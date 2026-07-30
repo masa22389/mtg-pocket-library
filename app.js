@@ -1,4 +1,4 @@
-const APP_VERSION = "v112";
+const APP_VERSION = "v113";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -1019,21 +1019,60 @@ function buildLocalIndexScryfallQuery(items, filters) {
   return "";
 }
 
+function buildLocalIndexScryfallQueryChunks(items, filters, options = {}) {
+  const nameChunkSize = Number(options.nameChunkSize || 8);
+  const oracleChunkSize = Number(options.oracleChunkSize || 16);
+  const names = [...new Set(items.flatMap(item => [item.scryfallName, ...(item.enNames || [])]).filter(Boolean))];
+  const queries = [];
+  for (let i = 0; i < names.length; i += nameChunkSize) {
+    const chunk = names.slice(i, i + nameChunkSize);
+    if (chunk.length) queries.push(`(${chunk.map(scryfallNameQuery).join(" or ")}) ${filters}`.trim());
+  }
+  if (queries.length) return queries;
+  const oracleIds = [...new Set(items.map(item => item.oracleId).filter(Boolean))];
+  for (let i = 0; i < oracleIds.length; i += oracleChunkSize) {
+    const chunk = oracleIds.slice(i, i + oracleChunkSize);
+    if (chunk.length) queries.push(`(${chunk.map(id => `oracleid:${id}`).join(" or ")}) ${filters}`.trim());
+  }
+  return queries;
+}
+
 async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards = 30) {
   const queryKey = normalizeAliasKey(query);
   const isShortJapaneseQuery = /^[\u3041-\u3093\u30a1-\u30f6\u30fc]{1,3}$/.test(queryKey);
-  const localLimit = exactMatch ? 20 : isShortJapaneseQuery ? 32 : 20;
+  const localLimit = exactMatch ? 20 : isShortJapaneseQuery ? 80 : 48;
   const localItems = localSearchIndexMatches(query, exactMatch, localLimit);
   if (!localItems.length) return { cards: [], items: [], error: null };
-  const scryfallQuery = buildLocalIndexScryfallQuery(localItems, filters);
-  if (!scryfallQuery) return { cards: [], items: localItems, error: null };
-  const result = await fetchScryfallSearch(scryfallQuery, { unique: "prints", order: "released", dir: "desc" });
-  if (!result.ok) return { cards: [], items: localItems, error: result.error };
+  const queries = exactMatch
+    ? [buildLocalIndexScryfallQuery(localItems, filters)].filter(Boolean)
+    : buildLocalIndexScryfallQueryChunks(localItems, filters);
+  if (!queries.length) return { cards: [], items: localItems, error: null };
   const localOrder = new Map(localItems.map((item, index) => [item, index]));
   const localByOracle = new Map(localItems.map(item => [item.oracleId, item]).filter(([key]) => key));
   const localByName = new Map();
   localItems.forEach(item => jpIndexNames(item).forEach(name => localByName.set(normalizeCardName(name), item)));
-  const ordered = result.data.data
+  const cards = [];
+  const seen = new Set();
+  let lastError = null;
+  for (const scryfallQuery of queries) {
+    const result = await fetchScryfallSearch(scryfallQuery, exactMatch
+      ? { unique: "prints", order: "released", dir: "desc" }
+      : { unique: "cards", order: "name" });
+    if (!result.ok) {
+      lastError = result.error;
+      continue;
+    }
+    for (const card of result.data.data || []) {
+      const key = exactMatch ? card.id : (card.oracle_id || card.id);
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      cards.push(card);
+    }
+    if (!exactMatch && cards.length >= maxCards) break;
+    await new Promise(resolve => setTimeout(resolve, 80));
+  }
+  if (!cards.length && lastError) return { cards: [], items: localItems, error: lastError };
+  const ordered = cards
     .map(card => ({
       card,
       item: localByOracle.get(card.oracle_id) || cardSearchNames(card).map(normalizeCardName).map(name => localByName.get(name)).find(Boolean) || null,
