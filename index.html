@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#173f35">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MTG Pocket">
+  <title>MTG Pocket Library</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css?v=109">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand"><span class="brand-mark">M</span><span><strong>MTG Pocket Library</strong><small>コレクション & デッキ</small></span></div>
+    <button id="installButton" class="ghost compact" hidden>アプリをインストール</button>
+  </header>
+
+  <main>
+    <section id="collectionView" class="view active">
+      <div class="hero-card">
+        <div><span class="eyebrow">MY COLLECTION</span><h1>持っているカード</h1></div>
+        <div class="stats"><span><b id="totalCards">0</b>枚</span><span><b id="uniqueCards">0</b>種類</span><span class="value-stat"><b id="collectionValue">--</b>参考総額<small id="priceStatus">価格取得中</small></span></div>
+      </div>
+
+      <section class="card search-card">
+        <label for="cardSearch">カードを日本語・英語で検索</label>
+        <div class="search-row"><input id="cardSearch" type="search" enterkeyhint="search" placeholder="例：稲妻 / Lightning Bolt"><button id="searchButton">検索</button></div>
+        <div class="ocr-actions" aria-label="画像からカード名を読み取る">
+          <label class="ocr-button">写真を撮る<input id="ocrCameraInput" type="file" accept="image/*" capture="environment"></label>
+          <label class="ocr-button ghost">画像を選択<input id="ocrFileInput" type="file" accept="image/*"></label>
+        </div>
+        <p id="ocrStatus" class="muted ocr-status"></p>
+        <div class="search-filters" aria-label="カード検索条件">
+          <label>名前の一致<select id="searchMatch"><option value="partial">部分一致</option><option value="exact">完全一致</option></select></label>
+          <label>色（固有色）<select id="searchColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
+          <label>マナ総量<select id="searchMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label>
+          <label>カードタイプ<select id="searchType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label>
+          <label>エキスパンション<input id="searchSet" type="search" placeholder="例：mh3 / fin"></label>
+          <label class="set-extra-filter"><input id="searchSetIncludeExtras" type="checkbox"><span>特殊セットも表示</span></label>
+          <button id="clearSearchFilters" class="filter-reset" type="button">条件をクリア</button>
+        </div>
+        <p id="searchStatus" class="muted">Scryfallのカードデータを使用します</p>
+        <div id="searchResults" class="search-results"></div>
+      </section>
+
+      <section class="section-head">
+        <div><span class="eyebrow">OWNED</span><h2>コレクション</h2></div>
+        <div class="collection-toolbar">
+          <label>表示<select id="collectionViewMode"><option value="hidden">非表示</option><option value="detail">詳細表示</option><option value="images">イラスト表示</option></select></label>
+          <input id="collectionFilter" class="small-search" type="search" placeholder="絞り込み">
+        </div>
+      </section>
+      <section class="collection-filters" aria-label="コレクションの詳細フィルター">
+        <label>色（固有色）<select id="collectionColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
+        <label>マナ総量<select id="collectionMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label>
+        <label>カードタイプ<select id="collectionType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label>
+        <label>価格<select id="collectionPriceFilter"><option value="">すべて</option><option value="priced">価格あり</option><option value="missing">価格なし</option><option value="english">英語版参考</option><option value="over10000">1万円以上</option><option value="over50000">5万円以上</option></select></label>
+        <label class="favorite-filter"><input id="collectionFavoritesOnly" type="checkbox"><span>★ お気に入りのみ</span></label>
+        <button id="clearCollectionFilters" class="filter-reset" type="button">条件をクリア</button>
+      </section>
+      <section class="collection-sort-panel" aria-label="コレクションの並び替え">
+        <span id="collectionSortStatus">ソートなし</span>
+        <div class="collection-sort-buttons">
+          <button id="sortCollectionByName" type="button" class="compact ghost">名前順</button>
+          <button id="sortCollectionByColor" type="button" class="compact ghost">色</button>
+          <button id="sortCollectionByMana" type="button" class="compact ghost">マナ</button>
+          <button id="sortCollectionByType" type="button" class="compact ghost">タイプ</button>
+          <button id="sortCollectionByValue" type="button" class="compact ghost">資産額</button>
+          <button id="sortCollectionByUnitPrice" type="button" class="compact ghost">単価</button>
+          <button id="resetCollectionSort" type="button" class="compact filter-reset">初期化</button>
+        </div>
+      </section>
+      <div id="collectionList" class="item-list"></div>
+    </section>
+
+    <section id="decksView" class="view">
+      <div class="hero-card">
+        <div><span class="eyebrow">DECK BUILDER</span><h1>デッキ</h1></div>
+        <div class="hero-actions"><button id="newDeckButton">＋ 新規デッキ</button><label class="import-deck-button">TXTインポート<input id="deckImportInput" type="file" accept=".txt,text/plain"></label></div>
+      </div>
+      <section class="card deck-list-filter">
+        <label>表示フォーマット<select id="deckFormatFilter"><option value="">すべて</option></select></label>
+      </section>
+      <div id="deckList" class="deck-grid"></div>
+    </section>
+
+    <section id="settingsView" class="view">
+      <div class="hero-card"><div><span class="eyebrow">DATA</span><h1>設定とバックアップ</h1></div></div>
+      <section class="card stack">
+        <h2>端末内データ</h2>
+        <p class="muted">カードとデッキはこの端末のブラウザー内に保存されます。機種変更前にバックアップしてください。</p>
+        <div id="backupSummary" class="data-summary"></div>
+        <button id="exportButton">JSONバックアップを保存</button>
+        <label class="file-button">バックアップを復元<input id="importInput" type="file" accept="application/json,.json"></label>
+        <button id="clearButton" class="danger">すべてのデータを削除</button>
+        <p class="version-note">現在のバージョン：<b>v112</b></p>
+        <hr>
+        <h3>資産価値の円換算</h3>
+        <div class="search-row"><input id="usdJpyRate" type="number" min="1" step="0.01" inputmode="decimal" placeholder="USD/JPY"><button id="saveFxButton" type="button">換算レートを保存</button></div>
+        <p id="fxHelp" class="muted">為替を自動取得できない場合に手動で変更できます。</p>
+      </section>
+      <section class="card stack install-help">
+        <h2>Androidへインストール</h2>
+        <ol><li>Chromeでこのページを開く</li><li>右上の「︙」をタップ</li><li>「アプリをインストール」を選ぶ</li></ol>
+      </section>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="メインメニュー">
+    <button data-view="collection" class="active"><span>◫</span>カード</button>
+    <button data-view="decks"><span>▤</span>デッキ</button>
+    <button data-view="settings"><span>⚙</span>設定</button>
+  </nav>
+
+  <dialog id="cardDialog">
+    <form method="dialog" class="dialog-card card-detail-dialog">
+      <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+      <div id="cardPreview"></div>
+      <section class="variant-section">
+        <div class="variant-head"><h3>別イラスト・収録版 <span id="variantCount" class="variant-count"></span></h3><select id="variantFilter" aria-label="カードの言語で絞り込み"><option value="">日英すべて</option><option value="ja">日本語</option><option value="en">英語</option></select></div>
+        <div id="cardVariants" class="variant-list"><span class="muted">収録版を読み込み中…</span></div>
+      </section>
+      <label class="owned-control">この版の所持枚数
+        <span class="quantity-stepper"><button id="decrementQuantity" type="button" aria-label="所持枚数を1枚減らす">−</button><input id="cardQuantity" type="number" min="0" value="0" inputmode="numeric"><button id="incrementQuantity" type="button" aria-label="所持枚数を1枚増やす">＋</button></span>
+      </label>
+      <div class="form-grid">
+        <label>状態<select id="cardCondition"><option>NM</option><option>LP</option><option>MP</option><option>HP</option><option>DMG</option></select></label>
+        <label>仕様<select id="cardFinish"><option value="normal">通常</option><option value="foil">Foil</option><option value="etched">Etched</option></select></label>
+        <label>言語<select id="cardLanguage" disabled><option value="ja">日本語</option><option value="en">英語</option><option value="other">その他</option></select></label>
+        <label>保管場所<input id="cardLocation" placeholder="バインダーA など"></label>
+      </div>
+      <div class="deck-add-target-buttons card-deck-targets" aria-label="カード追加先を選択" hidden>
+        <button type="button" data-deck-section-target="main">メイン</button>
+        <button type="button" data-deck-section-target="side">サイド</button>
+        <button type="button" data-deck-section-target="commander">統率者</button>
+        <button type="button" data-deck-section-target="maybe">候補</button>
+      </div>
+      <div class="card-action-row"><button id="addCardButton" type="button">所持枚数を保存</button><button id="addCardToDeckButton" type="button" hidden>このイラストをデッキへ追加</button></div>
+      <p id="cardActionStatus" class="deck-add-status" aria-live="polite"></p>
+      <div class="card-owned-actions"><button id="favoriteCardButton" type="button" class="favorite-owned">☆ お気に入り</button><button id="deleteCardButton" type="button" class="danger">削除</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="deckDialog">
+    <form method="dialog" class="dialog-card deck-editor">
+      <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+      <label>デッキ名<input id="deckName" maxlength="60" placeholder="新しいデッキ"></label>
+      <label>フォーマット<select id="deckFormat"><option>統率者戦</option><option>スタンダード</option><option>パイオニア</option><option>モダン</option><option>レガシー</option><option>パウパー</option><option>カジュアル</option></select></label>
+      <div class="deck-summary"><b id="deckCount">0枚</b><span id="deckMissing">不足なし</span></div>
+      <section id="deckStats" class="deck-stats" hidden></section>
+      <section id="deckMissingList" class="deck-missing-list" hidden></section>
+      <p id="deckDates" class="deck-dates"></p>
+      <label>メモ<textarea id="deckMemo" rows="4" maxlength="2000" placeholder="採用理由、調整メモ、次に試したいカードなど"></textarea></label>
+      <label hidden>カード追加先<select id="deckSection"><option value="main">メイン</option><option value="side">サイド</option><option value="commander">統率者</option><option value="maybe">候補</option></select></label>
+      <section class="deck-add-menu" aria-label="カード追加方法">
+        <button id="openDeckOwnedAdd" type="button">所持カードから追加</button>
+        <button id="openDeckSearchAdd" type="button" class="ghost">全カードから検索</button>
+      </section>
+      <div class="deck-content-head">
+        <h3>デッキ内容</h3>
+        <div class="deck-sort-buttons" aria-label="デッキ内容の並び替え">
+          <button id="openDeckVisual" type="button" class="compact">Visual View</button>
+          <button id="sortDeckByName" type="button" class="compact ghost">名前順</button>
+          <button id="sortDeckByColor" type="button" class="compact ghost">色</button>
+          <button id="sortDeckByMana" type="button" class="compact ghost">マナ</button>
+          <button id="sortDeckByType" type="button" class="compact ghost">タイプ</button>
+        </div>
+      </div>
+      <div id="deckCards" class="item-list compact-list"></div>
+      <div class="button-row deck-editor-actions"><button id="saveDeckButton" type="button">保存</button><button id="duplicateDeckButton" type="button" class="ghost">コピー</button><button id="deleteDeckButton" type="button" class="danger">削除</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="deckOwnedAddDialog">
+    <form method="dialog" class="dialog-card deck-add-dialog deck-owned-add-dialog">
+      <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+      <div class="deck-add-heading"><h3>所持カードから追加</h3><input id="deckCardFilter" class="small-search" type="search" placeholder="名前で絞り込み"></div>
+      <div class="deck-owned-filters" aria-label="デッキ用の所持カード検索条件">
+        <label>色<select id="deckOwnedColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
+        <label>マナ総量<select id="deckOwnedMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label>
+        <label>カードタイプ<select id="deckOwnedType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label>
+        <label class="favorite-filter"><input id="deckOwnedFavoritesOnly" type="checkbox"><span>★ お気に入りのみ</span></label>
+        <button id="clearDeckOwnedFilters" class="filter-reset" type="button">条件をクリア</button>
+      </div>
+      <p id="deckOwnedAddStatus" class="deck-add-status" aria-live="polite"></p>
+      <div id="deckCandidates" class="deck-owned-list"></div>
+    </form>
+  </dialog>
+
+  <dialog id="deckSearchAddDialog">
+    <form method="dialog" class="dialog-card deck-add-dialog deck-search-add-dialog">
+      <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+      <h3>全カードから検索</h3>
+      <div class="search-row"><input id="deckGlobalSearch" type="search" enterkeyhint="search" placeholder="日本語名 / English name"><button id="deckGlobalSearchButton" type="button">検索</button></div>
+      <div class="search-filters compact-search-filters" aria-label="デッキ用の全カード検索条件">
+        <label>名前の一致<select id="deckSearchMatch"><option value="partial">部分一致</option><option value="exact">完全一致</option></select></label>
+        <label>色<select id="deckSearchColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
+        <label>マナ総量<select id="deckSearchMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label>
+        <label>カードタイプ<select id="deckSearchType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label>
+        <label>エキスパンション<input id="deckSearchSet" type="search" placeholder="例：mh3 / fin"></label>
+        <label class="set-extra-filter"><input id="deckSearchSetIncludeExtras" type="checkbox"><span>特殊セットも表示</span></label>
+        <button id="clearDeckSearchFilters" class="filter-reset" type="button">条件をクリア</button>
+      </div>
+      <p id="deckGlobalSearchStatus" class="muted">未所持のカードもデッキに追加できます</p>
+      <div id="deckGlobalSearchResults" class="deck-card-grid"></div>
+    </form>
+  </dialog>
+
+  <dialog id="deckVisualDialog">
+    <form method="dialog" class="dialog-card deck-visual-dialog">
+      <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+      <div class="deck-visual-head">
+        <div><span class="eyebrow">VISUAL VIEW</span><h2 id="deckVisualTitle">デッキ表示</h2></div>
+        <p id="deckVisualSummary" class="muted"></p>
+      </div>
+      <div id="deckVisualBoard" class="deck-visual-board"></div>
+    </form>
+  </dialog>
+
+  <dialog id="deckEntryDialog">
+    <form method="dialog" class="dialog-card deck-entry-editor">
+      <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+      <div class="deck-entry-preview"><button id="openDeckEntryVariants" type="button" class="deck-entry-image-button" aria-label="イラストを変更"><img id="deckEntryImage" alt=""><span>イラスト変更</span></button><div><span id="deckEntrySet" class="eyebrow"></span><h2 id="deckEntryName"></h2><p id="deckEntryOwned" class="muted"></p></div></div>
+      <label hidden>追加先<select id="deckEntrySection"><option value="main">メイン</option><option value="side">サイド</option><option value="commander">統率者</option><option value="maybe">候補</option></select></label>
+      <div class="deck-order-actions"><button id="moveDeckEntryUp" type="button" class="ghost">↑ 前へ</button><button id="moveDeckEntryDown" type="button" class="ghost">↓ 後へ</button></div>
+      <div class="deck-section-quantities" aria-label="メインとサイドの枚数">
+        <div class="deck-section-quantity-row" data-section-row="main"><b>メイン</b><button id="decrementMainDeckEntry" type="button">−</button><input id="mainDeckEntryQuantity" type="number" min="0" value="0" inputmode="numeric"><button id="incrementMainDeckEntry" type="button">＋</button></div>
+        <div class="deck-section-quantity-row" data-section-row="side"><b>サイド</b><button id="decrementSideDeckEntry" type="button">−</button><input id="sideDeckEntryQuantity" type="number" min="0" value="0" inputmode="numeric"><button id="incrementSideDeckEntry" type="button">＋</button></div>
+        <div class="deck-section-quantity-row" data-section-row="commander"><b>統率者</b><button id="decrementCommanderDeckEntry" type="button">−</button><input id="commanderDeckEntryQuantity" type="number" min="0" value="0" inputmode="numeric"><button id="incrementCommanderDeckEntry" type="button">＋</button></div>
+        <div class="deck-section-quantity-row" data-section-row="maybe"><b>候補</b><button id="decrementMaybeDeckEntry" type="button">−</button><input id="maybeDeckEntryQuantity" type="number" min="0" value="0" inputmode="numeric"><button id="incrementMaybeDeckEntry" type="button">＋</button></div>
+      </div>
+      <label class="owned-control" hidden>デッキに入れる枚数
+        <span class="quantity-stepper"><button id="decrementDeckEntry" type="button" aria-label="デッキ枚数を1枚減らす">−</button><input id="deckEntryQuantity" type="number" min="1" value="1" inputmode="numeric"><button id="incrementDeckEntry" type="button" aria-label="デッキ枚数を1枚増やす">＋</button></span>
+      </label>
+      <button id="removeDeckEntry" type="button" class="danger">デッキから削除</button>
+    </form>
+  </dialog>
+
+  <dialog id="deckEntryVariantDialog">
+    <form method="dialog" class="dialog-card deck-entry-variant-dialog">
+      <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+      <div class="variant-head"><h3>イラストを選択 <span id="deckEntryVariantCount" class="variant-count"></span></h3><select id="deckEntryVariantFilter" aria-label="デッキカードの言語で絞り込み"><option value="">日英すべて</option><option value="ja">日本語</option><option value="en">英語</option></select></div>
+      <div id="deckEntryVariants" class="variant-list deck-entry-variant-list"><span class="muted">収録版を読み込み中…</span></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="mtg-jp-card-index.js?v=112" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=112" defer></script>
+  <script src="app.js?v=112" defer></script>
+</body>
+</html>

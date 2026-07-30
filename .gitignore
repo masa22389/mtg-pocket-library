@@ -1,0 +1,18 @@
+# Local exports and audit artifacts
+exports/
+
+# Local/temporary backups
+*.bak
+*.backup
+*.tmp
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dependency folders, if scripts are extended later
+node_modules/
+
+# Logs
+*.log
