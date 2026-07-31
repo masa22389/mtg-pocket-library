@@ -45,3 +45,11 @@ dialog{border:0;border-radius:22px;padding:0;width:min(94vw,620px);max-height:88
 .deck-list-filter{margin-bottom:12px}
 .deck-list-filter label{max-width:260px}
 .deck-editor-actions{grid-template-columns:1fr auto auto}
+
+#deckOwnedAddDialog{overflow:hidden}
+#deckOwnedAddDialog .deck-owned-add-dialog{height:auto!important;max-height:88dvh!important;overflow-y:auto!important;overflow-x:hidden!important;display:block!important;align-content:normal!important;padding-top:15px;padding-bottom:15px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#deckOwnedAddDialog .deck-owned-add-dialog>*+*{margin-top:10px}
+#deckOwnedAddDialog .deck-owned-add-dialog .dialog-close{position:absolute;top:12px;right:12px;margin:0}
+#deckOwnedAddDialog .deck-add-heading{padding-right:44px}
+#deckOwnedAddDialog .deck-owned-list{display:grid!important;gap:8px!important;flex:none!important;min-height:0!important;max-height:none!important;overflow:visible!important;overflow-y:visible!important;padding-right:0!important;-webkit-overflow-scrolling:auto!important;overscroll-behavior:auto!important}
+#deckOwnedAddDialog .advanced-search-summary{margin-top:0;padding:7px 9px}
