@@ -1,4 +1,4 @@
-const APP_VERSION = "v114";
+const APP_VERSION = "v115";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -50,6 +50,7 @@ const els = {
   deckMissing: $("#deckMissing"), deckStats: $("#deckStats"), deckMissingList: $("#deckMissingList"), deckDates: $("#deckDates"), deckMemo: $("#deckMemo"), deckCardFilter: $("#deckCardFilter"), deckSection: $("#deckSection"),
   openDeckOwnedAdd: $("#openDeckOwnedAdd"), openDeckSearchAdd: $("#openDeckSearchAdd"),
   deckOwnedAddDialog: $("#deckOwnedAddDialog"), deckSearchAddDialog: $("#deckSearchAddDialog"),
+  openDeckOwnedAdvanced: $("#openDeckOwnedAdvanced"), deckOwnedAdvancedPanel: $("#deckOwnedAdvancedPanel"), deckOwnedFilterSummary: $("#deckOwnedFilterSummary"),
   deckOwnedColor: $("#deckOwnedColor"), deckOwnedMana: $("#deckOwnedMana"), deckOwnedType: $("#deckOwnedType"),
   deckOwnedFavoritesOnly: $("#deckOwnedFavoritesOnly"),
   clearDeckOwnedFilters: $("#clearDeckOwnedFilters"),
@@ -2137,6 +2138,18 @@ function deckCountsForCard(card) {
   return counts;
 }
 
+function updateDeckOwnedFilterSummary() {
+  const chips = [];
+  const colorText = els.deckOwnedColor.selectedOptions[0]?.textContent || "";
+  const manaText = els.deckOwnedMana.selectedOptions[0]?.textContent || "";
+  const typeText = els.deckOwnedType.selectedOptions[0]?.textContent || "";
+  if (els.deckOwnedColor.value) chips.push(`色:${colorText}`);
+  if (els.deckOwnedMana.value) chips.push(`マナ:${manaText}`);
+  if (els.deckOwnedType.value) chips.push(`タイプ:${typeText}`);
+  if (els.deckOwnedFavoritesOnly.checked) chips.push("お気に入りのみ");
+  els.deckOwnedFilterSummary.textContent = chips.length ? `詳細条件：${chips.join("・")}` : "詳細条件：指定なし";
+}
+
 function deckCountBadgesForCard(card) {
   const counts = deckCountsForCard(card);
   const sections = deckDisplaySections();
@@ -2351,6 +2364,7 @@ function renderDeckOwnedAddDialog() {
   if (keepScroll && els.deckCandidates.contains(document.activeElement)) document.activeElement.blur();
   const query = els.deckCardFilter.value.trim().toLowerCase();
   const candidates = groupedOwnedDeckCards(query);
+  updateDeckOwnedFilterSummary();
   els.deckCandidates.innerHTML = candidates.length ? candidates.map(({ card }) => deckOwnedChoiceButton(card)).join("") : '<span class="deck-search-empty">追加できる所持カードがありません</span>';
   els.deckCandidates.querySelectorAll("[data-owned-add-section]").forEach(button => {
     button.addEventListener("click", () => addOwnedToDeck(button.dataset.id, button.dataset.ownedAddSection));
@@ -2370,6 +2384,8 @@ function renderDeckSearchAddDialog() {
 function openDeckOwnedAddDialog() {
   els.deckOwnedAddStatus.textContent = "";
   els.deckOwnedAddStatus.classList.remove("show");
+  els.deckOwnedAdvancedPanel.hidden = true;
+  els.openDeckOwnedAdvanced.setAttribute("aria-expanded", "false");
   syncCommanderOptions();
   renderDeckOwnedAddDialog();
   els.deckOwnedAddDialog.showModal();
@@ -2938,6 +2954,11 @@ els.deckName.addEventListener("input", autoSaveEditingDeck);
 els.deckMemo.addEventListener("input", autoSaveEditingDeck);
 els.deckFormat.addEventListener("change", () => { renderDeckEditor(); autoSaveEditingDeck(); });
 els.deckCardFilter.addEventListener("input", renderDeckEditor);
+els.openDeckOwnedAdvanced.addEventListener("click", () => {
+  const nextOpen = els.deckOwnedAdvancedPanel.hidden;
+  els.deckOwnedAdvancedPanel.hidden = !nextOpen;
+  els.openDeckOwnedAdvanced.setAttribute("aria-expanded", nextOpen ? "true" : "false");
+});
 els.deckSection.addEventListener("change", renderDeckEditor);
 document.querySelectorAll("[data-deck-section-target]").forEach(button => button.addEventListener("click", () => {
   els.deckSection.value = button.dataset.deckSectionTarget;

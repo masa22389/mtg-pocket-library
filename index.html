@@ -98,7 +98,7 @@
         <button id="exportButton">JSONバックアップを保存</button>
         <label class="file-button">バックアップを復元<input id="importInput" type="file" accept="application/json,.json"></label>
         <button id="clearButton" class="danger">すべてのデータを削除</button>
-        <p class="version-note">現在のバージョン：<b>v114</b></p>
+        <p class="version-note">現在のバージョン：<b>v115</b></p>
         <hr>
         <h3>資産価値の円換算</h3>
         <div class="search-row"><input id="usdJpyRate" type="number" min="1" step="0.01" inputmode="decimal" placeholder="USD/JPY"><button id="saveFxButton" type="button">換算レートを保存</button></div>
@@ -179,13 +179,20 @@
   <dialog id="deckOwnedAddDialog">
     <form method="dialog" class="dialog-card deck-add-dialog deck-owned-add-dialog">
       <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
-      <div class="deck-add-heading"><h3>所持カードから追加</h3><input id="deckCardFilter" class="small-search" type="search" placeholder="名前で絞り込み"></div>
+      <div class="deck-add-heading"><h3>所持カードから追加</h3></div>
+      <div class="deck-owned-search-row">
+        <input id="deckCardFilter" type="search" placeholder="名前で絞り込み">
+        <button id="openDeckOwnedAdvanced" class="advanced-search-open" type="button" aria-expanded="false" aria-controls="deckOwnedAdvancedPanel">詳細検索</button>
+      </div>
+      <label class="favorite-filter deck-owned-favorite-inline"><input id="deckOwnedFavoritesOnly" type="checkbox"><span>★ お気に入りのみ</span></label>
+      <p id="deckOwnedFilterSummary" class="advanced-search-summary">詳細条件：指定なし</p>
+      <div id="deckOwnedAdvancedPanel" class="deck-owned-advanced-panel" hidden>
       <div class="deck-owned-filters" aria-label="デッキ用の所持カード検索条件">
         <label>色<select id="deckOwnedColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
         <label>マナ総量<select id="deckOwnedMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label>
         <label>カードタイプ<select id="deckOwnedType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label>
-        <label class="favorite-filter"><input id="deckOwnedFavoritesOnly" type="checkbox"><span>★ お気に入りのみ</span></label>
         <button id="clearDeckOwnedFilters" class="filter-reset" type="button">条件をクリア</button>
+      </div>
       </div>
       <p id="deckOwnedAddStatus" class="deck-add-status" aria-live="polite"></p>
       <div id="deckCandidates" class="deck-owned-list"></div>
@@ -250,8 +257,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=114" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=114" defer></script>
-  <script src="app.js?v=114" defer></script>
+  <script src="mtg-jp-card-index.js?v=115" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=115" defer></script>
+  <script src="app.js?v=115" defer></script>
 </body>
 </html>
