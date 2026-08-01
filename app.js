@@ -1,4 +1,4 @@
-const APP_VERSION = "v117";
+const APP_VERSION = "v118";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -61,7 +61,7 @@ const els = {
   openDeckVisual: $("#openDeckVisual"), deckVisualDialog: $("#deckVisualDialog"), deckVisualTitle: $("#deckVisualTitle"),
   deckVisualSummary: $("#deckVisualSummary"), deckVisualBoard: $("#deckVisualBoard"),
   deckEntryDialog: $("#deckEntryDialog"), deckEntryVariantDialog: $("#deckEntryVariantDialog"), deckEntryImage: $("#deckEntryImage"), openDeckEntryVariants: $("#openDeckEntryVariants"), deckEntrySet: $("#deckEntrySet"),
-  deckEntryName: $("#deckEntryName"), deckEntryOwned: $("#deckEntryOwned"), deckEntrySection: $("#deckEntrySection"),
+  deckEntryName: $("#deckEntryName"), deckEntryOwned: $("#deckEntryOwned"), addDeckEntryToCollection: $("#addDeckEntryToCollection"), deckEntryCollectionStatus: $("#deckEntryCollectionStatus"), deckEntrySection: $("#deckEntrySection"),
   deckEntryVariants: $("#deckEntryVariants"), deckEntryVariantFilter: $("#deckEntryVariantFilter"), deckEntryVariantCount: $("#deckEntryVariantCount"),
   deckEntryQuantity: $("#deckEntryQuantity"), decrementDeckEntry: $("#decrementDeckEntry"),
   incrementDeckEntry: $("#incrementDeckEntry"), moveDeckEntryUp: $("#moveDeckEntryUp"), moveDeckEntryDown: $("#moveDeckEntryDown"), removeDeckEntry: $("#removeDeckEntry"),
@@ -2568,6 +2568,81 @@ function renderDeckEntryEditor() {
   els.moveDeckEntryDown.disabled = sectionIndex < 0 || sectionIndex >= sectionEntries.length - 1;
 }
 
+function collectionLanguageForDeckCard(card) {
+  if (card?.language) return card.language;
+  if (card?.lang) return card.lang;
+  return isJapanese(card?.printedName || card?.jpName || "") ? "ja" : "en";
+}
+
+function collectionCardFromDeckCard(card) {
+  const language = collectionLanguageForDeckCard(card);
+  return {
+    id: uid(),
+    scryfallId: card.scryfallId || card.id || "",
+    oracleId: card.oracleId || card.oracle_id || "",
+    name: card.name || card.printedName || "",
+    printedName: card.printedName || card.printed_name || nameOf(card),
+    set: (card.set || "").toUpperCase(),
+    setName: card.setName || card.set_name || "",
+    collectorNumber: card.collectorNumber || card.collector_number || "",
+    typeLine: card.typeLine || card.type_line || "",
+    printedTypeLine: card.printedTypeLine || card.printed_type_line || "",
+    image: imageOf(card),
+    manaCost: card.manaCost || card.mana_cost || "",
+    manaValue: Number(card.manaValue ?? card.cmc ?? 0),
+    colors: card.colors || [],
+    colorIdentity: card.colorIdentity || card.color_identity || card.colors || [],
+    metadataVersion: 1,
+    priceUsd: card.priceUsd || card.prices?.usd || null,
+    priceUsdFoil: card.priceUsdFoil || card.prices?.usd_foil || null,
+    priceUsdEtched: card.priceUsdEtched || card.prices?.usd_etched || null,
+    priceUsdFromEnglish: Boolean(card.priceUsdFromEnglish),
+    priceUsdFoilFromEnglish: Boolean(card.priceUsdFoilFromEnglish),
+    priceUsdEtchedFromEnglish: Boolean(card.priceUsdEtchedFromEnglish),
+    priceUpdatedAt: card.priceUpdatedAt || Date.now(),
+    quantity: 1,
+    condition: "NM",
+    finish: "normal",
+    language,
+    location: "",
+    favorite: false,
+    addedAt: Date.now(),
+  };
+}
+
+function addCurrentDeckEntryToCollection() {
+  const entry = currentDeckEntry() || deckEntriesForCurrentCard()[0];
+  if (!entry) return;
+  const card = cardForDeckEntry(entry);
+  if (!card) return;
+  const incoming = collectionCardFromDeckCard(card);
+  const exactEntryLot = state.collection.find(item => item.id === entry.cardId);
+  const matchingLot = exactEntryLot || state.collection.find(item =>
+    incoming.scryfallId
+      ? item.scryfallId === incoming.scryfallId && item.condition === incoming.condition && item.finish === incoming.finish && item.language === incoming.language && !item.location
+      : item.name === incoming.name && item.printedName === incoming.printedName && item.set === incoming.set && item.collectorNumber === incoming.collectorNumber && item.condition === incoming.condition && item.finish === incoming.finish && item.language === incoming.language && !item.location
+  );
+  const lot = matchingLot || incoming;
+  if (matchingLot) {
+    matchingLot.quantity = Number(matchingLot.quantity || 0) + 1;
+  } else {
+    state.collection.unshift(incoming);
+  }
+  if (!incoming.scryfallId && entry.cardId !== lot.id) {
+    state.editingDeck.entries.forEach(item => {
+      if (item.cardId === entry.cardId) item.cardId = lot.id;
+    });
+    state.editingDeckEntry = { cardId: lot.id, section: entry.section };
+  }
+  persist();
+  renderCollection();
+  renderDeckEditor();
+  renderDeckEntryEditor();
+  hydrateEnglishPriceFallbacks();
+  showInlineStatus(els.deckEntryCollectionStatus, `${nameOf(card)}を所持カードに1枚追加しました`);
+  showToast("所持カードに1枚追加しました");
+}
+
 function setDeckEntrySectionQuantity(section, quantity) {
   const template = currentDeckCardTemplate();
   if (!template) return;
@@ -2990,6 +3065,7 @@ els.deckEntryQuantity.addEventListener("change", () => setDeckEntryQuantity(els.
 els.deckEntrySection.addEventListener("change", () => moveDeckEntrySection(els.deckEntrySection.value));
 els.openDeckEntryVariants?.addEventListener("click", openDeckEntryVariantDialog);
 els.deckEntryVariantFilter?.addEventListener("change", renderDeckEntryVariantGallery);
+els.addDeckEntryToCollection?.addEventListener("click", addCurrentDeckEntryToCollection);
 els.removeDeckEntry.addEventListener("click", removeCurrentDeckEntry);
 els.sortDeckByName.addEventListener("click", () => sortDeckEntries("name"));
 els.sortDeckByColor.addEventListener("click", () => sortDeckEntries("color"));

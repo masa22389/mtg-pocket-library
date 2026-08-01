@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=117">
+  <link rel="stylesheet" href="styles.css?v=118">
 </head>
 <body>
   <header class="app-header">
@@ -98,7 +98,7 @@
         <button id="exportButton">JSONバックアップを保存</button>
         <label class="file-button">バックアップを復元<input id="importInput" type="file" accept="application/json,.json"></label>
         <button id="clearButton" class="danger">すべてのデータを削除</button>
-        <p class="version-note">現在のバージョン：<b>v117</b></p>
+        <p class="version-note">現在のバージョン：<b>v118</b></p>
         <hr>
         <h3>資産価値の円換算</h3>
         <div class="search-row"><input id="usdJpyRate" type="number" min="1" step="0.01" inputmode="decimal" placeholder="USD/JPY"><button id="saveFxButton" type="button">換算レートを保存</button></div>
@@ -232,7 +232,8 @@
   <dialog id="deckEntryDialog">
     <form method="dialog" class="dialog-card deck-entry-editor">
       <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
-      <div class="deck-entry-preview"><button id="openDeckEntryVariants" type="button" class="deck-entry-image-button" aria-label="イラストを変更"><img id="deckEntryImage" alt=""><span>イラスト変更</span></button><div><span id="deckEntrySet" class="eyebrow"></span><h2 id="deckEntryName"></h2><p id="deckEntryOwned" class="muted"></p></div></div>
+      <div class="deck-entry-preview"><button id="openDeckEntryVariants" type="button" class="deck-entry-image-button" aria-label="イラストを変更"><img id="deckEntryImage" alt=""><span>イラスト変更</span></button><div><span id="deckEntrySet" class="eyebrow"></span><h2 id="deckEntryName"></h2><p id="deckEntryOwned" class="muted"></p><button id="addDeckEntryToCollection" type="button" class="ghost deck-entry-owned-add">所持カードに1枚追加</button></div></div>
+      <p id="deckEntryCollectionStatus" class="deck-add-status" aria-live="polite"></p>
       <label hidden>追加先<select id="deckEntrySection"><option value="main">メイン</option><option value="side">サイド</option><option value="commander">統率者</option><option value="maybe">候補</option></select></label>
       <div class="deck-order-actions"><button id="moveDeckEntryUp" type="button" class="ghost">↑ 前へ</button><button id="moveDeckEntryDown" type="button" class="ghost">↓ 後へ</button></div>
       <div class="deck-section-quantities" aria-label="メインとサイドの枚数">
@@ -257,8 +258,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=117" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=117" defer></script>
-  <script src="app.js?v=117" defer></script>
+  <script src="mtg-jp-card-index.js?v=118" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=118" defer></script>
+  <script src="app.js?v=118" defer></script>
 </body>
 </html>
