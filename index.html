@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=121">
+  <link rel="stylesheet" href="styles.css?v=122">
 </head>
 <body>
   <header class="app-header">
@@ -98,7 +98,7 @@
         <button id="exportButton">JSONバックアップを保存</button>
         <label class="file-button">バックアップを復元<input id="importInput" type="file" accept="application/json,.json"></label>
         <button id="clearButton" class="danger">すべてのデータを削除</button>
-        <p class="version-note">現在のバージョン：<b>v120</b></p>
+        <p class="version-note">現在のバージョン：<b id="currentAppVersion">読み込み中</b></p>
         <hr>
         <h3>資産価値の円換算</h3>
         <div class="search-row"><input id="usdJpyRate" type="number" min="1" step="0.01" inputmode="decimal" placeholder="USD/JPY"><button id="saveFxButton" type="button">換算レートを保存</button></div>
@@ -258,8 +258,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=121" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=121" defer></script>
-  <script src="app.js?v=121" defer></script>
+  <script src="mtg-jp-card-index.js?v=122" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=122" defer></script>
+  <script src="app.js?v=122" defer></script>
 </body>
 </html>
