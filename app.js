@@ -1,4 +1,4 @@
-const APP_VERSION = "v118";
+const APP_VERSION = "v119";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -89,14 +89,16 @@ function uid() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random()}
 function esc(value) { return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;"); }
 function isJapaneseCard(card) { return (card?.lang || card?.language || "") === "ja"; }
 function imageOf(card) {
+  const canUseLocalizedImage = Boolean(card?._jpImageExact && isJapaneseCard(card));
   const nativeImage = card?.image_uris?.normal || card?.card_faces?.[0]?.image_uris?.normal || card?.image || "";
-  const localizedImage = card?.jpImage || card?.jpImages?.normal || "";
-  return (isJapaneseCard(card) || !card?.lang) ? (localizedImage || nativeImage) : (nativeImage || localizedImage);
+  const localizedImage = canUseLocalizedImage ? (card?.jpImage || card?.jpImages?.normal || "") : "";
+  return localizedImage || nativeImage;
 }
 function backImageOf(card) {
+  const canUseLocalizedImage = Boolean(card?._jpImageExact && isJapaneseCard(card));
   const nativeBackImage = card?.card_faces?.[1]?.image_uris?.normal || "";
-  const localizedBackImage = card?.jpImages?.back || "";
-  return (isJapaneseCard(card) || !card?.lang) ? (localizedBackImage || nativeBackImage) : (nativeBackImage || localizedBackImage);
+  const localizedBackImage = canUseLocalizedImage ? (card?.jpImages?.back || "") : "";
+  return localizedBackImage || nativeBackImage;
 }
 function typeOf(card) { return card.printed_type_line || card.printedTypeLine || card.type_line || card.typeLine || ""; }
 function nameOf(card) { return (isJapaneseCard(card) ? card.jpName : "") || card.printed_name || card.printedName || card.name || "名称不明"; }
@@ -884,6 +886,8 @@ function jpIndexMatchesCard(item, card) {
 function jpIndexForCard(card) {
   const scryfallId = card.id || card.scryfallId || "";
   if (scryfallId && JP_INDEX_BY_SCRYFALL_ID.has(scryfallId)) return JP_INDEX_BY_SCRYFALL_ID.get(scryfallId);
+  const exactPrint = MTG_JP_CARD_INDEX.find(item => jpIndexImageMatchesCard(item, card));
+  if (exactPrint) return exactPrint;
   const oracleId = card.oracle_id || card.oracleId || "";
   if (oracleId && JP_INDEX_BY_ORACLE_ID.has(oracleId)) return JP_INDEX_BY_ORACLE_ID.get(oracleId);
   const names = cardSearchNames(card).map(normalizeCardName);
@@ -916,11 +920,12 @@ function applyJpIndexToCard(card) {
   if (!item) return card;
   const localizeDisplay = isJapaneseCard(card) || !card.lang;
   const localizeImage = jpIndexImageMatchesCard(item, card);
+  const localizeTopImage = localizeDisplay && localizeImage;
   const displayJaNames = displayJaNamesForIndexItem(item);
   const faces = Array.isArray(card.card_faces) ? card.card_faces.map((face, index) => ({
     ...face,
     printed_name: localizeDisplay ? (displayJaNames[index] || face.printed_name) : face.printed_name,
-    image_uris: localizeDisplay && localizeImage ? {
+    image_uris: localizeTopImage ? {
       ...(face.image_uris || {}),
       normal: index === 0 ? (item.images?.normal || face.image_uris?.normal) : (item.images?.back || face.image_uris?.normal),
     } : face.image_uris,
@@ -928,10 +933,12 @@ function applyJpIndexToCard(card) {
   return {
     ...card,
     lang: card.lang || "ja",
+    image_uris: localizeTopImage && item.images?.normal ? { ...(card.image_uris || {}), normal: item.images.normal } : card.image_uris,
     jpName: displayJaNames[0] || card.jpName,
     jpAltName: displayJaNames[1] || "",
-    jpImage: localizeImage ? (item.images?.normal || item.image || card.jpImage) : card.jpImage,
-    jpImages: localizeImage ? (item.images || null) : (card.jpImages || null),
+    jpImage: localizeTopImage ? (item.images?.normal || item.image || "") : "",
+    jpImages: localizeTopImage ? (item.images || null) : null,
+    _jpImageExact: localizeTopImage,
     jpSourceUrl: item.sourceUrl || "",
     card_faces: faces,
     printed_name: localizeDisplay ? (displayJaNames[0] || card.printed_name) : card.printed_name,
