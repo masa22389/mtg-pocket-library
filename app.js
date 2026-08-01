@@ -1,4 +1,4 @@
-const APP_VERSION = "v120";
+const APP_VERSION = "v121";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -827,7 +827,11 @@ async function fetchAllScryfallSearch(q, options = {}) {
 }
 
 function normalizeCardName(value) {
-  return String(value || "").normalize("NFKC").trim().toLocaleLowerCase("ja").replaceAll(/\s+/g, " ");
+  return stripJapaneseReadings(value).normalize("NFKC").trim().toLocaleLowerCase("ja").replaceAll(/\s+/g, " ");
+}
+
+function stripJapaneseReadings(value) {
+  return String(value || "").replace(/[\uff08(][\u3041-\u3096\u30a1-\u30fa\u30fc\u30fb\uff65\s]+[\uff09)]/g, "");
 }
 
 function normalizeAliasKey(value) {
@@ -911,14 +915,16 @@ function jpIndexImageMatchesCard(item, card) {
 
 function displayJaNamesForIndexItem(item) {
   const names = item?.jaNames || [];
-  const japaneseNames = names.filter(isJapanese);
-  return japaneseNames.length ? japaneseNames : names;
+  const cleanNames = names.map(stripJapaneseReadings).filter(Boolean);
+  const japaneseNames = cleanNames.filter(isJapanese);
+  return japaneseNames.length ? japaneseNames : cleanNames.length ? cleanNames : names;
 }
 
 function applyJpIndexToCard(card) {
   const item = jpIndexForCard(card);
   if (!item) return card;
-  const localizeDisplay = isJapaneseCard(card) || !card.lang;
+  const preferJpDisplay = Boolean(card._preferJpDisplay);
+  const localizeDisplay = preferJpDisplay || isJapaneseCard(card) || !card.lang;
   const localizeImage = jpIndexImageMatchesCard(item, card);
   const localizeTopImage = localizeDisplay && localizeImage;
   const displayJaNames = displayJaNamesForIndexItem(item);
@@ -932,7 +938,7 @@ function applyJpIndexToCard(card) {
   })) : card.card_faces;
   return {
     ...card,
-    lang: card.lang || "ja",
+    lang: preferJpDisplay ? "ja" : (card.lang || "ja"),
     image_uris: localizeTopImage && item.images?.normal ? { ...(card.image_uris || {}), normal: item.images.normal } : card.image_uris,
     jpName: displayJaNames[0] || card.jpName,
     jpAltName: displayJaNames[1] || "",
@@ -1107,7 +1113,12 @@ async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards =
     }))
     .filter(entry => !exactMatch || cardNameMatchesExactly(applyJpIndexToCard(entry.card), query))
     .sort((a, b) => (localOrder.get(a.item) ?? 9999) - (localOrder.get(b.item) ?? 9999));
-  return { cards: ordered.map(entry => entry.card).slice(0, maxCards), items: localItems, error: null };
+  const preferJpDisplay = isJapanese(query);
+  return {
+    cards: ordered.map(entry => (preferJpDisplay && entry.item ? { ...entry.card, _preferJpDisplay: true } : entry.card)).slice(0, maxCards),
+    items: localItems,
+    error: null,
+  };
 }
 
 function buildSearchCandidates(query, filters, preferredLang = "", exactMatch = false) {
