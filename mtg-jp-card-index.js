@@ -1,5 +1,21 @@
 window.MTG_JP_CARD_INDEX = [
   {
+    "source": "manual補完",
+    "sourceUrl": "https://www.hareruyamtg.com/ja/products/detail/102226?lang=JP",
+    "setCode": "MID",
+    "collectorNumber": "221",
+    "setNameJa": "イニストラード：真夜中の狩り",
+    "jaNames": [
+      "信仰の繕い"
+    ],
+    "enNames": [
+      "Faithful Mending"
+    ],
+    "scryfallName": "Faithful Mending",
+    "releasedAt": "2021-09-24",
+    "setName": "Innistrad: Midnight Hunt"
+  },
+  {
     "source": "mtg-jp-card-gallery",
     "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000297/533634/",
     "setCode": "TLA",
