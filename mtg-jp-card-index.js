@@ -4,6 +4,8 @@ window.MTG_JP_CARD_INDEX = [
     "sourceUrl": "https://www.hareruyamtg.com/ja/products/detail/102226?lang=JP",
     "setCode": "MID",
     "collectorNumber": "221",
+    "scryfallId": "50752ca9-ea85-4c4b-9bf5-4f8759a7dcec",
+    "oracleId": "b997a982-0b9f-4b43-a606-403b9ddfd7ae",
     "setNameJa": "イニストラード：真夜中の狩り",
     "jaNames": [
       "信仰の繕い"

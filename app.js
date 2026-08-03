@@ -1,4 +1,4 @@
-const APP_VERSION = "v122";
+const APP_VERSION = "v123";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -765,7 +765,8 @@ async function searchCards() {
     if (exactMatch && exactOracleIds.length) {
       els.searchStatus.textContent = "同じカードの日英版を取得中…";
       const unifiedPrints = await fetchUnifiedPrints(exactOracleIds.slice(0, 3), filters);
-      state.searchResults = applyJpIndexToCards(sortUnifiedPrints(unifiedPrints)).slice(0, 24);
+      const unifiedCards = sortUnifiedPrints(unifiedPrints).map(card => sourceLang === "ja" ? { ...card, _preferJpDisplay: true } : card);
+      state.searchResults = applyJpIndexToCards(unifiedCards).slice(0, 24);
     } else {
       els.searchStatus.textContent = "反対言語のカードも検索中…";
       const counterpartCards = await fetchCounterparts(primaryCards, targetLang, filters);
@@ -1293,7 +1294,9 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   let variants = state.variantCache.get(key);
   if (!variants) {
     const prints = card.oracle_id ? await fetchUnifiedPrints([card.oracle_id]) : [card];
-    variants = applyJpIndexToCards(sortUnifiedPrints(prints.length ? prints : [card]));
+    const shouldPreferJpDisplay = Boolean(card._preferJpDisplay);
+    const variantSource = sortUnifiedPrints(prints.length ? prints : [card]).map(item => shouldPreferJpDisplay ? { ...item, _preferJpDisplay: true } : item);
+    variants = applyJpIndexToCards(variantSource);
     state.variantCache.set(key, variants);
   }
   state.cardVariants = variants;
