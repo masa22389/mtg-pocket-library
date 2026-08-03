@@ -1,4 +1,4 @@
-const APP_VERSION = "v124";
+const APP_VERSION = "v125";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -109,12 +109,11 @@ function nameOf(card) { return (prefersJapaneseDisplay(card) ? card.jpName : "")
 function altNameOf(card) { const printed = (prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName; return printed && printed !== card.name ? card.name : ""; }
 function displayLanguageLabel(card) {
   if (isJapaneseCard(card)) return "日本語";
-  if (card?._preferJpDisplay && card?.jpName) return "日本語名";
+  if (card?._preferJpDisplay && card?.jpName) return card?.lang === "en" ? "日本語名 / 英語版" : "日本語名";
   return card?.lang === "en" ? "英語" : "その他";
 }
-function displayLanguageShortLabel(card) {
+function actualLanguageLabel(card) {
   if (isJapaneseCard(card)) return "日";
-  if (card?._preferJpDisplay && card?.jpName) return "日名";
   return card?.lang === "en" ? "英" : "他";
 }
 function isJapanese(text) { return /[\u3040-\u30ff\u3400-\u9fff]/.test(text); }
@@ -953,7 +952,7 @@ function applyJpIndexToCard(card) {
   })) : card.card_faces;
   return {
     ...card,
-    lang: preferJpDisplay ? "ja" : (card.lang || "ja"),
+    lang: card.lang || (localizeDisplay ? "ja" : card.lang),
     image_uris: localizeTopImage && item.images?.normal ? { ...(card.image_uris || {}), normal: item.images.normal } : card.image_uris,
     jpName: displayJaNames[0] || card.jpName,
     jpAltName: displayJaNames[1] || "",
@@ -1468,7 +1467,7 @@ function renderVariantGallery() {
   if (!variants.length) { els.cardVariants.innerHTML = '<span class="muted">該当する収録版がありません</span>'; return; }
   els.cardVariants.innerHTML = variants.map(card => `
     <button type="button" class="variant-option ${card.id === state.selectedCard.id ? "selected" : ""}" data-id="${card.id}" aria-label="${esc(nameOf(card))} ${(card.set || "").toUpperCase()} ${card.collector_number || ""} ${displayLanguageLabel(card)}">
-      <img src="${esc(imageOf(card))}" alt="" loading="lazy"><span>${displayLanguageShortLabel(card)} · ${esc((card.set || "").toUpperCase())}</span>
+      <img src="${esc(imageOf(card))}" alt="" loading="lazy"><span>${actualLanguageLabel(card)} · ${esc((card.set || "").toUpperCase())}</span>
     </button>`).join("");
   els.cardVariants.querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
     const card = state.cardVariants.find(item => item.id === button.dataset.id);
