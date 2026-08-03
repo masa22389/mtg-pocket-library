@@ -1,4 +1,4 @@
-const APP_VERSION = "v125";
+const APP_VERSION = "v126";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -91,6 +91,7 @@ function persist() {
 function uid() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`; }
 function esc(value) { return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;"); }
 function isJapaneseCard(card) { return (card?.lang || card?.language || "") === "ja"; }
+function cardScryfallId(card) { return card?._sourceScryfallId || card?.scryfallId || card?.id || ""; }
 function prefersJapaneseDisplay(card) { return Boolean(card?._preferJpDisplay || isJapaneseCard(card)); }
 function imageOf(card) {
   const canUseLocalizedImage = Boolean(card?._jpImageExact && isJapaneseCard(card));
@@ -108,11 +109,13 @@ function typeOf(card) { return card.printed_type_line || card.printedTypeLine ||
 function nameOf(card) { return (prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName || card.name || "名称不明"; }
 function altNameOf(card) { const printed = (prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName; return printed && printed !== card.name ? card.name : ""; }
 function displayLanguageLabel(card) {
+  if (card?._supplementalJpVariant) return "日本語名 / 英語版画像";
   if (isJapaneseCard(card)) return "日本語";
   if (card?._preferJpDisplay && card?.jpName) return card?.lang === "en" ? "日本語名 / 英語版" : "日本語名";
   return card?.lang === "en" ? "英語" : "その他";
 }
 function actualLanguageLabel(card) {
+  if (card?._supplementalJpVariant) return "日名";
   if (isJapaneseCard(card)) return "日";
   return card?.lang === "en" ? "英" : "他";
 }
@@ -970,6 +973,22 @@ function applyJpIndexToCards(cards) {
   return cards.map(applyJpIndexToCard);
 }
 
+function supplementalJpVariantForCard(card) {
+  const item = jpIndexForCard(card);
+  if (!item || isJapaneseCard(card)) return null;
+  const displayJaNames = displayJaNamesForIndexItem(item);
+  if (!displayJaNames.length) return null;
+  const sourceId = cardScryfallId(card);
+  return applyJpIndexToCard({
+    ...card,
+    id: `${sourceId || item.scryfallId || item.oracleId || item.scryfallName}-jp-name`,
+    lang: "ja",
+    _preferJpDisplay: true,
+    _supplementalJpVariant: true,
+    _sourceScryfallId: sourceId,
+  });
+}
+
 function aliasTargetsForQuery(query, options = {}) {
   const key = normalizeAliasKey(query);
   if (!key) return [];
@@ -1307,6 +1326,10 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
     const shouldPreferJpDisplay = Boolean(card._preferJpDisplay);
     const variantSource = sortUnifiedPrints(prints.length ? prints : [card]).map(item => shouldPreferJpDisplay ? { ...item, _preferJpDisplay: true } : item);
     variants = applyJpIndexToCards(variantSource);
+    if (shouldPreferJpDisplay && !variants.some(isJapaneseCard)) {
+      const supplementalVariant = supplementalJpVariantForCard(card);
+      if (supplementalVariant) variants = [supplementalVariant, ...variants];
+    }
     state.variantCache.set(key, variants);
   }
   state.cardVariants = variants;
@@ -1315,13 +1338,14 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
 }
 
 function selectedOwnedQuantity() {
+  const selectedId = cardScryfallId(state.selectedCard);
   return state.collection
-    .filter(card => card.scryfallId === state.selectedCard?.id)
+    .filter(card => card.scryfallId === selectedId)
     .reduce((sum, card) => sum + Number(card.quantity || 0), 0);
 }
 
 function selectedOwnedCard() {
-  const selectedId = state.selectedCard?.id;
+  const selectedId = cardScryfallId(state.selectedCard);
   if (!selectedId) return null;
   const pinned = state.collection.find(card => card.id === state.selectedOwnedId && card.scryfallId === selectedId);
   return pinned || state.collection.find(card => card.scryfallId === selectedId) || null;
@@ -1477,14 +1501,14 @@ function renderVariantGallery() {
 
 function selectVariant(card) {
   state.selectedCard = card;
-  if (!state.collection.some(item => item.id === state.selectedOwnedId && item.scryfallId === card.id)) state.selectedOwnedId = null;
+  if (!state.collection.some(item => item.id === state.selectedOwnedId && item.scryfallId === cardScryfallId(card))) state.selectedOwnedId = null;
   renderSelectedVariant();
   renderVariantGallery();
 }
 
 function compactCard(card) {
   return {
-    id: uid(), scryfallId: card.id || "", oracleId: card.oracle_id || "", name: card.name || "", printedName: nameOf(card) || card.printed_name || "",
+    id: uid(), scryfallId: cardScryfallId(card), oracleId: card.oracle_id || "", name: card.name || "", printedName: nameOf(card) || card.printed_name || "",
     set: (card.set || "").toUpperCase(), setName: card.set_name || "", collectorNumber: card.collector_number || "",
     typeLine: card.type_line || "", printedTypeLine: card.printed_type_line || "", image: imageOf(card),
     manaCost: card.mana_cost || card.card_faces?.map(face => face.mana_cost).filter(Boolean).join(" // ") || "",
@@ -1498,7 +1522,8 @@ function compactCard(card) {
 
 function saveSelectedCardQuantity() {
   const target = Math.max(0, Number(els.cardQuantity.value || 0));
-  const matching = state.collection.filter(card => card.scryfallId === state.selectedCard.id);
+  const selectedId = cardScryfallId(state.selectedCard);
+  const matching = state.collection.filter(card => card.scryfallId === selectedId);
   const current = matching.reduce((sum, card) => sum + Number(card.quantity || 0), 0);
   if (target > current) {
     const incoming = compactCard(state.selectedCard);
@@ -1962,7 +1987,7 @@ function fillDeckDialog() {
 
 function deckCardSnapshot(card) {
   return {
-    scryfallId: card.scryfallId || card.id || "", oracleId: card.oracleId || card.oracle_id || "",
+    scryfallId: cardScryfallId(card), oracleId: card.oracleId || card.oracle_id || "",
     name: card.name || "", printedName: nameOf(card) || card.printedName || card.printed_name || "",
     set: (card.set || "").toUpperCase(), collectorNumber: card.collectorNumber || card.collector_number || "",
     image: imageOf(card), typeLine: card.typeLine || card.type_line || "",
@@ -2819,7 +2844,7 @@ function addSelectedCardToDeck() {
   const card = state.selectedCard;
   if (!card || !state.editingDeck) return;
   const section = els.deckSection.value;
-  addDeckEntry(`scryfall-${card.id}`, deckCardSnapshot(card), section);
+  addDeckEntry(`scryfall-${cardScryfallId(card)}`, deckCardSnapshot(card), section);
   showInlineStatus(els.cardActionStatus, `${nameOf(card)}を${sectionLabel(section)}に追加しました`);
   showToast("選択したイラストをデッキに追加しました");
 }
