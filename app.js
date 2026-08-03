@@ -1,4 +1,4 @@
-const APP_VERSION = "v123";
+const APP_VERSION = "v124";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -91,6 +91,7 @@ function persist() {
 function uid() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`; }
 function esc(value) { return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;"); }
 function isJapaneseCard(card) { return (card?.lang || card?.language || "") === "ja"; }
+function prefersJapaneseDisplay(card) { return Boolean(card?._preferJpDisplay || isJapaneseCard(card)); }
 function imageOf(card) {
   const canUseLocalizedImage = Boolean(card?._jpImageExact && isJapaneseCard(card));
   const nativeImage = card?.image_uris?.normal || card?.card_faces?.[0]?.image_uris?.normal || card?.image || "";
@@ -104,8 +105,18 @@ function backImageOf(card) {
   return localizedBackImage || nativeBackImage;
 }
 function typeOf(card) { return card.printed_type_line || card.printedTypeLine || card.type_line || card.typeLine || ""; }
-function nameOf(card) { return (isJapaneseCard(card) ? card.jpName : "") || card.printed_name || card.printedName || card.name || "名称不明"; }
-function altNameOf(card) { const printed = (isJapaneseCard(card) ? card.jpName : "") || card.printed_name || card.printedName; return printed && printed !== card.name ? card.name : ""; }
+function nameOf(card) { return (prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName || card.name || "名称不明"; }
+function altNameOf(card) { const printed = (prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName; return printed && printed !== card.name ? card.name : ""; }
+function displayLanguageLabel(card) {
+  if (isJapaneseCard(card)) return "日本語";
+  if (card?._preferJpDisplay && card?.jpName) return "日本語名";
+  return card?.lang === "en" ? "英語" : "その他";
+}
+function displayLanguageShortLabel(card) {
+  if (isJapaneseCard(card)) return "日";
+  if (card?._preferJpDisplay && card?.jpName) return "日名";
+  return card?.lang === "en" ? "英" : "他";
+}
 function isJapanese(text) { return /[\u3040-\u30ff\u3400-\u9fff]/.test(text); }
 function formatYen(value) { return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 }).format(value); }
 function formatDeckDate(value) { return value ? new Date(value).toLocaleDateString("ja-JP") : "-"; }
@@ -1442,7 +1453,7 @@ function moveOwnedCard(cardId, direction, visibleIds = []) {
 function renderSelectedVariant() {
   const card = state.selectedCard;
   const backImage = backImageOf(card);
-  els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images"><img class="card-detail-image" src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${card.lang === "ja" ? "日本語" : "英語"}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
+  els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images"><img class="card-detail-image" src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
   els.cardQuantity.value = selectedOwnedQuantity();
   els.cardLanguage.value = card.lang === "ja" ? "ja" : card.lang === "en" ? "en" : "other";
   updateCardOwnedActions();
@@ -1456,8 +1467,8 @@ function renderVariantGallery() {
   els.variantCount.textContent = lang ? `${variants.length}版` : `${state.cardVariants.length}版（日${jaCount}・英${enCount}）`;
   if (!variants.length) { els.cardVariants.innerHTML = '<span class="muted">該当する収録版がありません</span>'; return; }
   els.cardVariants.innerHTML = variants.map(card => `
-    <button type="button" class="variant-option ${card.id === state.selectedCard.id ? "selected" : ""}" data-id="${card.id}" aria-label="${esc(nameOf(card))} ${(card.set || "").toUpperCase()} ${card.collector_number || ""} ${card.lang === "ja" ? "日本語" : "英語"}">
-      <img src="${esc(imageOf(card))}" alt="" loading="lazy"><span>${card.lang === "ja" ? "日" : "英"} · ${esc((card.set || "").toUpperCase())}</span>
+    <button type="button" class="variant-option ${card.id === state.selectedCard.id ? "selected" : ""}" data-id="${card.id}" aria-label="${esc(nameOf(card))} ${(card.set || "").toUpperCase()} ${card.collector_number || ""} ${displayLanguageLabel(card)}">
+      <img src="${esc(imageOf(card))}" alt="" loading="lazy"><span>${displayLanguageShortLabel(card)} · ${esc((card.set || "").toUpperCase())}</span>
     </button>`).join("");
   els.cardVariants.querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
     const card = state.cardVariants.find(item => item.id === button.dataset.id);
