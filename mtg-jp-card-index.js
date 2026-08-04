@@ -14,6 +14,9 @@ window.MTG_JP_CARD_INDEX = [
       "Faithful Mending"
     ],
     "scryfallName": "Faithful Mending",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/MID/jp/0221.jpg"
+    },
     "releasedAt": "2021-09-24",
     "setName": "Innistrad: Midnight Hunt"
   },

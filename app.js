@@ -1,4 +1,4 @@
-const APP_VERSION = "v126";
+const APP_VERSION = "v127";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -109,8 +109,9 @@ function typeOf(card) { return card.printed_type_line || card.printedTypeLine ||
 function nameOf(card) { return (prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName || card.name || "名称不明"; }
 function altNameOf(card) { const printed = (prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName; return printed && printed !== card.name ? card.name : ""; }
 function displayLanguageLabel(card) {
-  if (card?._supplementalJpVariant) return "日本語名 / 英語版画像";
+  if (card?._supplementalJpVariant) return card?._jpImageExact ? "日本語名 / 日本語画像" : "日本語名 / 英語版画像";
   if (isJapaneseCard(card)) return "日本語";
+  if (card?._preferJpDisplay && card?._jpImageExact) return "日本語名 / 日本語画像";
   if (card?._preferJpDisplay && card?.jpName) return card?.lang === "en" ? "日本語名 / 英語版" : "日本語名";
   return card?.lang === "en" ? "英語" : "その他";
 }
