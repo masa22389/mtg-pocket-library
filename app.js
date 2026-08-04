@@ -1,4 +1,4 @@
-const APP_VERSION = "v127";
+const APP_VERSION = "v128";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -944,7 +944,8 @@ function applyJpIndexToCard(card) {
   const preferJpDisplay = Boolean(card._preferJpDisplay);
   const localizeDisplay = preferJpDisplay || isJapaneseCard(card) || !card.lang;
   const localizeImage = jpIndexImageMatchesCard(item, card);
-  const localizeTopImage = localizeDisplay && localizeImage;
+  const canUseJpImage = isJapaneseCard(card) || Boolean(card._supplementalJpVariant);
+  const localizeTopImage = canUseJpImage && localizeImage;
   const displayJaNames = displayJaNamesForIndexItem(item);
   const faces = Array.isArray(card.card_faces) ? card.card_faces.map((face, index) => ({
     ...face,
