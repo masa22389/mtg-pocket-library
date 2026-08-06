@@ -1,4 +1,4 @@
-const APP_VERSION = "v128";
+const APP_VERSION = "v129";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -599,6 +599,90 @@ function ocrCardNameCandidates(text) {
   return [...new Map(candidates.sort((a, b) => b.score - a.score).map(item => [item.line, item.line])).values()].slice(0, 5);
 }
 
+function normalizedOcrKey(value) {
+  return normalizeAliasKey(value)
+    .replaceAll(/[^\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-z0-9]/gu, "");
+}
+
+function levenshteinDistance(a, b, maxDistance = Infinity) {
+  if (a === b) return 0;
+  if (!a || !b) return Math.max(a.length, b.length);
+  if (Math.abs(a.length - b.length) > maxDistance) return maxDistance + 1;
+  let previous = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= a.length; i += 1) {
+    const current = [i];
+    let rowMin = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      const value = Math.min(previous[j] + 1, current[j - 1] + 1, previous[j - 1] + cost);
+      current[j] = value;
+      rowMin = Math.min(rowMin, value);
+    }
+    if (rowMin > maxDistance) return maxDistance + 1;
+    previous = current;
+  }
+  return previous[b.length];
+}
+
+let OCR_SEARCH_TARGETS = null;
+function ocrSearchTargets() {
+  if (OCR_SEARCH_TARGETS) return OCR_SEARCH_TARGETS;
+  const targets = [];
+  const seen = new Set();
+  JP_CARD_SEARCH_INDEX.forEach(item => {
+    const displayName = displayJaNamesForIndexItem(item)[0] || item.scryfallName || item.enNames?.[0] || "";
+    const searchName = item.scryfallName || item.enNames?.[0] || displayName;
+    jpIndexNames(item).forEach(name => {
+      const cleanName = stripJapaneseReadings(name);
+      const key = normalizedOcrKey(cleanName);
+      if (key.length < 2) return;
+      const id = `${key}:${item.scryfallId || item.oracleId || searchName}`;
+      if (seen.has(id)) return;
+      seen.add(id);
+      targets.push({ key, name: cleanName, displayName, searchName, item });
+    });
+  });
+  OCR_SEARCH_TARGETS = targets;
+  return targets;
+}
+
+function scoreOcrTarget(candidateKey, targetKey) {
+  if (!candidateKey || !targetKey) return 0;
+  if (candidateKey === targetKey) return 1000;
+  if (candidateKey.length >= 2 && targetKey.includes(candidateKey)) return 850 + Math.min(candidateKey.length, 20);
+  if (targetKey.length >= 4 && candidateKey.includes(targetKey)) return 780 + Math.min(targetKey.length, 20);
+  if (candidateKey.length < 4 || targetKey.length < 4) return 0;
+  if (candidateKey[0] !== targetKey[0] && candidateKey.at(-1) !== targetKey.at(-1)) return 0;
+  const maxLen = Math.max(candidateKey.length, targetKey.length);
+  const maxDistance = Math.max(2, Math.floor(maxLen * 0.35));
+  const distance = levenshteinDistance(candidateKey, targetKey, maxDistance);
+  if (distance > maxDistance) return 0;
+  return Math.round((1 - (distance / maxLen)) * 700);
+}
+
+function ocrDbMatches(candidates, limit = 5) {
+  const scored = [];
+  const targets = ocrSearchTargets();
+  candidates.forEach((candidate, candidateIndex) => {
+    const candidateKey = normalizedOcrKey(candidate);
+    if (candidateKey.length < 2) return;
+    targets.forEach(target => {
+      const score = scoreOcrTarget(candidateKey, target.key) - candidateIndex * 10;
+      if (score < 520) return;
+      scored.push({ ...target, score, ocrText: candidate });
+    });
+  });
+  const unique = [];
+  const seen = new Set();
+  scored.sort((a, b) => b.score - a.score).forEach(item => {
+    const key = item.item?.oracleId || item.item?.scryfallName || item.searchName;
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    unique.push(item);
+  });
+  return unique.slice(0, limit);
+}
+
 function loadImageFromFile(file) {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
@@ -746,8 +830,16 @@ async function readCardNameFromImage(file) {
       setOcrStatus("カード名を読み取れませんでした。カード名部分が大きく写るように撮り直してください");
       return;
     }
-    els.cardSearch.value = candidates[0];
-    setOcrStatus(`読み取り候補: ${candidates.join(" / ")}。先頭候補で検索します`);
+    const dbMatches = ocrDbMatches(candidates);
+    const bestMatch = dbMatches[0];
+    if (bestMatch) {
+      els.cardSearch.value = bestMatch.searchName;
+      const matchLabels = dbMatches.map(item => item.displayName || item.searchName).filter(Boolean);
+      setOcrStatus(`読み取り候補: ${candidates.join(" / ")} → DB補正: ${matchLabels.join(" / ")}。先頭候補で検索します`);
+    } else {
+      els.cardSearch.value = candidates[0];
+      setOcrStatus(`読み取り候補: ${candidates.join(" / ")}。DB候補が弱いため、先頭候補で検索します`);
+    }
     await searchCards();
   } catch (error) {
     console.error(error);
