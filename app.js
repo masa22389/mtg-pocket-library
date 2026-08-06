@@ -1,4 +1,4 @@
-const APP_VERSION = "v129";
+const APP_VERSION = "v130";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -604,6 +604,33 @@ function normalizedOcrKey(value) {
     .replaceAll(/[^\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-z0-9]/gu, "");
 }
 
+function ocrCandidateKeys(candidate) {
+  const text = String(candidate || "").normalize("NFKC");
+  const keys = new Set();
+  const fullKey = normalizedOcrKey(text);
+  if (fullKey.length >= 2) keys.add(fullKey);
+
+  const japaneseOnly = text
+    .replaceAll(/[^\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]/gu, "")
+    .replaceAll(/ー{2,}/g, "ー");
+  const japaneseKey = normalizedOcrKey(japaneseOnly);
+  if (japaneseKey.length >= 2) keys.add(japaneseKey);
+
+  const japaneseChunks = text.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]{2,}/gu) || [];
+  japaneseChunks.forEach(chunk => {
+    const key = normalizedOcrKey(chunk);
+    if (key.length >= 3) keys.add(key);
+  });
+
+  const latinChunks = text.match(/[A-Za-z][A-Za-z'’\- ]{3,}/g) || [];
+  latinChunks.forEach(chunk => {
+    const key = normalizedOcrKey(chunk);
+    if (key.length >= 4) keys.add(key);
+  });
+
+  return [...keys].sort((a, b) => b.length - a.length);
+}
+
 function levenshteinDistance(a, b, maxDistance = Infinity) {
   if (a === b) return 0;
   if (!a || !b) return Math.max(a.length, b.length);
@@ -664,12 +691,14 @@ function ocrDbMatches(candidates, limit = 5) {
   const scored = [];
   const targets = ocrSearchTargets();
   candidates.forEach((candidate, candidateIndex) => {
-    const candidateKey = normalizedOcrKey(candidate);
-    if (candidateKey.length < 2) return;
-    targets.forEach(target => {
-      const score = scoreOcrTarget(candidateKey, target.key) - candidateIndex * 10;
-      if (score < 520) return;
-      scored.push({ ...target, score, ocrText: candidate });
+    const candidateKeys = ocrCandidateKeys(candidate);
+    candidateKeys.forEach((candidateKey, keyIndex) => {
+      if (candidateKey.length < 2) return;
+      targets.forEach(target => {
+        const score = scoreOcrTarget(candidateKey, target.key) - candidateIndex * 10 - keyIndex * 3;
+        if (score < 520) return;
+        scored.push({ ...target, score, ocrText: candidate, matchedKey: candidateKey });
+      });
     });
   });
   const unique = [];
@@ -833,9 +862,11 @@ async function readCardNameFromImage(file) {
     const dbMatches = ocrDbMatches(candidates);
     const bestMatch = dbMatches[0];
     if (bestMatch) {
-      els.cardSearch.value = bestMatch.searchName;
+      const nearMatches = dbMatches.filter(item => item.score >= bestMatch.score - 8 && item.matchedKey === bestMatch.matchedKey);
+      const useFragmentSearch = isJapanese(bestMatch.matchedKey) && nearMatches.length >= 2;
+      els.cardSearch.value = useFragmentSearch ? bestMatch.matchedKey : bestMatch.searchName;
       const matchLabels = dbMatches.map(item => item.displayName || item.searchName).filter(Boolean);
-      setOcrStatus(`読み取り候補: ${candidates.join(" / ")} → DB補正: ${matchLabels.join(" / ")}。先頭候補で検索します`);
+      setOcrStatus(`読み取り候補: ${candidates.join(" / ")} → DB補正: ${matchLabels.join(" / ")}。${useFragmentSearch ? `断片「${bestMatch.matchedKey}」` : "先頭候補"}で検索します`);
     } else {
       els.cardSearch.value = candidates[0];
       setOcrStatus(`読み取り候補: ${candidates.join(" / ")}。DB候補が弱いため、先頭候補で検索します`);
