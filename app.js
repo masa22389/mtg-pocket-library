@@ -1,4 +1,4 @@
-const APP_VERSION = "v130";
+const APP_VERSION = "v131";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -601,6 +601,7 @@ function ocrCardNameCandidates(text) {
 
 function normalizedOcrKey(value) {
   return normalizeAliasKey(value)
+    .replaceAll(/ー/g, "")
     .replaceAll(/[^\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-z0-9]/gu, "");
 }
 
@@ -710,6 +711,39 @@ function ocrDbMatches(candidates, limit = 5) {
     unique.push(item);
   });
   return unique.slice(0, limit);
+}
+
+function displayFragmentForOcrKey(matchedKey, matches) {
+  if (!matchedKey || !isJapanese(matchedKey)) return "";
+  const candidates = [];
+  matches.forEach(match => {
+    const names = [
+      match.name,
+      match.displayName,
+      ...(match.item?.jaNames || []),
+      ...(match.item?.jpNames || []),
+    ].filter(Boolean);
+    names.forEach(name => {
+      const cleanName = stripJapaneseReadings(name);
+      for (let start = 0; start < cleanName.length; start += 1) {
+        for (let end = start + 2; end <= cleanName.length; end += 1) {
+          const fragment = cleanName.slice(start, end).replace(/^[、，・\s/]+|[、，・\s/]+$/g, "");
+          if (fragment.length < 2 || !isJapanese(fragment)) continue;
+          if (normalizedOcrKey(fragment) !== matchedKey) continue;
+          candidates.push(fragment);
+        }
+      }
+    });
+  });
+  if (!candidates.length) return "";
+  return candidates
+    .sort((a, b) => {
+      const aHasLongMark = a.includes("ー") ? 1 : 0;
+      const bHasLongMark = b.includes("ー") ? 1 : 0;
+      if (aHasLongMark !== bHasLongMark) return bHasLongMark - aHasLongMark;
+      if (a.length !== b.length) return a.length - b.length;
+      return a.localeCompare(b, "ja");
+    })[0];
 }
 
 function loadImageFromFile(file) {
@@ -864,9 +898,11 @@ async function readCardNameFromImage(file) {
     if (bestMatch) {
       const nearMatches = dbMatches.filter(item => item.score >= bestMatch.score - 8 && item.matchedKey === bestMatch.matchedKey);
       const useFragmentSearch = isJapanese(bestMatch.matchedKey) && nearMatches.length >= 2;
-      els.cardSearch.value = useFragmentSearch ? bestMatch.matchedKey : bestMatch.searchName;
+      const displayFragment = useFragmentSearch ? displayFragmentForOcrKey(bestMatch.matchedKey, nearMatches) : "";
+      const searchText = displayFragment || bestMatch.matchedKey;
+      els.cardSearch.value = useFragmentSearch ? searchText : bestMatch.searchName;
       const matchLabels = dbMatches.map(item => item.displayName || item.searchName).filter(Boolean);
-      setOcrStatus(`読み取り候補: ${candidates.join(" / ")} → DB補正: ${matchLabels.join(" / ")}。${useFragmentSearch ? `断片「${bestMatch.matchedKey}」` : "先頭候補"}で検索します`);
+      setOcrStatus(`読み取り候補: ${candidates.join(" / ")} → DB補正: ${matchLabels.join(" / ")}。${useFragmentSearch ? `断片「${searchText}」` : "先頭候補"}で検索します`);
     } else {
       els.cardSearch.value = candidates[0];
       setOcrStatus(`読み取り候補: ${candidates.join(" / ")}。DB候補が弱いため、先頭候補で検索します`);
