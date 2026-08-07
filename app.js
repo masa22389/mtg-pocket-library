@@ -1,4 +1,4 @@
-const APP_VERSION = "v138";
+const APP_VERSION = "v139";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -2518,7 +2518,7 @@ function renderDeckSection(section, entries, emptyText = "") {
         const dragging = deckDragState?.dragging && deckDragState.cardId === entry.cardId && deckDragState.section === entry.section;
         const classes = ["deck-content-card", missing ? "missing-card" : "", dragging ? "deck-dragging-card" : ""].filter(Boolean).join(" ");
         const cardName = card ? nameOf(card) : "削除済みカード";
-        return `<button type="button" class="${classes}" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img src="${esc(card?.image || "")}" alt="" loading="lazy"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
+        return `<button type="button" class="${classes}" draggable="true" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img src="${esc(card?.image || "")}" alt="" loading="lazy"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
       }).join("")}
     </div>` : `<div class="deck-section-empty">${esc(emptyText || `${label}にカードがありません`)}</div>`;
   return `<section class="deck-section deck-section-${esc(section)}"><div class="deck-section-title"><span>${esc(label)}</span><b>${count}枚</b></div>${content}</section>`;
@@ -2618,6 +2618,40 @@ function attachDeckContentCardHandlers(button) {
     if (!deckDragState?.dragging) return;
     event.preventDefault();
   });
+  button.addEventListener("dragstart", event => {
+    deckDragState = {
+      button,
+      cardId: button.dataset.cardId,
+      section: button.dataset.section,
+      startX: event.clientX,
+      startY: event.clientY,
+      pointerId: null,
+      dragging: true,
+      timer: null,
+    };
+    suppressNextDeckCardClick = true;
+    document.body.classList.add("deck-dragging");
+    button.classList.add("deck-dragging-card");
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", `${button.dataset.section}:${button.dataset.cardId}`);
+  });
+  button.addEventListener("dragover", event => {
+    if (!deckDragState?.dragging) return;
+    if (button.dataset.section !== deckDragState.section || button.dataset.cardId === deckDragState.cardId) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  });
+  button.addEventListener("drop", event => {
+    if (!deckDragState?.dragging) return;
+    event.preventDefault();
+    if (button.dataset.section !== deckDragState.section || button.dataset.cardId === deckDragState.cardId) return;
+    if (reorderDeckEntryWithinSection(deckDragState.section, deckDragState.cardId, button.dataset.cardId)) {
+      autoSaveEditingDeck();
+      renderDeckEditor();
+    }
+    endDeckDrag();
+  });
+  button.addEventListener("dragend", endDeckDrag);
 }
 
 function deckVisualTypeGroup(card) {
