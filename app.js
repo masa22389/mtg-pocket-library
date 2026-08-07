@@ -1,4 +1,4 @@
-const APP_VERSION = "v134";
+const APP_VERSION = "v135";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -2609,6 +2609,9 @@ function renderDeckOwnedAddDialog() {
   els.deckCandidates.querySelectorAll("[data-owned-add-section]").forEach(button => {
     button.addEventListener("click", () => addOwnedToDeck(button.dataset.id, button.dataset.ownedAddSection));
   });
+  els.deckCandidates.querySelectorAll(".deck-owned-choice").forEach(button => {
+    button.addEventListener("click", () => openOwnedDeckCardEditor(button.dataset.id));
+  });
   if (keepScroll) requestAnimationFrame(() => {
     if (dialogForm) dialogForm.scrollTop = dialogScrollTop;
   });
@@ -2666,7 +2669,9 @@ function deckEntryForCurrentCardSection(section) {
 
 function currentDeckCardTemplate() {
   const entry = currentDeckEntry() || deckEntriesForCurrentCard()[0];
-  return entry ? { cardId: entry.cardId, card: entry.card || cardForDeckEntry(entry) } : null;
+  if (entry) return { cardId: entry.cardId, card: entry.card || cardForDeckEntry(entry) };
+  if (state.editingDeckEntry?.draftCard) return { cardId: state.editingDeckEntry.cardId, card: state.editingDeckEntry.draftCard };
+  return null;
 }
 
 function openDeckEntryEditor(cardId, section) {
@@ -2675,9 +2680,21 @@ function openDeckEntryEditor(cardId, section) {
   els.deckEntryDialog.showModal();
 }
 
+function openOwnedDeckCardEditor(cardId) {
+  const existing = state.editingDeck.entries.find(entry => entry.cardId === cardId);
+  const owned = state.collection.find(card => card.id === cardId);
+  if (!existing && !owned) return;
+  state.editingDeckEntry = existing
+    ? { cardId: existing.cardId, section: existing.section }
+    : { cardId, section: "main", draftCard: deckCardSnapshot(owned) };
+  if (els.deckOwnedAddDialog.open) els.deckOwnedAddDialog.close();
+  renderDeckEntryEditor();
+  els.deckEntryDialog.showModal();
+}
+
 function deckEntryCurrentCard() {
   const entry = currentDeckEntry() || deckEntriesForCurrentCard()[0];
-  return entry ? cardForDeckEntry(entry) : null;
+  return entry ? cardForDeckEntry(entry) : state.editingDeckEntry?.draftCard || null;
 }
 
 function deckEntryCurrentScryfallId() {
@@ -2785,10 +2802,12 @@ function replaceDeckEntryVariant(card) {
 
 function renderDeckEntryEditor() {
   const entry = currentDeckEntry() || deckEntriesForCurrentCard()[0];
-  if (!entry) { els.deckEntryDialog.close(); return; }
-  state.editingDeckEntry = { cardId: entry.cardId, section: entry.section };
-  const card = cardForDeckEntry(entry);
-  const owned = ownedQuantityForEntry(entry);
+  const template = currentDeckCardTemplate();
+  if (!entry && !template) { els.deckEntryDialog.close(); return; }
+  if (entry) state.editingDeckEntry = { cardId: entry.cardId, section: entry.section };
+  const activeCardId = entry?.cardId || template.cardId;
+  const card = entry ? cardForDeckEntry(entry) : template.card;
+  const owned = entry ? ownedQuantityForEntry(entry) : Number(state.collection.find(item => item.id === activeCardId)?.quantity || 0);
   const deckTotalForCard = deckEntriesForCurrentCard().filter(item => isDeckBuildSection(item.section)).reduce((sum, item) => sum + Number(item.quantity || 0), 0);
   els.deckEntryImage.src = card?.image || "";
   els.deckEntryImage.alt = card ? nameOf(card) : "削除済みカード";
@@ -2796,16 +2815,16 @@ function renderDeckEntryEditor() {
   els.deckEntryName.textContent = card ? nameOf(card) : "削除済みカード";
   els.deckEntryOwned.textContent = `所持 ${owned}枚・デッキ ${deckTotalForCard}枚${deckTotalForCard > owned ? `・${deckTotalForCard - owned}枚不足` : "・不足なし"}`;
   syncCommanderOptions();
-  els.deckEntrySection.value = entry.section;
-  els.deckEntryQuantity.value = entry.quantity;
+  els.deckEntrySection.value = entry?.section || state.editingDeckEntry?.section || "main";
+  els.deckEntryQuantity.value = entry?.quantity || 0;
   els.mainDeckEntryQuantity.value = deckEntryForCurrentCardSection("main")?.quantity || 0;
   els.sideDeckEntryQuantity.value = deckEntryForCurrentCardSection("side")?.quantity || 0;
   els.commanderDeckEntryQuantity.value = deckEntryForCurrentCardSection("commander")?.quantity || 0;
   els.maybeDeckEntryQuantity.value = deckEntryForCurrentCardSection("maybe")?.quantity || 0;
   const commanderRow = document.querySelector('[data-section-row="commander"]');
   if (commanderRow) commanderRow.hidden = !isCommanderDeck();
-  const sectionEntries = state.editingDeck.entries.filter(item => item.section === entry.section);
-  const sectionIndex = sectionEntries.findIndex(item => item === entry);
+  const sectionEntries = entry ? state.editingDeck.entries.filter(item => item.section === entry.section) : [];
+  const sectionIndex = entry ? sectionEntries.findIndex(item => item === entry) : -1;
   els.moveDeckEntryUp.disabled = sectionIndex <= 0;
   els.moveDeckEntryDown.disabled = sectionIndex < 0 || sectionIndex >= sectionEntries.length - 1;
 }
@@ -2900,10 +2919,10 @@ function setDeckEntrySectionQuantity(section, quantity) {
   }
   const remaining = state.editingDeck.entries.filter(item => item.cardId === template.cardId);
   const active = remaining.find(item => item.section === section) || remaining[0] || null;
-  state.editingDeckEntry = active ? { cardId: template.cardId, section: active.section } : null;
+  state.editingDeckEntry = active ? { cardId: template.cardId, section: active.section } : { cardId: template.cardId, section, draftCard: template.card };
   autoSaveEditingDeck();
   renderDeckEditor();
-  if (state.editingDeckEntry) renderDeckEntryEditor(); else els.deckEntryDialog.close();
+  renderDeckEntryEditor();
 }
 
 function adjustDeckEntrySectionQuantity(section, delta) {
