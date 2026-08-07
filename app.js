@@ -1,4 +1,4 @@
-const APP_VERSION = "v133";
+const APP_VERSION = "v134";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -31,7 +31,8 @@ const els = {
   searchButton: $("#searchButton"), searchStatus: $("#searchStatus"), searchResults: $("#searchResults"),
   ocrCameraInput: $("#ocrCameraInput"), ocrFileInput: $("#ocrFileInput"), ocrStatus: $("#ocrStatus"),
   searchMatch: $("#searchMatch"), searchColor: $("#searchColor"), searchMana: $("#searchMana"), searchType: $("#searchType"), searchSet: $("#searchSet"), searchSetIncludeExtras: $("#searchSetIncludeExtras"), clearSearchFilters: $("#clearSearchFilters"),
-  collectionFilter: $("#collectionFilter"), collectionViewMode: $("#collectionViewMode"), collectionColor: $("#collectionColor"),
+  collectionFilter: $("#collectionFilter"), collectionViewMode: $("#collectionViewMode"), openCollectionAdvanced: $("#openCollectionAdvanced"),
+  collectionFilterDialog: $("#collectionFilterDialog"), closeCollectionAdvanced: $("#closeCollectionAdvanced"), collectionFilterSummary: $("#collectionFilterSummary"), collectionColor: $("#collectionColor"),
   collectionMana: $("#collectionMana"), collectionType: $("#collectionType"), collectionPriceFilter: $("#collectionPriceFilter"),
   collectionFavoritesOnly: $("#collectionFavoritesOnly"),
   sortCollectionByName: $("#sortCollectionByName"), sortCollectionByColor: $("#sortCollectionByColor"),
@@ -410,6 +411,26 @@ function updateAdvancedSearchSummary() {
   if (els.searchMana?.value) chips.push(`マナ:${els.searchMana.value}`);
   if ($("#searchRarity")?.value) chips.push(`レア:${$("#searchRarity").selectedOptions[0]?.textContent}`);
   summary.textContent = chips.length ? `詳細条件：${chips.join(" / ")}` : "詳細条件：指定なし";
+}
+
+function selectedOptionText(select) {
+  if (!select || !select.value) return "";
+  return select.options[select.selectedIndex]?.textContent?.trim() || select.value;
+}
+
+function updateCollectionFilterSummary() {
+  if (!els.collectionFilterSummary) return;
+  const chips = [];
+  const color = selectedOptionText(els.collectionColor);
+  const mana = selectedOptionText(els.collectionMana);
+  const type = selectedOptionText(els.collectionType);
+  const price = selectedOptionText(els.collectionPriceFilter);
+  if (color) chips.push(`色:${color}`);
+  if (mana) chips.push(`マナ:${mana}`);
+  if (type) chips.push(`タイプ:${type}`);
+  if (price) chips.push(`価格:${price}`);
+  if (els.collectionFavoritesOnly?.checked) chips.push("お気に入りのみ");
+  els.collectionFilterSummary.textContent = chips.length ? `詳細条件：${chips.join(" / ")}` : "詳細条件：指定なし";
 }
 
 function initAdvancedSearchUi() {
@@ -1738,6 +1759,7 @@ function renderCollection() {
   });
   cards = sortedCollectionCards(cards);
   updateCollectionSortUi();
+  updateCollectionFilterSummary();
   els.totalCards.textContent = state.collection.reduce((sum, card) => sum + Number(card.quantity), 0);
   els.uniqueCards.textContent = state.collection.length;
   const valuedCards = state.collection.map(yenValueOf).filter(value => value != null);
@@ -3197,6 +3219,11 @@ els.clearSearchFilters.addEventListener("click", () => {
   updateAdvancedSearchSummary();
 });
 els.collectionFilter.addEventListener("input", renderCollection);
+els.openCollectionAdvanced?.addEventListener("click", () => {
+  updateCollectionFilterSummary();
+  els.collectionFilterDialog?.showModal();
+});
+els.closeCollectionAdvanced?.addEventListener("click", () => els.collectionFilterDialog?.close());
 els.collectionViewMode.value = state.collectionViewMode;
 els.collectionViewMode.addEventListener("change", () => {
   state.collectionViewMode = els.collectionViewMode.value;
@@ -3206,7 +3233,7 @@ els.collectionViewMode.addEventListener("change", () => {
 [els.collectionColor, els.collectionMana, els.collectionType, els.collectionPriceFilter].forEach(filter => filter.addEventListener("change", renderCollection));
 els.collectionFavoritesOnly.addEventListener("change", renderCollection);
 els.clearCollectionFilters.addEventListener("click", () => {
-  els.collectionFilter.value = ""; els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; els.collectionFavoritesOnly.checked = false; renderCollection();
+  els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; els.collectionFavoritesOnly.checked = false; renderCollection();
 });
 els.sortCollectionByName.addEventListener("click", () => applyCollectionSort("name"));
 els.sortCollectionByColor.addEventListener("click", () => applyCollectionSort("color"));

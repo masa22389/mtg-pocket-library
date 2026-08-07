@@ -3,7 +3,7 @@
   "short_name": "MTG Pocket",
   "description": "日本語検索に対応したMTG所持カード・デッキ管理アプリ",
   "lang": "ja",
-  "start_url": "./?v=133",
+  "start_url": "./?v=134",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",

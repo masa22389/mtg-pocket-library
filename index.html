@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=133">
+  <link rel="stylesheet" href="styles.css?v=134">
 </head>
 <body>
   <header class="app-header">
@@ -53,8 +53,14 @@
         <div class="collection-toolbar">
           <label>表示<select id="collectionViewMode"><option value="hidden">非表示</option><option value="detail">詳細表示</option><option value="images">イラスト表示</option></select></label>
           <input id="collectionFilter" class="small-search" type="search" placeholder="絞り込み">
+          <button id="openCollectionAdvanced" class="compact ghost" type="button">詳細設定</button>
         </div>
       </section>
+      <p id="collectionFilterSummary" class="advanced-search-summary collection-filter-summary">詳細条件：指定なし</p>
+      <dialog id="collectionFilterDialog" class="advanced-search-dialog">
+        <form method="dialog" class="dialog-card collection-filter-dialog">
+          <button id="closeCollectionAdvanced" class="dialog-close" type="button" aria-label="閉じる">×</button>
+          <h2>コレクション詳細設定</h2>
       <section class="collection-filters" aria-label="コレクションの詳細フィルター">
         <label>色（固有色）<select id="collectionColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
         <label>マナ総量<select id="collectionMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label>
@@ -63,6 +69,8 @@
         <label class="favorite-filter"><input id="collectionFavoritesOnly" type="checkbox"><span>★ お気に入りのみ</span></label>
         <button id="clearCollectionFilters" class="filter-reset" type="button">条件をクリア</button>
       </section>
+        </form>
+      </dialog>
       <section class="collection-sort-panel" aria-label="コレクションの並び替え">
         <span id="collectionSortStatus">ソートなし</span>
         <div class="collection-sort-buttons">
@@ -258,8 +266,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=133" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=133" defer></script>
-  <script src="app.js?v=133" defer></script>
+  <script src="mtg-jp-card-index.js?v=134" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=134" defer></script>
+  <script src="app.js?v=134" defer></script>
 </body>
 </html>
