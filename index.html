@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=131">
+  <link rel="stylesheet" href="styles.css?v=132">
 </head>
 <body>
   <header class="app-header">
@@ -30,11 +30,11 @@
       <section class="card search-card">
         <label for="cardSearch">カードを日本語・英語で検索</label>
         <div class="search-row"><input id="cardSearch" type="search" enterkeyhint="search" placeholder="例：稲妻 / Lightning Bolt"><button id="searchButton">検索</button></div>
-        <div class="ocr-actions" aria-label="画像からカード名を読み取る">
-          <label class="ocr-button">写真を撮る<input id="ocrCameraInput" type="file" accept="image/*" capture="environment"></label>
-          <label class="ocr-button ghost">画像を選択<input id="ocrFileInput" type="file" accept="image/*"></label>
+        <div class="ocr-actions hidden" aria-label="画像からカード名を読み取る">
+          <label class="ocr-button">写真を撮る<input id="ocrCameraInput" type="file" accept="image/*" capture="environment" disabled></label>
+          <label class="ocr-button ghost">画像を選択<input id="ocrFileInput" type="file" accept="image/*" disabled></label>
         </div>
-        <p id="ocrStatus" class="muted ocr-status"></p>
+        <p id="ocrStatus" class="muted ocr-status hidden"></p>
         <div class="search-filters" aria-label="カード検索条件">
           <label>名前の一致<select id="searchMatch"><option value="partial">部分一致</option><option value="exact">完全一致</option></select></label>
           <label>色（固有色）<select id="searchColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
@@ -258,8 +258,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=131" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=131" defer></script>
-  <script src="app.js?v=131" defer></script>
+  <script src="mtg-jp-card-index.js?v=132" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=132" defer></script>
+  <script src="app.js?v=132" defer></script>
 </body>
 </html>

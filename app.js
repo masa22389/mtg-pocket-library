@@ -1,4 +1,4 @@
-const APP_VERSION = "v131";
+const APP_VERSION = "v132";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -3178,10 +3178,12 @@ els.searchButton.addEventListener("click", searchCards);
 els.cardSearch.addEventListener("keydown", event => { if (event.key === "Enter") searchCards(); });
 els.searchSet.addEventListener("keydown", event => { if (event.key === "Enter") searchCards(); });
 els.ocrCameraInput?.addEventListener("change", async event => {
+  if (event.target.disabled) return;
   await readCardNameFromImage(event.target.files?.[0]);
   event.target.value = "";
 });
 els.ocrFileInput?.addEventListener("change", async event => {
+  if (event.target.disabled) return;
   await readCardNameFromImage(event.target.files?.[0]);
   event.target.value = "";
 });
