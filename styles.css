@@ -54,3 +54,4 @@ dialog{border:0;border-radius:22px;padding:0;width:min(94vw,620px);max-height:88
 #deckOwnedAddDialog .deck-add-heading{padding-right:44px}
 #deckOwnedAddDialog .deck-owned-list{display:grid!important;gap:8px!important;flex:none!important;min-height:0!important;max-height:none!important;overflow:visible!important;overflow-y:visible!important;padding-right:0!important;-webkit-overflow-scrolling:auto!important;overscroll-behavior:auto!important}
 #deckOwnedAddDialog .advanced-search-summary{margin-top:0;padding:7px 9px}
+.hidden{display:none!important}
