@@ -1,4 +1,4 @@
-const APP_VERSION = "v137";
+const APP_VERSION = "v138";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -2559,7 +2559,7 @@ function handleDeckDragMove(event) {
   const dx = event.clientX - deckDragState.startX;
   const dy = event.clientY - deckDragState.startY;
   if (!deckDragState.dragging) {
-    if (Math.hypot(dx, dy) > 10) endDeckDrag();
+    if (Math.hypot(dx, dy) > 18) endDeckDrag();
     return;
   }
   event.preventDefault();
@@ -2577,6 +2577,7 @@ function startDeckDrag(button, event) {
   document.body.classList.add("deck-dragging");
   button.classList.add("deck-dragging-card");
   button.setPointerCapture?.(event.pointerId);
+  showToast("カードを動かして並び替え");
   document.addEventListener("pointermove", handleDeckDragMove, { passive: false });
   document.addEventListener("pointerup", endDeckDrag, { once: true });
   document.addEventListener("pointercancel", endDeckDrag, { once: true });
@@ -2593,6 +2594,7 @@ function attachDeckContentCardHandlers(button) {
   button.addEventListener("pointerdown", event => {
     if (event.button && event.button !== 0) return;
     endDeckDrag();
+    button.setPointerCapture?.(event.pointerId);
     deckDragState = {
       button,
       cardId: button.dataset.cardId,
@@ -2601,7 +2603,7 @@ function attachDeckContentCardHandlers(button) {
       startY: event.clientY,
       pointerId: event.pointerId,
       dragging: false,
-      timer: window.setTimeout(() => startDeckDrag(button, event), 450),
+      timer: window.setTimeout(() => startDeckDrag(button, event), 300),
     };
   });
   button.addEventListener("pointermove", event => {
@@ -2611,6 +2613,10 @@ function attachDeckContentCardHandlers(button) {
   button.addEventListener("pointercancel", endDeckDrag);
   button.addEventListener("lostpointercapture", () => {
     if (!deckDragState?.dragging) endDeckDrag();
+  });
+  button.addEventListener("contextmenu", event => {
+    if (!deckDragState?.dragging) return;
+    event.preventDefault();
   });
 }
 
