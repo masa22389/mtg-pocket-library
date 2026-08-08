@@ -1,4 +1,4 @@
-const APP_VERSION = "v143";
+const APP_VERSION = "v144";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -2903,6 +2903,60 @@ function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 2) {
   lines.slice(0, maxLines).forEach((part, index) => ctx.fillText(part, x, y + index * lineHeight));
 }
 
+function downloadTextFile(content, fileName, type) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function deckVisualSvgText(deck, sectionLayouts, canvasW, canvasH, cardW, cardH, gap, margin, titleH, typeHeadH, captionH) {
+  const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
+  const parts = [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasW}" height="${canvasH}" viewBox="0 0 ${canvasW} ${canvasH}">`,
+    `<rect width="100%" height="100%" fill="#f7f3ea"/>`,
+    `<linearGradient id="head" x1="0" x2="1"><stop offset="0" stop-color="#123f35"/><stop offset="1" stop-color="#d6b254"/></linearGradient>`,
+    `<rect width="${canvasW}" height="${titleH + 22}" fill="url(#head)"/>`,
+    `<text x="${margin}" y="62" fill="#fff" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="42" font-weight="700">${esc(deck.name || "MTG Pocket Library Deck")}</text>`,
+    `<text x="${margin}" y="94" fill="#fff" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="22" font-weight="600">${esc(deck.format || "")} / ${total} cards</text>`,
+  ];
+  sectionLayouts.forEach(section => {
+    parts.push(`<rect x="${margin - 18}" y="${section.y}" width="${canvasW - margin * 2 + 36}" height="${section.height}" rx="24" fill="#fff"/>`);
+    const sectionTotal = section.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
+    parts.push(`<text x="${margin}" y="${section.y + 34}" fill="#123f35" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="30" font-weight="800">${esc(section.title)} ${sectionTotal}</text>`);
+    let y = section.y + 46;
+    section.groupLayouts.forEach(group => {
+      const groupTotal = group.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
+      parts.push(`<rect x="${margin - 4}" y="${y}" width="${canvasW - margin * 2 + 8}" height="34" rx="12" fill="#e9f1ed"/>`);
+      parts.push(`<text x="${margin + 10}" y="${y + 23}" fill="#123f35" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="20" font-weight="800">${esc(group.label)} ${groupTotal}</text>`);
+      y += typeHeadH + 12;
+      group.entries.forEach((entry, index) => {
+        const col = index % Math.max(1, Math.floor((canvasW - margin * 2 + gap) / (cardW + gap)));
+        const row = Math.floor(index / Math.max(1, Math.floor((canvasW - margin * 2 + gap) / (cardW + gap))));
+        const x = margin + col * (cardW + gap);
+        const cardY = y + row * (cardH + captionH + gap);
+        const card = cardForDeckEntry(entry);
+        const src = card?.image || imageOf(card);
+        parts.push(`<rect x="${x}" y="${cardY}" width="${cardW}" height="${cardH}" rx="12" fill="#d9dedb"/>`);
+        if (src) parts.push(`<image href="${esc(src)}" x="${x}" y="${cardY}" width="${cardW}" height="${cardH}" preserveAspectRatio="xMidYMid slice"/>`);
+        parts.push(`<rect x="${x}" y="${cardY}" width="${cardW}" height="${cardH}" rx="12" fill="none" stroke="#fff" stroke-width="4"/>`);
+        parts.push(`<rect x="${x + 8}" y="${cardY + 8}" width="48" height="34" rx="17" fill="#123f35"/>`);
+        parts.push(`<text x="${x + 32}" y="${cardY + 31}" text-anchor="middle" fill="#fff" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="18" font-weight="800">×${Number(entry.quantity || 0)}</text>`);
+        const title = esc(nameOf(card));
+        parts.push(`<text x="${x}" y="${cardY + cardH + 24}" fill="#1e2926" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="19" font-weight="700">${title.length > 24 ? `${title.slice(0, 24)}...` : title}</text>`);
+      });
+      y += group.rows * (cardH + captionH + gap) + 10;
+    });
+  });
+  parts.push("</svg>");
+  return parts.join("");
+}
+
 async function downloadDeckVisualImage() {
   const deck = state.editingDeck;
   if (!deck) return;
@@ -2944,14 +2998,24 @@ async function downloadDeckVisualImage() {
       canvasH += height + 30;
     });
     canvasH = Math.max(900, canvasH + margin);
+    const svgText = deckVisualSvgText(deck, sectionLayouts, canvasW, canvasH, cardW, cardH, gap, margin, titleH, typeHeadH, captionH);
     showToast("Visual View画像を作成中です");
     const allCards = sections.flatMap(section => section.entries.map(entry => cardForDeckEntry(entry))).filter(Boolean);
+    let failedImageCount = 0;
     await Promise.all(allCards.map(async card => {
       const src = card?.image || imageOf(card);
-      if (!src || imageCache.has(src)) return;
+      if (!src) { failedImageCount += 1; return; }
+      if (imageCache.has(src)) return;
       const safeSrc = await canvasSafeImageSource(src);
-      imageCache.set(src, await loadCanvasImage(safeSrc));
+      const img = await loadCanvasImage(safeSrc);
+      if (!img) failedImageCount += 1;
+      imageCache.set(src, img);
     }));
+    if (failedImageCount > 0) {
+      downloadTextFile(svgText, `${sanitizeDownloadName(deck.name)}-visual.svg`, "image/svg+xml;charset=utf-8");
+      showToast("PNG用の画像取得に失敗したためSVGで保存しました");
+      return;
+    }
     const canvas = document.createElement("canvas");
     canvas.width = canvasW;
     canvas.height = canvasH;
