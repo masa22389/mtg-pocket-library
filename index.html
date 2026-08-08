@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=145">
+  <link rel="stylesheet" href="styles.css?v=146">
 </head>
 <body>
   <header class="app-header">
@@ -173,6 +173,7 @@
         <h3>デッキ内容</h3>
         <div class="deck-sort-buttons" aria-label="デッキ内容の並び替え">
           <button id="openDeckVisual" type="button" class="compact">Visual View</button>
+          <button id="openDeckOneScreenVisual" type="button" class="compact ghost">一画面Visual</button>
           <button id="reorderDeckCards" type="button" class="compact ghost">並び替え</button>
           <button id="sortDeckByName" type="button" class="compact ghost">名前順</button>
           <button id="sortDeckByColor" type="button" class="compact ghost">色</button>
@@ -238,6 +239,17 @@
     </form>
   </dialog>
 
+  <dialog id="deckOneScreenVisualDialog">
+    <form method="dialog" class="dialog-card deck-one-screen-dialog">
+      <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+      <div class="deck-visual-head">
+        <div><span class="eyebrow">ONE SCREEN VISUAL</span><h2 id="deckOneScreenTitle">一画面表示</h2></div>
+        <p id="deckOneScreenSummary" class="muted"></p>
+      </div>
+      <div id="deckOneScreenBoard" class="deck-one-screen-board"></div>
+    </form>
+  </dialog>
+
   <dialog id="deckEntryDialog">
     <form method="dialog" class="dialog-card deck-entry-editor">
       <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
@@ -269,6 +281,6 @@
   <div id="toast" class="toast" role="status"></div>
   <script src="mtg-jp-card-index.js?v=140" defer></script>
   <script src="mtgjson-jp-search-index.js?v=140" defer></script>
-  <script src="app.js?v=145" defer></script>
+  <script src="app.js?v=146" defer></script>
 </body>
 </html>

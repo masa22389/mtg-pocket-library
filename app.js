@@ -1,4 +1,4 @@
-const APP_VERSION = "v145";
+const APP_VERSION = "v146";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -63,8 +63,9 @@ const els = {
   deckGlobalSearchButton: $("#deckGlobalSearchButton"), deckGlobalSearchStatus: $("#deckGlobalSearchStatus"),
   deckSearchMatch: $("#deckSearchMatch"), deckSearchColor: $("#deckSearchColor"), deckSearchMana: $("#deckSearchMana"), deckSearchType: $("#deckSearchType"), deckSearchSet: $("#deckSearchSet"), deckSearchSetIncludeExtras: $("#deckSearchSetIncludeExtras"), clearDeckSearchFilters: $("#clearDeckSearchFilters"),
   deckGlobalSearchResults: $("#deckGlobalSearchResults"), deckCards: $("#deckCards"), duplicateDeckButton: $("#duplicateDeckButton"), deleteDeckButton: $("#deleteDeckButton"),
-  openDeckVisual: $("#openDeckVisual"), deckVisualDialog: $("#deckVisualDialog"), deckVisualTitle: $("#deckVisualTitle"),
+  openDeckVisual: $("#openDeckVisual"), openDeckOneScreenVisual: $("#openDeckOneScreenVisual"), deckVisualDialog: $("#deckVisualDialog"), deckVisualTitle: $("#deckVisualTitle"),
   deckVisualSummary: $("#deckVisualSummary"), deckVisualBoard: $("#deckVisualBoard"),
+  deckOneScreenVisualDialog: $("#deckOneScreenVisualDialog"), deckOneScreenTitle: $("#deckOneScreenTitle"), deckOneScreenSummary: $("#deckOneScreenSummary"), deckOneScreenBoard: $("#deckOneScreenBoard"),
   deckEntryDialog: $("#deckEntryDialog"), deckEntryVariantDialog: $("#deckEntryVariantDialog"), deckEntryImage: $("#deckEntryImage"), openDeckEntryVariants: $("#openDeckEntryVariants"), deckEntrySet: $("#deckEntrySet"),
   deckEntryName: $("#deckEntryName"), deckEntryOwned: $("#deckEntryOwned"), addDeckEntryToCollection: $("#addDeckEntryToCollection"), deckEntryCollectionStatus: $("#deckEntryCollectionStatus"), deckEntrySection: $("#deckEntrySection"),
   deckEntryVariants: $("#deckEntryVariants"), deckEntryVariantFilter: $("#deckEntryVariantFilter"), deckEntryVariantCount: $("#deckEntryVariantCount"),
@@ -2828,6 +2829,69 @@ function openDeckVisualView() {
   els.deckVisualDialog.showModal();
 }
 
+function renderOneScreenCard(entry, compact = false) {
+  const card = cardForDeckEntry(entry);
+  const qty = Math.max(1, Number(entry.quantity || 1));
+  const layers = Array.from({ length: Math.min(qty, compact ? 5 : 4) }, (_, index) => {
+    const src = imageOf(card) || card?.image || "";
+    return `<img src="${esc(src)}" alt="${esc(card ? nameOf(card) : "")}" loading="lazy" style="--i:${index}">`;
+  }).join("");
+  return `<div class="one-screen-card" title="${esc(card ? nameOf(card) : "")} ×${qty}">
+    <div class="one-screen-stack">${layers}</div>
+    <span class="one-screen-qty">×${qty}</span>
+  </div>`;
+}
+
+function renderOneScreenTypeGroups(entries, compact = false) {
+  const typeOrder = ["creature", "instant", "sorcery", "artifact", "enchantment", "planeswalker", "battle", "land", "other"];
+  const groups = new Map();
+  entries.forEach(entry => {
+    const group = deckVisualTypeGroup(cardForDeckEntry(entry));
+    if (!groups.has(group.key)) groups.set(group.key, { label: group.label, entries: [] });
+    groups.get(group.key).entries.push(entry);
+  });
+  return typeOrder.filter(key => groups.has(key)).map(key => {
+    const group = groups.get(key);
+    const total = group.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
+    return `<section class="one-screen-type one-screen-type-${key}">
+      <div class="one-screen-type-title"><span>${group.label}</span><b>${total}</b></div>
+      <div class="one-screen-grid">${group.entries.map(entry => renderOneScreenCard(entry, compact)).join("")}</div>
+    </section>`;
+  }).join("");
+}
+
+function renderOneScreenPanel(title, entries, className = "", compact = false) {
+  const total = entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
+  return `<section class="one-screen-panel ${className}">
+    <div class="one-screen-panel-title"><span>${esc(title)}</span><b>${total}</b></div>
+    ${entries.length ? renderOneScreenTypeGroups(entries, compact) : '<div class="deck-section-empty">カードがありません</div>'}
+  </section>`;
+}
+
+function renderDeckOneScreenVisualView() {
+  const deck = state.editingDeck;
+  if (!deck) return;
+  const mainEntries = deck.entries.filter(entry => entry.section === "main");
+  const sideEntries = deck.entries.filter(entry => entry.section === "side");
+  const commanderEntries = deck.entries.filter(entry => entry.section === "commander");
+  const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
+  els.deckOneScreenTitle.textContent = deck.name || "一画面表示";
+  els.deckOneScreenSummary.textContent = `${deck.format}・${total}枚`;
+  const mainContent = [
+    isCommanderDeck() && commanderEntries.length ? renderOneScreenPanel("Commander", commanderEntries, "one-screen-commander") : "",
+    renderOneScreenPanel("Main", mainEntries, "one-screen-main"),
+  ].join("");
+  els.deckOneScreenBoard.innerHTML = `
+    <div class="one-screen-left">${mainContent}</div>
+    <div class="one-screen-right">${renderOneScreenPanel("Sideboard", sideEntries, "one-screen-side", true)}</div>
+  `;
+}
+
+function openDeckOneScreenVisualView() {
+  renderDeckOneScreenVisualView();
+  els.deckOneScreenVisualDialog.showModal();
+}
+
 function deckVisualExportSections(deck = state.editingDeck) {
   if (!deck) return [];
   const sections = [];
@@ -3144,6 +3208,7 @@ function renderDeckEditor() {
     attachDeckContentCardHandlers(button);
   });
   if (els.deckVisualDialog.open) renderDeckVisualView();
+  if (els.deckOneScreenVisualDialog?.open) renderDeckOneScreenVisualView();
 }
 
 function renderDeckOwnedAddDialog() {
@@ -3848,6 +3913,7 @@ els.openDeckOwnedAdd.addEventListener("click", openDeckOwnedAddDialog);
 els.openDeckSearchAdd.addEventListener("click", openDeckSearchAddDialog);
 els.deckSearchAddDialog.addEventListener("close", resetDeckSearchAddForm);
 els.openDeckVisual.addEventListener("click", openDeckVisualView);
+els.openDeckOneScreenVisual?.addEventListener("click", openDeckOneScreenVisualView);
 els.reorderDeckCards?.addEventListener("click", () => setDeckReorderMode(!deckReorderMode));
 els.deckName.addEventListener("input", autoSaveEditingDeck);
 els.deckMemo.addEventListener("input", autoSaveEditingDeck);
