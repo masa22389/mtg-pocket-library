@@ -1,4 +1,4 @@
-const APP_VERSION = "v148";
+const APP_VERSION = "v149";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -1372,7 +1372,7 @@ function buildSearchCandidates(query, filters, preferredLang = "", exactMatch = 
   const baseSearches = preferredLang === "ja"
     ? [`lang:ja ${searchTerms}`, `lang:ja name:"${query}" ${filters}`.trim(), searchTerms]
     : preferredLang === "en"
-      ? [`lang:en ${searchTerms}`, searchTerms]
+      ? [`lang:en name:"${String(query).replaceAll('"', '\\"')}" ${filters}`.trim(), `lang:en ${searchTerms}`, searchTerms]
       : [searchTerms];
   return [...new Set([...aliasSearches, ...baseSearches].filter(Boolean))];
 }
@@ -1388,10 +1388,14 @@ async function fetchSearchCandidates(query, filters, preferredLang, exactMatch, 
       }
     }
   }
+  let localFallbackCards = [];
   if (String(query || "").trim()) {
     const localResult = await fetchLocalSearchCandidates(query, filters, exactMatch, maxCards);
     if (localResult.cards.length) {
-      return { cards: localResult.cards, error: null, source: "local" };
+      if (exactMatch || preferredLang === "ja") {
+        return { cards: localResult.cards, error: null, source: "local" };
+      }
+      localFallbackCards = localResult.cards;
     }
   }
   const candidates = buildSearchCandidates(query, filters, preferredLang, exactMatch);
@@ -1414,6 +1418,13 @@ async function fetchSearchCandidates(query, filters, preferredLang, exactMatch, 
     }
     lastError = result.error;
     if (shouldCollectMany) await new Promise(resolve => setTimeout(resolve, 60));
+  }
+  for (const card of localFallbackCards) {
+    const key = card.id || card.oracle_id || card.name;
+    if (key && !seen.has(key)) {
+      seen.add(key);
+      cards.push(card);
+    }
   }
   return { cards: cards.slice(0, maxCards), error: lastError };
 }
