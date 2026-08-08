@@ -1,4 +1,4 @@
-const APP_VERSION = "v140";
+const APP_VERSION = "v141";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -2674,6 +2674,12 @@ function clearDeckReorderSelection() {
   document.activeElement?.blur?.();
 }
 
+function finishDeckReorderMode() {
+  deckReorderMode = false;
+  clearDeckReorderSelection();
+  updateDeckReorderButton();
+}
+
 function setDeckReorderMode(enabled, selection = null) {
   endDeckDrag();
   deckReorderMode = enabled;
@@ -2693,7 +2699,7 @@ function handleDeckReorderClick(button) {
     return;
   }
   if (deckReorderSelection.cardId === cardId && deckReorderSelection.section === section) {
-    clearDeckReorderSelection();
+    finishDeckReorderMode();
     showToast("選択を解除しました");
     renderDeckEditor();
     return;
@@ -2706,7 +2712,7 @@ function handleDeckReorderClick(button) {
   }
   if (reorderDeckEntryWithinSection(section, deckReorderSelection.cardId, cardId)) {
     autoSaveEditingDeck();
-    clearDeckReorderSelection();
+    finishDeckReorderMode();
     showToast("並び替えました");
     renderDeckEditor();
   }
