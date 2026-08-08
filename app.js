@@ -1,4 +1,4 @@
-const APP_VERSION = "v141";
+const APP_VERSION = "v142";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -64,7 +64,7 @@ const els = {
   deckSearchMatch: $("#deckSearchMatch"), deckSearchColor: $("#deckSearchColor"), deckSearchMana: $("#deckSearchMana"), deckSearchType: $("#deckSearchType"), deckSearchSet: $("#deckSearchSet"), deckSearchSetIncludeExtras: $("#deckSearchSetIncludeExtras"), clearDeckSearchFilters: $("#clearDeckSearchFilters"),
   deckGlobalSearchResults: $("#deckGlobalSearchResults"), deckCards: $("#deckCards"), duplicateDeckButton: $("#duplicateDeckButton"), deleteDeckButton: $("#deleteDeckButton"),
   openDeckVisual: $("#openDeckVisual"), deckVisualDialog: $("#deckVisualDialog"), deckVisualTitle: $("#deckVisualTitle"),
-  deckVisualSummary: $("#deckVisualSummary"), deckVisualBoard: $("#deckVisualBoard"),
+  deckVisualSummary: $("#deckVisualSummary"), deckVisualBoard: $("#deckVisualBoard"), downloadDeckVisual: $("#downloadDeckVisual"),
   deckEntryDialog: $("#deckEntryDialog"), deckEntryVariantDialog: $("#deckEntryVariantDialog"), deckEntryImage: $("#deckEntryImage"), openDeckEntryVariants: $("#openDeckEntryVariants"), deckEntrySet: $("#deckEntrySet"),
   deckEntryName: $("#deckEntryName"), deckEntryOwned: $("#deckEntryOwned"), addDeckEntryToCollection: $("#addDeckEntryToCollection"), deckEntryCollectionStatus: $("#deckEntryCollectionStatus"), deckEntrySection: $("#deckEntrySection"),
   deckEntryVariants: $("#deckEntryVariants"), deckEntryVariantFilter: $("#deckEntryVariantFilter"), deckEntryVariantCount: $("#deckEntryVariantCount"),
@@ -2828,6 +2828,204 @@ function openDeckVisualView() {
   els.deckVisualDialog.showModal();
 }
 
+function deckVisualExportSections(deck = state.editingDeck) {
+  if (!deck) return [];
+  const sections = [];
+  const commanderEntries = deck.entries.filter(entry => entry.section === "commander");
+  const mainEntries = deck.entries.filter(entry => entry.section === "main");
+  const sideEntries = deck.entries.filter(entry => entry.section === "side");
+  if (isCommanderDeck(deck) && commanderEntries.length) sections.push({ title: "Commander", entries: commanderEntries });
+  sections.push({ title: "Main", entries: mainEntries });
+  if (sideEntries.length) sections.push({ title: "Sideboard", entries: sideEntries });
+  return sections;
+}
+
+function sanitizeDownloadName(name) {
+  return String(name || "deck").replace(/[\\/:*?"<>|]/g, "_").replace(/\s+/g, "_").slice(0, 80) || "deck";
+}
+
+function loadCanvasImage(src) {
+  return new Promise(resolve => {
+    if (!src) return resolve(null);
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.referrerPolicy = "no-referrer";
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  const radius = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + w, y, x + w, y + h, radius);
+  ctx.arcTo(x + w, y + h, x, y + h, radius);
+  ctx.arcTo(x, y + h, x, y, radius);
+  ctx.arcTo(x, y, x + w, y, radius);
+  ctx.closePath();
+}
+
+function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 2) {
+  const chars = String(text || "").split("");
+  const lines = [];
+  let line = "";
+  chars.forEach(ch => {
+    const next = line + ch;
+    if (ctx.measureText(next).width > maxWidth && line) {
+      lines.push(line);
+      line = ch;
+    } else {
+      line = next;
+    }
+  });
+  if (line) lines.push(line);
+  lines.slice(0, maxLines).forEach((part, index) => ctx.fillText(part, x, y + index * lineHeight));
+}
+
+async function downloadDeckVisualImage() {
+  const deck = state.editingDeck;
+  if (!deck) return;
+  const button = els.downloadDeckVisual;
+  const originalText = button?.textContent || "";
+  if (button) { button.disabled = true; button.textContent = "作成中..."; }
+  try {
+    const sections = deckVisualExportSections(deck);
+    const typeOrder = ["creature", "instant", "sorcery", "artifact", "enchantment", "planeswalker", "battle", "land", "other"];
+    const cardW = 156;
+    const cardH = Math.round(cardW * 680 / 488);
+    const gap = 22;
+    const margin = 52;
+    const titleH = 96;
+    const sectionHeadH = 46;
+    const typeHeadH = 30;
+    const captionH = 42;
+    const canvasW = 1600;
+    const columns = Math.max(1, Math.floor((canvasW - margin * 2 + gap) / (cardW + gap)));
+    const imageCache = new Map();
+    const sectionLayouts = [];
+    let canvasH = margin + titleH;
+    sections.forEach(section => {
+      const groups = new Map();
+      section.entries.forEach(entry => {
+        const card = cardForDeckEntry(entry);
+        const group = deckVisualTypeGroup(card);
+        if (!groups.has(group.key)) groups.set(group.key, { label: group.label, entries: [] });
+        groups.get(group.key).entries.push(entry);
+      });
+      const groupLayouts = typeOrder.filter(key => groups.has(key)).map(key => {
+        const group = groups.get(key);
+        const rows = Math.ceil(group.entries.length / columns) || 1;
+        const height = typeHeadH + rows * (cardH + captionH + gap) + 12;
+        return { ...group, key, rows, height };
+      });
+      const height = sectionHeadH + groupLayouts.reduce((sum, group) => sum + group.height, 0) + 32;
+      sectionLayouts.push({ ...section, groupLayouts, y: canvasH, height });
+      canvasH += height + 30;
+    });
+    canvasH = Math.max(900, canvasH + margin);
+    const allCards = sections.flatMap(section => section.entries.map(entry => cardForDeckEntry(entry))).filter(Boolean);
+    await Promise.all(allCards.map(async card => {
+      const src = card?.image || imageOf(card);
+      if (!src || imageCache.has(src)) return;
+      imageCache.set(src, await loadCanvasImage(src));
+    }));
+    const canvas = document.createElement("canvas");
+    canvas.width = canvasW;
+    canvas.height = canvasH;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#f7f3ea";
+    ctx.fillRect(0, 0, canvasW, canvasH);
+    const bg = ctx.createLinearGradient(0, 0, canvasW, 0);
+    bg.addColorStop(0, "#123f35");
+    bg.addColorStop(1, "#d6b254");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, canvasW, titleH + 22);
+    ctx.fillStyle = "#fff";
+    ctx.font = "700 42px 'Segoe UI','Yu Gothic',sans-serif";
+    ctx.fillText(deck.name || "MTG Pocket Library Deck", margin, 62);
+    const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
+    ctx.font = "600 22px 'Segoe UI','Yu Gothic',sans-serif";
+    ctx.fillText(`${deck.format || ""} / ${total} cards`, margin, 94);
+    sectionLayouts.forEach(section => {
+      ctx.fillStyle = "#ffffff";
+      roundRect(ctx, margin - 18, section.y, canvasW - margin * 2 + 36, section.height, 24);
+      ctx.fill();
+      ctx.fillStyle = "#123f35";
+      ctx.font = "800 30px 'Segoe UI','Yu Gothic',sans-serif";
+      const sectionTotal = section.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
+      ctx.fillText(`${section.title}  ${sectionTotal}`, margin, section.y + 34);
+      let y = section.y + sectionHeadH;
+      section.groupLayouts.forEach(group => {
+        ctx.fillStyle = "#e9f1ed";
+        roundRect(ctx, margin - 4, y, canvasW - margin * 2 + 8, 34, 12);
+        ctx.fill();
+        ctx.fillStyle = "#123f35";
+        ctx.font = "800 20px 'Segoe UI','Yu Gothic',sans-serif";
+        const groupTotal = group.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
+        ctx.fillText(`${group.label}  ${groupTotal}`, margin + 10, y + 23);
+        y += typeHeadH + 12;
+        group.entries.forEach((entry, index) => {
+          const col = index % columns;
+          const row = Math.floor(index / columns);
+          const x = margin + col * (cardW + gap);
+          const cardY = y + row * (cardH + captionH + gap);
+          const card = cardForDeckEntry(entry);
+          const src = card?.image || imageOf(card);
+          const img = imageCache.get(src);
+          ctx.fillStyle = "#d9dedb";
+          roundRect(ctx, x, cardY, cardW, cardH, 12);
+          ctx.fill();
+          if (img) {
+            ctx.save();
+            roundRect(ctx, x, cardY, cardW, cardH, 12);
+            ctx.clip();
+            ctx.drawImage(img, x, cardY, cardW, cardH);
+            ctx.restore();
+          }
+          ctx.strokeStyle = "#ffffff";
+          ctx.lineWidth = 4;
+          roundRect(ctx, x, cardY, cardW, cardH, 12);
+          ctx.stroke();
+          ctx.fillStyle = "#123f35";
+          roundRect(ctx, x + 8, cardY + 8, 44, 34, 17);
+          ctx.fill();
+          ctx.fillStyle = "#fff";
+          ctx.font = "800 18px 'Segoe UI','Yu Gothic',sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(`×${Number(entry.quantity || 0)}`, x + 30, cardY + 31);
+          ctx.textAlign = "left";
+          ctx.fillStyle = "#1e2926";
+          ctx.font = "700 15px 'Segoe UI','Yu Gothic',sans-serif";
+          wrapCanvasText(ctx, nameOf(card), x, cardY + cardH + 20, cardW, 18, 2);
+        });
+        y += group.rows * (cardH + captionH + gap) + 10;
+      });
+    });
+    canvas.toBlob(blob => {
+      if (!blob) {
+        alert("画像の作成に失敗しました。カード画像の読み込み制限が原因の可能性があります。");
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${sanitizeDownloadName(deck.name)}-visual.png`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast("Visual View画像を保存しました");
+    }, "image/png");
+  } catch (error) {
+    console.error(error);
+    alert("画像の作成に失敗しました。カード画像の取得制限が原因の可能性があります。");
+  } finally {
+    if (button) { button.disabled = false; button.textContent = originalText || "画像保存"; }
+  }
+}
+
 function renderDeckEditor() {
   const deck = state.editingDeck;
   deck.format = els.deckFormat.value;
@@ -3565,6 +3763,7 @@ els.openDeckOwnedAdd.addEventListener("click", openDeckOwnedAddDialog);
 els.openDeckSearchAdd.addEventListener("click", openDeckSearchAddDialog);
 els.deckSearchAddDialog.addEventListener("close", resetDeckSearchAddForm);
 els.openDeckVisual.addEventListener("click", openDeckVisualView);
+els.downloadDeckVisual?.addEventListener("click", downloadDeckVisualImage);
 els.reorderDeckCards?.addEventListener("click", () => setDeckReorderMode(!deckReorderMode));
 els.deckName.addEventListener("input", autoSaveEditingDeck);
 els.deckMemo.addEventListener("input", autoSaveEditingDeck);

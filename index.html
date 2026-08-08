@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=141">
+  <link rel="stylesheet" href="styles.css?v=142">
 </head>
 <body>
   <header class="app-header">
@@ -232,7 +232,7 @@
       <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
       <div class="deck-visual-head">
         <div><span class="eyebrow">VISUAL VIEW</span><h2 id="deckVisualTitle">デッキ表示</h2></div>
-        <p id="deckVisualSummary" class="muted"></p>
+        <div class="deck-visual-actions"><p id="deckVisualSummary" class="muted"></p><button id="downloadDeckVisual" type="button" class="compact">画像保存</button></div>
       </div>
       <div id="deckVisualBoard" class="deck-visual-board"></div>
     </form>
@@ -269,6 +269,6 @@
   <div id="toast" class="toast" role="status"></div>
   <script src="mtg-jp-card-index.js?v=140" defer></script>
   <script src="mtgjson-jp-search-index.js?v=140" defer></script>
-  <script src="app.js?v=141" defer></script>
+  <script src="app.js?v=142" defer></script>
 </body>
 </html>
