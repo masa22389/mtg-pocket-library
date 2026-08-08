@@ -1,4 +1,4 @@
-const APP_VERSION = "v139";
+const APP_VERSION = "v140";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -26,6 +26,8 @@ const state = {
 };
 let deckDragState = null;
 let suppressNextDeckCardClick = false;
+let deckReorderMode = false;
+let deckReorderSelection = null;
 
 const $ = selector => document.querySelector(selector);
 const els = {
@@ -73,7 +75,7 @@ const els = {
   decrementSideDeckEntry: $("#decrementSideDeckEntry"), incrementSideDeckEntry: $("#incrementSideDeckEntry"),
   decrementMaybeDeckEntry: $("#decrementMaybeDeckEntry"), incrementMaybeDeckEntry: $("#incrementMaybeDeckEntry"),
   decrementCommanderDeckEntry: $("#decrementCommanderDeckEntry"), incrementCommanderDeckEntry: $("#incrementCommanderDeckEntry"),
-  sortDeckByName: $("#sortDeckByName"), sortDeckByColor: $("#sortDeckByColor"), sortDeckByMana: $("#sortDeckByMana"), sortDeckByType: $("#sortDeckByType"),
+  reorderDeckCards: $("#reorderDeckCards"), sortDeckByName: $("#sortDeckByName"), sortDeckByColor: $("#sortDeckByColor"), sortDeckByMana: $("#sortDeckByMana"), sortDeckByType: $("#sortDeckByType"),
   usdJpyRate: $("#usdJpyRate"), saveFxButton: $("#saveFxButton"), fxHelp: $("#fxHelp"),
   installButton: $("#installButton"), backupSummary: $("#backupSummary"), importInput: $("#importInput"), toast: $("#toast"),
   currentAppVersion: $("#currentAppVersion"),
@@ -2516,9 +2518,10 @@ function renderDeckSection(section, entries, emptyText = "") {
         const card = cardForDeckEntry(entry);
         const missing = section === "maybe" ? 0 : missingQuantityForEntry(entry);
         const dragging = deckDragState?.dragging && deckDragState.cardId === entry.cardId && deckDragState.section === entry.section;
-        const classes = ["deck-content-card", missing ? "missing-card" : "", dragging ? "deck-dragging-card" : ""].filter(Boolean).join(" ");
+        const selected = deckReorderSelection?.cardId === entry.cardId && deckReorderSelection?.section === entry.section;
+        const classes = ["deck-content-card", missing ? "missing-card" : "", dragging ? "deck-dragging-card" : "", deckReorderMode ? "deck-reorder-mode-card" : "", selected ? "deck-reorder-selected" : ""].filter(Boolean).join(" ");
         const cardName = card ? nameOf(card) : "削除済みカード";
-        return `<button type="button" class="${classes}" draggable="true" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img src="${esc(card?.image || "")}" alt="" loading="lazy"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
+        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img src="${esc(card?.image || "")}" alt="" loading="lazy"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
       }).join("")}
     </div>` : `<div class="deck-section-empty">${esc(emptyText || `${label}にカードがありません`)}</div>`;
   return `<section class="deck-section deck-section-${esc(section)}"><div class="deck-section-title"><span>${esc(label)}</span><b>${count}枚</b></div>${content}</section>`;
@@ -2654,6 +2657,104 @@ function attachDeckContentCardHandlers(button) {
   button.addEventListener("dragend", endDeckDrag);
 }
 
+function updateDeckReorderButton() {
+  if (!els.reorderDeckCards) return;
+  els.reorderDeckCards.classList.toggle("active", deckReorderMode);
+  els.reorderDeckCards.textContent = deckReorderMode ? "並び替え中" : "並び替え";
+}
+
+function endDeckDrag() {
+  if (deckDragState?.timer) clearTimeout(deckDragState.timer);
+  deckDragState = null;
+  document.body.classList.remove("deck-dragging");
+}
+
+function clearDeckReorderSelection() {
+  deckReorderSelection = null;
+  document.activeElement?.blur?.();
+}
+
+function setDeckReorderMode(enabled, selection = null) {
+  endDeckDrag();
+  deckReorderMode = enabled;
+  deckReorderSelection = selection;
+  updateDeckReorderButton();
+  renderDeckEditor();
+  showToast(enabled ? (selection ? "移動先のカードを選んでください" : "並び替えモードです") : "並び替えモードを終了しました");
+}
+
+function handleDeckReorderClick(button) {
+  const cardId = button.dataset.cardId;
+  const section = button.dataset.section;
+  if (!deckReorderSelection) {
+    deckReorderSelection = { cardId, section };
+    showToast("移動先のカードを選んでください");
+    renderDeckEditor();
+    return;
+  }
+  if (deckReorderSelection.cardId === cardId && deckReorderSelection.section === section) {
+    clearDeckReorderSelection();
+    showToast("選択を解除しました");
+    renderDeckEditor();
+    return;
+  }
+  if (deckReorderSelection.section !== section) {
+    deckReorderSelection = { cardId, section };
+    showToast("同じ区分内で移動先を選んでください");
+    renderDeckEditor();
+    return;
+  }
+  if (reorderDeckEntryWithinSection(section, deckReorderSelection.cardId, cardId)) {
+    autoSaveEditingDeck();
+    clearDeckReorderSelection();
+    showToast("並び替えました");
+    renderDeckEditor();
+  }
+}
+
+function startDeckReorderFromLongPress(button) {
+  if (!deckDragState || deckDragState.button !== button) return;
+  setDeckReorderMode(true, { cardId: button.dataset.cardId, section: button.dataset.section });
+}
+
+function attachDeckContentCardHandlers(button) {
+  button.addEventListener("click", () => {
+    document.activeElement?.blur?.();
+    if (deckReorderMode) {
+      handleDeckReorderClick(button);
+      return;
+    }
+    if (suppressNextDeckCardClick) {
+      suppressNextDeckCardClick = false;
+      return;
+    }
+    openDeckEntryEditor(button.dataset.cardId, button.dataset.section);
+  });
+  button.addEventListener("pointerdown", event => {
+    if (event.button && event.button !== 0) return;
+    if (deckReorderMode) return;
+    endDeckDrag();
+    deckDragState = {
+      button,
+      startX: event.clientX,
+      startY: event.clientY,
+      timer: window.setTimeout(() => startDeckReorderFromLongPress(button), 450),
+    };
+  });
+  button.addEventListener("pointermove", event => {
+    if (!deckDragState) return;
+    const dx = event.clientX - deckDragState.startX;
+    const dy = event.clientY - deckDragState.startY;
+    if (Math.hypot(dx, dy) > 18) endDeckDrag();
+  });
+  button.addEventListener("pointerup", endDeckDrag);
+  button.addEventListener("pointercancel", endDeckDrag);
+  button.addEventListener("contextmenu", event => {
+    if (deckReorderMode || deckDragState) event.preventDefault();
+  });
+  button.addEventListener("dragstart", event => event.preventDefault());
+}
+
 function deckVisualTypeGroup(card) {
   const type = String(card?.typeLine || card?.type_line || "");
   if (type.includes("Land")) return { key: "land", label: "Land" };
@@ -2733,6 +2834,7 @@ function renderDeckEditor() {
   els.deckMissing.style.color = missing ? "#9b332f" : "";
   renderDeckStats();
   renderDeckMissingList();
+  updateDeckReorderButton();
 
   renderDeckOwnedAddDialog();
   renderDeckSearchAddDialog();
@@ -3457,6 +3559,7 @@ els.openDeckOwnedAdd.addEventListener("click", openDeckOwnedAddDialog);
 els.openDeckSearchAdd.addEventListener("click", openDeckSearchAddDialog);
 els.deckSearchAddDialog.addEventListener("close", resetDeckSearchAddForm);
 els.openDeckVisual.addEventListener("click", openDeckVisualView);
+els.reorderDeckCards?.addEventListener("click", () => setDeckReorderMode(!deckReorderMode));
 els.deckName.addEventListener("input", autoSaveEditingDeck);
 els.deckMemo.addEventListener("input", autoSaveEditingDeck);
 els.deckFormat.addEventListener("change", () => { renderDeckEditor(); autoSaveEditingDeck(); });
