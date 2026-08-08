@@ -1,4 +1,4 @@
-const APP_VERSION = "v144";
+const APP_VERSION = "v145";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -64,7 +64,7 @@ const els = {
   deckSearchMatch: $("#deckSearchMatch"), deckSearchColor: $("#deckSearchColor"), deckSearchMana: $("#deckSearchMana"), deckSearchType: $("#deckSearchType"), deckSearchSet: $("#deckSearchSet"), deckSearchSetIncludeExtras: $("#deckSearchSetIncludeExtras"), clearDeckSearchFilters: $("#clearDeckSearchFilters"),
   deckGlobalSearchResults: $("#deckGlobalSearchResults"), deckCards: $("#deckCards"), duplicateDeckButton: $("#duplicateDeckButton"), deleteDeckButton: $("#deleteDeckButton"),
   openDeckVisual: $("#openDeckVisual"), deckVisualDialog: $("#deckVisualDialog"), deckVisualTitle: $("#deckVisualTitle"),
-  deckVisualSummary: $("#deckVisualSummary"), deckVisualBoard: $("#deckVisualBoard"), downloadDeckVisual: $("#downloadDeckVisual"),
+  deckVisualSummary: $("#deckVisualSummary"), deckVisualBoard: $("#deckVisualBoard"),
   deckEntryDialog: $("#deckEntryDialog"), deckEntryVariantDialog: $("#deckEntryVariantDialog"), deckEntryImage: $("#deckEntryImage"), openDeckEntryVariants: $("#openDeckEntryVariants"), deckEntrySet: $("#deckEntrySet"),
   deckEntryName: $("#deckEntryName"), deckEntryOwned: $("#deckEntryOwned"), addDeckEntryToCollection: $("#addDeckEntryToCollection"), deckEntryCollectionStatus: $("#deckEntryCollectionStatus"), deckEntrySection: $("#deckEntrySection"),
   deckEntryVariants: $("#deckEntryVariants"), deckEntryVariantFilter: $("#deckEntryVariantFilter"), deckEntryVariantCount: $("#deckEntryVariantCount"),
@@ -3848,7 +3848,6 @@ els.openDeckOwnedAdd.addEventListener("click", openDeckOwnedAddDialog);
 els.openDeckSearchAdd.addEventListener("click", openDeckSearchAddDialog);
 els.deckSearchAddDialog.addEventListener("close", resetDeckSearchAddForm);
 els.openDeckVisual.addEventListener("click", openDeckVisualView);
-els.downloadDeckVisual?.addEventListener("click", downloadDeckVisualImage);
 els.reorderDeckCards?.addEventListener("click", () => setDeckReorderMode(!deckReorderMode));
 els.deckName.addEventListener("input", autoSaveEditingDeck);
 els.deckMemo.addEventListener("input", autoSaveEditingDeck);
