@@ -1,4 +1,4 @@
-const APP_VERSION = "v146";
+const APP_VERSION = "v147";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -2832,7 +2832,7 @@ function openDeckVisualView() {
 function renderOneScreenCard(entry, compact = false) {
   const card = cardForDeckEntry(entry);
   const qty = Math.max(1, Number(entry.quantity || 1));
-  const layers = Array.from({ length: Math.min(qty, compact ? 5 : 4) }, (_, index) => {
+  const layers = Array.from({ length: Math.min(qty, compact ? 4 : 4) }, (_, index) => {
     const src = imageOf(card) || card?.image || "";
     return `<img src="${esc(src)}" alt="${esc(card ? nameOf(card) : "")}" loading="lazy" style="--i:${index}">`;
   }).join("");
@@ -2842,29 +2842,25 @@ function renderOneScreenCard(entry, compact = false) {
   </div>`;
 }
 
-function renderOneScreenTypeGroups(entries, compact = false) {
+function oneScreenOrderedEntries(entries) {
   const typeOrder = ["creature", "instant", "sorcery", "artifact", "enchantment", "planeswalker", "battle", "land", "other"];
-  const groups = new Map();
-  entries.forEach(entry => {
-    const group = deckVisualTypeGroup(cardForDeckEntry(entry));
-    if (!groups.has(group.key)) groups.set(group.key, { label: group.label, entries: [] });
-    groups.get(group.key).entries.push(entry);
+  return [...entries].sort((a, b) => {
+    const aIndex = typeOrder.indexOf(deckVisualTypeGroup(cardForDeckEntry(a)).key);
+    const bIndex = typeOrder.indexOf(deckVisualTypeGroup(cardForDeckEntry(b)).key);
+    if (aIndex !== bIndex) return aIndex - bIndex;
+    return String(nameOf(cardForDeckEntry(a))).localeCompare(String(nameOf(cardForDeckEntry(b))), "ja");
   });
-  return typeOrder.filter(key => groups.has(key)).map(key => {
-    const group = groups.get(key);
-    const total = group.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-    return `<section class="one-screen-type one-screen-type-${key}">
-      <div class="one-screen-type-title"><span>${group.label}</span><b>${total}</b></div>
-      <div class="one-screen-grid">${group.entries.map(entry => renderOneScreenCard(entry, compact)).join("")}</div>
-    </section>`;
-  }).join("");
+}
+
+function renderOneScreenGrid(entries, compact = false) {
+  return `<div class="one-screen-grid">${oneScreenOrderedEntries(entries).map(entry => renderOneScreenCard(entry, compact)).join("")}</div>`;
 }
 
 function renderOneScreenPanel(title, entries, className = "", compact = false) {
   const total = entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
   return `<section class="one-screen-panel ${className}">
     <div class="one-screen-panel-title"><span>${esc(title)}</span><b>${total}</b></div>
-    ${entries.length ? renderOneScreenTypeGroups(entries, compact) : '<div class="deck-section-empty">カードがありません</div>'}
+    ${entries.length ? renderOneScreenGrid(entries, compact) : '<div class="deck-section-empty">カードがありません</div>'}
   </section>`;
 }
 
