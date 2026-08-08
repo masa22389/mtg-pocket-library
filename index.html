@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=150">
+  <link rel="stylesheet" href="styles.css?v=151">
 </head>
 <body>
   <header class="app-header">
@@ -52,6 +52,10 @@
         <div><span class="eyebrow">OWNED</span><h2>コレクション</h2></div>
         <div class="collection-toolbar">
           <label>表示<select id="collectionViewMode"><option value="hidden">非表示</option><option value="detail">詳細表示</option><option value="images">イラスト表示</option></select></label>
+          <div class="collection-price-toggle" role="group" aria-label="価格表示">
+            <button type="button" data-collection-price-mode="total">合計</button>
+            <button type="button" data-collection-price-mode="unit">単価</button>
+          </div>
           <input id="collectionFilter" class="small-search" type="search" placeholder="絞り込み">
           <button id="openCollectionAdvanced" class="compact ghost" type="button">詳細設定</button>
         </div>
@@ -283,8 +287,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=150" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=150" defer></script>
-  <script src="app.js?v=150" defer></script>
+  <script src="mtg-jp-card-index.js?v=151" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=151" defer></script>
+  <script src="app.js?v=151" defer></script>
 </body>
 </html>

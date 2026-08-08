@@ -1,5 +1,5 @@
-const APP_VERSION = "v150";
-const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
+const APP_VERSION = "v151";
+const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
   collection: read(KEYS.collection, []),
@@ -15,6 +15,7 @@ const state = {
   variantCache: new Map(),
   selectedOwnedId: null,
   collectionViewMode: localStorage.getItem(KEYS.collectionViewMode) || "hidden",
+  collectionPriceDisplayMode: localStorage.getItem(KEYS.collectionPriceDisplayMode) || "total",
   collectionSortStack: read(KEYS.collectionSortStack, []),
   deckFormatFilter: localStorage.getItem(KEYS.deckFormatFilter) || "",
   editingDeck: null,
@@ -35,7 +36,7 @@ const els = {
   searchButton: $("#searchButton"), searchStatus: $("#searchStatus"), searchResults: $("#searchResults"),
   ocrCameraInput: $("#ocrCameraInput"), ocrFileInput: $("#ocrFileInput"), ocrStatus: $("#ocrStatus"),
   searchMatch: $("#searchMatch"), searchColor: $("#searchColor"), searchMana: $("#searchMana"), searchType: $("#searchType"), searchSet: $("#searchSet"), searchSetIncludeExtras: $("#searchSetIncludeExtras"), clearSearchFilters: $("#clearSearchFilters"),
-  collectionFilter: $("#collectionFilter"), collectionViewMode: $("#collectionViewMode"), openCollectionAdvanced: $("#openCollectionAdvanced"),
+  collectionFilter: $("#collectionFilter"), collectionViewMode: $("#collectionViewMode"), collectionPriceDisplayMode: $("#collectionPriceDisplayMode"), openCollectionAdvanced: $("#openCollectionAdvanced"),
   collectionFilterDialog: $("#collectionFilterDialog"), closeCollectionAdvanced: $("#closeCollectionAdvanced"), collectionFilterSummary: $("#collectionFilterSummary"), collectionColor: $("#collectionColor"),
   collectionMana: $("#collectionMana"), collectionType: $("#collectionType"), collectionPriceFilter: $("#collectionPriceFilter"),
   collectionFavoritesOnly: $("#collectionFavoritesOnly"),
@@ -151,6 +152,25 @@ function selectedPriceUsesEnglish(card) {
 }
 function yenValueOf(card) { const usd = usdPriceOf(card); return usd != null && state.fx.usdJpy ? usd * state.fx.usdJpy * Number(card.quantity || 0) : null; }
 function unitYenValueOf(card) { const value = yenValueOf(card); const quantity = Number(card.quantity || 0); return value != null && quantity > 0 ? value / quantity : null; }
+function collectionPriceDisplayValue(card) {
+  return state.collectionPriceDisplayMode === "unit" ? unitYenValueOf(card) : yenValueOf(card);
+}
+function collectionPriceLabel(card, compact = false) {
+  const value = collectionPriceDisplayValue(card);
+  if (value == null) return compact ? "" : "参考価格なし";
+  if (compact) return state.collectionPriceDisplayMode === "unit" ? `${formatYen(value)} / 枚` : formatYen(value);
+  const prefix = selectedPriceUsesEnglish(card) ? "英語版参考" : "参考";
+  return state.collectionPriceDisplayMode === "unit"
+    ? `${prefix} ${formatYen(value)} / 枚`
+    : `${prefix} ${formatYen(value)}`;
+}
+function updateCollectionPriceModeUi() {
+  document.querySelectorAll("[data-collection-price-mode]").forEach(button => {
+    const active = button.dataset.collectionPriceMode === state.collectionPriceDisplayMode;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+  });
+}
 
 const CARD_NAME_ALIASES = [
   {
@@ -1815,6 +1835,8 @@ function renderCollection() {
   els.fxHelp.textContent = state.fx.usdJpy ? `現在の換算レート：1 USD = ${state.fx.usdJpy.toFixed(2)}円（${state.fx.source === "auto" ? "自動取得" : "手動・概算"}）` : "為替を取得できない場合に手動で変更できます。";
   const hiddenMode = state.collectionViewMode === "hidden";
   const imageMode = state.collectionViewMode === "images";
+  if (els.collectionPriceDisplayMode) els.collectionPriceDisplayMode.value = state.collectionPriceDisplayMode;
+  updateCollectionPriceModeUi();
   els.collectionList.className = imageMode ? "collection-image-grid" : "item-list";
   if (hiddenMode) {
     els.collectionList.innerHTML = `<div class="empty">コレクション一覧は非表示です。表示方法から「詳細表示」または「イラスト表示」を選んでください。</div>`;
@@ -1825,7 +1847,8 @@ function renderCollection() {
     els.collectionList.innerHTML = cards.map(card => `
       <button type="button" class="collection-image-card" data-id="${card.id}" aria-label="${esc(nameOf(card))}の詳細を開く">
         <img src="${esc(card.image)}" alt="" loading="lazy">
-        ${yenValueOf(card) != null ? `<span class="collection-price-badge">${formatYen(yenValueOf(card))}</span>` : ""}
+        <span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>
+        ${collectionPriceDisplayValue(card) != null ? `<span class="collection-price-badge">${esc(collectionPriceLabel(card, true))}</span>` : ""}
       </button>`).join("");
     els.collectionList.querySelectorAll(".collection-image-card").forEach(button => {
       const card = state.collection.find(item => item.id === button.dataset.id);
@@ -1837,8 +1860,8 @@ function renderCollection() {
   els.collectionList.innerHTML = cards.map((card, index) => `
     <article class="list-item" data-id="${card.id}">
       <button class="collection-card-open" type="button" aria-label="${esc(nameOf(card))}の詳細を開く">
-        <img class="thumb" src="${esc(card.image)}" alt="" loading="lazy">
-        <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(card.condition)} · ${card.finish === "normal" ? "通常" : esc(card.finish)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small>${yenValueOf(card) != null ? `<span class="asset-value">${selectedPriceUsesEnglish(card) ? "英語版参考" : "参考"} ${formatYen(yenValueOf(card))}（1枚 ${formatYen(yenValueOf(card) / card.quantity)}）</span>` : '<span class="asset-value">参考価格なし</span>'}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
+        <span class="collection-thumb-wrap"><img class="thumb" src="${esc(card.image)}" alt="" loading="lazy"><span class="collection-qty-badge">×${Number(card.quantity || 0)}</span></span>
+        <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(card.condition)} · ${card.finish === "normal" ? "通常" : esc(card.finish)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
       </button>
       <div class="item-actions"><button class="tiny move-owned-up" aria-label="${esc(nameOf(card))}を前へ移動" ${index === 0 ? "disabled" : ""}>↑</button><button class="tiny move-owned-down" aria-label="${esc(nameOf(card))}を後へ移動" ${index === cards.length - 1 ? "disabled" : ""}>↓</button><button class="tiny minus" aria-label="1枚減らす">−</button><span class="qty-pill">×${card.quantity}</span><button class="tiny plus" aria-label="1枚増やす">＋</button><button class="tiny favorite-owned ${card.favorite ? "active" : ""}" aria-label="${esc(nameOf(card))}を${card.favorite ? "お気に入りから外す" : "お気に入りに追加"}" aria-pressed="${card.favorite ? "true" : "false"}">${card.favorite ? "★" : "☆"}</button><button class="tiny delete-owned" aria-label="${esc(nameOf(card))}をコレクションから削除">削除</button></div>
     </article>`).join("");
@@ -3910,6 +3933,19 @@ els.collectionViewMode.addEventListener("change", () => {
   localStorage.setItem(KEYS.collectionViewMode, state.collectionViewMode);
   renderCollection();
 });
+if (els.collectionPriceDisplayMode) {
+  els.collectionPriceDisplayMode.value = state.collectionPriceDisplayMode;
+  els.collectionPriceDisplayMode.addEventListener("change", () => {
+    state.collectionPriceDisplayMode = els.collectionPriceDisplayMode.value;
+    localStorage.setItem(KEYS.collectionPriceDisplayMode, state.collectionPriceDisplayMode);
+    renderCollection();
+  });
+}
+document.querySelectorAll("[data-collection-price-mode]").forEach(button => button.addEventListener("click", () => {
+  state.collectionPriceDisplayMode = button.dataset.collectionPriceMode;
+  localStorage.setItem(KEYS.collectionPriceDisplayMode, state.collectionPriceDisplayMode);
+  renderCollection();
+}));
 [els.collectionColor, els.collectionMana, els.collectionType, els.collectionPriceFilter].forEach(filter => filter.addEventListener("change", renderCollection));
 els.collectionFavoritesOnly.addEventListener("change", renderCollection);
 els.clearCollectionFilters.addEventListener("click", () => {
