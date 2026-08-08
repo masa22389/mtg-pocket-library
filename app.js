@@ -1,4 +1,4 @@
-const APP_VERSION = "v142";
+const APP_VERSION = "v143";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -2856,6 +2856,25 @@ function loadCanvasImage(src) {
   });
 }
 
+async function canvasSafeImageSource(src) {
+  if (!src) return "";
+  if (src.startsWith("data:") || src.startsWith("blob:")) return src;
+  try {
+    const response = await fetch(src, { mode: "cors", cache: "force-cache" });
+    if (!response.ok) throw new Error(`image fetch failed: ${response.status}`);
+    const blob = await response.blob();
+    return await new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result || ""));
+      reader.onerror = () => resolve("");
+      reader.readAsDataURL(blob);
+    });
+  } catch (error) {
+    console.warn("Visual export image fetch failed", src, error);
+    return src;
+  }
+}
+
 function roundRect(ctx, x, y, w, h, r) {
   const radius = Math.min(r, w / 2, h / 2);
   ctx.beginPath();
@@ -2893,15 +2912,15 @@ async function downloadDeckVisualImage() {
   try {
     const sections = deckVisualExportSections(deck);
     const typeOrder = ["creature", "instant", "sorcery", "artifact", "enchantment", "planeswalker", "battle", "land", "other"];
-    const cardW = 156;
+    const cardW = 220;
     const cardH = Math.round(cardW * 680 / 488);
-    const gap = 22;
+    const gap = 28;
     const margin = 52;
     const titleH = 96;
     const sectionHeadH = 46;
     const typeHeadH = 30;
-    const captionH = 42;
-    const canvasW = 1600;
+    const captionH = 50;
+    const canvasW = 1800;
     const columns = Math.max(1, Math.floor((canvasW - margin * 2 + gap) / (cardW + gap)));
     const imageCache = new Map();
     const sectionLayouts = [];
@@ -2925,11 +2944,13 @@ async function downloadDeckVisualImage() {
       canvasH += height + 30;
     });
     canvasH = Math.max(900, canvasH + margin);
+    showToast("Visual View画像を作成中です");
     const allCards = sections.flatMap(section => section.entries.map(entry => cardForDeckEntry(entry))).filter(Boolean);
     await Promise.all(allCards.map(async card => {
       const src = card?.image || imageOf(card);
       if (!src || imageCache.has(src)) return;
-      imageCache.set(src, await loadCanvasImage(src));
+      const safeSrc = await canvasSafeImageSource(src);
+      imageCache.set(src, await loadCanvasImage(safeSrc));
     }));
     const canvas = document.createElement("canvas");
     canvas.width = canvasW;
@@ -2997,8 +3018,8 @@ async function downloadDeckVisualImage() {
           ctx.fillText(`×${Number(entry.quantity || 0)}`, x + 30, cardY + 31);
           ctx.textAlign = "left";
           ctx.fillStyle = "#1e2926";
-          ctx.font = "700 15px 'Segoe UI','Yu Gothic',sans-serif";
-          wrapCanvasText(ctx, nameOf(card), x, cardY + cardH + 20, cardW, 18, 2);
+          ctx.font = "700 19px 'Segoe UI','Yu Gothic',sans-serif";
+          wrapCanvasText(ctx, nameOf(card), x, cardY + cardH + 24, cardW, 23, 2);
         });
         y += group.rows * (cardH + captionH + gap) + 10;
       });
