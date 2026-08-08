@@ -1,4 +1,4 @@
-const APP_VERSION = "v147";
+const APP_VERSION = "v148";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -169,6 +169,7 @@ const JP_ALIAS_TARGETS_EXACT = new Map();
 const JP_ALIAS_TARGET_CACHE = new Map();
 
 const SET_JA_NAMES = {
+  hob: "マジック：ザ・ギャザリング | ホビット", hoc: "マジック：ザ・ギャザリング | ホビット 統率者",
   eoe: "久遠の終端", eoc: "久遠の終端 統率者",
   inr: "イニストラード・リマスター",
   fin: "マジック：ザ・ギャザリング——FINAL FANTASY", fic: "FINAL FANTASY 統率者",
@@ -243,8 +244,14 @@ const SET_JA_NAMES = {
 const PRIMARY_SET_TYPES = new Set(["expansion", "core", "masters", "commander", "draft_innovation", "jumpstart"]);
 const HIDDEN_SET_TYPES = new Set(["token", "memorabilia", "alchemy", "funny", "minigame", "promo", "box"]);
 const HIDDEN_SET_NAME_PATTERN = /\b(promo|promos|arena|anthology|bonus sheet|alchemy|treasure chest|regional|showdown|love your lgs|through the ages|stellar sights|the big score)\b/i;
+const SET_SEARCH_ALIASES = [
+  { codes: ["hoc"], terms: ["ホビット統率者", "ホビット 統率者", "The Hobbit Commander", "Hobbit Commander", "HOC"] },
+  { codes: ["hob", "hoc"], terms: ["ホビット", "The Hobbit", "Hobbit"] },
+];
 
 const FALLBACK_SETS = [
+  { code: "hob", name: "Magic: The Gathering | The Hobbit", released_at: "2026-08-14", set_type: "expansion" },
+  { code: "hoc", name: "Magic: The Gathering | The Hobbit Commander", released_at: "2026-08-14", set_type: "commander" },
   { code: "fin", name: "Magic: The Gathering—FINAL FANTASY", released_at: "2025-06-13", set_type: "expansion" },
   { code: "tdm", name: "Tarkir: Dragonstorm", released_at: "2025-04-11", set_type: "expansion" },
   { code: "dft", name: "Aetherdrift", released_at: "2025-02-14", set_type: "expansion" },
@@ -1041,6 +1048,19 @@ function normalizeAliasKey(value) {
   return normalizeCardName(value).replaceAll(/[・･\s'’"“”\-‐‑‒–—―]/g, "");
 }
 
+function setAliasCodesForQuery(query) {
+  const key = normalizeAliasKey(query);
+  if (!key) return [];
+  const match = SET_SEARCH_ALIASES.find(alias => alias.terms.some(term => normalizeAliasKey(term) === key));
+  return match ? match.codes : [];
+}
+
+function buildSetAliasSearchQuery(codes, filters) {
+  const setTerms = [...new Set(codes.map(normalizeSetCode).filter(Boolean))].map(code => `set:${code}`);
+  if (!setTerms.length) return "";
+  return [`(${setTerms.join(" or ")})`, filters].filter(Boolean).join(" ");
+}
+
 function cardSearchNames(card) {
   return [
     card.name,
@@ -1358,6 +1378,16 @@ function buildSearchCandidates(query, filters, preferredLang = "", exactMatch = 
 }
 
 async function fetchSearchCandidates(query, filters, preferredLang, exactMatch, maxCards = 30) {
+  const setAliasCodes = exactMatch ? [] : setAliasCodesForQuery(query);
+  if (setAliasCodes.length) {
+    const setAliasQuery = buildSetAliasSearchQuery(setAliasCodes, filters);
+    if (setAliasQuery) {
+      const result = await fetchScryfallSearch(setAliasQuery, { unique: "cards", order: "name" });
+      if (result.ok && result.data.data?.length) {
+        return { cards: result.data.data.slice(0, maxCards), error: null, source: "set-alias" };
+      }
+    }
+  }
   if (String(query || "").trim()) {
     const localResult = await fetchLocalSearchCandidates(query, filters, exactMatch, maxCards);
     if (localResult.cards.length) {

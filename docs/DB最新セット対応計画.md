@@ -18,28 +18,33 @@
 
 ローカル生成DB上では、現時点の最新セットは次の順です。
 
+2026-08-08時点で、ホビット系セットはScryfall/MTGJSONともに英語版カードは取得できますが、日本語名つきカードデータはまだ揃っていません。
+そのため、アプリ側では先行して `HOB` / `HOC` をセットとして認識し、詳細検索のセット欄や通常検索の `ホビット` から検索できるようにしています。
+
 | 優先 | 発売日 | セット略号 | セット名 | 生成DB件数 | 補完DB件数 | DB状態 | 作業ステータス |
 | ---: | --- | --- | --- | ---: | ---: | --- | --- |
-| 1 | 2026-06-26 | MSC | Marvel Super Heroes Commander | 260 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 2 | 2026-06-26 | MSH | Marvel Super Heroes | 259 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 3 | 2026-04-24 | SOA | Secrets of Strixhaven Mystical Archive | 63 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 4 | 2026-04-24 | SOC | Secrets of Strixhaven Commander | 211 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 5 | 2026-04-24 | SOS | Secrets of Strixhaven | 236 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 6 | 2026-03-06 | PZA | Teenage Mutant Ninja Turtles Source Material | 18 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 7 | 2026-03-06 | TMC | Teenage Mutant Ninja Turtles Eternal | 62 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 8 | 2026-03-06 | TMT | Teenage Mutant Ninja Turtles | 194 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 9 | 2026-01-23 | ECC | Lorwyn Eclipsed Commander | 125 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 10 | 2026-01-23 | ECL | Lorwyn Eclipsed | 263 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 11 | 2026-01-01 | PW26 | Wizards Play Network 2026 | 1 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 12 | 2025-11-21 | TLA | Avatar: The Last Airbender | 279 | 15 | 補完あり | ✅修正済み・ID補完済み |
-| 13 | 2025-11-21 | TLE | Avatar: The Last Airbender Eternal | 210 | 0 | 生成DBあり | ✅確認済み・問題なし |
-| 14 | 2025-09-26 | MAR | Marvel Universe | 32 | 0 | 生成DBあり | ⏳未確認 |
-| 15 | 2025-09-26 | SPE | Marvel's Spider-Man Eternal | 26 | 0 | 生成DBあり | ⏳未確認 |
-| 16 | 2025-09-26 | SPM | Marvel's Spider-Man | 181 | 0 | 生成DBあり | ⏳未確認 |
-| 17 | 2025-08-01 | EOC | Edge of Eternities Commander | 131 | 0 | 生成DBあり | ⏳未確認 |
-| 18 | 2025-08-01 | EOE | Edge of Eternities | 260 | 0 | 生成DBあり | ⏳未確認 |
-| 19 | 2025-06-13 | FCA | Final Fantasy: Through the Ages | 54 | 0 | 生成DBあり | ⏳未確認 |
-| 20 | 2025-06-13 | FIC | Final Fantasy Commander | 209 | 0 | 生成DBあり | ⏳未確認 |
+| 1 | 2026-08-14 | HOB | Magic: The Gathering \| The Hobbit | 0 | 0 | 外部DB日本語待ち | ✅セット検索対応済み・日本語名待ち |
+| 2 | 2026-08-14 | HOC | Magic: The Gathering \| The Hobbit Commander | 0 | 0 | 外部DB日本語待ち | ✅セット検索対応済み・日本語名待ち |
+| 3 | 2026-06-26 | MSC | Marvel Super Heroes Commander | 260 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 4 | 2026-06-26 | MSH | Marvel Super Heroes | 259 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 5 | 2026-04-24 | SOA | Secrets of Strixhaven Mystical Archive | 63 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 6 | 2026-04-24 | SOC | Secrets of Strixhaven Commander | 211 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 7 | 2026-04-24 | SOS | Secrets of Strixhaven | 236 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 8 | 2026-03-06 | PZA | Teenage Mutant Ninja Turtles Source Material | 18 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 9 | 2026-03-06 | TMC | Teenage Mutant Ninja Turtles Eternal | 62 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 10 | 2026-03-06 | TMT | Teenage Mutant Ninja Turtles | 194 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 11 | 2026-01-23 | ECC | Lorwyn Eclipsed Commander | 125 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 12 | 2026-01-23 | ECL | Lorwyn Eclipsed | 263 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 13 | 2026-01-01 | PW26 | Wizards Play Network 2026 | 1 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 14 | 2025-11-21 | TLA | Avatar: The Last Airbender | 279 | 15 | 補完あり | ✅修正済み・ID補完済み |
+| 15 | 2025-11-21 | TLE | Avatar: The Last Airbender Eternal | 210 | 0 | 生成DBあり | ✅確認済み・問題なし |
+| 16 | 2025-09-26 | MAR | Marvel Universe | 32 | 0 | 生成DBあり | ⏳未確認 |
+| 17 | 2025-09-26 | SPE | Marvel's Spider-Man Eternal | 26 | 0 | 生成DBあり | ⏳未確認 |
+| 18 | 2025-09-26 | SPM | Marvel's Spider-Man | 181 | 0 | 生成DBあり | ⏳未確認 |
+| 19 | 2025-08-01 | EOC | Edge of Eternities Commander | 131 | 0 | 生成DBあり | ⏳未確認 |
+| 20 | 2025-08-01 | EOE | Edge of Eternities | 260 | 0 | 生成DBあり | ⏳未確認 |
+| 21 | 2025-06-13 | FCA | Final Fantasy: Through the Ages | 54 | 0 | 生成DBあり | ⏳未確認 |
+| 22 | 2025-06-13 | FIC | Final Fantasy Commander | 209 | 0 | 生成DBあり | ⏳未確認 |
 
 凡例：
 
