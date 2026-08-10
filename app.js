@@ -1,4 +1,4 @@
-const APP_VERSION = "v151";
+const APP_VERSION = "v152";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -2586,7 +2586,7 @@ function renderDeckSection(section, entries, emptyText = "") {
         const selected = deckReorderSelection?.cardId === entry.cardId && deckReorderSelection?.section === entry.section;
         const classes = ["deck-content-card", missing ? "missing-card" : "", dragging ? "deck-dragging-card" : "", deckReorderMode ? "deck-reorder-mode-card" : "", selected ? "deck-reorder-selected" : ""].filter(Boolean).join(" ");
         const cardName = card ? nameOf(card) : "削除済みカード";
-        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img src="${esc(card?.image || "")}" alt="" loading="lazy"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
+        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img src="${esc(card?.image || "")}" alt="" loading="lazy" draggable="false"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
       }).join("")}
     </div>` : `<div class="deck-section-empty">${esc(emptyText || `${label}にカードがありません`)}</div>`;
   return `<section class="deck-section deck-section-${esc(section)}"><div class="deck-section-title"><span>${esc(label)}</span><b>${count}枚</b></div>${content}</section>`;
@@ -2820,9 +2820,7 @@ function attachDeckContentCardHandlers(button) {
   });
   button.addEventListener("pointerup", endDeckDrag);
   button.addEventListener("pointercancel", endDeckDrag);
-  button.addEventListener("contextmenu", event => {
-    if (deckReorderMode || deckDragState) event.preventDefault();
-  });
+  button.addEventListener("contextmenu", event => event.preventDefault());
   button.addEventListener("dragstart", event => event.preventDefault());
 }
 
@@ -3897,6 +3895,9 @@ async function importBackup(file) {
 }
 
 document.querySelectorAll(".bottom-nav button").forEach(button => button.addEventListener("click", () => showView(button.dataset.view)));
+document.addEventListener("contextmenu", event => {
+  if (event.target?.closest?.(".deck-content-card")) event.preventDefault();
+}, { capture: true });
 initAdvancedSearchUi();
 els.deckSearchSetIncludeExtras?.closest("label")?.remove();
 els.searchButton.addEventListener("click", searchCards);
