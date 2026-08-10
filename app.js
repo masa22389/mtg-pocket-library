@@ -1,10 +1,11 @@
-const APP_VERSION = "v152";
-const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
+const APP_VERSION = "v153";
+const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
   collection: read(KEYS.collection, []),
   decks: read(KEYS.decks, []),
   fx: read(KEYS.fx, { usdJpy: 0, updatedAt: 0, source: "" }),
+  favoriteGroups: read(KEYS.favoriteGroups, []),
   backupMeta: read(KEYS.backupMeta, { lastExportedAt: 0 }),
   searchResults: [],
   searchGroups: [],
@@ -39,7 +40,7 @@ const els = {
   collectionFilter: $("#collectionFilter"), collectionViewMode: $("#collectionViewMode"), collectionPriceDisplayMode: $("#collectionPriceDisplayMode"), openCollectionAdvanced: $("#openCollectionAdvanced"),
   collectionFilterDialog: $("#collectionFilterDialog"), closeCollectionAdvanced: $("#closeCollectionAdvanced"), collectionFilterSummary: $("#collectionFilterSummary"), collectionColor: $("#collectionColor"),
   collectionMana: $("#collectionMana"), collectionType: $("#collectionType"), collectionPriceFilter: $("#collectionPriceFilter"),
-  collectionFavoritesOnly: $("#collectionFavoritesOnly"),
+  collectionFavoritesOnly: $("#collectionFavoritesOnly"), collectionFavoriteGroup: $("#collectionFavoriteGroup"),
   sortCollectionByName: $("#sortCollectionByName"), sortCollectionByColor: $("#sortCollectionByColor"),
   sortCollectionByMana: $("#sortCollectionByMana"), sortCollectionByType: $("#sortCollectionByType"),
   sortCollectionByValue: $("#sortCollectionByValue"), sortCollectionByUnitPrice: $("#sortCollectionByUnitPrice"),
@@ -52,13 +53,15 @@ const els = {
   cardLocation: $("#cardLocation"), addCardButton: $("#addCardButton"), addCardToDeckButton: $("#addCardToDeckButton"),
   cardActionStatus: $("#cardActionStatus"), deckDialog: $("#deckDialog"),
   favoriteCardButton: $("#favoriteCardButton"), deleteCardButton: $("#deleteCardButton"),
+  favoriteGroupPanel: $("#favoriteGroupPanel"), newFavoriteGroupName: $("#newFavoriteGroupName"),
+  createFavoriteGroupButton: $("#createFavoriteGroupButton"), favoriteGroupList: $("#favoriteGroupList"),
   deckName: $("#deckName"), deckFormat: $("#deckFormat"), deckCount: $("#deckCount"),
   deckMissing: $("#deckMissing"), deckStats: $("#deckStats"), deckMissingList: $("#deckMissingList"), deckDates: $("#deckDates"), deckMemo: $("#deckMemo"), deckCardFilter: $("#deckCardFilter"), deckSection: $("#deckSection"),
   openDeckOwnedAdd: $("#openDeckOwnedAdd"), openDeckSearchAdd: $("#openDeckSearchAdd"),
   deckOwnedAddDialog: $("#deckOwnedAddDialog"), deckSearchAddDialog: $("#deckSearchAddDialog"),
   openDeckOwnedAdvanced: $("#openDeckOwnedAdvanced"), deckOwnedAdvancedPanel: $("#deckOwnedAdvancedPanel"), deckOwnedFilterSummary: $("#deckOwnedFilterSummary"),
   deckOwnedColor: $("#deckOwnedColor"), deckOwnedMana: $("#deckOwnedMana"), deckOwnedType: $("#deckOwnedType"),
-  deckOwnedFavoritesOnly: $("#deckOwnedFavoritesOnly"),
+  deckOwnedFavoritesOnly: $("#deckOwnedFavoritesOnly"), deckOwnedFavoriteGroup: $("#deckOwnedFavoriteGroup"),
   clearDeckOwnedFilters: $("#clearDeckOwnedFilters"),
   deckOwnedAddStatus: $("#deckOwnedAddStatus"), deckCandidates: $("#deckCandidates"), deckGlobalSearch: $("#deckGlobalSearch"),
   deckGlobalSearchButton: $("#deckGlobalSearchButton"), deckGlobalSearchStatus: $("#deckGlobalSearchStatus"),
@@ -93,10 +96,95 @@ function persist() {
   localStorage.setItem(KEYS.collection, JSON.stringify(state.collection));
   localStorage.setItem(KEYS.decks, JSON.stringify(state.decks));
   localStorage.setItem(KEYS.fx, JSON.stringify(state.fx));
+  localStorage.setItem(KEYS.favoriteGroups, JSON.stringify(state.favoriteGroups));
 }
 
 function uid() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`; }
 function esc(value) { return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;"); }
+function normalizeFavoriteGroups() {
+  state.favoriteGroups = Array.isArray(state.favoriteGroups) ? state.favoriteGroups
+    .filter(group => group && String(group.name || "").trim())
+    .map(group => ({ id: group.id || uid(), name: String(group.name).trim(), createdAt: group.createdAt || Date.now() })) : [];
+  state.collection.forEach(card => {
+    card.favoriteGroupIds = Array.isArray(card.favoriteGroupIds) ? card.favoriteGroupIds.filter(id => state.favoriteGroups.some(group => group.id === id)) : [];
+  });
+}
+function favoriteGroupNames(card) {
+  const ids = Array.isArray(card?.favoriteGroupIds) ? card.favoriteGroupIds : [];
+  return state.favoriteGroups.filter(group => ids.includes(group.id)).map(group => group.name);
+}
+function favoriteGroupMatch(card, groupId) {
+  return !groupId || (Array.isArray(card.favoriteGroupIds) && card.favoriteGroupIds.includes(groupId));
+}
+function renderFavoriteGroupOptions() {
+  const options = [`<option value="">すべて</option>`, ...state.favoriteGroups.map(group => `<option value="${esc(group.id)}">${esc(group.name)}</option>`)].join("");
+  [els.collectionFavoriteGroup, els.deckOwnedFavoriteGroup].forEach(select => {
+    if (!select) return;
+    const value = select.value;
+    select.innerHTML = options;
+    select.value = state.favoriteGroups.some(group => group.id === value) ? value : "";
+  });
+}
+function renderFavoriteGroupPanel() {
+  const owned = selectedOwnedCard();
+  const hidden = state.cardDialogMode === "deck" || !owned;
+  if (!els.favoriteGroupPanel) return;
+  els.favoriteGroupPanel.hidden = hidden;
+  if (hidden) return;
+  if (!state.favoriteGroups.length) {
+    els.favoriteGroupList.innerHTML = `<p class="muted">グループを作成すると、このカードを分類できます。</p>`;
+    return;
+  }
+  const ids = Array.isArray(owned.favoriteGroupIds) ? owned.favoriteGroupIds : [];
+  els.favoriteGroupList.innerHTML = state.favoriteGroups.map(group => `
+    <label class="favorite-group-item">
+      <input type="checkbox" data-favorite-group-id="${esc(group.id)}" ${ids.includes(group.id) ? "checked" : ""}>
+      <span>${esc(group.name)}</span>
+      <button type="button" class="tiny delete-favorite-group" data-favorite-group-delete="${esc(group.id)}">削除</button>
+    </label>
+  `).join("");
+  els.favoriteGroupList.querySelectorAll("[data-favorite-group-id]").forEach(input => input.addEventListener("change", () => {
+    const id = input.dataset.favoriteGroupId;
+    owned.favoriteGroupIds = Array.isArray(owned.favoriteGroupIds) ? owned.favoriteGroupIds : [];
+    owned.favoriteGroupIds = input.checked
+      ? [...new Set([...owned.favoriteGroupIds, id])]
+      : owned.favoriteGroupIds.filter(groupId => groupId !== id);
+    persist();
+    renderCollection();
+    if (state.editingDeck) renderDeckEditor();
+    renderFavoriteGroupPanel();
+  }));
+  els.favoriteGroupList.querySelectorAll("[data-favorite-group-delete]").forEach(button => button.addEventListener("click", () => deleteFavoriteGroup(button.dataset.favoriteGroupDelete)));
+}
+function createFavoriteGroup() {
+  const name = els.newFavoriteGroupName?.value.trim();
+  if (!name) { showToast("グループ名を入力してください"); return; }
+  if (state.favoriteGroups.some(group => group.name === name)) { showToast("同じ名前のグループがあります"); return; }
+  state.favoriteGroups.push({ id: uid(), name, createdAt: Date.now() });
+  els.newFavoriteGroupName.value = "";
+  persist();
+  renderFavoriteGroupOptions();
+  renderFavoriteGroupPanel();
+  renderCollection();
+  if (state.editingDeck) renderDeckEditor();
+  showToast(`「${name}」を作成しました`);
+}
+function deleteFavoriteGroup(groupId) {
+  const group = state.favoriteGroups.find(item => item.id === groupId);
+  if (!group) return;
+  if (!confirm(`お気に入りグループ「${group.name}」を削除しますか？\nカード自体は削除されません。`)) return;
+  state.favoriteGroups = state.favoriteGroups.filter(item => item.id !== groupId);
+  state.collection.forEach(card => {
+    if (Array.isArray(card.favoriteGroupIds)) card.favoriteGroupIds = card.favoriteGroupIds.filter(id => id !== groupId);
+  });
+  persist();
+  renderFavoriteGroupOptions();
+  renderFavoriteGroupPanel();
+  renderCollection();
+  if (state.editingDeck) renderDeckEditor();
+  showToast(`「${group.name}」を削除しました`);
+}
+normalizeFavoriteGroups();
 function isJapaneseCard(card) { return (card?.lang || card?.language || "") === "ja"; }
 function cardScryfallId(card) { return card?._sourceScryfallId || card?.scryfallId || card?.id || ""; }
 function prefersJapaneseDisplay(card) { return Boolean(card?._preferJpDisplay || isJapaneseCard(card)); }
@@ -457,11 +545,13 @@ function updateCollectionFilterSummary() {
   const mana = selectedOptionText(els.collectionMana);
   const type = selectedOptionText(els.collectionType);
   const price = selectedOptionText(els.collectionPriceFilter);
+  const favoriteGroup = selectedOptionText(els.collectionFavoriteGroup);
   if (color) chips.push(`色:${color}`);
   if (mana) chips.push(`マナ:${mana}`);
   if (type) chips.push(`タイプ:${type}`);
   if (price) chips.push(`価格:${price}`);
   if (els.collectionFavoritesOnly?.checked) chips.push("お気に入りのみ");
+  if (favoriteGroup) chips.push(`お気に入り:${favoriteGroup}`);
   els.collectionFilterSummary.textContent = chips.length ? `詳細条件：${chips.join(" / ")}` : "詳細条件：指定なし";
 }
 
@@ -1604,10 +1694,11 @@ function updateCardOwnedActions() {
   const hidden = state.cardDialogMode === "deck" || !owned;
   els.favoriteCardButton.hidden = hidden;
   els.deleteCardButton.hidden = hidden;
-  if (!owned) return;
+  if (!owned) { renderFavoriteGroupPanel(); return; }
   els.favoriteCardButton.classList.toggle("active", owned.favorite === true);
   els.favoriteCardButton.textContent = owned.favorite ? "★ お気に入り" : "☆ お気に入り";
   els.favoriteCardButton.setAttribute("aria-pressed", owned.favorite ? "true" : "false");
+  renderFavoriteGroupPanel();
 }
 
 function collectionSortLabel(mode) {
@@ -1764,7 +1855,7 @@ function compactCard(card) {
     priceUsd: card.prices?.usd || null, priceUsdFoil: card.prices?.usd_foil || null, priceUsdEtched: card.prices?.usd_etched || null,
     priceUsdFromEnglish: false, priceUsdFoilFromEnglish: false, priceUsdEtchedFromEnglish: false, priceUpdatedAt: Date.now(),
     quantity: Math.max(1, Number(els.cardQuantity.value || 1)), condition: els.cardCondition.value,
-    finish: els.cardFinish.value, language: els.cardLanguage.value, location: els.cardLocation.value.trim(), favorite: false, addedAt: Date.now(),
+    finish: els.cardFinish.value, language: els.cardLanguage.value, location: els.cardLocation.value.trim(), favorite: false, favoriteGroupIds: [], addedAt: Date.now(),
   };
 }
 
@@ -1806,6 +1897,7 @@ function renderCollection() {
   const type = els.collectionType.value;
   const priceFilter = els.collectionPriceFilter.value;
   const favoritesOnly = els.collectionFavoritesOnly.checked;
+  const favoriteGroupId = els.collectionFavoriteGroup?.value || "";
   let cards = state.collection.filter(card => {
     const textMatch = [card.name, card.printedName, card.setName, card.typeLine, card.printedTypeLine, card.location].join(" ").toLowerCase().includes(query);
     const identity = card.colorIdentity || card.colors || [];
@@ -1820,7 +1912,7 @@ function renderCollection() {
       || (priceFilter === "english" && selectedPriceUsesEnglish(card))
       || (priceFilter === "over10000" && yenValue != null && yenValue >= 10000)
       || (priceFilter === "over50000" && yenValue != null && yenValue >= 50000);
-    const favoriteMatch = !favoritesOnly || card.favorite === true;
+    const favoriteMatch = (!favoritesOnly || card.favorite === true) && favoriteGroupMatch(card, favoriteGroupId);
     return textMatch && colorMatch && manaMatch && typeMatch && priceMatch && favoriteMatch;
   });
   cards = sortedCollectionCards(cards);
@@ -1861,7 +1953,7 @@ function renderCollection() {
     <article class="list-item" data-id="${card.id}">
       <button class="collection-card-open" type="button" aria-label="${esc(nameOf(card))}の詳細を開く">
         <span class="collection-thumb-wrap"><img class="thumb" src="${esc(card.image)}" alt="" loading="lazy"><span class="collection-qty-badge">×${Number(card.quantity || 0)}</span></span>
-        <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(card.condition)} · ${card.finish === "normal" ? "通常" : esc(card.finish)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
+        <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(card.condition)} · ${card.finish === "normal" ? "通常" : esc(card.finish)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${favoriteGroupNames(card).map(name => `<span class="chip">★ ${esc(name)}</span>`).join("")}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
       </button>
       <div class="item-actions"><button class="tiny move-owned-up" aria-label="${esc(nameOf(card))}を前へ移動" ${index === 0 ? "disabled" : ""}>↑</button><button class="tiny move-owned-down" aria-label="${esc(nameOf(card))}を後へ移動" ${index === cards.length - 1 ? "disabled" : ""}>↓</button><button class="tiny minus" aria-label="1枚減らす">−</button><span class="qty-pill">×${card.quantity}</span><button class="tiny plus" aria-label="1枚増やす">＋</button><button class="tiny favorite-owned ${card.favorite ? "active" : ""}" aria-label="${esc(nameOf(card))}を${card.favorite ? "お気に入りから外す" : "お気に入りに追加"}" aria-pressed="${card.favorite ? "true" : "false"}">${card.favorite ? "★" : "☆"}</button><button class="tiny delete-owned" aria-label="${esc(nameOf(card))}をコレクションから削除">削除</button></div>
     </article>`).join("");
@@ -2442,6 +2534,7 @@ function groupedOwnedDeckCards(query) {
   const mana = els.deckOwnedMana.value;
   const type = els.deckOwnedType.value;
   const favoritesOnly = els.deckOwnedFavoritesOnly.checked;
+  const favoriteGroupId = els.deckOwnedFavoriteGroup?.value || "";
   state.collection.filter(card => {
     const textMatch = [card.name, card.printedName, card.setName, card.typeLine, card.printedTypeLine].join(" ").toLowerCase().includes(query);
     const identity = card.colorIdentity || card.colors || [];
@@ -2449,7 +2542,7 @@ function groupedOwnedDeckCards(query) {
     const manaValue = Number(card.manaValue || 0);
     const manaMatch = !mana || (mana === "7+" ? manaValue >= 7 : manaValue === Number(mana));
     const typeMatch = !type || String(card.typeLine || "").toLowerCase().includes(type.toLowerCase());
-    const favoriteMatch = !favoritesOnly || card.favorite === true;
+    const favoriteMatch = (!favoritesOnly || card.favorite === true) && favoriteGroupMatch(card, favoriteGroupId);
     return textMatch && colorMatch && manaMatch && typeMatch && favoriteMatch;
   }).forEach(card => {
     const key = card.scryfallId || `${card.name}:${card.image}`;
@@ -2476,10 +2569,12 @@ function updateDeckOwnedFilterSummary() {
   const colorText = els.deckOwnedColor.selectedOptions[0]?.textContent || "";
   const manaText = els.deckOwnedMana.selectedOptions[0]?.textContent || "";
   const typeText = els.deckOwnedType.selectedOptions[0]?.textContent || "";
+  const favoriteGroupText = selectedOptionText(els.deckOwnedFavoriteGroup);
   if (els.deckOwnedColor.value) chips.push(`色:${colorText}`);
   if (els.deckOwnedMana.value) chips.push(`マナ:${manaText}`);
   if (els.deckOwnedType.value) chips.push(`タイプ:${typeText}`);
   if (els.deckOwnedFavoritesOnly.checked) chips.push("お気に入りのみ");
+  if (favoriteGroupText) chips.push(`お気に入り:${favoriteGroupText}`);
   els.deckOwnedFilterSummary.textContent = chips.length ? `詳細条件：${chips.join("・")}` : "詳細条件：指定なし";
 }
 
@@ -3549,6 +3644,7 @@ function collectionCardFromDeckCard(card) {
     language,
     location: "",
     favorite: false,
+    favoriteGroupIds: [],
     addedAt: Date.now(),
   };
 }
@@ -3849,6 +3945,7 @@ function backupPayload() {
     collection: state.collection,
     decks: state.decks,
     fx: state.fx,
+    favoriteGroups: state.favoriteGroups,
   };
 }
 
@@ -3889,6 +3986,9 @@ async function importBackup(file) {
     state.collection = data.collection;
     state.decks = data.decks;
     if (data.fx && typeof data.fx === "object") state.fx = data.fx;
+    state.favoriteGroups = Array.isArray(data.favoriteGroups) ? data.favoriteGroups : [];
+    normalizeFavoriteGroups();
+    renderFavoriteGroupOptions();
     persist(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("バックアップを復元しました");
   } catch { showToast("正しいバックアップファイルではありません"); }
   els.importInput.value = "";
@@ -3898,6 +3998,7 @@ document.querySelectorAll(".bottom-nav button").forEach(button => button.addEven
 document.addEventListener("contextmenu", event => {
   if (event.target?.closest?.(".deck-content-card")) event.preventDefault();
 }, { capture: true });
+renderFavoriteGroupOptions();
 initAdvancedSearchUi();
 els.deckSearchSetIncludeExtras?.closest("label")?.remove();
 els.searchButton.addEventListener("click", searchCards);
@@ -3947,10 +4048,10 @@ document.querySelectorAll("[data-collection-price-mode]").forEach(button => butt
   localStorage.setItem(KEYS.collectionPriceDisplayMode, state.collectionPriceDisplayMode);
   renderCollection();
 }));
-[els.collectionColor, els.collectionMana, els.collectionType, els.collectionPriceFilter].forEach(filter => filter.addEventListener("change", renderCollection));
+[els.collectionColor, els.collectionMana, els.collectionType, els.collectionPriceFilter, els.collectionFavoriteGroup].filter(Boolean).forEach(filter => filter.addEventListener("change", renderCollection));
 els.collectionFavoritesOnly.addEventListener("change", renderCollection);
 els.clearCollectionFilters.addEventListener("click", () => {
-  els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; els.collectionFavoritesOnly.checked = false; renderCollection();
+  els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; renderCollection();
 });
 els.sortCollectionByName.addEventListener("click", () => applyCollectionSort("name"));
 els.sortCollectionByColor.addEventListener("click", () => applyCollectionSort("color"));
@@ -3963,6 +4064,10 @@ els.addCardButton.addEventListener("click", saveSelectedCardQuantity);
 els.addCardToDeckButton.addEventListener("click", addSelectedCardToDeck);
 els.favoriteCardButton.addEventListener("click", toggleSelectedFavorite);
 els.deleteCardButton.addEventListener("click", deleteSelectedOwned);
+els.createFavoriteGroupButton?.addEventListener("click", createFavoriteGroup);
+els.newFavoriteGroupName?.addEventListener("keydown", event => {
+  if (event.key === "Enter") { event.preventDefault(); createFavoriteGroup(); }
+});
 els.decrementQuantity.addEventListener("click", () => { els.cardQuantity.value = Math.max(0, Number(els.cardQuantity.value || 0) - 1); });
 els.incrementQuantity.addEventListener("click", () => { els.cardQuantity.value = Math.max(0, Number(els.cardQuantity.value || 0) + 1); });
 els.variantFilter.addEventListener("change", renderVariantGallery);
@@ -4003,10 +4108,10 @@ document.querySelectorAll("[data-deck-section-target]").forEach(button => button
   els.deckSection.value = button.dataset.deckSectionTarget;
   renderDeckEditor();
 }));
-[els.deckOwnedColor, els.deckOwnedMana, els.deckOwnedType].forEach(filter => filter.addEventListener("change", renderDeckEditor));
+[els.deckOwnedColor, els.deckOwnedMana, els.deckOwnedType, els.deckOwnedFavoriteGroup].filter(Boolean).forEach(filter => filter.addEventListener("change", renderDeckEditor));
 els.deckOwnedFavoritesOnly.addEventListener("change", renderDeckEditor);
 els.clearDeckOwnedFilters.addEventListener("click", () => {
-  els.deckCardFilter.value = ""; els.deckOwnedColor.value = ""; els.deckOwnedMana.value = ""; els.deckOwnedType.value = ""; els.deckOwnedFavoritesOnly.checked = false; renderDeckEditor();
+  els.deckCardFilter.value = ""; els.deckOwnedColor.value = ""; els.deckOwnedMana.value = ""; els.deckOwnedType.value = ""; if (els.deckOwnedFavoriteGroup) els.deckOwnedFavoriteGroup.value = ""; els.deckOwnedFavoritesOnly.checked = false; renderDeckEditor();
 });
 els.deckGlobalSearchButton.addEventListener("click", searchDeckCards);
 els.deckGlobalSearch.addEventListener("keydown", event => { if (event.key === "Enter") { event.preventDefault(); searchDeckCards(); } });

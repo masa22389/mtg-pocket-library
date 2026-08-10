@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=152">
+  <link rel="stylesheet" href="styles.css?v=153">
 </head>
 <body>
   <header class="app-header">
@@ -71,6 +71,7 @@
         <label>カードタイプ<select id="collectionType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label>
         <label>価格<select id="collectionPriceFilter"><option value="">すべて</option><option value="priced">価格あり</option><option value="missing">価格なし</option><option value="english">英語版参考</option><option value="over10000">1万円以上</option><option value="over50000">5万円以上</option></select></label>
         <label class="favorite-filter"><input id="collectionFavoritesOnly" type="checkbox"><span>★ お気に入りのみ</span></label>
+        <label>お気に入りグループ<select id="collectionFavoriteGroup"><option value="">すべて</option></select></label>
         <button id="clearCollectionFilters" class="filter-reset" type="button">条件をクリア</button>
       </section>
         </form>
@@ -159,6 +160,14 @@
       <div class="card-action-row"><button id="addCardButton" type="button">所持枚数を保存</button><button id="addCardToDeckButton" type="button" hidden>このイラストをデッキへ追加</button></div>
       <p id="cardActionStatus" class="deck-add-status" aria-live="polite"></p>
       <div class="card-owned-actions"><button id="favoriteCardButton" type="button" class="favorite-owned">☆ お気に入り</button><button id="deleteCardButton" type="button" class="danger">削除</button></div>
+      <section id="favoriteGroupPanel" class="favorite-group-panel" hidden>
+        <h3>お気に入りグループ</h3>
+        <div class="favorite-group-create">
+          <input id="newFavoriteGroupName" type="text" maxlength="30" placeholder="例：基本土地">
+          <button id="createFavoriteGroupButton" type="button" class="ghost">作成</button>
+        </div>
+        <div id="favoriteGroupList" class="favorite-group-list"></div>
+      </section>
     </form>
   </dialog>
 
@@ -203,6 +212,7 @@
         <button id="openDeckOwnedAdvanced" class="advanced-search-open" type="button" aria-expanded="false" aria-controls="deckOwnedAdvancedPanel">詳細検索</button>
       </div>
       <label class="favorite-filter deck-owned-favorite-inline"><input id="deckOwnedFavoritesOnly" type="checkbox"><span>★ お気に入りのみ</span></label>
+      <label class="deck-owned-favorite-group">お気に入りグループ<select id="deckOwnedFavoriteGroup"><option value="">すべて</option></select></label>
       <p id="deckOwnedFilterSummary" class="advanced-search-summary">詳細条件：指定なし</p>
       <div id="deckOwnedAdvancedPanel" class="deck-owned-advanced-panel" hidden>
       <div class="deck-owned-filters" aria-label="デッキ用の所持カード検索条件">
@@ -287,8 +297,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=152" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=152" defer></script>
-  <script src="app.js?v=152" defer></script>
+  <script src="mtg-jp-card-index.js?v=153" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=153" defer></script>
+  <script src="app.js?v=153" defer></script>
 </body>
 </html>
