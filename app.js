@@ -1,4 +1,4 @@
-const APP_VERSION = "v153";
+const APP_VERSION = "v154";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -2320,7 +2320,7 @@ function fillDeckDialog() {
   els.deckOwnedColor.value = "";
   els.deckOwnedMana.value = "";
   els.deckOwnedType.value = "";
-  els.deckOwnedFavoritesOnly.checked = false;
+  if (els.deckOwnedFavoritesOnly) els.deckOwnedFavoritesOnly.checked = false;
   els.deckGlobalSearch.value = "";
   els.deckGlobalSearchStatus.textContent = "未所持のカードもデッキに追加できます";
   state.deckSearchResults = [];
@@ -2533,7 +2533,6 @@ function groupedOwnedDeckCards(query) {
   const color = els.deckOwnedColor.value;
   const mana = els.deckOwnedMana.value;
   const type = els.deckOwnedType.value;
-  const favoritesOnly = els.deckOwnedFavoritesOnly.checked;
   const favoriteGroupId = els.deckOwnedFavoriteGroup?.value || "";
   state.collection.filter(card => {
     const textMatch = [card.name, card.printedName, card.setName, card.typeLine, card.printedTypeLine].join(" ").toLowerCase().includes(query);
@@ -2542,7 +2541,7 @@ function groupedOwnedDeckCards(query) {
     const manaValue = Number(card.manaValue || 0);
     const manaMatch = !mana || (mana === "7+" ? manaValue >= 7 : manaValue === Number(mana));
     const typeMatch = !type || String(card.typeLine || "").toLowerCase().includes(type.toLowerCase());
-    const favoriteMatch = (!favoritesOnly || card.favorite === true) && favoriteGroupMatch(card, favoriteGroupId);
+    const favoriteMatch = favoriteGroupMatch(card, favoriteGroupId);
     return textMatch && colorMatch && manaMatch && typeMatch && favoriteMatch;
   }).forEach(card => {
     const key = card.scryfallId || `${card.name}:${card.image}`;
@@ -2573,7 +2572,6 @@ function updateDeckOwnedFilterSummary() {
   if (els.deckOwnedColor.value) chips.push(`色:${colorText}`);
   if (els.deckOwnedMana.value) chips.push(`マナ:${manaText}`);
   if (els.deckOwnedType.value) chips.push(`タイプ:${typeText}`);
-  if (els.deckOwnedFavoritesOnly.checked) chips.push("お気に入りのみ");
   if (favoriteGroupText) chips.push(`お気に入り:${favoriteGroupText}`);
   els.deckOwnedFilterSummary.textContent = chips.length ? `詳細条件：${chips.join("・")}` : "詳細条件：指定なし";
 }
@@ -4109,9 +4107,9 @@ document.querySelectorAll("[data-deck-section-target]").forEach(button => button
   renderDeckEditor();
 }));
 [els.deckOwnedColor, els.deckOwnedMana, els.deckOwnedType, els.deckOwnedFavoriteGroup].filter(Boolean).forEach(filter => filter.addEventListener("change", renderDeckEditor));
-els.deckOwnedFavoritesOnly.addEventListener("change", renderDeckEditor);
+els.deckOwnedFavoritesOnly?.addEventListener("change", renderDeckEditor);
 els.clearDeckOwnedFilters.addEventListener("click", () => {
-  els.deckCardFilter.value = ""; els.deckOwnedColor.value = ""; els.deckOwnedMana.value = ""; els.deckOwnedType.value = ""; if (els.deckOwnedFavoriteGroup) els.deckOwnedFavoriteGroup.value = ""; els.deckOwnedFavoritesOnly.checked = false; renderDeckEditor();
+  els.deckCardFilter.value = ""; els.deckOwnedColor.value = ""; els.deckOwnedMana.value = ""; els.deckOwnedType.value = ""; if (els.deckOwnedFavoriteGroup) els.deckOwnedFavoriteGroup.value = ""; if (els.deckOwnedFavoritesOnly) els.deckOwnedFavoritesOnly.checked = false; renderDeckEditor();
 });
 els.deckGlobalSearchButton.addEventListener("click", searchDeckCards);
 els.deckGlobalSearch.addEventListener("keydown", event => { if (event.key === "Enter") { event.preventDefault(); searchDeckCards(); } });
