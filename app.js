@@ -1,4 +1,4 @@
-const APP_VERSION = "v156";
+const APP_VERSION = "v157";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -54,7 +54,10 @@ const els = {
   cardActionStatus: $("#cardActionStatus"), deckDialog: $("#deckDialog"),
   favoriteCardButton: $("#favoriteCardButton"), deleteCardButton: $("#deleteCardButton"),
   favoriteGroupPanel: $("#favoriteGroupPanel"), favoriteGroupSummary: $("#favoriteGroupSummary"), newFavoriteGroupName: $("#newFavoriteGroupName"),
-  createFavoriteGroupButton: $("#createFavoriteGroupButton"), favoriteGroupList: $("#favoriteGroupList"),
+  createFavoriteGroupButton: $("#createFavoriteGroupButton"), manageFavoriteGroupsButton: $("#manageFavoriteGroupsButton"), favoriteGroupList: $("#favoriteGroupList"),
+  favoriteGroupManagerDialog: $("#favoriteGroupManagerDialog"), closeFavoriteGroupManager: $("#closeFavoriteGroupManager"),
+  manageFavoriteGroupSelect: $("#manageFavoriteGroupSelect"), manageFavoriteGroupName: $("#manageFavoriteGroupName"), saveFavoriteGroupName: $("#saveFavoriteGroupName"),
+  deleteManagedFavoriteGroup: $("#deleteManagedFavoriteGroup"), manageFavoriteGroupStatus: $("#manageFavoriteGroupStatus"), manageFavoriteGroupCards: $("#manageFavoriteGroupCards"),
   deckName: $("#deckName"), deckFormat: $("#deckFormat"), deckCount: $("#deckCount"),
   deckMissing: $("#deckMissing"), deckStats: $("#deckStats"), deckMissingList: $("#deckMissingList"), deckDates: $("#deckDates"), deckMemo: $("#deckMemo"), deckCardFilter: $("#deckCardFilter"), deckSection: $("#deckSection"),
   openDeckOwnedAdd: $("#openDeckOwnedAdd"), openDeckSearchAdd: $("#openDeckSearchAdd"),
@@ -161,6 +164,82 @@ function renderFavoriteGroupPanel() {
   }));
   els.favoriteGroupList.querySelectorAll("[data-favorite-group-delete]").forEach(button => button.addEventListener("click", () => deleteFavoriteGroup(button.dataset.favoriteGroupDelete)));
 }
+function renderFavoriteGroupManager(preferredId = "") {
+  if (!els.favoriteGroupManagerDialog) return;
+  const selectedId = state.favoriteGroups.some(group => group.id === preferredId)
+    ? preferredId
+    : state.favoriteGroups.some(group => group.id === els.manageFavoriteGroupSelect?.value)
+      ? els.manageFavoriteGroupSelect.value
+      : state.favoriteGroups[0]?.id || "";
+  const group = state.favoriteGroups.find(item => item.id === selectedId);
+  if (els.manageFavoriteGroupSelect) {
+    els.manageFavoriteGroupSelect.innerHTML = state.favoriteGroups.length
+      ? state.favoriteGroups.map(item => `<option value="${esc(item.id)}">${esc(item.name)}</option>`).join("")
+      : `<option value="">グループ未作成</option>`;
+    els.manageFavoriteGroupSelect.value = selectedId;
+    els.manageFavoriteGroupSelect.disabled = !group;
+  }
+  if (els.manageFavoriteGroupName) {
+    els.manageFavoriteGroupName.value = group?.name || "";
+    els.manageFavoriteGroupName.disabled = !group;
+  }
+  [els.saveFavoriteGroupName, els.deleteManagedFavoriteGroup].forEach(button => { if (button) button.disabled = !group; });
+  if (!group) {
+    if (els.manageFavoriteGroupStatus) els.manageFavoriteGroupStatus.textContent = "先にグループを作成してください。";
+    if (els.manageFavoriteGroupCards) els.manageFavoriteGroupCards.innerHTML = `<div class="empty">カードを登録するグループがありません。</div>`;
+    return;
+  }
+  const cards = [...state.collection].sort((a, b) => nameOf(a).localeCompare(nameOf(b), "ja"));
+  const checkedCount = cards.filter(card => Array.isArray(card.favoriteGroupIds) && card.favoriteGroupIds.includes(group.id)).length;
+  if (els.manageFavoriteGroupStatus) els.manageFavoriteGroupStatus.textContent = `${checkedCount}/${cards.length}枚を登録中`;
+  if (!cards.length) {
+    els.manageFavoriteGroupCards.innerHTML = `<div class="empty">コレクションにカードがありません。</div>`;
+    return;
+  }
+  els.manageFavoriteGroupCards.innerHTML = cards.map(card => {
+    const ids = Array.isArray(card.favoriteGroupIds) ? card.favoriteGroupIds : [];
+    return `
+      <label class="favorite-manage-card">
+        <input type="checkbox" data-manage-favorite-card="${esc(card.id)}" ${ids.includes(group.id) ? "checked" : ""}>
+        <img src="${esc(card.image)}" alt="" loading="lazy">
+        <span><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ×${Number(card.quantity || 0)}</small></span>
+      </label>`;
+  }).join("");
+  els.manageFavoriteGroupCards.querySelectorAll("[data-manage-favorite-card]").forEach(input => input.addEventListener("change", () => {
+    const card = state.collection.find(item => item.id === input.dataset.manageFavoriteCard);
+    if (!card) return;
+    card.favoriteGroupIds = Array.isArray(card.favoriteGroupIds) ? card.favoriteGroupIds : [];
+    card.favoriteGroupIds = input.checked
+      ? [...new Set([...card.favoriteGroupIds, group.id])]
+      : card.favoriteGroupIds.filter(id => id !== group.id);
+    persist();
+    renderCollection();
+    if (state.editingDeck) renderDeckEditor();
+    renderFavoriteGroupPanel();
+    const newCount = state.collection.filter(item => Array.isArray(item.favoriteGroupIds) && item.favoriteGroupIds.includes(group.id)).length;
+    if (els.manageFavoriteGroupStatus) els.manageFavoriteGroupStatus.textContent = `${newCount}/${state.collection.length}枚を登録中`;
+  }));
+}
+function openFavoriteGroupManager() {
+  if (!els.favoriteGroupManagerDialog) return;
+  renderFavoriteGroupManager();
+  els.favoriteGroupManagerDialog.showModal();
+}
+function saveManagedFavoriteGroupName() {
+  const id = els.manageFavoriteGroupSelect?.value || "";
+  const group = state.favoriteGroups.find(item => item.id === id);
+  const name = els.manageFavoriteGroupName?.value.trim();
+  if (!group || !name) { showToast("グループ名を入力してください"); return; }
+  if (state.favoriteGroups.some(item => item.id !== id && item.name === name)) { showToast("同じ名前のグループがあります"); return; }
+  group.name = name;
+  persist();
+  renderFavoriteGroupOptions();
+  renderFavoriteGroupPanel();
+  renderFavoriteGroupManager(id);
+  renderCollection();
+  if (state.editingDeck) renderDeckEditor();
+  showToast("グループ名を変更しました");
+}
 function createFavoriteGroup() {
   const name = els.newFavoriteGroupName?.value.trim();
   if (!name) { showToast("グループ名を入力してください"); return; }
@@ -185,6 +264,7 @@ function deleteFavoriteGroup(groupId) {
   persist();
   renderFavoriteGroupOptions();
   renderFavoriteGroupPanel();
+  if (els.favoriteGroupManagerDialog?.open) renderFavoriteGroupManager();
   renderCollection();
   if (state.editingDeck) renderDeckEditor();
   showToast(`「${group.name}」を削除しました`);
@@ -4070,6 +4150,17 @@ els.addCardToDeckButton.addEventListener("click", addSelectedCardToDeck);
 els.favoriteCardButton?.addEventListener("click", toggleSelectedFavorite);
 els.deleteCardButton.addEventListener("click", deleteSelectedOwned);
 els.createFavoriteGroupButton?.addEventListener("click", createFavoriteGroup);
+els.manageFavoriteGroupsButton?.addEventListener("click", openFavoriteGroupManager);
+els.closeFavoriteGroupManager?.addEventListener("click", () => els.favoriteGroupManagerDialog?.close());
+els.manageFavoriteGroupSelect?.addEventListener("change", () => renderFavoriteGroupManager(els.manageFavoriteGroupSelect.value));
+els.saveFavoriteGroupName?.addEventListener("click", saveManagedFavoriteGroupName);
+els.manageFavoriteGroupName?.addEventListener("keydown", event => {
+  if (event.key === "Enter") { event.preventDefault(); saveManagedFavoriteGroupName(); }
+});
+els.deleteManagedFavoriteGroup?.addEventListener("click", () => {
+  const id = els.manageFavoriteGroupSelect?.value || "";
+  deleteFavoriteGroup(id);
+});
 els.newFavoriteGroupName?.addEventListener("keydown", event => {
   if (event.key === "Enter") { event.preventDefault(); createFavoriteGroup(); }
 });

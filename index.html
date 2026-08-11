@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=156">
+  <link rel="stylesheet" href="styles.css?v=157">
 </head>
 <body>
   <header class="app-header">
@@ -166,8 +166,28 @@
           <input id="newFavoriteGroupName" type="text" maxlength="30" placeholder="例：基本土地">
           <button id="createFavoriteGroupButton" type="button" class="ghost">作成</button>
         </div>
+        <button id="manageFavoriteGroupsButton" type="button" class="ghost favorite-group-manage-button">グループ管理</button>
         <div id="favoriteGroupList" class="favorite-group-list"></div>
       </details>
+    </form>
+  </dialog>
+
+  <dialog id="favoriteGroupManagerDialog">
+    <form method="dialog" class="dialog-card favorite-group-manager-dialog">
+      <button id="closeFavoriteGroupManager" class="dialog-close" type="button" aria-label="閉じる">×</button>
+      <h2>お気に入りグループ管理</h2>
+      <label>編集するグループ
+        <select id="manageFavoriteGroupSelect"></select>
+      </label>
+      <div class="favorite-group-edit-row">
+        <input id="manageFavoriteGroupName" type="text" maxlength="30" placeholder="グループ名">
+        <button id="saveFavoriteGroupName" type="button">名前を保存</button>
+      </div>
+      <div class="favorite-group-manager-actions">
+        <p id="manageFavoriteGroupStatus" class="muted">グループを選択してください。</p>
+        <button id="deleteManagedFavoriteGroup" type="button" class="danger ghost">グループ削除</button>
+      </div>
+      <div id="manageFavoriteGroupCards" class="favorite-manage-card-list"></div>
     </form>
   </dialog>
 
@@ -296,8 +316,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=156" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=156" defer></script>
-  <script src="app.js?v=156" defer></script>
+  <script src="mtg-jp-card-index.js?v=157" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=157" defer></script>
+  <script src="app.js?v=157" defer></script>
 </body>
 </html>
