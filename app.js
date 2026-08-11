@@ -1,4 +1,4 @@
-const APP_VERSION = "v158";
+const APP_VERSION = "v159";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -32,6 +32,7 @@ let deckReorderMode = false;
 let deckReorderSelection = null;
 let favoriteGroupRenameOpen = false;
 let favoriteGroupManagerQuery = "";
+let favoriteGroupManagerMode = "view";
 
 const $ = selector => document.querySelector(selector);
 const els = {
@@ -58,7 +59,7 @@ const els = {
   favoriteGroupPanel: $("#favoriteGroupPanel"), favoriteGroupSummary: $("#favoriteGroupSummary"), newFavoriteGroupName: $("#newFavoriteGroupName"),
   createFavoriteGroupButton: $("#createFavoriteGroupButton"), manageFavoriteGroupsButton: $("#manageFavoriteGroupsButton"), favoriteGroupList: $("#favoriteGroupList"),
   favoriteGroupManagerDialog: $("#favoriteGroupManagerDialog"), closeFavoriteGroupManager: $("#closeFavoriteGroupManager"),
-  manageFavoriteGroupSelect: $("#manageFavoriteGroupSelect"), toggleFavoriteGroupRename: $("#toggleFavoriteGroupRename"),
+  manageFavoriteGroupSelect: $("#manageFavoriteGroupSelect"), toggleFavoriteGroupRename: $("#toggleFavoriteGroupRename"), toggleFavoriteGroupAdd: $("#toggleFavoriteGroupAdd"),
   manageFavoriteGroupName: $("#manageFavoriteGroupName"), saveFavoriteGroupName: $("#saveFavoriteGroupName"), manageFavoriteGroupSearch: $("#manageFavoriteGroupSearch"),
   deleteManagedFavoriteGroup: $("#deleteManagedFavoriteGroup"), manageFavoriteGroupStatus: $("#manageFavoriteGroupStatus"), manageFavoriteGroupCards: $("#manageFavoriteGroupCards"),
   deckName: $("#deckName"), deckFormat: $("#deckFormat"), deckCount: $("#deckCount"),
@@ -110,9 +111,13 @@ function esc(value) { return String(value ?? "").replaceAll("&", "&amp;").replac
 function normalizeFavoriteGroups() {
   state.favoriteGroups = Array.isArray(state.favoriteGroups) ? state.favoriteGroups
     .filter(group => group && String(group.name || "").trim())
-    .map(group => ({ id: group.id || uid(), name: String(group.name).trim(), createdAt: group.createdAt || Date.now() })) : [];
+    .map(group => ({ id: group.id || uid(), name: String(group.name).trim(), createdAt: group.createdAt || Date.now(), cardOrder: Array.isArray(group.cardOrder) ? group.cardOrder.map(String) : [] })) : [];
   state.collection.forEach(card => {
     card.favoriteGroupIds = Array.isArray(card.favoriteGroupIds) ? card.favoriteGroupIds.filter(id => state.favoriteGroups.some(group => group.id === id)) : [];
+  });
+  state.favoriteGroups.forEach(group => {
+    const memberIds = new Set(state.collection.filter(card => card.favoriteGroupIds.includes(group.id)).map(card => card.id));
+    group.cardOrder = group.cardOrder.filter(id => memberIds.has(id));
   });
 }
 function favoriteGroupNames(card) {
@@ -121,6 +126,25 @@ function favoriteGroupNames(card) {
 }
 function favoriteGroupMatch(card, groupId) {
   return !groupId || (Array.isArray(card.favoriteGroupIds) && card.favoriteGroupIds.includes(groupId));
+}
+function cardsInFavoriteGroup(group) {
+  const members = state.collection.filter(card => Array.isArray(card.favoriteGroupIds) && card.favoriteGroupIds.includes(group.id));
+  const order = Array.isArray(group.cardOrder) ? group.cardOrder : [];
+  const orderIndex = new Map(order.map((id, index) => [id, index]));
+  return members.sort((a, b) => {
+    const ai = orderIndex.has(a.id) ? orderIndex.get(a.id) : Number.MAX_SAFE_INTEGER;
+    const bi = orderIndex.has(b.id) ? orderIndex.get(b.id) : Number.MAX_SAFE_INTEGER;
+    if (ai !== bi) return ai - bi;
+    return nameOf(a).localeCompare(nameOf(b), "ja");
+  });
+}
+function syncFavoriteGroupOrder(group) {
+  if (!group) return;
+  const memberIds = new Set(state.collection.filter(card => Array.isArray(card.favoriteGroupIds) && card.favoriteGroupIds.includes(group.id)).map(card => card.id));
+  const existing = Array.isArray(group.cardOrder) ? group.cardOrder.filter(id => memberIds.has(id)) : [];
+  const known = new Set(existing);
+  const added = state.collection.filter(card => memberIds.has(card.id) && !known.has(card.id)).sort((a, b) => nameOf(a).localeCompare(nameOf(b), "ja")).map(card => card.id);
+  group.cardOrder = [...existing, ...added];
 }
 function renderFavoriteGroupOptions() {
   const options = [`<option value="">すべて</option>`, ...state.favoriteGroups.map(group => `<option value="${esc(group.id)}">${esc(group.name)}</option>`)].join("");
@@ -156,10 +180,18 @@ function renderFavoriteGroupPanel() {
   `).join("");
   els.favoriteGroupList.querySelectorAll("[data-favorite-group-id]").forEach(input => input.addEventListener("change", () => {
     const id = input.dataset.favoriteGroupId;
+    const group = state.favoriteGroups.find(item => item.id === id);
     owned.favoriteGroupIds = Array.isArray(owned.favoriteGroupIds) ? owned.favoriteGroupIds : [];
-    owned.favoriteGroupIds = input.checked
-      ? [...new Set([...owned.favoriteGroupIds, id])]
-      : owned.favoriteGroupIds.filter(groupId => groupId !== id);
+    if (input.checked) {
+      owned.favoriteGroupIds = [...new Set([...owned.favoriteGroupIds, id])];
+      if (group) {
+        group.cardOrder = Array.isArray(group.cardOrder) ? group.cardOrder : [];
+        if (!group.cardOrder.includes(owned.id)) group.cardOrder.push(owned.id);
+      }
+    } else {
+      owned.favoriteGroupIds = owned.favoriteGroupIds.filter(groupId => groupId !== id);
+      if (group) group.cardOrder = Array.isArray(group.cardOrder) ? group.cardOrder.filter(cardId => cardId !== owned.id) : [];
+    }
     persist();
     renderCollection();
     if (state.editingDeck) renderDeckEditor();
@@ -191,7 +223,12 @@ function renderFavoriteGroupManager(preferredId = "") {
     els.toggleFavoriteGroupRename.disabled = !group;
     els.toggleFavoriteGroupRename.textContent = favoriteGroupRenameOpen ? "名前変更を閉じる" : "名前を変更";
   }
+  if (els.toggleFavoriteGroupAdd) {
+    els.toggleFavoriteGroupAdd.disabled = !group;
+    els.toggleFavoriteGroupAdd.textContent = favoriteGroupManagerMode === "add" ? "追加画面を閉じる" : "グループに追加する";
+  }
   if (els.manageFavoriteGroupSearch) {
+    els.manageFavoriteGroupSearch.hidden = favoriteGroupManagerMode !== "add";
     els.manageFavoriteGroupSearch.value = favoriteGroupManagerQuery;
     els.manageFavoriteGroupSearch.disabled = !group || !state.collection.length;
   }
@@ -201,7 +238,51 @@ function renderFavoriteGroupManager(preferredId = "") {
     if (els.manageFavoriteGroupCards) els.manageFavoriteGroupCards.innerHTML = `<div class="empty">カードを登録するグループがありません。</div>`;
     return;
   }
+  syncFavoriteGroupOrder(group);
   const allCards = [...state.collection].sort((a, b) => nameOf(a).localeCompare(nameOf(b), "ja"));
+  const memberCards = cardsInFavoriteGroup(group);
+  if (favoriteGroupManagerMode !== "add") {
+    if (els.manageFavoriteGroupStatus) els.manageFavoriteGroupStatus.textContent = `${memberCards.length}枚を登録中`;
+    if (!memberCards.length) {
+      els.manageFavoriteGroupCards.innerHTML = `<div class="empty">このグループにはまだカードがありません。「グループに追加する」からカードを選んでください。</div>`;
+      return;
+    }
+    els.manageFavoriteGroupCards.innerHTML = memberCards.map((card, index) => `
+      <div class="favorite-manage-card favorite-manage-card-view">
+        <img src="${esc(card.image)}" alt="" loading="lazy">
+        <span><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} ・ ${Number(card.quantity || 0)}枚</small></span>
+        <span class="favorite-manage-card-actions">
+          <button type="button" class="ghost" data-favorite-group-move="${esc(card.id)}" data-direction="-1" ${index === 0 ? "disabled" : ""}>↑</button>
+          <button type="button" class="ghost" data-favorite-group-move="${esc(card.id)}" data-direction="1" ${index === memberCards.length - 1 ? "disabled" : ""}>↓</button>
+          <button type="button" class="danger tiny" data-favorite-group-remove="${esc(card.id)}">解除</button>
+        </span>
+      </div>
+    `).join("");
+    els.manageFavoriteGroupCards.querySelectorAll("[data-favorite-group-move]").forEach(button => button.addEventListener("click", () => {
+      const cardId = button.dataset.favoriteGroupMove;
+      const direction = Number(button.dataset.direction || 0);
+      const ids = memberCards.map(card => card.id);
+      const from = ids.indexOf(cardId);
+      const to = from + direction;
+      if (from < 0 || to < 0 || to >= ids.length) return;
+      [ids[from], ids[to]] = [ids[to], ids[from]];
+      group.cardOrder = ids;
+      persist();
+      renderFavoriteGroupManager(group.id);
+    }));
+    els.manageFavoriteGroupCards.querySelectorAll("[data-favorite-group-remove]").forEach(button => button.addEventListener("click", () => {
+      const card = state.collection.find(item => item.id === button.dataset.favoriteGroupRemove);
+      if (!card) return;
+      card.favoriteGroupIds = Array.isArray(card.favoriteGroupIds) ? card.favoriteGroupIds.filter(id => id !== group.id) : [];
+      group.cardOrder = Array.isArray(group.cardOrder) ? group.cardOrder.filter(id => id !== card.id) : [];
+      persist();
+      renderCollection();
+      if (state.editingDeck) renderDeckEditor();
+      renderFavoriteGroupPanel();
+      renderFavoriteGroupManager(group.id);
+    }));
+    return;
+  }
   const query = normalizeCardName(favoriteGroupManagerQuery);
   const cards = query ? allCards.filter(card => {
     const haystack = [
@@ -234,9 +315,14 @@ function renderFavoriteGroupManager(preferredId = "") {
     const card = state.collection.find(item => item.id === input.dataset.manageFavoriteCard);
     if (!card) return;
     card.favoriteGroupIds = Array.isArray(card.favoriteGroupIds) ? card.favoriteGroupIds : [];
-    card.favoriteGroupIds = input.checked
-      ? [...new Set([...card.favoriteGroupIds, group.id])]
-      : card.favoriteGroupIds.filter(id => id !== group.id);
+    if (input.checked) {
+      card.favoriteGroupIds = [...new Set([...card.favoriteGroupIds, group.id])];
+      group.cardOrder = Array.isArray(group.cardOrder) ? group.cardOrder : [];
+      if (!group.cardOrder.includes(card.id)) group.cardOrder.push(card.id);
+    } else {
+      card.favoriteGroupIds = card.favoriteGroupIds.filter(id => id !== group.id);
+      group.cardOrder = Array.isArray(group.cardOrder) ? group.cardOrder.filter(id => id !== card.id) : [];
+    }
     persist();
     renderCollection();
     if (state.editingDeck) renderDeckEditor();
@@ -249,6 +335,7 @@ function openFavoriteGroupManager() {
   if (!els.favoriteGroupManagerDialog) return;
   favoriteGroupRenameOpen = false;
   favoriteGroupManagerQuery = "";
+  favoriteGroupManagerMode = "view";
   renderFavoriteGroupManager();
   els.favoriteGroupManagerDialog.showModal();
 }
@@ -272,7 +359,7 @@ function createFavoriteGroup() {
   const name = els.newFavoriteGroupName?.value.trim();
   if (!name) { showToast("グループ名を入力してください"); return; }
   if (state.favoriteGroups.some(group => group.name === name)) { showToast("同じ名前のグループがあります"); return; }
-  state.favoriteGroups.push({ id: uid(), name, createdAt: Date.now() });
+  state.favoriteGroups.push({ id: uid(), name, createdAt: Date.now(), cardOrder: [] });
   els.newFavoriteGroupName.value = "";
   persist();
   renderFavoriteGroupOptions();
@@ -4182,12 +4269,20 @@ els.manageFavoriteGroupsButton?.addEventListener("click", openFavoriteGroupManag
 els.closeFavoriteGroupManager?.addEventListener("click", () => els.favoriteGroupManagerDialog?.close());
 els.manageFavoriteGroupSelect?.addEventListener("change", () => {
   favoriteGroupRenameOpen = false;
+  favoriteGroupManagerMode = "view";
+  favoriteGroupManagerQuery = "";
   renderFavoriteGroupManager(els.manageFavoriteGroupSelect.value);
 });
 els.toggleFavoriteGroupRename?.addEventListener("click", () => {
   favoriteGroupRenameOpen = !favoriteGroupRenameOpen;
   renderFavoriteGroupManager(els.manageFavoriteGroupSelect?.value || "");
   if (favoriteGroupRenameOpen) setTimeout(() => els.manageFavoriteGroupName?.focus(), 0);
+});
+els.toggleFavoriteGroupAdd?.addEventListener("click", () => {
+  favoriteGroupManagerMode = favoriteGroupManagerMode === "add" ? "view" : "add";
+  favoriteGroupManagerQuery = "";
+  renderFavoriteGroupManager(els.manageFavoriteGroupSelect?.value || "");
+  if (favoriteGroupManagerMode === "add") setTimeout(() => els.manageFavoriteGroupSearch?.focus(), 0);
 });
 els.saveFavoriteGroupName?.addEventListener("click", saveManagedFavoriteGroupName);
 els.manageFavoriteGroupName?.addEventListener("keydown", event => {

@@ -66,8 +66,13 @@ body.deck-dragging{user-select:none;-webkit-user-select:none}.deck-content-card{
 #deckOwnedAddDialog .deck-added-counts{grid-column:2}
 @media(max-width:520px){#deckOwnedAddDialog .deck-owned-choice{grid-template-columns:44px minmax(0,1fr)}}
 .favorite-group-manager-dialog #manageFavoriteGroupSearch{width:100%;margin:2px 0 6px}
+.favorite-group-manager-dialog #manageFavoriteGroupSearch[hidden]{display:none}
+.favorite-group-add-toggle{width:100%;margin:2px 0 6px}
 .favorite-group-manager-dialog .favorite-group-manager-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .favorite-group-manager-dialog .favorite-group-manager-actions button{min-height:44px}
 .favorite-group-manager-dialog .favorite-group-edit-row{margin-top:-2px;margin-bottom:4px;padding:10px;border:1px solid #d7e2da;border-radius:14px;background:#f3f7f2}
 .favorite-group-manager-dialog .favorite-group-edit-row[hidden]{display:none}
 .favorite-group-manager-dialog #manageFavoriteGroupStatus{margin:2px 0 8px}
+.favorite-manage-card-view{grid-template-columns:42px minmax(0,1fr) auto}
+.favorite-manage-card-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap}
+.favorite-manage-card-actions button{min-height:32px;padding:0 9px;font-size:11px}
