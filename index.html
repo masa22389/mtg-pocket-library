@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=154">
+  <link rel="stylesheet" href="styles.css?v=155">
 </head>
 <body>
   <header class="app-header">
@@ -159,15 +159,15 @@
       </div>
       <div class="card-action-row"><button id="addCardButton" type="button">所持枚数を保存</button><button id="addCardToDeckButton" type="button" hidden>このイラストをデッキへ追加</button></div>
       <p id="cardActionStatus" class="deck-add-status" aria-live="polite"></p>
-      <div class="card-owned-actions"><button id="favoriteCardButton" type="button" class="favorite-owned">☆ お気に入り</button><button id="deleteCardButton" type="button" class="danger">削除</button></div>
-      <section id="favoriteGroupPanel" class="favorite-group-panel" hidden>
-        <h3>お気に入りグループ</h3>
+      <div class="card-owned-actions"><button id="deleteCardButton" type="button" class="danger">削除</button></div>
+      <details id="favoriteGroupPanel" class="favorite-group-panel" hidden>
+        <summary><span>お気に入りグループ</span><small id="favoriteGroupSummary">未作成</small></summary>
         <div class="favorite-group-create">
           <input id="newFavoriteGroupName" type="text" maxlength="30" placeholder="例：基本土地">
           <button id="createFavoriteGroupButton" type="button" class="ghost">作成</button>
         </div>
         <div id="favoriteGroupList" class="favorite-group-list"></div>
-      </section>
+      </details>
     </form>
   </dialog>
 
@@ -296,8 +296,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=154" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=154" defer></script>
-  <script src="app.js?v=154" defer></script>
+  <script src="mtg-jp-card-index.js?v=155" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=155" defer></script>
+  <script src="app.js?v=155" defer></script>
 </body>
 </html>

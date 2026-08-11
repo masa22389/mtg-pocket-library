@@ -1,4 +1,4 @@
-const APP_VERSION = "v154";
+const APP_VERSION = "v155";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -53,7 +53,7 @@ const els = {
   cardLocation: $("#cardLocation"), addCardButton: $("#addCardButton"), addCardToDeckButton: $("#addCardToDeckButton"),
   cardActionStatus: $("#cardActionStatus"), deckDialog: $("#deckDialog"),
   favoriteCardButton: $("#favoriteCardButton"), deleteCardButton: $("#deleteCardButton"),
-  favoriteGroupPanel: $("#favoriteGroupPanel"), newFavoriteGroupName: $("#newFavoriteGroupName"),
+  favoriteGroupPanel: $("#favoriteGroupPanel"), favoriteGroupSummary: $("#favoriteGroupSummary"), newFavoriteGroupName: $("#newFavoriteGroupName"),
   createFavoriteGroupButton: $("#createFavoriteGroupButton"), favoriteGroupList: $("#favoriteGroupList"),
   deckName: $("#deckName"), deckFormat: $("#deckFormat"), deckCount: $("#deckCount"),
   deckMissing: $("#deckMissing"), deckStats: $("#deckStats"), deckMissingList: $("#deckMissingList"), deckDates: $("#deckDates"), deckMemo: $("#deckMemo"), deckCardFilter: $("#deckCardFilter"), deckSection: $("#deckSection"),
@@ -131,11 +131,16 @@ function renderFavoriteGroupPanel() {
   if (!els.favoriteGroupPanel) return;
   els.favoriteGroupPanel.hidden = hidden;
   if (hidden) return;
+  const ids = Array.isArray(owned.favoriteGroupIds) ? owned.favoriteGroupIds : [];
+  if (els.favoriteGroupSummary) {
+    els.favoriteGroupSummary.textContent = state.favoriteGroups.length
+      ? `${ids.length}/${state.favoriteGroups.length}件`
+      : "未作成";
+  }
   if (!state.favoriteGroups.length) {
     els.favoriteGroupList.innerHTML = `<p class="muted">グループを作成すると、このカードを分類できます。</p>`;
     return;
   }
-  const ids = Array.isArray(owned.favoriteGroupIds) ? owned.favoriteGroupIds : [];
   els.favoriteGroupList.innerHTML = state.favoriteGroups.map(group => `
     <label class="favorite-group-item">
       <input type="checkbox" data-favorite-group-id="${esc(group.id)}" ${ids.includes(group.id) ? "checked" : ""}>
@@ -1692,12 +1697,14 @@ function selectedOwnedCard() {
 function updateCardOwnedActions() {
   const owned = selectedOwnedCard();
   const hidden = state.cardDialogMode === "deck" || !owned;
-  els.favoriteCardButton.hidden = hidden;
+  if (els.favoriteCardButton) els.favoriteCardButton.hidden = true;
   els.deleteCardButton.hidden = hidden;
   if (!owned) { renderFavoriteGroupPanel(); return; }
-  els.favoriteCardButton.classList.toggle("active", owned.favorite === true);
-  els.favoriteCardButton.textContent = owned.favorite ? "★ お気に入り" : "☆ お気に入り";
-  els.favoriteCardButton.setAttribute("aria-pressed", owned.favorite ? "true" : "false");
+  if (els.favoriteCardButton) {
+    els.favoriteCardButton.classList.toggle("active", owned.favorite === true);
+    els.favoriteCardButton.textContent = owned.favorite ? "★ お気に入り" : "☆ お気に入り";
+    els.favoriteCardButton.setAttribute("aria-pressed", owned.favorite ? "true" : "false");
+  }
   renderFavoriteGroupPanel();
 }
 
@@ -4060,7 +4067,7 @@ els.sortCollectionByUnitPrice.addEventListener("click", () => applyCollectionSor
 els.resetCollectionSort.addEventListener("click", resetCollectionSortOrder);
 els.addCardButton.addEventListener("click", saveSelectedCardQuantity);
 els.addCardToDeckButton.addEventListener("click", addSelectedCardToDeck);
-els.favoriteCardButton.addEventListener("click", toggleSelectedFavorite);
+els.favoriteCardButton?.addEventListener("click", toggleSelectedFavorite);
 els.deleteCardButton.addEventListener("click", deleteSelectedOwned);
 els.createFavoriteGroupButton?.addEventListener("click", createFavoriteGroup);
 els.newFavoriteGroupName?.addEventListener("keydown", event => {
