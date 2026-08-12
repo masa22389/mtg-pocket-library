@@ -1,4 +1,4 @@
-const APP_VERSION = "v162";
+const APP_VERSION = "v170";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -477,7 +477,14 @@ const JP_ALIAS_TARGETS_EXACT = new Map();
 const JP_ALIAS_TARGET_CACHE = new Map();
 
 const SET_JA_NAMES = {
+  spm: "マーベル スパイダーマン",
+  mar: "マーベル・マテリアル",
+  spe: "マーベル スパイダーマン ウェルカム・デッキ",
   hob: "マジック：ザ・ギャザリング | ホビット", hoc: "マジック：ザ・ギャザリング | ホビット 統率者",
+  msh: "マジック：ザ・ギャザリング | マーベル スーパー・ヒーローズ", msc: "マーベル スーパー・ヒーローズ 統率者",
+  sos: "ストリクスヘイヴンの秘密", soa: "ストリクスヘイヴンの秘密 ミスティカルアーカイブ", soc: "ストリクスヘイヴンの秘密 統率者",
+  tmt: "ミュータント タートルズ", tmc: "ミュータント タートルズ 統率者", pza: "ミュータント タートルズ ソース・マテリアル",
+  ecl: "ローウィンの昏明", ecc: "ローウィンの昏明 統率者",
   eoe: "久遠の終端", eoc: "久遠の終端 統率者",
   inr: "イニストラード・リマスター",
   fin: "マジック：ザ・ギャザリング——FINAL FANTASY", fic: "FINAL FANTASY 統率者",
@@ -553,11 +560,18 @@ const PRIMARY_SET_TYPES = new Set(["expansion", "core", "masters", "commander", 
 const HIDDEN_SET_TYPES = new Set(["token", "memorabilia", "alchemy", "funny", "minigame", "promo", "box"]);
 const HIDDEN_SET_NAME_PATTERN = /\b(promo|promos|arena|anthology|bonus sheet|alchemy|treasure chest|regional|showdown|love your lgs|through the ages|stellar sights|the big score)\b/i;
 const SET_SEARCH_ALIASES = [
+  { codes: ["spe"], terms: ["マーベル スパイダーマン ウェルカム・デッキ", "スパイダーマン ウェルカム・デッキ", "Spider-Man Welcome Deck", "SPE"] },
+  { codes: ["mar"], terms: ["マーベル・マテリアル", "Marvel Material", "MAR"] },
+  { codes: ["spm"], terms: ["マーベル スパイダーマン", "Magic: The Gathering | Marvel's Spider-Man", "SPM"] },
+  { codes: ["spm", "mar", "spe"], terms: ["スパイダーマン", "Marvel's Spider-Man", "Spider-Man"] },
   { codes: ["hoc"], terms: ["ホビット統率者", "ホビット 統率者", "The Hobbit Commander", "Hobbit Commander", "HOC"] },
   { codes: ["hob", "hoc"], terms: ["ホビット", "The Hobbit", "Hobbit"] },
 ];
 
 const FALLBACK_SETS = [
+  { code: "spm", name: "Magic: The Gathering | Marvel's Spider-Man", released_at: "2025-09-26", set_type: "expansion" },
+  { code: "mar", name: "Marvel's Spider-Man: Marvel Material", released_at: "2025-09-26", set_type: "masterpiece" },
+  { code: "spe", name: "Marvel's Spider-Man Welcome Deck", released_at: "2025-09-26", set_type: "starter" },
   { code: "hob", name: "Magic: The Gathering | The Hobbit", released_at: "2026-08-14", set_type: "expansion" },
   { code: "hoc", name: "Magic: The Gathering | The Hobbit Commander", released_at: "2026-08-14", set_type: "commander" },
   { code: "fin", name: "Magic: The Gathering—FINAL FANTASY", released_at: "2025-06-13", set_type: "expansion" },
@@ -581,6 +595,24 @@ const FALLBACK_SETS = [
 
 function normalizeSetCode(value) {
   return String(value || "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function getAllKnownSets() {
+  const merged = new Map();
+  [...FALLBACK_SETS, ...(Array.isArray(state.sets) ? state.sets : [])].forEach((set) => {
+    const code = normalizeSetCode(set?.code);
+    if (!code) return;
+    const previous = merged.get(code) || {};
+    merged.set(code, {
+      ...previous,
+      ...set,
+      code,
+      name: set?.name || previous.name || code.toUpperCase(),
+      released_at: set?.released_at || previous.released_at || "",
+      set_type: set?.set_type || previous.set_type || "",
+    });
+  });
+  return [...merged.values()];
 }
 
 const SET_JA_NAME_CACHE = new Map();
@@ -608,7 +640,7 @@ function resolveSetInput(value) {
   const raw = String(value || "").trim();
   if (!raw) return "";
   const normalized = normalizeSetCode(raw);
-  const sets = state.sets.length ? state.sets : FALLBACK_SETS;
+  const sets = getAllKnownSets();
   const matched = sets.find(set => {
     const code = normalizeSetCode(set.code);
     const enName = normalizeSetCode(set.name);
@@ -622,9 +654,17 @@ function resolveSetInput(value) {
   return normalizeSetCode(matched?.code || raw);
 }
 
+function compactSetDisplayName(value) {
+  return String(value || "")
+    .replace(/^\s*マジック\s*[：:]?\s*ザ\s*[・･]?\s*ギャザリング(?:®|™)?\s*(?:[|｜—–―ー\-:：]+\s*)*/i, "")
+    .replace(/^\s*Magic\s*:\s*The\s+Gathering(?:®|™)?\s*(?:[|｜—–―ー\-:：]+\s*)*/i, "")
+    .trim();
+}
+
 function setDisplayName(set) {
   const code = String(set.code || "").toLowerCase();
-  return `${getSetJapaneseName(code) || set.name || code.toUpperCase()}（${code.toUpperCase()}）`;
+  const name = getSetJapaneseName(code) || set.name || code.toUpperCase();
+  return `${compactSetDisplayName(name) || code.toUpperCase()}（${code.toUpperCase()}）`;
 }
 
 function isUsefulSet(set) {
@@ -639,7 +679,7 @@ function isPrimarySet(set) {
 }
 
 function renderSetSelects() {
-  const allSets = (state.sets.length ? state.sets : FALLBACK_SETS)
+  const allSets = getAllKnownSets()
     .filter(isUsefulSet)
     .sort((a, b) => String(b.released_at || "").localeCompare(String(a.released_at || "")));
   [els.searchSet, els.deckSearchSet].forEach(select => {
@@ -667,7 +707,7 @@ function setPickerLabel(set) {
   const code = normalizeSetCode(set?.code);
   const ja = getSetJapaneseName(code);
   const en = set?.name || "";
-  return ja || en || code.toUpperCase();
+  return compactSetDisplayName(ja || en) || code.toUpperCase();
 }
 
 function isRecentSetForPicker(set) {
@@ -682,7 +722,7 @@ function shouldShowSetInPicker(set) {
 
 function getSetPickerSets() {
   const seen = new Set();
-  return (state.sets.length ? state.sets : FALLBACK_SETS)
+  return getAllKnownSets()
     .filter(isPrimarySet)
     .filter(shouldShowSetInPicker)
     .filter(set => {
@@ -853,12 +893,103 @@ function buildSearchColorFilter() {
   return `c>=${colorText}`;
 }
 
-function buildCardSearchFilters() {
+const SCRYFALL_SUBTYPE_ALIASES = new Map([
+  ["熊", "Bear"],
+  ["狼", "Wolf"],
+  ["人間", "Human"],
+  ["エルフ", "Elf"],
+  ["ゴブリン", "Goblin"],
+  ["ゾンビ", "Zombie"],
+  ["吸血鬼", "Vampire"],
+  ["ウィザード", "Wizard"],
+  ["戦士", "Warrior"],
+  ["ドルイド", "Druid"],
+  ["ドラゴン", "Dragon"],
+  ["天使", "Angel"],
+  ["デーモン", "Demon"],
+  ["エレメンタル", "Elemental"],
+  ["ビースト", "Beast"],
+  ["猫", "Cat"],
+  ["犬", "Dog"],
+  ["鳥", "Bird"],
+  ["魚", "Fish"],
+]);
+
+function normalizeScryfallSubtype(value) {
+  const subtype = String(value || "").trim();
+  return SCRYFALL_SUBTYPE_ALIASES.get(subtype) || subtype;
+}
+
+function localizedSubtypeNeedsClientFilter(value) {
+  const subtype = String(value || "").trim();
+  return Boolean(subtype && isJapanese(subtype) && normalizeScryfallSubtype(subtype) === subtype);
+}
+
+function getCardTypeLines(card) {
+  const faces = Array.isArray(card?.card_faces) ? card.card_faces : [];
+  return [
+    card?.printed_type_line,
+    card?.printedTypeLine,
+    card?.type_line,
+    card?.typeLine,
+    ...faces.flatMap((face) => [
+      face?.printed_type_line,
+      face?.printedTypeLine,
+      face?.type_line,
+      face?.typeLine,
+    ]),
+  ].filter(Boolean);
+}
+
+function normalizeSubtypeToken(value) {
+  return String(value || "")
+    .normalize("NFKC")
+    .toLocaleLowerCase("ja")
+    .replace(/[・･]/g, " ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getSubtypeSegments(typeLine) {
+  return String(typeLine || "")
+    .split(/\s*\/\/\s*/)
+    .flatMap((face) => {
+      const parts = face.split(/\s*[—–]\s*|\s+-\s+/);
+      return parts.length > 1 ? parts.slice(1) : [];
+    })
+    .map(normalizeSubtypeToken)
+    .filter(Boolean);
+}
+
+function cardMatchesLocalizedSubtype(card, value) {
+  const raw = normalizeSubtypeToken(value);
+  const translated = normalizeSubtypeToken(normalizeScryfallSubtype(value));
+  const needles = [...new Set([raw, translated].filter(Boolean))];
+  if (!needles.length) return true;
+  return getCardTypeLines(card).some((typeLine) => (
+    getSubtypeSegments(typeLine).some((segment) => {
+      const tokens = new Set(segment.split(" ").filter(Boolean));
+      return needles.some((needle) => (
+        needle.split(" ").filter(Boolean).every((token) => tokens.has(token))
+      ));
+    })
+  ));
+}
+
+function stripLanguageFilter(filters) {
+  return String(filters || "")
+    .replace(/(?:^|\s)lang:[^\s)]+/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function buildCardSearchFilters(options = {}) {
   const terms = [buildScryfallFilters("", els.searchMana.value, els.searchType.value, els.searchSet.value)];
   const language = $("#searchLanguage")?.value || "";
   const oracleText = $("#searchOracleText")?.value.trim() || "";
   const format = $("#searchFormat")?.value || "";
-  const subtype = $("#searchSubtype")?.value.trim() || "";
+  const subtype = options.omitSubtype ? "" : normalizeScryfallSubtype($("#searchSubtype")?.value);
   const rarity = $("#searchRarity")?.value || "";
   const colorFilter = buildSearchColorFilter();
   if (language) terms.push(`lang:${language}`);
@@ -1415,20 +1546,45 @@ async function readCardNameFromImage(file) {
 
 async function searchCards() {
   const query = els.cardSearch.value.trim();
-  const filters = buildCardSearchFilters();
+  const rawSubtype = $("#searchSubtype")?.value.trim() || "";
+  const clientSubtype = rawSubtype;
+  const localizedSubtype = localizedSubtypeNeedsClientFilter(rawSubtype) ? rawSubtype : "";
+  const filters = buildCardSearchFilters({ omitSubtype: Boolean(localizedSubtype) });
   const exactMatch = Boolean(query) && els.searchMatch.value === "exact";
-  if (!query && !filters) { els.searchStatus.textContent = "カード名または検索条件を指定してください"; return; }
+  const exhaustiveAdvancedSearch = Boolean(filters || clientSubtype);
+  const maxCandidates = exhaustiveAdvancedSearch ? Number.POSITIVE_INFINITY : 30;
+  if (!query && !filters && !clientSubtype) { els.searchStatus.textContent = "カード名または検索条件を指定してください"; return; }
   els.searchButton.disabled = true;
   els.searchStatus.textContent = navigator.onLine ? "検索中…" : "オフラインのため検索できません";
   els.searchResults.innerHTML = "";
   if (!navigator.onLine) { els.searchButton.disabled = false; return; }
 
-  const sourceLang = isJapanese(query) ? "ja" : "en";
+  const selectedLanguage = $("#searchLanguage")?.value || "";
+  const oracleText = $("#searchOracleText")?.value.trim() || "";
+  const sourceLang = selectedLanguage || ([query, rawSubtype, oracleText].some(isJapanese) ? "ja" : "en");
   const targetLang = sourceLang === "ja" ? "en" : "ja";
+  const applySubtypeFilter = cards => clientSubtype
+    ? (cards || []).filter(card => cardMatchesLocalizedSubtype(card, clientSubtype))
+    : (cards || []);
   let primaryCards = [];
   let lastError = null;
   try {
-    const searchResult = await fetchSearchCandidates(query, filters, sourceLang, exactMatch, 30);
+    if (isSetScopedCardSearch(query)) {
+      els.searchStatus.textContent = "セットの全カードを取得中…";
+      const completeSet = await fetchCompleteSetCandidates(els.searchSet.value, filters);
+      const matchingSetCards = applySubtypeFilter(completeSet.cards);
+      if (!matchingSetCards.length) throw new Error(completeSet.error?.details || "カードが見つかりませんでした");
+      state.searchResults = applyJpIndexToCards(matchingSetCards);
+      renderSearchResults();
+      const uniqueCount = state.searchGroups.length;
+      const indexedText = completeSet.indexedCount > uniqueCount ? `（DB登録 ${completeSet.indexedCount}件）` : "";
+      els.searchStatus.textContent = `${uniqueCount}種類を表示${indexedText}`;
+      return;
+    }
+    const searchResult = await fetchSearchCandidates(query, filters, sourceLang, exactMatch, maxCandidates, {
+      exhaustive: exhaustiveAdvancedSearch,
+      localizedSubtype: clientSubtype,
+    });
     primaryCards = searchResult.cards;
     lastError = searchResult.error;
     if (!primaryCards.length) throw new Error(lastError?.details || "カードが見つかりませんでした");
@@ -1438,19 +1594,21 @@ async function searchCards() {
       els.searchStatus.textContent = "同じカードの日英版を取得中…";
       const unifiedPrints = await fetchUnifiedPrints(exactOracleIds.slice(0, 3), filters);
       const unifiedCards = sortUnifiedPrints(unifiedPrints).map(card => sourceLang === "ja" ? { ...card, _preferJpDisplay: true } : card);
-      state.searchResults = applyJpIndexToCards(unifiedCards).slice(0, 24);
+      state.searchResults = applySubtypeFilter(applyJpIndexToCards(unifiedCards)).slice(0, 24);
     } else {
       els.searchStatus.textContent = "反対言語のカードも検索中…";
       const counterpartCards = await fetchCounterparts(primaryCards, targetLang, filters);
-      const mergedCards = searchResult.source === "local"
+      const mergedCards = searchResult.source === "local" || exhaustiveAdvancedSearch
         ? [...primaryCards, ...counterpartCards]
         : mergeLanguageResults(primaryCards, counterpartCards);
-      state.searchResults = applyJpIndexToCards(mergedCards).slice(0, 24);
+      const indexedCards = applySubtypeFilter(applyJpIndexToCards(mergedCards));
+      state.searchResults = exhaustiveAdvancedSearch ? indexedCards : indexedCards.slice(0, 24);
     }
     renderSearchResults();
-    const jaCount = state.searchResults.filter(card => card.lang === "ja").length;
-    const enCount = state.searchResults.filter(card => card.lang === "en").length;
-    els.searchStatus.textContent = `日本語 ${jaCount}件・英語 ${enCount}件を表示`;
+    const displayedCards = state.searchGroups.map(group => group.card).filter(Boolean);
+    const jaCount = displayedCards.filter(prefersJapaneseDisplay).length;
+    const enCount = displayedCards.length - jaCount;
+    els.searchStatus.textContent = `${displayedCards.length}種類を表示（日本語 ${jaCount}件・英語 ${enCount}件）`;
   } catch (err) {
     els.searchStatus.textContent = err.message || "検索に失敗しました。通信状態を確認してください";
   } finally {
@@ -1512,6 +1670,19 @@ function stripJapaneseReadings(value) {
 
 function normalizeAliasKey(value) {
   return normalizeCardName(value).replaceAll(/[・･\s'’"“”\-‐‑‒–—―]/g, "");
+}
+
+async function fetchScryfallCardsByIdChunks(ids) {
+  const uniqueIds = [...new Set((ids || []).filter(Boolean))];
+  const cards = [];
+  let lastError = null;
+  for (let index = 0; index < uniqueIds.length; index += 75) {
+    const result = await fetchScryfallCardsByIds(uniqueIds.slice(index, index + 75));
+    if (result.ok) cards.push(...(result.data.data || []));
+    else lastError = result.error;
+    if (index + 75 < uniqueIds.length) await new Promise(resolve => setTimeout(resolve, 80));
+  }
+  return { cards, error: lastError };
 }
 
 function setAliasCodesForQuery(query) {
@@ -1843,25 +2014,83 @@ function buildSearchCandidates(query, filters, preferredLang = "", exactMatch = 
   return [...new Set([...aliasSearches, ...baseSearches].filter(Boolean))];
 }
 
-async function fetchSearchCandidates(query, filters, preferredLang, exactMatch, maxCards = 30) {
+function localIndexItemsForSet(setCode) {
+  const normalizedSet = String(resolveSetInput(setCode) || setCode || "").trim().toLocaleLowerCase("en");
+  if (!normalizedSet) return [];
+  return JP_CARD_SEARCH_INDEX.filter(item => String(item.setCode || "").trim().toLocaleLowerCase("en") === normalizedSet);
+}
+
+function isSetScopedCardSearch(query) {
+  if (String(query || "").trim() || !els.searchSet?.value) return false;
+  return Boolean(resolveSetInput(els.searchSet.value));
+}
+
+async function fetchCompleteSetCandidates(setCode, filters) {
+  const normalizedSet = resolveSetInput(setCode);
+  const localItems = localIndexItemsForSet(normalizedSet);
+  const setOnly = filters.trim() === `set:${normalizedSet}`;
+  // IDから取得したローカル補完カードは追加条件で絞り込まれていない。
+  // セット以外の条件がある場合は、全ページ取得したScryfall結果だけを使う。
+  const localCards = setOnly
+    ? await fetchScryfallCardsByIdChunks(localItems.map(item => item.scryfallId))
+    : { cards: [], error: null };
+  const liveResult = await fetchAllScryfallSearch(filters, { unique: "cards", order: "name" });
+  const cards = [];
+  const seen = new Set();
+  const push = card => {
+    if (!card) return;
+    const key = card.id || `${card.oracle_id || card.name}:${card.set}:${card.collector_number}`;
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    cards.push(card);
+  };
+  localCards.cards.forEach(push);
+  if (liveResult.ok) (liveResult.data.data || []).forEach(push);
+
+  const orderById = new Map(localItems.map((item, index) => [item.scryfallId, index]));
+  const orderByOracle = new Map(localItems.map((item, index) => [item.oracleId, index]).filter(([key]) => key));
+  cards.sort((a, b) => {
+    const aOrder = orderById.get(a.id) ?? orderByOracle.get(a.oracle_id) ?? Number.MAX_SAFE_INTEGER;
+    const bOrder = orderById.get(b.id) ?? orderByOracle.get(b.oracle_id) ?? Number.MAX_SAFE_INTEGER;
+    if (aOrder !== bOrder) return aOrder - bOrder;
+    return String(a.name || "").localeCompare(String(b.name || ""), "ja");
+  });
+  return {
+    cards,
+    error: liveResult.ok ? localCards.error : (liveResult.error || localCards.error),
+    indexedCount: localItems.length,
+  };
+}
+
+async function fetchSearchCandidates(query, filters, preferredLang, exactMatch, maxCards = 30, options = {}) {
+  const exhaustive = Boolean(options.exhaustive);
+  const localizedSubtype = String(options.localizedSubtype || "").trim();
+  const runSearch = exhaustive ? fetchAllScryfallSearch : fetchScryfallSearch;
+  const applyClientFilters = source => localizedSubtype
+    ? (source || []).filter(card => cardMatchesLocalizedSubtype(card, localizedSubtype))
+    : (source || []);
+  const limitCards = source => Number.isFinite(maxCards) ? source.slice(0, maxCards) : source;
+  const localMaxCards = Number.isFinite(maxCards) ? maxCards : 5000;
   const setAliasCodes = exactMatch ? [] : setAliasCodesForQuery(query);
   if (setAliasCodes.length) {
     const setAliasQuery = buildSetAliasSearchQuery(setAliasCodes, filters);
     if (setAliasQuery) {
-      const result = await fetchScryfallSearch(setAliasQuery, { unique: "cards", order: "name" });
+      const result = await runSearch(setAliasQuery, { unique: "cards", order: "name" });
       if (result.ok && result.data.data?.length) {
-        return { cards: result.data.data.slice(0, maxCards), error: null, source: "set-alias" };
+        const matches = applyClientFilters(result.data.data);
+        if (matches.length) return { cards: limitCards(matches), error: null, source: "set-alias" };
       }
     }
   }
   let localFallbackCards = [];
   if (String(query || "").trim()) {
-    const localResult = await fetchLocalSearchCandidates(query, filters, exactMatch, maxCards);
+    const localResult = await fetchLocalSearchCandidates(query, filters, exactMatch, localMaxCards);
     if (localResult.cards.length) {
-      if (exactMatch || preferredLang === "ja") {
-        return { cards: localResult.cards, error: null, source: "local" };
+      const matches = applyClientFilters(localResult.cards);
+      if (!exhaustive && (exactMatch || preferredLang === "ja")) {
+        return { cards: limitCards(matches), error: null, source: "local" };
       }
-      localFallbackCards = localResult.cards;
+      localFallbackCards = matches;
     }
   }
   const candidates = buildSearchCandidates(query, filters, preferredLang, exactMatch);
@@ -1871,16 +2100,17 @@ async function fetchSearchCandidates(query, filters, preferredLang, exactMatch, 
   const seen = new Set();
   let lastError = null;
   for (const q of candidates) {
-    const result = await fetchScryfallSearch(q, { unique: "cards" });
+    const result = await runSearch(q, { unique: "cards" });
     if (result.ok) {
-      const matches = exactMatch ? result.data.data.filter(card => cardNameMatchesExactly(card, query)) : result.data.data;
+      const nameMatches = exactMatch ? result.data.data.filter(card => cardNameMatchesExactly(card, query)) : result.data.data;
+      const matches = applyClientFilters(nameMatches);
       for (const card of matches) {
         if (!seen.has(card.id)) {
           seen.add(card.id);
           cards.push(card);
         }
       }
-      if (cards.length && (!shouldCollectMany || cards.length >= maxCards)) break;
+      if (!exhaustive && cards.length && (!shouldCollectMany || cards.length >= maxCards)) break;
     }
     lastError = result.error;
     if (shouldCollectMany) await new Promise(resolve => setTimeout(resolve, 60));
@@ -1892,7 +2122,7 @@ async function fetchSearchCandidates(query, filters, preferredLang, exactMatch, 
       cards.push(card);
     }
   }
-  return { cards: cards.slice(0, maxCards), error: lastError };
+  return { cards: limitCards(cards), error: lastError };
 }
 
 function cardNameMatchesExactly(card, query) {
@@ -1919,9 +2149,10 @@ function findExactOracleIds(cards, query) {
 
 async function fetchUnifiedPrints(oracleIds, extraFilters = "") {
   const prints = [];
+  const neutralFilters = stripLanguageFilter(extraFilters);
   for (const oracleId of oracleIds) {
     for (const lang of ["ja", "en"]) {
-      const result = await fetchAllScryfallSearch(`oracleid:${oracleId} lang:${lang} ${extraFilters}`.trim(), { order: "released", dir: "desc" });
+      const result = await fetchAllScryfallSearch(`oracleid:${oracleId} lang:${lang} ${neutralFilters}`.trim(), { order: "released", dir: "desc" });
       if (result.ok) prints.push(...result.data.data);
       await new Promise(resolve => setTimeout(resolve, 80));
     }
@@ -1953,10 +2184,11 @@ async function fetchCounterparts(cards, targetLang, extraFilters = "") {
   }
 
   const counterparts = [];
+  const neutralFilters = stripLanguageFilter(extraFilters);
   for (const card of uniqueCards) {
     const exactName = String(card.name || "").replaceAll('"', '\\"');
     if (!exactName) continue;
-    const result = await fetchScryfallSearch(`!\"${exactName}\" lang:${targetLang} ${extraFilters}`.trim());
+    const result = await fetchScryfallSearch(`!\"${exactName}\" lang:${targetLang} ${neutralFilters}`.trim());
     if (result.ok && result.data.data[0]) counterparts.push(result.data.data[0]);
     await new Promise(resolve => setTimeout(resolve, 80));
   }
