@@ -1,4 +1,4 @@
-const APP_VERSION = "v171";
+const APP_VERSION = "v172";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -30,6 +30,10 @@ let deckDragState = null;
 let suppressNextDeckCardClick = false;
 let deckReorderMode = false;
 let deckReorderSelection = null;
+let collectionPressState = null;
+let suppressNextCollectionCardClick = false;
+let collectionReorderMode = false;
+let collectionReorderSelection = null;
 let favoriteGroupRenameOpen = false;
 let favoriteGroupManagerQuery = "";
 let favoriteGroupManagerMode = "view";
@@ -2402,6 +2406,105 @@ function moveOwnedCard(cardId, direction, visibleIds = []) {
   showToast("コレクションの並び順を変更しました");
 }
 
+function reorderOwnedCard(sourceId, targetId) {
+  if (!sourceId || !targetId || sourceId === targetId) return false;
+  const fromIndex = state.collection.findIndex(card => card.id === sourceId);
+  const initialTargetIndex = state.collection.findIndex(card => card.id === targetId);
+  if (fromIndex < 0 || initialTargetIndex < 0) return false;
+  const [movingCard] = state.collection.splice(fromIndex, 1);
+  const targetIndex = state.collection.findIndex(card => card.id === targetId);
+  state.collection.splice(targetIndex, 0, movingCard);
+  if (state.collectionSortStack?.length) {
+    state.collectionSortStack = [];
+    saveCollectionSortStack();
+  }
+  persist();
+  return true;
+}
+
+function endCollectionPress() {
+  if (collectionPressState?.timer) window.clearTimeout(collectionPressState.timer);
+  collectionPressState = null;
+}
+
+function finishCollectionReorderMode() {
+  collectionReorderMode = false;
+  collectionReorderSelection = null;
+  document.body.classList.remove("collection-reordering");
+}
+
+function handleCollectionReorderClick(button) {
+  const targetId = button.dataset.id;
+  if (!collectionReorderSelection || targetId === collectionReorderSelection) {
+    finishCollectionReorderMode();
+    renderCollection();
+    showToast("並び替えを解除しました");
+    return;
+  }
+  const moved = reorderOwnedCard(collectionReorderSelection, targetId);
+  finishCollectionReorderMode();
+  renderCollection();
+  showToast(moved ? "コレクションの並び順を変更しました" : "並び替えできませんでした");
+}
+
+function startCollectionReorderFromLongPress(button) {
+  if (!collectionPressState || collectionPressState.button !== button) return;
+  collectionPressState = null;
+  collectionReorderMode = true;
+  collectionReorderSelection = button.dataset.id;
+  suppressNextCollectionCardClick = true;
+  document.body.classList.add("collection-reordering");
+  button.classList.add("collection-reorder-selected");
+  showToast("移動先のカードを選んでください");
+}
+
+function attachCollectionCardHandlers(button, card) {
+  button.dataset.id = card.id;
+  button.classList.toggle(
+    "collection-reorder-selected",
+    collectionReorderMode && collectionReorderSelection === card.id,
+  );
+  button.addEventListener("click", () => {
+    if (suppressNextCollectionCardClick) {
+      suppressNextCollectionCardClick = false;
+      if (collectionReorderMode && button.dataset.id !== collectionReorderSelection) {
+        handleCollectionReorderClick(button);
+      }
+      return;
+    }
+    if (collectionReorderMode) {
+      handleCollectionReorderClick(button);
+      return;
+    }
+    openOwnedCard(card);
+  });
+  button.addEventListener("pointerdown", event => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    if (collectionReorderMode) return;
+    endCollectionPress();
+    collectionPressState = {
+      button,
+      startX: event.clientX,
+      startY: event.clientY,
+      timer: window.setTimeout(() => startCollectionReorderFromLongPress(button), 450),
+    };
+  });
+  button.addEventListener("pointermove", event => {
+    if (!collectionPressState || collectionPressState.button !== button) return;
+    if (Math.hypot(
+      event.clientX - collectionPressState.startX,
+      event.clientY - collectionPressState.startY,
+    ) > 18) {
+      endCollectionPress();
+    }
+  });
+  button.addEventListener("pointerup", endCollectionPress);
+  button.addEventListener("pointercancel", endCollectionPress);
+  button.addEventListener("lostpointercapture", endCollectionPress);
+  button.addEventListener("contextmenu", event => event.preventDefault());
+  button.addEventListener("dragstart", event => event.preventDefault());
+}
+
 function renderSelectedVariant() {
   const card = state.selectedCard;
   const backImage = backImageOf(card);
@@ -2532,10 +2635,10 @@ function renderCollection() {
         <span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>
         ${collectionPriceDisplayValue(card) != null ? `<span class="collection-price-badge">${esc(collectionPriceLabel(card, true))}</span>` : ""}
       </button>`).join("");
-    els.collectionList.querySelectorAll(".collection-image-card").forEach(button => {
-      const card = state.collection.find(item => item.id === button.dataset.id);
-      button.addEventListener("click", () => openOwnedCard(card));
-    });
+  els.collectionList.querySelectorAll(".collection-image-card").forEach(button => {
+    const card = state.collection.find(item => item.id === button.dataset.id);
+    attachCollectionCardHandlers(button, card);
+  });
     return;
   }
   const visibleIds = cards.map(card => card.id);
@@ -2549,7 +2652,7 @@ function renderCollection() {
     </article>`).join("");
   els.collectionList.querySelectorAll(".list-item").forEach(row => {
     const card = state.collection.find(item => item.id === row.dataset.id);
-    row.querySelector(".collection-card-open").addEventListener("click", () => openOwnedCard(card));
+    attachCollectionCardHandlers(row.querySelector(".collection-card-open"), card);
     row.querySelector(".move-owned-up").addEventListener("click", () => moveOwnedCard(card.id, -1, visibleIds));
     row.querySelector(".move-owned-down").addEventListener("click", () => moveOwnedCard(card.id, 1, visibleIds));
     row.querySelector(".plus").addEventListener("click", () => changeOwned(card, 1));
@@ -4584,7 +4687,9 @@ async function importBackup(file) {
 
 document.querySelectorAll(".bottom-nav button").forEach(button => button.addEventListener("click", () => showView(button.dataset.view)));
 document.addEventListener("contextmenu", event => {
-  if (event.target?.closest?.(".deck-content-card")) event.preventDefault();
+  if (event.target?.closest?.(".deck-content-card, .collection-image-card, .collection-card-open")) {
+    event.preventDefault();
+  }
 }, { capture: true });
 renderFavoriteGroupOptions();
 initAdvancedSearchUi();
