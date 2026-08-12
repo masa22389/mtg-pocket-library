@@ -1,4 +1,4 @@
-const APP_VERSION = "v159";
+const APP_VERSION = "v160";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -632,6 +632,131 @@ function renderSetSelects() {
     select.innerHTML = options;
     if ([...select.options].some(option => option.value === current)) select.value = current;
   });
+  renderSetPickers();
+}
+
+function normalizeSetPickerText(value) {
+  return String(value || "")
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[()\[\]{}（）【】「」『』・:：／/|｜\s_-]+/g, "");
+}
+
+function setPickerLabel(set) {
+  const code = normalizeSetCode(set?.code);
+  const ja = SET_JA_NAMES[code] || "";
+  const en = set?.name || "";
+  const name = ja && en && ja !== en ? `${ja} / ${en}` : (ja || en || code.toUpperCase());
+  return `${name}（${code.toUpperCase()}）`;
+}
+
+function getSetPickerSets() {
+  const seen = new Set();
+  return (state.sets.length ? state.sets : FALLBACK_SETS)
+    .filter(isPrimarySet)
+    .filter(set => {
+      const code = normalizeSetCode(set?.code);
+      if (!code || seen.has(code)) return false;
+      seen.add(code);
+      return true;
+    })
+    .sort((a, b) =>
+      String(b.released_at || "").localeCompare(String(a.released_at || "")) ||
+      String(a.name || "").localeCompare(String(b.name || ""))
+    );
+}
+
+function setMatchesPickerQuery(set, query) {
+  const normalizedQuery = normalizeSetPickerText(query);
+  if (!normalizedQuery) return true;
+  const code = normalizeSetCode(set?.code);
+  const ja = SET_JA_NAMES[code] || "";
+  const haystack = [
+    code,
+    set?.name || "",
+    ja,
+    setPickerLabel(set),
+  ].map(normalizeSetPickerText).join(" ");
+  return haystack.includes(normalizedQuery);
+}
+
+function renderSetPickerList(list, input, query = "") {
+  const selected = normalizeSetCode(input?.value);
+  const sets = getSetPickerSets().filter(set => setMatchesPickerQuery(set, query));
+  if (!sets.length) {
+    list.innerHTML = '<p class="muted set-picker-empty">一致するセットがありません</p>';
+    return;
+  }
+  list.innerHTML = sets.map(set => {
+    const code = normalizeSetCode(set.code);
+    const active = selected && selected === code;
+    return `<button type="button" class="set-picker-option ${active ? "active" : ""}" data-set-code="${esc(code)}">
+      <span>${esc(setPickerLabel(set))}</span>
+      <small>${esc(set.released_at || "")}</small>
+    </button>`;
+  }).join("");
+}
+
+function renderSetPicker(input, pickerId) {
+  if (!input) return;
+  const label = input.closest("label");
+  if (!label) return;
+  label.classList.add("set-code-input-label");
+
+  let picker = document.getElementById(pickerId);
+  if (!picker) {
+    picker = document.createElement("div");
+    picker.id = pickerId;
+    picker.className = "set-picker";
+    label.insertAdjacentElement("afterend", picker);
+  }
+
+  const selectedCode = normalizeSetCode(input.value);
+  const selectedSet = selectedCode
+    ? getSetPickerSets().find(set => normalizeSetCode(set.code) === selectedCode)
+    : null;
+  const selectedLabel = selectedSet ? setPickerLabel(selectedSet) : (selectedCode ? selectedCode.toUpperCase() : "指定なし");
+
+  picker.innerHTML = `
+    <details class="set-picker-accordion">
+      <summary>
+        <span>エキスパンション</span>
+        <strong>${esc(selectedLabel)}</strong>
+      </summary>
+      <div class="set-picker-body">
+        <div class="set-picker-tools">
+          <input type="search" class="set-picker-search" placeholder="セット名・略号で絞り込み">
+          <button type="button" class="filter-reset set-picker-clear">指定なし</button>
+        </div>
+        <div class="set-picker-list"></div>
+      </div>
+    </details>`;
+
+  const search = picker.querySelector(".set-picker-search");
+  const list = picker.querySelector(".set-picker-list");
+  const refreshList = () => renderSetPickerList(list, input, search?.value || "");
+  refreshList();
+
+  search?.addEventListener("input", refreshList);
+  picker.querySelector(".set-picker-clear")?.addEventListener("click", () => {
+    input.value = "";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    updateAdvancedSearchSummary();
+    renderSetSelects();
+  });
+  list.addEventListener("click", event => {
+    const button = event.target.closest("[data-set-code]");
+    if (!button) return;
+    input.value = button.dataset.setCode || "";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    updateAdvancedSearchSummary();
+    renderSetSelects();
+  });
+}
+
+function renderSetPickers() {
+  renderSetPicker(els.searchSet, "searchSetPicker");
+  renderSetPicker(els.deckSearchSet, "deckSearchSetPicker");
 }
 
 async function hydrateSetOptions() {
