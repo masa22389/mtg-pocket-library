@@ -1,4 +1,4 @@
-const APP_VERSION = "v161";
+const APP_VERSION = "v162";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -583,6 +583,27 @@ function normalizeSetCode(value) {
   return String(value || "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
+const SET_JA_NAME_CACHE = new Map();
+
+function getSetJapaneseName(code) {
+  const normalized = normalizeSetCode(code);
+  if (!normalized) return "";
+  if (SET_JA_NAME_CACHE.has(normalized)) return SET_JA_NAME_CACHE.get(normalized);
+
+  const direct = SET_JA_NAMES[normalized] || "";
+  if (direct) {
+    SET_JA_NAME_CACHE.set(normalized, direct);
+    return direct;
+  }
+
+  const indexed = JP_CARD_SEARCH_INDEX.find(entry =>
+    normalizeSetCode(entry?.setCode) === normalized && entry?.setNameJa
+  );
+  const name = indexed?.setNameJa || "";
+  SET_JA_NAME_CACHE.set(normalized, name);
+  return name;
+}
+
 function resolveSetInput(value) {
   const raw = String(value || "").trim();
   if (!raw) return "";
@@ -591,11 +612,11 @@ function resolveSetInput(value) {
   const matched = sets.find(set => {
     const code = normalizeSetCode(set.code);
     const enName = normalizeSetCode(set.name);
-    const jaName = normalizeSetCode(SET_JA_NAMES[String(set.code || "").toLowerCase()] || "");
+    const jaName = normalizeSetCode(getSetJapaneseName(set.code));
     return code === normalized || enName === normalized || jaName === normalized;
   }) || sets.find(set => {
     const enName = normalizeSetCode(set.name);
-    const jaName = normalizeSetCode(SET_JA_NAMES[String(set.code || "").toLowerCase()] || "");
+    const jaName = normalizeSetCode(getSetJapaneseName(set.code));
     return normalized.length >= 3 && (enName.includes(normalized) || jaName.includes(normalized));
   });
   return normalizeSetCode(matched?.code || raw);
@@ -603,7 +624,7 @@ function resolveSetInput(value) {
 
 function setDisplayName(set) {
   const code = String(set.code || "").toLowerCase();
-  return `${SET_JA_NAMES[code] || set.name || code.toUpperCase()}（${code.toUpperCase()}）`;
+  return `${getSetJapaneseName(code) || set.name || code.toUpperCase()}（${code.toUpperCase()}）`;
 }
 
 function isUsefulSet(set) {
@@ -614,7 +635,7 @@ function isPrimarySet(set) {
   if (!isUsefulSet(set)) return false;
   if (HIDDEN_SET_NAME_PATTERN.test(set.name || "")) return false;
   if (PRIMARY_SET_TYPES.has(set.set_type)) return true;
-  return Boolean(SET_JA_NAMES[String(set.code || "").toLowerCase()]);
+  return Boolean(getSetJapaneseName(set.code));
 }
 
 function renderSetSelects() {
@@ -644,15 +665,26 @@ function normalizeSetPickerText(value) {
 
 function setPickerLabel(set) {
   const code = normalizeSetCode(set?.code);
-  const ja = SET_JA_NAMES[code] || "";
+  const ja = getSetJapaneseName(code);
   const en = set?.name || "";
   return ja || en || code.toUpperCase();
+}
+
+function isRecentSetForPicker(set) {
+  const releasedAt = Date.parse(set?.released_at || "");
+  if (!Number.isFinite(releasedAt)) return false;
+  return releasedAt >= Date.now() - 180 * DAY_MS;
+}
+
+function shouldShowSetInPicker(set) {
+  return Boolean(getSetJapaneseName(set?.code)) || isRecentSetForPicker(set);
 }
 
 function getSetPickerSets() {
   const seen = new Set();
   return (state.sets.length ? state.sets : FALLBACK_SETS)
     .filter(isPrimarySet)
+    .filter(shouldShowSetInPicker)
     .filter(set => {
       const code = normalizeSetCode(set?.code);
       if (!code || seen.has(code)) return false;
@@ -669,7 +701,7 @@ function setMatchesPickerQuery(set, query) {
   const normalizedQuery = normalizeSetPickerText(query);
   if (!normalizedQuery) return true;
   const code = normalizeSetCode(set?.code);
-  const ja = SET_JA_NAMES[code] || "";
+  const ja = getSetJapaneseName(code);
   const haystack = [
     code,
     set?.name || "",
