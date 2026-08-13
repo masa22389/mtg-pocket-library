@@ -1,4 +1,4 @@
-const APP_VERSION = "v173";
+const APP_VERSION = "v175";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -22,6 +22,7 @@ const state = {
   editingDeck: null,
   editingDeckEntry: null,
   deckMissingOpen: false,
+  deckStatsOpen: false,
   deckSearchResults: [],
   deckEntryVariants: [],
   installPrompt: null,
@@ -3230,18 +3231,28 @@ function renderDeckStats() {
   const maxColor = Math.max(1, ...stats.colors.values());
   const maxMana = Math.max(1, ...stats.mana.values());
   const maxType = Math.max(1, ...stats.types.values());
+  const statsOpen = state.deckStatsOpen === true;
   els.deckStats.hidden = false;
-  els.deckStats.innerHTML = `<div class="deck-stats-head"><b>デッキ統計</b><span>土地 ${stats.lands}枚 / 非土地 ${stats.nonlands}枚</span></div>
-    <div class="deck-stat-summary">
-      <span><b>${stats.total}</b>総枚数</span>
-      <span><b>${stats.lands}</b>土地</span>
-      <span><b>${stats.nonlands}</b>非土地</span>
-    </div>
-    <div class="deck-stat-grid">
-      <section><h4>色分布</h4>${renderStatBars(stats.colors, maxColor, "color")}</section>
-      <section><h4>マナカーブ</h4>${renderStatBars(stats.mana, maxMana, "mana")}</section>
-      <section><h4>タイプ内訳</h4>${renderStatBars(stats.types, maxType, "type")}</section>
+  els.deckStats.innerHTML = `<button type="button" class="deck-stats-title" aria-expanded="${statsOpen}">
+      <span><b>デッキ統計</b><small>土地 ${stats.lands}枚 / 非土地 ${stats.nonlands}枚</small></span>
+      <em>${statsOpen ? "▲" : "▼"}</em>
+    </button>
+    <div class="deck-stats-body" ${statsOpen ? "" : "hidden"}>
+      <div class="deck-stat-summary">
+        <span><b>${stats.total}</b>総枚数</span>
+        <span><b>${stats.lands}</b>土地</span>
+        <span><b>${stats.nonlands}</b>非土地</span>
+      </div>
+      <div class="deck-stat-grid">
+        <section><h4>色分布</h4>${renderStatBars(stats.colors, maxColor, "color")}</section>
+        <section><h4>マナカーブ</h4>${renderStatBars(stats.mana, maxMana, "mana")}</section>
+        <section><h4>タイプ内訳</h4>${renderStatBars(stats.types, maxType, "type")}</section>
+      </div>
     </div>`;
+  els.deckStats.querySelector(".deck-stats-title")?.addEventListener("click", () => {
+    state.deckStatsOpen = !statsOpen;
+    renderDeckStats();
+  });
 }
 
 function groupedOwnedDeckCards(query) {
