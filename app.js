@@ -1,4 +1,4 @@
-const APP_VERSION = "v172";
+const APP_VERSION = "v173";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -41,7 +41,7 @@ let favoriteGroupManagerMode = "view";
 const $ = selector => document.querySelector(selector);
 const els = {
   totalCards: $("#totalCards"), uniqueCards: $("#uniqueCards"), collectionValue: $("#collectionValue"), priceStatus: $("#priceStatus"), cardSearch: $("#cardSearch"),
-  searchButton: $("#searchButton"), searchStatus: $("#searchStatus"), searchResults: $("#searchResults"),
+  searchButton: $("#searchButton"), clearSearchResults: $("#clearSearchResults"), searchStatus: $("#searchStatus"), searchResults: $("#searchResults"),
   ocrCameraInput: $("#ocrCameraInput"), ocrFileInput: $("#ocrFileInput"), ocrStatus: $("#ocrStatus"),
   searchMatch: $("#searchMatch"), searchColor: $("#searchColor"), searchMana: $("#searchMana"), searchType: $("#searchType"), searchSet: $("#searchSet"), searchSetIncludeExtras: $("#searchSetIncludeExtras"), clearSearchFilters: $("#clearSearchFilters"),
   collectionFilter: $("#collectionFilter"), collectionViewMode: $("#collectionViewMode"), collectionPriceDisplayMode: $("#collectionPriceDisplayMode"), openCollectionAdvanced: $("#openCollectionAdvanced"),
@@ -1560,8 +1560,11 @@ async function searchCards() {
   if (!query && !filters && !clientSubtype) { els.searchStatus.textContent = "カード名または検索条件を指定してください"; return; }
   els.searchButton.disabled = true;
   els.searchStatus.textContent = navigator.onLine ? "検索中…" : "オフラインのため検索できません";
-  els.searchResults.innerHTML = "";
-  if (!navigator.onLine) { els.searchButton.disabled = false; return; }
+    state.searchResults = [];
+    state.searchGroups = [];
+    els.searchResults.innerHTML = "";
+    updateClearSearchResultsButton();
+    if (!navigator.onLine) { els.searchButton.disabled = false; updateClearSearchResultsButton(); return; }
 
   const selectedLanguage = $("#searchLanguage")?.value || "";
   const oracleText = $("#searchOracleText")?.value.trim() || "";
@@ -1617,6 +1620,7 @@ async function searchCards() {
     els.searchStatus.textContent = err.message || "検索に失敗しました。通信状態を確認してください";
   } finally {
     els.searchButton.disabled = false;
+    updateClearSearchResultsButton();
   }
 }
 
@@ -2233,6 +2237,25 @@ function renderSearchResults() {
       <span><strong>${esc(nameOf(group.card))}</strong><small><span class="language-tag">日英版</span>${altNameOf(group.card) ? `${esc(altNameOf(group.card))} · ` : ""}タップして別イラストを選択</small></span>
     </button>`).join("");
   els.searchResults.querySelectorAll("button").forEach(button => button.addEventListener("click", () => openCardDialog(state.searchGroups[Number(button.dataset.index)].card)));
+  updateClearSearchResultsButton();
+}
+
+function updateClearSearchResultsButton() {
+  if (!els.clearSearchResults) return;
+  const hasResults =
+    (state.searchResults?.length || 0) > 0 ||
+    (state.searchGroups?.length || 0) > 0 ||
+    Boolean(els.searchResults?.innerHTML.trim());
+  els.clearSearchResults.disabled = !hasResults;
+}
+
+function clearSearchResults() {
+  state.searchResults = [];
+  state.searchGroups = [];
+  if (els.searchResults) els.searchResults.innerHTML = "";
+  if (els.searchStatus) els.searchStatus.textContent = "検索結果をクリアしました";
+  updateClearSearchResultsButton();
+  showToast("検索結果をクリアしました");
 }
 
 async function openCardDialog(card, mode = "collection", ownedId = null) {
@@ -4695,6 +4718,7 @@ renderFavoriteGroupOptions();
 initAdvancedSearchUi();
 els.deckSearchSetIncludeExtras?.closest("label")?.remove();
 els.searchButton.addEventListener("click", searchCards);
+els.clearSearchResults?.addEventListener("click", clearSearchResults);
 els.cardSearch.addEventListener("keydown", event => { if (event.key === "Enter") searchCards(); });
 els.searchSet.addEventListener("keydown", event => { if (event.key === "Enter") searchCards(); });
 els.ocrCameraInput?.addEventListener("change", async event => {

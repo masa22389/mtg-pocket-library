@@ -1,4 +1,4 @@
-const CACHE = "mtg-pocket-v172";
+const CACHE = "mtg-pocket-v173";
 const OFFLINE_PAGE = "./index.html?v=172";
 const SHELL = [OFFLINE_PAGE, "./styles.css?v=172", "./mtg-jp-card-index.js?v=172", "./mtgjson-jp-search-index.js?v=172", "./app.js?v=172", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 
