@@ -1,4 +1,4 @@
-const APP_VERSION = "v175";
+const APP_VERSION = "v179";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const state = {
@@ -390,9 +390,28 @@ function deleteFavoriteGroup(groupId) {
   showToast(`「${group.name}」を削除しました`);
 }
 normalizeFavoriteGroups();
-function isJapaneseCard(card) { return (card?.lang || card?.language || "") === "ja"; }
+function cardLanguage(card) { return String(card?.lang || card?.language || "").toLowerCase(); }
+function isJapaneseCard(card) { return cardLanguage(card) === "ja"; }
+function isEnglishCard(card) { return cardLanguage(card) === "en"; }
 function cardScryfallId(card) { return card?._sourceScryfallId || card?.scryfallId || card?.id || ""; }
-function prefersJapaneseDisplay(card) { return Boolean(card?._preferJpDisplay || isJapaneseCard(card)); }
+function shouldLocalizeDisplay(card) {
+  if (isJapaneseCard(card) || card?._supplementalJpVariant) return true;
+  if (isEnglishCard(card)) return false;
+  return Boolean(card?._preferJpDisplay || !card?.lang);
+}
+function prefersJapaneseDisplay(card) { return shouldLocalizeDisplay(card); }
+function normalizeDisplayName(value) {
+  const text = String(value || "").trim();
+  if (!text.includes("//")) return text;
+  const parts = text.split(/\s*\/\/\s*/).map(part => part.trim()).filter(Boolean);
+  if (parts.length >= 2 && parts.length % 2 === 0) {
+    const half = parts.length / 2;
+    const left = parts.slice(0, half);
+    const right = parts.slice(half);
+    if (left.every((part, index) => part === right[index])) return left.join(" // ");
+  }
+  return parts.join(" // ");
+}
 function imageOf(card) {
   const canUseLocalizedImage = Boolean(card?._jpImageExact && isJapaneseCard(card));
   const nativeImage = card?.image_uris?.normal || card?.card_faces?.[0]?.image_uris?.normal || card?.image || "";
@@ -406,13 +425,17 @@ function backImageOf(card) {
   return localizedBackImage || nativeBackImage;
 }
 function typeOf(card) { return card.printed_type_line || card.printedTypeLine || card.type_line || card.typeLine || ""; }
-function nameOf(card) { return (prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName || card.name || "名称不明"; }
-function altNameOf(card) { const printed = (prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName; return printed && printed !== card.name ? card.name : ""; }
+function nameOf(card) { return normalizeDisplayName((prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName || card.name || "名称不明"); }
+function altNameOf(card) {
+  const printed = normalizeDisplayName((prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName);
+  const englishName = normalizeDisplayName(card.name);
+  return printed && englishName && printed !== englishName ? englishName : "";
+}
 function displayLanguageLabel(card) {
   if (card?._supplementalJpVariant) return card?._jpImageExact ? "日本語名 / 日本語画像" : "日本語名 / 英語版画像";
   if (isJapaneseCard(card)) return "日本語";
-  if (card?._preferJpDisplay && card?._jpImageExact) return "日本語名 / 日本語画像";
-  if (card?._preferJpDisplay && card?.jpName) return card?.lang === "en" ? "日本語名 / 英語版" : "日本語名";
+  if (prefersJapaneseDisplay(card) && card?._jpImageExact) return "日本語名 / 日本語画像";
+  if (prefersJapaneseDisplay(card) && card?.jpName) return card?.lang === "en" ? "日本語名 / 英語版" : "日本語名";
   return card?.lang === "en" ? "英語" : "その他";
 }
 function actualLanguageLabel(card) {
@@ -1784,23 +1807,58 @@ function jpIndexImageMatchesCard(item, card) {
 
 function displayJaNamesForIndexItem(item) {
   const names = item?.jaNames || [];
-  const cleanNames = names.map(stripJapaneseReadings).filter(Boolean);
+  const cleanNames = names.map(stripJapaneseReadings).map(normalizeDisplayName).filter(Boolean);
   const japaneseNames = cleanNames.filter(isJapanese);
-  return japaneseNames.length ? japaneseNames : cleanNames.length ? cleanNames : names;
+  const preferred = japaneseNames.length ? japaneseNames : cleanNames;
+  return preferred.length ? sortJapaneseDisplayNames(preferred) : names.map(normalizeDisplayName);
+}
+
+function scoreJapaneseDisplayName(name) {
+  const normalized = normalizeDisplayName(stripJapaneseReadings(name));
+  const parts = String(normalized).split(/\s*\/\/\s*/).map(normalizeDisplayName).filter(Boolean);
+  if (!parts.length) return 0;
+  const japaneseParts = parts.filter(isJapanese).length;
+  const latinParts = parts.filter((part) => /[A-Za-z]/.test(part)).length;
+  const allFacesJapanese = parts.length > 1 && japaneseParts === parts.length;
+  return (allFacesJapanese ? 10000 : 0) + japaneseParts * 1000 - latinParts * 200 - normalized.length * 0.01;
+}
+
+function sortJapaneseDisplayNames(names) {
+  return [...names].sort((a, b) => scoreJapaneseDisplayName(b) - scoreJapaneseDisplayName(a));
+}
+
+function splitDisplayNamesForFaces(names, faceCount = 0) {
+  const clean = sortJapaneseDisplayNames((names || []).map(normalizeDisplayName).filter(Boolean));
+  if (!faceCount || faceCount <= 1) return clean;
+  const expanded = [];
+  clean.forEach((name) => {
+    const parts = String(name).split(/\s*\/\/\s*/).map(normalizeDisplayName).filter(Boolean);
+    if (parts.length > 1) expanded.push(...parts);
+    else expanded.push(name);
+  });
+  return expanded.length >= faceCount ? expanded.slice(0, faceCount) : clean;
+}
+
+function joinedDisplayNameForFaces(faceNames, fallback = "") {
+  const clean = (faceNames || []).map(normalizeDisplayName).filter(Boolean);
+  return normalizeDisplayName(clean.length > 1 ? clean.join(" // ") : (clean[0] || fallback));
 }
 
 function applyJpIndexToCard(card) {
   const item = jpIndexForCard(card);
   if (!item) return card;
-  const preferJpDisplay = Boolean(card._preferJpDisplay);
-  const localizeDisplay = preferJpDisplay || isJapaneseCard(card) || !card.lang;
+  const localizeDisplay = shouldLocalizeDisplay(card);
   const localizeImage = jpIndexImageMatchesCard(item, card);
   const canUseJpImage = isJapaneseCard(card) || Boolean(card._supplementalJpVariant);
   const localizeTopImage = canUseJpImage && localizeImage;
-  const displayJaNames = displayJaNamesForIndexItem(item);
+  const rawDisplayJaNames = displayJaNamesForIndexItem(item).map(normalizeDisplayName);
+  const faceCount = Array.isArray(card.card_faces) ? card.card_faces.length : 0;
+  const faceJaNames = splitDisplayNamesForFaces(rawDisplayJaNames, faceCount);
+  const displayJaNames = faceJaNames.length ? faceJaNames : rawDisplayJaNames;
+  const displayJaName = joinedDisplayNameForFaces(faceJaNames, rawDisplayJaNames[0] || card.jpName);
   const faces = Array.isArray(card.card_faces) ? card.card_faces.map((face, index) => ({
     ...face,
-    printed_name: localizeDisplay ? (displayJaNames[index] || face.printed_name) : face.printed_name,
+    printed_name: normalizeDisplayName(localizeDisplay ? (faceJaNames[index] || displayJaNames[index] || face.printed_name) : face.printed_name),
     image_uris: localizeTopImage ? {
       ...(face.image_uris || {}),
       normal: index === 0 ? (item.images?.normal || face.image_uris?.normal) : (item.images?.back || face.image_uris?.normal),
@@ -1810,14 +1868,14 @@ function applyJpIndexToCard(card) {
     ...card,
     lang: card.lang || (localizeDisplay ? "ja" : card.lang),
     image_uris: localizeTopImage && item.images?.normal ? { ...(card.image_uris || {}), normal: item.images.normal } : card.image_uris,
-    jpName: displayJaNames[0] || card.jpName,
-    jpAltName: displayJaNames[1] || "",
+    jpName: displayJaName,
+    jpAltName: normalizeDisplayName(faceJaNames[1] || displayJaNames[1] || ""),
     jpImage: localizeTopImage ? (item.images?.normal || item.image || "") : "",
     jpImages: localizeTopImage ? (item.images || null) : null,
     _jpImageExact: localizeTopImage,
     jpSourceUrl: item.sourceUrl || "",
     card_faces: faces,
-    printed_name: localizeDisplay ? (displayJaNames[0] || card.printed_name) : card.printed_name,
+    printed_name: normalizeDisplayName(localizeDisplay ? (displayJaName || card.printed_name) : card.printed_name),
     printed_type_line: card.printed_type_line || card.type_line,
   };
 }
@@ -2433,11 +2491,11 @@ function moveOwnedCard(cardId, direction, visibleIds = []) {
 function reorderOwnedCard(sourceId, targetId) {
   if (!sourceId || !targetId || sourceId === targetId) return false;
   const fromIndex = state.collection.findIndex(card => card.id === sourceId);
-  const initialTargetIndex = state.collection.findIndex(card => card.id === targetId);
-  if (fromIndex < 0 || initialTargetIndex < 0) return false;
-  const [movingCard] = state.collection.splice(fromIndex, 1);
-  const targetIndex = state.collection.findIndex(card => card.id === targetId);
-  state.collection.splice(targetIndex, 0, movingCard);
+  const toIndex = state.collection.findIndex(card => card.id === targetId);
+  if (fromIndex < 0 || toIndex < 0) return false;
+  const movingCard = state.collection[fromIndex];
+  state.collection[fromIndex] = state.collection[toIndex];
+  state.collection[toIndex] = movingCard;
   if (state.collectionSortStack?.length) {
     state.collectionSortStack = [];
     saveCollectionSortStack();
