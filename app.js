@@ -1,4 +1,4 @@
-const APP_VERSION = "v192";
+const APP_VERSION = "v193";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -556,8 +556,9 @@ function cardTraderStatusText() {
   if (!cardTraderToken()) return "未設定の場合はScryfall価格を使用します。";
   const stats = state.cardTrader?.lastStats;
   const statsText = stats
-    ? `対象${stats.candidates || 0}件 / 価格更新${stats.priced || 0}件 / 出品なし${stats.noProduct || 0}件 / 紐付けなし${stats.noBlueprint || 0}件`
+    ? `対象${stats.candidates || 0}件 / 価格更新${stats.priced || 0}件 / 出品なし${stats.noProduct || 0}件 / 紐付けなし${stats.noBlueprint || 0}件${stats.groupsTotal ? ` / ${stats.groupsDone || 0}/${stats.groupsTotal}処理` : ""}`
     : "";
+  if (stats?.inProgress) return `CardTrader価格を取得中です。${statsText}`;
   if (state.cardTrader?.lastError) return `CardTrader設定済み。直近の取得エラー：${state.cardTrader.lastError}${statsText ? `（${statsText}）` : ""}`;
   if (state.cardTrader?.priceUpdatedAt) return `CardTrader設定済み。最終価格取得：${new Date(state.cardTrader.priceUpdatedAt).toLocaleString("ja-JP")}${statsText ? `（${statsText}）` : ""}`;
   return "CardTrader設定済み。次回の価格更新で使用します。";
@@ -601,11 +602,22 @@ function cardTraderPriceFresh(card) {
 async function fetchCardTrader(path) {
   const token = cardTraderToken();
   if (!token) throw new Error("APIトークン未設定");
-  const response = await fetch(`${CARDTRADER_API_BASE}${path}`, {
-    headers: { Accept: "application/json", Authorization: `Bearer ${token}` },
-  });
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  return response.json();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 12000);
+  try {
+    const response = await fetch(`${CARDTRADER_API_BASE}${path}`, {
+      headers: { Accept: "application/json", Authorization: `Bearer ${token}` },
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function normalizeCardTraderName(value) {
+  return String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 }
 
 async function cardTraderExpansionMap() {
@@ -634,8 +646,11 @@ async function cardTraderBlueprintsForSet(setCode) {
   if (!expansionId) return {};
   const blueprints = await fetchCardTrader(`/blueprints/export?expansion_id=${encodeURIComponent(expansionId)}`);
   const map = {};
+  map.__names = {};
   (blueprints || []).forEach(blueprint => {
     if (blueprint.scryfall_id) map[blueprint.scryfall_id] = blueprint.id;
+    const nameKey = normalizeCardTraderName(blueprint.name);
+    if (nameKey && !map.__names[nameKey]) map.__names[nameKey] = blueprint.id;
   });
   state.cardTrader.blueprintsBySet = state.cardTrader.blueprintsBySet || {};
   state.cardTrader.blueprintsUpdatedAt = state.cardTrader.blueprintsUpdatedAt || {};
@@ -663,6 +678,8 @@ async function ensureCardTraderScryfallId(card) {
 
 async function cardTraderBlueprintIdForCard(card, blueprints) {
   if (blueprints[card.scryfallId]) return blueprints[card.scryfallId];
+  const nameId = blueprints.__names?.[normalizeCardTraderName(card.name)];
+  if (nameId) return nameId;
   const alternateId = await ensureCardTraderScryfallId(card);
   return blueprints[alternateId] || "";
 }
@@ -3161,9 +3178,15 @@ async function hydrateCardTraderPrices(options = {}) {
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key).push(card);
   });
+  stats.groupsTotal = groups.size;
+  stats.groupsDone = 0;
+  stats.inProgress = true;
+  state.cardTrader.lastError = "";
+  state.cardTrader.lastStats = stats;
+  persist();
+  updateCardTraderSettingsUi();
   let changed = false;
   try {
-    state.cardTrader.lastError = "";
     for (const groupCards of groups.values()) {
       const sample = groupCards[0];
       const setCode = String(sample.set || "").toLowerCase();
@@ -3183,12 +3206,20 @@ async function hydrateCardTraderPrices(options = {}) {
         }
         changed = true;
       }
+      stats.groupsDone += 1;
+      state.cardTrader.lastStats = { ...stats };
+      persist();
+      updateCardTraderSettingsUi();
     }
-    state.cardTrader.lastStats = stats;
+    stats.inProgress = false;
+    state.cardTrader.lastStats = { ...stats };
     if (changed) state.cardTrader.priceUpdatedAt = Date.now();
+    showToast(`CardTrader価格取得：${stats.priced}件更新`);
   } catch (error) {
+    stats.inProgress = false;
     state.cardTrader.lastError = error?.message || "取得に失敗しました";
-    state.cardTrader.lastStats = stats;
+    state.cardTrader.lastStats = { ...stats };
+    showToast(`CardTrader価格取得エラー：${state.cardTrader.lastError}`);
   }
   if (changed || state.cardTrader.lastError || candidates.length === 0) { persist(); renderCollection(); }
   updateCardTraderSettingsUi();
@@ -3235,6 +3266,8 @@ function saveCardTraderToken() {
   state.cardTrader.lastStats = null;
   state.collection.forEach(card => { card.cardTraderPriceUpdatedAt = 0; });
   cardTraderMarketplaceCache = new Map();
+  state.cardTrader.blueprintsBySet = {};
+  state.cardTrader.blueprintsUpdatedAt = {};
   persist();
   if (els.cardTraderToken) els.cardTraderToken.value = "********";
   updateCardTraderSettingsUi();
@@ -3248,6 +3281,8 @@ function refreshCardTraderPrices() {
   state.cardTrader.lastError = "";
   state.cardTrader.lastStats = null;
   cardTraderMarketplaceCache = new Map();
+  state.cardTrader.blueprintsBySet = {};
+  state.cardTrader.blueprintsUpdatedAt = {};
   persist();
   updateCardTraderSettingsUi();
   showToast("CardTrader価格を取得しています");
