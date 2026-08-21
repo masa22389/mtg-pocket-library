@@ -1,4 +1,4 @@
-const APP_VERSION = "v195";
+const APP_VERSION = "v196";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -175,6 +175,17 @@ function normalizeFavoriteGroups() {
     const memberIds = new Set(state.collection.filter(card => card.favoriteGroupIds.includes(group.id)).map(card => card.id));
     group.cardOrder = group.cardOrder.filter(id => memberIds.has(id));
   });
+}
+function normalizeCollectionConditions() {
+  let changed = false;
+  state.collection.forEach(card => {
+    const normalized = normalizeCardCondition(card.condition);
+    if (card.condition !== normalized) {
+      card.condition = normalized;
+      changed = true;
+    }
+  });
+  return changed;
 }
 function favoriteGroupNames(card) {
   const ids = Array.isArray(card?.favoriteGroupIds) ? card.favoriteGroupIds : [];
@@ -579,14 +590,23 @@ function cardTraderLanguageForCard(card) {
   return "";
 }
 
+function normalizeCardCondition(value) {
+  const condition = String(value || "NM").trim();
+  const upper = condition.toUpperCase();
+  if (upper === "LP" || upper === "SP") return "SP";
+  if (upper === "DMG" || upper === "POOR") return "Poor";
+  if (["NM", "MP", "HP"].includes(upper)) return upper;
+  return condition || "NM";
+}
+
 function cardTraderConditionForCard(card) {
   return ({
     NM: "Near Mint",
-    LP: "Slightly Played",
+    SP: "Slightly Played",
     MP: "Moderately Played",
     HP: "Heavily Played",
-    DMG: "Poor",
-  })[String(card.condition || "").toUpperCase()] || "";
+    Poor: "Poor",
+  })[normalizeCardCondition(card.condition)] || "";
 }
 
 function cardTraderFoilForCard(card) {
@@ -2893,7 +2913,7 @@ function renderSelectedVariant() {
   const backImage = backImageOf(card);
   els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images"><img class="card-detail-image" src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
   els.cardQuantity.value = selectedOwnedQuantity();
-  els.cardCondition.value = owned?.condition || "NM";
+  els.cardCondition.value = normalizeCardCondition(owned?.condition || "NM");
   els.cardFinish.value = owned?.finish || "normal";
   els.cardLanguage.value = owned?.language || (card.lang === "ja" ? "ja" : card.lang === "en" ? "en" : "other");
   els.cardLocation.value = owned?.location || "";
@@ -2934,7 +2954,7 @@ function compactCard(card) {
     priceUsd: card.prices?.usd || null, priceUsdFoil: card.prices?.usd_foil || null, priceUsdEtched: card.prices?.usd_etched || null,
     priceUsdSource: card.prices?.usd ? "scryfall" : "", priceUsdFoilSource: card.prices?.usd_foil ? "scryfall" : "", priceUsdEtchedSource: card.prices?.usd_etched ? "scryfall" : "",
     priceUsdFromEnglish: false, priceUsdFoilFromEnglish: false, priceUsdEtchedFromEnglish: false, priceUpdatedAt: Date.now(),
-    quantity: Math.max(1, Number(els.cardQuantity.value || 1)), condition: els.cardCondition.value,
+    quantity: Math.max(1, Number(els.cardQuantity.value || 1)), condition: normalizeCardCondition(els.cardCondition.value),
     finish: els.cardFinish.value, language: els.cardLanguage.value, location: els.cardLocation.value.trim(), favorite: false, favoriteGroupIds: [], addedAt: Date.now(),
   };
 }
@@ -2952,7 +2972,7 @@ function saveSelectedCardQuantity() {
     const sameLot = card =>
       card.id !== owned?.id &&
       card.scryfallId === selectedId &&
-      card.condition === incoming.condition &&
+      normalizeCardCondition(card.condition) === incoming.condition &&
       card.finish === incoming.finish &&
       card.language === incoming.language &&
       card.location === incoming.location;
@@ -3053,7 +3073,7 @@ function renderCollection() {
     <article class="list-item" data-id="${card.id}">
       <button class="collection-card-open" type="button" aria-label="${esc(nameOf(card))}の詳細を開く">
         <span class="collection-thumb-wrap"><img class="thumb" src="${esc(card.image)}" alt="" loading="lazy"><span class="collection-qty-badge">×${Number(card.quantity || 0)}</span></span>
-        <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(card.condition)} · ${card.finish === "normal" ? "通常" : esc(card.finish)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${favoriteGroupNames(card).map(name => `<span class="chip">★ ${esc(name)}</span>`).join("")}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
+        <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(normalizeCardCondition(card.condition))} · ${card.finish === "normal" ? "通常" : esc(card.finish)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${favoriteGroupNames(card).map(name => `<span class="chip">★ ${esc(name)}</span>`).join("")}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
       </button>
       <div class="item-actions"><button class="tiny move-owned-up" aria-label="${esc(nameOf(card))}を前へ移動" ${index === 0 ? "disabled" : ""}>↑</button><button class="tiny move-owned-down" aria-label="${esc(nameOf(card))}を後へ移動" ${index === cards.length - 1 ? "disabled" : ""}>↓</button><button class="tiny minus" aria-label="1枚減らす">−</button><span class="qty-pill">×${card.quantity}</span><button class="tiny plus" aria-label="1枚増やす">＋</button><button class="tiny favorite-owned ${card.favorite ? "active" : ""}" aria-label="${esc(nameOf(card))}を${card.favorite ? "お気に入りから外す" : "お気に入りに追加"}" aria-pressed="${card.favorite ? "true" : "false"}">${card.favorite ? "★" : "☆"}</button><button class="tiny delete-owned" aria-label="${esc(nameOf(card))}をコレクションから削除">削除</button></div>
     </article>`).join("");
@@ -5031,8 +5051,8 @@ function addCurrentDeckEntryToCollection() {
   const exactEntryLot = state.collection.find(item => item.id === entry.cardId);
   const matchingLot = exactEntryLot || state.collection.find(item =>
     incoming.scryfallId
-      ? item.scryfallId === incoming.scryfallId && item.condition === incoming.condition && item.finish === incoming.finish && item.language === incoming.language && !item.location
-      : item.name === incoming.name && item.printedName === incoming.printedName && item.set === incoming.set && item.collectorNumber === incoming.collectorNumber && item.condition === incoming.condition && item.finish === incoming.finish && item.language === incoming.language && !item.location
+      ? item.scryfallId === incoming.scryfallId && normalizeCardCondition(item.condition) === incoming.condition && item.finish === incoming.finish && item.language === incoming.language && !item.location
+      : item.name === incoming.name && item.printedName === incoming.printedName && item.set === incoming.set && item.collectorNumber === incoming.collectorNumber && normalizeCardCondition(item.condition) === incoming.condition && item.finish === incoming.finish && item.language === incoming.language && !item.location
   );
   const lot = matchingLot || incoming;
   if (matchingLot) {
@@ -5364,6 +5384,7 @@ async function importBackup(file) {
     if (data.settings?.backgroundTheme && BACKGROUND_THEMES[data.settings.backgroundTheme]) {
       applyBackgroundTheme(data.settings.backgroundTheme, { persist: true });
     }
+    normalizeCollectionConditions();
     normalizeFavoriteGroups();
     renderFavoriteGroupOptions();
     persist(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("バックアップを復元しました");
@@ -5587,4 +5608,5 @@ window.addEventListener("online", () => { els.searchStatus.textContent = "オン
 window.addEventListener("offline", () => { els.searchStatus.textContent = "オフライン：保存済みデータは利用できます"; });
 
 if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
+if (normalizeCollectionConditions()) persist();
 renderSetSelects(); renderCollection(); renderDecks(); renderBackupSummary(); refreshExchangeRate(); hydrateCollectionMetadata(); hydrateSetOptions();

@@ -1,6 +1,6 @@
-const CACHE = "mtg-pocket-v195";
-const OFFLINE_PAGE = "./index.html?v=195";
-const SHELL = [OFFLINE_PAGE, "./styles.css?v=195", "./mtg-jp-card-index.js?v=195", "./mtgjson-jp-search-index.js?v=195", "./app.js?v=195", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v196";
+const OFFLINE_PAGE = "./index.html?v=196";
+const SHELL = [OFFLINE_PAGE, "./styles.css?v=196", "./mtg-jp-card-index.js?v=196", "./mtgjson-jp-search-index.js?v=196", "./app.js?v=196", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)));
