@@ -1,4 +1,4 @@
-const APP_VERSION = "v201";
+const APP_VERSION = "v202";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -2827,15 +2827,26 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   selectVariant(sameVariant);
 }
 
+function ownedCardForVariant(card, preferredId = state.selectedOwnedId) {
+  const selectedId = cardScryfallId(card);
+  if (!selectedId) return null;
+  if (preferredId) {
+    const pinned = state.collection.find(item => item.id === preferredId && item.scryfallId === selectedId);
+    if (pinned) return pinned;
+  }
+  return state.collection.find(item => item.scryfallId === selectedId) || null;
+}
+
 function selectedOwnedQuantity() {
   return Number(selectedOwnedCard()?.quantity || 0);
 }
 
 function selectedOwnedCard() {
   const selectedId = cardScryfallId(state.selectedCard);
-  if (!selectedId || !state.selectedOwnedId) return null;
-  const pinned = state.collection.find(card => card.id === state.selectedOwnedId && card.scryfallId === selectedId);
-  return pinned || null;
+  if (!selectedId) return null;
+  const owned = ownedCardForVariant(state.selectedCard);
+  if (owned && state.selectedOwnedId !== owned.id) state.selectedOwnedId = owned.id;
+  return owned;
 }
 
 function updateCardOwnedActions() {
@@ -3107,7 +3118,8 @@ function renderVariantGallery() {
 
 function selectVariant(card) {
   state.selectedCard = card;
-  if (!state.collection.some(item => item.id === state.selectedOwnedId && item.scryfallId === cardScryfallId(card))) state.selectedOwnedId = null;
+  const owned = ownedCardForVariant(card);
+  state.selectedOwnedId = owned?.id || null;
   renderSelectedVariant();
   renderVariantGallery();
 }
