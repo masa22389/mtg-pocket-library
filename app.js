@@ -1,4 +1,4 @@
-const APP_VERSION = "v194";
+const APP_VERSION = "v195";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -621,14 +621,17 @@ function normalizeCardTraderName(value) {
 }
 
 async function cardTraderExpansionMap() {
-  if (state.cardTrader.expansionMap && Date.now() - Number(state.cardTrader.expansionMapUpdatedAt || 0) < CARDTRADER_CACHE_MS) {
+  if (state.cardTrader.expansionMap?.__names && Date.now() - Number(state.cardTrader.expansionMapUpdatedAt || 0) < CARDTRADER_CACHE_MS) {
     return state.cardTrader.expansionMap;
   }
   const expansions = await fetchCardTrader("/expansions");
-  const map = {};
+  const map = { __names: {} };
   (expansions || []).forEach(expansion => {
+    if (Number(expansion.game_id) !== 1) return;
     const code = String(expansion.code || "").toLowerCase();
     if (code && !map[code]) map[code] = expansion.id;
+    const nameKey = normalizeCardTraderName(expansion.name_en || expansion.name);
+    if (nameKey && !map.__names[nameKey]) map.__names[nameKey] = expansion.id;
   });
   state.cardTrader.expansionMap = map;
   state.cardTrader.expansionMapUpdatedAt = Date.now();
@@ -636,13 +639,19 @@ async function cardTraderExpansionMap() {
   return map;
 }
 
-async function cardTraderBlueprintsForSet(setCode) {
+async function cardTraderExpansionIdForSet(setCode, setName = "") {
+  const normalizedSet = String(setCode || "").toLowerCase();
+  const expansionMap = await cardTraderExpansionMap();
+  return expansionMap[normalizedSet] || expansionMap.__names?.[normalizeCardTraderName(setName)] || "";
+}
+
+async function cardTraderBlueprintsForSet(setCode, setName = "") {
   const normalizedSet = String(setCode || "").toLowerCase();
   if (!normalizedSet) return {};
   const cached = state.cardTrader.blueprintsBySet?.[normalizedSet];
   const cachedAt = state.cardTrader.blueprintsUpdatedAt?.[normalizedSet] || 0;
   if (cached && Date.now() - cachedAt < CARDTRADER_CACHE_MS) return cached;
-  const expansionId = (await cardTraderExpansionMap())[normalizedSet];
+  const expansionId = await cardTraderExpansionIdForSet(setCode, setName);
   if (!expansionId) return {};
   const blueprints = await fetchCardTrader(`/blueprints/export?expansion_id=${encodeURIComponent(expansionId)}`);
   const map = {};
@@ -684,9 +693,9 @@ async function cardTraderBlueprintIdForCard(card, blueprints) {
   return blueprints[alternateId] || "";
 }
 
-async function cardTraderMarketplaceForSet(setCode, language, foil) {
+async function cardTraderMarketplaceForSet(setCode, language, foil, setName = "") {
   const normalizedSet = String(setCode || "").toLowerCase();
-  const expansionId = (await cardTraderExpansionMap())[normalizedSet];
+  const expansionId = await cardTraderExpansionIdForSet(setCode, setName);
   if (!expansionId) return {};
   const key = `${expansionId}:${language}:${foil}`;
   if (cardTraderMarketplaceCache.has(key)) return cardTraderMarketplaceCache.get(key);
@@ -3196,8 +3205,8 @@ async function hydrateCardTraderPrices(options = {}) {
     for (const groupCards of groups.values()) {
       const sample = groupCards[0];
       const setCode = String(sample.set || "").toLowerCase();
-      const blueprints = await cardTraderBlueprintsForSet(setCode);
-      const marketplace = await cardTraderMarketplaceForSet(setCode, cardTraderLanguageForCard(sample), cardTraderFoilForCard(sample));
+      const blueprints = await cardTraderBlueprintsForSet(setCode, sample.setName);
+      const marketplace = await cardTraderMarketplaceForSet(setCode, cardTraderLanguageForCard(sample), cardTraderFoilForCard(sample), sample.setName);
       for (const card of groupCards) {
         const blueprintId = await cardTraderBlueprintIdForCard(card, blueprints);
         const chosen = blueprintId ? chooseCardTraderProduct(marketplace[String(blueprintId)] || [], card) : null;
