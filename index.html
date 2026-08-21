@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=199">
+  <link rel="stylesheet" href="styles.css?v=200">
 </head>
 <body>
   <header class="app-header">
@@ -129,19 +129,34 @@
         <hr>
         <h3>CardTrader価格取得</h3>
         <div class="search-row"><input id="cardTraderToken" type="password" autocomplete="off" placeholder="CardTrader APIトークン"><button id="saveCardTraderToken" type="button">保存</button><button id="refreshCardTraderPrices" class="ghost" type="button">今すぐ取得</button><button id="clearCardTraderToken" class="ghost" type="button">削除</button></div>
+        <div class="search-row"><input id="cardTraderHighValueThreshold" type="number" min="1" step="1" inputmode="numeric" placeholder="単価の下限（円）"><button id="refreshHighValueCardTraderPrices" class="ghost" type="button">高額カードだけ取得</button></div>
         <p id="cardTraderHelp" class="muted">未設定の場合はScryfall価格を使用します。</p>
+        <details class="settings-details">
+          <summary id="cardTraderRunResultSummary">最終実行結果：まだありません</summary>
+          <div id="cardTraderRunResultBody" class="settings-details-body"></div>
+        </details>
+        <details class="settings-details">
+          <summary>各種設定方法</summary>
+          <div class="settings-guide-grid">
+            <section>
+              <h3>CardTrader API設定方法</h3>
+              <ol><li>CardTraderにログイン</li><li>右上のユーザーアイコンからSettingsを開く</li><li>APIsを開く</li><li>JWT TokenのCopy to Clipboardを押す</li><li>この画面のCardTrader APIトークン欄へ貼り付けて保存</li></ol>
+              <p class="muted">トークンはこの端末のブラウザー内に保存されます。Invalidate all past JWT Tokensは、古いトークンをすべて無効化したい時だけ使います。</p>
+            </section>
+            <section>
+              <h3>スマホへインストール方法</h3>
+              <h4>Android</h4>
+              <ol><li>Chromeでこのページを開く</li><li>右上の「︙」をタップ</li><li>「アプリをインストール」を選ぶ</li></ol>
+              <h4>iPhone / iPad</h4>
+              <ol><li>Safariでこのページを開く</li><li>共有ボタン（四角から上矢印）をタップ</li><li>「ホーム画面に追加」を選ぶ</li><li>名前を確認して「追加」をタップ</li></ol>
+              <p class="muted">iPhone / iPadではChromeではなくSafariから追加するのがおすすめです。</p>
+            </section>
+          </div>
+        </details>
         <hr>
         <h3>資産価値の円換算</h3>
         <div class="search-row"><input id="usdJpyRate" type="number" min="1" step="0.01" inputmode="decimal" placeholder="USD/JPY"><button id="saveFxButton" type="button">換算レートを保存</button></div>
         <p id="fxHelp" class="muted">為替を自動取得できない場合に手動で変更できます。</p>
-      </section>
-      <section class="card stack install-help">
-        <h2>スマホへインストール</h2>
-        <h3>Android</h3>
-        <ol><li>Chromeでこのページを開く</li><li>右上の「︙」をタップ</li><li>「アプリをインストール」を選ぶ</li></ol>
-        <h3>iPhone / iPad</h3>
-        <ol><li>Safariでこのページを開く</li><li>共有ボタン（四角から上矢印）をタップ</li><li>「ホーム画面に追加」を選ぶ</li><li>名前を確認して「追加」をタップ</li></ol>
-        <p class="muted">iPhone / iPadではChromeではなくSafariから追加するのがおすすめです。</p>
       </section>
     </section>
   </main>
@@ -337,8 +352,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=199" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=199" defer></script>
-  <script src="app.js?v=199" defer></script>
+  <script src="mtg-jp-card-index.js?v=200" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=200" defer></script>
+  <script src="app.js?v=200" defer></script>
 </body>
 </html>

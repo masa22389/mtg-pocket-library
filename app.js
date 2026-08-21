@@ -1,5 +1,5 @@
-const APP_VERSION = "v199";
-const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1" };
+const APP_VERSION = "v200";
+const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
   default: { label: "標準", bg: "#f2f4f1", pageBg: "linear-gradient(150deg,#f8f9f5 0,#eef3ef 48%,#f4f1e8 100%)", paper: "#fffdf8", surface: "#f0f3ee", surfaceStrong: "#eef3ef", surfacePanel: "#ffffff99", surfaceSoft: "#f8faf8", surfaceAccent: "#e7eee9", navBg: "#fffdf8ee", visualBg: "linear-gradient(135deg,#f7f1e4,#e6eef2)" },
@@ -25,6 +25,7 @@ const state = {
   collection: read(KEYS.collection, []),
   decks: read(KEYS.decks, []),
   fx: read(KEYS.fx, { usdJpy: 0, updatedAt: 0, source: "" }),
+  priceCache: read(KEYS.priceCache, {}),
   cardTrader: read(KEYS.cardTrader, { token: "", expansionMap: null, expansionMapUpdatedAt: 0, blueprintsBySet: {}, blueprintsUpdatedAt: {}, priceUpdatedAt: 0, lastError: "", lastStats: null }),
   favoriteGroups: read(KEYS.favoriteGroups, []),
   backupMeta: read(KEYS.backupMeta, { lastExportedAt: 0 }),
@@ -41,6 +42,7 @@ const state = {
   collectionSortStack: read(KEYS.collectionSortStack, []),
   deckFormatFilter: localStorage.getItem(KEYS.deckFormatFilter) || "",
   backgroundTheme: localStorage.getItem(KEYS.backgroundTheme) || "default",
+  cardTraderHighValueThreshold: localStorage.getItem(KEYS.cardTraderHighValueThreshold) || "10000",
   editingDeck: null,
   editingDeckEntry: null,
   deckMissingOpen: false,
@@ -120,7 +122,8 @@ const els = {
   decrementCommanderDeckEntry: $("#decrementCommanderDeckEntry"), incrementCommanderDeckEntry: $("#incrementCommanderDeckEntry"),
   reorderDeckCards: $("#reorderDeckCards"), sortDeckByName: $("#sortDeckByName"), sortDeckByColor: $("#sortDeckByColor"), sortDeckByMana: $("#sortDeckByMana"), sortDeckByType: $("#sortDeckByType"),
   usdJpyRate: $("#usdJpyRate"), saveFxButton: $("#saveFxButton"), fxHelp: $("#fxHelp"),
-  cardTraderToken: $("#cardTraderToken"), saveCardTraderToken: $("#saveCardTraderToken"), refreshCardTraderPrices: $("#refreshCardTraderPrices"), clearCardTraderToken: $("#clearCardTraderToken"), cardTraderHelp: $("#cardTraderHelp"),
+  cardTraderToken: $("#cardTraderToken"), saveCardTraderToken: $("#saveCardTraderToken"), refreshCardTraderPrices: $("#refreshCardTraderPrices"), refreshHighValueCardTraderPrices: $("#refreshHighValueCardTraderPrices"),
+  clearCardTraderToken: $("#clearCardTraderToken"), cardTraderHelp: $("#cardTraderHelp"), cardTraderHighValueThreshold: $("#cardTraderHighValueThreshold"), cardTraderRunResultSummary: $("#cardTraderRunResultSummary"), cardTraderRunResultBody: $("#cardTraderRunResultBody"),
   installButton: $("#installButton"), backupSummary: $("#backupSummary"), importInput: $("#importInput"), toast: $("#toast"),
   currentAppVersion: $("#currentAppVersion"), backgroundColorChoices: $("#backgroundColorChoices"), backgroundColorStatus: $("#backgroundColorStatus"),
 };
@@ -158,6 +161,7 @@ function persist() {
   localStorage.setItem(KEYS.collection, JSON.stringify(state.collection));
   localStorage.setItem(KEYS.decks, JSON.stringify(state.decks));
   localStorage.setItem(KEYS.fx, JSON.stringify(state.fx));
+  localStorage.setItem(KEYS.priceCache, JSON.stringify(state.priceCache || {}));
   localStorage.setItem(KEYS.cardTrader, JSON.stringify(state.cardTrader));
   localStorage.setItem(KEYS.favoriteGroups, JSON.stringify(state.favoriteGroups));
 }
@@ -522,14 +526,65 @@ function ensureDeckDates(deck) {
   if (!deck.updatedAt) { deck.updatedAt = deck.createdAt; changed = true; }
   return changed;
 }
+function priceCacheFinish(card) {
+  return card.finish === "foil" || card.finish === "etched" ? card.finish : "normal";
+}
+
+function priceCacheLanguage(card) {
+  return cardTraderLanguageForCard(card) || card.language || "unknown";
+}
+
+function priceCacheKeyForCard(card, source = "cardtrader") {
+  const identity = card.scryfallId || [card.set, card.collectorNumber, card.name].map(value => String(value || "").toLowerCase()).join(":");
+  return [source, identity, priceCacheLanguage(card), normalizeCardCondition(card.condition), priceCacheFinish(card)].join("|");
+}
+
+function priceCacheEntryForCard(card, source = "cardtrader") {
+  return state.priceCache?.[priceCacheKeyForCard(card, source)] || null;
+}
+
+function setPriceCacheEntry(card, source, entry) {
+  state.priceCache = state.priceCache || {};
+  state.priceCache[priceCacheKeyForCard(card, source)] = entry;
+}
+
+function deletePriceCacheEntry(card, source = "cardtrader") {
+  if (!state.priceCache) return;
+  delete state.priceCache[priceCacheKeyForCard(card, source)];
+}
+
+function deletePriceCacheBySource(source) {
+  if (!state.priceCache) return;
+  Object.keys(state.priceCache).forEach(key => {
+    if (key.startsWith(`${source}|`)) delete state.priceCache[key];
+  });
+}
+
+function clearCardTraderPriceFields(card) {
+  deletePriceCacheEntry(card, "cardtrader");
+  if (card.priceUsdSource === "cardtrader") { card.priceUsd = null; card.priceUsdSource = ""; }
+  if (card.priceUsdFoilSource === "cardtrader") { card.priceUsdFoil = null; card.priceUsdFoilSource = ""; }
+  if (card.priceUsdEtchedSource === "cardtrader") { card.priceUsdEtched = null; card.priceUsdEtchedSource = ""; }
+}
+
+function cardTraderPriceUpdatedAtForCard(card) {
+  return Number(priceCacheEntryForCard(card, "cardtrader")?.updatedAt || card.cardTraderPriceUpdatedAt || 0);
+}
+
 function usdPriceOf(card) {
+  const cached = priceCacheEntryForCard(card, "cardtrader");
+  if (cached?.valueUsd != null) return Number(cached.valueUsd);
   const value = card.finish === "foil" ? card.priceUsdFoil : card.finish === "etched" ? card.priceUsdEtched : card.priceUsd;
   return value == null || value === "" ? null : Number(value);
 }
 function selectedPriceSource(card) {
+  const cached = priceCacheEntryForCard(card, "cardtrader");
+  if (cached?.source) return cached.source;
   return card.finish === "foil" ? card.priceUsdFoilSource : card.finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
 }
 function selectedPriceUsesEnglish(card) {
+  const cached = priceCacheEntryForCard(card, "cardtrader");
+  if (cached?.source) return cached.usesEnglish === true;
   return card.finish === "foil" ? card.priceUsdFoilFromEnglish === true : card.finish === "etched" ? card.priceUsdEtchedFromEnglish === true : card.priceUsdFromEnglish === true;
 }
 function yenValueOf(card) { const usd = usdPriceOf(card); return usd != null && state.fx.usdJpy ? usd * state.fx.usdJpy * Number(card.quantity || 0) : null; }
@@ -545,6 +600,11 @@ function collectionPriceLabel(card, compact = false) {
   return state.collectionPriceDisplayMode === "unit"
     ? `${prefix} ${formatYen(value)} / 枚`
     : `${prefix} ${formatYen(value)}`;
+}
+
+function cardPriceLabel(card) {
+  const unit = unitYenValueOf(card);
+  return unit == null ? "参考価格なし" : `${selectedPriceSource(card) === "cardtrader" ? "CardTrader" : "参考"} ${formatYen(unit)} / 枚`;
 }
 function updateCollectionPriceModeUi() {
   document.querySelectorAll("[data-collection-price-mode]").forEach(button => {
@@ -575,13 +635,53 @@ function cardTraderStatusText() {
   return "CardTrader設定済み。次回の価格更新で使用します。";
 }
 
+function cardTraderRunResultTitle(stats) {
+  if (!stats) return "最終実行結果：まだありません";
+  const mode = stats.mode || "全量";
+  const finished = stats.finishedAt ? new Date(stats.finishedAt).toLocaleString("ja-JP") : stats.inProgress ? "実行中" : "未完了";
+  return `最終実行結果：${mode} / ${finished}`;
+}
+
+function cardTraderRunResultHtml(stats) {
+  if (!stats) return `<p class="muted">まだ価格取得を実行していません。</p>`;
+  const rows = [
+    ["実行種別", stats.mode || "全量"],
+    ["開始", stats.startedAt ? new Date(stats.startedAt).toLocaleString("ja-JP") : "-"],
+    ["終了", stats.finishedAt ? new Date(stats.finishedAt).toLocaleString("ja-JP") : stats.inProgress ? "実行中" : "-"],
+    ["対象", `${stats.candidates || 0}件`],
+    ["価格更新", `${stats.priced || 0}件`],
+    ["出品なし", `${stats.noProduct || 0}件`],
+    ["紐付けなし", `${stats.noBlueprint || 0}件`],
+    ["処理セット", `${stats.groupsDone || 0}/${stats.groupsTotal || 0}`],
+  ];
+  if (stats.threshold) rows.splice(1, 0, ["条件", `単価 ${formatYen(stats.threshold)} 以上`]);
+  if (stats.failedGroups) rows.push(["失敗", `${stats.failedGroups}件`]);
+  const exampleBlock = (title, values = []) => values.length
+    ? `<div><b>${esc(title)}</b><ul>${values.slice(0, 8).map(value => `<li>${esc(value)}</li>`).join("")}</ul></div>`
+    : "";
+  return `
+    <dl class="run-result-grid">${rows.map(([label, value]) => `<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join("")}</dl>
+    <div class="run-result-examples">
+      ${exampleBlock("更新したカード", stats.pricedExamples)}
+      ${exampleBlock("一致する出品なし", stats.noProductExamples)}
+      ${exampleBlock("カード版と紐付け不可", stats.noBlueprintExamples)}
+      ${exampleBlock("エラー", stats.errorExamples)}
+    </div>
+  `;
+}
+
 function updateCardTraderSettingsUi() {
   if (els.cardTraderToken && document.activeElement !== els.cardTraderToken) {
     const currentValue = String(els.cardTraderToken.value || "").trim();
     if (cardTraderToken() && (!currentValue || currentValue === "********")) els.cardTraderToken.value = "********";
     if (!cardTraderToken() && currentValue === "********") els.cardTraderToken.value = "";
   }
+  if (els.cardTraderHighValueThreshold && document.activeElement !== els.cardTraderHighValueThreshold) {
+    els.cardTraderHighValueThreshold.value = state.cardTraderHighValueThreshold || "10000";
+  }
   if (els.cardTraderHelp) els.cardTraderHelp.textContent = cardTraderStatusText();
+  if (els.cardTraderRunResultSummary) els.cardTraderRunResultSummary.textContent = cardTraderRunResultTitle(state.cardTrader?.lastStats);
+  if (els.cardTraderRunResultBody) els.cardTraderRunResultBody.innerHTML = cardTraderRunResultHtml(state.cardTrader?.lastStats);
 }
 
 function cardTraderLanguageForCard(card) {
@@ -616,7 +716,8 @@ function cardTraderFoilForCard(card) {
 }
 
 function cardTraderPriceFresh(card) {
-  return card.cardTraderPriceUpdatedAt && Date.now() - card.cardTraderPriceUpdatedAt < DAY_MS;
+  const updatedAt = cardTraderPriceUpdatedAtForCard(card);
+  return updatedAt && Date.now() - updatedAt < DAY_MS;
 }
 
 async function fetchCardTrader(path) {
@@ -757,19 +858,31 @@ function chooseCardTraderProduct(products, card) {
 }
 
 function applyCardTraderPrice(card, usd, product) {
-  if (card.finish === "foil") {
-    card.priceUsdFoil = String(usd);
-    card.priceUsdFoilSource = "cardtrader";
-    card.priceUsdFoilFromEnglish = false;
-  } else {
-    card.priceUsd = String(usd);
-    card.priceUsdSource = "cardtrader";
-    card.priceUsdFromEnglish = false;
-  }
-  card.cardTraderPriceUpdatedAt = Date.now();
-  card.cardTraderPriceCurrency = product?.price?.currency || "";
-  card.cardTraderPriceCents = product?.price?.cents ?? null;
-  card.priceUpdatedAt = Date.now();
+  const updatedAt = Date.now();
+  const currency = product?.price?.currency || "";
+  const cents = product?.price?.cents ?? null;
+  setPriceCacheEntry(card, "cardtrader", {
+    source: "cardtrader",
+    cardId: card.id || "",
+    scryfallId: card.scryfallId || "",
+    name: nameOf(card),
+    set: card.set || "",
+    setName: card.setName || "",
+    collectorNumber: card.collectorNumber || "",
+    language: cardTraderLanguageForCard(card),
+    condition: normalizeCardCondition(card.condition),
+    finish: priceCacheFinish(card),
+    valueUsd: Number(usd),
+    valueJpy: state.fx?.usdJpy ? Number(usd) * Number(state.fx.usdJpy) : null,
+    currency,
+    cents,
+    productId: product?.id || "",
+    updatedAt,
+  });
+  card.cardTraderPriceUpdatedAt = updatedAt;
+  card.cardTraderPriceCurrency = currency;
+  card.cardTraderPriceCents = cents;
+  card.priceUpdatedAt = updatedAt;
 }
 
 const CARD_NAME_ALIASES = [
@@ -2690,9 +2803,17 @@ function updateCardOwnedActions() {
   if (els.refreshCardPriceButton) {
     els.refreshCardPriceButton.hidden = hidden;
     els.refreshCardPriceButton.disabled = hidden || !cardTraderToken();
-    els.refreshCardPriceButton.textContent = cardTraderToken() ? "価格を取得" : "APIトークン未設定";
+    const updatedAt = owned ? cardTraderPriceUpdatedAtForCard(owned) : 0;
+    els.refreshCardPriceButton.textContent = cardTraderToken() ? (updatedAt ? "価格を再取得" : "価格を取得") : "APIトークン未設定";
   }
   if (!owned) { renderFavoriteGroupPanel(); return; }
+  if (state.cardDialogMode === "collection" && els.cardActionStatus && !els.cardActionStatus.classList.contains("show") && cardTraderToken()) {
+    const updatedAt = cardTraderPriceUpdatedAtForCard(owned);
+    const message = updatedAt
+      ? `CardTrader価格：${cardPriceLabel(owned)}（最終取得 ${new Date(updatedAt).toLocaleString("ja-JP")}）`
+      : "CardTrader価格：未取得です。価格を取得できます。";
+    showInlineStatus(els.cardActionStatus, message);
+  }
   if (els.favoriteCardButton) {
     els.favoriteCardButton.classList.toggle("active", owned.favorite === true);
     els.favoriteCardButton.textContent = owned.favorite ? "★ お気に入り" : "☆ お気に入り";
@@ -3208,9 +3329,23 @@ async function hydrateCardTraderPrices(options = {}) {
     !card.scryfallId.startsWith("sample-") &&
     cardTraderLanguageForCard(card) &&
     cardTraderFoilForCard(card) !== null &&
-    (force || !card.cardTraderPriceUpdatedAt || Date.now() - card.cardTraderPriceUpdatedAt > DAY_MS)
+    (force || !cardTraderPriceUpdatedAtForCard(card) || Date.now() - cardTraderPriceUpdatedAtForCard(card) > DAY_MS)
   ));
-  const stats = { candidates: candidates.length, priced: 0, noBlueprint: 0, noProduct: 0, failedGroups: 0 };
+  const stats = {
+    mode: options.mode || (options.cards ? "指定カード" : "全量"),
+    threshold: options.threshold || 0,
+    startedAt: Date.now(),
+    finishedAt: 0,
+    candidates: candidates.length,
+    priced: 0,
+    noBlueprint: 0,
+    noProduct: 0,
+    failedGroups: 0,
+    pricedExamples: [],
+    noBlueprintExamples: [],
+    noProductExamples: [],
+    errorExamples: [],
+  };
   const groups = new Map();
   candidates.forEach(card => {
     const key = `${String(card.set || "").toLowerCase()}:${cardTraderLanguageForCard(card)}:${cardTraderFoilForCard(card)}`;
@@ -3238,16 +3373,22 @@ async function hydrateCardTraderPrices(options = {}) {
         if (chosen) {
           applyCardTraderPrice(card, chosen.usd, chosen.product);
           stats.priced += 1;
+          if (stats.pricedExamples.length < 8) stats.pricedExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""} ${normalizeCardCondition(card.condition)} ${priceCacheFinish(card)} ${formatYen(Number(chosen.usd) * Number(state.fx.usdJpy || 0))}`);
         } else if (blueprintId) {
+          clearCardTraderPriceFields(card);
           stats.noProduct += 1;
+          if (stats.noProductExamples.length < 8) stats.noProductExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""}`);
         } else {
+          clearCardTraderPriceFields(card);
           stats.noBlueprint += 1;
+          if (stats.noBlueprintExamples.length < 8) stats.noBlueprintExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""}`);
         }
         changed = true;
       }
     } catch (error) {
       stats.failedGroups += 1;
       state.cardTrader.lastError = error?.message || "一部取得に失敗しました";
+      if (stats.errorExamples.length < 8) stats.errorExamples.push(`${groupCards[0]?.setName || groupCards[0]?.set || "不明なセット"}：${state.cardTrader.lastError}`);
     } finally {
       stats.groupsDone += 1;
       state.cardTrader.lastStats = { ...stats };
@@ -3256,6 +3397,7 @@ async function hydrateCardTraderPrices(options = {}) {
     }
   }
   stats.inProgress = false;
+  stats.finishedAt = Date.now();
   state.cardTrader.lastStats = { ...stats };
   if (changed) state.cardTrader.priceUpdatedAt = Date.now();
   if (stats.failedGroups) showToast(`CardTrader価格取得：${stats.priced}件更新、一部失敗${stats.failedGroups}件`);
@@ -3311,7 +3453,7 @@ function saveCardTraderToken() {
   if (els.cardTraderToken) els.cardTraderToken.value = "********";
   updateCardTraderSettingsUi();
   showToast("CardTrader APIトークンを保存しました");
-  hydrateCardTraderPrices({ force: true });
+  hydrateCardTraderPrices({ force: true, mode: "全量" });
 }
 
 function refreshCardTraderPrices() {
@@ -3325,15 +3467,60 @@ function refreshCardTraderPrices() {
   persist();
   updateCardTraderSettingsUi();
   showToast("CardTrader価格を取得しています");
-  hydrateCardTraderPrices({ force: true });
+  hydrateCardTraderPrices({ force: true, mode: "全量" });
+}
+
+function saveCardTraderHighValueThreshold() {
+  const value = String(els.cardTraderHighValueThreshold?.value || "").trim();
+  const threshold = Math.max(0, Math.floor(Number(value || 0)));
+  state.cardTraderHighValueThreshold = threshold ? String(threshold) : "";
+  localStorage.setItem(KEYS.cardTraderHighValueThreshold, state.cardTraderHighValueThreshold);
+  return threshold;
+}
+
+function refreshHighValueCardTraderPrices() {
+  if (!cardTraderToken()) { showToast("CardTrader APIトークンを保存してください"); return; }
+  const threshold = saveCardTraderHighValueThreshold();
+  if (!threshold) { showToast("単価の下限を入力してください"); return; }
+  const cards = state.collection.filter(card => {
+    const unit = unitYenValueOf(card);
+    return unit != null && unit >= threshold;
+  });
+  if (!cards.length) {
+    state.cardTrader.lastStats = {
+      mode: "高額のみ",
+      threshold,
+      startedAt: Date.now(),
+      finishedAt: Date.now(),
+      candidates: 0,
+      priced: 0,
+      noBlueprint: 0,
+      noProduct: 0,
+      failedGroups: 0,
+      pricedExamples: [],
+      noBlueprintExamples: [],
+      noProductExamples: [],
+      errorExamples: [],
+    };
+    persist();
+    updateCardTraderSettingsUi();
+    showToast("条件に一致するカードがありません");
+    return;
+  }
+  cards.forEach(card => { card.cardTraderPriceUpdatedAt = 0; deletePriceCacheEntry(card, "cardtrader"); });
+  state.cardTrader.lastError = "";
+  cardTraderMarketplaceCache = new Map();
+  persist();
+  updateCardTraderSettingsUi();
+  showToast(`単価${formatYen(threshold)}以上のCardTrader価格を取得しています`);
+  hydrateCardTraderPrices({ force: true, cards, mode: "高額のみ", threshold });
 }
 
 function clearCardTraderToken() {
   state.cardTrader = { token: "", expansionMap: null, expansionMapUpdatedAt: 0, blueprintsBySet: {}, blueprintsUpdatedAt: {}, priceUpdatedAt: 0, lastError: "", lastStats: null };
+  deletePriceCacheBySource("cardtrader");
   state.collection.forEach(card => {
-    if (card.priceUsdSource === "cardtrader") { card.priceUsd = null; card.priceUsdSource = ""; }
-    if (card.priceUsdFoilSource === "cardtrader") { card.priceUsdFoil = null; card.priceUsdFoilSource = ""; }
-    if (card.priceUsdEtchedSource === "cardtrader") { card.priceUsdEtched = null; card.priceUsdEtchedSource = ""; }
+    clearCardTraderPriceFields(card);
     card.cardTraderPriceUpdatedAt = 0;
     card.priceUpdatedAt = 0;
   });
@@ -3408,6 +3595,7 @@ async function refreshSelectedCardTraderPrice() {
   }
   if (els.refreshCardPriceButton) els.refreshCardPriceButton.disabled = true;
   card.cardTraderPriceUpdatedAt = 0;
+  deletePriceCacheEntry(card, "cardtrader");
   state.cardTrader.lastError = "";
   state.cardTrader.lastStats = null;
   const setCode = String(card.set || "").toLowerCase();
@@ -3418,7 +3606,7 @@ async function refreshSelectedCardTraderPrice() {
   cardTraderMarketplaceCache = new Map();
   persist();
   showInlineStatus(els.cardActionStatus, "CardTrader価格を取得しています");
-  await hydrateCardTraderPrices({ force: true, cards: [card] });
+  await hydrateCardTraderPrices({ force: true, cards: [card], mode: "個別カード" });
   const stats = state.cardTrader?.lastStats;
   if (state.cardTrader?.lastError) {
     showInlineStatus(els.cardActionStatus, `価格取得エラー：${state.cardTrader.lastError}`);
@@ -5347,6 +5535,7 @@ function backupPayload() {
     },
     collection: state.collection,
     decks: state.decks,
+    priceCache: state.priceCache || {},
     fx: state.fx,
     favoriteGroups: state.favoriteGroups,
     settings: { backgroundTheme: state.backgroundTheme },
@@ -5389,6 +5578,7 @@ async function importBackup(file) {
     if (!confirm(message)) { els.importInput.value = ""; return; }
     state.collection = data.collection;
     state.decks = data.decks;
+    state.priceCache = data.priceCache && typeof data.priceCache === "object" ? data.priceCache : {};
     if (data.fx && typeof data.fx === "object") state.fx = data.fx;
     state.favoriteGroups = Array.isArray(data.favoriteGroups) ? data.favoriteGroups : [];
     if (data.settings?.backgroundTheme && BACKGROUND_THEMES[data.settings.backgroundTheme]) {
@@ -5603,13 +5793,18 @@ $("#exportButton").addEventListener("click", exportBackup);
 els.saveFxButton.addEventListener("click", saveExchangeRate);
 els.saveCardTraderToken?.addEventListener("click", saveCardTraderToken);
 els.refreshCardTraderPrices?.addEventListener("click", refreshCardTraderPrices);
+els.refreshHighValueCardTraderPrices?.addEventListener("click", refreshHighValueCardTraderPrices);
 els.clearCardTraderToken?.addEventListener("click", clearCardTraderToken);
+els.cardTraderHighValueThreshold?.addEventListener("change", () => {
+  saveCardTraderHighValueThreshold();
+  updateCardTraderSettingsUi();
+});
 els.cardTraderToken?.addEventListener("focus", () => {
   if (els.cardTraderToken.value === "********") els.cardTraderToken.value = "";
 });
 els.cardTraderToken?.addEventListener("blur", updateCardTraderSettingsUi);
 els.importInput.addEventListener("change", () => els.importInput.files[0] && importBackup(els.importInput.files[0]));
-$("#clearButton").addEventListener("click", () => { if (!confirm("所持カードとデッキをすべて削除しますか？")) return; state.collection = []; state.decks = []; persist(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("すべて削除しました"); });
+$("#clearButton").addEventListener("click", () => { if (!confirm("所持カードとデッキをすべて削除しますか？")) return; state.collection = []; state.decks = []; state.priceCache = {}; persist(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("すべて削除しました"); });
 
 window.addEventListener("beforeinstallprompt", event => { event.preventDefault(); state.installPrompt = event; els.installButton.hidden = false; });
 els.installButton.addEventListener("click", async () => { if (!state.installPrompt) return; state.installPrompt.prompt(); await state.installPrompt.userChoice; state.installPrompt = null; els.installButton.hidden = true; });
