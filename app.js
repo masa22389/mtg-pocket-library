@@ -1,4 +1,4 @@
-const APP_VERSION = "v188";
+const APP_VERSION = "v189";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -10,6 +10,16 @@ const BACKGROUND_THEMES = {
   blue: { label: "青", bg: "#edf3f8", pageBg: "linear-gradient(150deg,#f7fbff 0,#d7e6f3 50%,#edf4fa 100%)", paper: "#f8fcff", surface: "#e4f0f8", surfaceStrong: "#d9e9f5", surfacePanel: "#f5fbffcc", surfaceSoft: "#f4fbff", surfaceAccent: "#cfe0ef", navBg: "#f7fbffee", visualBg: "linear-gradient(135deg,#f2f9ff,#cfe2f2)" },
   indigo: { label: "藍", bg: "#eceef7", pageBg: "linear-gradient(150deg,#f7f8ff 0,#d9ddf0 50%,#eef0fb 100%)", paper: "#fafaff", surface: "#e7eafb", surfaceStrong: "#dde1f4", surfacePanel: "#f7f8ffcc", surfaceSoft: "#f5f6ff", surfaceAccent: "#d1d6ee", navBg: "#f7f8ffee", visualBg: "linear-gradient(135deg,#f4f5ff,#d2d8f1)" },
   violet: { label: "紫", bg: "#f2eaf5", pageBg: "linear-gradient(150deg,#fdf7ff 0,#ead8f0 50%,#f5ecf7 100%)", paper: "#fff9ff", surface: "#f4e6f8", surfaceStrong: "#eadcf1", surfacePanel: "#fdf6ffcc", surfaceSoft: "#fcf5ff", surfaceAccent: "#e2cfe9", navBg: "#fdf7ffee", visualBg: "linear-gradient(135deg,#fcf2ff,#e3cfeb)" },
+};
+const BACKGROUND_THEME_CHROME = {
+  default: { green: "#173f35", green2: "#256453", gold: "#c59746" },
+  red: { green: "#7f2f2b", green2: "#a3463f", gold: "#c77f55" },
+  orange: { green: "#855116", green2: "#a5641d", gold: "#d08a2d" },
+  yellow: { green: "#6a5a12", green2: "#837022", gold: "#b89320" },
+  green: { green: "#1e5937", green2: "#2d7048", gold: "#9a8f3a" },
+  blue: { green: "#1f4d78", green2: "#2d689b", gold: "#b78a3e" },
+  indigo: { green: "#343f82", green2: "#4a55a0", gold: "#b98a45" },
+  violet: { green: "#68327c", green2: "#82449a", gold: "#b77a56" },
 };
 const state = {
   collection: read(KEYS.collection, []),
@@ -118,10 +128,15 @@ if (els.currentAppVersion) els.currentAppVersion.textContent = APP_VERSION;
 function applyBackgroundTheme(themeKey = state.backgroundTheme, options = {}) {
   const key = BACKGROUND_THEMES[themeKey] ? themeKey : "default";
   const theme = BACKGROUND_THEMES[key];
+  const chrome = BACKGROUND_THEME_CHROME[key] || BACKGROUND_THEME_CHROME.default;
   state.backgroundTheme = key;
   ["bg", "pageBg", "paper", "surface", "surfaceStrong", "surfacePanel", "surfaceSoft", "surfaceAccent", "navBg", "visualBg"].forEach(name => {
     document.documentElement.style.setProperty(`--${name.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)}`, theme[name]);
   });
+  ["green", "green2", "gold"].forEach(name => {
+    document.documentElement.style.setProperty(`--${name}`, chrome[name]);
+  });
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", chrome.green);
   if (options.persist) localStorage.setItem(KEYS.backgroundTheme, key);
   els.backgroundColorChoices?.querySelectorAll("[data-background-theme]").forEach(button => {
     const active = button.dataset.backgroundTheme === key;
