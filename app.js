@@ -1,4 +1,4 @@
-const APP_VERSION = "v191";
+const APP_VERSION = "v192";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -25,7 +25,7 @@ const state = {
   collection: read(KEYS.collection, []),
   decks: read(KEYS.decks, []),
   fx: read(KEYS.fx, { usdJpy: 0, updatedAt: 0, source: "" }),
-  cardTrader: read(KEYS.cardTrader, { token: "", expansionMap: null, expansionMapUpdatedAt: 0, blueprintsBySet: {}, blueprintsUpdatedAt: {}, priceUpdatedAt: 0, lastError: "" }),
+  cardTrader: read(KEYS.cardTrader, { token: "", expansionMap: null, expansionMapUpdatedAt: 0, blueprintsBySet: {}, blueprintsUpdatedAt: {}, priceUpdatedAt: 0, lastError: "", lastStats: null }),
   favoriteGroups: read(KEYS.favoriteGroups, []),
   backupMeta: read(KEYS.backupMeta, { lastExportedAt: 0 }),
   searchResults: [],
@@ -120,7 +120,7 @@ const els = {
   decrementCommanderDeckEntry: $("#decrementCommanderDeckEntry"), incrementCommanderDeckEntry: $("#incrementCommanderDeckEntry"),
   reorderDeckCards: $("#reorderDeckCards"), sortDeckByName: $("#sortDeckByName"), sortDeckByColor: $("#sortDeckByColor"), sortDeckByMana: $("#sortDeckByMana"), sortDeckByType: $("#sortDeckByType"),
   usdJpyRate: $("#usdJpyRate"), saveFxButton: $("#saveFxButton"), fxHelp: $("#fxHelp"),
-  cardTraderToken: $("#cardTraderToken"), saveCardTraderToken: $("#saveCardTraderToken"), clearCardTraderToken: $("#clearCardTraderToken"), cardTraderHelp: $("#cardTraderHelp"),
+  cardTraderToken: $("#cardTraderToken"), saveCardTraderToken: $("#saveCardTraderToken"), refreshCardTraderPrices: $("#refreshCardTraderPrices"), clearCardTraderToken: $("#clearCardTraderToken"), cardTraderHelp: $("#cardTraderHelp"),
   installButton: $("#installButton"), backupSummary: $("#backupSummary"), importInput: $("#importInput"), toast: $("#toast"),
   currentAppVersion: $("#currentAppVersion"), backgroundColorChoices: $("#backgroundColorChoices"), backgroundColorStatus: $("#backgroundColorStatus"),
 };
@@ -546,6 +546,7 @@ function updateCollectionPriceModeUi() {
 const CARDTRADER_API_BASE = "https://api.cardtrader.com/api/v2";
 const CARDTRADER_CACHE_MS = 7 * DAY_MS;
 let cardTraderMarketplaceCache = new Map();
+const cardTraderEnglishIdCache = new Map();
 
 function cardTraderToken() {
   return String(state.cardTrader?.token || "").trim();
@@ -553,8 +554,12 @@ function cardTraderToken() {
 
 function cardTraderStatusText() {
   if (!cardTraderToken()) return "未設定の場合はScryfall価格を使用します。";
-  if (state.cardTrader?.lastError) return `CardTrader設定済み。直近の取得エラー：${state.cardTrader.lastError}`;
-  if (state.cardTrader?.priceUpdatedAt) return `CardTrader設定済み。最終価格取得：${new Date(state.cardTrader.priceUpdatedAt).toLocaleString("ja-JP")}`;
+  const stats = state.cardTrader?.lastStats;
+  const statsText = stats
+    ? `対象${stats.candidates || 0}件 / 価格更新${stats.priced || 0}件 / 出品なし${stats.noProduct || 0}件 / 紐付けなし${stats.noBlueprint || 0}件`
+    : "";
+  if (state.cardTrader?.lastError) return `CardTrader設定済み。直近の取得エラー：${state.cardTrader.lastError}${statsText ? `（${statsText}）` : ""}`;
+  if (state.cardTrader?.priceUpdatedAt) return `CardTrader設定済み。最終価格取得：${new Date(state.cardTrader.priceUpdatedAt).toLocaleString("ja-JP")}${statsText ? `（${statsText}）` : ""}`;
   return "CardTrader設定済み。次回の価格更新で使用します。";
 }
 
@@ -638,6 +643,28 @@ async function cardTraderBlueprintsForSet(setCode) {
   state.cardTrader.blueprintsUpdatedAt[normalizedSet] = Date.now();
   persist();
   return map;
+}
+
+async function ensureCardTraderScryfallId(card) {
+  if (card.language !== "ja" || card.englishScryfallId || !card.set || !card.collectorNumber) return card.scryfallId;
+  const key = `${String(card.set).toLowerCase()}:${card.collectorNumber}`;
+  if (!cardTraderEnglishIdCache.has(key)) {
+    cardTraderEnglishIdCache.set(key, fetch(`https://api.scryfall.com/cards/${encodeURIComponent(String(card.set).toLowerCase())}/${encodeURIComponent(card.collectorNumber)}/en`, {
+      headers: { Accept: "application/json" },
+    }).then(response => response.ok ? response.json() : null).catch(() => null));
+  }
+  const englishCard = await cardTraderEnglishIdCache.get(key);
+  if (englishCard?.id) {
+    card.englishScryfallId = englishCard.id;
+    return englishCard.id;
+  }
+  return card.scryfallId;
+}
+
+async function cardTraderBlueprintIdForCard(card, blueprints) {
+  if (blueprints[card.scryfallId]) return blueprints[card.scryfallId];
+  const alternateId = await ensureCardTraderScryfallId(card);
+  return blueprints[alternateId] || "";
 }
 
 async function cardTraderMarketplaceForSet(setCode, language, foil) {
@@ -3127,6 +3154,7 @@ async function hydrateCardTraderPrices(options = {}) {
     cardTraderFoilForCard(card) !== null &&
     (force || !card.cardTraderPriceUpdatedAt || Date.now() - card.cardTraderPriceUpdatedAt > DAY_MS)
   ));
+  const stats = { candidates: candidates.length, priced: 0, noBlueprint: 0, noProduct: 0 };
   const groups = new Map();
   candidates.forEach(card => {
     const key = `${String(card.set || "").toLowerCase()}:${cardTraderLanguageForCard(card)}:${cardTraderFoilForCard(card)}`;
@@ -3142,18 +3170,27 @@ async function hydrateCardTraderPrices(options = {}) {
       const blueprints = await cardTraderBlueprintsForSet(setCode);
       const marketplace = await cardTraderMarketplaceForSet(setCode, cardTraderLanguageForCard(sample), cardTraderFoilForCard(sample));
       for (const card of groupCards) {
-        const blueprintId = blueprints[card.scryfallId];
+        const blueprintId = await cardTraderBlueprintIdForCard(card, blueprints);
         const chosen = blueprintId ? chooseCardTraderProduct(marketplace[String(blueprintId)] || [], card) : null;
         card.cardTraderPriceUpdatedAt = Date.now();
-        if (chosen) applyCardTraderPrice(card, chosen.usd, chosen.product);
+        if (chosen) {
+          applyCardTraderPrice(card, chosen.usd, chosen.product);
+          stats.priced += 1;
+        } else if (blueprintId) {
+          stats.noProduct += 1;
+        } else {
+          stats.noBlueprint += 1;
+        }
         changed = true;
       }
     }
+    state.cardTrader.lastStats = stats;
     if (changed) state.cardTrader.priceUpdatedAt = Date.now();
   } catch (error) {
     state.cardTrader.lastError = error?.message || "取得に失敗しました";
+    state.cardTrader.lastStats = stats;
   }
-  if (changed || state.cardTrader.lastError) { persist(); renderCollection(); }
+  if (changed || state.cardTrader.lastError || candidates.length === 0) { persist(); renderCollection(); }
   updateCardTraderSettingsUi();
 }
 
@@ -3195,6 +3232,7 @@ function saveCardTraderToken() {
   if (!typed || typed === "********") { showToast("CardTrader APIトークンを入力してください"); return; }
   state.cardTrader.token = typed;
   state.cardTrader.lastError = "";
+  state.cardTrader.lastStats = null;
   state.collection.forEach(card => { card.cardTraderPriceUpdatedAt = 0; });
   cardTraderMarketplaceCache = new Map();
   persist();
@@ -3204,8 +3242,20 @@ function saveCardTraderToken() {
   hydrateCardTraderPrices({ force: true });
 }
 
+function refreshCardTraderPrices() {
+  if (!cardTraderToken()) { showToast("CardTrader APIトークンを保存してください"); return; }
+  state.collection.forEach(card => { card.cardTraderPriceUpdatedAt = 0; });
+  state.cardTrader.lastError = "";
+  state.cardTrader.lastStats = null;
+  cardTraderMarketplaceCache = new Map();
+  persist();
+  updateCardTraderSettingsUi();
+  showToast("CardTrader価格を取得しています");
+  hydrateCardTraderPrices({ force: true });
+}
+
 function clearCardTraderToken() {
-  state.cardTrader = { token: "", expansionMap: null, expansionMapUpdatedAt: 0, blueprintsBySet: {}, blueprintsUpdatedAt: {}, priceUpdatedAt: 0, lastError: "" };
+  state.cardTrader = { token: "", expansionMap: null, expansionMapUpdatedAt: 0, blueprintsBySet: {}, blueprintsUpdatedAt: {}, priceUpdatedAt: 0, lastError: "", lastStats: null };
   state.collection.forEach(card => {
     if (card.priceUsdSource === "cardtrader") { card.priceUsd = null; card.priceUsdSource = ""; }
     if (card.priceUsdFoilSource === "cardtrader") { card.priceUsdFoil = null; card.priceUsdFoilSource = ""; }
@@ -5445,6 +5495,7 @@ els.deleteDeckButton.addEventListener("click", deleteDeck);
 $("#exportButton").addEventListener("click", exportBackup);
 els.saveFxButton.addEventListener("click", saveExchangeRate);
 els.saveCardTraderToken?.addEventListener("click", saveCardTraderToken);
+els.refreshCardTraderPrices?.addEventListener("click", refreshCardTraderPrices);
 els.clearCardTraderToken?.addEventListener("click", clearCardTraderToken);
 els.cardTraderToken?.addEventListener("focus", () => {
   if (els.cardTraderToken.value === "********") els.cardTraderToken.value = "";

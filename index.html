@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=191">
+  <link rel="stylesheet" href="styles.css?v=192">
 </head>
 <body>
   <header class="app-header">
@@ -128,7 +128,7 @@
         <p id="backgroundColorStatus" class="muted">現在の背景色：標準</p>
         <hr>
         <h3>CardTrader価格取得</h3>
-        <div class="search-row"><input id="cardTraderToken" type="password" autocomplete="off" placeholder="CardTrader APIトークン"><button id="saveCardTraderToken" type="button">保存</button><button id="clearCardTraderToken" class="ghost" type="button">削除</button></div>
+        <div class="search-row"><input id="cardTraderToken" type="password" autocomplete="off" placeholder="CardTrader APIトークン"><button id="saveCardTraderToken" type="button">保存</button><button id="refreshCardTraderPrices" class="ghost" type="button">今すぐ取得</button><button id="clearCardTraderToken" class="ghost" type="button">削除</button></div>
         <p id="cardTraderHelp" class="muted">未設定の場合はScryfall価格を使用します。</p>
         <hr>
         <h3>資産価値の円換算</h3>
@@ -337,8 +337,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=191" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=191" defer></script>
-  <script src="app.js?v=191" defer></script>
+  <script src="mtg-jp-card-index.js?v=192" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=192" defer></script>
+  <script src="app.js?v=192" defer></script>
 </body>
 </html>
