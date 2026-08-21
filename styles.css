@@ -181,3 +181,47 @@ body.deck-list-reordering {
   outline-offset: 2px;
   transform: scale(.96);
 }
+
+@media(max-width:520px) {
+  .section-head {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .collection-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 8px;
+    flex: none;
+  }
+  .collection-toolbar label {
+    grid-column: 1;
+    width: auto;
+    min-width: 0;
+  }
+  .collection-toolbar label select {
+    width: 100%;
+    min-width: 0;
+  }
+  .collection-price-toggle {
+    grid-column: 2;
+    align-self: end;
+  }
+  .collection-price-toggle button {
+    min-width: 0;
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+  .collection-toolbar .small-search {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+  .collection-toolbar #openCollectionAdvanced {
+    grid-column: 2;
+    width: auto;
+    min-width: 96px;
+    white-space: nowrap;
+  }
+}
