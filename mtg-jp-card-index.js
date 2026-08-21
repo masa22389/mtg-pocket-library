@@ -1,6 +1,405 @@
 window.MTG_JP_CARD_INDEX = [
   {
     "source": "manual補完",
+    "sourceUrl": "https://tcgshop-suzunone.com/?cbid=2966935&csid=207&mode=cate&page=21",
+    "setCode": "SOS",
+    "collectorNumber": "253",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "死天狗茸の林間地"
+    ],
+    "enNames": [
+      "Deathcap Glade"
+    ],
+    "scryfallName": "Deathcap Glade",
+    "oracleId": "f6d24565-5b32-4eff-b2e0-6e2c25516ff0",
+    "scryfallId": "78897104-80e1-4d8a-9958-145b40f679e8",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/7/8/78897104-80e1-4d8a-9958-145b40f679e8.jpg?1783903621"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://tcgshop-suzunone.com/?cbid=2966935&csid=207&mode=cate&page=21",
+    "setCode": "SOS",
+    "collectorNumber": "254",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "夢根の滝"
+    ],
+    "enNames": [
+      "Dreamroot Cascade"
+    ],
+    "scryfallName": "Dreamroot Cascade",
+    "oracleId": "dd8538e6-cd5f-4a88-aff5-eb5e76ce8ddb",
+    "scryfallId": "ef662b92-5a7f-48c9-bcc1-14b55e091aef",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/e/f/ef662b92-5a7f-48c9-bcc1-14b55e091aef.jpg?1783903621"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://tcgshop-suzunone.com/?cbid=2966935&csid=207&mode=cate&page=21",
+    "setCode": "SOS",
+    "collectorNumber": "255",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "紛争の曠野"
+    ],
+    "enNames": [
+      "Fields of Strife"
+    ],
+    "scryfallName": "Fields of Strife",
+    "oracleId": "a32e08fa-bea4-4ba9-a126-9bf0a91f67e2",
+    "scryfallId": "3dc7a4c3-c356-4fba-bea0-e8788da3eb57",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/3/d/3dc7a4c3-c356-4fba-bea0-e8788da3eb57.jpg?1783903620"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.hareruyamtg.com/ja/products/detail/190184",
+    "setCode": "SOS",
+    "collectorNumber": "256",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "アミティの公開討論所"
+    ],
+    "enNames": [
+      "Forum of Amity"
+    ],
+    "scryfallName": "Forum of Amity",
+    "oracleId": "349ea6c7-6b3e-417f-b082-b712e2b1635b",
+    "scryfallId": "1de6c6cc-0c55-4997-8623-d7f796bd9ab8",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/1/d/1de6c6cc-0c55-4997-8623-d7f796bd9ab8.jpg?1783903623"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.projectcore.jp/product/291564",
+    "setCode": "SOS",
+    "collectorNumber": "257",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "大図書棟の大ホール"
+    ],
+    "enNames": [
+      "Great Hall of the Biblioplex"
+    ],
+    "scryfallName": "Great Hall of the Biblioplex",
+    "oracleId": "a8c70dab-1e27-4a9c-bd2d-910d5720d02d",
+    "scryfallId": "42d92674-2664-411c-b9c5-b04da7c845f4",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/4/2/42d92674-2664-411c-b9c5-b04da7c845f4.jpg?1783903620"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://tcgshop-suzunone.com/?cbid=2966935&csid=207&mode=cate&page=21",
+    "setCode": "SOS",
+    "collectorNumber": "258",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "逆説の庭園"
+    ],
+    "enNames": [
+      "Paradox Gardens"
+    ],
+    "scryfallName": "Paradox Gardens",
+    "oracleId": "638ff242-63d5-457d-a7a6-40ad51052e2e",
+    "scryfallId": "dbc3447e-1329-4ea1-b4ca-b321b0ffec8f",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/d/b/dbc3447e-1329-4ea1-b4ca-b321b0ffec8f.jpg?1783903620"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.cardrush-mtg.jp/product-list?keyword=%E7%9F%B3%E5%8C%96%E3%81%97%E3%81%9F%E6%9D%91%E8%90%BD",
+    "setCode": "SOS",
+    "collectorNumber": "259",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "石化した村落"
+    ],
+    "enNames": [
+      "Petrified Hamlet"
+    ],
+    "scryfallName": "Petrified Hamlet",
+    "oracleId": "78a2972c-14f4-41f3-99f9-167948bdd73a",
+    "scryfallId": "355dd460-b0e9-41f2-a058-b7f7e39ac387",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/3/5/355dd460-b0e9-41f2-a058-b7f7e39ac387.jpg?1783903620"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.singlestar.jp/product-group/4903",
+    "setCode": "SOS",
+    "collectorNumber": "260",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "砕かれた聖域"
+    ],
+    "enNames": [
+      "Shattered Sanctum"
+    ],
+    "scryfallName": "Shattered Sanctum",
+    "oracleId": "c854ecb0-cc60-4c48-a9aa-7f2348a7a8c6",
+    "scryfallId": "5aa0c810-3b7d-4661-979e-e84fb327742d",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/5/a/5aa0c810-3b7d-4661-979e-e84fb327742d.jpg?1783903618"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.cardwiz-mtg.jp/product-list/22?page=5",
+    "setCode": "SOS",
+    "collectorNumber": "261",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "飛空バスの中継地"
+    ],
+    "enNames": [
+      "Skycoach Waypoint"
+    ],
+    "scryfallName": "Skycoach Waypoint",
+    "oracleId": "2ac2b815-2d72-48e6-b43a-18884a74bf95",
+    "scryfallId": "6747657b-5ce4-4dbd-b924-ca1f7119faf7",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/6/7/6747657b-5ce4-4dbd-b924-ca1f7119faf7.jpg?1783903618"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.hareruyamtg.com/ja/products/detail/190190",
+    "setCode": "SOS",
+    "collectorNumber": "262",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "壮麗なる頂"
+    ],
+    "enNames": [
+      "Spectacle Summit"
+    ],
+    "scryfallName": "Spectacle Summit",
+    "oracleId": "33a4e73d-d93a-4b6f-88ff-cd53f20d178c",
+    "scryfallId": "a0a66f7b-eab4-45da-8895-c2c2c7eb05f8",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/a/0/a0a66f7b-eab4-45da-8895-c2c2c7eb05f8.jpg?1783903617"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.singlestar.jp/product-group/4903",
+    "setCode": "SOS",
+    "collectorNumber": "263",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "嵐削りの海岸"
+    ],
+    "enNames": [
+      "Stormcarved Coast"
+    ],
+    "scryfallName": "Stormcarved Coast",
+    "oracleId": "4722105b-0085-4bb8-bca1-9de0d3eb5600",
+    "scryfallId": "bd3ae4fa-4c97-410a-8c0a-bd203342595d",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/b/d/bd3ae4fa-4c97-410a-8c0a-bd203342595d.jpg?1783903618"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.singlestar.jp/product-group/4903",
+    "setCode": "SOS",
+    "collectorNumber": "264",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "日没の道"
+    ],
+    "enNames": [
+      "Sundown Pass"
+    ],
+    "scryfallName": "Sundown Pass",
+    "oracleId": "5ad0b405-cca4-475e-985c-4d7e3599d87e",
+    "scryfallId": "b34000e9-ff20-4fb4-9d0b-03a172a92457",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/b/3/b34000e9-ff20-4fb4-9d0b-03a172a92457.jpg?1783903618"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.singlestar.jp/product-group/4903",
+    "setCode": "SOS",
+    "collectorNumber": "265",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "広漠なる変幻地"
+    ],
+    "enNames": [
+      "Terramorphic Expanse"
+    ],
+    "scryfallName": "Terramorphic Expanse",
+    "oracleId": "1bd3e453-aa21-4ee6-95c2-d6d920ee8e7a",
+    "scryfallId": "9a4c5629-fadd-42b9-850f-9f8586a2ca50",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/9/a/9a4c5629-fadd-42b9-850f-9f8586a2ca50.jpg?1783903615"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.hareruyamtg.com/ja/products/detail/190562",
+    "setCode": "SOS",
+    "collectorNumber": "266",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "タイタンの墓"
+    ],
+    "enNames": [
+      "Titan's Grave"
+    ],
+    "scryfallName": "Titan's Grave",
+    "oracleId": "595f0eb5-f521-4174-9c48-b89e85ea907c",
+    "scryfallId": "a9ab41c8-3ee2-4676-9b8b-20c34d9f5f21",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/a/9/a9ab41c8-3ee2-4676-9b8b-20c34d9f5f21.jpg?1783903615"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.cardwiz-mtg.jp/product-list/22?page=5",
+    "setCode": "SOS",
+    "collectorNumber": "267",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "平地"
+    ],
+    "enNames": [
+      "Plains"
+    ],
+    "scryfallName": "Plains",
+    "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+    "scryfallId": "a845de50-4af0-4f4a-9c2a-db587973571c",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/a/8/a845de50-4af0-4f4a-9c2a-db587973571c.jpg?1783903615"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.cardwiz-mtg.jp/product-list/22?page=5",
+    "setCode": "SOS",
+    "collectorNumber": "268",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "島"
+    ],
+    "enNames": [
+      "Island"
+    ],
+    "scryfallName": "Island",
+    "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+    "scryfallId": "937250fe-bcad-4ff8-9406-286a69db7e0a",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/9/3/937250fe-bcad-4ff8-9406-286a69db7e0a.jpg?1783903615"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.cardwiz-mtg.jp/product-list/22?page=5",
+    "setCode": "SOS",
+    "collectorNumber": "269",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "沼"
+    ],
+    "enNames": [
+      "Swamp"
+    ],
+    "scryfallName": "Swamp",
+    "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+    "scryfallId": "1797d5c7-d3fa-4184-85ae-46db14ddf523",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/1/7/1797d5c7-d3fa-4184-85ae-46db14ddf523.jpg?1783903615"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.cardwiz-mtg.jp/product-list/22?page=5",
+    "setCode": "SOS",
+    "collectorNumber": "270",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "山"
+    ],
+    "enNames": [
+      "Mountain"
+    ],
+    "scryfallName": "Mountain",
+    "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+    "scryfallId": "6af1f1db-eb91-4297-83f6-9318b87fd220",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/6/a/6af1f1db-eb91-4297-83f6-9318b87fd220.jpg?1783903615"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
+    "sourceUrl": "https://www.cardwiz-mtg.jp/product-list/22?page=5",
+    "setCode": "SOS",
+    "collectorNumber": "271",
+    "setNameJa": "ストリクスヘイヴンの秘密",
+    "jaNames": [
+      "森"
+    ],
+    "enNames": [
+      "Forest"
+    ],
+    "scryfallName": "Forest",
+    "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+    "scryfallId": "46196e8f-9339-4f00-b9cf-cab8f9abc80e",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/4/6/46196e8f-9339-4f00-b9cf-cab8f9abc80e.jpg?1783903614"
+    },
+    "releasedAt": "2026-04-24",
+    "setName": "Secrets of Strixhaven"
+  },
+  {
+    "source": "manual補完",
     "sourceUrl": "https://www.hareruyamtg.com/ja/products/detail/102226?lang=JP",
     "setCode": "MID",
     "collectorNumber": "221",

@@ -1,4 +1,4 @@
-const APP_VERSION = "v186";
+const APP_VERSION = "v188";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -429,8 +429,9 @@ function isEnglishCard(card) { return cardLanguage(card) === "en"; }
 function cardScryfallId(card) { return card?._sourceScryfallId || card?.scryfallId || card?.id || ""; }
 function shouldLocalizeDisplay(card) {
   if (isJapaneseCard(card) || card?._supplementalJpVariant) return true;
+  if (card?._preferJpDisplay) return true;
   if (isEnglishCard(card)) return false;
-  return Boolean(card?._preferJpDisplay || !card?.lang);
+  return Boolean(!card?.lang);
 }
 function prefersJapaneseDisplay(card) { return shouldLocalizeDisplay(card); }
 function normalizeDisplayName(value) {
@@ -615,6 +616,10 @@ const SET_JA_NAMES = {
   hml: "ホームランド", ice: "アイスエイジ", chr: "クロニクル",
   drk: "ザ・ダーク", leg: "レジェンド", atq: "アンティキティー", arn: "アラビアンナイト",
   "9ed": "第9版", "8ed": "第8版", "7ed": "第7版", "6ed": "第6版", "5ed": "第5版", "4ed": "第4版", "3ed": "リバイズド", "2ed": "アンリミテッド", lea: "リミテッド・エディション アルファ", leb: "リミテッド・エディション ベータ",
+};
+
+const COMPLETE_SET_OVERRIDES = {
+  sos: { setSize: 271 },
 };
 
 const PRIMARY_SET_TYPES = new Set(["expansion", "core", "masters", "commander", "draft_innovation", "jumpstart"]);
@@ -1638,7 +1643,10 @@ async function searchCards() {
       const completeSet = await fetchCompleteSetCandidates(els.searchSet.value, filters);
       const matchingSetCards = applySubtypeFilter(completeSet.cards);
       if (!matchingSetCards.length) throw new Error(completeSet.error?.details || "カードが見つかりませんでした");
-      state.searchResults = applyJpIndexToCards(matchingSetCards);
+      const preferJpDisplay = selectedLanguage === "ja";
+      state.searchResults = applyJpIndexToCards(matchingSetCards.map(card => (
+        preferJpDisplay ? { ...card, _preferJpDisplay: true } : card
+      ))).map(card => ({ ...card, _setScopedResult: true }));
       renderSearchResults();
       const uniqueCount = state.searchGroups.length;
       const indexedText = completeSet.indexedCount > uniqueCount ? `（DB登録 ${completeSet.indexedCount}件）` : "";
@@ -2120,6 +2128,25 @@ function localIndexItemsForSet(setCode) {
   return JP_CARD_SEARCH_INDEX.filter(item => String(item.setCode || "").trim().toLocaleLowerCase("en") === normalizedSet);
 }
 
+function hasLanguageFilter(filters) {
+  return /\blang:[^\s)]+/i.test(String(filters || ""));
+}
+
+function collectorNumberSortValue(card) {
+  const match = String(card?.collector_number || card?.collectorNumber || "").match(/^\d+/);
+  return match ? Number(match[0]) : Number.MAX_SAFE_INTEGER;
+}
+
+function completeSetOverrideCards(setCode, cards) {
+  const override = COMPLETE_SET_OVERRIDES[String(setCode || "").toLocaleLowerCase("en")];
+  if (!override?.setSize) return cards || [];
+  return (cards || []).filter(card => (
+    String(card?.set || "").toLocaleLowerCase("en") === String(setCode || "").toLocaleLowerCase("en") &&
+    collectorNumberSortValue(card) >= 1 &&
+    collectorNumberSortValue(card) <= override.setSize
+  ));
+}
+
 function isSetScopedCardSearch(query) {
   if (String(query || "").trim() || !els.searchSet?.value) return false;
   return Boolean(resolveSetInput(els.searchSet.value));
@@ -2128,13 +2155,19 @@ function isSetScopedCardSearch(query) {
 async function fetchCompleteSetCandidates(setCode, filters) {
   const normalizedSet = resolveSetInput(setCode);
   const localItems = localIndexItemsForSet(normalizedSet);
-  const setOnly = filters.trim() === `set:${normalizedSet}`;
+  const normalizedFilters = String(filters || "").trim().replace(/\s+/g, " ");
+  const neutralFilters = stripLanguageFilter(normalizedFilters);
+  const setOnly = neutralFilters === `set:${normalizedSet}`;
+  const setLanguageOnly = setOnly && hasLanguageFilter(normalizedFilters);
   // IDから取得したローカル補完カードは追加条件で絞り込まれていない。
-  // セット以外の条件がある場合は、全ページ取得したScryfall結果だけを使う。
+  // セット単独または言語のみ追加の検索では、日本語DB未登録の収録カードも落とさず補完する。
   const localCards = setOnly
     ? await fetchScryfallCardsByIdChunks(localItems.map(item => item.scryfallId))
     : { cards: [], error: null };
-  const liveResult = await fetchAllScryfallSearch(filters, { unique: "cards", order: "name" });
+  const liveResult = await fetchAllScryfallSearch(normalizedFilters, { unique: "cards", order: "name" });
+  const completeSetFallback = setLanguageOnly && COMPLETE_SET_OVERRIDES[normalizedSet]
+    ? await fetchAllScryfallSearch(`set:${normalizedSet} lang:en`, { unique: "cards", order: "set" })
+    : { ok: true, data: { data: [] }, error: null };
   const cards = [];
   const seen = new Set();
   const push = card => {
@@ -2146,19 +2179,23 @@ async function fetchCompleteSetCandidates(setCode, filters) {
   };
   localCards.cards.forEach(push);
   if (liveResult.ok) (liveResult.data.data || []).forEach(push);
+  if (completeSetFallback.ok) completeSetOverrideCards(normalizedSet, completeSetFallback.data.data).forEach(push);
 
   const orderById = new Map(localItems.map((item, index) => [item.scryfallId, index]));
   const orderByOracle = new Map(localItems.map((item, index) => [item.oracleId, index]).filter(([key]) => key));
   cards.sort((a, b) => {
+    const numberOrder = collectorNumberSortValue(a) - collectorNumberSortValue(b);
+    if (setOnly && numberOrder) return numberOrder;
     const aOrder = orderById.get(a.id) ?? orderByOracle.get(a.oracle_id) ?? Number.MAX_SAFE_INTEGER;
     const bOrder = orderById.get(b.id) ?? orderByOracle.get(b.oracle_id) ?? Number.MAX_SAFE_INTEGER;
     if (aOrder !== bOrder) return aOrder - bOrder;
+    if (numberOrder) return numberOrder;
     return String(a.name || "").localeCompare(String(b.name || ""), "ja");
   });
   return {
     cards,
-    error: liveResult.ok ? localCards.error : (liveResult.error || localCards.error),
-    indexedCount: localItems.length,
+    error: liveResult.ok ? (completeSetFallback.error || localCards.error) : (liveResult.error || completeSetFallback.error || localCards.error),
+    indexedCount: setOnly ? Math.max(localItems.length, COMPLETE_SET_OVERRIDES[normalizedSet]?.setSize || 0) : localItems.length,
   };
 }
 
@@ -2318,7 +2355,9 @@ function mergeLanguageResults(primaryCards, counterpartCards) {
 function renderSearchResults() {
   const groups = new Map();
   for (const card of state.searchResults) {
-    const key = card.oracle_id || card.name;
+    const key = card._setScopedResult
+      ? `${String(card.set || "").toLocaleLowerCase("en")}:${card.collector_number || card.id || card.name}`
+      : card.oracle_id || card.name;
     if (!groups.has(key)) groups.set(key, { key, card, cards: [] });
     groups.get(key).cards.push(card);
   }
