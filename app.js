@@ -1,4 +1,4 @@
-const APP_VERSION = "v197";
+const APP_VERSION = "v198";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -730,7 +730,8 @@ function priceAmountToUsd(price) {
   const cents = Number(price?.cents);
   const currency = String(price?.currency || "USD").toUpperCase();
   if (!Number.isFinite(cents)) return null;
-  const amount = cents / 100;
+  const zeroDecimalCurrencies = new Set(["BIF", "CLP", "DJF", "GNF", "ISK", "JPY", "KMF", "KRW", "PYG", "RWF", "UGX", "VND", "VUV", "XAF", "XOF", "XPF"]);
+  const amount = zeroDecimalCurrencies.has(currency) ? cents : cents / 100;
   if (currency === "USD") return amount;
   const rate = Number(state.fx?.rates?.[currency] || 0);
   return rate > 0 ? amount / rate : null;
