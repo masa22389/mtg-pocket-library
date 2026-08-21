@@ -1,4 +1,4 @@
-const APP_VERSION = "v190";
+const APP_VERSION = "v191";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -560,7 +560,9 @@ function cardTraderStatusText() {
 
 function updateCardTraderSettingsUi() {
   if (els.cardTraderToken && document.activeElement !== els.cardTraderToken) {
-    els.cardTraderToken.value = cardTraderToken() ? "********" : "";
+    const currentValue = String(els.cardTraderToken.value || "").trim();
+    if (cardTraderToken() && (!currentValue || currentValue === "********")) els.cardTraderToken.value = "********";
+    if (!cardTraderToken() && currentValue === "********") els.cardTraderToken.value = "";
   }
   if (els.cardTraderHelp) els.cardTraderHelp.textContent = cardTraderStatusText();
 }
@@ -3196,6 +3198,7 @@ function saveCardTraderToken() {
   state.collection.forEach(card => { card.cardTraderPriceUpdatedAt = 0; });
   cardTraderMarketplaceCache = new Map();
   persist();
+  if (els.cardTraderToken) els.cardTraderToken.value = "********";
   updateCardTraderSettingsUi();
   showToast("CardTrader APIトークンを保存しました");
   hydrateCardTraderPrices({ force: true });
@@ -3212,6 +3215,7 @@ function clearCardTraderToken() {
   });
   cardTraderMarketplaceCache = new Map();
   persist();
+  if (els.cardTraderToken) els.cardTraderToken.value = "";
   updateCardTraderSettingsUi();
   renderCollection();
   hydrateCollectionMetadata();
