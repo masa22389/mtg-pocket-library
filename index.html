@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=179">
+  <link rel="stylesheet" href="styles.css?v=185">
 </head>
 <body>
   <header class="app-header">
@@ -114,6 +114,19 @@
         <button id="clearButton" class="danger">すべてのデータを削除</button>
         <p class="version-note">現在のバージョン：<b id="currentAppVersion">読み込み中</b></p>
         <hr>
+        <h3>背景色</h3>
+        <div id="backgroundColorChoices" class="background-color-choices" role="group" aria-label="背景色を選択">
+          <button type="button" data-background-theme="default"><span class="background-swatch swatch-default"></span>標準</button>
+          <button type="button" data-background-theme="red"><span class="background-swatch swatch-red"></span>赤</button>
+          <button type="button" data-background-theme="orange"><span class="background-swatch swatch-orange"></span>橙</button>
+          <button type="button" data-background-theme="yellow"><span class="background-swatch swatch-yellow"></span>黄</button>
+          <button type="button" data-background-theme="green"><span class="background-swatch swatch-green"></span>緑</button>
+          <button type="button" data-background-theme="blue"><span class="background-swatch swatch-blue"></span>青</button>
+          <button type="button" data-background-theme="indigo"><span class="background-swatch swatch-indigo"></span>藍</button>
+          <button type="button" data-background-theme="violet"><span class="background-swatch swatch-violet"></span>紫</button>
+        </div>
+        <p id="backgroundColorStatus" class="muted">現在の背景色：標準</p>
+        <hr>
         <h3>資産価値の円換算</h3>
         <div class="search-row"><input id="usdJpyRate" type="number" min="1" step="0.01" inputmode="decimal" placeholder="USD/JPY"><button id="saveFxButton" type="button">換算レートを保存</button></div>
         <p id="fxHelp" class="muted">為替を自動取得できない場合に手動で変更できます。</p>
@@ -143,7 +156,7 @@
         <div class="variant-head"><h3>別イラスト・収録版 <span id="variantCount" class="variant-count"></span></h3><select id="variantFilter" aria-label="カードの言語で絞り込み"><option value="">日英すべて</option><option value="ja">日本語</option><option value="en">英語</option></select></div>
         <div id="cardVariants" class="variant-list"><span class="muted">収録版を読み込み中…</span></div>
       </section>
-      <label class="owned-control">この版の所持枚数
+      <label class="owned-control">この個別カードの所持枚数
         <span class="quantity-stepper"><button id="decrementQuantity" type="button" aria-label="所持枚数を1枚減らす">−</button><input id="cardQuantity" type="number" min="0" value="0" inputmode="numeric"><button id="incrementQuantity" type="button" aria-label="所持枚数を1枚増やす">＋</button></span>
       </label>
       <div class="form-grid">
@@ -320,8 +333,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=175" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=175" defer></script>
-  <script src="app.js?v=179" defer></script>
+  <script src="mtg-jp-card-index.js?v=185" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=185" defer></script>
+  <script src="app.js?v=185" defer></script>
 </body>
 </html>

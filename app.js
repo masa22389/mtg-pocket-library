@@ -1,6 +1,16 @@
-const APP_VERSION = "v179";
-const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
+const APP_VERSION = "v185";
+const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
+const BACKGROUND_THEMES = {
+  default: { label: "標準", bg: "#f2f4f1", pageBg: "linear-gradient(150deg,#f8f9f5 0,#eef3ef 48%,#f4f1e8 100%)", paper: "#fffdf8", surface: "#f0f3ee", surfaceStrong: "#eef3ef", surfacePanel: "#ffffff99", surfaceSoft: "#f8faf8", surfaceAccent: "#e7eee9", navBg: "#fffdf8ee", visualBg: "linear-gradient(135deg,#f7f1e4,#e6eef2)" },
+  red: { label: "赤", bg: "#f5e9e7", pageBg: "linear-gradient(150deg,#fff8f7 0,#f3d5d2 50%,#f7ece8 100%)", paper: "#fff9f8", surface: "#f8e7e4", surfaceStrong: "#f4dedb", surfacePanel: "#fff7f5cc", surfaceSoft: "#fff6f5", surfaceAccent: "#efd1cd", navBg: "#fff8f7ee", visualBg: "linear-gradient(135deg,#fff5f3,#f0cfca)" },
+  orange: { label: "橙", bg: "#f5ece2", pageBg: "linear-gradient(150deg,#fff8f1 0,#f0d7bd 52%,#f8eee4 100%)", paper: "#fffaf4", surface: "#f7eadc", surfaceStrong: "#f2dec7", surfacePanel: "#fff8f0cc", surfaceSoft: "#fff7ef", surfaceAccent: "#edcfad", navBg: "#fff8f1ee", visualBg: "linear-gradient(135deg,#fff3e5,#edcda8)" },
+  yellow: { label: "黄", bg: "#f4f0dc", pageBg: "linear-gradient(150deg,#fffdf2 0,#eee4b7 50%,#f7f2dd 100%)", paper: "#fffdf4", surface: "#f5efd5", surfaceStrong: "#eee5be", surfacePanel: "#fffbedcc", surfaceSoft: "#fffbea", surfaceAccent: "#e9dda9", navBg: "#fffdf2ee", visualBg: "linear-gradient(135deg,#fff9dc,#e8dca5)" },
+  green: { label: "緑", bg: "#edf5ed", pageBg: "linear-gradient(150deg,#f8fff7 0,#d7eadb 50%,#eef7ed 100%)", paper: "#fbfff9", surface: "#e6f3e8", surfaceStrong: "#dceee0", surfacePanel: "#f7fff7cc", surfaceSoft: "#f6fff6", surfaceAccent: "#cfe5d4", navBg: "#f8fff7ee", visualBg: "linear-gradient(135deg,#f4fff0,#cfebd5)" },
+  blue: { label: "青", bg: "#edf3f8", pageBg: "linear-gradient(150deg,#f7fbff 0,#d7e6f3 50%,#edf4fa 100%)", paper: "#f8fcff", surface: "#e4f0f8", surfaceStrong: "#d9e9f5", surfacePanel: "#f5fbffcc", surfaceSoft: "#f4fbff", surfaceAccent: "#cfe0ef", navBg: "#f7fbffee", visualBg: "linear-gradient(135deg,#f2f9ff,#cfe2f2)" },
+  indigo: { label: "藍", bg: "#eceef7", pageBg: "linear-gradient(150deg,#f7f8ff 0,#d9ddf0 50%,#eef0fb 100%)", paper: "#fafaff", surface: "#e7eafb", surfaceStrong: "#dde1f4", surfacePanel: "#f7f8ffcc", surfaceSoft: "#f5f6ff", surfaceAccent: "#d1d6ee", navBg: "#f7f8ffee", visualBg: "linear-gradient(135deg,#f4f5ff,#d2d8f1)" },
+  violet: { label: "紫", bg: "#f2eaf5", pageBg: "linear-gradient(150deg,#fdf7ff 0,#ead8f0 50%,#f5ecf7 100%)", paper: "#fff9ff", surface: "#f4e6f8", surfaceStrong: "#eadcf1", surfacePanel: "#fdf6ffcc", surfaceSoft: "#fcf5ff", surfaceAccent: "#e2cfe9", navBg: "#fdf7ffee", visualBg: "linear-gradient(135deg,#fcf2ff,#e3cfeb)" },
+};
 const state = {
   collection: read(KEYS.collection, []),
   decks: read(KEYS.decks, []),
@@ -19,6 +29,7 @@ const state = {
   collectionPriceDisplayMode: localStorage.getItem(KEYS.collectionPriceDisplayMode) || "total",
   collectionSortStack: read(KEYS.collectionSortStack, []),
   deckFormatFilter: localStorage.getItem(KEYS.deckFormatFilter) || "",
+  backgroundTheme: localStorage.getItem(KEYS.backgroundTheme) || "default",
   editingDeck: null,
   editingDeckEntry: null,
   deckMissingOpen: false,
@@ -31,6 +42,10 @@ let deckDragState = null;
 let suppressNextDeckCardClick = false;
 let deckReorderMode = false;
 let deckReorderSelection = null;
+let deckListPressState = null;
+let suppressNextDeckTileClick = false;
+let deckListReorderMode = false;
+let deckListReorderSelection = null;
 let collectionPressState = null;
 let suppressNextCollectionCardClick = false;
 let collectionReorderMode = false;
@@ -95,10 +110,28 @@ const els = {
   reorderDeckCards: $("#reorderDeckCards"), sortDeckByName: $("#sortDeckByName"), sortDeckByColor: $("#sortDeckByColor"), sortDeckByMana: $("#sortDeckByMana"), sortDeckByType: $("#sortDeckByType"),
   usdJpyRate: $("#usdJpyRate"), saveFxButton: $("#saveFxButton"), fxHelp: $("#fxHelp"),
   installButton: $("#installButton"), backupSummary: $("#backupSummary"), importInput: $("#importInput"), toast: $("#toast"),
-  currentAppVersion: $("#currentAppVersion"),
+  currentAppVersion: $("#currentAppVersion"), backgroundColorChoices: $("#backgroundColorChoices"), backgroundColorStatus: $("#backgroundColorStatus"),
 };
 
 if (els.currentAppVersion) els.currentAppVersion.textContent = APP_VERSION;
+
+function applyBackgroundTheme(themeKey = state.backgroundTheme, options = {}) {
+  const key = BACKGROUND_THEMES[themeKey] ? themeKey : "default";
+  const theme = BACKGROUND_THEMES[key];
+  state.backgroundTheme = key;
+  ["bg", "pageBg", "paper", "surface", "surfaceStrong", "surfacePanel", "surfaceSoft", "surfaceAccent", "navBg", "visualBg"].forEach(name => {
+    document.documentElement.style.setProperty(`--${name.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)}`, theme[name]);
+  });
+  if (options.persist) localStorage.setItem(KEYS.backgroundTheme, key);
+  els.backgroundColorChoices?.querySelectorAll("[data-background-theme]").forEach(button => {
+    const active = button.dataset.backgroundTheme === key;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+  });
+  if (els.backgroundColorStatus) els.backgroundColorStatus.textContent = `現在の背景色：${theme.label}`;
+}
+
+applyBackgroundTheme();
 
 function read(key, fallback) {
   try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
@@ -2350,17 +2383,14 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
 }
 
 function selectedOwnedQuantity() {
-  const selectedId = cardScryfallId(state.selectedCard);
-  return state.collection
-    .filter(card => card.scryfallId === selectedId)
-    .reduce((sum, card) => sum + Number(card.quantity || 0), 0);
+  return Number(selectedOwnedCard()?.quantity || 0);
 }
 
 function selectedOwnedCard() {
   const selectedId = cardScryfallId(state.selectedCard);
-  if (!selectedId) return null;
+  if (!selectedId || !state.selectedOwnedId) return null;
   const pinned = state.collection.find(card => card.id === state.selectedOwnedId && card.scryfallId === selectedId);
-  return pinned || state.collection.find(card => card.scryfallId === selectedId) || null;
+  return pinned || null;
 }
 
 function updateCardOwnedActions() {
@@ -2589,10 +2619,14 @@ function attachCollectionCardHandlers(button, card) {
 
 function renderSelectedVariant() {
   const card = state.selectedCard;
+  const owned = selectedOwnedCard();
   const backImage = backImageOf(card);
   els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images"><img class="card-detail-image" src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
   els.cardQuantity.value = selectedOwnedQuantity();
-  els.cardLanguage.value = card.lang === "ja" ? "ja" : card.lang === "en" ? "en" : "other";
+  els.cardCondition.value = owned?.condition || "NM";
+  els.cardFinish.value = owned?.finish || "normal";
+  els.cardLanguage.value = owned?.language || (card.lang === "ja" ? "ja" : card.lang === "en" ? "en" : "other");
+  els.cardLocation.value = owned?.location || "";
   updateCardOwnedActions();
 }
 
@@ -2637,23 +2671,40 @@ function compactCard(card) {
 function saveSelectedCardQuantity() {
   const target = Math.max(0, Number(els.cardQuantity.value || 0));
   const selectedId = cardScryfallId(state.selectedCard);
-  const matching = state.collection.filter(card => card.scryfallId === selectedId);
-  const current = matching.reduce((sum, card) => sum + Number(card.quantity || 0), 0);
-  if (target > current) {
+  const owned = selectedOwnedCard();
+  if (target <= 0) {
+    if (owned) state.collection = state.collection.filter(card => card.id !== owned.id);
+    state.selectedOwnedId = null;
+  } else {
     const incoming = compactCard(state.selectedCard);
-    incoming.quantity = target - current;
-    const lot = matching.find(card => card.condition === incoming.condition && card.finish === incoming.finish && card.language === incoming.language && card.location === incoming.location);
-    if (lot) { lot.quantity += incoming.quantity; state.selectedOwnedId = lot.id; } else { state.collection.unshift(incoming); state.selectedOwnedId = incoming.id; }
-  } else if (target < current) {
-    let remove = current - target;
-    for (const card of matching) {
-      const amount = Math.min(remove, card.quantity);
-      card.quantity -= amount;
-      remove -= amount;
-      if (!remove) break;
+    incoming.quantity = target;
+    const sameLot = card =>
+      card.id !== owned?.id &&
+      card.scryfallId === selectedId &&
+      card.condition === incoming.condition &&
+      card.finish === incoming.finish &&
+      card.language === incoming.language &&
+      card.location === incoming.location;
+    const mergeTarget = state.collection.find(sameLot);
+    if (mergeTarget) {
+      mergeTarget.quantity = Number(mergeTarget.quantity || 0) + target;
+      mergeTarget.favorite = mergeTarget.favorite || owned?.favorite || false;
+      mergeTarget.favoriteGroupIds = [...new Set([...(mergeTarget.favoriteGroupIds || []), ...(owned?.favoriteGroupIds || [])])];
+      if (owned) state.collection = state.collection.filter(card => card.id !== owned.id);
+      state.selectedOwnedId = mergeTarget.id;
+    } else if (owned) {
+      Object.assign(owned, incoming, {
+        id: owned.id,
+        quantity: target,
+        favorite: owned.favorite || false,
+        favoriteGroupIds: Array.isArray(owned.favoriteGroupIds) ? owned.favoriteGroupIds : [],
+        addedAt: owned.addedAt || incoming.addedAt,
+      });
+      state.selectedOwnedId = owned.id;
+    } else {
+      state.collection.unshift(incoming);
+      state.selectedOwnedId = incoming.id;
     }
-    state.collection = state.collection.filter(card => card.quantity > 0);
-    if (!state.collection.some(card => card.id === state.selectedOwnedId)) state.selectedOwnedId = selectedOwnedCard()?.id || null;
   }
   persist();
   renderCollection();
@@ -2937,22 +2988,131 @@ function renderDeckFormatFilter() {
   localStorage.setItem(KEYS.deckFormatFilter, state.deckFormatFilter);
 }
 
+function endDeckListPress() {
+  if (deckListPressState?.timer) window.clearTimeout(deckListPressState.timer);
+  deckListPressState = null;
+}
+
+function finishDeckListReorderMode() {
+  deckListReorderMode = false;
+  deckListReorderSelection = null;
+  document.body.classList.remove("deck-list-reordering");
+}
+
+function reorderDeck(deckId, targetId) {
+  const fromIndex = state.decks.findIndex(deck => deck.id === deckId);
+  let targetIndex = state.decks.findIndex(deck => deck.id === targetId);
+  if (fromIndex < 0 || targetIndex < 0 || fromIndex === targetIndex) return false;
+  const [movingDeck] = state.decks.splice(fromIndex, 1);
+  state.decks.splice(targetIndex, 0, movingDeck);
+  persist();
+  return true;
+}
+
+function handleDeckListReorderClick(button) {
+  const targetId = button.dataset.id;
+  if (!deckListReorderSelection || targetId === deckListReorderSelection) {
+    finishDeckListReorderMode();
+    renderDecks();
+    showToast("並び替えを解除しました");
+    return;
+  }
+  const moved = reorderDeck(deckListReorderSelection, targetId);
+  finishDeckListReorderMode();
+  renderDecks();
+  showToast(moved ? "デッキの並び順を変更しました" : "並び替えできませんでした");
+}
+
+function startDeckListReorderFromLongPress(button) {
+  if (!deckListPressState || deckListPressState.button !== button) return;
+  deckListPressState = null;
+  deckListReorderMode = true;
+  deckListReorderSelection = button.dataset.id;
+  suppressNextDeckTileClick = true;
+  document.body.classList.add("deck-list-reordering");
+  button.classList.add("deck-list-reorder-selected");
+  showToast("移動先のデッキを選んでください");
+}
+
+function attachDeckTileHandlers(button, deck) {
+  if (!deck) return;
+  button.dataset.id = deck.id;
+  button.classList.toggle(
+    "deck-list-reorder-selected",
+    deckListReorderMode && deckListReorderSelection === deck.id,
+  );
+  button.addEventListener("click", () => {
+    if (suppressNextDeckTileClick) {
+      suppressNextDeckTileClick = false;
+      if (deckListReorderMode && button.dataset.id !== deckListReorderSelection) {
+        handleDeckListReorderClick(button);
+      }
+      return;
+    }
+    if (deckListReorderMode) {
+      handleDeckListReorderClick(button);
+      return;
+    }
+    openDeck(deck.id);
+  });
+  button.addEventListener("pointerdown", event => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    if (deckListReorderMode) return;
+    endDeckListPress();
+    deckListPressState = {
+      button,
+      startX: event.clientX,
+      startY: event.clientY,
+      timer: window.setTimeout(() => startDeckListReorderFromLongPress(button), 450),
+    };
+  });
+  button.addEventListener("pointermove", event => {
+    if (!deckListPressState || deckListPressState.button !== button) return;
+    if (Math.hypot(
+      event.clientX - deckListPressState.startX,
+      event.clientY - deckListPressState.startY,
+    ) > 18) {
+      endDeckListPress();
+    }
+  });
+  button.addEventListener("pointerup", endDeckListPress);
+  button.addEventListener("pointercancel", endDeckListPress);
+  button.addEventListener("lostpointercapture", endDeckListPress);
+  button.addEventListener("contextmenu", event => event.preventDefault());
+  button.addEventListener("dragstart", event => event.preventDefault());
+}
+
 function renderDecks() {
   renderDeckFormatFilter();
-  if (!state.decks.length) { els.deckList.innerHTML = '<div class="empty">「新規デッキ」からデッキを作成できます</div>'; return; }
+  if (!state.decks.length) {
+    finishDeckListReorderMode();
+    els.deckList.innerHTML = '<div class="empty">「新規デッキ」からデッキを作成できます</div>';
+    return;
+  }
   let migrated = false;
   const visibleDecks = state.deckFormatFilter ? state.decks.filter(deck => deck.format === state.deckFormatFilter) : state.decks;
-  if (!visibleDecks.length) { els.deckList.innerHTML = `<div class="empty">${esc(state.deckFormatFilter)}のデッキはまだありません</div>`; return; }
+  if (!visibleDecks.length) {
+    finishDeckListReorderMode();
+    els.deckList.innerHTML = `<div class="empty">${esc(state.deckFormatFilter)}のデッキはまだありません</div>`;
+    return;
+  }
+  if (deckListReorderSelection && !visibleDecks.some(deck => deck.id === deckListReorderSelection)) {
+    finishDeckListReorderMode();
+  }
   els.deckList.innerHTML = visibleDecks.map(deck => {
     migrated = ensureDeckDates(deck) || migrated;
     const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + entry.quantity, 0);
     const missing = missingCount(deck);
     const memo = String(deck.memo || "").trim();
     const memoPreview = memo ? `<p class="deck-memo-preview">${esc(memo.slice(0, 90))}${memo.length > 90 ? "…" : ""}</p>` : "";
-    return `<button class="deck-tile" data-id="${deck.id}"><span class="eyebrow">${esc(deck.format)}</span><h2>${esc(deck.name)}</h2><span class="deck-total">${total}</span> 枚<p>${deck.entries.length}種類${missing ? ` · <b>${missing}枚不足</b>` : " · 所持内で構築可能"}</p>${memoPreview}<small class="deck-date-line">作成 ${formatDeckDate(deck.createdAt)} · 更新 ${formatDeckDate(deck.updatedAt)}</small></button>`;
+    const selected = deckListReorderMode && deckListReorderSelection === deck.id;
+    return `<button type="button" class="deck-tile${selected ? " deck-list-reorder-selected" : ""}" data-id="${deck.id}"><span class="eyebrow">${esc(deck.format)}</span><h2>${esc(deck.name)}</h2><span class="deck-total">${total}</span> 枚<p>${deck.entries.length}種類${missing ? ` · <b>${missing}枚不足</b>` : " · 所持内で構築可能"}</p>${memoPreview}<small class="deck-date-line">作成 ${formatDeckDate(deck.createdAt)} · 更新 ${formatDeckDate(deck.updatedAt)}</small></button>`;
   }).join("");
   if (migrated) persist();
-  els.deckList.querySelectorAll("button").forEach(button => button.addEventListener("click", () => openDeck(button.dataset.id)));
+  els.deckList.querySelectorAll(".deck-tile").forEach(button => {
+    const deck = state.decks.find(item => item.id === button.dataset.id);
+    attachDeckTileHandlers(button, deck);
+  });
 }
 
 function newDeck() {
@@ -4729,6 +4889,7 @@ function backupPayload() {
     decks: state.decks,
     fx: state.fx,
     favoriteGroups: state.favoriteGroups,
+    settings: { backgroundTheme: state.backgroundTheme },
   };
 }
 
@@ -4770,6 +4931,9 @@ async function importBackup(file) {
     state.decks = data.decks;
     if (data.fx && typeof data.fx === "object") state.fx = data.fx;
     state.favoriteGroups = Array.isArray(data.favoriteGroups) ? data.favoriteGroups : [];
+    if (data.settings?.backgroundTheme && BACKGROUND_THEMES[data.settings.backgroundTheme]) {
+      applyBackgroundTheme(data.settings.backgroundTheme, { persist: true });
+    }
     normalizeFavoriteGroups();
     renderFavoriteGroupOptions();
     persist(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("バックアップを復元しました");
@@ -4905,6 +5069,10 @@ els.deckFormatFilter.addEventListener("change", () => {
   localStorage.setItem(KEYS.deckFormatFilter, state.deckFormatFilter);
   renderDecks();
 });
+els.backgroundColorChoices?.querySelectorAll("[data-background-theme]").forEach(button => button.addEventListener("click", () => {
+  applyBackgroundTheme(button.dataset.backgroundTheme, { persist: true });
+  showToast(`背景色を${BACKGROUND_THEMES[state.backgroundTheme].label}にしました`);
+}));
 els.openDeckOwnedAdd.addEventListener("click", openDeckOwnedAddDialog);
 els.openDeckSearchAdd.addEventListener("click", openDeckSearchAddDialog);
 els.deckSearchAddDialog.addEventListener("close", resetDeckSearchAddForm);
