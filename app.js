@@ -1,4 +1,4 @@
-const APP_VERSION = "v196";
+const APP_VERSION = "v197";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -668,14 +668,15 @@ async function cardTraderExpansionIdForSet(setCode, setName = "") {
 async function cardTraderBlueprintsForSet(setCode, setName = "") {
   const normalizedSet = String(setCode || "").toLowerCase();
   if (!normalizedSet) return {};
-  const cached = state.cardTrader.blueprintsBySet?.[normalizedSet];
-  const cachedAt = state.cardTrader.blueprintsUpdatedAt?.[normalizedSet] || 0;
-  if (cached && Date.now() - cachedAt < CARDTRADER_CACHE_MS) return cached;
   const expansionId = await cardTraderExpansionIdForSet(setCode, setName);
   if (!expansionId) return {};
+  const cached = state.cardTrader.blueprintsBySet?.[normalizedSet];
+  const cachedAt = state.cardTrader.blueprintsUpdatedAt?.[normalizedSet] || 0;
+  if (cached?.__expansionId === expansionId && Date.now() - cachedAt < CARDTRADER_CACHE_MS) return cached;
   const blueprints = await fetchCardTrader(`/blueprints/export?expansion_id=${encodeURIComponent(expansionId)}`);
   const map = {};
   map.__names = {};
+  map.__expansionId = expansionId;
   (blueprints || []).forEach(blueprint => {
     if (blueprint.scryfall_id) map[blueprint.scryfall_id] = blueprint.id;
     const nameKey = normalizeCardTraderName(blueprint.name);
@@ -717,10 +718,9 @@ async function cardTraderMarketplaceForSet(setCode, language, foil, setName = ""
   const normalizedSet = String(setCode || "").toLowerCase();
   const expansionId = await cardTraderExpansionIdForSet(setCode, setName);
   if (!expansionId) return {};
-  const key = `${expansionId}:${language}:${foil}`;
+  const key = `${expansionId}:all`;
   if (cardTraderMarketplaceCache.has(key)) return cardTraderMarketplaceCache.get(key);
-  const query = new URLSearchParams({ expansion_id: String(expansionId), language });
-  query.set("foil", foil ? "true" : "false");
+  const query = new URLSearchParams({ expansion_id: String(expansionId) });
   const data = await fetchCardTrader(`/marketplace/products?${query}`);
   cardTraderMarketplaceCache.set(key, data || {});
   return data || {};
@@ -3406,6 +3406,12 @@ async function refreshSelectedCardTraderPrice() {
   card.cardTraderPriceUpdatedAt = 0;
   state.cardTrader.lastError = "";
   state.cardTrader.lastStats = null;
+  const setCode = String(card.set || "").toLowerCase();
+  if (setCode) {
+    delete state.cardTrader.blueprintsBySet?.[setCode];
+    delete state.cardTrader.blueprintsUpdatedAt?.[setCode];
+  }
+  cardTraderMarketplaceCache = new Map();
   persist();
   showInlineStatus(els.cardActionStatus, "CardTrader価格を取得しています");
   await hydrateCardTraderPrices({ force: true, cards: [card] });
@@ -3415,7 +3421,7 @@ async function refreshSelectedCardTraderPrice() {
   } else if (stats?.priced) {
     showInlineStatus(els.cardActionStatus, `CardTrader価格を更新しました：${collectionPriceLabel(card)}`);
   } else {
-    showInlineStatus(els.cardActionStatus, stats?.noProduct ? "CardTraderに一致する出品がありませんでした" : "CardTrader価格を取得できませんでした");
+    showInlineStatus(els.cardActionStatus, stats?.noBlueprint ? "CardTraderのカード版と紐付けできませんでした" : stats?.noProduct ? "CardTraderに一致する出品がありませんでした" : "CardTrader価格を取得できませんでした");
   }
   updateCardOwnedActions();
 }
