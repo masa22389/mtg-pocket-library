@@ -1,4 +1,4 @@
-const APP_VERSION = "v200";
+const APP_VERSION = "v201";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -527,7 +527,8 @@ function ensureDeckDates(deck) {
   return changed;
 }
 function priceCacheFinish(card) {
-  return card.finish === "foil" || card.finish === "etched" ? card.finish : "normal";
+  if (card.finish === "foil" || card.finish === "etched") return card.finish;
+  return cardIsFoilOnly(card) ? "foil" : "normal";
 }
 
 function priceCacheLanguage(card) {
@@ -596,7 +597,8 @@ function collectionPriceLabel(card, compact = false) {
   const value = collectionPriceDisplayValue(card);
   if (value == null) return compact ? "" : "参考価格なし";
   if (compact) return state.collectionPriceDisplayMode === "unit" ? `${formatYen(value)} / 枚` : formatYen(value);
-  const prefix = selectedPriceSource(card) === "cardtrader" ? "CardTrader" : selectedPriceUsesEnglish(card) ? "英語版参考" : "参考";
+  const source = selectedPriceSource(card);
+  const prefix = source === "cardtrader" ? (selectedPriceUsesEnglish(card) ? "CardTrader英語版参考" : "CardTrader") : selectedPriceUsesEnglish(card) ? "英語版参考" : "参考";
   return state.collectionPriceDisplayMode === "unit"
     ? `${prefix} ${formatYen(value)} / 枚`
     : `${prefix} ${formatYen(value)}`;
@@ -604,7 +606,11 @@ function collectionPriceLabel(card, compact = false) {
 
 function cardPriceLabel(card) {
   const unit = unitYenValueOf(card);
-  return unit == null ? "参考価格なし" : `${selectedPriceSource(card) === "cardtrader" ? "CardTrader" : "参考"} ${formatYen(unit)} / 枚`;
+  if (unit == null) return "参考価格なし";
+  const source = selectedPriceSource(card) === "cardtrader"
+    ? selectedPriceUsesEnglish(card) ? "CardTrader英語版参考" : "CardTrader"
+    : "参考";
+  return `${source} ${formatYen(unit)} / 枚`;
 }
 function updateCollectionPriceModeUi() {
   document.querySelectorAll("[data-collection-price-mode]").forEach(button => {
@@ -709,8 +715,15 @@ function cardTraderConditionForCard(card) {
   })[normalizeCardCondition(card.condition)] || "";
 }
 
+function cardIsFoilOnly(card) {
+  const finishes = Array.isArray(card.finishes) ? card.finishes.map(value => String(value).toLowerCase()) : [];
+  if (finishes.length) return finishes.includes("foil") && !finishes.includes("nonfoil");
+  return card.foil === true && card.nonfoil === false;
+}
+
 function cardTraderFoilForCard(card) {
   if (card.finish === "foil") return true;
+  if (card.finish === "normal" && cardIsFoilOnly(card)) return true;
   if (card.finish === "normal") return false;
   return null;
 }
@@ -742,6 +755,23 @@ async function fetchCardTrader(path) {
 
 function normalizeCardTraderName(value) {
   return String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function normalizeCardTraderCollectorNumber(value) {
+  const normalized = String(value || "").toLowerCase().replace(/^#/, "").trim();
+  return normalized.replace(/^0+(\d)/, "$1");
+}
+
+function cardTraderBlueprintCollectorNumbers(blueprint) {
+  const props = blueprint.properties_hash || blueprint.fixed_properties || blueprint.properties || {};
+  return [
+    blueprint.collector_number,
+    blueprint.collectorNumber,
+    blueprint.number,
+    props.collector_number,
+    props.mtg_collector_number,
+    props.number,
+  ].map(normalizeCardTraderCollectorNumber).filter(Boolean);
 }
 
 async function cardTraderExpansionMap() {
@@ -776,15 +806,20 @@ async function cardTraderBlueprintsForSet(setCode, setName = "") {
   if (!expansionId) return {};
   const cached = state.cardTrader.blueprintsBySet?.[normalizedSet];
   const cachedAt = state.cardTrader.blueprintsUpdatedAt?.[normalizedSet] || 0;
-  if (cached?.__expansionId === expansionId && Date.now() - cachedAt < CARDTRADER_CACHE_MS) return cached;
+  if (cached?.__expansionId === expansionId && cached?.__schema === 2 && Date.now() - cachedAt < CARDTRADER_CACHE_MS) return cached;
   const blueprints = await fetchCardTrader(`/blueprints/export?expansion_id=${encodeURIComponent(expansionId)}`);
   const map = {};
   map.__names = {};
+  map.__collectors = {};
   map.__expansionId = expansionId;
+  map.__schema = 2;
   (blueprints || []).forEach(blueprint => {
     if (blueprint.scryfall_id) map[blueprint.scryfall_id] = blueprint.id;
     const nameKey = normalizeCardTraderName(blueprint.name);
     if (nameKey && !map.__names[nameKey]) map.__names[nameKey] = blueprint.id;
+    cardTraderBlueprintCollectorNumbers(blueprint).forEach(number => {
+      if (!map.__collectors[number]) map.__collectors[number] = blueprint.id;
+    });
   });
   state.cardTrader.blueprintsBySet = state.cardTrader.blueprintsBySet || {};
   state.cardTrader.blueprintsUpdatedAt = state.cardTrader.blueprintsUpdatedAt || {};
@@ -814,6 +849,8 @@ async function cardTraderBlueprintIdForCard(card, blueprints) {
   if (blueprints[card.scryfallId]) return blueprints[card.scryfallId];
   const nameId = blueprints.__names?.[normalizeCardTraderName(card.name)];
   if (nameId) return nameId;
+  const collectorId = blueprints.__collectors?.[normalizeCardTraderCollectorNumber(card.collectorNumber)];
+  if (collectorId) return collectorId;
   const alternateId = await ensureCardTraderScryfallId(card);
   return blueprints[alternateId] || "";
 }
@@ -842,19 +879,24 @@ function priceAmountToUsd(price) {
 }
 
 function chooseCardTraderProduct(products, card) {
-  const language = cardTraderLanguageForCard(card);
+  const primaryLanguage = cardTraderLanguageForCard(card);
+  const languages = primaryLanguage === "jp" ? ["jp", "en"] : [primaryLanguage];
   const condition = cardTraderConditionForCard(card);
   const foil = cardTraderFoilForCard(card);
-  const candidates = (products || [])
+  const baseProducts = (products || [])
     .filter(product => !product.graded && !product.on_vacation)
     .filter(product => !product.bundle_size || Number(product.bundle_size) === 1)
-    .filter(product => product.properties_hash?.mtg_language === language)
     .filter(product => product.properties_hash?.condition === condition)
-    .filter(product => product.properties_hash?.mtg_foil === foil)
-    .map(product => ({ product, usd: priceAmountToUsd(product.price) }))
-    .filter(entry => entry.usd != null)
-    .sort((a, b) => a.usd - b.usd);
-  return candidates[0] || null;
+    .filter(product => product.properties_hash?.mtg_foil === foil);
+  for (const language of languages.filter(Boolean)) {
+    const candidates = baseProducts
+      .filter(product => product.properties_hash?.mtg_language === language)
+      .map(product => ({ product, usd: priceAmountToUsd(product.price), usesEnglish: primaryLanguage === "jp" && language === "en" }))
+      .filter(entry => entry.usd != null)
+      .sort((a, b) => a.usd - b.usd);
+    if (candidates[0]) return candidates[0];
+  }
+  return null;
 }
 
 function applyCardTraderPrice(card, usd, product) {
@@ -874,6 +916,7 @@ function applyCardTraderPrice(card, usd, product) {
     finish: priceCacheFinish(card),
     valueUsd: Number(usd),
     valueJpy: state.fx?.usdJpy ? Number(usd) * Number(state.fx.usdJpy) : null,
+    usesEnglish: product?.properties_hash?.mtg_language === "en" && cardTraderLanguageForCard(card) === "jp",
     currency,
     cents,
     productId: product?.id || "",
@@ -3076,6 +3119,7 @@ function compactCard(card) {
     typeLine: card.type_line || "", printedTypeLine: card.printed_type_line || "", image: imageOf(card),
     manaCost: card.mana_cost || card.card_faces?.map(face => face.mana_cost).filter(Boolean).join(" // ") || "",
     manaValue: Number(card.cmc || 0), colors: card.colors || [], colorIdentity: card.color_identity || [], metadataVersion: 1,
+    finishes: Array.isArray(card.finishes) ? card.finishes : [], foil: card.foil === true, nonfoil: card.nonfoil === true,
     priceUsd: card.prices?.usd || null, priceUsdFoil: card.prices?.usd_foil || null, priceUsdEtched: card.prices?.usd_etched || null,
     priceUsdSource: card.prices?.usd ? "scryfall" : "", priceUsdFoilSource: card.prices?.usd_foil ? "scryfall" : "", priceUsdEtchedSource: card.prices?.usd_etched ? "scryfall" : "",
     priceUsdFromEnglish: false, priceUsdFoilFromEnglish: false, priceUsdEtchedFromEnglish: false, priceUpdatedAt: Date.now(),
@@ -3229,6 +3273,9 @@ function ownedCardToApiCard(card) {
     cmc: card.manaValue,
     colors: card.colors || [],
     color_identity: card.colorIdentity || [],
+    finishes: card.finishes || [],
+    foil: card.foil === true,
+    nonfoil: card.nonfoil === true,
     prices: { usd: card.priceUsd || null, usd_foil: card.priceUsdFoil || null, usd_etched: card.priceUsdEtched || null },
     image_uris: { normal: card.image },
     lang: card.language,
@@ -3246,6 +3293,9 @@ function applyCardMetadata(ownedCard, apiCard) {
   ownedCard.manaValue = Number(apiCard.cmc || 0);
   ownedCard.colors = apiCard.colors || [];
   ownedCard.colorIdentity = apiCard.color_identity || [];
+  ownedCard.finishes = Array.isArray(apiCard.finishes) ? apiCard.finishes : ownedCard.finishes || [];
+  ownedCard.foil = apiCard.foil === true;
+  ownedCard.nonfoil = apiCard.nonfoil === true;
   if (!keepCardTraderNormal) {
     ownedCard.priceUsd = apiCard.prices?.usd || null;
     ownedCard.priceUsdSource = apiCard.prices?.usd ? "scryfall" : "";
@@ -5218,6 +5268,9 @@ function collectionCardFromDeckCard(card) {
     manaValue: Number(card.manaValue ?? card.cmc ?? 0),
     colors: card.colors || [],
     colorIdentity: card.colorIdentity || card.color_identity || card.colors || [],
+    finishes: Array.isArray(card.finishes) ? card.finishes : [],
+    foil: card.foil === true,
+    nonfoil: card.nonfoil === true,
     metadataVersion: 1,
     priceUsd: card.priceUsd || card.prices?.usd || null,
     priceUsdFoil: card.priceUsdFoil || card.prices?.usd_foil || null,
