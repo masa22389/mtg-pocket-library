@@ -1,4 +1,4 @@
-const APP_VERSION = "v193";
+const APP_VERSION = "v194";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -86,7 +86,7 @@ const els = {
   cardCondition: $("#cardCondition"), cardFinish: $("#cardFinish"), cardLanguage: $("#cardLanguage"),
   cardLocation: $("#cardLocation"), addCardButton: $("#addCardButton"), addCardToDeckButton: $("#addCardToDeckButton"),
   cardActionStatus: $("#cardActionStatus"), deckDialog: $("#deckDialog"),
-  favoriteCardButton: $("#favoriteCardButton"), deleteCardButton: $("#deleteCardButton"),
+  favoriteCardButton: $("#favoriteCardButton"), refreshCardPriceButton: $("#refreshCardPriceButton"), deleteCardButton: $("#deleteCardButton"),
   favoriteGroupPanel: $("#favoriteGroupPanel"), favoriteGroupSummary: $("#favoriteGroupSummary"), newFavoriteGroupName: $("#newFavoriteGroupName"),
   createFavoriteGroupButton: $("#createFavoriteGroupButton"), manageFavoriteGroupsButton: $("#manageFavoriteGroupsButton"), favoriteGroupList: $("#favoriteGroupList"),
   favoriteGroupManagerDialog: $("#favoriteGroupManagerDialog"), closeFavoriteGroupManager: $("#closeFavoriteGroupManager"),
@@ -2654,6 +2654,11 @@ function updateCardOwnedActions() {
   const hidden = state.cardDialogMode === "deck" || !owned;
   if (els.favoriteCardButton) els.favoriteCardButton.hidden = true;
   els.deleteCardButton.hidden = hidden;
+  if (els.refreshCardPriceButton) {
+    els.refreshCardPriceButton.hidden = hidden;
+    els.refreshCardPriceButton.disabled = hidden || !cardTraderToken();
+    els.refreshCardPriceButton.textContent = cardTraderToken() ? "価格を取得" : "APIトークン未設定";
+  }
   if (!owned) { renderFavoriteGroupPanel(); return; }
   if (els.favoriteCardButton) {
     els.favoriteCardButton.classList.toggle("active", owned.favorite === true);
@@ -3164,7 +3169,8 @@ async function hydrateCardTraderPrices(options = {}) {
   if (!navigator.onLine || !cardTraderToken()) { updateCardTraderSettingsUi(); return; }
   if (!state.fx?.usdJpy || !state.fx?.rates?.EUR) await refreshExchangeRate();
   const force = options.force === true;
-  const candidates = state.collection.filter(card => (
+  const sourceCards = Array.isArray(options.cards) ? options.cards : state.collection;
+  const candidates = sourceCards.filter(card => (
     card.scryfallId &&
     !card.scryfallId.startsWith("sample-") &&
     cardTraderLanguageForCard(card) &&
@@ -3358,6 +3364,31 @@ function deleteSelectedOwned() {
   if (!card) return;
   deleteOwned(card);
   els.cardDialog.close();
+}
+
+async function refreshSelectedCardTraderPrice() {
+  const card = selectedOwnedCard();
+  if (!card) return;
+  if (!cardTraderToken()) {
+    showInlineStatus(els.cardActionStatus, "設定タブでCardTrader APIトークンを保存してください");
+    return;
+  }
+  if (els.refreshCardPriceButton) els.refreshCardPriceButton.disabled = true;
+  card.cardTraderPriceUpdatedAt = 0;
+  state.cardTrader.lastError = "";
+  state.cardTrader.lastStats = null;
+  persist();
+  showInlineStatus(els.cardActionStatus, "CardTrader価格を取得しています");
+  await hydrateCardTraderPrices({ force: true, cards: [card] });
+  const stats = state.cardTrader?.lastStats;
+  if (state.cardTrader?.lastError) {
+    showInlineStatus(els.cardActionStatus, `価格取得エラー：${state.cardTrader.lastError}`);
+  } else if (stats?.priced) {
+    showInlineStatus(els.cardActionStatus, `CardTrader価格を更新しました：${collectionPriceLabel(card)}`);
+  } else {
+    showInlineStatus(els.cardActionStatus, stats?.noProduct ? "CardTraderに一致する出品がありませんでした" : "CardTrader価格を取得できませんでした");
+  }
+  updateCardOwnedActions();
 }
 
 function deckFormats() {
@@ -5403,6 +5434,7 @@ els.resetCollectionSort.addEventListener("click", resetCollectionSortOrder);
 els.addCardButton.addEventListener("click", saveSelectedCardQuantity);
 els.addCardToDeckButton.addEventListener("click", addSelectedCardToDeck);
 els.favoriteCardButton?.addEventListener("click", toggleSelectedFavorite);
+els.refreshCardPriceButton?.addEventListener("click", refreshSelectedCardTraderPrice);
 els.deleteCardButton.addEventListener("click", deleteSelectedOwned);
 els.createFavoriteGroupButton?.addEventListener("click", createFavoriteGroup);
 els.manageFavoriteGroupsButton?.addEventListener("click", openFavoriteGroupManager);
