@@ -1,6 +1,7 @@
-const APP_VERSION = "v204";
+const APP_VERSION = "v205";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
+const VARIANT_RENDER_LIMIT = 80;
 const BACKGROUND_THEMES = {
   default: { label: "標準", bg: "#f2f4f1", pageBg: "linear-gradient(150deg,#f8f9f5 0,#eef3ef 48%,#f4f1e8 100%)", paper: "#fffdf8", surface: "#f0f3ee", surfaceStrong: "#eef3ef", surfacePanel: "#ffffff99", surfaceSoft: "#f8faf8", surfaceAccent: "#e7eee9", navBg: "#fffdf8ee", visualBg: "linear-gradient(135deg,#f7f1e4,#e6eef2)" },
   red: { label: "赤", bg: "#f5e9e7", pageBg: "linear-gradient(150deg,#fff8f7 0,#f3d5d2 50%,#f7ece8 100%)", paper: "#fff9f8", surface: "#f8e7e4", surfaceStrong: "#f4dedb", surfacePanel: "#fff7f5cc", surfaceSoft: "#fff6f5", surfaceAccent: "#efd1cd", navBg: "#fff8f7ee", visualBg: "linear-gradient(135deg,#fff5f3,#f0cfca)" },
@@ -1689,12 +1690,33 @@ function showToast(message, options = {}) {
   if (!sticky) showToast.timer = setTimeout(hideToast, 2200);
 }
 
-function showInlineStatus(element, message) {
+function hideInlineStatus(element) {
   if (!element) return;
-  element.textContent = message;
+  clearTimeout(element.statusTimer);
+  element.classList.remove("show");
+  element.textContent = "";
+}
+
+function showInlineStatus(element, message, options = {}) {
+  if (!element) return;
+  const sticky = options.sticky === true;
+  element.textContent = "";
+  if (sticky) {
+    const text = document.createElement("span");
+    text.textContent = message;
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "inline-status-close";
+    close.setAttribute("aria-label", "メッセージを閉じる");
+    close.textContent = "×";
+    close.addEventListener("click", () => hideInlineStatus(element));
+    element.append(text, close);
+  } else {
+    element.textContent = message;
+  }
   element.classList.add("show");
   clearTimeout(element.statusTimer);
-  element.statusTimer = setTimeout(() => element.classList.remove("show"), 2200);
+  if (!sticky) element.statusTimer = setTimeout(() => hideInlineStatus(element), 2200);
 }
 
 function showView(name) {
@@ -2891,8 +2913,8 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   state.cardDialogMode = mode;
   state.selectedOwnedId = ownedId;
   state.cardVariants = [];
-  els.cardActionStatus.textContent = "";
-  els.cardActionStatus.classList.remove("show");
+  state.variantRenderLimit = VARIANT_RENDER_LIMIT;
+  hideInlineStatus(els.cardActionStatus);
   els.addCardToDeckButton.hidden = mode !== "deck";
   document.querySelectorAll(".card-deck-targets").forEach(element => element.hidden = mode !== "deck");
   els.variantFilter.value = "";
@@ -3193,18 +3215,23 @@ function renderSelectedVariant() {
 function renderVariantGallery() {
   const lang = els.variantFilter.value;
   const variants = state.cardVariants.filter(card => !lang || card.lang === lang);
+  const visibleVariants = variants.slice(0, state.variantRenderLimit || VARIANT_RENDER_LIMIT);
   const jaCount = state.cardVariants.filter(card => card.lang === "ja").length;
   const enCount = state.cardVariants.filter(card => card.lang === "en").length;
   els.variantCount.textContent = lang ? `${variants.length}版` : `${state.cardVariants.length}版（日${jaCount}・英${enCount}）`;
   if (!variants.length) { els.cardVariants.innerHTML = '<span class="muted">該当する収録版がありません</span>'; return; }
-  els.cardVariants.innerHTML = variants.map(card => `
+  els.cardVariants.innerHTML = `${visibleVariants.map(card => `
     <button type="button" class="variant-option ${card.id === state.selectedCard.id ? "selected" : ""}" data-id="${card.id}" aria-label="${esc(nameOf(card))} ${(card.set || "").toUpperCase()} ${card.collector_number || ""} ${displayLanguageLabel(card)}">
       <img src="${esc(imageOf(card))}" alt="" loading="lazy"><span>${actualLanguageLabel(card)} · ${esc((card.set || "").toUpperCase())}</span>
-    </button>`).join("");
-  els.cardVariants.querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
+    </button>`).join("")}${visibleVariants.length < variants.length ? `<button type="button" class="variant-option variant-more" data-variant-more="1"><span>さらに表示<br>${variants.length - visibleVariants.length}版</span></button>` : ""}`;
+  els.cardVariants.querySelectorAll("button[data-id]").forEach(button => button.addEventListener("click", () => {
     const card = state.cardVariants.find(item => item.id === button.dataset.id);
     if (card) selectVariant(card);
   }));
+  els.cardVariants.querySelector("[data-variant-more]")?.addEventListener("click", () => {
+    state.variantRenderLimit = Number(state.variantRenderLimit || VARIANT_RENDER_LIMIT) + VARIANT_RENDER_LIMIT;
+    renderVariantGallery();
+  });
 }
 
 function selectVariant(card) {
@@ -3273,8 +3300,6 @@ function saveSelectedCardQuantity() {
   renderCollection();
   if (state.editingDeck && els.deckDialog.open) renderDeckEditor();
   els.cardQuantity.value = selectedOwnedQuantity();
-  hydrateEnglishPriceFallbacks();
-  hydrateCardTraderPrices({ force: true });
   updateCardOwnedActions();
   showInlineStatus(els.cardActionStatus, `${nameOf(state.selectedCard)}をコレクションに保存しました`);
   showToast("所持枚数を保存しました");
@@ -3762,15 +3787,15 @@ async function refreshSelectedCardTraderPrice() {
   });
   cardTraderMarketplaceCache = new Map();
   persist();
-  showInlineStatus(els.cardActionStatus, "CardTrader価格を取得しています");
+  showInlineStatus(els.cardActionStatus, "CardTrader価格を取得しています", { sticky: true });
   await hydrateCardTraderPrices({ force: true, cards: [card], mode: "個別カード" });
   const stats = state.cardTrader?.lastStats;
   if (state.cardTrader?.lastError) {
-    showInlineStatus(els.cardActionStatus, `価格取得エラー：${state.cardTrader.lastError}`);
+    showInlineStatus(els.cardActionStatus, `価格取得エラー：${state.cardTrader.lastError}`, { sticky: true });
   } else if (stats?.priced) {
-    showInlineStatus(els.cardActionStatus, `CardTrader価格を更新しました：${collectionPriceLabel(card)}`);
+    showInlineStatus(els.cardActionStatus, `CardTrader価格を更新しました：${collectionPriceLabel(card)}`, { sticky: true });
   } else {
-    showInlineStatus(els.cardActionStatus, stats?.noBlueprint ? "CardTraderのカード版と紐付けできませんでした" : stats?.noProduct ? "CardTraderに一致する出品がありませんでした" : "CardTrader価格を取得できませんでした");
+    showInlineStatus(els.cardActionStatus, stats?.noBlueprint ? "CardTraderのカード版と紐付けできませんでした" : stats?.noProduct ? "CardTraderに一致する出品がありませんでした" : "CardTrader価格を取得できませんでした", { sticky: true });
   }
   updateCardOwnedActions();
 }
@@ -5863,7 +5888,10 @@ els.newFavoriteGroupName?.addEventListener("keydown", event => {
 });
 els.decrementQuantity.addEventListener("click", () => { els.cardQuantity.value = Math.max(0, Number(els.cardQuantity.value || 0) - 1); });
 els.incrementQuantity.addEventListener("click", () => { els.cardQuantity.value = Math.max(0, Number(els.cardQuantity.value || 0) + 1); });
-els.variantFilter.addEventListener("change", renderVariantGallery);
+els.variantFilter.addEventListener("change", () => {
+  state.variantRenderLimit = VARIANT_RENDER_LIMIT;
+  renderVariantGallery();
+});
 $("#newDeckButton").addEventListener("click", newDeck);
 els.deckImportInput?.addEventListener("change", async event => {
   const file = event.target.files?.[0];
