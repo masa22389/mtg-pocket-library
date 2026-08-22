@@ -1,4 +1,4 @@
-const APP_VERSION = "v205";
+const APP_VERSION = "v206";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2979,7 +2979,7 @@ function updateCardOwnedActions() {
     const message = updatedAt
       ? `CardTrader価格：${cardPriceLabel(owned)}（最終取得 ${new Date(updatedAt).toLocaleString("ja-JP")}）`
       : "CardTrader価格：未取得です。価格を取得できます。";
-    showInlineStatus(els.cardActionStatus, message);
+    showInlineStatus(els.cardActionStatus, message, { sticky: true });
   }
   if (els.favoriteCardButton) {
     els.favoriteCardButton.classList.toggle("active", owned.favorite === true);
@@ -3581,8 +3581,10 @@ async function hydrateCardTraderPrices(options = {}) {
   stats.finishedAt = Date.now();
   state.cardTrader.lastStats = { ...stats };
   if (changed) state.cardTrader.priceUpdatedAt = Date.now();
-  if (stats.failedGroups) showToast(`CardTrader価格取得：${stats.priced}件更新、一部失敗${stats.failedGroups}件`, { sticky: true });
-  else showToast(`CardTrader価格取得：${stats.priced}件更新`, { sticky: true });
+  if (options.silentToast !== true) {
+    if (stats.failedGroups) showToast(`CardTrader価格取得：${stats.priced}件更新、一部失敗${stats.failedGroups}件`, { sticky: true });
+    else showToast(`CardTrader価格取得：${stats.priced}件更新`, { sticky: true });
+  }
   if (changed || state.cardTrader.lastError || candidates.length === 0) { persist(); renderCollection(); }
   updateCardTraderSettingsUi();
 }
@@ -3771,7 +3773,7 @@ async function refreshSelectedCardTraderPrice() {
   const card = selectedOwnedCard();
   if (!card) return;
   if (!cardTraderToken()) {
-    showInlineStatus(els.cardActionStatus, "設定タブでCardTrader APIトークンを保存してください");
+    showInlineStatus(els.cardActionStatus, "設定タブでCardTrader APIトークンを保存してください", { sticky: true });
     return;
   }
   if (els.refreshCardPriceButton) els.refreshCardPriceButton.disabled = true;
@@ -3788,7 +3790,7 @@ async function refreshSelectedCardTraderPrice() {
   cardTraderMarketplaceCache = new Map();
   persist();
   showInlineStatus(els.cardActionStatus, "CardTrader価格を取得しています", { sticky: true });
-  await hydrateCardTraderPrices({ force: true, cards: [card], mode: "個別カード" });
+  await hydrateCardTraderPrices({ force: true, cards: [card], mode: "個別カード", silentToast: true });
   const stats = state.cardTrader?.lastStats;
   if (state.cardTrader?.lastError) {
     showInlineStatus(els.cardActionStatus, `価格取得エラー：${state.cardTrader.lastError}`, { sticky: true });
