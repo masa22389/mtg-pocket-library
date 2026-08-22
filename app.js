@@ -1,4 +1,4 @@
-const APP_VERSION = "v203";
+const APP_VERSION = "v204";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -787,12 +787,36 @@ const CARDTRADER_SET_ALIASES = {
     { set: "fnm", setName: "Friday Night Magic" },
     { set: "f17", setName: "Friday Night Magic 2017" },
   ],
+  bab: [
+    { set: "bab", setName: "Buy a Box" },
+    { set: "pxbuy", setName: "Buy-a-Box Promos" },
+  ],
 };
 
 const CARDTRADER_PRINTING_OVERRIDES = [
   {
     match: { set: "prm", name: "island", collectorNumber: "304" },
     lookup: { set: "UNH", setName: "Unhinged", collectorNumber: "137", language: "en" },
+  },
+  {
+    match: { set: "prm", name: "plains", collectorNumber: "308" },
+    lookup: { set: "UNH", setName: "Unhinged", collectorNumber: "136", language: "en" },
+  },
+  {
+    match: { set: "prm", name: "swamp", collectorNumber: "310" },
+    lookup: { set: "UNH", setName: "Unhinged", collectorNumber: "138", language: "en" },
+  },
+  {
+    match: { set: "prm", name: "mountain", collectorNumber: "306" },
+    lookup: { set: "UNH", setName: "Unhinged", collectorNumber: "139", language: "en" },
+  },
+  {
+    match: { set: "prm", name: "forest", collectorNumber: "302" },
+    lookup: { set: "UNH", setName: "Unhinged", collectorNumber: "140", language: "en" },
+  },
+  {
+    match: { set: "pnph", name: "surgical extraction", collectorNumber: "74" },
+    lookup: { set: "BAB", setName: "Buy a Box", collectorNumber: "74", language: "en" },
   },
 ];
 
@@ -808,11 +832,11 @@ function cardTraderSetCandidates(setCode, setName = "") {
 
 function cardTraderLookupCard(card) {
   const set = String(card?.set || "").toLowerCase();
-  const name = normalizeCardTraderName(nameOf(card));
+  const names = [nameOf(card), card?.name, card?.printedName, card?.printed_name].map(normalizeCardTraderName).filter(Boolean);
   const collectorNumber = normalizeCardTraderCollectorNumber(card?.collectorNumber);
   const override = CARDTRADER_PRINTING_OVERRIDES.find(entry => (
     (!entry.match.set || entry.match.set === set) &&
-    (!entry.match.name || entry.match.name === name) &&
+    (!entry.match.name || names.includes(entry.match.name)) &&
     (!entry.match.collectorNumber || normalizeCardTraderCollectorNumber(entry.match.collectorNumber) === collectorNumber)
   ));
   return override ? { ...card, ...override.lookup, cardTraderLookupOverride: true } : card;
@@ -1640,11 +1664,29 @@ function initAdvancedSearchUi() {
   updateAdvancedSearchSummary();
 }
 
-function showToast(message) {
-  els.toast.textContent = message;
+function hideToast() {
+  if (!els.toast) return;
+  els.toast.classList.remove("show", "sticky");
+}
+
+function showToast(message, options = {}) {
+  if (!els.toast) return;
+  const sticky = options.sticky === true;
+  els.toast.replaceChildren();
+  const body = document.createElement("span");
+  body.textContent = message;
+  els.toast.appendChild(body);
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "toast-close";
+  close.setAttribute("aria-label", "通知を閉じる");
+  close.textContent = "×";
+  close.addEventListener("click", hideToast);
+  els.toast.appendChild(close);
+  els.toast.classList.toggle("sticky", sticky);
   els.toast.classList.add("show");
   clearTimeout(showToast.timer);
-  showToast.timer = setTimeout(() => els.toast.classList.remove("show"), 2200);
+  if (!sticky) showToast.timer = setTimeout(hideToast, 2200);
 }
 
 function showInlineStatus(element, message) {
@@ -3514,8 +3556,8 @@ async function hydrateCardTraderPrices(options = {}) {
   stats.finishedAt = Date.now();
   state.cardTrader.lastStats = { ...stats };
   if (changed) state.cardTrader.priceUpdatedAt = Date.now();
-  if (stats.failedGroups) showToast(`CardTrader価格取得：${stats.priced}件更新、一部失敗${stats.failedGroups}件`);
-  else showToast(`CardTrader価格取得：${stats.priced}件更新`);
+  if (stats.failedGroups) showToast(`CardTrader価格取得：${stats.priced}件更新、一部失敗${stats.failedGroups}件`, { sticky: true });
+  else showToast(`CardTrader価格取得：${stats.priced}件更新`, { sticky: true });
   if (changed || state.cardTrader.lastError || candidates.length === 0) { persist(); renderCollection(); }
   updateCardTraderSettingsUi();
 }
@@ -3580,7 +3622,7 @@ function refreshCardTraderPrices() {
   state.cardTrader.blueprintsUpdatedAt = {};
   persist();
   updateCardTraderSettingsUi();
-  showToast("CardTrader価格を取得しています");
+  showToast("CardTrader価格を取得しています", { sticky: true });
   hydrateCardTraderPrices({ force: true, mode: "全量" });
 }
 
@@ -3626,7 +3668,7 @@ function refreshHighValueCardTraderPrices() {
   cardTraderMarketplaceCache = new Map();
   persist();
   updateCardTraderSettingsUi();
-  showToast(`単価${formatYen(threshold)}以上のCardTrader価格を取得しています`);
+  showToast(`単価${formatYen(threshold)}以上のCardTrader価格を取得しています`, { sticky: true });
   hydrateCardTraderPrices({ force: true, cards, mode: "高額のみ", threshold });
 }
 
