@@ -1,4 +1,4 @@
-const APP_VERSION = "v202";
+const APP_VERSION = "v203";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const BACKGROUND_THEMES = {
@@ -774,6 +774,50 @@ function cardTraderBlueprintCollectorNumbers(blueprint) {
   ].map(normalizeCardTraderCollectorNumber).filter(Boolean);
 }
 
+const CARDTRADER_SET_ALIASES = {
+  bchr: [
+    { set: "chr", setName: "Chronicles" },
+    { set: "bchr", setName: "Chronicles Foreign Black Border" },
+  ],
+  "4bb": [
+    { set: "4ed", setName: "Fourth Edition" },
+    { set: "4bb", setName: "Fourth Edition Foreign Black Border" },
+  ],
+  f17: [
+    { set: "fnm", setName: "Friday Night Magic" },
+    { set: "f17", setName: "Friday Night Magic 2017" },
+  ],
+};
+
+const CARDTRADER_PRINTING_OVERRIDES = [
+  {
+    match: { set: "prm", name: "island", collectorNumber: "304" },
+    lookup: { set: "UNH", setName: "Unhinged", collectorNumber: "137", language: "en" },
+  },
+];
+
+function cardTraderSetCandidates(setCode, setName = "") {
+  const normalizedSet = String(setCode || "").toLowerCase();
+  const candidates = [{ set: normalizedSet, setName }];
+  (CARDTRADER_SET_ALIASES[normalizedSet] || []).forEach(candidate => candidates.push(candidate));
+  return candidates.filter((candidate, index, all) => {
+    const key = `${candidate.set || ""}:${normalizeCardTraderName(candidate.setName)}`;
+    return key !== ":" && all.findIndex(item => `${item.set || ""}:${normalizeCardTraderName(item.setName)}` === key) === index;
+  });
+}
+
+function cardTraderLookupCard(card) {
+  const set = String(card?.set || "").toLowerCase();
+  const name = normalizeCardTraderName(nameOf(card));
+  const collectorNumber = normalizeCardTraderCollectorNumber(card?.collectorNumber);
+  const override = CARDTRADER_PRINTING_OVERRIDES.find(entry => (
+    (!entry.match.set || entry.match.set === set) &&
+    (!entry.match.name || entry.match.name === name) &&
+    (!entry.match.collectorNumber || normalizeCardTraderCollectorNumber(entry.match.collectorNumber) === collectorNumber)
+  ));
+  return override ? { ...card, ...override.lookup, cardTraderLookupOverride: true } : card;
+}
+
 async function cardTraderExpansionMap() {
   if (state.cardTrader.expansionMap?.__names && Date.now() - Number(state.cardTrader.expansionMapUpdatedAt || 0) < CARDTRADER_CACHE_MS) {
     return state.cardTrader.expansionMap;
@@ -794,9 +838,15 @@ async function cardTraderExpansionMap() {
 }
 
 async function cardTraderExpansionIdForSet(setCode, setName = "") {
-  const normalizedSet = String(setCode || "").toLowerCase();
   const expansionMap = await cardTraderExpansionMap();
-  return expansionMap[normalizedSet] || expansionMap.__names?.[normalizeCardTraderName(setName)] || "";
+  for (const candidate of cardTraderSetCandidates(setCode, setName)) {
+    const normalizedSet = String(candidate.set || "").toLowerCase();
+    const byCode = normalizedSet ? expansionMap[normalizedSet] : "";
+    if (byCode) return byCode;
+    const byName = expansionMap.__names?.[normalizeCardTraderName(candidate.setName)];
+    if (byName) return byName;
+  }
+  return "";
 }
 
 async function cardTraderBlueprintsForSet(setCode, setName = "") {
@@ -847,12 +897,11 @@ async function ensureCardTraderScryfallId(card) {
 
 async function cardTraderBlueprintIdForCard(card, blueprints) {
   if (blueprints[card.scryfallId]) return blueprints[card.scryfallId];
-  const nameId = blueprints.__names?.[normalizeCardTraderName(card.name)];
-  if (nameId) return nameId;
   const collectorId = blueprints.__collectors?.[normalizeCardTraderCollectorNumber(card.collectorNumber)];
   if (collectorId) return collectorId;
   const alternateId = await ensureCardTraderScryfallId(card);
-  return blueprints[alternateId] || "";
+  if (blueprints[alternateId]) return blueprints[alternateId];
+  return blueprints.__names?.[normalizeCardTraderName(card.name)] || "";
 }
 
 async function cardTraderMarketplaceForSet(setCode, language, foil, setName = "") {
@@ -3410,9 +3459,10 @@ async function hydrateCardTraderPrices(options = {}) {
   };
   const groups = new Map();
   candidates.forEach(card => {
-    const key = `${String(card.set || "").toLowerCase()}:${cardTraderLanguageForCard(card)}:${cardTraderFoilForCard(card)}`;
+    const lookupCard = cardTraderLookupCard(card);
+    const key = `${String(lookupCard.set || "").toLowerCase()}:${cardTraderLanguageForCard(lookupCard)}:${cardTraderFoilForCard(lookupCard)}`;
     if (!groups.has(key)) groups.set(key, []);
-    groups.get(key).push(card);
+    groups.get(key).push({ card, lookupCard });
   });
   stats.groupsTotal = groups.size;
   stats.groupsDone = 0;
@@ -3422,15 +3472,16 @@ async function hydrateCardTraderPrices(options = {}) {
   persist();
   updateCardTraderSettingsUi();
   let changed = false;
-  for (const groupCards of groups.values()) {
+  for (const groupItems of groups.values()) {
     try {
-      const sample = groupCards[0];
+      const sample = groupItems[0].lookupCard;
       const setCode = String(sample.set || "").toLowerCase();
       const blueprints = await cardTraderBlueprintsForSet(setCode, sample.setName);
       const marketplace = await cardTraderMarketplaceForSet(setCode, cardTraderLanguageForCard(sample), cardTraderFoilForCard(sample), sample.setName);
-      for (const card of groupCards) {
-        const blueprintId = await cardTraderBlueprintIdForCard(card, blueprints);
-        const chosen = blueprintId ? chooseCardTraderProduct(marketplace[String(blueprintId)] || [], card) : null;
+      for (const item of groupItems) {
+        const { card, lookupCard } = item;
+        const blueprintId = await cardTraderBlueprintIdForCard(lookupCard, blueprints);
+        const chosen = blueprintId ? chooseCardTraderProduct(marketplace[String(blueprintId)] || [], lookupCard) : null;
         card.cardTraderPriceUpdatedAt = Date.now();
         if (chosen) {
           applyCardTraderPrice(card, chosen.usd, chosen.product);
@@ -3450,7 +3501,8 @@ async function hydrateCardTraderPrices(options = {}) {
     } catch (error) {
       stats.failedGroups += 1;
       state.cardTrader.lastError = error?.message || "一部取得に失敗しました";
-      if (stats.errorExamples.length < 8) stats.errorExamples.push(`${groupCards[0]?.setName || groupCards[0]?.set || "不明なセット"}：${state.cardTrader.lastError}`);
+      const failedCard = groupItems[0]?.lookupCard || groupItems[0]?.card;
+      if (stats.errorExamples.length < 8) stats.errorExamples.push(`${failedCard?.setName || failedCard?.set || "不明なセット"}：${state.cardTrader.lastError}`);
     } finally {
       stats.groupsDone += 1;
       state.cardTrader.lastStats = { ...stats };
@@ -3661,10 +3713,11 @@ async function refreshSelectedCardTraderPrice() {
   state.cardTrader.lastError = "";
   state.cardTrader.lastStats = null;
   const setCode = String(card.set || "").toLowerCase();
-  if (setCode) {
-    delete state.cardTrader.blueprintsBySet?.[setCode];
-    delete state.cardTrader.blueprintsUpdatedAt?.[setCode];
-  }
+  const lookupSetCode = String(cardTraderLookupCard(card).set || "").toLowerCase();
+  [setCode, lookupSetCode].filter(Boolean).forEach(code => {
+    delete state.cardTrader.blueprintsBySet?.[code];
+    delete state.cardTrader.blueprintsUpdatedAt?.[code];
+  });
   cardTraderMarketplaceCache = new Map();
   persist();
   showInlineStatus(els.cardActionStatus, "CardTrader価格を取得しています");
