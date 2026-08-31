@@ -1,4 +1,4 @@
-const APP_VERSION = "v207";
+const APP_VERSION = "v208";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -963,6 +963,8 @@ function priceAmountToUsd(price) {
 }
 
 function priceAmountToJpy(price) {
+  const formattedJpy = parseCardTraderFormattedJpy(price?.formatted);
+  if (formattedJpy != null) return formattedJpy;
   const cents = Number(price?.cents);
   const currency = String(price?.currency || "USD").toUpperCase();
   if (!Number.isFinite(cents)) return null;
@@ -972,6 +974,18 @@ function priceAmountToJpy(price) {
   if (currency === "USD") return state.fx?.usdJpy ? amount * Number(state.fx.usdJpy) : null;
   const usd = priceAmountToUsd(price);
   return usd != null && state.fx?.usdJpy ? usd * Number(state.fx.usdJpy) : null;
+}
+
+function parseCardTraderFormattedJpy(value) {
+  const text = String(value || "").trim();
+  if (!text || !/[¥￥]/.test(text)) return null;
+  const normalized = text
+    .replace(/[¥￥]/g, "")
+    .replace(/\s/g, "")
+    .replace(/,/g, "")
+    .replace(/[^\d.-]/g, "");
+  const amount = Number(normalized);
+  return Number.isFinite(amount) ? amount : null;
 }
 
 function chooseCardTraderProduct(products, card) {
@@ -1017,6 +1031,7 @@ function applyCardTraderPrice(card, price, product) {
     usesEnglish: product?.properties_hash?.mtg_language === "en" && cardTraderLanguageForCard(card) === "jp",
     currency,
     cents,
+    formatted: product?.price?.formatted || "",
     productId: product?.id || "",
     updatedAt,
   });
