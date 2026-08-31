@@ -1,4 +1,4 @@
-const APP_VERSION = "v215";
+const APP_VERSION = "v216";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -653,6 +653,16 @@ function cardPriceLabel(card) {
       : "参考";
   return `${source} ${formatYen(unit)} / 枚`;
 }
+
+function priceSourceDetailLabel(card) {
+  const source = selectedPriceSource(card);
+  const cached = source ? priceCacheEntryForCard(card, source) : null;
+  if (source !== "wisdom-guild" || !cached) return "";
+  const stock = Number(cached.stock || 0) > 0 ? `在庫${cached.stock}枚` : "在庫なし";
+  const condition = cached.condition ? `状態${cached.condition}` : "";
+  const fallback = cached.conditionFallback ? "状態参考" : "";
+  return [cached.shop, cached.set, cached.lang, condition, stock, fallback].filter(Boolean).join(" / ");
+}
 function updateCollectionPriceModeUi() {
   document.querySelectorAll("[data-collection-price-mode]").forEach(button => {
     const active = button.dataset.collectionPriceMode === state.collectionPriceDisplayMode;
@@ -1107,19 +1117,17 @@ function wisdomGuildSearchNames(card) {
     .filter(Boolean))];
 }
 
-function wisdomGuildSearchUrl(card, cardName) {
+function wisdomGuildSearchUrl(card, cardName, options = {}) {
   const params = new URLSearchParams();
   params.set("mode", "shop");
   params.set("card", cardName);
   const lang = wisdomGuildLanguageForCard(card);
   if (lang) params.append("lang[]", lang);
-  const condition = wisdomGuildConditionForCard(card);
-  params.set("state_gt", condition);
-  params.set("state_lt", condition);
   if (card.set) params.append("set[]", String(card.set).toUpperCase());
+  if (options.stockOnly) params.set("stock_gt", "1");
   params.set("sort", "price");
   params.set("sort_op", "asc");
-  params.set("limit", "100");
+  params.set("limit", "1000");
   return `${WISDOM_GUILD_SEARCH_BASE}?${params}`;
 }
 
@@ -1163,11 +1171,20 @@ function textFromMarkdownCell(value) {
     .trim();
 }
 
-function chooseWisdomGuildPriceRow(rows) {
-  const inStock = rows.filter(row => row.stock > 0).sort((a, b) => a.price - b.price);
-  if (inStock[0]) return { ...inStock[0], selection: "in-stock-low" };
-  const noStockHigh = rows.sort((a, b) => b.price - a.price)[0];
-  return noStockHigh ? { ...noStockHigh, selection: "no-stock-high" } : null;
+function chooseWisdomGuildPriceRow(rows, card) {
+  const targetCondition = wisdomGuildConditionForCard(card);
+  const byLowPrice = (a, b) => a.price - b.price;
+  const byHighPrice = (a, b) => b.price - a.price;
+  const sameCondition = row => !targetCondition || !row.condition || row.condition === targetCondition;
+  const inStock = rows.filter(row => row.stock > 0);
+  const exactInStock = inStock.filter(sameCondition).sort(byLowPrice)[0];
+  if (exactInStock) return { ...exactInStock, selection: "in-stock-low", conditionFallback: false };
+  const anyInStock = inStock.sort(byLowPrice)[0];
+  if (anyInStock) return { ...anyInStock, selection: "in-stock-low", conditionFallback: anyInStock.condition !== targetCondition };
+  const exactNoStockHigh = rows.filter(sameCondition).sort(byHighPrice)[0];
+  if (exactNoStockHigh) return { ...exactNoStockHigh, selection: "no-stock-high", conditionFallback: false };
+  const noStockHigh = rows.sort(byHighPrice)[0];
+  return noStockHigh ? { ...noStockHigh, selection: "no-stock-high", conditionFallback: noStockHigh.condition !== targetCondition } : null;
 }
 
 function parseWisdomGuildMarkdownRows(text, card) {
@@ -1198,17 +1215,49 @@ function parseWisdomGuildMarkdownRows(text, card) {
       const condition = textFromMarkdownCell(cells[priceIndex + 5]).toUpperCase();
       const shop = textFromMarkdownCell(cells.slice(0, priceIndex).join(" / ")).replace(/\/.+$/, "").trim();
       if (!Number.isFinite(price) || price <= 0) return null;
-      if (targetSet && set && set !== targetSet) return null;
+      if (targetSet && set !== targetSet) return null;
       if (targetLang && lang && lang !== targetLang) return null;
       if (targetFoil !== foil) return null;
       return { price, set, lang, stock: Number.isFinite(stock) ? stock : 0, condition, shop, foil };
     })
     .filter(Boolean);
-  return chooseWisdomGuildPriceRow(rows);
+  return chooseWisdomGuildPriceRow(rows, card);
+}
+
+function parseWisdomGuildCompactRows(text, card) {
+  const targetFoil = priceCacheFinish(card) === "foil";
+  const targetLang = wisdomGuildLanguageForCard(card);
+  const targetSet = String(card.set || "").toUpperCase();
+  const normalized = String(text || "").replace(/\r?\n/g, " ").replace(/\s+/g, " ");
+  const pattern = /\[([^\]]+)\]\(http:\/\/wonder\.wisdom-guild\.net\/shop\/[^)]*\)\[[^\]]+\]\(http:\/\/wonder\.wisdom-guild\.net\/price\/[^)]*\)\*\*([\d,]+)\*\* 円\s*(.*?)\[売り場\]/g;
+  const detailPattern = /^(?:(\S+)\s+)?(ENG|JPN|FRA|DEU|ITA|SPA|POR|RUS|KOR|CHS|CHT)\s+(なし|\d+\s*枚)\s*(?:!\[[^\]]*\]\([^)]+\)\s*)?([A-Z]{1,2})?\s*$/;
+  const rows = [];
+  let match = null;
+  while ((match = pattern.exec(normalized))) {
+    const details = String(match[3] || "").trim();
+    const detail = details.match(detailPattern);
+    if (!detail) continue;
+    const price = Number(String(match[2] || "").replace(/[^\d]/g, ""));
+    const set = String(detail[1] || "").trim().toUpperCase();
+    const lang = String(detail[2] || "").trim().toUpperCase();
+    const stockText = String(detail[3] || "").trim();
+    const stock = /なし/.test(stockText) ? 0 : Number(stockText.replace(/[^\d]/g, ""));
+    const condition = String(detail[4] || "").trim().toUpperCase();
+    const segment = match[0] || "";
+    const foil = /foil/i.test(segment);
+    if (!Number.isFinite(price) || price <= 0) continue;
+    if (targetSet && set !== targetSet) continue;
+    if (targetLang && lang && lang !== targetLang) continue;
+    if (targetFoil !== foil) continue;
+    rows.push({ price, set, lang, stock: Number.isFinite(stock) ? stock : 0, condition, shop: textFromMarkdownCell(match[1]), foil });
+  }
+  return chooseWisdomGuildPriceRow(rows, card);
 }
 
 function parseWisdomGuildPriceRows(html, card) {
-  if (/Markdown Content:|^\|/m.test(String(html || ""))) return parseWisdomGuildMarkdownRows(html, card);
+  if (/Markdown Content:|^\|/m.test(String(html || ""))) {
+    return parseWisdomGuildMarkdownRows(html, card) || parseWisdomGuildCompactRows(html, card);
+  }
   const document = new DOMParser().parseFromString(html, "text/html");
   const targetFoil = priceCacheFinish(card) === "foil";
   const targetLang = wisdomGuildLanguageForCard(card);
@@ -1227,13 +1276,13 @@ function parseWisdomGuildPriceRows(html, card) {
       const condition = String(cells[6]?.textContent || "").trim().toUpperCase();
       const shop = String(row.querySelector(".shopname")?.textContent || "").trim();
       if (!Number.isFinite(price) || price <= 0) return null;
-      if (targetSet && set && set !== targetSet) return null;
+      if (targetSet && set !== targetSet) return null;
       if (targetLang && lang && lang !== targetLang) return null;
       if (targetFoil !== foil) return null;
       return { price, set, lang, stock: Number.isFinite(stock) ? stock : 0, condition, shop, foil };
     })
     .filter(Boolean);
-  return chooseWisdomGuildPriceRow(rows);
+  return chooseWisdomGuildPriceRow(rows, card);
 }
 
 function applyWisdomGuildPrice(card, result, url) {
@@ -1252,6 +1301,10 @@ function applyWisdomGuildPrice(card, result, url) {
     stock: result.stock,
     shop: result.shop,
     selection: result.selection,
+    conditionFallback: result.conditionFallback === true,
+    matchedSet: result.set || "",
+    matchedLanguage: result.lang || "",
+    matchedCondition: result.condition || "",
     url,
     updatedAt: Date.now(),
   });
@@ -1260,13 +1313,15 @@ function applyWisdomGuildPrice(card, result, url) {
 async function fetchWisdomGuildPriceForCard(card) {
   const errors = [];
   for (const cardName of wisdomGuildSearchNames(card)) {
-    const url = wisdomGuildSearchUrl(card, cardName);
-    try {
-      const html = await fetchWisdomGuildHtml(url);
-      const result = parseWisdomGuildPriceRows(html, card);
-      if (result) return { ...result, url, cardName };
-    } catch (error) {
-      errors.push(`${cardName}: ${error?.message || "取得失敗"}`);
+    for (const stockOnly of [true, false]) {
+      const url = wisdomGuildSearchUrl(card, cardName, { stockOnly });
+      try {
+        const html = await fetchWisdomGuildHtml(url);
+        const result = parseWisdomGuildPriceRows(html, card);
+        if (result && (stockOnly ? result.stock > 0 : true)) return { ...result, url, cardName };
+      } catch (error) {
+        errors.push(`${cardName}${stockOnly ? " 在庫あり" : " 全体"}: ${error?.message || "取得失敗"}`);
+      }
     }
   }
   if (errors.length) throw new Error(errors.join(" / "));
@@ -3305,8 +3360,9 @@ function updateCardOwnedActions() {
   if (!owned) { renderFavoriteGroupPanel(); return; }
   if (state.cardDialogMode === "collection" && els.cardActionStatus && !els.cardActionStatus.classList.contains("show")) {
     const updatedAt = wisdomGuildPriceUpdatedAtForCard(owned) || cardTraderPriceUpdatedAtForCard(owned);
+    const sourceDetail = priceSourceDetailLabel(owned);
     const message = updatedAt
-      ? `参考価格：${cardPriceLabel(owned)}（最終取得 ${new Date(updatedAt).toLocaleString("ja-JP")}）`
+      ? `参考価格：${cardPriceLabel(owned)}${sourceDetail ? `（${sourceDetail}）` : ""}（最終取得 ${new Date(updatedAt).toLocaleString("ja-JP")}）`
       : "参考価格：未取得です。価格を取得できます。";
     showInlineStatus(els.cardActionStatus, message, { sticky: true });
   }
@@ -4202,7 +4258,8 @@ async function refreshSelectedCardTraderPrice() {
   await hydrateWisdomGuildPrices({ force: true, cards: [card], mode: "個別カード", silentToast: true });
   const wisdomStats = state.wisdomGuild?.lastStats;
   if (wisdomStats?.priced) {
-    showInlineStatus(els.cardActionStatus, `Wisdom Guild価格を更新しました：${collectionPriceLabel(card)}`, { sticky: true });
+    const sourceDetail = priceSourceDetailLabel(card);
+    showInlineStatus(els.cardActionStatus, `Wisdom Guild価格を更新しました：${collectionPriceLabel(card)}${sourceDetail ? `（${sourceDetail}）` : ""}`, { sticky: true });
   } else if (cardTraderToken()) {
     card.cardTraderPriceUpdatedAt = 0;
     deletePriceCacheEntry(card, "cardtrader");
