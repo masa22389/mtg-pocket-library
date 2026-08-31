@@ -1,4 +1,4 @@
-const APP_VERSION = "v206";
+const APP_VERSION = "v207";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -579,6 +579,11 @@ function usdPriceOf(card) {
   const value = card.finish === "foil" ? card.priceUsdFoil : card.finish === "etched" ? card.priceUsdEtched : card.priceUsd;
   return value == null || value === "" ? null : Number(value);
 }
+function cardTraderJpyPriceOf(card) {
+  const cached = priceCacheEntryForCard(card, "cardtrader");
+  if (String(cached?.currency || "").toUpperCase() === "JPY" && cached?.cents != null && Number.isFinite(Number(cached.cents))) return Number(cached.cents);
+  return cached?.valueJpy != null ? Number(cached.valueJpy) : null;
+}
 function selectedPriceSource(card) {
   const cached = priceCacheEntryForCard(card, "cardtrader");
   if (cached?.source) return cached.source;
@@ -589,7 +594,12 @@ function selectedPriceUsesEnglish(card) {
   if (cached?.source) return cached.usesEnglish === true;
   return card.finish === "foil" ? card.priceUsdFoilFromEnglish === true : card.finish === "etched" ? card.priceUsdEtchedFromEnglish === true : card.priceUsdFromEnglish === true;
 }
-function yenValueOf(card) { const usd = usdPriceOf(card); return usd != null && state.fx.usdJpy ? usd * state.fx.usdJpy * Number(card.quantity || 0) : null; }
+function yenValueOf(card) {
+  const cardTraderJpy = cardTraderJpyPriceOf(card);
+  if (cardTraderJpy != null) return cardTraderJpy * Number(card.quantity || 0);
+  const usd = usdPriceOf(card);
+  return usd != null && state.fx.usdJpy ? usd * state.fx.usdJpy * Number(card.quantity || 0) : null;
+}
 function unitYenValueOf(card) { const value = yenValueOf(card); const quantity = Number(card.quantity || 0); return value != null && quantity > 0 ? value / quantity : null; }
 function collectionPriceDisplayValue(card) {
   return state.collectionPriceDisplayMode === "unit" ? unitYenValueOf(card) : yenValueOf(card);
@@ -952,6 +962,18 @@ function priceAmountToUsd(price) {
   return rate > 0 ? amount / rate : null;
 }
 
+function priceAmountToJpy(price) {
+  const cents = Number(price?.cents);
+  const currency = String(price?.currency || "USD").toUpperCase();
+  if (!Number.isFinite(cents)) return null;
+  const zeroDecimalCurrencies = new Set(["BIF", "CLP", "DJF", "GNF", "ISK", "JPY", "KMF", "KRW", "PYG", "RWF", "UGX", "VND", "VUV", "XAF", "XOF", "XPF"]);
+  const amount = zeroDecimalCurrencies.has(currency) ? cents : cents / 100;
+  if (currency === "JPY") return amount;
+  if (currency === "USD") return state.fx?.usdJpy ? amount * Number(state.fx.usdJpy) : null;
+  const usd = priceAmountToUsd(price);
+  return usd != null && state.fx?.usdJpy ? usd * Number(state.fx.usdJpy) : null;
+}
+
 function chooseCardTraderProduct(products, card) {
   const primaryLanguage = cardTraderLanguageForCard(card);
   const languages = primaryLanguage === "jp" ? ["jp", "en"] : [primaryLanguage];
@@ -965,18 +987,20 @@ function chooseCardTraderProduct(products, card) {
   for (const language of languages.filter(Boolean)) {
     const candidates = baseProducts
       .filter(product => product.properties_hash?.mtg_language === language)
-      .map(product => ({ product, usd: priceAmountToUsd(product.price), usesEnglish: primaryLanguage === "jp" && language === "en" }))
-      .filter(entry => entry.usd != null)
-      .sort((a, b) => a.usd - b.usd);
+      .map(product => ({ product, jpy: priceAmountToJpy(product.price), usd: priceAmountToUsd(product.price), usesEnglish: primaryLanguage === "jp" && language === "en" }))
+      .filter(entry => entry.jpy != null)
+      .sort((a, b) => a.jpy - b.jpy);
     if (candidates[0]) return candidates[0];
   }
   return null;
 }
 
-function applyCardTraderPrice(card, usd, product) {
+function applyCardTraderPrice(card, price, product) {
   const updatedAt = Date.now();
   const currency = product?.price?.currency || "";
   const cents = product?.price?.cents ?? null;
+  const jpy = Number(price?.jpy);
+  const usd = Number.isFinite(Number(price?.usd)) ? Number(price.usd) : (state.fx?.usdJpy ? jpy / Number(state.fx.usdJpy) : null);
   setPriceCacheEntry(card, "cardtrader", {
     source: "cardtrader",
     cardId: card.id || "",
@@ -988,8 +1012,8 @@ function applyCardTraderPrice(card, usd, product) {
     language: cardTraderLanguageForCard(card),
     condition: normalizeCardCondition(card.condition),
     finish: priceCacheFinish(card),
-    valueUsd: Number(usd),
-    valueJpy: state.fx?.usdJpy ? Number(usd) * Number(state.fx.usdJpy) : null,
+    valueUsd: usd,
+    valueJpy: jpy,
     usesEnglish: product?.properties_hash?.mtg_language === "en" && cardTraderLanguageForCard(card) === "jp",
     currency,
     cents,
@@ -3551,9 +3575,9 @@ async function hydrateCardTraderPrices(options = {}) {
         const chosen = blueprintId ? chooseCardTraderProduct(marketplace[String(blueprintId)] || [], lookupCard) : null;
         card.cardTraderPriceUpdatedAt = Date.now();
         if (chosen) {
-          applyCardTraderPrice(card, chosen.usd, chosen.product);
+          applyCardTraderPrice(card, chosen, chosen.product);
           stats.priced += 1;
-          if (stats.pricedExamples.length < 8) stats.pricedExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""} ${normalizeCardCondition(card.condition)} ${priceCacheFinish(card)} ${formatYen(Number(chosen.usd) * Number(state.fx.usdJpy || 0))}`);
+          if (stats.pricedExamples.length < 8) stats.pricedExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""} ${normalizeCardCondition(card.condition)} ${priceCacheFinish(card)} ${formatYen(chosen.jpy)}`);
         } else if (blueprintId) {
           clearCardTraderPriceFields(card);
           stats.noProduct += 1;
