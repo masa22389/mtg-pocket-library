@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=211">
+  <link rel="stylesheet" href="styles.css?v=212">
 </head>
 <body>
   <header class="app-header">
@@ -127,22 +127,27 @@
         </div>
         <p id="backgroundColorStatus" class="muted">現在の背景色：標準</p>
         <hr>
-        <h3>Wisdom Guild価格取得</h3>
-        <div class="search-row"><button id="refreshWisdomGuildPrices" type="button">今すぐ取得</button></div>
-        <p id="wisdomGuildHelp" class="muted">国内ショップ価格を手動取得します。取得後はWisdom Guild価格を優先表示します。</p>
         <details class="settings-details">
-          <summary id="wisdomGuildRunResultSummary">最終実行結果：まだありません</summary>
-          <div id="wisdomGuildRunResultBody" class="settings-details-body"></div>
-        </details>
-        <hr>
-        <h3>CardTrader価格取得</h3>
-        <div class="search-row"><input id="cardTraderToken" type="password" autocomplete="off" placeholder="CardTrader APIトークン"><button id="saveCardTraderToken" type="button">保存</button><button id="refreshCardTraderPrices" class="ghost" type="button">今すぐ取得</button><button id="clearCardTraderToken" class="ghost" type="button">削除</button></div>
-        <div class="search-row"><label>価格の言語<select id="cardTraderPriceLanguageMode"><option value="english-reference">日本語カードは英語版参考を優先</option><option value="prefer-card-language">カードの言語を優先</option><option value="strict-card-language">カードの言語のみ</option></select></label></div>
-        <div class="search-row"><input id="cardTraderHighValueThreshold" type="number" min="1" step="1" inputmode="numeric" placeholder="単価の下限（円）"><button id="refreshHighValueCardTraderPrices" class="ghost" type="button">高額カードだけ取得</button></div>
-        <p id="cardTraderHelp" class="muted">未設定の場合はScryfall価格を使用します。</p>
-        <details class="settings-details">
-          <summary id="cardTraderRunResultSummary">最終実行結果：まだありません</summary>
-          <div id="cardTraderRunResultBody" class="settings-details-body"></div>
+          <summary>価格取得設定</summary>
+          <div class="settings-details-body">
+            <h3>Wisdom Guild価格取得</h3>
+            <div class="search-row"><button id="refreshWisdomGuildPrices" type="button">今すぐ取得</button></div>
+            <p id="wisdomGuildHelp" class="muted">国内ショップ価格を手動取得します。取得後はWisdom Guild価格を優先表示します。</p>
+            <details class="settings-details">
+              <summary id="wisdomGuildRunResultSummary">最終実行結果：まだありません</summary>
+              <div id="wisdomGuildRunResultBody" class="settings-details-body"></div>
+            </details>
+            <hr>
+            <h3>CardTrader価格取得</h3>
+            <div class="search-row"><input id="cardTraderToken" type="password" autocomplete="off" placeholder="CardTrader APIトークン"><button id="saveCardTraderToken" type="button">保存</button><button id="refreshCardTraderPrices" class="ghost" type="button">今すぐ取得</button><button id="clearCardTraderToken" class="ghost" type="button">削除</button></div>
+            <div class="search-row"><label>価格の言語<select id="cardTraderPriceLanguageMode"><option value="english-reference">日本語カードは英語版参考を優先</option><option value="prefer-card-language">カードの言語を優先</option><option value="strict-card-language">カードの言語のみ</option></select></label></div>
+            <div class="search-row"><input id="cardTraderHighValueThreshold" type="number" min="1" step="1" inputmode="numeric" placeholder="単価の下限（円）"><button id="refreshHighValueCardTraderPrices" class="ghost" type="button">高額カードだけ取得</button></div>
+            <p id="cardTraderHelp" class="muted">未設定の場合はScryfall価格を使用します。</p>
+            <details class="settings-details">
+              <summary id="cardTraderRunResultSummary">最終実行結果：まだありません</summary>
+              <div id="cardTraderRunResultBody" class="settings-details-body"></div>
+            </details>
+          </div>
         </details>
         <details class="settings-details">
           <summary>各種設定方法</summary>
@@ -361,8 +366,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=211" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=211" defer></script>
-  <script src="app.js?v=211" defer></script>
+  <script src="mtg-jp-card-index.js?v=212" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=212" defer></script>
+  <script src="app.js?v=212" defer></script>
 </body>
 </html>
