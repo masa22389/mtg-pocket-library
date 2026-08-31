@@ -1,6 +1,6 @@
-const CACHE = "mtg-pocket-v214";
-const OFFLINE_PAGE = "./index.html?v=214";
-const SHELL = [OFFLINE_PAGE, "./styles.css?v=214", "./mtg-jp-card-index.js?v=214", "./mtgjson-jp-search-index.js?v=214", "./app.js?v=214", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v215";
+const OFFLINE_PAGE = "./index.html?v=215";
+const SHELL = [OFFLINE_PAGE, "./styles.css?v=215", "./mtg-jp-card-index.js?v=215", "./mtgjson-jp-search-index.js?v=215", "./app.js?v=215", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)));
@@ -19,7 +19,7 @@ self.addEventListener("message", event => {
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
   const url = new URL(event.request.url);
-  if (url.hostname === "api.scryfall.com") return;
+  if (["api.scryfall.com", "wonder.wisdom-guild.net", "r.jina.ai", "api.allorigins.win"].includes(url.hostname)) return;
 
   if (event.request.mode === "navigate") {
     event.respondWith(
