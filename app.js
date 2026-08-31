@@ -1,4 +1,4 @@
-const APP_VERSION = "v208";
+const APP_VERSION = "v209";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -976,6 +976,15 @@ function priceAmountToJpy(price) {
   return usd != null && state.fx?.usdJpy ? usd * Number(state.fx.usdJpy) : null;
 }
 
+function cardTraderProductPrice(product) {
+  const nested = product?.price && typeof product.price === "object" ? product.price : {};
+  return {
+    cents: nested.cents ?? product?.price_cents ?? null,
+    currency: nested.currency ?? product?.price_currency ?? "",
+    formatted: nested.formatted ?? product?.formatted_price ?? "",
+  };
+}
+
 function parseCardTraderFormattedJpy(value) {
   const text = String(value || "").trim();
   if (!text || !/[¥￥]/.test(text)) return null;
@@ -995,13 +1004,17 @@ function chooseCardTraderProduct(products, card) {
   const foil = cardTraderFoilForCard(card);
   const baseProducts = (products || [])
     .filter(product => !product.graded && !product.on_vacation)
+    .filter(product => product.shipped_to_country !== false)
     .filter(product => !product.bundle_size || Number(product.bundle_size) === 1)
     .filter(product => product.properties_hash?.condition === condition)
     .filter(product => product.properties_hash?.mtg_foil === foil);
   for (const language of languages.filter(Boolean)) {
     const candidates = baseProducts
       .filter(product => product.properties_hash?.mtg_language === language)
-      .map(product => ({ product, jpy: priceAmountToJpy(product.price), usd: priceAmountToUsd(product.price), usesEnglish: primaryLanguage === "jp" && language === "en" }))
+      .map(product => {
+        const price = cardTraderProductPrice(product);
+        return { product, price, jpy: priceAmountToJpy(price), usd: priceAmountToUsd(price), usesEnglish: primaryLanguage === "jp" && language === "en" };
+      })
       .filter(entry => entry.jpy != null)
       .sort((a, b) => a.jpy - b.jpy);
     if (candidates[0]) return candidates[0];
@@ -1011,8 +1024,9 @@ function chooseCardTraderProduct(products, card) {
 
 function applyCardTraderPrice(card, price, product) {
   const updatedAt = Date.now();
-  const currency = product?.price?.currency || "";
-  const cents = product?.price?.cents ?? null;
+  const priceInfo = price?.price || cardTraderProductPrice(product);
+  const currency = priceInfo.currency || "";
+  const cents = priceInfo.cents ?? null;
   const jpy = Number(price?.jpy);
   const usd = Number.isFinite(Number(price?.usd)) ? Number(price.usd) : (state.fx?.usdJpy ? jpy / Number(state.fx.usdJpy) : null);
   setPriceCacheEntry(card, "cardtrader", {
@@ -1031,7 +1045,7 @@ function applyCardTraderPrice(card, price, product) {
     usesEnglish: product?.properties_hash?.mtg_language === "en" && cardTraderLanguageForCard(card) === "jp",
     currency,
     cents,
-    formatted: product?.price?.formatted || "",
+    formatted: priceInfo.formatted || "",
     productId: product?.id || "",
     updatedAt,
   });
