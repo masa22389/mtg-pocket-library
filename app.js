@@ -1,4 +1,4 @@
-const APP_VERSION = "v209";
+const APP_VERSION = "v210";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -27,7 +27,7 @@ const state = {
   decks: read(KEYS.decks, []),
   fx: read(KEYS.fx, { usdJpy: 0, updatedAt: 0, source: "" }),
   priceCache: read(KEYS.priceCache, {}),
-  cardTrader: read(KEYS.cardTrader, { token: "", expansionMap: null, expansionMapUpdatedAt: 0, blueprintsBySet: {}, blueprintsUpdatedAt: {}, priceUpdatedAt: 0, lastError: "", lastStats: null }),
+  cardTrader: read(KEYS.cardTrader, { token: "", expansionMap: null, expansionMapUpdatedAt: 0, blueprintsBySet: {}, blueprintsUpdatedAt: {}, priceUpdatedAt: 0, lastError: "", lastStats: null, priceLanguageMode: "english-reference" }),
   favoriteGroups: read(KEYS.favoriteGroups, []),
   backupMeta: read(KEYS.backupMeta, { lastExportedAt: 0 }),
   searchResults: [],
@@ -124,12 +124,24 @@ const els = {
   reorderDeckCards: $("#reorderDeckCards"), sortDeckByName: $("#sortDeckByName"), sortDeckByColor: $("#sortDeckByColor"), sortDeckByMana: $("#sortDeckByMana"), sortDeckByType: $("#sortDeckByType"),
   usdJpyRate: $("#usdJpyRate"), saveFxButton: $("#saveFxButton"), fxHelp: $("#fxHelp"),
   cardTraderToken: $("#cardTraderToken"), saveCardTraderToken: $("#saveCardTraderToken"), refreshCardTraderPrices: $("#refreshCardTraderPrices"), refreshHighValueCardTraderPrices: $("#refreshHighValueCardTraderPrices"),
-  clearCardTraderToken: $("#clearCardTraderToken"), cardTraderHelp: $("#cardTraderHelp"), cardTraderHighValueThreshold: $("#cardTraderHighValueThreshold"), cardTraderRunResultSummary: $("#cardTraderRunResultSummary"), cardTraderRunResultBody: $("#cardTraderRunResultBody"),
+  clearCardTraderToken: $("#clearCardTraderToken"), cardTraderHelp: $("#cardTraderHelp"), cardTraderHighValueThreshold: $("#cardTraderHighValueThreshold"), cardTraderPriceLanguageMode: $("#cardTraderPriceLanguageMode"), cardTraderRunResultSummary: $("#cardTraderRunResultSummary"), cardTraderRunResultBody: $("#cardTraderRunResultBody"),
   installButton: $("#installButton"), backupSummary: $("#backupSummary"), importInput: $("#importInput"), toast: $("#toast"),
   currentAppVersion: $("#currentAppVersion"), backgroundColorChoices: $("#backgroundColorChoices"), backgroundColorStatus: $("#backgroundColorStatus"),
 };
 
 if (els.currentAppVersion) els.currentAppVersion.textContent = APP_VERSION;
+state.cardTrader = {
+  token: "",
+  expansionMap: null,
+  expansionMapUpdatedAt: 0,
+  blueprintsBySet: {},
+  blueprintsUpdatedAt: {},
+  priceUpdatedAt: 0,
+  lastError: "",
+  lastStats: null,
+  priceLanguageMode: "english-reference",
+  ...(state.cardTrader || {}),
+};
 
 function applyBackgroundTheme(themeKey = state.backgroundTheme, options = {}) {
   const key = BACKGROUND_THEMES[themeKey] ? themeKey : "default";
@@ -641,15 +653,17 @@ function cardTraderToken() {
 }
 
 function cardTraderStatusText() {
-  if (!cardTraderToken()) return "未設定の場合はScryfall価格を使用します。";
+  const mode = cardTraderPriceLanguageMode();
+  const modeText = mode === "english-reference" ? "日本語カードは英語版参考を優先" : mode === "strict-card-language" ? "カードの言語のみ" : "カードの言語を優先";
+  if (!cardTraderToken()) return `未設定の場合はScryfall価格を使用します。価格の言語：${modeText}`;
   const stats = state.cardTrader?.lastStats;
   const statsText = stats
     ? `対象${stats.candidates || 0}件 / 価格更新${stats.priced || 0}件 / 出品なし${stats.noProduct || 0}件 / 紐付けなし${stats.noBlueprint || 0}件${stats.failedGroups ? ` / 失敗${stats.failedGroups}件` : ""}${stats.groupsTotal ? ` / ${stats.groupsDone || 0}/${stats.groupsTotal}処理` : ""}`
     : "";
-  if (stats?.inProgress) return `CardTrader価格を取得中です。${statsText}`;
-  if (state.cardTrader?.lastError) return `CardTrader設定済み。直近の取得エラー：${state.cardTrader.lastError}${statsText ? `（${statsText}）` : ""}`;
-  if (state.cardTrader?.priceUpdatedAt) return `CardTrader設定済み。最終価格取得：${new Date(state.cardTrader.priceUpdatedAt).toLocaleString("ja-JP")}${statsText ? `（${statsText}）` : ""}`;
-  return "CardTrader設定済み。次回の価格更新で使用します。";
+  if (stats?.inProgress) return `CardTrader価格を取得中です。価格の言語：${modeText}。${statsText}`;
+  if (state.cardTrader?.lastError) return `CardTrader設定済み。価格の言語：${modeText}。直近の取得エラー：${state.cardTrader.lastError}${statsText ? `（${statsText}）` : ""}`;
+  if (state.cardTrader?.priceUpdatedAt) return `CardTrader設定済み。価格の言語：${modeText}。最終価格取得：${new Date(state.cardTrader.priceUpdatedAt).toLocaleString("ja-JP")}${statsText ? `（${statsText}）` : ""}`;
+  return `CardTrader設定済み。価格の言語：${modeText}。次回の価格更新で使用します。`;
 }
 
 function cardTraderRunResultTitle(stats) {
@@ -696,15 +710,30 @@ function updateCardTraderSettingsUi() {
   if (els.cardTraderHighValueThreshold && document.activeElement !== els.cardTraderHighValueThreshold) {
     els.cardTraderHighValueThreshold.value = state.cardTraderHighValueThreshold || "10000";
   }
+  if (els.cardTraderPriceLanguageMode) els.cardTraderPriceLanguageMode.value = cardTraderPriceLanguageMode();
   if (els.cardTraderHelp) els.cardTraderHelp.textContent = cardTraderStatusText();
   if (els.cardTraderRunResultSummary) els.cardTraderRunResultSummary.textContent = cardTraderRunResultTitle(state.cardTrader?.lastStats);
   if (els.cardTraderRunResultBody) els.cardTraderRunResultBody.innerHTML = cardTraderRunResultHtml(state.cardTrader?.lastStats);
+}
+
+function cardTraderPriceLanguageMode() {
+  const mode = String(state.cardTrader?.priceLanguageMode || "english-reference");
+  return ["english-reference", "prefer-card-language", "strict-card-language"].includes(mode) ? mode : "english-reference";
 }
 
 function cardTraderLanguageForCard(card) {
   if (card.language === "ja") return "jp";
   if (card.language === "en") return "en";
   return "";
+}
+
+function cardTraderPriceLanguagesForCard(card) {
+  const primaryLanguage = cardTraderLanguageForCard(card);
+  const mode = cardTraderPriceLanguageMode();
+  if (!primaryLanguage) return [];
+  if (mode === "strict-card-language") return [primaryLanguage];
+  if (primaryLanguage !== "jp") return [primaryLanguage];
+  return mode === "english-reference" ? ["en", "jp"] : ["jp", "en"];
 }
 
 function normalizeCardCondition(value) {
@@ -999,7 +1028,7 @@ function parseCardTraderFormattedJpy(value) {
 
 function chooseCardTraderProduct(products, card) {
   const primaryLanguage = cardTraderLanguageForCard(card);
-  const languages = primaryLanguage === "jp" ? ["jp", "en"] : [primaryLanguage];
+  const languages = cardTraderPriceLanguagesForCard(card);
   const condition = cardTraderConditionForCard(card);
   const foil = cardTraderFoilForCard(card);
   const baseProducts = (products || [])
@@ -3692,6 +3721,23 @@ function saveCardTraderToken() {
   hydrateCardTraderPrices({ force: true, mode: "全量" });
 }
 
+function saveCardTraderPriceLanguageMode() {
+  const mode = String(els.cardTraderPriceLanguageMode?.value || "english-reference");
+  state.cardTrader.priceLanguageMode = ["english-reference", "prefer-card-language", "strict-card-language"].includes(mode) ? mode : "english-reference";
+  deletePriceCacheBySource("cardtrader");
+  state.collection.forEach(card => {
+    clearCardTraderPriceFields(card);
+    card.cardTraderPriceUpdatedAt = 0;
+  });
+  cardTraderMarketplaceCache = new Map();
+  state.cardTrader.lastError = "";
+  state.cardTrader.lastStats = null;
+  persist();
+  updateCardTraderSettingsUi();
+  renderCollection();
+  showToast("CardTrader価格の言語設定を保存しました。価格を再取得してください", { sticky: true });
+}
+
 function refreshCardTraderPrices() {
   if (!cardTraderToken()) { showToast("CardTrader APIトークンを保存してください"); return; }
   state.collection.forEach(card => { card.cardTraderPriceUpdatedAt = 0; });
@@ -3753,7 +3799,7 @@ function refreshHighValueCardTraderPrices() {
 }
 
 function clearCardTraderToken() {
-  state.cardTrader = { token: "", expansionMap: null, expansionMapUpdatedAt: 0, blueprintsBySet: {}, blueprintsUpdatedAt: {}, priceUpdatedAt: 0, lastError: "", lastStats: null };
+  state.cardTrader = { token: "", expansionMap: null, expansionMapUpdatedAt: 0, blueprintsBySet: {}, blueprintsUpdatedAt: {}, priceUpdatedAt: 0, lastError: "", lastStats: null, priceLanguageMode: cardTraderPriceLanguageMode() };
   deletePriceCacheBySource("cardtrader");
   state.collection.forEach(card => {
     clearCardTraderPriceFields(card);
@@ -6038,6 +6084,7 @@ els.saveCardTraderToken?.addEventListener("click", saveCardTraderToken);
 els.refreshCardTraderPrices?.addEventListener("click", refreshCardTraderPrices);
 els.refreshHighValueCardTraderPrices?.addEventListener("click", refreshHighValueCardTraderPrices);
 els.clearCardTraderToken?.addEventListener("click", clearCardTraderToken);
+els.cardTraderPriceLanguageMode?.addEventListener("change", saveCardTraderPriceLanguageMode);
 els.cardTraderHighValueThreshold?.addEventListener("change", () => {
   saveCardTraderHighValueThreshold();
   updateCardTraderSettingsUi();
