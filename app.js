@@ -1,4 +1,4 @@
-const APP_VERSION = "v212";
+const APP_VERSION = "v213";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -755,9 +755,11 @@ function cardTraderPriceLanguagesForCard(card) {
 }
 
 function wisdomGuildLanguageForCard(card) {
-  if (card.language === "ja") return "JPN";
-  if (card.language === "en") return "ENG";
-  return "";
+  const language = String(card?.language || card?.lang || "").toLowerCase();
+  if (["ja", "jp", "jpn", "japanese", "日本語", "日"].includes(language)) return "JPN";
+  if (["en", "eng", "english", "英語", "英"].includes(language)) return "ENG";
+  if (isJapanese(card?.printedName || card?.jpName || "")) return "JPN";
+  return "ENG";
 }
 
 function wisdomGuildConditionForCard(card) {
@@ -1056,6 +1058,7 @@ function parseCardTraderFormattedJpy(value) {
 
 const WISDOM_GUILD_SEARCH_BASE = "https://wonder.wisdom-guild.net/search.php";
 const WISDOM_GUILD_CORS_PROXY = "https://api.allorigins.win/raw?url=";
+const WISDOM_GUILD_READER_PROXY = "https://r.jina.ai/http://r.jina.ai/http://";
 
 function wisdomGuildStatusText() {
   const stats = state.wisdomGuild?.lastStats;
@@ -1121,7 +1124,8 @@ function wisdomGuildSearchUrl(card, cardName) {
 }
 
 async function fetchWisdomGuildHtml(url) {
-  const urls = [url, `${WISDOM_GUILD_CORS_PROXY}${encodeURIComponent(url)}`];
+  const readerUrl = `${WISDOM_GUILD_READER_PROXY}${url}`;
+  const urls = [url, readerUrl, `${WISDOM_GUILD_CORS_PROXY}${encodeURIComponent(url)}`];
   let lastError = null;
   for (const target of urls) {
     const controller = new AbortController();
@@ -1140,7 +1144,62 @@ async function fetchWisdomGuildHtml(url) {
   throw new Error(lastError?.name === "AbortError" ? "Wisdom Guild取得がタイムアウトしました" : (lastError?.message || "Wisdom Guild価格を取得できませんでした"));
 }
 
+function textFromMarkdownCell(value) {
+  return String(value || "")
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, " ")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/\*\*/g, "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function chooseWisdomGuildPriceRow(rows) {
+  const inStock = rows.filter(row => row.stock > 0).sort((a, b) => a.price - b.price);
+  if (inStock[0]) return { ...inStock[0], selection: "in-stock-low" };
+  const noStockHigh = rows.sort((a, b) => b.price - a.price)[0];
+  return noStockHigh ? { ...noStockHigh, selection: "no-stock-high" } : null;
+}
+
+function parseWisdomGuildMarkdownRows(text, card) {
+  const targetFoil = priceCacheFinish(card) === "foil";
+  const targetLang = wisdomGuildLanguageForCard(card);
+  const targetSet = String(card.set || "").toUpperCase();
+  const rows = String(text || "")
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(line => line.startsWith("|"))
+    .map(line => line.split("|").slice(1, -1).map(cell => cell.trim()))
+    .filter(cells => {
+      const normalizedCells = cells.map(textFromMarkdownCell);
+      const isSeparator = normalizedCells.every(cell => /^-+$/.test(cell));
+      const isHeader = normalizedCells[0] === "ショップ" && normalizedCells.includes("カード名") && normalizedCells.includes("価格");
+      return cells.length >= 7 && !isSeparator && !isHeader;
+    })
+    .map(cells => {
+      const priceIndex = cells.findIndex(cell => /円/.test(textFromMarkdownCell(cell)) && /\d/.test(textFromMarkdownCell(cell)));
+      if (priceIndex < 0) return null;
+      const price = Number(textFromMarkdownCell(cells[priceIndex]).replace(/[^\d]/g, ""));
+      const set = textFromMarkdownCell(cells[priceIndex + 1]).toUpperCase();
+      const lang = textFromMarkdownCell(cells[priceIndex + 2]).toUpperCase();
+      const stockText = textFromMarkdownCell(cells[priceIndex + 3]);
+      const stock = /なし/.test(stockText) ? 0 : Number(stockText.replace(/[^\d]/g, ""));
+      const foilCell = cells[priceIndex + 4] || "";
+      const foil = /foil/i.test(`${foilCell} ${textFromMarkdownCell(foilCell)}`);
+      const condition = textFromMarkdownCell(cells[priceIndex + 5]).toUpperCase();
+      const shop = textFromMarkdownCell(cells.slice(0, priceIndex).join(" / ")).replace(/\/.+$/, "").trim();
+      if (!Number.isFinite(price) || price <= 0) return null;
+      if (targetSet && set && set !== targetSet) return null;
+      if (targetLang && lang && lang !== targetLang) return null;
+      if (targetFoil !== foil) return null;
+      return { price, set, lang, stock: Number.isFinite(stock) ? stock : 0, condition, shop, foil };
+    })
+    .filter(Boolean);
+  return chooseWisdomGuildPriceRow(rows);
+}
+
 function parseWisdomGuildPriceRows(html, card) {
+  if (/Markdown Content:|^\|/m.test(String(html || ""))) return parseWisdomGuildMarkdownRows(html, card);
   const document = new DOMParser().parseFromString(html, "text/html");
   const targetFoil = priceCacheFinish(card) === "foil";
   const targetLang = wisdomGuildLanguageForCard(card);
@@ -1165,10 +1224,7 @@ function parseWisdomGuildPriceRows(html, card) {
       return { price, set, lang, stock: Number.isFinite(stock) ? stock : 0, condition, shop, foil };
     })
     .filter(Boolean);
-  const inStock = rows.filter(row => row.stock > 0).sort((a, b) => a.price - b.price);
-  if (inStock[0]) return { ...inStock[0], selection: "in-stock-low" };
-  const noStockHigh = rows.sort((a, b) => b.price - a.price)[0];
-  return noStockHigh ? { ...noStockHigh, selection: "no-stock-high" } : null;
+  return chooseWisdomGuildPriceRow(rows);
 }
 
 function applyWisdomGuildPrice(card, result, url) {
@@ -3885,13 +3941,13 @@ async function hydrateWisdomGuildPrices(options = {}) {
       } else {
         deletePriceCacheEntry(card, "wisdom-guild");
         stats.noProduct += 1;
-        if (stats.noProductExamples.length < 8) stats.noProductExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""}`);
+        if (stats.noProductExamples.length < 8) stats.noProductExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""} ${wisdomGuildLanguageForCard(card)} ${wisdomGuildConditionForCard(card)}`);
       }
       changed = true;
     } catch (error) {
       stats.failed += 1;
       state.wisdomGuild.lastError = error?.message || "一部取得に失敗しました";
-      if (stats.errorExamples.length < 8) stats.errorExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()}：${state.wisdomGuild.lastError}`);
+      if (stats.errorExamples.length < 8) stats.errorExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} ${wisdomGuildLanguageForCard(card)} ${wisdomGuildConditionForCard(card)}：${state.wisdomGuild.lastError}`);
     } finally {
       stats.done += 1;
       state.wisdomGuild.lastStats = { ...stats };
@@ -3905,8 +3961,8 @@ async function hydrateWisdomGuildPrices(options = {}) {
   state.wisdomGuild.lastStats = { ...stats };
   if (changed) state.wisdomGuild.priceUpdatedAt = Date.now();
   if (options.silentToast !== true) {
-    if (stats.failed) showToast(`Wisdom Guild価格取得：${stats.priced}件更新、一部失敗${stats.failed}件`, { sticky: true });
-    else showToast(`Wisdom Guild価格取得：${stats.priced}件更新`, { sticky: true });
+    if (stats.failed) showToast(`Wisdom Guild価格取得：${stats.priced}/${stats.candidates}件更新、一部失敗${stats.failed}件`, { sticky: true });
+    else showToast(`Wisdom Guild価格取得：${stats.priced}/${stats.candidates}件更新、出品なし${stats.noProduct}件`, { sticky: true });
   }
   if (changed || state.wisdomGuild.lastError || candidates.length === 0) { persist(); renderCollection(); }
   updateWisdomGuildSettingsUi();
