@@ -1,4 +1,4 @@
-const APP_VERSION = "v217";
+const APP_VERSION = "v218";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -560,6 +560,13 @@ function priceCacheEntryForCard(card, source = "cardtrader") {
   return state.priceCache?.[priceCacheKeyForCard(card, source)] || null;
 }
 
+function validPriceCacheEntryForCard(card, source = "cardtrader") {
+  const cached = priceCacheEntryForCard(card, source);
+  if (!cached) return null;
+  if (source === "wisdom-guild" && cached.cacheVersion !== WISDOM_GUILD_PRICE_CACHE_VERSION) return null;
+  return cached;
+}
+
 function setPriceCacheEntry(card, source, entry) {
   state.priceCache = state.priceCache || {};
   state.priceCache[priceCacheKeyForCard(card, source)] = entry;
@@ -589,7 +596,7 @@ function cardTraderPriceUpdatedAtForCard(card) {
 }
 
 function wisdomGuildPriceUpdatedAtForCard(card) {
-  return Number(priceCacheEntryForCard(card, "wisdom-guild")?.updatedAt || 0);
+  return Number(validPriceCacheEntryForCard(card, "wisdom-guild")?.updatedAt || 0);
 }
 
 function usdPriceOf(card) {
@@ -599,7 +606,7 @@ function usdPriceOf(card) {
   return value == null || value === "" ? null : Number(value);
 }
 function wisdomGuildJpyPriceOf(card) {
-  const cached = priceCacheEntryForCard(card, "wisdom-guild");
+  const cached = validPriceCacheEntryForCard(card, "wisdom-guild");
   return cached?.valueJpy != null ? Number(cached.valueJpy) : null;
 }
 function cardTraderJpyPriceOf(card) {
@@ -608,7 +615,7 @@ function cardTraderJpyPriceOf(card) {
   return cached?.valueJpy != null ? Number(cached.valueJpy) : null;
 }
 function selectedPriceSource(card) {
-  const wisdomGuild = priceCacheEntryForCard(card, "wisdom-guild");
+  const wisdomGuild = validPriceCacheEntryForCard(card, "wisdom-guild");
   if (wisdomGuild?.source) return wisdomGuild.source;
   const cached = priceCacheEntryForCard(card, "cardtrader");
   if (cached?.source) return cached.source;
@@ -656,7 +663,9 @@ function cardPriceLabel(card) {
 
 function priceSourceDetailLabel(card) {
   const source = selectedPriceSource(card);
-  const cached = source ? priceCacheEntryForCard(card, source) : null;
+  const cached = source === "wisdom-guild"
+    ? validPriceCacheEntryForCard(card, source)
+    : source ? priceCacheEntryForCard(card, source) : null;
   if (source !== "wisdom-guild" || !cached) return "";
   const stock = Number(cached.stock || 0) > 0 ? `在庫${cached.stock}枚` : "在庫なし";
   const condition = cached.condition ? `状態${cached.condition}` : "";
@@ -1070,6 +1079,7 @@ const WISDOM_GUILD_PRICE_BASE = "https://wonder.wisdom-guild.net/price";
 const WISDOM_GUILD_SEARCH_BASE = "https://wonder.wisdom-guild.net/search.php";
 const WISDOM_GUILD_CORS_PROXY = "https://api.allorigins.win/raw?url=";
 const WISDOM_GUILD_READER_PROXY = "https://r.jina.ai/http://r.jina.ai/http://";
+const WISDOM_GUILD_PRICE_CACHE_VERSION = "wg-price-v2";
 
 function wisdomGuildStatusText() {
   const stats = state.wisdomGuild?.lastStats;
@@ -1323,6 +1333,7 @@ function parseWisdomGuildPriceRows(html, card) {
 function applyWisdomGuildPrice(card, result, url) {
   setPriceCacheEntry(card, "wisdom-guild", {
     source: "wisdom-guild",
+    cacheVersion: WISDOM_GUILD_PRICE_CACHE_VERSION,
     cardId: card.id || "",
     scryfallId: card.scryfallId || "",
     name: nameOf(card),
@@ -4028,7 +4039,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
   const candidates = sourceCards.filter(card =>
     wisdomGuildLanguageForCard(card) &&
     priceCacheFinish(card) !== "etched" &&
-    (force || !priceCacheEntryForCard(card, "wisdom-guild")?.updatedAt || Date.now() - Number(priceCacheEntryForCard(card, "wisdom-guild")?.updatedAt || 0) > DAY_MS)
+    (force || !validPriceCacheEntryForCard(card, "wisdom-guild")?.updatedAt || Date.now() - Number(validPriceCacheEntryForCard(card, "wisdom-guild")?.updatedAt || 0) > DAY_MS)
   );
   const stats = {
     mode: options.mode || "全量",
