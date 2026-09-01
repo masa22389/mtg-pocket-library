@@ -1,4 +1,4 @@
-const APP_VERSION = "v216";
+const APP_VERSION = "v217";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -1066,6 +1066,7 @@ function parseCardTraderFormattedJpy(value) {
   return Number.isFinite(amount) ? amount : null;
 }
 
+const WISDOM_GUILD_PRICE_BASE = "https://wonder.wisdom-guild.net/price";
 const WISDOM_GUILD_SEARCH_BASE = "https://wonder.wisdom-guild.net/search.php";
 const WISDOM_GUILD_CORS_PROXY = "https://api.allorigins.win/raw?url=";
 const WISDOM_GUILD_READER_PROXY = "https://r.jina.ai/http://r.jina.ai/http://";
@@ -1117,10 +1118,18 @@ function wisdomGuildSearchNames(card) {
     .filter(Boolean))];
 }
 
-function wisdomGuildSearchUrl(card, cardName, options = {}) {
+function wisdomGuildPriceNames(card) {
+  return [...new Set([card.name, nameOf(card), card.printedName, card.jpName]
+    .map(value => String(value || "").trim())
+    .filter(Boolean))];
+}
+
+function wisdomGuildCardPath(cardName) {
+  return encodeURIComponent(cardName).replace(/%20/g, "+");
+}
+
+function wisdomGuildSharedPriceParams(card, options = {}) {
   const params = new URLSearchParams();
-  params.set("mode", "shop");
-  params.set("card", cardName);
   const lang = wisdomGuildLanguageForCard(card);
   if (lang) params.append("lang[]", lang);
   if (card.set) params.append("set[]", String(card.set).toUpperCase());
@@ -1128,6 +1137,18 @@ function wisdomGuildSearchUrl(card, cardName, options = {}) {
   params.set("sort", "price");
   params.set("sort_op", "asc");
   params.set("limit", "1000");
+  return params;
+}
+
+function wisdomGuildPriceUrl(card, cardName, options = {}) {
+  const params = wisdomGuildSharedPriceParams(card, options);
+  return `${WISDOM_GUILD_PRICE_BASE}/${wisdomGuildCardPath(cardName)}/?${params}`;
+}
+
+function wisdomGuildSearchUrl(card, cardName, options = {}) {
+  const params = wisdomGuildSharedPriceParams(card, options);
+  params.set("mode", "shop");
+  params.set("card", cardName);
   return `${WISDOM_GUILD_SEARCH_BASE}?${params}`;
 }
 
@@ -1191,6 +1212,17 @@ function parseWisdomGuildMarkdownRows(text, card) {
   const targetFoil = priceCacheFinish(card) === "foil";
   const targetLang = wisdomGuildLanguageForCard(card);
   const targetSet = String(card.set || "").toUpperCase();
+  const priceCellIndex = cells => cells.findIndex(cell => {
+    const text = textFromMarkdownCell(cell);
+    return /^[\d,]+\s*円$/.test(text) || /^\*\*[\d,]+\*\*\s*円$/.test(String(cell || "").trim());
+  });
+  const readStock = value => {
+    const text = textFromMarkdownCell(value);
+    if (/なし/.test(text)) return 0;
+    if (!/^\d+\s*枚$/.test(text)) return null;
+    const stock = Number(text.replace(/[^\d]/g, ""));
+    return Number.isFinite(stock) ? stock : null;
+  };
   const rows = String(text || "")
     .split(/\r?\n/)
     .map(line => line.trim())
@@ -1203,13 +1235,15 @@ function parseWisdomGuildMarkdownRows(text, card) {
       return cells.length >= 7 && !isSeparator && !isHeader;
     })
     .map(cells => {
-      const priceIndex = cells.findIndex(cell => /円/.test(textFromMarkdownCell(cell)) && /\d/.test(textFromMarkdownCell(cell)));
+      const priceIndex = priceCellIndex(cells);
       if (priceIndex < 0) return null;
-      const price = Number(textFromMarkdownCell(cells[priceIndex]).replace(/[^\d]/g, ""));
+      const priceText = textFromMarkdownCell(cells[priceIndex]);
+      if (!/^[\d,]+\s*円$/.test(priceText)) return null;
+      const price = Number(priceText.replace(/[^\d]/g, ""));
       const set = textFromMarkdownCell(cells[priceIndex + 1]).toUpperCase();
       const lang = textFromMarkdownCell(cells[priceIndex + 2]).toUpperCase();
-      const stockText = textFromMarkdownCell(cells[priceIndex + 3]);
-      const stock = /なし/.test(stockText) ? 0 : Number(stockText.replace(/[^\d]/g, ""));
+      const stock = readStock(cells[priceIndex + 3]);
+      if (stock == null) return null;
       const foilCell = cells[priceIndex + 4] || "";
       const foil = /foil/i.test(`${foilCell} ${textFromMarkdownCell(foilCell)}`);
       const condition = textFromMarkdownCell(cells[priceIndex + 5]).toUpperCase();
@@ -1217,6 +1251,7 @@ function parseWisdomGuildMarkdownRows(text, card) {
       if (!Number.isFinite(price) || price <= 0) return null;
       if (targetSet && set !== targetSet) return null;
       if (targetLang && lang && lang !== targetLang) return null;
+      if (condition && !/^[A-Z]{1,3}\+?$/.test(condition)) return null;
       if (targetFoil !== foil) return null;
       return { price, set, lang, stock: Number.isFinite(stock) ? stock : 0, condition, shop, foil };
     })
@@ -1312,6 +1347,18 @@ function applyWisdomGuildPrice(card, result, url) {
 
 async function fetchWisdomGuildPriceForCard(card) {
   const errors = [];
+  for (const cardName of wisdomGuildPriceNames(card)) {
+    for (const stockOnly of [true, false]) {
+      const url = wisdomGuildPriceUrl(card, cardName, { stockOnly });
+      try {
+        const html = await fetchWisdomGuildHtml(url);
+        const result = parseWisdomGuildPriceRows(html, card);
+        if (result && (stockOnly ? result.stock > 0 : true)) return { ...result, url, cardName };
+      } catch (error) {
+        errors.push(`${cardName}${stockOnly ? " 価格ページ在庫あり" : " 価格ページ全体"}: ${error?.message || "取得失敗"}`);
+      }
+    }
+  }
   for (const cardName of wisdomGuildSearchNames(card)) {
     for (const stockOnly of [true, false]) {
       const url = wisdomGuildSearchUrl(card, cardName, { stockOnly });
