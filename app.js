@@ -1,5 +1,5 @@
-const APP_VERSION = "v220";
-const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
+const APP_VERSION = "v221";
+const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
 const BACKGROUND_THEMES = {
@@ -41,6 +41,7 @@ const state = {
   selectedOwnedId: null,
   collectionViewMode: localStorage.getItem(KEYS.collectionViewMode) || "hidden",
   collectionPriceDisplayMode: localStorage.getItem(KEYS.collectionPriceDisplayMode) || "total",
+  priceSourceMode: localStorage.getItem(KEYS.priceSourceMode) || "manual-wisdom-cardtrader",
   collectionSortStack: read(KEYS.collectionSortStack, []),
   deckFormatFilter: localStorage.getItem(KEYS.deckFormatFilter) || "",
   backgroundTheme: localStorage.getItem(KEYS.backgroundTheme) || "default",
@@ -89,7 +90,7 @@ const els = {
   decrementQuantity: $("#decrementQuantity"), incrementQuantity: $("#incrementQuantity"),
   cardCondition: $("#cardCondition"), cardFinish: $("#cardFinish"), cardLanguage: $("#cardLanguage"),
   cardLocation: $("#cardLocation"), addCardButton: $("#addCardButton"), addCardToDeckButton: $("#addCardToDeckButton"),
-  cardActionStatus: $("#cardActionStatus"), deckDialog: $("#deckDialog"),
+  cardActionStatus: $("#cardActionStatus"), manualPricePanel: $("#manualPricePanel"), manualPriceInput: $("#manualPriceInput"), saveManualPriceButton: $("#saveManualPriceButton"), clearManualPriceButton: $("#clearManualPriceButton"), deckDialog: $("#deckDialog"),
   favoriteCardButton: $("#favoriteCardButton"), refreshCardPriceButton: $("#refreshCardPriceButton"), deleteCardButton: $("#deleteCardButton"),
   favoriteGroupPanel: $("#favoriteGroupPanel"), favoriteGroupSummary: $("#favoriteGroupSummary"), newFavoriteGroupName: $("#newFavoriteGroupName"),
   createFavoriteGroupButton: $("#createFavoriteGroupButton"), manageFavoriteGroupsButton: $("#manageFavoriteGroupsButton"), favoriteGroupList: $("#favoriteGroupList"),
@@ -123,7 +124,7 @@ const els = {
   decrementMaybeDeckEntry: $("#decrementMaybeDeckEntry"), incrementMaybeDeckEntry: $("#incrementMaybeDeckEntry"),
   decrementCommanderDeckEntry: $("#decrementCommanderDeckEntry"), incrementCommanderDeckEntry: $("#incrementCommanderDeckEntry"),
   reorderDeckCards: $("#reorderDeckCards"), sortDeckByName: $("#sortDeckByName"), sortDeckByColor: $("#sortDeckByColor"), sortDeckByMana: $("#sortDeckByMana"), sortDeckByType: $("#sortDeckByType"),
-  usdJpyRate: $("#usdJpyRate"), saveFxButton: $("#saveFxButton"), fxHelp: $("#fxHelp"),
+  usdJpyRate: $("#usdJpyRate"), saveFxButton: $("#saveFxButton"), fxHelp: $("#fxHelp"), priceSourceMode: $("#priceSourceMode"),
   refreshWisdomGuildPrices: $("#refreshWisdomGuildPrices"), wisdomGuildHelp: $("#wisdomGuildHelp"), wisdomGuildRunResultSummary: $("#wisdomGuildRunResultSummary"), wisdomGuildRunResultBody: $("#wisdomGuildRunResultBody"),
   cardTraderToken: $("#cardTraderToken"), saveCardTraderToken: $("#saveCardTraderToken"), refreshCardTraderPrices: $("#refreshCardTraderPrices"), refreshHighValueCardTraderPrices: $("#refreshHighValueCardTraderPrices"),
   clearCardTraderToken: $("#clearCardTraderToken"), cardTraderHelp: $("#cardTraderHelp"), cardTraderHighValueThreshold: $("#cardTraderHighValueThreshold"), cardTraderPriceLanguageMode: $("#cardTraderPriceLanguageMode"), cardTraderRunResultSummary: $("#cardTraderRunResultSummary"), cardTraderRunResultBody: $("#cardTraderRunResultBody"),
@@ -180,6 +181,7 @@ function persist() {
   localStorage.setItem(KEYS.cardTrader, JSON.stringify(state.cardTrader));
   localStorage.setItem(KEYS.wisdomGuild, JSON.stringify(state.wisdomGuild));
   localStorage.setItem(KEYS.favoriteGroups, JSON.stringify(state.favoriteGroups));
+  localStorage.setItem(KEYS.priceSourceMode, priceSourceMode());
 }
 
 function uid() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`; }
@@ -571,6 +573,45 @@ function priceCacheUpdatedAtForCard(card, source = "cardtrader") {
   return Number(cached?.updatedAt || 0);
 }
 
+function priceSourceMode() {
+  const mode = String(state.priceSourceMode || "manual-wisdom-cardtrader");
+  return ["manual-wisdom-cardtrader", "manual-cardtrader-wisdom", "wisdom-only", "cardtrader-only", "manual-only"].includes(mode)
+    ? mode
+    : "manual-wisdom-cardtrader";
+}
+
+function priceSourceOrder() {
+  return ({
+    "manual-wisdom-cardtrader": ["manual", "wisdom-guild", "cardtrader"],
+    "manual-cardtrader-wisdom": ["manual", "cardtrader", "wisdom-guild"],
+    "wisdom-only": ["wisdom-guild"],
+    "cardtrader-only": ["cardtrader"],
+    "manual-only": ["manual"],
+  })[priceSourceMode()];
+}
+
+function priceCacheJpyValue(card, source) {
+  const cached = priceCacheEntryForCard(card, source);
+  if (!cached) return null;
+  if (source === "cardtrader" && String(cached.currency || "").toUpperCase() === "JPY" && cached.cents != null && Number.isFinite(Number(cached.cents))) return Number(cached.cents);
+  return cached.valueJpy != null ? Number(cached.valueJpy) : null;
+}
+
+function selectedPriceEntry(card) {
+  for (const source of priceSourceOrder()) {
+    const valueJpy = priceCacheJpyValue(card, source);
+    if (valueJpy != null && Number.isFinite(valueJpy)) return { source, cached: priceCacheEntryForCard(card, source), valueJpy };
+  }
+  return null;
+}
+
+function selectedPriceUpdatedAtForCard(card) {
+  const selected = selectedPriceEntry(card);
+  if (selected?.cached?.updatedAt) return Number(selected.cached.updatedAt);
+  if (priceSourceOrder().includes("cardtrader")) return cardTraderPriceUpdatedAtForCard(card);
+  return 0;
+}
+
 function setPriceCacheEntry(card, source, entry) {
   state.priceCache = state.priceCache || {};
   state.priceCache[priceCacheKeyForCard(card, source)] = entry;
@@ -603,6 +644,10 @@ function wisdomGuildPriceUpdatedAtForCard(card) {
   return priceCacheUpdatedAtForCard(card, "wisdom-guild");
 }
 
+function manualPriceUpdatedAtForCard(card) {
+  return priceCacheUpdatedAtForCard(card, "manual");
+}
+
 function usdPriceOf(card) {
   const cached = priceCacheEntryForCard(card, "cardtrader");
   if (cached?.valueUsd != null) return Number(cached.valueUsd);
@@ -610,19 +655,15 @@ function usdPriceOf(card) {
   return value == null || value === "" ? null : Number(value);
 }
 function wisdomGuildJpyPriceOf(card) {
-  const cached = priceCacheEntryForCard(card, "wisdom-guild");
-  return cached?.valueJpy != null ? Number(cached.valueJpy) : null;
+  return priceCacheJpyValue(card, "wisdom-guild");
 }
 function cardTraderJpyPriceOf(card) {
-  const cached = priceCacheEntryForCard(card, "cardtrader");
-  if (String(cached?.currency || "").toUpperCase() === "JPY" && cached?.cents != null && Number.isFinite(Number(cached.cents))) return Number(cached.cents);
-  return cached?.valueJpy != null ? Number(cached.valueJpy) : null;
+  return priceCacheJpyValue(card, "cardtrader");
 }
 function selectedPriceSource(card) {
-  const wisdomGuild = priceCacheEntryForCard(card, "wisdom-guild");
-  if (wisdomGuild?.source) return wisdomGuild.source;
-  const cached = priceCacheEntryForCard(card, "cardtrader");
-  if (cached?.source) return cached.source;
+  const selected = selectedPriceEntry(card);
+  if (selected?.source) return selected.source;
+  if (!priceSourceOrder().includes("cardtrader")) return "";
   return card.finish === "foil" ? card.priceUsdFoilSource : card.finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
 }
 function selectedPriceUsesEnglish(card) {
@@ -631,10 +672,9 @@ function selectedPriceUsesEnglish(card) {
   return card.finish === "foil" ? card.priceUsdFoilFromEnglish === true : card.finish === "etched" ? card.priceUsdEtchedFromEnglish === true : card.priceUsdFromEnglish === true;
 }
 function yenValueOf(card) {
-  const wisdomGuildJpy = wisdomGuildJpyPriceOf(card);
-  if (wisdomGuildJpy != null) return wisdomGuildJpy * Number(card.quantity || 0);
-  const cardTraderJpy = cardTraderJpyPriceOf(card);
-  if (cardTraderJpy != null) return cardTraderJpy * Number(card.quantity || 0);
+  const selected = selectedPriceEntry(card);
+  if (selected) return selected.valueJpy * Number(card.quantity || 0);
+  if (!priceSourceOrder().includes("cardtrader")) return null;
   const usd = usdPriceOf(card);
   return usd != null && state.fx.usdJpy ? usd * state.fx.usdJpy * Number(card.quantity || 0) : null;
 }
@@ -647,7 +687,7 @@ function collectionPriceLabel(card, compact = false) {
   if (value == null) return compact ? "" : "参考価格なし";
   if (compact) return state.collectionPriceDisplayMode === "unit" ? `${formatYen(value)} / 枚` : formatYen(value);
   const source = selectedPriceSource(card);
-  const prefix = source === "wisdom-guild" ? "Wisdom Guild" : source === "cardtrader" ? (selectedPriceUsesEnglish(card) ? "CardTrader英語版参考" : "CardTrader") : selectedPriceUsesEnglish(card) ? "英語版参考" : "参考";
+  const prefix = source === "manual" ? "手動価格" : source === "wisdom-guild" ? "Wisdom Guild" : source === "cardtrader" ? (selectedPriceUsesEnglish(card) ? "CardTrader英語版参考" : "CardTrader") : selectedPriceUsesEnglish(card) ? "英語版参考" : "参考";
   return state.collectionPriceDisplayMode === "unit"
     ? `${prefix} ${formatYen(value)} / 枚`
     : `${prefix} ${formatYen(value)}`;
@@ -657,7 +697,9 @@ function cardPriceLabel(card) {
   const unit = unitYenValueOf(card);
   if (unit == null) return "参考価格なし";
   const selectedSource = selectedPriceSource(card);
-  const source = selectedSource === "wisdom-guild"
+  const source = selectedSource === "manual"
+    ? "手動価格"
+    : selectedSource === "wisdom-guild"
     ? "Wisdom Guild"
     : selectedSource === "cardtrader"
       ? selectedPriceUsesEnglish(card) ? "CardTrader英語版参考" : "CardTrader"
@@ -668,6 +710,7 @@ function cardPriceLabel(card) {
 function priceSourceDetailLabel(card) {
   const source = selectedPriceSource(card);
   const cached = source ? priceCacheEntryForCard(card, source) : null;
+  if (source === "manual") return cached?.note || "手動入力";
   if (source !== "wisdom-guild" || !cached) return "";
   const stock = Number(cached.stock || 0) > 0 ? `在庫${cached.stock}枚` : "在庫なし";
   const condition = cached.condition ? `状態${cached.condition}` : "";
@@ -741,6 +784,7 @@ function cardTraderRunResultHtml(stats) {
 }
 
 function updateCardTraderSettingsUi() {
+  if (els.priceSourceMode && document.activeElement !== els.priceSourceMode) els.priceSourceMode.value = priceSourceMode();
   if (els.cardTraderToken && document.activeElement !== els.cardTraderToken) {
     const currentValue = String(els.cardTraderToken.value || "").trim();
     if (cardTraderToken() && (!currentValue || currentValue === "********")) els.cardTraderToken.value = "********";
@@ -3453,16 +3497,22 @@ function updateCardOwnedActions() {
   const owned = selectedOwnedCard();
   const hidden = state.cardDialogMode === "deck" || !owned;
   if (els.favoriteCardButton) els.favoriteCardButton.hidden = true;
+  if (els.manualPricePanel) els.manualPricePanel.hidden = hidden;
+  if (els.manualPriceInput && owned && document.activeElement !== els.manualPriceInput) {
+    const manual = priceCacheEntryForCard(owned, "manual");
+    els.manualPriceInput.value = manual?.valueJpy != null ? String(Math.round(Number(manual.valueJpy))) : "";
+  }
+  if (els.clearManualPriceButton) els.clearManualPriceButton.disabled = hidden || !priceCacheEntryForCard(owned, "manual");
   els.deleteCardButton.hidden = hidden;
   if (els.refreshCardPriceButton) {
     els.refreshCardPriceButton.hidden = hidden;
     els.refreshCardPriceButton.disabled = hidden;
-    const updatedAt = owned ? (wisdomGuildPriceUpdatedAtForCard(owned) || cardTraderPriceUpdatedAtForCard(owned)) : 0;
+    const updatedAt = owned ? selectedPriceUpdatedAtForCard(owned) : 0;
     els.refreshCardPriceButton.textContent = updatedAt ? "価格を再取得" : "価格を取得";
   }
   if (!owned) { renderFavoriteGroupPanel(); return; }
   if (state.cardDialogMode === "collection" && els.cardActionStatus && !els.cardActionStatus.classList.contains("show")) {
-    const updatedAt = wisdomGuildPriceUpdatedAtForCard(owned) || cardTraderPriceUpdatedAtForCard(owned);
+    const updatedAt = selectedPriceUpdatedAtForCard(owned);
     const sourceDetail = priceSourceDetailLabel(owned);
     const message = updatedAt
       ? `参考価格：${cardPriceLabel(owned)}${sourceDetail ? `（${sourceDetail}）` : ""}（最終取得 ${new Date(updatedAt).toLocaleString("ja-JP")}）`
@@ -4185,6 +4235,14 @@ function saveExchangeRate() {
   showToast("円換算レートを保存しました");
 }
 
+function savePriceSourceMode() {
+  state.priceSourceMode = String(els.priceSourceMode?.value || "manual-wisdom-cardtrader");
+  localStorage.setItem(KEYS.priceSourceMode, state.priceSourceMode);
+  renderCollection();
+  updateCardOwnedActions();
+  showToast("価格表示に使う取得元を保存しました", { sticky: true });
+}
+
 function saveCardTraderToken() {
   const typed = String(els.cardTraderToken?.value || "").trim();
   if (!typed || typed === "********") { showToast("CardTrader APIトークンを入力してください"); return; }
@@ -4349,48 +4407,107 @@ function deleteSelectedOwned() {
   els.cardDialog.close();
 }
 
+function saveSelectedManualPrice() {
+  const card = selectedOwnedCard();
+  if (!card) return;
+  const rawPrice = String(els.manualPriceInput?.value || "").trim();
+  const price = rawPrice ? Number(rawPrice.replace(/[^\d.]/g, "")) : NaN;
+  if (!Number.isFinite(price) || price < 0) {
+    showInlineStatus(els.cardActionStatus, "手動価格は0円以上の数値で入力してください", { sticky: true });
+    return;
+  }
+  setPriceCacheEntry(card, "manual", {
+    source: "manual",
+    cardId: card.id || "",
+    scryfallId: card.scryfallId || "",
+    name: nameOf(card),
+    set: card.set || "",
+    setName: card.setName || "",
+    collectorNumber: card.collectorNumber || "",
+    language: priceCacheLanguage(card),
+    condition: normalizeCardCondition(card.condition),
+    finish: priceCacheFinish(card),
+    valueJpy: Math.round(price),
+    note: "手動入力",
+    updatedAt: Date.now(),
+  });
+  persist();
+  renderCollection();
+  updateCardOwnedActions();
+  showInlineStatus(els.cardActionStatus, `手動価格を保存しました：${cardPriceLabel(card)}`, { sticky: true });
+}
+
+function clearSelectedManualPrice() {
+  const card = selectedOwnedCard();
+  if (!card) return;
+  deletePriceCacheEntry(card, "manual");
+  if (els.manualPriceInput) els.manualPriceInput.value = "";
+  persist();
+  renderCollection();
+  updateCardOwnedActions();
+  showInlineStatus(els.cardActionStatus, "手動価格を削除しました。設定中の取得元に戻します。", { sticky: true });
+}
+
 async function refreshSelectedCardTraderPrice() {
   const card = selectedOwnedCard();
   if (!card) return;
   if (els.refreshCardPriceButton) els.refreshCardPriceButton.disabled = true;
-  deletePriceCacheEntry(card, "wisdom-guild");
-  state.wisdomGuild.lastError = "";
-  state.wisdomGuild.lastStats = null;
-  persist();
-  showInlineStatus(els.cardActionStatus, "Wisdom Guild価格を取得しています", { sticky: true });
-  await hydrateWisdomGuildPrices({ force: true, cards: [card], mode: "個別カード", silentToast: true });
-  const wisdomStats = state.wisdomGuild?.lastStats;
-  if (wisdomStats?.priced) {
-    const sourceDetail = priceSourceDetailLabel(card);
-    showInlineStatus(els.cardActionStatus, `Wisdom Guild価格を更新しました：${collectionPriceLabel(card)}${sourceDetail ? `（${sourceDetail}）` : ""}`, { sticky: true });
-  } else if (cardTraderToken()) {
-    card.cardTraderPriceUpdatedAt = 0;
-    deletePriceCacheEntry(card, "cardtrader");
-    state.cardTrader.lastError = "";
-    state.cardTrader.lastStats = null;
-    const setCode = String(card.set || "").toLowerCase();
-    const lookupSetCode = String(cardTraderLookupCard(card).set || "").toLowerCase();
-    [setCode, lookupSetCode].filter(Boolean).forEach(code => {
-      delete state.cardTrader.blueprintsBySet?.[code];
-      delete state.cardTrader.blueprintsUpdatedAt?.[code];
-    });
-    cardTraderMarketplaceCache = new Map();
-    persist();
-    showInlineStatus(els.cardActionStatus, "Wisdom Guildで見つからないためCardTrader価格を取得しています", { sticky: true });
-    await hydrateCardTraderPrices({ force: true, cards: [card], mode: "個別カード", silentToast: true });
-    const stats = state.cardTrader?.lastStats;
-    if (state.cardTrader?.lastError) {
-      showInlineStatus(els.cardActionStatus, `価格取得エラー：${state.cardTrader.lastError}`, { sticky: true });
-    } else if (stats?.priced) {
-      showInlineStatus(els.cardActionStatus, `CardTrader価格を更新しました：${collectionPriceLabel(card)}`, { sticky: true });
-    } else {
-      showInlineStatus(els.cardActionStatus, stats?.noBlueprint ? "CardTraderのカード版と紐付けできませんでした" : stats?.noProduct ? "Wisdom Guild / CardTraderに一致する出品がありませんでした" : "価格を取得できませんでした", { sticky: true });
-    }
-  } else if (state.wisdomGuild?.lastError) {
-    showInlineStatus(els.cardActionStatus, `価格取得エラー：${state.wisdomGuild.lastError}`, { sticky: true });
-  } else {
-    showInlineStatus(els.cardActionStatus, "Wisdom Guildに一致する出品がありませんでした", { sticky: true });
+  const sources = priceSourceOrder().filter(source => source !== "manual");
+  if (!sources.length) {
+    showInlineStatus(els.cardActionStatus, "手動価格のみを使用する設定です。手動価格欄から入力してください。", { sticky: true });
+    updateCardOwnedActions();
+    return;
   }
+  let lastMessage = "";
+  for (const source of sources) {
+    if (source === "wisdom-guild") {
+      deletePriceCacheEntry(card, "wisdom-guild");
+      state.wisdomGuild.lastError = "";
+      state.wisdomGuild.lastStats = null;
+      persist();
+      showInlineStatus(els.cardActionStatus, "Wisdom Guild価格を取得しています", { sticky: true });
+      await hydrateWisdomGuildPrices({ force: true, cards: [card], mode: "個別カード", silentToast: true });
+      const wisdomStats = state.wisdomGuild?.lastStats;
+      if (wisdomStats?.priced) {
+        const sourceDetail = priceSourceDetailLabel(card);
+        showInlineStatus(els.cardActionStatus, `Wisdom Guild価格を更新しました：${collectionPriceLabel(card)}${sourceDetail ? `（${sourceDetail}）` : ""}`, { sticky: true });
+        updateCardOwnedActions();
+        return;
+      }
+      lastMessage = state.wisdomGuild?.lastError ? `価格取得エラー：${state.wisdomGuild.lastError}` : "Wisdom Guildに一致する出品がありませんでした";
+    }
+    if (source === "cardtrader") {
+      if (!cardTraderToken()) {
+        lastMessage = "CardTrader APIトークンが未設定です";
+        continue;
+      }
+      card.cardTraderPriceUpdatedAt = 0;
+      deletePriceCacheEntry(card, "cardtrader");
+      state.cardTrader.lastError = "";
+      state.cardTrader.lastStats = null;
+      const setCode = String(card.set || "").toLowerCase();
+      const lookupSetCode = String(cardTraderLookupCard(card).set || "").toLowerCase();
+      [setCode, lookupSetCode].filter(Boolean).forEach(code => {
+        delete state.cardTrader.blueprintsBySet?.[code];
+        delete state.cardTrader.blueprintsUpdatedAt?.[code];
+      });
+      cardTraderMarketplaceCache = new Map();
+      persist();
+      showInlineStatus(els.cardActionStatus, "CardTrader価格を取得しています", { sticky: true });
+      await hydrateCardTraderPrices({ force: true, cards: [card], mode: "個別カード", silentToast: true });
+      const stats = state.cardTrader?.lastStats;
+      if (state.cardTrader?.lastError) {
+        lastMessage = `価格取得エラー：${state.cardTrader.lastError}`;
+      } else if (stats?.priced) {
+        showInlineStatus(els.cardActionStatus, `CardTrader価格を更新しました：${collectionPriceLabel(card)}`, { sticky: true });
+        updateCardOwnedActions();
+        return;
+      } else {
+        lastMessage = stats?.noBlueprint ? "CardTraderのカード版と紐付けできませんでした" : stats?.noProduct ? "CardTraderに一致する出品がありませんでした" : "価格を取得できませんでした";
+      }
+    }
+  }
+  showInlineStatus(els.cardActionStatus, lastMessage || "価格を取得できませんでした", { sticky: true });
   updateCardOwnedActions();
 }
 
@@ -6317,7 +6434,7 @@ function backupPayload() {
     priceCache: state.priceCache || {},
     fx: state.fx,
     favoriteGroups: state.favoriteGroups,
-    settings: { backgroundTheme: state.backgroundTheme },
+    settings: { backgroundTheme: state.backgroundTheme, priceSourceMode: priceSourceMode() },
   };
 }
 
@@ -6363,6 +6480,7 @@ async function importBackup(file) {
     if (data.settings?.backgroundTheme && BACKGROUND_THEMES[data.settings.backgroundTheme]) {
       applyBackgroundTheme(data.settings.backgroundTheme, { persist: true });
     }
+    if (data.settings?.priceSourceMode) state.priceSourceMode = data.settings.priceSourceMode;
     normalizeCollectionConditions();
     normalizeFavoriteGroups();
     renderFavoriteGroupOptions();
@@ -6440,10 +6558,13 @@ els.sortCollectionByType.addEventListener("click", () => applyCollectionSort("ty
 els.sortCollectionByValue.addEventListener("click", () => applyCollectionSort("value"));
 els.sortCollectionByUnitPrice.addEventListener("click", () => applyCollectionSort("unitPrice"));
 els.resetCollectionSort.addEventListener("click", resetCollectionSortOrder);
+els.priceSourceMode?.addEventListener("change", savePriceSourceMode);
 els.addCardButton.addEventListener("click", saveSelectedCardQuantity);
 els.addCardToDeckButton.addEventListener("click", addSelectedCardToDeck);
 els.favoriteCardButton?.addEventListener("click", toggleSelectedFavorite);
 els.refreshCardPriceButton?.addEventListener("click", refreshSelectedCardTraderPrice);
+els.saveManualPriceButton?.addEventListener("click", saveSelectedManualPrice);
+els.clearManualPriceButton?.addEventListener("click", clearSelectedManualPrice);
 els.deleteCardButton.addEventListener("click", deleteSelectedOwned);
 els.createFavoriteGroupButton?.addEventListener("click", createFavoriteGroup);
 els.manageFavoriteGroupsButton?.addEventListener("click", openFavoriteGroupManager);
