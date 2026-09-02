@@ -1,4 +1,4 @@
-const APP_VERSION = "v218";
+const APP_VERSION = "v219";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -1079,7 +1079,7 @@ const WISDOM_GUILD_PRICE_BASE = "https://wonder.wisdom-guild.net/price";
 const WISDOM_GUILD_SEARCH_BASE = "https://wonder.wisdom-guild.net/search.php";
 const WISDOM_GUILD_CORS_PROXY = "https://api.allorigins.win/raw?url=";
 const WISDOM_GUILD_READER_PROXY = "https://r.jina.ai/http://r.jina.ai/http://";
-const WISDOM_GUILD_PRICE_CACHE_VERSION = "wg-price-v2";
+const WISDOM_GUILD_PRICE_CACHE_VERSION = "wg-price-v3";
 
 function wisdomGuildStatusText() {
   const stats = state.wisdomGuild?.lastStats;
@@ -1202,6 +1202,43 @@ function textFromMarkdownCell(value) {
     .trim();
 }
 
+function normalizeWisdomGuildCardName(value) {
+  const text = String(value || "")
+    .replace(/\+/g, "%20")
+    .replace(/%27/gi, "'")
+    .replace(/%E2%80%99/gi, "'");
+  let decoded = text;
+  try {
+    decoded = decodeURIComponent(text);
+  } catch {
+    decoded = text.replace(/%20/g, " ");
+  }
+  return decoded
+    .replace(/[’`]/g, "'")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function wisdomGuildExpectedCardNames(card) {
+  return new Set([...wisdomGuildPriceNames(card), ...wisdomGuildSearchNames(card)].map(normalizeWisdomGuildCardName).filter(Boolean));
+}
+
+function wisdomGuildPriceLinkNames(value) {
+  const names = [];
+  const pattern = /wonder\.wisdom-guild\.net\/price\/([^)\s/?#]+)\/?/gi;
+  let match = null;
+  while ((match = pattern.exec(String(value || "")))) names.push(normalizeWisdomGuildCardName(match[1]));
+  return names.filter(Boolean);
+}
+
+function wisdomGuildCellsMatchCard(cells, card) {
+  const names = wisdomGuildPriceLinkNames(cells.join(" "));
+  if (!names.length) return true;
+  const expected = wisdomGuildExpectedCardNames(card);
+  return names.some(name => expected.has(name));
+}
+
 function chooseWisdomGuildPriceRow(rows, card) {
   const targetCondition = wisdomGuildConditionForCard(card);
   const byLowPrice = (a, b) => a.price - b.price;
@@ -1247,6 +1284,7 @@ function parseWisdomGuildMarkdownRows(text, card) {
     .map(cells => {
       const priceIndex = priceCellIndex(cells);
       if (priceIndex < 0) return null;
+      if (!wisdomGuildCellsMatchCard(cells.slice(0, priceIndex), card)) return null;
       const priceText = textFromMarkdownCell(cells[priceIndex]);
       if (!/^[\d,]+\s*円$/.test(priceText)) return null;
       const price = Number(priceText.replace(/[^\d]/g, ""));
@@ -1274,15 +1312,18 @@ function parseWisdomGuildCompactRows(text, card) {
   const targetLang = wisdomGuildLanguageForCard(card);
   const targetSet = String(card.set || "").toUpperCase();
   const normalized = String(text || "").replace(/\r?\n/g, " ").replace(/\s+/g, " ");
-  const pattern = /\[([^\]]+)\]\(http:\/\/wonder\.wisdom-guild\.net\/shop\/[^)]*\)\[[^\]]+\]\(http:\/\/wonder\.wisdom-guild\.net\/price\/[^)]*\)\*\*([\d,]+)\*\* 円\s*(.*?)\[売り場\]/g;
-  const detailPattern = /^(?:(\S+)\s+)?(ENG|JPN|FRA|DEU|ITA|SPA|POR|RUS|KOR|CHS|CHT)\s+(なし|\d+\s*枚)\s*(?:!\[[^\]]*\]\([^)]+\)\s*)?([A-Z]{1,2})?\s*$/;
+  const pattern = /\[([^\]]+)\]\(http:\/\/wonder\.wisdom-guild\.net\/shop\/[^)]*\)\[([^\]]+)\]\(http:\/\/wonder\.wisdom-guild\.net\/price\/([^)/\s?#]+)\/?\)\*\*([\d,]+)\*\* 円\s*(.*?)\[売り場\]/g;
+  const detailPattern = /^(?:(\S+)\s+)?(ENG|JPN|FRA|DEU|ITA|SPA|POR|RUS|KOR|CHS|CHT)\s+(なし|\d+\s*枚)\s*(?:!\[[^\]]*\]\([^)]+\)\s*)?([A-Z]{1,3}\+?)?\s*$/;
   const rows = [];
   let match = null;
   while ((match = pattern.exec(normalized))) {
-    const details = String(match[3] || "").trim();
+    const expected = wisdomGuildExpectedCardNames(card);
+    const linkedName = normalizeWisdomGuildCardName(match[3]);
+    if (linkedName && !expected.has(linkedName)) continue;
+    const details = String(match[5] || "").trim();
     const detail = details.match(detailPattern);
     if (!detail) continue;
-    const price = Number(String(match[2] || "").replace(/[^\d]/g, ""));
+    const price = Number(String(match[4] || "").replace(/[^\d]/g, ""));
     const set = String(detail[1] || "").trim().toUpperCase();
     const lang = String(detail[2] || "").trim().toUpperCase();
     const stockText = String(detail[3] || "").trim();
@@ -1320,6 +1361,8 @@ function parseWisdomGuildPriceRows(html, card) {
       const foil = /foil/i.test(iconHtml);
       const condition = String(cells[6]?.textContent || "").trim().toUpperCase();
       const shop = String(row.querySelector(".shopname")?.textContent || "").trim();
+      const priceLinks = [...row.querySelectorAll('a[href*="/price/"]')].map(link => link.href).filter(Boolean);
+      if (priceLinks.length && !wisdomGuildCellsMatchCard(priceLinks, card)) return null;
       if (!Number.isFinite(price) || price <= 0) return null;
       if (targetSet && set !== targetSet) return null;
       if (targetLang && lang && lang !== targetLang) return null;
