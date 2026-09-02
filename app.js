@@ -1,4 +1,4 @@
-const APP_VERSION = "v219";
+const APP_VERSION = "v220";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -560,11 +560,15 @@ function priceCacheEntryForCard(card, source = "cardtrader") {
   return state.priceCache?.[priceCacheKeyForCard(card, source)] || null;
 }
 
-function validPriceCacheEntryForCard(card, source = "cardtrader") {
+function priceCacheEntryNeedsRefresh(cached, source = "cardtrader") {
+  if (!cached) return true;
+  if (source === "wisdom-guild" && cached.cacheVersion !== WISDOM_GUILD_PRICE_CACHE_VERSION) return true;
+  return Date.now() - Number(cached.updatedAt || 0) > DAY_MS;
+}
+
+function priceCacheUpdatedAtForCard(card, source = "cardtrader") {
   const cached = priceCacheEntryForCard(card, source);
-  if (!cached) return null;
-  if (source === "wisdom-guild" && cached.cacheVersion !== WISDOM_GUILD_PRICE_CACHE_VERSION) return null;
-  return cached;
+  return Number(cached?.updatedAt || 0);
 }
 
 function setPriceCacheEntry(card, source, entry) {
@@ -596,7 +600,7 @@ function cardTraderPriceUpdatedAtForCard(card) {
 }
 
 function wisdomGuildPriceUpdatedAtForCard(card) {
-  return Number(validPriceCacheEntryForCard(card, "wisdom-guild")?.updatedAt || 0);
+  return priceCacheUpdatedAtForCard(card, "wisdom-guild");
 }
 
 function usdPriceOf(card) {
@@ -606,7 +610,7 @@ function usdPriceOf(card) {
   return value == null || value === "" ? null : Number(value);
 }
 function wisdomGuildJpyPriceOf(card) {
-  const cached = validPriceCacheEntryForCard(card, "wisdom-guild");
+  const cached = priceCacheEntryForCard(card, "wisdom-guild");
   return cached?.valueJpy != null ? Number(cached.valueJpy) : null;
 }
 function cardTraderJpyPriceOf(card) {
@@ -615,7 +619,7 @@ function cardTraderJpyPriceOf(card) {
   return cached?.valueJpy != null ? Number(cached.valueJpy) : null;
 }
 function selectedPriceSource(card) {
-  const wisdomGuild = validPriceCacheEntryForCard(card, "wisdom-guild");
+  const wisdomGuild = priceCacheEntryForCard(card, "wisdom-guild");
   if (wisdomGuild?.source) return wisdomGuild.source;
   const cached = priceCacheEntryForCard(card, "cardtrader");
   if (cached?.source) return cached.source;
@@ -663,9 +667,7 @@ function cardPriceLabel(card) {
 
 function priceSourceDetailLabel(card) {
   const source = selectedPriceSource(card);
-  const cached = source === "wisdom-guild"
-    ? validPriceCacheEntryForCard(card, source)
-    : source ? priceCacheEntryForCard(card, source) : null;
+  const cached = source ? priceCacheEntryForCard(card, source) : null;
   if (source !== "wisdom-guild" || !cached) return "";
   const stock = Number(cached.stock || 0) > 0 ? `在庫${cached.stock}枚` : "在庫なし";
   const condition = cached.condition ? `状態${cached.condition}` : "";
@@ -4082,7 +4084,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
   const candidates = sourceCards.filter(card =>
     wisdomGuildLanguageForCard(card) &&
     priceCacheFinish(card) !== "etched" &&
-    (force || !validPriceCacheEntryForCard(card, "wisdom-guild")?.updatedAt || Date.now() - Number(validPriceCacheEntryForCard(card, "wisdom-guild")?.updatedAt || 0) > DAY_MS)
+    (force || priceCacheEntryNeedsRefresh(priceCacheEntryForCard(card, "wisdom-guild"), "wisdom-guild"))
   );
   const stats = {
     mode: options.mode || "全量",
