@@ -1,4 +1,4 @@
-const APP_VERSION = "v223";
+const APP_VERSION = "v224";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3905,8 +3905,12 @@ function renderCollection() {
   const renderLimit = Math.max(COLLECTION_RENDER_LIMIT, Number(state.collectionRenderLimit || COLLECTION_RENDER_LIMIT));
   const visibleCards = cards.slice(0, renderLimit);
   const hasMore = visibleCards.length < cards.length;
+  const canCollapse = renderLimit > COLLECTION_RENDER_LIMIT;
   const loadMoreButton = hasMore
     ? `<button type="button" class="collection-load-more" data-collection-load-more>さらに表示（${visibleCards.length.toLocaleString("ja-JP")} / ${cards.length.toLocaleString("ja-JP")}）</button>`
+    : "";
+  const collapseButton = canCollapse
+    ? `<button type="button" class="collection-load-more collection-collapse" data-collection-collapse>表示を減らす（先頭${COLLECTION_RENDER_LIMIT.toLocaleString("ja-JP")}件に戻す）</button>`
     : "";
   if (imageMode) {
     els.collectionList.innerHTML = visibleCards.map(card => `
@@ -3914,7 +3918,7 @@ function renderCollection() {
         <img src="${esc(card.image)}" alt="" loading="lazy">
         <span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>
         ${collectionPriceDisplayValue(card) != null ? `<span class="collection-price-badge">${esc(collectionPriceLabel(card, true))}</span>` : ""}
-      </button>`).join("") + loadMoreButton;
+      </button>`).join("") + loadMoreButton + collapseButton;
   els.collectionList.querySelectorAll(".collection-image-card").forEach(button => {
     const card = state.collection.find(item => item.id === button.dataset.id);
     attachCollectionCardHandlers(button, card);
@@ -3934,7 +3938,7 @@ function renderCollection() {
       </button>
       <div class="item-actions"><button class="tiny move-owned-up" aria-label="${esc(nameOf(card))}を前へ移動" ${index === 0 ? "disabled" : ""}>↑</button><button class="tiny move-owned-down" aria-label="${esc(nameOf(card))}を後へ移動" ${index === cards.length - 1 ? "disabled" : ""}>↓</button><button class="tiny minus" aria-label="1枚減らす">−</button><span class="qty-pill">×${card.quantity}</span><button class="tiny plus" aria-label="1枚増やす">＋</button><button class="tiny favorite-owned ${card.favorite ? "active" : ""}" aria-label="${esc(nameOf(card))}を${card.favorite ? "お気に入りから外す" : "お気に入りに追加"}" aria-pressed="${card.favorite ? "true" : "false"}">${card.favorite ? "★" : "☆"}</button><button class="tiny delete-owned" aria-label="${esc(nameOf(card))}をコレクションから削除">削除</button></div>
     </article>`;
-  }).join("") + loadMoreButton;
+  }).join("") + loadMoreButton + collapseButton;
   els.collectionList.querySelectorAll(".list-item").forEach(row => {
     const card = state.collection.find(item => item.id === row.dataset.id);
     attachCollectionCardHandlers(row.querySelector(".collection-card-open"), card);
@@ -3955,6 +3959,10 @@ function resetCollectionRenderLimit() {
 function attachCollectionLoadMoreHandler() {
   els.collectionList.querySelector("[data-collection-load-more]")?.addEventListener("click", () => {
     state.collectionRenderLimit = Number(state.collectionRenderLimit || COLLECTION_RENDER_LIMIT) + COLLECTION_RENDER_LIMIT;
+    renderCollection();
+  });
+  els.collectionList.querySelector("[data-collection-collapse]")?.addEventListener("click", () => {
+    resetCollectionRenderLimit();
     renderCollection();
   });
 }
