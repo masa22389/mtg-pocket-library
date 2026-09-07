@@ -1,4 +1,4 @@
-const APP_VERSION = "v221";
+const APP_VERSION = "v222";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3469,6 +3469,7 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   state.cardVariants = variants;
   const sameVariant = variants.find(item => item.id === card.id) || variants[0] || card;
   selectVariant(sameVariant);
+  renderVariantGallery();
 }
 
 function ownedCardForVariant(card, preferredId = state.selectedOwnedId) {
@@ -3772,12 +3773,19 @@ function renderVariantGallery() {
   });
 }
 
+function updateVariantSelectionUi() {
+  const selectedId = state.selectedCard?.id || "";
+  els.cardVariants?.querySelectorAll(".variant-option[data-id]").forEach(button => {
+    button.classList.toggle("selected", Boolean(selectedId) && button.dataset.id === selectedId);
+  });
+}
+
 function selectVariant(card) {
   state.selectedCard = card;
   const owned = ownedCardForVariant(card);
   state.selectedOwnedId = owned?.id || null;
   renderSelectedVariant();
-  renderVariantGallery();
+  updateVariantSelectionUi();
 }
 
 function compactCard(card) {
@@ -6316,6 +6324,12 @@ function addSelectedCardToDeck() {
   showToast("選択したイラストをデッキに追加しました");
 }
 
+function stepSelectedCardQuantity(delta) {
+  if (!els.cardQuantity) return;
+  const current = Number(els.cardQuantity.value || 0);
+  els.cardQuantity.value = Math.max(0, current + delta);
+}
+
 async function searchDeckCards() {
   const query = els.deckGlobalSearch.value.trim();
   const filters = buildScryfallFilters(els.deckSearchColor.value, els.deckSearchMana.value, els.deckSearchType.value, els.deckSearchSet.value);
@@ -6601,8 +6615,10 @@ els.deleteManagedFavoriteGroup?.addEventListener("click", () => {
 els.newFavoriteGroupName?.addEventListener("keydown", event => {
   if (event.key === "Enter") { event.preventDefault(); createFavoriteGroup(); }
 });
-els.decrementQuantity.addEventListener("click", () => { els.cardQuantity.value = Math.max(0, Number(els.cardQuantity.value || 0) - 1); });
-els.incrementQuantity.addEventListener("click", () => { els.cardQuantity.value = Math.max(0, Number(els.cardQuantity.value || 0) + 1); });
+els.decrementQuantity.addEventListener("pointerdown", event => { event.preventDefault(); stepSelectedCardQuantity(-1); });
+els.incrementQuantity.addEventListener("pointerdown", event => { event.preventDefault(); stepSelectedCardQuantity(1); });
+els.decrementQuantity.addEventListener("click", event => { if (event.detail === 0) stepSelectedCardQuantity(-1); });
+els.incrementQuantity.addEventListener("click", event => { if (event.detail === 0) stepSelectedCardQuantity(1); });
 els.variantFilter.addEventListener("change", () => {
   state.variantRenderLimit = VARIANT_RENDER_LIMIT;
   renderVariantGallery();
