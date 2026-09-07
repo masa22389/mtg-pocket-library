@@ -1,7 +1,8 @@
-const APP_VERSION = "v222";
+const APP_VERSION = "v223";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
+const COLLECTION_RENDER_LIMIT = 96;
 const BACKGROUND_THEMES = {
   default: { label: "標準", bg: "#f2f4f1", pageBg: "linear-gradient(150deg,#f8f9f5 0,#eef3ef 48%,#f4f1e8 100%)", paper: "#fffdf8", surface: "#f0f3ee", surfaceStrong: "#eef3ef", surfacePanel: "#ffffff99", surfaceSoft: "#f8faf8", surfaceAccent: "#e7eee9", navBg: "#fffdf8ee", visualBg: "linear-gradient(135deg,#f7f1e4,#e6eef2)" },
   red: { label: "赤", bg: "#f5e9e7", pageBg: "linear-gradient(150deg,#fff8f7 0,#f3d5d2 50%,#f7ece8 100%)", paper: "#fff9f8", surface: "#f8e7e4", surfaceStrong: "#f4dedb", surfacePanel: "#fff7f5cc", surfaceSoft: "#fff6f5", surfaceAccent: "#efd1cd", navBg: "#fff8f7ee", visualBg: "linear-gradient(135deg,#fff5f3,#f0cfca)" },
@@ -36,6 +37,7 @@ const state = {
   sets: read(KEYS.sets, []),
   selectedCard: null,
   cardVariants: [],
+  collectionRenderLimit: COLLECTION_RENDER_LIMIT,
   cardDialogMode: "collection",
   variantCache: new Map(),
   selectedOwnedId: null,
@@ -3604,6 +3606,7 @@ function applyCollectionSort(mode) {
   state.collectionSortStack = stack.filter(item => item !== mode);
   if (!alreadyActive) state.collectionSortStack.push(mode);
   saveCollectionSortStack();
+  resetCollectionRenderLimit();
   renderCollection();
   showToast(`${collectionSortLabel(mode)}順を反映しました`);
 }
@@ -3611,6 +3614,7 @@ function applyCollectionSort(mode) {
 function resetCollectionSortOrder() {
   state.collectionSortStack = [];
   saveCollectionSortStack();
+  resetCollectionRenderLimit();
   renderCollection();
   showToast("コレクションのソートを初期化しました");
 }
@@ -3898,28 +3902,39 @@ function renderCollection() {
     return;
   }
   if (!cards.length) { els.collectionList.innerHTML = `<div class="empty">${state.collection.length ? "条件に合うカードがありません" : "検索から最初のカードを追加しましょう"}</div>`; return; }
+  const renderLimit = Math.max(COLLECTION_RENDER_LIMIT, Number(state.collectionRenderLimit || COLLECTION_RENDER_LIMIT));
+  const visibleCards = cards.slice(0, renderLimit);
+  const hasMore = visibleCards.length < cards.length;
+  const loadMoreButton = hasMore
+    ? `<button type="button" class="collection-load-more" data-collection-load-more>さらに表示（${visibleCards.length.toLocaleString("ja-JP")} / ${cards.length.toLocaleString("ja-JP")}）</button>`
+    : "";
   if (imageMode) {
-    els.collectionList.innerHTML = cards.map(card => `
+    els.collectionList.innerHTML = visibleCards.map(card => `
       <button type="button" class="collection-image-card" data-id="${card.id}" aria-label="${esc(nameOf(card))}の詳細を開く">
         <img src="${esc(card.image)}" alt="" loading="lazy">
         <span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>
         ${collectionPriceDisplayValue(card) != null ? `<span class="collection-price-badge">${esc(collectionPriceLabel(card, true))}</span>` : ""}
-      </button>`).join("");
+      </button>`).join("") + loadMoreButton;
   els.collectionList.querySelectorAll(".collection-image-card").forEach(button => {
     const card = state.collection.find(item => item.id === button.dataset.id);
     attachCollectionCardHandlers(button, card);
   });
+  attachCollectionLoadMoreHandler();
     return;
   }
   const visibleIds = cards.map(card => card.id);
-  els.collectionList.innerHTML = cards.map((card, index) => `
+  const indexById = new Map(cards.map((card, index) => [card.id, index]));
+  els.collectionList.innerHTML = visibleCards.map(card => {
+    const index = indexById.get(card.id) ?? 0;
+    return `
     <article class="list-item" data-id="${card.id}">
       <button class="collection-card-open" type="button" aria-label="${esc(nameOf(card))}の詳細を開く">
         <span class="collection-thumb-wrap"><img class="thumb" src="${esc(card.image)}" alt="" loading="lazy"><span class="collection-qty-badge">×${Number(card.quantity || 0)}</span></span>
         <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(normalizeCardCondition(card.condition))} · ${card.finish === "normal" ? "通常" : esc(card.finish)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${favoriteGroupNames(card).map(name => `<span class="chip">★ ${esc(name)}</span>`).join("")}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
       </button>
       <div class="item-actions"><button class="tiny move-owned-up" aria-label="${esc(nameOf(card))}を前へ移動" ${index === 0 ? "disabled" : ""}>↑</button><button class="tiny move-owned-down" aria-label="${esc(nameOf(card))}を後へ移動" ${index === cards.length - 1 ? "disabled" : ""}>↓</button><button class="tiny minus" aria-label="1枚減らす">−</button><span class="qty-pill">×${card.quantity}</span><button class="tiny plus" aria-label="1枚増やす">＋</button><button class="tiny favorite-owned ${card.favorite ? "active" : ""}" aria-label="${esc(nameOf(card))}を${card.favorite ? "お気に入りから外す" : "お気に入りに追加"}" aria-pressed="${card.favorite ? "true" : "false"}">${card.favorite ? "★" : "☆"}</button><button class="tiny delete-owned" aria-label="${esc(nameOf(card))}をコレクションから削除">削除</button></div>
-    </article>`).join("");
+    </article>`;
+  }).join("") + loadMoreButton;
   els.collectionList.querySelectorAll(".list-item").forEach(row => {
     const card = state.collection.find(item => item.id === row.dataset.id);
     attachCollectionCardHandlers(row.querySelector(".collection-card-open"), card);
@@ -3929,6 +3944,18 @@ function renderCollection() {
     row.querySelector(".minus").addEventListener("click", () => changeOwned(card, -1));
     row.querySelector(".favorite-owned").addEventListener("click", () => toggleFavorite(card));
     row.querySelector(".delete-owned").addEventListener("click", () => deleteOwned(card));
+  });
+  attachCollectionLoadMoreHandler();
+}
+
+function resetCollectionRenderLimit() {
+  state.collectionRenderLimit = COLLECTION_RENDER_LIMIT;
+}
+
+function attachCollectionLoadMoreHandler() {
+  els.collectionList.querySelector("[data-collection-load-more]")?.addEventListener("click", () => {
+    state.collectionRenderLimit = Number(state.collectionRenderLimit || COLLECTION_RENDER_LIMIT) + COLLECTION_RENDER_LIMIT;
+    renderCollection();
   });
 }
 
@@ -6535,7 +6562,7 @@ els.clearSearchFilters.addEventListener("click", () => {
   document.querySelectorAll("[data-search-color]").forEach(input => { input.checked = false; });
   updateAdvancedSearchSummary();
 });
-els.collectionFilter.addEventListener("input", renderCollection);
+els.collectionFilter.addEventListener("input", () => { resetCollectionRenderLimit(); renderCollection(); });
 els.openCollectionAdvanced?.addEventListener("click", () => {
   updateCollectionFilterSummary();
   els.collectionFilterDialog?.showModal();
@@ -6545,6 +6572,7 @@ els.collectionViewMode.value = state.collectionViewMode;
 els.collectionViewMode.addEventListener("change", () => {
   state.collectionViewMode = els.collectionViewMode.value;
   localStorage.setItem(KEYS.collectionViewMode, state.collectionViewMode);
+  resetCollectionRenderLimit();
   renderCollection();
 });
 if (els.collectionPriceDisplayMode) {
@@ -6552,18 +6580,20 @@ if (els.collectionPriceDisplayMode) {
   els.collectionPriceDisplayMode.addEventListener("change", () => {
     state.collectionPriceDisplayMode = els.collectionPriceDisplayMode.value;
     localStorage.setItem(KEYS.collectionPriceDisplayMode, state.collectionPriceDisplayMode);
+    resetCollectionRenderLimit();
     renderCollection();
   });
 }
 document.querySelectorAll("[data-collection-price-mode]").forEach(button => button.addEventListener("click", () => {
   state.collectionPriceDisplayMode = button.dataset.collectionPriceMode;
   localStorage.setItem(KEYS.collectionPriceDisplayMode, state.collectionPriceDisplayMode);
+  resetCollectionRenderLimit();
   renderCollection();
 }));
-[els.collectionColor, els.collectionMana, els.collectionType, els.collectionPriceFilter, els.collectionFavoriteGroup].filter(Boolean).forEach(filter => filter.addEventListener("change", renderCollection));
-els.collectionFavoritesOnly.addEventListener("change", renderCollection);
+[els.collectionColor, els.collectionMana, els.collectionType, els.collectionPriceFilter, els.collectionFavoriteGroup].filter(Boolean).forEach(filter => filter.addEventListener("change", () => { resetCollectionRenderLimit(); renderCollection(); }));
+els.collectionFavoritesOnly.addEventListener("change", () => { resetCollectionRenderLimit(); renderCollection(); });
 els.clearCollectionFilters.addEventListener("click", () => {
-  els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; renderCollection();
+  els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
 });
 els.sortCollectionByName.addEventListener("click", () => applyCollectionSort("name"));
 els.sortCollectionByColor.addEventListener("click", () => applyCollectionSort("color"));

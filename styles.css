@@ -231,3 +231,12 @@ body.deck-list-reordering {
     white-space: nowrap;
   }
 }
+
+.collection-load-more {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 44px;
+  background: #fff;
+  color: var(--green);
+  border: 1px solid var(--line);
+}
