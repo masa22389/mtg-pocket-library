@@ -1,4 +1,4 @@
-const APP_VERSION = "v231";
+const APP_VERSION = "v232";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4266,6 +4266,7 @@ function renderDecks() {
 }
 
 function newDeck() {
+  flushDeckTextSave();
   const now = Date.now();
   state.editingDeck = { id: uid(), name: "新しいデッキ", format: state.deckFormatFilter || "統率者戦", memo: "", entries: [], createdAt: now, updatedAt: now };
   els.deleteDeckButton.hidden = true;
@@ -4388,6 +4389,7 @@ async function importDeckFromTextFile(file) {
 }
 
 function openDeck(id) {
+  flushDeckTextSave();
   const deck = state.decks.find(item => item.id === id);
   ensureDeckDates(deck);
   state.editingDeck = structuredClone(deck);
@@ -4735,14 +4737,41 @@ function applyDeckFormFields() {
   if (els.deckDates) els.deckDates.textContent = `作成日 ${formatDeckDate(state.editingDeck.createdAt)}・更新日 ${formatDeckDate(state.editingDeck.updatedAt)}`;
 }
 
-function autoSaveEditingDeck() {
+let deckTextSaveTimer = null;
+let pendingDeckTextId = null;
+let deckTextComposing = false;
+let deckTextListDirty = false;
+
+function cancelDeckTextSave() {
+  clearTimeout(deckTextSaveTimer);
+  deckTextSaveTimer = null;
+  pendingDeckTextId = null;
+}
+
+function flushDeckTextSave() {
+  const id = pendingDeckTextId;
+  cancelDeckTextSave();
+  if (id && state.editingDeck?.id === id) autoSaveEditingDeck(false);
+}
+
+function scheduleDeckTextSave(event) {
+  if (!state.editingDeck) return;
+  pendingDeckTextId = state.editingDeck.id;
+  clearTimeout(deckTextSaveTimer);
+  if (deckTextComposing || event?.isComposing) return;
+  deckTextSaveTimer = setTimeout(flushDeckTextSave, 400);
+}
+
+function autoSaveEditingDeck(refreshList = true) {
+  cancelDeckTextSave();
   if (!state.editingDeck) return;
   applyDeckFormFields();
   const savedDeck = structuredClone(state.editingDeck);
   const index = state.decks.findIndex(item => item.id === savedDeck.id);
   if (index >= 0) state.decks[index] = savedDeck; else state.decks.unshift(savedDeck);
-  persist();
-  renderDecks();
+  persist(["decks"]);
+  if (refreshList) { renderDecks(); deckTextListDirty = false; }
+  else deckTextListDirty = true;
 }
 
 function syncCommanderOptions() {
@@ -5596,6 +5625,8 @@ function missingCount(deck) {
 }
 
 function saveDeck() {
+  cancelDeckTextSave();
+  deckTextListDirty = false;
   const deck = state.editingDeck;
   deck.name = els.deckName.value.trim() || "名称未設定のデッキ";
   deck.format = els.deckFormat.value;
@@ -5635,6 +5666,8 @@ function duplicateDeck() {
 
 function deleteDeck() {
   if (!confirm(`「${state.editingDeck.name}」を削除しますか？`)) return;
+  cancelDeckTextSave();
+  deckTextListDirty = false;
   state.decks = state.decks.filter(deck => deck.id !== state.editingDeck.id);
   persist(); els.deckDialog.close(); renderDecks(); showToast("デッキを削除しました");
 }
@@ -5841,8 +5874,18 @@ els.openDeckOwnedAdd.addEventListener("click", openDeckOwnedAddDialog);
 els.openDeckSearchAdd.addEventListener("click", openDeckSearchAddDialog);
 els.deckSearchAddDialog.addEventListener("close", resetDeckSearchAddForm);
 els.reorderDeckCards?.addEventListener("click", () => setDeckReorderMode(!deckReorderMode));
-els.deckName.addEventListener("input", autoSaveEditingDeck);
-els.deckMemo.addEventListener("input", autoSaveEditingDeck);
+for (const input of [els.deckName, els.deckMemo]) {
+  input.addEventListener("compositionstart", () => { deckTextComposing = true; clearTimeout(deckTextSaveTimer); });
+  input.addEventListener("compositionend", () => { deckTextComposing = false; scheduleDeckTextSave(); });
+  input.addEventListener("input", scheduleDeckTextSave);
+  input.addEventListener("blur", () => { deckTextComposing = false; flushDeckTextSave(); });
+}
+els.deckDialog.addEventListener("close", () => {
+  flushDeckTextSave();
+  if (deckTextListDirty) { renderDecks(); deckTextListDirty = false; }
+});
+window.addEventListener("pagehide", flushDeckTextSave);
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") flushDeckTextSave(); });
 els.deckFormat.addEventListener("change", () => { renderDeckEditor(); autoSaveEditingDeck(); });
 els.deckCardFilter.addEventListener("input", renderDeckEditor);
 els.openDeckOwnedAdvanced.addEventListener("click", () => {
