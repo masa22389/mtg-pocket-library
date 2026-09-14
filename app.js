@@ -1,17 +1,17 @@
-const APP_VERSION = "v224";
-const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1", cardTraderHighValueThreshold: "mtg-pocket.cardTraderHighValueThreshold.v1" };
+const APP_VERSION = "v231";
+const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
-const COLLECTION_RENDER_LIMIT = 96;
+const COLLECTION_RENDER_LIMIT = 50;
 const BACKGROUND_THEMES = {
-  default: { label: "標準", bg: "#f2f4f1", pageBg: "linear-gradient(150deg,#f8f9f5 0,#eef3ef 48%,#f4f1e8 100%)", paper: "#fffdf8", surface: "#f0f3ee", surfaceStrong: "#eef3ef", surfacePanel: "#ffffff99", surfaceSoft: "#f8faf8", surfaceAccent: "#e7eee9", navBg: "#fffdf8ee", visualBg: "linear-gradient(135deg,#f7f1e4,#e6eef2)" },
-  red: { label: "赤", bg: "#f5e9e7", pageBg: "linear-gradient(150deg,#fff8f7 0,#f3d5d2 50%,#f7ece8 100%)", paper: "#fff9f8", surface: "#f8e7e4", surfaceStrong: "#f4dedb", surfacePanel: "#fff7f5cc", surfaceSoft: "#fff6f5", surfaceAccent: "#efd1cd", navBg: "#fff8f7ee", visualBg: "linear-gradient(135deg,#fff5f3,#f0cfca)" },
-  orange: { label: "橙", bg: "#f5ece2", pageBg: "linear-gradient(150deg,#fff8f1 0,#f0d7bd 52%,#f8eee4 100%)", paper: "#fffaf4", surface: "#f7eadc", surfaceStrong: "#f2dec7", surfacePanel: "#fff8f0cc", surfaceSoft: "#fff7ef", surfaceAccent: "#edcfad", navBg: "#fff8f1ee", visualBg: "linear-gradient(135deg,#fff3e5,#edcda8)" },
-  yellow: { label: "黄", bg: "#f4f0dc", pageBg: "linear-gradient(150deg,#fffdf2 0,#eee4b7 50%,#f7f2dd 100%)", paper: "#fffdf4", surface: "#f5efd5", surfaceStrong: "#eee5be", surfacePanel: "#fffbedcc", surfaceSoft: "#fffbea", surfaceAccent: "#e9dda9", navBg: "#fffdf2ee", visualBg: "linear-gradient(135deg,#fff9dc,#e8dca5)" },
-  green: { label: "緑", bg: "#edf5ed", pageBg: "linear-gradient(150deg,#f8fff7 0,#d7eadb 50%,#eef7ed 100%)", paper: "#fbfff9", surface: "#e6f3e8", surfaceStrong: "#dceee0", surfacePanel: "#f7fff7cc", surfaceSoft: "#f6fff6", surfaceAccent: "#cfe5d4", navBg: "#f8fff7ee", visualBg: "linear-gradient(135deg,#f4fff0,#cfebd5)" },
-  blue: { label: "青", bg: "#edf3f8", pageBg: "linear-gradient(150deg,#f7fbff 0,#d7e6f3 50%,#edf4fa 100%)", paper: "#f8fcff", surface: "#e4f0f8", surfaceStrong: "#d9e9f5", surfacePanel: "#f5fbffcc", surfaceSoft: "#f4fbff", surfaceAccent: "#cfe0ef", navBg: "#f7fbffee", visualBg: "linear-gradient(135deg,#f2f9ff,#cfe2f2)" },
-  indigo: { label: "藍", bg: "#eceef7", pageBg: "linear-gradient(150deg,#f7f8ff 0,#d9ddf0 50%,#eef0fb 100%)", paper: "#fafaff", surface: "#e7eafb", surfaceStrong: "#dde1f4", surfacePanel: "#f7f8ffcc", surfaceSoft: "#f5f6ff", surfaceAccent: "#d1d6ee", navBg: "#f7f8ffee", visualBg: "linear-gradient(135deg,#f4f5ff,#d2d8f1)" },
-  violet: { label: "紫", bg: "#f2eaf5", pageBg: "linear-gradient(150deg,#fdf7ff 0,#ead8f0 50%,#f5ecf7 100%)", paper: "#fff9ff", surface: "#f4e6f8", surfaceStrong: "#eadcf1", surfacePanel: "#fdf6ffcc", surfaceSoft: "#fcf5ff", surfaceAccent: "#e2cfe9", navBg: "#fdf7ffee", visualBg: "linear-gradient(135deg,#fcf2ff,#e3cfeb)" },
+  default: { label: "標準", bg: "#f2f4f1", pageBg: "linear-gradient(150deg,#f8f9f5 0,#eef3ef 48%,#f4f1e8 100%)", paper: "#fffdf8", surface: "#f0f3ee", surfaceStrong: "#eef3ef", surfacePanel: "#ffffff99", surfaceSoft: "#f8faf8", surfaceAccent: "#e7eee9", navBg: "#fffdf8ee" },
+  red: { label: "赤", bg: "#f5e9e7", pageBg: "linear-gradient(150deg,#fff8f7 0,#f3d5d2 50%,#f7ece8 100%)", paper: "#fff9f8", surface: "#f8e7e4", surfaceStrong: "#f4dedb", surfacePanel: "#fff7f5cc", surfaceSoft: "#fff6f5", surfaceAccent: "#efd1cd", navBg: "#fff8f7ee" },
+  orange: { label: "橙", bg: "#f5ece2", pageBg: "linear-gradient(150deg,#fff8f1 0,#f0d7bd 52%,#f8eee4 100%)", paper: "#fffaf4", surface: "#f7eadc", surfaceStrong: "#f2dec7", surfacePanel: "#fff8f0cc", surfaceSoft: "#fff7ef", surfaceAccent: "#edcfad", navBg: "#fff8f1ee" },
+  yellow: { label: "黄", bg: "#f4f0dc", pageBg: "linear-gradient(150deg,#fffdf2 0,#eee4b7 50%,#f7f2dd 100%)", paper: "#fffdf4", surface: "#f5efd5", surfaceStrong: "#eee5be", surfacePanel: "#fffbedcc", surfaceSoft: "#fffbea", surfaceAccent: "#e9dda9", navBg: "#fffdf2ee" },
+  green: { label: "緑", bg: "#edf5ed", pageBg: "linear-gradient(150deg,#f8fff7 0,#d7eadb 50%,#eef7ed 100%)", paper: "#fbfff9", surface: "#e6f3e8", surfaceStrong: "#dceee0", surfacePanel: "#f7fff7cc", surfaceSoft: "#f6fff6", surfaceAccent: "#cfe5d4", navBg: "#f8fff7ee" },
+  blue: { label: "青", bg: "#edf3f8", pageBg: "linear-gradient(150deg,#f7fbff 0,#d7e6f3 50%,#edf4fa 100%)", paper: "#f8fcff", surface: "#e4f0f8", surfaceStrong: "#d9e9f5", surfacePanel: "#f5fbffcc", surfaceSoft: "#f4fbff", surfaceAccent: "#cfe0ef", navBg: "#f7fbffee" },
+  indigo: { label: "藍", bg: "#eceef7", pageBg: "linear-gradient(150deg,#f7f8ff 0,#d9ddf0 50%,#eef0fb 100%)", paper: "#fafaff", surface: "#e7eafb", surfaceStrong: "#dde1f4", surfacePanel: "#f7f8ffcc", surfaceSoft: "#f5f6ff", surfaceAccent: "#d1d6ee", navBg: "#f7f8ffee" },
+  violet: { label: "紫", bg: "#f2eaf5", pageBg: "linear-gradient(150deg,#fdf7ff 0,#ead8f0 50%,#f5ecf7 100%)", paper: "#fff9ff", surface: "#f4e6f8", surfaceStrong: "#eadcf1", surfacePanel: "#fdf6ffcc", surfaceSoft: "#fcf5ff", surfaceAccent: "#e2cfe9", navBg: "#fdf7ffee" },
 };
 const BACKGROUND_THEME_CHROME = {
   default: { green: "#173f35", green2: "#256453", gold: "#c59746" },
@@ -38,6 +38,8 @@ const state = {
   selectedCard: null,
   cardVariants: [],
   collectionRenderLimit: COLLECTION_RENDER_LIMIT,
+  collectionPageSize: ["50", "100", "all"].includes(localStorage.getItem("mtg-pocket.collectionPageSize")) ? localStorage.getItem("mtg-pocket.collectionPageSize") : "50",
+  useScryfallPrices: localStorage.getItem("mtg-pocket.useScryfallPrices") !== "false",
   cardDialogMode: "collection",
   variantCache: new Map(),
   selectedOwnedId: null,
@@ -47,7 +49,6 @@ const state = {
   collectionSortStack: read(KEYS.collectionSortStack, []),
   deckFormatFilter: localStorage.getItem(KEYS.deckFormatFilter) || "",
   backgroundTheme: localStorage.getItem(KEYS.backgroundTheme) || "default",
-  cardTraderHighValueThreshold: localStorage.getItem(KEYS.cardTraderHighValueThreshold) || "10000",
   editingDeck: null,
   editingDeckEntry: null,
   deckMissingOpen: false,
@@ -76,15 +77,15 @@ const $ = selector => document.querySelector(selector);
 const els = {
   totalCards: $("#totalCards"), uniqueCards: $("#uniqueCards"), collectionValue: $("#collectionValue"), priceStatus: $("#priceStatus"), cardSearch: $("#cardSearch"),
   searchButton: $("#searchButton"), clearSearchResults: $("#clearSearchResults"), searchStatus: $("#searchStatus"), searchResults: $("#searchResults"),
-  ocrCameraInput: $("#ocrCameraInput"), ocrFileInput: $("#ocrFileInput"), ocrStatus: $("#ocrStatus"),
+
   searchMatch: $("#searchMatch"), searchColor: $("#searchColor"), searchMana: $("#searchMana"), searchType: $("#searchType"), searchSet: $("#searchSet"), searchSetIncludeExtras: $("#searchSetIncludeExtras"), clearSearchFilters: $("#clearSearchFilters"),
   collectionFilter: $("#collectionFilter"), collectionViewMode: $("#collectionViewMode"), collectionPriceDisplayMode: $("#collectionPriceDisplayMode"), openCollectionAdvanced: $("#openCollectionAdvanced"),
   collectionFilterDialog: $("#collectionFilterDialog"), closeCollectionAdvanced: $("#closeCollectionAdvanced"), collectionFilterSummary: $("#collectionFilterSummary"), collectionColor: $("#collectionColor"),
   collectionMana: $("#collectionMana"), collectionType: $("#collectionType"), collectionPriceFilter: $("#collectionPriceFilter"),
   collectionFavoritesOnly: $("#collectionFavoritesOnly"), collectionFavoriteGroup: $("#collectionFavoriteGroup"),
-  sortCollectionByName: $("#sortCollectionByName"), sortCollectionByColor: $("#sortCollectionByColor"),
-  sortCollectionByMana: $("#sortCollectionByMana"), sortCollectionByType: $("#sortCollectionByType"),
-  sortCollectionByValue: $("#sortCollectionByValue"), sortCollectionByUnitPrice: $("#sortCollectionByUnitPrice"),
+
+
+
   resetCollectionSort: $("#resetCollectionSort"), collectionSortStatus: $("#collectionSortStatus"),
   clearCollectionFilters: $("#clearCollectionFilters"), collectionList: $("#collectionList"), deckFormatFilter: $("#deckFormatFilter"), deckList: $("#deckList"), deckImportInput: $("#deckImportInput"),
   cardDialog: $("#cardDialog"), cardPreview: $("#cardPreview"), cardQuantity: $("#cardQuantity"),
@@ -112,9 +113,9 @@ const els = {
   deckGlobalSearchButton: $("#deckGlobalSearchButton"), deckGlobalSearchStatus: $("#deckGlobalSearchStatus"),
   deckSearchMatch: $("#deckSearchMatch"), deckSearchColor: $("#deckSearchColor"), deckSearchMana: $("#deckSearchMana"), deckSearchType: $("#deckSearchType"), deckSearchSet: $("#deckSearchSet"), deckSearchSetIncludeExtras: $("#deckSearchSetIncludeExtras"), clearDeckSearchFilters: $("#clearDeckSearchFilters"),
   deckGlobalSearchResults: $("#deckGlobalSearchResults"), deckCards: $("#deckCards"), duplicateDeckButton: $("#duplicateDeckButton"), deleteDeckButton: $("#deleteDeckButton"),
-  openDeckVisual: $("#openDeckVisual"), openDeckOneScreenVisual: $("#openDeckOneScreenVisual"), deckVisualDialog: $("#deckVisualDialog"), deckVisualTitle: $("#deckVisualTitle"),
-  deckVisualSummary: $("#deckVisualSummary"), deckVisualBoard: $("#deckVisualBoard"),
-  deckOneScreenVisualDialog: $("#deckOneScreenVisualDialog"), deckOneScreenTitle: $("#deckOneScreenTitle"), deckOneScreenSummary: $("#deckOneScreenSummary"), deckOneScreenBoard: $("#deckOneScreenBoard"),
+
+
+
   deckEntryDialog: $("#deckEntryDialog"), deckEntryVariantDialog: $("#deckEntryVariantDialog"), deckEntryImage: $("#deckEntryImage"), openDeckEntryVariants: $("#openDeckEntryVariants"), deckEntrySet: $("#deckEntrySet"),
   deckEntryName: $("#deckEntryName"), deckEntryOwned: $("#deckEntryOwned"), addDeckEntryToCollection: $("#addDeckEntryToCollection"), deckEntryCollectionStatus: $("#deckEntryCollectionStatus"), deckEntrySection: $("#deckEntrySection"),
   deckEntryVariants: $("#deckEntryVariants"), deckEntryVariantFilter: $("#deckEntryVariantFilter"), deckEntryVariantCount: $("#deckEntryVariantCount"),
@@ -125,11 +126,11 @@ const els = {
   decrementSideDeckEntry: $("#decrementSideDeckEntry"), incrementSideDeckEntry: $("#incrementSideDeckEntry"),
   decrementMaybeDeckEntry: $("#decrementMaybeDeckEntry"), incrementMaybeDeckEntry: $("#incrementMaybeDeckEntry"),
   decrementCommanderDeckEntry: $("#decrementCommanderDeckEntry"), incrementCommanderDeckEntry: $("#incrementCommanderDeckEntry"),
-  reorderDeckCards: $("#reorderDeckCards"), sortDeckByName: $("#sortDeckByName"), sortDeckByColor: $("#sortDeckByColor"), sortDeckByMana: $("#sortDeckByMana"), sortDeckByType: $("#sortDeckByType"),
+  reorderDeckCards: $("#reorderDeckCards"),
   usdJpyRate: $("#usdJpyRate"), saveFxButton: $("#saveFxButton"), fxHelp: $("#fxHelp"), priceSourceMode: $("#priceSourceMode"),
   refreshWisdomGuildPrices: $("#refreshWisdomGuildPrices"), wisdomGuildHelp: $("#wisdomGuildHelp"), wisdomGuildRunResultSummary: $("#wisdomGuildRunResultSummary"), wisdomGuildRunResultBody: $("#wisdomGuildRunResultBody"),
-  cardTraderToken: $("#cardTraderToken"), saveCardTraderToken: $("#saveCardTraderToken"), refreshCardTraderPrices: $("#refreshCardTraderPrices"), refreshHighValueCardTraderPrices: $("#refreshHighValueCardTraderPrices"),
-  clearCardTraderToken: $("#clearCardTraderToken"), cardTraderHelp: $("#cardTraderHelp"), cardTraderHighValueThreshold: $("#cardTraderHighValueThreshold"), cardTraderPriceLanguageMode: $("#cardTraderPriceLanguageMode"), cardTraderRunResultSummary: $("#cardTraderRunResultSummary"), cardTraderRunResultBody: $("#cardTraderRunResultBody"),
+  cardTraderToken: $("#cardTraderToken"), saveCardTraderToken: $("#saveCardTraderToken"), refreshCardTraderPrices: $("#refreshCardTraderPrices"),
+  clearCardTraderToken: $("#clearCardTraderToken"), cardTraderHelp: $("#cardTraderHelp"),  cardTraderPriceLanguageMode: $("#cardTraderPriceLanguageMode"), cardTraderRunResultSummary: $("#cardTraderRunResultSummary"), cardTraderRunResultBody: $("#cardTraderRunResultBody"),
   installButton: $("#installButton"), backupSummary: $("#backupSummary"), importInput: $("#importInput"), toast: $("#toast"),
   currentAppVersion: $("#currentAppVersion"), backgroundColorChoices: $("#backgroundColorChoices"), backgroundColorStatus: $("#backgroundColorStatus"),
 };
@@ -153,7 +154,7 @@ function applyBackgroundTheme(themeKey = state.backgroundTheme, options = {}) {
   const theme = BACKGROUND_THEMES[key];
   const chrome = BACKGROUND_THEME_CHROME[key] || BACKGROUND_THEME_CHROME.default;
   state.backgroundTheme = key;
-  ["bg", "pageBg", "paper", "surface", "surfaceStrong", "surfacePanel", "surfaceSoft", "surfaceAccent", "navBg", "visualBg"].forEach(name => {
+  ["bg", "pageBg", "paper", "surface", "surfaceStrong", "surfacePanel", "surfaceSoft", "surfaceAccent", "navBg"].forEach(name => {
     document.documentElement.style.setProperty(`--${name.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)}`, theme[name]);
   });
   ["green", "green2", "gold"].forEach(name => {
@@ -175,15 +176,12 @@ function read(key, fallback) {
   try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
 }
 
-function persist() {
-  localStorage.setItem(KEYS.collection, JSON.stringify(state.collection));
-  localStorage.setItem(KEYS.decks, JSON.stringify(state.decks));
-  localStorage.setItem(KEYS.fx, JSON.stringify(state.fx));
-  localStorage.setItem(KEYS.priceCache, JSON.stringify(state.priceCache || {}));
-  localStorage.setItem(KEYS.cardTrader, JSON.stringify(state.cardTrader));
-  localStorage.setItem(KEYS.wisdomGuild, JSON.stringify(state.wisdomGuild));
-  localStorage.setItem(KEYS.favoriteGroups, JSON.stringify(state.favoriteGroups));
-  localStorage.setItem(KEYS.priceSourceMode, priceSourceMode());
+function persist(fields = ["collection", "decks", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups", "priceSourceMode"]) {
+  for (const field of fields) {
+    const value = field === "priceSourceMode" ? priceSourceMode()
+      : JSON.stringify(field === "priceCache" ? state.priceCache || {} : state[field]);
+    localStorage.setItem(KEYS[field], value);
+  }
 }
 
 function uid() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`; }
@@ -653,6 +651,8 @@ function manualPriceUpdatedAtForCard(card) {
 function usdPriceOf(card) {
   const cached = priceCacheEntryForCard(card, "cardtrader");
   if (cached?.valueUsd != null) return Number(cached.valueUsd);
+  const source = card.finish === "foil" ? card.priceUsdFoilSource : card.finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
+  if (!state.useScryfallPrices && source !== "cardtrader") return null;
   const value = card.finish === "foil" ? card.priceUsdFoil : card.finish === "etched" ? card.priceUsdEtched : card.priceUsd;
   return value == null || value === "" ? null : Number(value);
 }
@@ -665,7 +665,7 @@ function cardTraderJpyPriceOf(card) {
 function selectedPriceSource(card) {
   const selected = selectedPriceEntry(card);
   if (selected?.source) return selected.source;
-  if (!priceSourceOrder().includes("cardtrader")) return "";
+  if (!priceSourceOrder().includes("cardtrader") || usdPriceOf(card) == null) return "";
   return card.finish === "foil" ? card.priceUsdFoilSource : card.finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
 }
 function selectedPriceUsesEnglish(card) {
@@ -705,7 +705,7 @@ function cardPriceLabel(card) {
     ? "Wisdom Guild"
     : selectedSource === "cardtrader"
       ? selectedPriceUsesEnglish(card) ? "CardTrader英語版参考" : "CardTrader"
-      : "参考";
+      : selectedSource === "scryfall" ? "Scryfall参考" : "参考";
   return `${source} ${formatYen(unit)} / 枚`;
 }
 
@@ -715,9 +715,9 @@ function priceSourceDetailLabel(card) {
   if (source === "manual") return cached?.note || "手動入力";
   if (source !== "wisdom-guild" || !cached) return "";
   const stock = Number(cached.stock || 0) > 0 ? `在庫${cached.stock}枚` : "在庫なし";
-  const condition = cached.condition ? `状態${cached.condition}` : "";
+  const condition = `取得元の状態：${cached.matchedCondition || "不明"}`;
   const fallback = cached.conditionFallback ? "状態参考" : "";
-  return [cached.shop, cached.set, cached.lang, condition, stock, fallback].filter(Boolean).join(" / ");
+  return [cached.shop, cached.matchedSet || cached.set, cached.matchedLanguage || cached.language, condition, stock, fallback].filter(Boolean).join(" / ");
 }
 function updateCollectionPriceModeUi() {
   document.querySelectorAll("[data-collection-price-mode]").forEach(button => {
@@ -739,7 +739,7 @@ function cardTraderToken() {
 function cardTraderStatusText() {
   const mode = cardTraderPriceLanguageMode();
   const modeText = mode === "english-reference" ? "日本語カードは英語版参考を優先" : mode === "strict-card-language" ? "カードの言語のみ" : "カードの言語を優先";
-  if (!cardTraderToken()) return `未設定の場合はScryfall価格を使用します。価格の言語：${modeText}`;
+  if (!cardTraderToken()) return `CardTrader未設定。Scryfall参考価格：${state.useScryfallPrices ? "有効（取得元設定に従う）" : "無効"}。価格の言語：${modeText}`;
   const stats = state.cardTrader?.lastStats;
   const statsText = stats
     ? `対象${stats.candidates || 0}件 / 価格更新${stats.priced || 0}件 / 出品なし${stats.noProduct || 0}件 / 紐付けなし${stats.noBlueprint || 0}件${stats.failedGroups ? ` / 失敗${stats.failedGroups}件` : ""}${stats.groupsTotal ? ` / ${stats.groupsDone || 0}/${stats.groupsTotal}処理` : ""}`
@@ -769,7 +769,6 @@ function cardTraderRunResultHtml(stats) {
     ["紐付けなし", `${stats.noBlueprint || 0}件`],
     ["処理セット", `${stats.groupsDone || 0}/${stats.groupsTotal || 0}`],
   ];
-  if (stats.threshold) rows.splice(1, 0, ["条件", `単価 ${formatYen(stats.threshold)} 以上`]);
   if (stats.failedGroups) rows.push(["失敗", `${stats.failedGroups}件`]);
   const exampleBlock = (title, values = []) => values.length
     ? `<div><b>${esc(title)}</b><ul>${values.slice(0, 8).map(value => `<li>${esc(value)}</li>`).join("")}</ul></div>`
@@ -791,9 +790,6 @@ function updateCardTraderSettingsUi() {
     const currentValue = String(els.cardTraderToken.value || "").trim();
     if (cardTraderToken() && (!currentValue || currentValue === "********")) els.cardTraderToken.value = "********";
     if (!cardTraderToken() && currentValue === "********") els.cardTraderToken.value = "";
-  }
-  if (els.cardTraderHighValueThreshold && document.activeElement !== els.cardTraderHighValueThreshold) {
-    els.cardTraderHighValueThreshold.value = state.cardTraderHighValueThreshold || "10000";
   }
   if (els.cardTraderPriceLanguageMode) els.cardTraderPriceLanguageMode.value = cardTraderPriceLanguageMode();
   if (els.cardTraderHelp) els.cardTraderHelp.textContent = cardTraderStatusText();
@@ -1550,6 +1546,9 @@ const JP_INDEX_BY_ORACLE_ID = new Map();
 const JP_INDEX_BY_EN_NAME = new Map();
 const JP_ALIAS_TARGETS_EXACT = new Map();
 const JP_ALIAS_TARGET_CACHE = new Map();
+// The bundled DB is immutable during a page session. Build these only on use.
+const JP_NORMALIZED_NAMES = new WeakMap();
+let jpItemsBySet = null;
 
 const SET_JA_NAMES = {
   spm: "マーベル スパイダーマン",
@@ -2273,395 +2272,6 @@ function renderBackupSummary() {
     <span><b>${esc(formatDateTime(lastExportedAt))}</b><small>最終バックアップ</small></span>`;
 }
 
-function setOcrStatus(message) {
-  if (els.ocrStatus) els.ocrStatus.textContent = message || "";
-}
-
-function loadScriptOnce(src, globalName) {
-  if (globalName && window[globalName]) return Promise.resolve(window[globalName]);
-  return new Promise((resolve, reject) => {
-    const existing = [...document.scripts].find(script => script.src === src);
-    if (existing) {
-      existing.addEventListener("load", () => resolve(globalName ? window[globalName] : true), { once: true });
-      existing.addEventListener("error", reject, { once: true });
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = src;
-    script.async = true;
-    script.onload = () => resolve(globalName ? window[globalName] : true);
-    script.onerror = () => reject(new Error("OCRエンジンを読み込めませんでした"));
-    document.head.appendChild(script);
-  });
-}
-
-async function loadOcrEngine() {
-  return loadScriptOnce("https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js", "Tesseract");
-}
-
-function cleanupOcrLine(line) {
-  return String(line || "")
-    .normalize("NFKC")
-    .replace(/[|{}[\]()<>]/g, " ")
-    .replace(/\s+/g, " ")
-    .replace(/^[0-9]+\s*x?\s+/i, "")
-    .replace(/\s+\d{1,2}$/g, "")
-    .trim();
-}
-
-function isLikelyCardNameLine(line) {
-  const text = cleanupOcrLine(line);
-  if (text.length < 2 || text.length > 70) return false;
-  const digitCount = (text.match(/\d/g) || []).length;
-  const hasJapanese = /[\u3040-\u30ff\u3400-\u9fff]/.test(text);
-  const meaningfulText = text.replace(/[ー－―‐‑‒–—一\s。、，,.・･/\\|!！?？:;#~〜＝=]+/g, "");
-  const kanaOrLatinCount = (meaningfulText.match(/[A-Za-z\u3040-\u30ff]/g) || []).length;
-  const cjkCount = (meaningfulText.match(/[\u3400-\u9fff]/g) || []).length;
-  const latinWords = text.match(/[A-Za-z]{2,}/g) || [];
-  if (meaningfulText.length < 2) return false;
-  if (kanaOrLatinCount === 0 && cjkCount < 2) return false;
-  if (!hasJapanese && !latinWords.some(word => word.length >= 4)) return false;
-  if (!hasJapanese && latinWords.length <= 3 && /^[A-Z]{2,5}$/.test(latinWords[latinWords.length - 1] || "")) return false;
-  if (!hasJapanese && digitCount >= 3) return false;
-  if (digitCount / Math.max(1, text.length) > 0.25) return false;
-  if (/^[0-9\s#・\-–—/.,:;]+$/.test(text)) return false;
-  if (/©|™|illus|illustrated|wizards|collector|not available/i.test(text)) return false;
-  if (/^[A-Z0-9]{2,6}\s*#?\d+[a-z]?$/i.test(text)) return false;
-  if (/\b(instant|sorcery|creature|artifact|enchantment|planeswalker|battle|land|legendary|basic)\b/i.test(text)) return false;
-  if (/(インスタント|ソーサリー|クリーチャー|アーティファクト|エンチャント|プレインズウォーカー|土地|バトル|伝説の|基本)/.test(text)) return false;
-  if (/(あなた|対象|ターン|戦場|墓地|カード|マナ|クリーチャー|呪文|プレイヤー|ライブラリー)/.test(text) && text.length > 12) return false;
-  return /[A-Za-z\u3040-\u30ff\u3400-\u9fff]/.test(text);
-}
-
-function ocrCardNameCandidates(text) {
-  const lines = String(text || "").split(/\n+/).map(cleanupOcrLine).filter(Boolean);
-  const candidates = [];
-  lines.forEach((line, index) => {
-    if (!isLikelyCardNameLine(line)) return;
-    const score = (index < 6 ? 8 - index : 1)
-      + (/[A-Z][a-z]+/.test(line) ? 2 : 0)
-      + (/[\u3040-\u30ff\u3400-\u9fff]/.test(line) ? 2 : 0)
-      - (line.split(" ").length > 6 ? 4 : 0);
-    candidates.push({ line, score });
-  });
-  return [...new Map(candidates.sort((a, b) => b.score - a.score).map(item => [item.line, item.line])).values()].slice(0, 5);
-}
-
-function normalizedOcrKey(value) {
-  return normalizeAliasKey(value)
-    .replaceAll(/ー/g, "")
-    .replaceAll(/[^\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-z0-9]/gu, "");
-}
-
-function ocrCandidateKeys(candidate) {
-  const text = String(candidate || "").normalize("NFKC");
-  const keys = new Set();
-  const fullKey = normalizedOcrKey(text);
-  if (fullKey.length >= 2) keys.add(fullKey);
-
-  const japaneseOnly = text
-    .replaceAll(/[^\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]/gu, "")
-    .replaceAll(/ー{2,}/g, "ー");
-  const japaneseKey = normalizedOcrKey(japaneseOnly);
-  if (japaneseKey.length >= 2) keys.add(japaneseKey);
-
-  const japaneseChunks = text.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]{2,}/gu) || [];
-  japaneseChunks.forEach(chunk => {
-    const key = normalizedOcrKey(chunk);
-    if (key.length >= 3) keys.add(key);
-  });
-
-  const latinChunks = text.match(/[A-Za-z][A-Za-z'’\- ]{3,}/g) || [];
-  latinChunks.forEach(chunk => {
-    const key = normalizedOcrKey(chunk);
-    if (key.length >= 4) keys.add(key);
-  });
-
-  return [...keys].sort((a, b) => b.length - a.length);
-}
-
-function levenshteinDistance(a, b, maxDistance = Infinity) {
-  if (a === b) return 0;
-  if (!a || !b) return Math.max(a.length, b.length);
-  if (Math.abs(a.length - b.length) > maxDistance) return maxDistance + 1;
-  let previous = Array.from({ length: b.length + 1 }, (_, index) => index);
-  for (let i = 1; i <= a.length; i += 1) {
-    const current = [i];
-    let rowMin = i;
-    for (let j = 1; j <= b.length; j += 1) {
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-      const value = Math.min(previous[j] + 1, current[j - 1] + 1, previous[j - 1] + cost);
-      current[j] = value;
-      rowMin = Math.min(rowMin, value);
-    }
-    if (rowMin > maxDistance) return maxDistance + 1;
-    previous = current;
-  }
-  return previous[b.length];
-}
-
-let OCR_SEARCH_TARGETS = null;
-function ocrSearchTargets() {
-  if (OCR_SEARCH_TARGETS) return OCR_SEARCH_TARGETS;
-  const targets = [];
-  const seen = new Set();
-  JP_CARD_SEARCH_INDEX.forEach(item => {
-    const displayName = displayJaNamesForIndexItem(item)[0] || item.scryfallName || item.enNames?.[0] || "";
-    const searchName = item.scryfallName || item.enNames?.[0] || displayName;
-    jpIndexNames(item).forEach(name => {
-      const cleanName = stripJapaneseReadings(name);
-      const key = normalizedOcrKey(cleanName);
-      if (key.length < 2) return;
-      const id = `${key}:${item.scryfallId || item.oracleId || searchName}`;
-      if (seen.has(id)) return;
-      seen.add(id);
-      targets.push({ key, name: cleanName, displayName, searchName, item });
-    });
-  });
-  OCR_SEARCH_TARGETS = targets;
-  return targets;
-}
-
-function scoreOcrTarget(candidateKey, targetKey) {
-  if (!candidateKey || !targetKey) return 0;
-  if (candidateKey === targetKey) return 1000;
-  if (candidateKey.length >= 2 && targetKey.includes(candidateKey)) return 850 + Math.min(candidateKey.length, 20);
-  if (targetKey.length >= 4 && candidateKey.includes(targetKey)) return 780 + Math.min(targetKey.length, 20);
-  if (candidateKey.length < 4 || targetKey.length < 4) return 0;
-  if (candidateKey[0] !== targetKey[0] && candidateKey.at(-1) !== targetKey.at(-1)) return 0;
-  const maxLen = Math.max(candidateKey.length, targetKey.length);
-  const maxDistance = Math.max(2, Math.floor(maxLen * 0.35));
-  const distance = levenshteinDistance(candidateKey, targetKey, maxDistance);
-  if (distance > maxDistance) return 0;
-  return Math.round((1 - (distance / maxLen)) * 700);
-}
-
-function ocrDbMatches(candidates, limit = 5) {
-  const scored = [];
-  const targets = ocrSearchTargets();
-  candidates.forEach((candidate, candidateIndex) => {
-    const candidateKeys = ocrCandidateKeys(candidate);
-    candidateKeys.forEach((candidateKey, keyIndex) => {
-      if (candidateKey.length < 2) return;
-      targets.forEach(target => {
-        const score = scoreOcrTarget(candidateKey, target.key) - candidateIndex * 10 - keyIndex * 3;
-        if (score < 520) return;
-        scored.push({ ...target, score, ocrText: candidate, matchedKey: candidateKey });
-      });
-    });
-  });
-  const unique = [];
-  const seen = new Set();
-  scored.sort((a, b) => b.score - a.score).forEach(item => {
-    const key = item.item?.oracleId || item.item?.scryfallName || item.searchName;
-    if (!key || seen.has(key)) return;
-    seen.add(key);
-    unique.push(item);
-  });
-  return unique.slice(0, limit);
-}
-
-function displayFragmentForOcrKey(matchedKey, matches) {
-  if (!matchedKey || !isJapanese(matchedKey)) return "";
-  const candidates = [];
-  matches.forEach(match => {
-    const names = [
-      match.name,
-      match.displayName,
-      ...(match.item?.jaNames || []),
-      ...(match.item?.jpNames || []),
-    ].filter(Boolean);
-    names.forEach(name => {
-      const cleanName = stripJapaneseReadings(name);
-      for (let start = 0; start < cleanName.length; start += 1) {
-        for (let end = start + 2; end <= cleanName.length; end += 1) {
-          const fragment = cleanName.slice(start, end).replace(/^[、，・\s/]+|[、，・\s/]+$/g, "");
-          if (fragment.length < 2 || !isJapanese(fragment)) continue;
-          if (normalizedOcrKey(fragment) !== matchedKey) continue;
-          candidates.push(fragment);
-        }
-      }
-    });
-  });
-  if (!candidates.length) return "";
-  return candidates
-    .sort((a, b) => {
-      const aHasLongMark = a.includes("ー") ? 1 : 0;
-      const bHasLongMark = b.includes("ー") ? 1 : 0;
-      if (aHasLongMark !== bHasLongMark) return bHasLongMark - aHasLongMark;
-      if (a.length !== b.length) return a.length - b.length;
-      return a.localeCompare(b, "ja");
-    })[0];
-}
-
-function loadImageFromFile(file) {
-  return new Promise((resolve, reject) => {
-    const url = URL.createObjectURL(file);
-    const image = new Image();
-    image.onload = () => {
-      URL.revokeObjectURL(url);
-      resolve(image);
-    };
-    image.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error("image load failed"));
-    };
-    image.src = url;
-  });
-}
-
-function clampNumber(value, min, max) {
-  return Math.max(min, Math.min(max, value));
-}
-
-async function preprocessOcrRegion(file, region = "title") {
-  const image = await loadImageFromFile(file);
-  const sourceWidth = image.naturalWidth || image.width;
-  const sourceHeight = image.naturalHeight || image.height;
-  if (!sourceWidth || !sourceHeight) return file;
-
-  const crop = {
-    titleStrip: { x: 0.055, y: 0.025, w: 0.79, h: 0.095 },
-    titleWide: { x: 0.035, y: 0.015, w: 0.93, h: 0.145 },
-    title: { x: 0.035, y: 0.015, w: 0.93, h: 0.22 },
-    upper: { x: 0, y: 0, w: 1, h: 0.45 },
-  }[region] || { x: 0, y: 0, w: 1, h: 0.28 };
-  const sx = Math.max(0, Math.floor(sourceWidth * crop.x));
-  const sy = Math.max(0, Math.floor(sourceHeight * crop.y));
-  const sw = Math.max(1, Math.min(sourceWidth - sx, Math.floor(sourceWidth * crop.w)));
-  const sh = Math.max(1, Math.min(sourceHeight - sy, Math.floor(sourceHeight * crop.h)));
-  const scale = clampNumber(2200 / sw, 3, 7);
-  const canvas = document.createElement("canvas");
-  canvas.width = Math.round(sw * scale);
-  canvas.height = Math.round(sh * scale);
-  const ctx = canvas.getContext("2d", { willReadFrequently: true });
-  if (!ctx) return file;
-
-  ctx.fillStyle = "#fff";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = "high";
-  ctx.drawImage(image, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
-
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const data = imageData.data;
-  for (let i = 0; i < data.length; i += 4) {
-    let gray = (data[i] * 0.299) + (data[i + 1] * 0.587) + (data[i + 2] * 0.114);
-    gray = clampNumber(((gray - 128) * 1.55) + 128, 0, 255);
-    if (gray > 238) gray = 255;
-    if (gray < 35) gray = 0;
-    data[i] = gray;
-    data[i + 1] = gray;
-    data[i + 2] = gray;
-  }
-  ctx.putImageData(imageData, 0, 0);
-
-  const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png"));
-  return blob || file;
-}
-
-async function recognizeOcrImage(Tesseract, image, label, pageSegMode = "6") {
-  const result = await Tesseract.recognize(image, "eng+jpn", {
-    tessedit_pageseg_mode: pageSegMode,
-    preserve_interword_spaces: "1",
-    logger: info => {
-      if (info.status === "recognizing text" && info.progress != null) {
-        setOcrStatus(`${label}を読み取り中…${Math.round(info.progress * 100)}%`);
-      }
-    },
-  });
-  return result?.data?.text || "";
-}
-
-function multiverseIdFromImageFile(file) {
-  const name = String(file?.name || "");
-  const match = name.match(/(?:^|[^\d])(\d{5,8})(?:[^\d]|$)/);
-  return match ? match[1] : "";
-}
-
-async function findCardByImageFileName(file) {
-  const multiverseId = multiverseIdFromImageFile(file);
-  if (!multiverseId) return null;
-  setOcrStatus(`画像ファイル名のID ${multiverseId} からカードを確認中…`);
-  try {
-    const response = await fetch(`https://api.scryfall.com/cards/multiverse/${encodeURIComponent(multiverseId)}`, {
-      headers: { Accept: "application/json" },
-    });
-    if (!response.ok) return null;
-    const card = await response.json();
-    const cardName = card.printed_name || card.name || "";
-    if (!cardName) return null;
-    return { card, cardName, multiverseId };
-  } catch {
-    return null;
-  }
-}
-
-async function readCardNameFromImage(file) {
-  if (!file) return;
-  if (!navigator.onLine) {
-    setOcrStatus("OCRエンジンの読み込みに通信が必要です");
-    return;
-  }
-  try {
-    const fileNameCard = await findCardByImageFileName(file);
-    if (fileNameCard) {
-      els.cardSearch.value = fileNameCard.cardName;
-      setOcrStatus(`ファイル名IDから候補: ${fileNameCard.cardName}。この名前で検索します`);
-      await searchCards();
-      return;
-    }
-    setOcrStatus("OCRエンジンを読み込み中…初回は少し時間がかかります");
-    const Tesseract = await loadOcrEngine();
-    setOcrStatus("カード名部分を切り出し中…");
-    const titleStripImage = await preprocessOcrRegion(file, "titleStrip");
-    const titleWideImage = await preprocessOcrRegion(file, "titleWide");
-    const titleImage = await preprocessOcrRegion(file, "title");
-    const upperImage = await preprocessOcrRegion(file, "upper");
-    const texts = [];
-    texts.push(await recognizeOcrImage(Tesseract, titleStripImage, "カード名欄", "7"));
-    let candidates = ocrCardNameCandidates(texts.join("\n"));
-    if (!candidates.length) {
-      texts.push(await recognizeOcrImage(Tesseract, titleWideImage, "カード名欄の周辺", "6"));
-      candidates = ocrCardNameCandidates(texts.join("\n"));
-    }
-    if (!candidates.length) {
-      texts.push(await recognizeOcrImage(Tesseract, titleImage, "カード上部", "6"));
-      candidates = ocrCardNameCandidates(texts.join("\n"));
-    }
-    if (!candidates.length) {
-      texts.push(await recognizeOcrImage(Tesseract, upperImage, "カード上半分", "6"));
-      candidates = ocrCardNameCandidates(texts.join("\n"));
-    }
-    if (!candidates.length) {
-      texts.push(await recognizeOcrImage(Tesseract, file, "画像全体", "6"));
-      candidates = ocrCardNameCandidates(texts.join("\n"));
-    }
-    if (!candidates.length) {
-      setOcrStatus("カード名を読み取れませんでした。カード名部分が大きく写るように撮り直してください");
-      return;
-    }
-    const dbMatches = ocrDbMatches(candidates);
-    const bestMatch = dbMatches[0];
-    if (bestMatch) {
-      const nearMatches = dbMatches.filter(item => item.score >= bestMatch.score - 8 && item.matchedKey === bestMatch.matchedKey);
-      const useFragmentSearch = isJapanese(bestMatch.matchedKey) && nearMatches.length >= 2;
-      const displayFragment = useFragmentSearch ? displayFragmentForOcrKey(bestMatch.matchedKey, nearMatches) : "";
-      const searchText = displayFragment || bestMatch.matchedKey;
-      els.cardSearch.value = useFragmentSearch ? searchText : bestMatch.searchName;
-      const matchLabels = dbMatches.map(item => item.displayName || item.searchName).filter(Boolean);
-      setOcrStatus(`読み取り候補: ${candidates.join(" / ")} → DB補正: ${matchLabels.join(" / ")}。${useFragmentSearch ? `断片「${searchText}」` : "先頭候補"}で検索します`);
-    } else {
-      els.cardSearch.value = candidates[0];
-      setOcrStatus(`読み取り候補: ${candidates.join(" / ")}。DB候補が弱いため、先頭候補で検索します`);
-    }
-    await searchCards();
-  } catch (error) {
-    console.error(error);
-    setOcrStatus("OCRに失敗しました。画像を選び直すか、カード名を手入力してください");
-  }
-}
-
 async function searchCards() {
   const query = els.cardSearch.value.trim();
   const rawSubtype = $("#searchSubtype")?.value.trim() || "";
@@ -3026,14 +2636,19 @@ function jpIndexNames(item) {
   return [...(item.jaNames || []), ...(item.enNames || []), item.scryfallName].filter(Boolean);
 }
 
+function jpIndexNormalizedNames(item) {
+  let names = JP_NORMALIZED_NAMES.get(item);
+  if (!names) {
+    names = jpIndexNames(item).map(normalizeAliasKey);
+    JP_NORMALIZED_NAMES.set(item, names);
+  }
+  return names;
+}
+
 function jpIndexMatchesQuery(item, query, exactMatch = false) {
   const needle = normalizeAliasKey(query);
   if (!needle) return true;
-  const names = jpIndexNames(item);
-  return names.some(name => {
-    const key = normalizeAliasKey(name);
-    return exactMatch ? key === needle : key.includes(needle);
-  });
+  return jpIndexNormalizedNames(item).some(key => exactMatch ? key === needle : key.includes(needle));
 }
 
 function jpIndexMatchesSetFilter(item) {
@@ -3052,10 +2667,9 @@ function localSearchIndexMatches(query, exactMatch = false, limit = 16) {
     // セット指定はScryfall側の set: 条件で絞り込む。
     // ローカルDBは「日本語名から英語名/Oracle IDへ解決する」役割に寄せることで、
     // 代表収録版が別セットにあるカードでも、古いセット指定検索で拾えるようにする。
-    if (!jpIndexMatchesQuery(item, query, exactMatch)) continue;
-    const names = jpIndexNames(item);
-    const score = names.reduce((best, name) => {
-      const key = normalizeAliasKey(name);
+    const names = jpIndexNormalizedNames(item);
+    if (needle && !names.some(key => exactMatch ? key === needle : key.includes(needle))) continue;
+    const score = names.reduce((best, key) => {
       if (!needle) return Math.max(best, 1);
       if (key === needle) return Math.max(best, 100);
       if (key.startsWith(needle)) return Math.max(best, 70);
@@ -3177,7 +2791,15 @@ function buildSearchCandidates(query, filters, preferredLang = "", exactMatch = 
 function localIndexItemsForSet(setCode) {
   const normalizedSet = String(resolveSetInput(setCode) || setCode || "").trim().toLocaleLowerCase("en");
   if (!normalizedSet) return [];
-  return JP_CARD_SEARCH_INDEX.filter(item => String(item.setCode || "").trim().toLocaleLowerCase("en") === normalizedSet);
+  if (!jpItemsBySet) {
+    jpItemsBySet = new Map();
+    for (const item of JP_CARD_SEARCH_INDEX) {
+      const key = String(item.setCode || "").trim().toLocaleLowerCase("en");
+      if (!jpItemsBySet.has(key)) jpItemsBySet.set(key, []);
+      jpItemsBySet.get(key).push(item);
+    }
+  }
+  return [...(jpItemsBySet.get(normalizedSet) || [])];
 }
 
 function hasLanguageFilter(filters) {
@@ -3514,14 +3136,8 @@ function updateCardOwnedActions() {
     els.refreshCardPriceButton.textContent = updatedAt ? "価格を再取得" : "価格を取得";
   }
   if (!owned) { renderFavoriteGroupPanel(); return; }
-  if (state.cardDialogMode === "collection" && els.cardActionStatus && !els.cardActionStatus.classList.contains("show")) {
-    const updatedAt = selectedPriceUpdatedAtForCard(owned);
-    const sourceDetail = priceSourceDetailLabel(owned);
-    const message = updatedAt
-      ? `参考価格：${cardPriceLabel(owned)}${sourceDetail ? `（${sourceDetail}）` : ""}（最終取得 ${new Date(updatedAt).toLocaleString("ja-JP")}）`
-      : "参考価格：未取得です。価格を取得できます。";
-    showInlineStatus(els.cardActionStatus, message, { sticky: true });
-  }
+  const priceDate = selectedPriceUpdatedAtForCard(owned);
+  $("#cardPriceSummary").textContent = `${cardPriceLabel(owned)} / ${priceSourceDetailLabel(owned)}${priceDate ? ` / 更新：${new Date(priceDate).toLocaleString("ja-JP")}` : ""}`;
   if (els.favoriteCardButton) {
     els.favoriteCardButton.classList.toggle("active", owned.favorite === true);
     els.favoriteCardButton.textContent = owned.favorite ? "★ お気に入り" : "☆ お気に入り";
@@ -3586,15 +3202,6 @@ function sortedCollectionCards(cards) {
 
 function updateCollectionSortUi() {
   const stack = Array.isArray(state.collectionSortStack) ? state.collectionSortStack : [];
-  const buttons = {
-    name: els.sortCollectionByName,
-    color: els.sortCollectionByColor,
-    mana: els.sortCollectionByMana,
-    type: els.sortCollectionByType,
-    value: els.sortCollectionByValue,
-    unitPrice: els.sortCollectionByUnitPrice,
-  };
-  Object.entries(buttons).forEach(([mode, button]) => button?.classList.toggle("active", stack.includes(mode)));
   els.collectionSortStatus.textContent = stack.length
     ? `ソート：${stack.map(collectionSortLabel).join(" → ")}`
     : "ソートなし";
@@ -3902,15 +3509,15 @@ function renderCollection() {
     return;
   }
   if (!cards.length) { els.collectionList.innerHTML = `<div class="empty">${state.collection.length ? "条件に合うカードがありません" : "検索から最初のカードを追加しましょう"}</div>`; return; }
-  const renderLimit = Math.max(COLLECTION_RENDER_LIMIT, Number(state.collectionRenderLimit || COLLECTION_RENDER_LIMIT));
+  const renderLimit = Math.max(collectionPageSize(), Number(state.collectionRenderLimit || collectionPageSize()));
   const visibleCards = cards.slice(0, renderLimit);
   const hasMore = visibleCards.length < cards.length;
-  const canCollapse = renderLimit > COLLECTION_RENDER_LIMIT;
+  const canCollapse = Number.isFinite(collectionPageSize()) && renderLimit > collectionPageSize();
   const loadMoreButton = hasMore
     ? `<button type="button" class="collection-load-more" data-collection-load-more>さらに表示（${visibleCards.length.toLocaleString("ja-JP")} / ${cards.length.toLocaleString("ja-JP")}）</button>`
     : "";
   const collapseButton = canCollapse
-    ? `<button type="button" class="collection-load-more collection-collapse" data-collection-collapse>表示を減らす（先頭${COLLECTION_RENDER_LIMIT.toLocaleString("ja-JP")}件に戻す）</button>`
+    ? `<button type="button" class="collection-load-more collection-collapse" data-collection-collapse>表示を減らす（先頭${collectionPageSize().toLocaleString("ja-JP")}件に戻す）</button>`
     : "";
   if (imageMode) {
     els.collectionList.innerHTML = visibleCards.map(card => `
@@ -3952,13 +3559,15 @@ function renderCollection() {
   attachCollectionLoadMoreHandler();
 }
 
+function collectionPageSize() { return state.collectionPageSize === "all" ? Infinity : Number(state.collectionPageSize) || 50; }
+
 function resetCollectionRenderLimit() {
-  state.collectionRenderLimit = COLLECTION_RENDER_LIMIT;
+  state.collectionRenderLimit = collectionPageSize();
 }
 
 function attachCollectionLoadMoreHandler() {
   els.collectionList.querySelector("[data-collection-load-more]")?.addEventListener("click", () => {
-    state.collectionRenderLimit = Number(state.collectionRenderLimit || COLLECTION_RENDER_LIMIT) + COLLECTION_RENDER_LIMIT;
+    state.collectionRenderLimit = Number(state.collectionRenderLimit || collectionPageSize()) + collectionPageSize();
     renderCollection();
   });
   els.collectionList.querySelector("[data-collection-collapse]")?.addEventListener("click", () => {
@@ -4005,17 +3614,17 @@ function applyCardMetadata(ownedCard, apiCard) {
   ownedCard.finishes = Array.isArray(apiCard.finishes) ? apiCard.finishes : ownedCard.finishes || [];
   ownedCard.foil = apiCard.foil === true;
   ownedCard.nonfoil = apiCard.nonfoil === true;
-  if (!keepCardTraderNormal) {
+  if (!keepCardTraderNormal && state.useScryfallPrices) {
     ownedCard.priceUsd = apiCard.prices?.usd || null;
     ownedCard.priceUsdSource = apiCard.prices?.usd ? "scryfall" : "";
     ownedCard.priceUsdFromEnglish = false;
   }
-  if (!keepCardTraderFoil) {
+  if (!keepCardTraderFoil && state.useScryfallPrices) {
     ownedCard.priceUsdFoil = apiCard.prices?.usd_foil || null;
     ownedCard.priceUsdFoilSource = apiCard.prices?.usd_foil ? "scryfall" : "";
     ownedCard.priceUsdFoilFromEnglish = false;
   }
-  if (!keepCardTraderEtched) {
+  if (!keepCardTraderEtched && state.useScryfallPrices) {
     ownedCard.priceUsdEtched = apiCard.prices?.usd_etched || null;
     ownedCard.priceUsdEtchedSource = apiCard.prices?.usd_etched ? "scryfall" : "";
     ownedCard.priceUsdEtchedFromEnglish = false;
@@ -4026,7 +3635,7 @@ function applyCardMetadata(ownedCard, apiCard) {
 }
 
 async function hydrateEnglishPriceFallbacks() {
-  if (!navigator.onLine) return;
+  if (!navigator.onLine || !state.useScryfallPrices) return;
   const candidates = state.collection.filter(card =>
     card.language === "ja" && card.set && card.collectorNumber &&
     (!card.englishPriceUpdatedAt || Date.now() - card.englishPriceUpdatedAt > DAY_MS) &&
@@ -4034,6 +3643,7 @@ async function hydrateEnglishPriceFallbacks() {
   const printings = [...new Map(candidates.map(card => [`${card.set}:${card.collectorNumber}`, card])).values()];
   let changed = false;
   for (const printing of printings) {
+    if (!state.useScryfallPrices) break;
     try {
       const set = encodeURIComponent(String(printing.set).toLowerCase());
       const number = encodeURIComponent(printing.collectorNumber);
@@ -4041,7 +3651,7 @@ async function hydrateEnglishPriceFallbacks() {
       const englishCard = response.ok ? await response.json() : null;
       state.collection.filter(card => card.language === "ja" && card.set === printing.set && card.collectorNumber === printing.collectorNumber).forEach(card => {
         card.englishPriceUpdatedAt = Date.now();
-        if (englishCard) {
+        if (englishCard && state.useScryfallPrices) {
           if (!card.priceUsd && englishCard.prices?.usd && card.priceUsdSource !== "cardtrader") { card.priceUsd = englishCard.prices.usd; card.priceUsdSource = "scryfall"; card.priceUsdFromEnglish = true; }
           if (!card.priceUsdFoil && englishCard.prices?.usd_foil && card.priceUsdFoilSource !== "cardtrader") { card.priceUsdFoil = englishCard.prices.usd_foil; card.priceUsdFoilSource = "scryfall"; card.priceUsdFoilFromEnglish = true; }
           if (!card.priceUsdEtched && englishCard.prices?.usd_etched && card.priceUsdEtchedSource !== "cardtrader") { card.priceUsdEtched = englishCard.prices.usd_etched; card.priceUsdEtchedSource = "scryfall"; card.priceUsdEtchedFromEnglish = true; }
@@ -4067,13 +3677,19 @@ async function hydrateCollectionMetadata() {
       });
       if (!response.ok) continue;
       const data = await response.json();
+      // Rebuild after each awaited request so edits made while fetching are respected.
+      const ownedByScryfallId = new Map();
+      for (const card of state.collection) {
+        if (!ownedByScryfallId.has(card.scryfallId)) ownedByScryfallId.set(card.scryfallId, []);
+        ownedByScryfallId.get(card.scryfallId).push(card);
+      }
       for (const apiCard of data.data) {
-        state.collection.filter(card => card.scryfallId === apiCard.id).forEach(card => applyCardMetadata(card, apiCard));
+        (ownedByScryfallId.get(apiCard.id) || []).forEach(card => applyCardMetadata(card, apiCard));
         changed = true;
       }
     } catch { /* 次回オンライン時に再試行 */ }
   }
-  if (changed) { persist(); renderCollection(); }
+  if (changed) { persist(["collection"]); renderCollection(); }
   await hydrateEnglishPriceFallbacks();
   await hydrateCardTraderPrices();
 }
@@ -4092,7 +3708,6 @@ async function hydrateCardTraderPrices(options = {}) {
   ));
   const stats = {
     mode: options.mode || (options.cards ? "指定カード" : "全量"),
-    threshold: options.threshold || 0,
     startedAt: Date.now(),
     finishedAt: 0,
     candidates: candidates.length,
@@ -4117,7 +3732,7 @@ async function hydrateCardTraderPrices(options = {}) {
   stats.inProgress = true;
   state.cardTrader.lastError = "";
   state.cardTrader.lastStats = stats;
-  persist();
+  persist(["collection", "priceCache", "cardTrader"]);
   updateCardTraderSettingsUi();
   let changed = false;
   for (const groupItems of groups.values()) {
@@ -4154,7 +3769,7 @@ async function hydrateCardTraderPrices(options = {}) {
     } finally {
       stats.groupsDone += 1;
       state.cardTrader.lastStats = { ...stats };
-      persist();
+      persist(["collection", "priceCache", "cardTrader"]);
       updateCardTraderSettingsUi();
     }
   }
@@ -4166,7 +3781,7 @@ async function hydrateCardTraderPrices(options = {}) {
     if (stats.failedGroups) showToast(`CardTrader価格取得：${stats.priced}件更新、一部失敗${stats.failedGroups}件`, { sticky: true });
     else showToast(`CardTrader価格取得：${stats.priced}件更新`, { sticky: true });
   }
-  if (changed || state.cardTrader.lastError || candidates.length === 0) { persist(); renderCollection(); }
+  if (changed || state.cardTrader.lastError || candidates.length === 0) { persist(["collection", "priceCache", "cardTrader"]); renderCollection(); }
   updateCardTraderSettingsUi();
 }
 
@@ -4194,7 +3809,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
   };
   state.wisdomGuild.lastError = "";
   state.wisdomGuild.lastStats = stats;
-  persist();
+  persist(["priceCache", "wisdomGuild"]);
   updateWisdomGuildSettingsUi();
   let changed = false;
   for (const card of candidates) {
@@ -4218,7 +3833,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
     } finally {
       stats.done += 1;
       state.wisdomGuild.lastStats = { ...stats };
-      persist();
+      persist(["priceCache", "wisdomGuild"]);
       updateWisdomGuildSettingsUi();
     }
     if (candidates.length > 1) await new Promise(resolve => setTimeout(resolve, 350));
@@ -4231,7 +3846,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
     if (stats.failed) showToast(`Wisdom Guild価格取得：${stats.priced}/${stats.candidates}件更新、一部失敗${stats.failed}件`, { sticky: true });
     else showToast(`Wisdom Guild価格取得：${stats.priced}/${stats.candidates}件更新、出品なし${stats.noProduct}件`, { sticky: true });
   }
-  if (changed || state.wisdomGuild.lastError || candidates.length === 0) { persist(); renderCollection(); }
+  if (changed || state.wisdomGuild.lastError || candidates.length === 0) { persist(["priceCache", "wisdomGuild"]); renderCollection(); }
   updateWisdomGuildSettingsUi();
 }
 
@@ -4246,7 +3861,7 @@ function refreshWisdomGuildPrices() {
 }
 
 async function refreshExchangeRate() {
-  if (!navigator.onLine || (state.fx.usdJpy && state.fx.rates?.EUR && Date.now() - state.fx.updatedAt < DAY_MS)) { renderCollection(); return; }
+  if (!navigator.onLine || (state.fx.usdJpy && state.fx.rates?.EUR && Date.now() - state.fx.updatedAt < DAY_MS)) return;
   const endpoints = [
     "https://api.frankfurter.dev/v1/latest?base=USD&symbols=JPY,EUR,GBP,CAD,AUD,CHF",
     "https://open.er-api.com/v6/latest/USD",
@@ -4261,20 +3876,20 @@ async function refreshExchangeRate() {
       const rate = Number(data.rates?.JPY || data.conversion_rates?.JPY || 0);
       if (!rate) continue;
       state.fx = { usdJpy: rate, rates: { ...(data.rates || data.conversion_rates || {}), USD: 1 }, updatedAt: Date.now(), source: "auto" };
-      persist(); renderCollection();
+      persist(["fx"]); renderCollection();
       return;
     } catch { /* 次の取得先を試す */ }
     finally { clearTimeout(timer); }
   }
   if (!state.fx.usdJpy) state.fx = { usdJpy: 150, rates: { USD: 1, JPY: 150 }, updatedAt: Date.now(), source: "fallback" };
-  persist(); renderCollection();
+  persist(["fx"]); renderCollection();
 }
 
 function saveExchangeRate() {
   const rate = Number(els.usdJpyRate.value || 0);
   if (!rate || rate <= 0) { showToast("正しい換算レートを入力してください"); return; }
   state.fx = { ...state.fx, usdJpy: rate, rates: { ...(state.fx.rates || {}), USD: 1, JPY: rate }, updatedAt: Date.now(), source: "manual" };
-  persist(); renderCollection();
+  persist(["fx"]); renderCollection();
   showToast("円換算レートを保存しました");
 }
 
@@ -4332,52 +3947,6 @@ function refreshCardTraderPrices() {
   updateCardTraderSettingsUi();
   showToast("CardTrader価格を取得しています", { sticky: true });
   hydrateCardTraderPrices({ force: true, mode: "全量" });
-}
-
-function saveCardTraderHighValueThreshold() {
-  const value = String(els.cardTraderHighValueThreshold?.value || "").trim();
-  const threshold = Math.max(0, Math.floor(Number(value || 0)));
-  state.cardTraderHighValueThreshold = threshold ? String(threshold) : "";
-  localStorage.setItem(KEYS.cardTraderHighValueThreshold, state.cardTraderHighValueThreshold);
-  return threshold;
-}
-
-function refreshHighValueCardTraderPrices() {
-  if (!cardTraderToken()) { showToast("CardTrader APIトークンを保存してください"); return; }
-  const threshold = saveCardTraderHighValueThreshold();
-  if (!threshold) { showToast("単価の下限を入力してください"); return; }
-  const cards = state.collection.filter(card => {
-    const unit = unitYenValueOf(card);
-    return unit != null && unit >= threshold;
-  });
-  if (!cards.length) {
-    state.cardTrader.lastStats = {
-      mode: "高額のみ",
-      threshold,
-      startedAt: Date.now(),
-      finishedAt: Date.now(),
-      candidates: 0,
-      priced: 0,
-      noBlueprint: 0,
-      noProduct: 0,
-      failedGroups: 0,
-      pricedExamples: [],
-      noBlueprintExamples: [],
-      noProductExamples: [],
-      errorExamples: [],
-    };
-    persist();
-    updateCardTraderSettingsUi();
-    showToast("条件に一致するカードがありません");
-    return;
-  }
-  cards.forEach(card => { card.cardTraderPriceUpdatedAt = 0; deletePriceCacheEntry(card, "cardtrader"); });
-  state.cardTrader.lastError = "";
-  cardTraderMarketplaceCache = new Map();
-  persist();
-  updateCardTraderSettingsUi();
-  showToast(`単価${formatYen(threshold)}以上のCardTrader価格を取得しています`, { sticky: true });
-  hydrateCardTraderPrices({ force: true, cards, mode: "高額のみ", threshold });
 }
 
 function clearCardTraderToken() {
@@ -4967,7 +4536,7 @@ function renderDeckMissingList() {
 }
 
 function deckTypeLabel(card) {
-  const group = deckVisualTypeGroup(card);
+  const group = deckTypeGroup(card);
   return group.key === "land" ? "土地" :
     group.key === "creature" ? "クリーチャー" :
     group.key === "instant" ? "インスタント" :
@@ -5443,7 +5012,7 @@ function attachDeckContentCardHandlers(button) {
   button.addEventListener("dragstart", event => event.preventDefault());
 }
 
-function deckVisualTypeGroup(card) {
+function deckTypeGroup(card) {
   const type = String(card?.typeLine || card?.type_line || "");
   if (type.includes("Land")) return { key: "land", label: "Land" };
   if (type.includes("Creature")) return { key: "creature", label: "Creature" };
@@ -5454,402 +5023,6 @@ function deckVisualTypeGroup(card) {
   if (type.includes("Sorcery")) return { key: "sorcery", label: "Sorcery" };
   if (type.includes("Battle")) return { key: "battle", label: "Battle" };
   return { key: "other", label: "Other" };
-}
-
-function renderVisualStack(entry) {
-  const card = cardForDeckEntry(entry);
-  const copies = Math.max(1, Math.min(8, Number(entry.quantity || 1)));
-  const layers = Array.from({ length: copies }, (_, index) => `<img src="${esc(card?.image || "")}" alt="" loading="lazy" style="--i:${index}">`).join("");
-  return `<div class="visual-stack" title="${esc(card ? nameOf(card) : "")} ×${entry.quantity}">
-    <div class="visual-stack-images">${layers}</div>
-    <span class="visual-stack-count">×${entry.quantity}</span>
-  </div>`;
-}
-
-function renderVisualSection(title, entries, className = "") {
-  const typeOrder = ["creature", "instant", "sorcery", "artifact", "enchantment", "planeswalker", "battle", "land", "other"];
-  const groups = new Map();
-  entries.forEach(entry => {
-    const group = deckVisualTypeGroup(cardForDeckEntry(entry));
-    if (!groups.has(group.key)) groups.set(group.key, { label: group.label, entries: [] });
-    groups.get(group.key).entries.push(entry);
-  });
-  const content = typeOrder.filter(key => groups.has(key)).map(key => {
-    const group = groups.get(key);
-    const total = group.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-    return `<section class="visual-type-column visual-type-${key}">
-      <div class="visual-type-title"><span>${group.label}</span><b>${total}</b></div>
-      <div class="visual-stack-row">${group.entries.map(renderVisualStack).join("")}</div>
-    </section>`;
-  }).join("");
-  return `<section class="visual-board-section ${className}">
-    <div class="visual-board-title"><span>${esc(title)}</span><b>${entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0)}</b></div>
-    ${entries.length ? content : '<div class="deck-section-empty">カードがありません</div>'}
-  </section>`;
-}
-
-function renderDeckVisualView() {
-  const deck = state.editingDeck;
-  if (!deck) return;
-  const mainEntries = deck.entries.filter(entry => entry.section === "main");
-  const sideEntries = deck.entries.filter(entry => entry.section === "side");
-  const commanderEntries = deck.entries.filter(entry => entry.section === "commander");
-  const maybeEntries = deck.entries.filter(entry => entry.section === "maybe");
-  const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-  els.deckVisualTitle.textContent = deck.name || "デッキ表示";
-  els.deckVisualSummary.textContent = `${deck.format}・${total}枚`;
-  els.deckVisualBoard.innerHTML = [
-    isCommanderDeck() && commanderEntries.length ? renderVisualSection("Commander", commanderEntries, "visual-commander") : "",
-    renderVisualSection("Main", mainEntries),
-    renderVisualSection("Sideboard", sideEntries, "visual-sideboard"),
-  ].join("");
-}
-
-function openDeckVisualView() {
-  renderDeckVisualView();
-  els.deckVisualDialog.showModal();
-}
-
-function renderOneScreenCard(entry, compact = false) {
-  const card = cardForDeckEntry(entry);
-  const qty = Math.max(1, Number(entry.quantity || 1));
-  const layers = Array.from({ length: Math.min(qty, compact ? 4 : 4) }, (_, index) => {
-    const src = imageOf(card) || card?.image || "";
-    return `<img src="${esc(src)}" alt="${esc(card ? nameOf(card) : "")}" loading="lazy" style="--i:${index}">`;
-  }).join("");
-  return `<div class="one-screen-card" title="${esc(card ? nameOf(card) : "")} ×${qty}">
-    <div class="one-screen-stack">${layers}</div>
-    <span class="one-screen-qty">×${qty}</span>
-  </div>`;
-}
-
-function oneScreenOrderedEntries(entries) {
-  const typeOrder = ["creature", "instant", "sorcery", "artifact", "enchantment", "planeswalker", "battle", "land", "other"];
-  return [...entries].sort((a, b) => {
-    const aIndex = typeOrder.indexOf(deckVisualTypeGroup(cardForDeckEntry(a)).key);
-    const bIndex = typeOrder.indexOf(deckVisualTypeGroup(cardForDeckEntry(b)).key);
-    if (aIndex !== bIndex) return aIndex - bIndex;
-    return String(nameOf(cardForDeckEntry(a))).localeCompare(String(nameOf(cardForDeckEntry(b))), "ja");
-  });
-}
-
-function renderOneScreenGrid(entries, compact = false) {
-  return `<div class="one-screen-grid">${oneScreenOrderedEntries(entries).map(entry => renderOneScreenCard(entry, compact)).join("")}</div>`;
-}
-
-function renderOneScreenPanel(title, entries, className = "", compact = false) {
-  const total = entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-  return `<section class="one-screen-panel ${className}">
-    <div class="one-screen-panel-title"><span>${esc(title)}</span><b>${total}</b></div>
-    ${entries.length ? renderOneScreenGrid(entries, compact) : '<div class="deck-section-empty">カードがありません</div>'}
-  </section>`;
-}
-
-function renderDeckOneScreenVisualView() {
-  const deck = state.editingDeck;
-  if (!deck) return;
-  const mainEntries = deck.entries.filter(entry => entry.section === "main");
-  const sideEntries = deck.entries.filter(entry => entry.section === "side");
-  const commanderEntries = deck.entries.filter(entry => entry.section === "commander");
-  const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-  els.deckOneScreenTitle.textContent = deck.name || "一画面表示";
-  els.deckOneScreenSummary.textContent = `${deck.format}・${total}枚`;
-  const mainContent = [
-    isCommanderDeck() && commanderEntries.length ? renderOneScreenPanel("Commander", commanderEntries, "one-screen-commander") : "",
-    renderOneScreenPanel("Main", mainEntries, "one-screen-main"),
-  ].join("");
-  els.deckOneScreenBoard.innerHTML = `
-    <div class="one-screen-left">${mainContent}</div>
-    <div class="one-screen-right">${renderOneScreenPanel("Sideboard", sideEntries, "one-screen-side", true)}</div>
-  `;
-}
-
-function openDeckOneScreenVisualView() {
-  renderDeckOneScreenVisualView();
-  els.deckOneScreenVisualDialog.showModal();
-}
-
-function deckVisualExportSections(deck = state.editingDeck) {
-  if (!deck) return [];
-  const sections = [];
-  const commanderEntries = deck.entries.filter(entry => entry.section === "commander");
-  const mainEntries = deck.entries.filter(entry => entry.section === "main");
-  const sideEntries = deck.entries.filter(entry => entry.section === "side");
-  if (isCommanderDeck(deck) && commanderEntries.length) sections.push({ title: "Commander", entries: commanderEntries });
-  sections.push({ title: "Main", entries: mainEntries });
-  if (sideEntries.length) sections.push({ title: "Sideboard", entries: sideEntries });
-  return sections;
-}
-
-function sanitizeDownloadName(name) {
-  return String(name || "deck").replace(/[\\/:*?"<>|]/g, "_").replace(/\s+/g, "_").slice(0, 80) || "deck";
-}
-
-function loadCanvasImage(src) {
-  return new Promise(resolve => {
-    if (!src) return resolve(null);
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.referrerPolicy = "no-referrer";
-    img.onload = () => resolve(img);
-    img.onerror = () => resolve(null);
-    img.src = src;
-  });
-}
-
-async function canvasSafeImageSource(src) {
-  if (!src) return "";
-  if (src.startsWith("data:") || src.startsWith("blob:")) return src;
-  try {
-    const response = await fetch(src, { mode: "cors", cache: "force-cache" });
-    if (!response.ok) throw new Error(`image fetch failed: ${response.status}`);
-    const blob = await response.blob();
-    return await new Promise(resolve => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(String(reader.result || ""));
-      reader.onerror = () => resolve("");
-      reader.readAsDataURL(blob);
-    });
-  } catch (error) {
-    console.warn("Visual export image fetch failed", src, error);
-    return src;
-  }
-}
-
-function roundRect(ctx, x, y, w, h, r) {
-  const radius = Math.min(r, w / 2, h / 2);
-  ctx.beginPath();
-  ctx.moveTo(x + radius, y);
-  ctx.arcTo(x + w, y, x + w, y + h, radius);
-  ctx.arcTo(x + w, y + h, x, y + h, radius);
-  ctx.arcTo(x, y + h, x, y, radius);
-  ctx.arcTo(x, y, x + w, y, radius);
-  ctx.closePath();
-}
-
-function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 2) {
-  const chars = String(text || "").split("");
-  const lines = [];
-  let line = "";
-  chars.forEach(ch => {
-    const next = line + ch;
-    if (ctx.measureText(next).width > maxWidth && line) {
-      lines.push(line);
-      line = ch;
-    } else {
-      line = next;
-    }
-  });
-  if (line) lines.push(line);
-  lines.slice(0, maxLines).forEach((part, index) => ctx.fillText(part, x, y + index * lineHeight));
-}
-
-function downloadTextFile(content, fileName, type) {
-  const blob = new Blob([content], { type });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-function deckVisualSvgText(deck, sectionLayouts, canvasW, canvasH, cardW, cardH, gap, margin, titleH, typeHeadH, captionH) {
-  const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-  const parts = [
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasW}" height="${canvasH}" viewBox="0 0 ${canvasW} ${canvasH}">`,
-    `<rect width="100%" height="100%" fill="#f7f3ea"/>`,
-    `<linearGradient id="head" x1="0" x2="1"><stop offset="0" stop-color="#123f35"/><stop offset="1" stop-color="#d6b254"/></linearGradient>`,
-    `<rect width="${canvasW}" height="${titleH + 22}" fill="url(#head)"/>`,
-    `<text x="${margin}" y="62" fill="#fff" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="42" font-weight="700">${esc(deck.name || "MTG Pocket Library Deck")}</text>`,
-    `<text x="${margin}" y="94" fill="#fff" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="22" font-weight="600">${esc(deck.format || "")} / ${total} cards</text>`,
-  ];
-  sectionLayouts.forEach(section => {
-    parts.push(`<rect x="${margin - 18}" y="${section.y}" width="${canvasW - margin * 2 + 36}" height="${section.height}" rx="24" fill="#fff"/>`);
-    const sectionTotal = section.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-    parts.push(`<text x="${margin}" y="${section.y + 34}" fill="#123f35" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="30" font-weight="800">${esc(section.title)} ${sectionTotal}</text>`);
-    let y = section.y + 46;
-    section.groupLayouts.forEach(group => {
-      const groupTotal = group.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-      parts.push(`<rect x="${margin - 4}" y="${y}" width="${canvasW - margin * 2 + 8}" height="34" rx="12" fill="#e9f1ed"/>`);
-      parts.push(`<text x="${margin + 10}" y="${y + 23}" fill="#123f35" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="20" font-weight="800">${esc(group.label)} ${groupTotal}</text>`);
-      y += typeHeadH + 12;
-      group.entries.forEach((entry, index) => {
-        const col = index % Math.max(1, Math.floor((canvasW - margin * 2 + gap) / (cardW + gap)));
-        const row = Math.floor(index / Math.max(1, Math.floor((canvasW - margin * 2 + gap) / (cardW + gap))));
-        const x = margin + col * (cardW + gap);
-        const cardY = y + row * (cardH + captionH + gap);
-        const card = cardForDeckEntry(entry);
-        const src = card?.image || imageOf(card);
-        parts.push(`<rect x="${x}" y="${cardY}" width="${cardW}" height="${cardH}" rx="12" fill="#d9dedb"/>`);
-        if (src) parts.push(`<image href="${esc(src)}" x="${x}" y="${cardY}" width="${cardW}" height="${cardH}" preserveAspectRatio="xMidYMid slice"/>`);
-        parts.push(`<rect x="${x}" y="${cardY}" width="${cardW}" height="${cardH}" rx="12" fill="none" stroke="#fff" stroke-width="4"/>`);
-        parts.push(`<rect x="${x + 8}" y="${cardY + 8}" width="48" height="34" rx="17" fill="#123f35"/>`);
-        parts.push(`<text x="${x + 32}" y="${cardY + 31}" text-anchor="middle" fill="#fff" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="18" font-weight="800">×${Number(entry.quantity || 0)}</text>`);
-        const title = esc(nameOf(card));
-        parts.push(`<text x="${x}" y="${cardY + cardH + 24}" fill="#1e2926" font-family="Segoe UI, Yu Gothic, sans-serif" font-size="19" font-weight="700">${title.length > 24 ? `${title.slice(0, 24)}...` : title}</text>`);
-      });
-      y += group.rows * (cardH + captionH + gap) + 10;
-    });
-  });
-  parts.push("</svg>");
-  return parts.join("");
-}
-
-async function downloadDeckVisualImage() {
-  const deck = state.editingDeck;
-  if (!deck) return;
-  const button = els.downloadDeckVisual;
-  const originalText = button?.textContent || "";
-  if (button) { button.disabled = true; button.textContent = "作成中..."; }
-  try {
-    const sections = deckVisualExportSections(deck);
-    const typeOrder = ["creature", "instant", "sorcery", "artifact", "enchantment", "planeswalker", "battle", "land", "other"];
-    const cardW = 220;
-    const cardH = Math.round(cardW * 680 / 488);
-    const gap = 28;
-    const margin = 52;
-    const titleH = 96;
-    const sectionHeadH = 46;
-    const typeHeadH = 30;
-    const captionH = 50;
-    const canvasW = 1800;
-    const columns = Math.max(1, Math.floor((canvasW - margin * 2 + gap) / (cardW + gap)));
-    const imageCache = new Map();
-    const sectionLayouts = [];
-    let canvasH = margin + titleH;
-    sections.forEach(section => {
-      const groups = new Map();
-      section.entries.forEach(entry => {
-        const card = cardForDeckEntry(entry);
-        const group = deckVisualTypeGroup(card);
-        if (!groups.has(group.key)) groups.set(group.key, { label: group.label, entries: [] });
-        groups.get(group.key).entries.push(entry);
-      });
-      const groupLayouts = typeOrder.filter(key => groups.has(key)).map(key => {
-        const group = groups.get(key);
-        const rows = Math.ceil(group.entries.length / columns) || 1;
-        const height = typeHeadH + rows * (cardH + captionH + gap) + 12;
-        return { ...group, key, rows, height };
-      });
-      const height = sectionHeadH + groupLayouts.reduce((sum, group) => sum + group.height, 0) + 32;
-      sectionLayouts.push({ ...section, groupLayouts, y: canvasH, height });
-      canvasH += height + 30;
-    });
-    canvasH = Math.max(900, canvasH + margin);
-    const svgText = deckVisualSvgText(deck, sectionLayouts, canvasW, canvasH, cardW, cardH, gap, margin, titleH, typeHeadH, captionH);
-    showToast("Visual View画像を作成中です");
-    const allCards = sections.flatMap(section => section.entries.map(entry => cardForDeckEntry(entry))).filter(Boolean);
-    let failedImageCount = 0;
-    await Promise.all(allCards.map(async card => {
-      const src = card?.image || imageOf(card);
-      if (!src) { failedImageCount += 1; return; }
-      if (imageCache.has(src)) return;
-      const safeSrc = await canvasSafeImageSource(src);
-      const img = await loadCanvasImage(safeSrc);
-      if (!img) failedImageCount += 1;
-      imageCache.set(src, img);
-    }));
-    if (failedImageCount > 0) {
-      downloadTextFile(svgText, `${sanitizeDownloadName(deck.name)}-visual.svg`, "image/svg+xml;charset=utf-8");
-      showToast("PNG用の画像取得に失敗したためSVGで保存しました");
-      return;
-    }
-    const canvas = document.createElement("canvas");
-    canvas.width = canvasW;
-    canvas.height = canvasH;
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#f7f3ea";
-    ctx.fillRect(0, 0, canvasW, canvasH);
-    const bg = ctx.createLinearGradient(0, 0, canvasW, 0);
-    bg.addColorStop(0, "#123f35");
-    bg.addColorStop(1, "#d6b254");
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, canvasW, titleH + 22);
-    ctx.fillStyle = "#fff";
-    ctx.font = "700 42px 'Segoe UI','Yu Gothic',sans-serif";
-    ctx.fillText(deck.name || "MTG Pocket Library Deck", margin, 62);
-    const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-    ctx.font = "600 22px 'Segoe UI','Yu Gothic',sans-serif";
-    ctx.fillText(`${deck.format || ""} / ${total} cards`, margin, 94);
-    sectionLayouts.forEach(section => {
-      ctx.fillStyle = "#ffffff";
-      roundRect(ctx, margin - 18, section.y, canvasW - margin * 2 + 36, section.height, 24);
-      ctx.fill();
-      ctx.fillStyle = "#123f35";
-      ctx.font = "800 30px 'Segoe UI','Yu Gothic',sans-serif";
-      const sectionTotal = section.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-      ctx.fillText(`${section.title}  ${sectionTotal}`, margin, section.y + 34);
-      let y = section.y + sectionHeadH;
-      section.groupLayouts.forEach(group => {
-        ctx.fillStyle = "#e9f1ed";
-        roundRect(ctx, margin - 4, y, canvasW - margin * 2 + 8, 34, 12);
-        ctx.fill();
-        ctx.fillStyle = "#123f35";
-        ctx.font = "800 20px 'Segoe UI','Yu Gothic',sans-serif";
-        const groupTotal = group.entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
-        ctx.fillText(`${group.label}  ${groupTotal}`, margin + 10, y + 23);
-        y += typeHeadH + 12;
-        group.entries.forEach((entry, index) => {
-          const col = index % columns;
-          const row = Math.floor(index / columns);
-          const x = margin + col * (cardW + gap);
-          const cardY = y + row * (cardH + captionH + gap);
-          const card = cardForDeckEntry(entry);
-          const src = card?.image || imageOf(card);
-          const img = imageCache.get(src);
-          ctx.fillStyle = "#d9dedb";
-          roundRect(ctx, x, cardY, cardW, cardH, 12);
-          ctx.fill();
-          if (img) {
-            ctx.save();
-            roundRect(ctx, x, cardY, cardW, cardH, 12);
-            ctx.clip();
-            ctx.drawImage(img, x, cardY, cardW, cardH);
-            ctx.restore();
-          }
-          ctx.strokeStyle = "#ffffff";
-          ctx.lineWidth = 4;
-          roundRect(ctx, x, cardY, cardW, cardH, 12);
-          ctx.stroke();
-          ctx.fillStyle = "#123f35";
-          roundRect(ctx, x + 8, cardY + 8, 44, 34, 17);
-          ctx.fill();
-          ctx.fillStyle = "#fff";
-          ctx.font = "800 18px 'Segoe UI','Yu Gothic',sans-serif";
-          ctx.textAlign = "center";
-          ctx.fillText(`×${Number(entry.quantity || 0)}`, x + 30, cardY + 31);
-          ctx.textAlign = "left";
-          ctx.fillStyle = "#1e2926";
-          ctx.font = "700 19px 'Segoe UI','Yu Gothic',sans-serif";
-          wrapCanvasText(ctx, nameOf(card), x, cardY + cardH + 24, cardW, 23, 2);
-        });
-        y += group.rows * (cardH + captionH + gap) + 10;
-      });
-    });
-    canvas.toBlob(blob => {
-      if (!blob) {
-        alert("画像の作成に失敗しました。カード画像の読み込み制限が原因の可能性があります。");
-        return;
-      }
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${sanitizeDownloadName(deck.name)}-visual.png`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      showToast("Visual View画像を保存しました");
-    }, "image/png");
-  } catch (error) {
-    console.error(error);
-    alert("画像の作成に失敗しました。カード画像の取得制限が原因の可能性があります。");
-  } finally {
-    if (button) { button.disabled = false; button.textContent = originalText || "画像保存"; }
-  }
 }
 
 function renderDeckEditor() {
@@ -5884,8 +5057,6 @@ function renderDeckEditor() {
   els.deckCards.querySelectorAll(".deck-content-card").forEach(button => {
     attachDeckContentCardHandlers(button);
   });
-  if (els.deckVisualDialog.open) renderDeckVisualView();
-  if (els.deckOneScreenVisualDialog?.open) renderDeckOneScreenVisualView();
 }
 
 function renderDeckOwnedAddDialog() {
@@ -6551,16 +5722,6 @@ els.searchButton.addEventListener("click", searchCards);
 els.clearSearchResults?.addEventListener("click", clearSearchResults);
 els.cardSearch.addEventListener("keydown", event => { if (event.key === "Enter") searchCards(); });
 els.searchSet.addEventListener("keydown", event => { if (event.key === "Enter") searchCards(); });
-els.ocrCameraInput?.addEventListener("change", async event => {
-  if (event.target.disabled) return;
-  await readCardNameFromImage(event.target.files?.[0]);
-  event.target.value = "";
-});
-els.ocrFileInput?.addEventListener("change", async event => {
-  if (event.target.disabled) return;
-  await readCardNameFromImage(event.target.files?.[0]);
-  event.target.value = "";
-});
 els.searchSetIncludeExtras?.addEventListener("change", renderSetSelects);
 els.clearSearchFilters.addEventListener("click", () => {
   els.searchMatch.value = "partial"; els.searchColor.value = ""; els.searchMana.value = ""; els.searchType.value = ""; els.searchSet.value = ""; if (els.searchSetIncludeExtras) els.searchSetIncludeExtras.checked = false; renderSetSelects();
@@ -6603,12 +5764,6 @@ els.collectionFavoritesOnly.addEventListener("change", () => { resetCollectionRe
 els.clearCollectionFilters.addEventListener("click", () => {
   els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
 });
-els.sortCollectionByName.addEventListener("click", () => applyCollectionSort("name"));
-els.sortCollectionByColor.addEventListener("click", () => applyCollectionSort("color"));
-els.sortCollectionByMana.addEventListener("click", () => applyCollectionSort("mana"));
-els.sortCollectionByType.addEventListener("click", () => applyCollectionSort("type"));
-els.sortCollectionByValue.addEventListener("click", () => applyCollectionSort("value"));
-els.sortCollectionByUnitPrice.addEventListener("click", () => applyCollectionSort("unitPrice"));
 els.resetCollectionSort.addEventListener("click", resetCollectionSortOrder);
 els.priceSourceMode?.addEventListener("change", savePriceSourceMode);
 els.addCardButton.addEventListener("click", saveSelectedCardQuantity);
@@ -6685,8 +5840,6 @@ els.backgroundColorChoices?.querySelectorAll("[data-background-theme]").forEach(
 els.openDeckOwnedAdd.addEventListener("click", openDeckOwnedAddDialog);
 els.openDeckSearchAdd.addEventListener("click", openDeckSearchAddDialog);
 els.deckSearchAddDialog.addEventListener("close", resetDeckSearchAddForm);
-els.openDeckVisual.addEventListener("click", openDeckVisualView);
-els.openDeckOneScreenVisual?.addEventListener("click", openDeckOneScreenVisualView);
 els.reorderDeckCards?.addEventListener("click", () => setDeckReorderMode(!deckReorderMode));
 els.deckName.addEventListener("input", autoSaveEditingDeck);
 els.deckMemo.addEventListener("input", autoSaveEditingDeck);
@@ -6739,10 +5892,6 @@ els.deckEntryDialog.querySelector(".dialog-close")?.addEventListener("click", ev
   state.editingDeckEntry = null;
   els.deckEntryDialog.close();
 });
-els.sortDeckByName.addEventListener("click", () => sortDeckEntries("name"));
-els.sortDeckByColor.addEventListener("click", () => sortDeckEntries("color"));
-els.sortDeckByMana.addEventListener("click", () => sortDeckEntries("mana"));
-els.sortDeckByType.addEventListener("click", () => sortDeckEntries("type"));
 $("#saveDeckButton").addEventListener("click", saveDeck);
 els.duplicateDeckButton.addEventListener("click", duplicateDeck);
 els.deleteDeckButton.addEventListener("click", deleteDeck);
@@ -6751,13 +5900,8 @@ els.saveFxButton.addEventListener("click", saveExchangeRate);
 els.refreshWisdomGuildPrices?.addEventListener("click", refreshWisdomGuildPrices);
 els.saveCardTraderToken?.addEventListener("click", saveCardTraderToken);
 els.refreshCardTraderPrices?.addEventListener("click", refreshCardTraderPrices);
-els.refreshHighValueCardTraderPrices?.addEventListener("click", refreshHighValueCardTraderPrices);
 els.clearCardTraderToken?.addEventListener("click", clearCardTraderToken);
 els.cardTraderPriceLanguageMode?.addEventListener("change", saveCardTraderPriceLanguageMode);
-els.cardTraderHighValueThreshold?.addEventListener("change", () => {
-  saveCardTraderHighValueThreshold();
-  updateCardTraderSettingsUi();
-});
 els.cardTraderToken?.addEventListener("focus", () => {
   if (els.cardTraderToken.value === "********") els.cardTraderToken.value = "";
 });
@@ -6790,4 +5934,22 @@ if ("serviceWorker" in navigator) window.addEventListener("load", async () => {
   }
 });
 if (normalizeCollectionConditions()) persist();
-renderSetSelects(); renderCollection(); renderDecks(); renderBackupSummary(); updateWisdomGuildSettingsUi(); updateCardTraderSettingsUi(); refreshExchangeRate(); hydrateCollectionMetadata(); hydrateSetOptions();
+resetCollectionRenderLimit(); renderSetSelects(); renderCollection(); renderDecks(); renderBackupSummary(); updateWisdomGuildSettingsUi(); updateCardTraderSettingsUi(); refreshExchangeRate(); hydrateCollectionMetadata(); hydrateSetOptions();
+
+$("#collectionPageSize").value = state.collectionPageSize;
+$("#collectionPageSize").addEventListener("change", event => {
+  state.collectionPageSize = event.target.value;
+  localStorage.setItem("mtg-pocket.collectionPageSize", state.collectionPageSize);
+  resetCollectionRenderLimit(); renderCollection();
+});
+$("#collectionSortMenu").addEventListener("change", event => { if (event.target.value) applyCollectionSort(event.target.value); event.target.value = ""; });
+$("#deckSortMenu").addEventListener("change", event => { if (event.target.value) sortDeckEntries(event.target.value); event.target.value = ""; });
+$("#useScryfallPrices").checked = state.useScryfallPrices;
+$("#useScryfallPrices").addEventListener("change", event => {
+  state.useScryfallPrices = event.target.checked;
+  localStorage.setItem("mtg-pocket.useScryfallPrices", String(state.useScryfallPrices));
+  renderCollection(); updateCardTraderSettingsUi();
+  if (state.selectedCard) updateCardOwnedActions();
+});
+$("#openCollectionGroupManager").addEventListener("click", openFavoriteGroupManager);
+$("#openSettingsGroupManager").addEventListener("click", openFavoriteGroupManager);
