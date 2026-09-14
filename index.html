@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=232">
+  <link rel="stylesheet" href="styles.css?v=235">
 </head>
 <body>
   <header class="app-header">
@@ -107,21 +107,12 @@
         <button id="clearButton" class="danger">すべてのデータを削除</button>
         <p class="version-note">現在のバージョン：<b id="currentAppVersion">読み込み中</b></p>
         <hr>
-        <h3>背景色</h3>
-        <div id="backgroundColorChoices" class="background-color-choices" role="group" aria-label="背景色を選択">
-          <button type="button" data-background-theme="default"><span class="background-swatch swatch-default"></span>標準</button>
-          <button type="button" data-background-theme="red"><span class="background-swatch swatch-red"></span>赤</button>
-          <button type="button" data-background-theme="orange"><span class="background-swatch swatch-orange"></span>橙</button>
-          <button type="button" data-background-theme="yellow"><span class="background-swatch swatch-yellow"></span>黄</button>
-          <button type="button" data-background-theme="green"><span class="background-swatch swatch-green"></span>緑</button>
-          <button type="button" data-background-theme="blue"><span class="background-swatch swatch-blue"></span>青</button>
-          <button type="button" data-background-theme="indigo"><span class="background-swatch swatch-indigo"></span>藍</button>
-          <button type="button" data-background-theme="violet"><span class="background-swatch swatch-violet"></span>紫</button>
-        </div>
+        <div class="background-setting-heading"><h3 id="backgroundColorHeading">背景色</h3><span id="backgroundColorStatus" class="muted" aria-live="polite">現在の背景色：標準</span></div>
+<details id="backgroundColorChoices" class="background-dropdown"><summary aria-labelledby="backgroundColorHeading backgroundSelectedLabel"><span id="backgroundSelectedSwatch" class="background-swatch swatch-default" aria-hidden="true"></span><span id="backgroundSelectedLabel">標準</span><span class="background-dropdown-arrow" aria-hidden="true">▾</span></summary><div class="background-dropdown-options"><button type="button" data-background-theme="default" aria-pressed="false"><span class="background-swatch swatch-default" aria-hidden="true"></span>標準</button><button type="button" data-background-theme="red" aria-pressed="false"><span class="background-swatch swatch-red" aria-hidden="true"></span>赤</button><button type="button" data-background-theme="orange" aria-pressed="false"><span class="background-swatch swatch-orange" aria-hidden="true"></span>橙</button><button type="button" data-background-theme="yellow" aria-pressed="false"><span class="background-swatch swatch-yellow" aria-hidden="true"></span>黄</button><button type="button" data-background-theme="green" aria-pressed="false"><span class="background-swatch swatch-green" aria-hidden="true"></span>緑</button><button type="button" data-background-theme="blue" aria-pressed="false"><span class="background-swatch swatch-blue" aria-hidden="true"></span>青</button><button type="button" data-background-theme="indigo" aria-pressed="false"><span class="background-swatch swatch-indigo" aria-hidden="true"></span>藍</button><button type="button" data-background-theme="violet" aria-pressed="false"><span class="background-swatch swatch-violet" aria-hidden="true"></span>紫</button></div></details>
         <hr>
         <h3>お気に入りグループ</h3>
         <button id="openSettingsGroupManager" type="button" class="ghost">グループ管理を開く</button>
-        <p id="backgroundColorStatus" class="muted">現在の背景色：標準</p>
+
         <hr>
         <details class="settings-details">
           <summary>価格取得設定</summary>
@@ -345,8 +336,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=232" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=232" defer></script>
-  <script src="app.js?v=232" defer></script>
+  <script src="mtg-jp-card-index.js?v=235" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=235" defer></script>
+  <script src="app.js?v=235" defer></script>
 </body>
 </html>

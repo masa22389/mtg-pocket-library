@@ -1,4 +1,4 @@
-const APP_VERSION = "v232";
+const APP_VERSION = "v235";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -162,11 +162,13 @@ function applyBackgroundTheme(themeKey = state.backgroundTheme, options = {}) {
   });
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", chrome.green);
   if (options.persist) localStorage.setItem(KEYS.backgroundTheme, key);
-  els.backgroundColorChoices?.querySelectorAll("[data-background-theme]").forEach(button => {
-    const active = button.dataset.backgroundTheme === key;
-    button.classList.toggle("active", active);
-    button.setAttribute("aria-pressed", active ? "true" : "false");
-  });
+  if (els.backgroundColorChoices) {
+    $("#backgroundSelectedLabel").textContent = theme.label;
+    $("#backgroundSelectedSwatch").className = `background-swatch swatch-${key}`;
+    els.backgroundColorChoices.querySelectorAll("[data-background-theme]").forEach(button => {
+      button.setAttribute("aria-pressed", String(button.dataset.backgroundTheme === key));
+    });
+  }
   if (els.backgroundColorStatus) els.backgroundColorStatus.textContent = `現在の背景色：${theme.label}`;
 }
 
@@ -5868,8 +5870,12 @@ els.deckFormatFilter.addEventListener("change", () => {
 });
 els.backgroundColorChoices?.querySelectorAll("[data-background-theme]").forEach(button => button.addEventListener("click", () => {
   applyBackgroundTheme(button.dataset.backgroundTheme, { persist: true });
-  showToast(`背景色を${BACKGROUND_THEMES[state.backgroundTheme].label}にしました`);
+  els.backgroundColorChoices.open = false;
+  els.backgroundColorChoices.querySelector("summary").focus();
 }));
+els.backgroundColorChoices?.addEventListener("keydown", event => {
+  if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); els.backgroundColorChoices.open = false; els.backgroundColorChoices.querySelector("summary").focus(); }
+});
 els.openDeckOwnedAdd.addEventListener("click", openDeckOwnedAddDialog);
 els.openDeckSearchAdd.addEventListener("click", openDeckSearchAddDialog);
 els.deckSearchAddDialog.addEventListener("close", resetDeckSearchAddForm);
