@@ -1,4 +1,4 @@
-const APP_VERSION = "v235";
+const APP_VERSION = "v236";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5191,7 +5191,6 @@ function openOwnedDeckCardEditor(cardId) {
   state.editingDeckEntry = existing
     ? { cardId: existing.cardId, section: existing.section }
     : { cardId, section: "main", draftCard: deckCardSnapshot(owned) };
-  if (els.deckOwnedAddDialog.open) els.deckOwnedAddDialog.close();
   renderDeckEntryEditor();
   els.deckEntryDialog.showModal();
 }
@@ -5430,8 +5429,7 @@ function setDeckEntrySectionQuantity(section, quantity) {
   const remaining = state.editingDeck.entries.filter(item => item.cardId === template.cardId);
   const active = remaining.find(item => item.section === section) || remaining[0] || null;
   state.editingDeckEntry = active ? { cardId: template.cardId, section: active.section } : { cardId: template.cardId, section, draftCard: template.card };
-  autoSaveEditingDeck();
-  renderDeckEditor();
+  scheduleDeckTextSave();
   renderDeckEntryEditor();
 }
 
@@ -5444,8 +5442,8 @@ function setDeckEntryQuantity(quantity) {
   const entry = currentDeckEntry();
   if (!entry) return;
   entry.quantity = Math.max(1, Number(quantity || 1));
-  autoSaveEditingDeck();
-  renderDeckEditor(); renderDeckEntryEditor();
+  scheduleDeckTextSave();
+  renderDeckEntryEditor();
 }
 
 function moveDeckEntrySection(section) {
@@ -5940,6 +5938,11 @@ els.deckEntryDialog.querySelector(".dialog-close")?.addEventListener("click", ev
   event.preventDefault();
   state.editingDeckEntry = null;
   els.deckEntryDialog.close();
+});
+els.deckEntryDialog.addEventListener("close", () => {
+  flushDeckTextSave();
+  state.editingDeckEntry = null;
+  if (state.editingDeck && els.deckDialog.open) renderDeckEditor();
 });
 $("#saveDeckButton").addEventListener("click", saveDeck);
 els.duplicateDeckButton.addEventListener("click", duplicateDeck);
