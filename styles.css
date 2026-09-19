@@ -257,3 +257,25 @@ body.deck-list-reordering {
 .background-setting-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.background-setting-heading h3{margin:0}.background-setting-heading #backgroundColorStatus{margin:0;font-size:12px}
 .background-dropdown{position:relative;border:1px solid var(--line);border-radius:14px;background:#fff}.background-dropdown summary{display:flex;align-items:center;gap:10px;min-height:44px;padding:10px 14px;cursor:pointer;list-style:none}.background-dropdown summary::-webkit-details-marker{display:none}.background-dropdown-arrow{margin-left:auto}.background-dropdown .background-swatch{display:inline-block;width:22px;height:22px}.background-dropdown-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:8px;border-top:1px solid var(--line)}.background-dropdown-options button{display:flex;align-items:center;justify-content:flex-start;gap:10px;background:#fff;color:var(--ink);border:1px solid var(--line);min-width:0}.background-dropdown-options button[aria-pressed="true"]{border-color:var(--green);background:var(--surface-accent)}
 #deckOwnedAddDialog .deck-owned-add-dialog>*,#deckOwnedAddDialog .deck-owned-favorite-group{flex-shrink:0} #deckOwnedAddDialog .deck-owned-favorite-group{display:grid;gap:6px;width:100%;max-width:none;margin:0} #deckOwnedAddDialog #deckOwnedFilterSummary{margin-top:4px}
+.price-settings-body{display:grid;gap:18px}
+.price-settings-section{display:grid;gap:12px;min-width:0}
+.price-settings-section h3,.price-provider-heading h4{margin:0}
+.price-setting-field{display:grid;gap:6px;min-width:0}
+.price-settings select,.price-settings input[type=password]{width:100%;min-width:0;max-width:100%;box-sizing:border-box}
+.price-settings .price-reference-toggle{display:flex;align-items:center;gap:9px;margin:0;cursor:pointer}
+.price-settings .price-reference-toggle input{width:18px;height:18px;min-height:18px;flex:0 0 18px;margin:0;padding:0;accent-color:var(--green)}
+.price-setting-note{margin:0;font-size:12px;line-height:1.6}
+.price-provider{display:grid;gap:10px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--paper);min-width:0}
+.price-provider-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.price-provider-heading button{flex:0 0 auto;min-height:40px;padding:8px 14px}
+.price-settings .settings-details summary{justify-content:flex-start;text-align:left;overflow-wrap:anywhere;white-space:normal;padding-top:10px;padding-bottom:10px}
+.price-settings .settings-details summary:before{flex:0 0 auto}
+.price-connection-body{display:grid;gap:12px}
+.price-token-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.price-result summary{font-size:12px}
+@media(max-width:400px){.price-settings select{font-size:12px;padding-left:8px;padding-right:22px}.price-provider{padding:10px}.price-provider-heading{gap:8px}.price-token-actions button{font-size:12px;padding:8px}}
+
+/* Contain gestures within modal dialogs, including nested deck editors. */
+html.dialog-scroll-locked{overflow:hidden;overscroll-behavior:none}
+html.dialog-scroll-locked body{position:fixed;top:var(--dialog-page-top);left:0;right:0;width:100%;overflow:hidden}
+dialog,dialog .dialog-card{overscroll-behavior-y:contain}

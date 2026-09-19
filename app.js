@@ -1,4 +1,4 @@
-const APP_VERSION = "v236";
+const APP_VERSION = "v241";
 const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -740,16 +740,16 @@ function cardTraderToken() {
 
 function cardTraderStatusText() {
   const mode = cardTraderPriceLanguageMode();
-  const modeText = mode === "english-reference" ? "日本語カードは英語版参考を優先" : mode === "strict-card-language" ? "カードの言語のみ" : "カードの言語を優先";
-  if (!cardTraderToken()) return `CardTrader未設定。Scryfall参考価格：${state.useScryfallPrices ? "有効（取得元設定に従う）" : "無効"}。価格の言語：${modeText}`;
+  const modeText = mode === "english-reference" ? "英語版を優先" : mode === "strict-card-language" ? "日本語版のみ" : "日本語版を優先";
+  if (!cardTraderToken()) return `CardTrader未設定。Scryfall参考価格：${state.useScryfallPrices ? "有効（取得元設定に従う）" : "無効"}。日本語版カードの価格：${modeText}`;
   const stats = state.cardTrader?.lastStats;
   const statsText = stats
     ? `対象${stats.candidates || 0}件 / 価格更新${stats.priced || 0}件 / 出品なし${stats.noProduct || 0}件 / 紐付けなし${stats.noBlueprint || 0}件${stats.failedGroups ? ` / 失敗${stats.failedGroups}件` : ""}${stats.groupsTotal ? ` / ${stats.groupsDone || 0}/${stats.groupsTotal}処理` : ""}`
     : "";
-  if (stats?.inProgress) return `CardTrader価格を取得中です。価格の言語：${modeText}。${statsText}`;
-  if (state.cardTrader?.lastError) return `CardTrader設定済み。価格の言語：${modeText}。直近の取得エラー：${state.cardTrader.lastError}${statsText ? `（${statsText}）` : ""}`;
-  if (state.cardTrader?.priceUpdatedAt) return `CardTrader設定済み。価格の言語：${modeText}。最終価格取得：${new Date(state.cardTrader.priceUpdatedAt).toLocaleString("ja-JP")}${statsText ? `（${statsText}）` : ""}`;
-  return `CardTrader設定済み。価格の言語：${modeText}。次回の価格更新で使用します。`;
+  if (stats?.inProgress) return `CardTrader価格を取得中です。日本語版カードの価格：${modeText}。${statsText}`;
+  if (state.cardTrader?.lastError) return `CardTrader設定済み。日本語版カードの価格：${modeText}。直近の取得エラー：${state.cardTrader.lastError}${statsText ? `（${statsText}）` : ""}`;
+  if (state.cardTrader?.priceUpdatedAt) return `CardTrader設定済み。日本語版カードの価格：${modeText}。最終価格取得：${new Date(state.cardTrader.priceUpdatedAt).toLocaleString("ja-JP")}${statsText ? `（${statsText}）` : ""}`;
+  return `CardTrader設定済み。日本語版カードの価格：${modeText}。次回の価格更新で使用します。`;
 }
 
 function cardTraderRunResultTitle(stats) {
@@ -6005,3 +6005,29 @@ $("#useScryfallPrices").addEventListener("change", event => {
 });
 $("#openCollectionGroupManager").addEventListener("click", openFavoriteGroupManager);
 $("#openSettingsGroupManager").addEventListener("click", openFavoriteGroupManager);
+
+// Keep the page still until the last stacked dialog is closed.
+// Watching only `open` avoids work during typing, rendering and scrolling.
+(() => {
+  let savedPosition = null;
+  const root = document.documentElement;
+  function updateDialogScrollLock() {
+    const hasDialog = !!document.querySelector("dialog[open]");
+    if (hasDialog && !savedPosition) {
+      savedPosition = { x: window.scrollX, y: window.scrollY };
+      root.style.setProperty("--dialog-page-top", `${-savedPosition.y}px`);
+      root.classList.add("dialog-scroll-locked");
+    } else if (!hasDialog && savedPosition) {
+      const position = savedPosition;
+      savedPosition = null;
+      root.classList.remove("dialog-scroll-locked");
+      root.style.removeProperty("--dialog-page-top");
+      window.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
+    }
+  }
+  const observer = new MutationObserver(updateDialogScrollLock);
+  document.querySelectorAll("dialog").forEach(dialog => {
+    observer.observe(dialog, { attributes: true, attributeFilter: ["open"] });
+  });
+  updateDialogScrollLock();
+})();
