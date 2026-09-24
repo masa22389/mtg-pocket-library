@@ -16406,5 +16406,10873 @@ window.MTG_JP_CARD_INDEX = [
     },
     "releasedAt": "2026-08-14",
     "setName": "The Hobbit Eternal"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "1",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "迫り来る破滅、エムラクール"
+    ],
+    "enNames": [
+      "Emrakul, the Exigent Doom"
+    ],
+    "scryfallName": "Emrakul, the Exigent Doom",
+    "oracleId": "4421ab7d-6d9b-4edd-b5a0-53a8ed84da6f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/j8KZMXQ2SP/jp_C3s3W41aEA.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "2",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "学術的上昇"
+    ],
+    "enNames": [
+      "Academic Ascent"
+    ],
+    "scryfallName": "Academic Ascent",
+    "oracleId": "406e853b-713f-4c89-9efb-aca74a11183f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_4uCYOrnaiC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "3",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "花開く祝福の天使 // 種子縫合",
+      "花開く祝福の天使",
+      "種子縫合"
+    ],
+    "enNames": [
+      "Blossom-Blessed Angel // Seed Suture",
+      "Blossom-Blessed Angel",
+      "Seed Suture"
+    ],
+    "scryfallName": "Blossom-Blessed Angel // Seed Suture",
+    "oracleId": "cd61c26b-8d3c-4730-92f2-0d94d961bafd",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_J3n67fVPgL.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "4",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "構内の触れ役"
+    ],
+    "enNames": [
+      "Campus Crier"
+    ],
+    "scryfallName": "Campus Crier",
+    "oracleId": "c1a9d60f-a469-48f9-8f1c-3ca5ae86bd64",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_8uiCiYAe5C.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "5",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "光の腹心"
+    ],
+    "enNames": [
+      "Enlightened Confidant"
+    ],
+    "scryfallName": "Enlightened Confidant",
+    "oracleId": "a139eb7f-3853-490c-a839-35d0e5aed7b5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_5nYIdfUxaT.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "6",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "運命造形師の野心家"
+    ],
+    "enNames": [
+      "Fateshaper Aspirant"
+    ],
+    "scryfallName": "Fateshaper Aspirant",
+    "oracleId": "bb3996b6-b68d-4ea1-b3dd-1600f8da2f1c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_z2RhBveZ3n.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "7",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "見え隠れする猟犬"
+    ],
+    "enNames": [
+      "Flickering Hound"
+    ],
+    "scryfallName": "Flickering Hound",
+    "oracleId": "162421d2-8761-437f-bed9-578b61c96f1f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_Lb0NmeMvHb.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "8",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "気前のよい蘇生"
+    ],
+    "enNames": [
+      "Generous Revival"
+    ],
+    "scryfallName": "Generous Revival",
+    "oracleId": "f8601f5f-0f7c-4689-9d15-137f1e82c49c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/qf8YUZ6Dd3/jp_M8LpYLTS5J.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "9",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "芽吹く補充兵"
+    ],
+    "enNames": [
+      "Germinate Recruits"
+    ],
+    "scryfallName": "Germinate Recruits",
+    "oracleId": "2c3a1313-a66e-4317-9732-e4ff9288b0db",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_O1dnpqVw4q.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "10",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "移植手術の外科医"
+    ],
+    "enNames": [
+      "Graft Surgeon"
+    ],
+    "scryfallName": "Graft Surgeon",
+    "oracleId": "fe7938ce-6289-4bf8-a8f5-85ecccbb7f86",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_PG0ZWlbd21.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "11",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "導きのハイドラ"
+    ],
+    "enNames": [
+      "Guiding Hydra"
+    ],
+    "scryfallName": "Guiding Hydra",
+    "oracleId": "24f1445c-16c9-45c0-be56-0266e6c78cdb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_Q8DHMrkdA6.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "12",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヘクスヘイヴン大隊"
+    ],
+    "enNames": [
+      "Hexhaven Battalion"
+    ],
+    "scryfallName": "Hexhaven Battalion",
+    "oracleId": "158823ed-6015-437a-82b0-8dadb1e9aab2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_SfRLF9FCxR.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "13",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "同族の審判"
+    ],
+    "enNames": [
+      "Kindred Judgment"
+    ],
+    "scryfallName": "Kindred Judgment",
+    "oracleId": "b5dce42a-a769-4d7d-b29e-8722f79d4092",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_vdM6qeFkSC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "14",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "忠誠の教示者"
+    ],
+    "enNames": [
+      "Loyal Tutor"
+    ],
+    "scryfallName": "Loyal Tutor",
+    "oracleId": "7e52f151-d1f6-4fcb-9b21-1baecae27da6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_hEzolVzHr5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "15",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "記憶の罠"
+    ],
+    "enNames": [
+      "Memory Trap"
+    ],
+    "scryfallName": "Memory Trap",
+    "oracleId": "70616a8c-9b6c-408e-8f3e-2c348ec136d8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_QVXnAJHmNh.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "16",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "予知の準備"
+    ],
+    "enNames": [
+      "Predictive Preparations"
+    ],
+    "scryfallName": "Predictive Preparations",
+    "oracleId": "d06a5642-861b-4b0d-9ea5-07046b7e1d37",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_v65NrEu1Dw.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "17",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "予言されし終焉"
+    ],
+    "enNames": [
+      "Prophesied End"
+    ],
+    "scryfallName": "Prophesied End",
+    "oracleId": "45f4d057-5134-40a2-9590-ddba73a65582",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/0079027850/jp_ZjKilAiq2L.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "18",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "運命への論駁"
+    ],
+    "enNames": [
+      "Refute Destiny"
+    ],
+    "scryfallName": "Refute Destiny",
+    "oracleId": "2a18b3f0-8a78-46d8-b60f-3cd634062f1b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_ChoB5Go1u7.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "19",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "転用された執行人"
+    ],
+    "enNames": [
+      "Repurposed Enforcer"
+    ],
+    "scryfallName": "Repurposed Enforcer",
+    "oracleId": "b775a404-ec0a-47ff-bb9d-eae2273d945b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_di4iZJwQfU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "20",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "光の領域への帰還"
+    ],
+    "enNames": [
+      "Return to the Light Realms"
+    ],
+    "scryfallName": "Return to the Light Realms",
+    "oracleId": "217e76ca-ea94-417c-b5b0-82e2302eeee8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_McO4Phk9rK.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "21",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "砕け翼のペガサス"
+    ],
+    "enNames": [
+      "Shatterwing Pegasus"
+    ],
+    "scryfallName": "Shatterwing Pegasus",
+    "oracleId": "7d6641e7-4d14-4a06-b588-0c752af529bd",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_LaVYEP4xVP.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "22",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "外科的精密性"
+    ],
+    "enNames": [
+      "Surgical Precision"
+    ],
+    "scryfallName": "Surgical Precision",
+    "oracleId": "0caccec3-4942-499a-9434-0c94389afcf8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_UoRYEZJq37.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "23",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ひるまぬ園芸術士"
+    ],
+    "enNames": [
+      "Unflinching Hortimancer"
+    ],
+    "scryfallName": "Unflinching Hortimancer",
+    "oracleId": "7cd0bd74-2463-4e9d-9802-69ac4ef6d543",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_EONznun6V8.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "24",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "汝の宿命の終焉"
+    ],
+    "enNames": [
+      "Your Fate Ends Here"
+    ],
+    "scryfallName": "Your Fate Ends Here",
+    "oracleId": "28a362c2-0c99-48e0-b9cb-485a6c1f350b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_Nf30ms02I6.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "25",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "対抗刻彫"
+    ],
+    "enNames": [
+      "Countersculpt"
+    ],
+    "scryfallName": "Countersculpt",
+    "oracleId": "fc3353e9-fe24-4ca7-bff8-9da767f2903a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_YpfES3Td9J.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "26",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "酷薄な計算"
+    ],
+    "enNames": [
+      "Cruel Calculations"
+    ],
+    "scryfallName": "Cruel Calculations",
+    "oracleId": "69b96fe5-9733-4b43-bd66-075742e142d9",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_I2W4kzBbsO.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "27",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "凍結理論の達人"
+    ],
+    "enNames": [
+      "Cryotheory Adept"
+    ],
+    "scryfallName": "Cryotheory Adept",
+    "oracleId": "a9b3ee21-1af1-4e7e-8e48-d7c90d056f5c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_OgSDxwIN5c.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "28",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "勝利の預言者 // 歴史の巻き戻し",
+      "勝利の預言者",
+      "歴史の巻き戻し"
+    ],
+    "enNames": [
+      "Diviner of Victory // Unwind History",
+      "Diviner of Victory",
+      "Unwind History"
+    ],
+    "scryfallName": "Diviner of Victory // Unwind History",
+    "oracleId": "e7b78acd-5288-4528-97a8-a5b43de90bf5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_y4Kdpuc8Ao.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "29",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "預言する決闘者"
+    ],
+    "enNames": [
+      "Divining Duelist"
+    ],
+    "scryfallName": "Divining Duelist",
+    "oracleId": "d0ce03fa-2284-4217-85b2-4db6b8a88c94",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_5qT36mz6Jy.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "30",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "氷の歓迎"
+    ],
+    "enNames": [
+      "Icy Reception"
+    ],
+    "scryfallName": "Icy Reception",
+    "oracleId": "612c7807-be70-4e2f-afd2-3d3c03eddbbe",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_ZpyMsPv7xY.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "31",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "無限に続く課題"
+    ],
+    "enNames": [
+      "Infinite Coursework"
+    ],
+    "scryfallName": "Infinite Coursework",
+    "oracleId": "666b34b5-a0c2-43e3-befd-7c3979313682",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_13ptXnq3Qg.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "32",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ジェイスの策謀"
+    ],
+    "enNames": [
+      "Jace's Machinations"
+    ],
+    "scryfallName": "Jace's Machinations",
+    "oracleId": "89bd056d-8f5b-4d0e-b80a-58a984e21100",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_AJG2GAP1ja.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "33",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "精神追いの眼"
+    ],
+    "enNames": [
+      "Mindseeker Oculus"
+    ],
+    "scryfallName": "Mindseeker Oculus",
+    "oracleId": "aa9547b3-e4e4-4557-9dd1-3aa9a7cb9937",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_GxWu9hSeQt.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "34",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "完成した理論"
+    ],
+    "enNames": [
+      "Perfected Theory"
+    ],
+    "scryfallName": "Perfected Theory",
+    "oracleId": "d824a319-fa74-42e4-9cbe-dba1576d6bad",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/qf8YUZ6Dd3/jp_dY7QebZcRi.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "35",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "準備万端な計画"
+    ],
+    "enNames": [
+      "Plan for All Outcomes"
+    ],
+    "scryfallName": "Plan for All Outcomes",
+    "oracleId": "7fd2cac5-cd29-4a47-9e89-9c6be39a0b67",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_aMaA7rMMAc.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "36",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "正確な改訂"
+    ],
+    "enNames": [
+      "Precise Redaction"
+    ],
+    "scryfallName": "Precise Redaction",
+    "oracleId": "c251b676-0e98-4047-bed1-d72c83aa8da0",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_QqjnJAhnqy.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "37",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "弟子の覚醒"
+    ],
+    "enNames": [
+      "Protege's Awakening"
+    ],
+    "scryfallName": "Protege's Awakening",
+    "oracleId": "07617648-6490-4719-acec-7705671f7e01",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_WXbroFZHFl.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "38",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "歴戦の冷術士"
+    ],
+    "enNames": [
+      "Seasoned Cryomancer"
+    ],
+    "scryfallName": "Seasoned Cryomancer",
+    "oracleId": "c3936db3-d3b6-4a92-9773-6f3c52dc419d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_321oMXtPJE.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "39",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "学期の先見者 // 一瞥査読",
+      "学期の先見者",
+      "一瞥査読"
+    ],
+    "enNames": [
+      "Semester Foreseer // Peer Review",
+      "Semester Foreseer",
+      "Peer Review"
+    ],
+    "scryfallName": "Semester Foreseer // Peer Review",
+    "oracleId": "21b8d59f-a90d-44ff-a2e3-9f439ac3e14a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_E1n8qGqwYk.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "40",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "誤謬結論のスフィンクス"
+    ],
+    "enNames": [
+      "Sphinx of False Conclusions"
+    ],
+    "scryfallName": "Sphinx of False Conclusions",
+    "oracleId": "9f004382-c57b-4fde-af97-0c85516c3cf4",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_N6IgCCIPwn.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "41",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "スフィンクスの接近"
+    ],
+    "enNames": [
+      "Sphinx's Approach"
+    ],
+    "scryfallName": "Sphinx's Approach",
+    "oracleId": "48b1ac27-430f-4fd9-a71b-6ad125c57fe3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_YXSCJVrQFU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "42",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "諜報する幻"
+    ],
+    "enNames": [
+      "Surveillance Phantasm"
+    ],
+    "scryfallName": "Surveillance Phantasm",
+    "oracleId": "b97648b7-ae98-45c9-8f0f-a52d6faf2d2d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_o2ZGT7bZqp.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "43",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "理論家、ジェイス・ベレレン"
+    ],
+    "enNames": [
+      "The Theorist, Jace Beleren"
+    ],
+    "scryfallName": "The Theorist, Jace Beleren",
+    "oracleId": "89a6e876-0b00-4671-9652-766fd7ef9bf2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_DQwvtxJqZC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "44",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "理論家の代理"
+    ],
+    "enNames": [
+      "Theorist's Proxy"
+    ],
+    "scryfallName": "Theorist's Proxy",
+    "oracleId": "0089acfe-da66-4dd7-b1e5-4d7407f58257",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_A4tF7lqMvL.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "45",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "はためく目撃者"
+    ],
+    "enNames": [
+      "Undulating Witness"
+    ],
+    "scryfallName": "Undulating Witness",
+    "oracleId": "77b684b8-227b-40de-80b4-15d0e70914f4",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_Ae8gnDTwek.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "46",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "送還"
+    ],
+    "enNames": [
+      "Unsummon"
+    ],
+    "scryfallName": "Unsummon",
+    "oracleId": "837182db-1bf3-4a2c-bd01-1af9d9873561",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_Csu0KkcIVG.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "47",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "変数の追跡者 // 運命の弧",
+      "変数の追跡者",
+      "運命の弧"
+    ],
+    "enNames": [
+      "Variable Chaser // Arc of Fortune",
+      "Variable Chaser",
+      "Arc of Fortune"
+    ],
+    "scryfallName": "Variable Chaser // Arc of Fortune",
+    "oracleId": "67c603cc-ad66-4a1c-8386-5901c9c01bfb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_J09Y9UifZ3.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "48",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "最強の魔女跡追い"
+    ],
+    "enNames": [
+      "Apex Witchstalker"
+    ],
+    "scryfallName": "Apex Witchstalker",
+    "oracleId": "253d0cf7-65d3-4f13-aaf2-aae5bb60ac46",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_iSXNZEjacH.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "49",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "血統想起者 // 祖先の渇望",
+      "血統想起者",
+      "祖先の渇望"
+    ],
+    "enNames": [
+      "Bloodline Recollector // Ancestral Craving",
+      "Bloodline Recollector",
+      "Ancestral Craving"
+    ],
+    "scryfallName": "Bloodline Recollector // Ancestral Craving",
+    "oracleId": "c8e9a7e1-28ae-40e3-8715-1bb0aa2057c7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/np46fp3fn1/jp_Vz1Vj3mhlg.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "50",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "重圧による崩壊"
+    ],
+    "enNames": [
+      "Break Under Pressure"
+    ],
+    "scryfallName": "Break Under Pressure",
+    "oracleId": "8dd23c50-cc84-4064-89cd-8d52fbfbd4ab",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_dJX8kvE8D6.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "51",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "疑念の廃却"
+    ],
+    "enNames": [
+      "Cast Away Doubt"
+    ],
+    "scryfallName": "Cast Away Doubt",
+    "oracleId": "bcf29dd7-6d5a-4139-958e-7c59434c0770",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/qf8YUZ6Dd3/jp_GnrnSzB6Wt.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "52",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "暗黒物質の操り手"
+    ],
+    "enNames": [
+      "Dark Matter Manipulator"
+    ],
+    "scryfallName": "Dark Matter Manipulator",
+    "oracleId": "6a3862f0-8dfc-4ac9-8eb9-faefcad685d4",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_ltHy0g4JK3.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "53",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "夜光のフェニックス"
+    ],
+    "enNames": [
+      "Darklight Phoenix"
+    ],
+    "scryfallName": "Darklight Phoenix",
+    "oracleId": "e4b51c2d-7e56-435b-89d6-85e33df65879",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_ZXK09bmQOv.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "54",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "欠席の延長"
+    ],
+    "enNames": [
+      "Extended Absence"
+    ],
+    "scryfallName": "Extended Absence",
+    "oracleId": "973fb1e3-83d5-4763-bea8-799b426a8848",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_ES2bYCorVT.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "55",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "不可能の外挿"
+    ],
+    "enNames": [
+      "Extrapolate the Impossible"
+    ],
+    "scryfallName": "Extrapolate the Impossible",
+    "oracleId": "1f47c869-f4a9-43b0-aec0-8da4e3a3fec5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_kR2MTDfv9k.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "56",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "最後の喘ぎ"
+    ],
+    "enNames": [
+      "Last Gasp"
+    ],
+    "scryfallName": "Last Gasp",
+    "oracleId": "a82c3860-4dd6-4ffd-aa8f-ab8df687db6c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_QZ3sVftn44.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "57",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "リッチの秘宝"
+    ],
+    "enNames": [
+      "Lich's Relic"
+    ],
+    "scryfallName": "Lich's Relic",
+    "oracleId": "0540eaca-0e03-4831-955a-192ae2b87d35",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_YKP1GSLZXz.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "58",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ゼロ乗算"
+    ],
+    "enNames": [
+      "Multiply by Zero"
+    ],
+    "scryfallName": "Multiply by Zero",
+    "oracleId": "d940611f-f84d-43fa-82d6-eecb4fb54164",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_DPKDKAGK1i.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "59",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "多元宇宙の上書き"
+    ],
+    "enNames": [
+      "Overwrite the Multiverse"
+    ],
+    "scryfallName": "Overwrite the Multiverse",
+    "oracleId": "d0372cde-bf30-4a1b-93bb-9ff4ac1c116d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/0079027850/jp_clCTh1eQGX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "60",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "塁壁の狩人"
+    ],
+    "enNames": [
+      "Rampart Hunter"
+    ],
+    "scryfallName": "Rampart Hunter",
+    "oracleId": "0867755a-9fb9-42ad-897e-6206fbfbc1f8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_iYoAvPwXnk.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "61",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "生臭いネズミ"
+    ],
+    "enNames": [
+      "Rank Rat"
+    ],
+    "scryfallName": "Rank Rat",
+    "oracleId": "64e7ef06-ba30-4b19-9d44-ca77944cc930",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_nykvMhXSr7.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "62",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "後悔の書き直し"
+    ],
+    "enNames": [
+      "Rewrite Regrets"
+    ],
+    "scryfallName": "Rewrite Regrets",
+    "oracleId": "42565432-3a17-4274-87fc-016ab900e313",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_sqLM1oe1O2.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "63",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "死をもたらす者の隆盛"
+    ],
+    "enNames": [
+      "Rise of the Deathbringer"
+    ],
+    "scryfallName": "Rise of the Deathbringer",
+    "oracleId": "57ea9f63-8267-4303-a3dd-9ded220294dc",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_Ac4YUxA6NX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "64",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "聖域に潜むもの"
+    ],
+    "enNames": [
+      "Sanctum Lurker"
+    ],
+    "scryfallName": "Sanctum Lurker",
+    "oracleId": "3ebd64d2-c178-45a2-a51f-9869754baa0f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_2VefICbbJ8.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "65",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "金切り声の魂砕き"
+    ],
+    "enNames": [
+      "Screeching Soulbreaker"
+    ],
+    "scryfallName": "Screeching Soulbreaker",
+    "oracleId": "47e33aa1-2f54-471c-a484-de13bcd2dceb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_XL5CVzI8mY.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "66",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "こだまを静寂に"
+    ],
+    "enNames": [
+      "Silence the Echo"
+    ],
+    "scryfallName": "Silence the Echo",
+    "oracleId": "43654381-c55c-4d6d-abfd-12932ceb5a4a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_efL8VNhq4J.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "67",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "失望の解決"
+    ],
+    "enNames": [
+      "Solve for Disappointment"
+    ],
+    "scryfallName": "Solve for Disappointment",
+    "oracleId": "3241a3f5-7ae5-4497-9dd2-a55f3370a055",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_HrwVdegHhA.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "68",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "絶望的批評"
+    ],
+    "enNames": [
+      "Terminal Criticism"
+    ],
+    "scryfallName": "Terminal Criticism",
+    "oracleId": "213b0814-f768-4408-9cb7-6f5960bcbb7a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_vatMl4Uqsv.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "69",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "理論派の屍術士"
+    ],
+    "enNames": [
+      "Theoretical Necromancer"
+    ],
+    "scryfallName": "Theoretical Necromancer",
+    "oracleId": "6c5ed756-b999-49f7-9a52-fb8196202f0f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_FNseTNNnp5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "70",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "虚空の外挿者 // 変数の削除",
+      "虚空の外挿者",
+      "変数の削除"
+    ],
+    "enNames": [
+      "Void Extrapolator // Omit Variables",
+      "Void Extrapolator",
+      "Omit Variables"
+    ],
+    "scryfallName": "Void Extrapolator // Omit Variables",
+    "oracleId": "517f84b5-cf99-410d-96ea-910740231dac",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_jomCH36djc.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "71",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヴラスカの最後の慈悲"
+    ],
+    "enNames": [
+      "Vraska's Final Mercy"
+    ],
+    "scryfallName": "Vraska's Final Mercy",
+    "oracleId": "7799413d-e313-4a05-ad28-f4c926c26d28",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_TpiYmBhmLP.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "72",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "アジャニの苦悶"
+    ],
+    "enNames": [
+      "Ajani's Anguish"
+    ],
+    "scryfallName": "Ajani's Anguish",
+    "oracleId": "4a37f4a0-2869-4f81-b51b-4c3e7e0e0671",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_02BafLouyg.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "73",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "アーティフィストの洞察力"
+    ],
+    "enNames": [
+      "Artifist Acumen"
+    ],
+    "scryfallName": "Artifist Acumen",
+    "oracleId": "129b41cf-8327-42f0-b186-1111b42c08ab",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_i19jom5iAX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "74",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "業火の覚醒"
+    ],
+    "enNames": [
+      "Awaken the Inferno"
+    ],
+    "scryfallName": "Awaken the Inferno",
+    "oracleId": "e729fce5-a1cf-4e95-9fd5-fccf4f704d31",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_CJcYysk8g1.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "75",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "猛火の最高潮"
+    ],
+    "enNames": [
+      "Blazing Crescendo"
+    ],
+    "scryfallName": "Blazing Crescendo",
+    "oracleId": "6344c96a-efa5-4125-8219-d333228391cf",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/j8KZMXQ2SP/jp_Jb7wZPikBq.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "76",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "チャンドラの熾火仔"
+    ],
+    "enNames": [
+      "Chandra's Emberling"
+    ],
+    "scryfallName": "Chandra's Emberling",
+    "oracleId": "d3576617-7867-4c3d-aa31-d6742483465b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_VIgssA08aS.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "77",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "演壇の指揮"
+    ],
+    "enNames": [
+      "Command the Stage"
+    ],
+    "scryfallName": "Command the Stage",
+    "oracleId": "13bfc51f-d079-40ef-a4ba-47d06d3150a3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_hFlCuBowt7.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "78",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "孔爪の巨像"
+    ],
+    "enNames": [
+      "Craterclaw Colossus"
+    ],
+    "scryfallName": "Craterclaw Colossus",
+    "oracleId": "71355b51-e70e-47b0-8460-933af3567141",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_rDX3ahq00Y.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "79",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "呪い傷の悪魔"
+    ],
+    "enNames": [
+      "Curse-Marred Demon"
+    ],
+    "scryfallName": "Curse-Marred Demon",
+    "oracleId": "f30a084c-5705-40f5-8e0d-2083d33973c7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_8ls7GyTvos.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "80",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ドラゴンの訪問者"
+    ],
+    "enNames": [
+      "Draconic Visitor"
+    ],
+    "scryfallName": "Draconic Visitor",
+    "oracleId": "6745e850-68f6-480b-a1e0-e06180dde169",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_xGYiGJF5c2.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "81",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "鼓膜揺さぶり"
+    ],
+    "enNames": [
+      "Eardrum Rattler"
+    ],
+    "scryfallName": "Eardrum Rattler",
+    "oracleId": "25151d18-8e73-4b0d-a8d2-e5fa291e5729",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/j8KZMXQ2SP/jp_cOug1HnMkF.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "82",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "本質の焼却"
+    ],
+    "enNames": [
+      "Essence Burn"
+    ],
+    "scryfallName": "Essence Burn",
+    "oracleId": "f1216f36-00fd-4d03-85c1-f4910a02d4d0",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_EIDiIAIoQN.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "83",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "自分との対峙"
+    ],
+    "enNames": [
+      "Face Yourself"
+    ],
+    "scryfallName": "Face Yourself",
+    "oracleId": "3c0fe71c-bee1-41d3-aeb5-1723028eedde",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_nPckvJbAcm.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "84",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "大音響のフォルテ"
+    ],
+    "enNames": [
+      "Fulminous Forte"
+    ],
+    "scryfallName": "Fulminous Forte",
+    "oracleId": "2a29d028-d1a4-413f-9c01-d6842294420a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_z8UgABEFoy.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "85",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "廊下の野次飛ばし // 敵意ある一節",
+      "廊下の野次飛ばし",
+      "敵意ある一節"
+    ],
+    "enNames": [
+      "Hallway Heckler // Vicious Verse",
+      "Hallway Heckler",
+      "Vicious Verse"
+    ],
+    "scryfallName": "Hallway Heckler // Vicious Verse",
+    "oracleId": "d1af8018-35b5-4b6f-93c8-1ed6bd8c92b1",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_1hm7aKlTrL.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "86",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "琴線を引く者"
+    ],
+    "enNames": [
+      "Heartstring Puller"
+    ],
+    "scryfallName": "Heartstring Puller",
+    "oracleId": "2cdcf65c-03d2-416f-8a3f-0322f75e8595",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_QEP4dQkVna.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "87",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "個性のこだま"
+    ],
+    "enNames": [
+      "Identity Echo"
+    ],
+    "scryfallName": "Identity Echo",
+    "oracleId": "4dbf8c43-d7c5-4037-875e-6accd87aaf6f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_C75zhXOwqu.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "88",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "棘ある言葉の達人"
+    ],
+    "enNames": [
+      "Master of Barbs"
+    ],
+    "scryfallName": "Master of Barbs",
+    "oracleId": "e8c36337-135c-460d-a1da-cc01743dda71",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_YXk7191zfp.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "89",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "入場不可"
+    ],
+    "enNames": [
+      "No Admittance"
+    ],
+    "scryfallName": "No Admittance",
+    "oracleId": "d53ae01b-87e1-48e1-9fc3-23a734ce6622",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_i5mHdWmaOg.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "90",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "驕慢な戦闘魔道士 // 即興演技",
+      "驕慢な戦闘魔道士",
+      "即興演技"
+    ],
+    "enNames": [
+      "Pompous Battlemage // Improvised Act",
+      "Pompous Battlemage",
+      "Improvised Act"
+    ],
+    "scryfallName": "Pompous Battlemage // Improvised Act",
+    "oracleId": "33e3793c-098f-4897-88f3-9f9ce9081e0f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_r1QzU7b1G8.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "91",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "焼尽の詩人 // 融潮",
+      "焼尽の詩人",
+      "融潮"
+    ],
+    "enNames": [
+      "Pyre Rhymer // Molten Tide",
+      "Pyre Rhymer",
+      "Molten Tide"
+    ],
+    "scryfallName": "Pyre Rhymer // Molten Tide",
+    "oracleId": "8940f503-fc6d-4fae-be74-22c660cae1a7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_cSV2pGEabA.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "92",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "技量ある彫闘士"
+    ],
+    "enNames": [
+      "Skilled Battlecarver"
+    ],
+    "scryfallName": "Skilled Battlecarver",
+    "oracleId": "4fc7c7a0-bfff-4833-a0d0-a38dc29e9dfb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_q32VDuPqje.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "93",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "棘唱の魔道士"
+    ],
+    "enNames": [
+      "Stingcaster Mage"
+    ],
+    "scryfallName": "Stingcaster Mage",
+    "oracleId": "056b651e-e0e2-4333-9235-d1ffe8fcca29",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_L5VMPtntR5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "94",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "繋操術の技師"
+    ],
+    "enNames": [
+      "Tether Technician"
+    ],
+    "scryfallName": "Tether Technician",
+    "oracleId": "a9d0657f-2c5e-4b6f-b8ae-d657cc0f7aef",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_5n7A5TJTV0.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "95",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "暴力的なこだま"
+    ],
+    "enNames": [
+      "Violent Echoes"
+    ],
+    "scryfallName": "Violent Echoes",
+    "oracleId": "e8ecec61-cc47-4051-a599-0e7470764488",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_71fJjtk50B.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "96",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "血のたてがみの怒り"
+    ],
+    "enNames": [
+      "Wrath of the Bloodmane"
+    ],
+    "scryfallName": "Wrath of the Bloodmane",
+    "oracleId": "c1994d6a-984d-4b75-9198-1f1822eab6eb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_FTEg3TpmC3.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "97",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "秘儀の両頭蛇"
+    ],
+    "enNames": [
+      "Arcane Amphisbaena"
+    ],
+    "scryfallName": "Arcane Amphisbaena",
+    "oracleId": "5c151e3b-fcf2-4adb-a60b-9eff0c360705",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_MOaiYNlD3S.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "98",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "獣の乱入"
+    ],
+    "enNames": [
+      "Bestial Incursion"
+    ],
+    "scryfallName": "Bestial Incursion",
+    "oracleId": "bc00f29a-e9d2-4b86-bb22-33b686ac4365",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_KhAxo4DEa8.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "99",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "芽生えし反乱者"
+    ],
+    "enNames": [
+      "Budding Insurgent"
+    ],
+    "scryfallName": "Budding Insurgent",
+    "oracleId": "723669e0-4a04-45ec-8c76-b1a369aa6892",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/j8KZMXQ2SP/jp_RY9wVlrpAT.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "100",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "人喰い植物の耕作者 // 埋根",
+      "人喰い植物の耕作者",
+      "埋根"
+    ],
+    "enNames": [
+      "Carnivorous Cultivator // Enroot",
+      "Carnivorous Cultivator",
+      "Enroot"
+    ],
+    "scryfallName": "Carnivorous Cultivator // Enroot",
+    "oracleId": "db655c5a-06f6-42bc-8180-d9ca1c1d939a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_Zkzc3q6kv2.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "101",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "蛮行の強制"
+    ],
+    "enNames": [
+      "Compel Brutality"
+    ],
+    "scryfallName": "Compel Brutality",
+    "oracleId": "3a9059ac-c595-4e71-b704-b04d2d47db70",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/qf8YUZ6Dd3/jp_eEimZtULmT.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "102",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "繁茂の組みつき"
+    ],
+    "enNames": [
+      "Flourishing Grapple"
+    ],
+    "scryfallName": "Flourishing Grapple",
+    "oracleId": "6b4f1569-2025-46a8-89ba-79859208b04e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_8wyOfzDTXb.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "103",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "庭園化"
+    ],
+    "enNames": [
+      "Gardenize"
+    ],
+    "scryfallName": "Gardenize",
+    "oracleId": "e74a2a4c-ca3c-49e8-9b0f-b4d1bb91fb54",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_FYo2nRrgva.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "104",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "温室の繁殖者"
+    ],
+    "enNames": [
+      "Greenhouse Propagator"
+    ],
+    "scryfallName": "Greenhouse Propagator",
+    "oracleId": "b6b77cb9-49a5-4d1a-ae2d-02ae176dc1fa",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_PnBK70hXgI.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "105",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "魂木の造り手 // 魂魄繋操術",
+      "魂木の造り手",
+      "魂魄繋操術"
+    ],
+    "enNames": [
+      "Heartwood Crafter // Soul Tether",
+      "Heartwood Crafter",
+      "Soul Tether"
+    ],
+    "scryfallName": "Heartwood Crafter // Soul Tether",
+    "oracleId": "c8b3a070-408e-4a8f-8597-6476eeec0a5f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_k4WR2ubjff.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "106",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヘクスヘイヴンの活性者"
+    ],
+    "enNames": [
+      "Hexhaven Invigorator"
+    ],
+    "scryfallName": "Hexhaven Invigorator",
+    "oracleId": "12d617b1-c95b-4b1c-a586-ccfdf5898b03",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_5kJGl1RMS2.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "107",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "飢餓の傀儡獣"
+    ],
+    "enNames": [
+      "Hungering Puppetbeast"
+    ],
+    "scryfallName": "Hungering Puppetbeast",
+    "oracleId": "690ae865-87bd-46b2-8e65-c53bd80c1a18",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_A5mFBn2bTQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "108",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "狩人の斧"
+    ],
+    "enNames": [
+      "Hunter's Axe"
+    ],
+    "scryfallName": "Hunter's Axe",
+    "oracleId": "d7d59fef-1401-464b-b1bb-ee5da92cde51",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_ncSAnQMk48.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "109",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "閃いた繋操魔道士"
+    ],
+    "enNames": [
+      "Inspired Tethermage"
+    ],
+    "scryfallName": "Inspired Tethermage",
+    "oracleId": "80c2784b-f27d-4a51-9380-171eb32b961d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_gmcksIW8c5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "110",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "遍在"
+    ],
+    "enNames": [
+      "Omnipresence"
+    ],
+    "scryfallName": "Omnipresence",
+    "oracleId": "8dad1fa8-3533-4e3c-b9b3-fcd57b20a33d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_ZTo702SyVF.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "111",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "傀儡造り"
+    ],
+    "enNames": [
+      "Puppet Crafting"
+    ],
+    "scryfallName": "Puppet Crafting",
+    "oracleId": "d13c111a-ebfc-48ac-b734-f203c7c29d21",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_xyB5ncp1Uq.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "112",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "共感による復元"
+    ],
+    "enNames": [
+      "Restore with Empathy"
+    ],
+    "scryfallName": "Restore with Empathy",
+    "oracleId": "cb1e697f-6689-4f0b-8725-61d51432b8dd",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_i2bVyg1TSB.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "113",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "身代わりの形成師"
+    ],
+    "enNames": [
+      "Simulacrum Shaper"
+    ],
+    "scryfallName": "Simulacrum Shaper",
+    "oracleId": "9e45e2da-7064-4ec0-8d09-55fc7d1aeaa8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_ZS1fpHman3.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "114",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "救う価値あり"
+    ],
+    "enNames": [
+      "Something Worth Saving"
+    ],
+    "scryfallName": "Something Worth Saving",
+    "oracleId": "46cf0e3e-3c3e-4eb8-a71a-4b4b87744ced",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_Q6nmpFojyr.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "115",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "必中の播種者"
+    ],
+    "enNames": [
+      "Sureshot Sower"
+    ],
+    "scryfallName": "Sureshot Sower",
+    "oracleId": "5bbc9d7d-91bd-4a58-8d19-f7be650720b7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_BfQ6d0VCXF.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "116",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "タルモゴイフ"
+    ],
+    "enNames": [
+      "Tarmogoyf"
+    ],
+    "scryfallName": "Tarmogoyf",
+    "oracleId": "45900b2f-f6a9-4c42-9642-008f3c1cf6dd",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_5YvSxmMPjG.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "117",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "繋操魔道士の優位"
+    ],
+    "enNames": [
+      "Tethermage's Advantage"
+    ],
+    "scryfallName": "Tethermage's Advantage",
+    "oracleId": "b4f89885-eeb9-46c7-9820-9758b624ca24",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/j8KZMXQ2SP/jp_QVD9c7QV0m.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "118",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "新緑のクラーケン"
+    ],
+    "enNames": [
+      "Verdant Kraken"
+    ],
+    "scryfallName": "Verdant Kraken",
+    "oracleId": "83c61083-b357-4775-a855-5a9013cc2bdf",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_mVSByQe5xB.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "119",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "殴打蔦の達人"
+    ],
+    "enNames": [
+      "Vinelasher Adept"
+    ],
+    "scryfallName": "Vinelasher Adept",
+    "oracleId": "b5918fb0-c33f-4e33-ac6d-8f94723d4296",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_Ch2qcpluM5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "120",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "破壊ヤモリ"
+    ],
+    "enNames": [
+      "Wrecking Gecko"
+    ],
+    "scryfallName": "Wrecking Gecko",
+    "oracleId": "4a9e0294-c967-4e90-b776-6d3195034a23",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_yr0UhXkVNy.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "121",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "アエリド・コンストラリ"
+    ],
+    "enNames": [
+      "Aerid Konstrari"
+    ],
+    "scryfallName": "Aerid Konstrari",
+    "oracleId": "172a8f58-c420-4497-b962-c5853f923667",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_6UoRHTwuDX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "122",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "芽生えこだまの化身"
+    ],
+    "enNames": [
+      "Avatar of Burgeoning Echoes"
+    ],
+    "scryfallName": "Avatar of Burgeoning Echoes",
+    "oracleId": "08e8a63c-9fcc-48cf-a9af-15cbaeec943f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_Osk2BH9T1Q.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "123",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "祝福されしグール"
+    ],
+    "enNames": [
+      "Blessed Ghoul"
+    ],
+    "scryfallName": "Blessed Ghoul",
+    "oracleId": "fe99d90e-4809-4310-a3f7-ceb540511d55",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_deqYXFTwpg.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "124",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "暴れ咲き花"
+    ],
+    "enNames": [
+      "Bloombrute"
+    ],
+    "scryfallName": "Bloombrute",
+    "oracleId": "b7040175-7411-43a8-9b46-dba1d7c2135d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_U9RfIXZjeU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "125",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "聖域への突撃"
+    ],
+    "enNames": [
+      "Charge the Sanctum"
+    ],
+    "scryfallName": "Charge the Sanctum",
+    "oracleId": "9d835137-584c-46bd-952e-4b2812bba1a3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/qf8YUZ6Dd3/jp_XgaGEpSHTE.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "126",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "激突する元素"
+    ],
+    "enNames": [
+      "Clash of Elements"
+    ],
+    "scryfallName": "Clash of Elements",
+    "oracleId": "78304a06-4c9a-4cdf-b67f-067d88762381",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_Wnea8pJ0SW.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "127",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "工芸品の破壊屋"
+    ],
+    "enNames": [
+      "Craftwork Crusher"
+    ],
+    "scryfallName": "Craftwork Crusher",
+    "oracleId": "d25284b9-50e4-4dcb-9aaf-6f6478c4a90a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_cZm3SbGvMF.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "128",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "デンジロア・フェイトホールド"
+    ],
+    "enNames": [
+      "Denzilore Fatehold"
+    ],
+    "scryfallName": "Denzilore Fatehold",
+    "oracleId": "0f8de7f0-c61d-415d-b4db-4959374343da",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_cy0ffp6K8g.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "129",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "必死の未来書記"
+    ],
+    "enNames": [
+      "Desperate Futurescribe"
+    ],
+    "scryfallName": "Desperate Futurescribe",
+    "oracleId": "83c12f50-e5a1-479d-afab-edb0b40412f2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_krrqPt5Pqg.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "130",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "救急植療士 // 種子縫合",
+      "救急植療士",
+      "種子縫合"
+    ],
+    "enNames": [
+      "Emergency Phytomedic // Seed Suture",
+      "Emergency Phytomedic",
+      "Seed Suture"
+    ],
+    "scryfallName": "Emergency Phytomedic // Seed Suture",
+    "oracleId": "7737ccdc-49f2-463e-8ffd-43ab98d11f45",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_ECVKEO1dWN.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "131",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "灯を委ねる"
+    ],
+    "enNames": [
+      "Entrust the Spark"
+    ],
+    "scryfallName": "Entrust the Spark",
+    "oracleId": "b796ecc8-a2e8-4ab9-8736-6825b650434d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_D1niPqf7Uz.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "132",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "フェイトホールドの魔除け"
+    ],
+    "enNames": [
+      "Fatehold Charm"
+    ],
+    "scryfallName": "Fatehold Charm",
+    "oracleId": "313aee0e-4090-4589-b323-a4edbda21c68",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_2ZWZph1zZw.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "133",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "フェイトホールドの年代学者 // 一瞥査読",
+      "フェイトホールドの年代学者",
+      "一瞥査読"
+    ],
+    "enNames": [
+      "Fatehold Chronologist // Peer Review",
+      "Fatehold Chronologist",
+      "Peer Review"
+    ],
+    "scryfallName": "Fatehold Chronologist // Peer Review",
+    "oracleId": "1063822f-47d3-42e9-8a21-f62b12609fe1",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/j8KZMXQ2SP/jp_vVAZ57iXNp.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "134",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "狩りという暴挙"
+    ],
+    "enNames": [
+      "Ferocity of the Hunt"
+    ],
+    "scryfallName": "Ferocity of the Hunt",
+    "oracleId": "747a1b36-eb4f-44e6-9e5a-bb1a0259a471",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_gU0Z5L16ZZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "135",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "凍傷の紅蓮精霊"
+    ],
+    "enNames": [
+      "Frostbite Pyromental"
+    ],
+    "scryfallName": "Frostbite Pyromental",
+    "oracleId": "9a104f73-597b-49e3-8088-13db31f61900",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_3q8Wfop1p8.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "136",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "不気味な再演者"
+    ],
+    "enNames": [
+      "Grim Repriser"
+    ],
+    "scryfallName": "Grim Repriser",
+    "oracleId": "e853e2fb-f90d-4934-aa70-c8d3cdf12e56",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_YjyCcqJoBI.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "137",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "イングリス・スティンガークイル"
+    ],
+    "enNames": [
+      "Ingris Stingerquill"
+    ],
+    "scryfallName": "Ingris Stingerquill",
+    "oracleId": "bda098cb-31ec-41a1-a9d7-122877cc69d2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_joIKYNixU5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "138",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "コンストラリの魔除け"
+    ],
+    "enNames": [
+      "Konstrari Charm"
+    ],
+    "scryfallName": "Konstrari Charm",
+    "oracleId": "40961b23-b153-434a-aeb9-b9c2ff613dcb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_IOkF1EwoX0.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "139",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "コンストラリの急造者 // 魂魄繋操術",
+      "コンストラリの急造者",
+      "魂魄繋操術"
+    ],
+    "enNames": [
+      "Konstrari Improviser // Soul Tether",
+      "Konstrari Improviser",
+      "Soul Tether"
+    ],
+    "scryfallName": "Konstrari Improviser // Soul Tether",
+    "oracleId": "bad2e3b2-ad47-4e17-b35e-0fcc13e82937",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_tpBRUPqsC9.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "140",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "クウィア・ヴィゴーブルーム"
+    ],
+    "enNames": [
+      "Kwia Vigorbloom"
+    ],
+    "scryfallName": "Kwia Vigorbloom",
+    "oracleId": "07a28621-e617-46b0-af3e-2efb03b5056a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_GRmG0aHRdD.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "141",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "精神蛇行者"
+    ],
+    "enNames": [
+      "Mind Meanderer"
+    ],
+    "scryfallName": "Mind Meanderer",
+    "oracleId": "18d1765b-3b60-4dda-93a6-d02a4e53f185",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_ujE6CEEzQ6.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "142",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "絶無の召喚士"
+    ],
+    "enNames": [
+      "Null Summoner"
+    ],
+    "scryfallName": "Null Summoner",
+    "oracleId": "56c412be-daab-4461-931f-1e2ea8ecd75d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_f7vVxOHzfK.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "143",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "パラドックスの形成師 // 変数の削除",
+      "パラドックスの形成師",
+      "変数の削除"
+    ],
+    "enNames": [
+      "Paradox Shaper // Omit Variables",
+      "Paradox Shaper",
+      "Omit Variables"
+    ],
+    "scryfallName": "Paradox Shaper // Omit Variables",
+    "oracleId": "511951ed-fbff-4e44-9429-27f237496672",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_P2hFXAFRYr.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "144",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "原初の魔女跡追い"
+    ],
+    "enNames": [
+      "Primal Witchstalker"
+    ],
+    "scryfallName": "Primal Witchstalker",
+    "oracleId": "c21fafaf-4510-4752-a501-606ae68e6699",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_y2ucf2nvs9.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "145",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "潜在能力の試験官"
+    ],
+    "enNames": [
+      "Proctor of Potential"
+    ],
+    "scryfallName": "Proctor of Potential",
+    "oracleId": "c612ba0a-5134-45fa-a762-f4621bda4f83",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_S7XYo9QpVg.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "146",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "用意周到な運命占い // 一瞥査読",
+      "用意周到な運命占い",
+      "一瞥査読"
+    ],
+    "enNames": [
+      "Prudent Fateseer // Peer Review",
+      "Prudent Fateseer",
+      "Peer Review"
+    ],
+    "scryfallName": "Prudent Fateseer // Peer Review",
+    "oracleId": "63f67baa-3f37-41b8-9ee6-3c37f828917d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_gWOyQpTKXk.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "147",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "繰り返される徴用"
+    ],
+    "enNames": [
+      "Recursive Recruitment"
+    ],
+    "scryfallName": "Recursive Recruitment",
+    "oracleId": "b73e35b0-b8c9-471a-bdff-f7dc8f453d7a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_XLYmYf3QcQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "148",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "日光浴室の歩哨"
+    ],
+    "enNames": [
+      "Solarium Sentry"
+    ],
+    "scryfallName": "Solarium Sentry",
+    "oracleId": "afddba56-f9a0-4917-8167-c9fd17ca9954",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_fFNFJSm9uW.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "149",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "独居房"
+    ],
+    "enNames": [
+      "Solitary Cell"
+    ],
+    "scryfallName": "Solitary Cell",
+    "oracleId": "66a22b35-3dc0-4a74-8474-e73293403de6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/qf8YUZ6Dd3/jp_gerjTaB62h.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "150",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "スティンガークイルの魔除け"
+    ],
+    "enNames": [
+      "Stingerquill Charm"
+    ],
+    "scryfallName": "Stingerquill Charm",
+    "oracleId": "987aadac-d6a6-4e50-9468-9e8e53cc5529",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_L89jv27jXm.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "151",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "スティンガークイルの音声術士 // 敵意ある一節",
+      "スティンガークイルの音声術士",
+      "敵意ある一節"
+    ],
+    "enNames": [
+      "Stingerquill Voxmancer // Vicious Verse",
+      "Stingerquill Voxmancer",
+      "Vicious Verse"
+    ],
+    "scryfallName": "Stingerquill Voxmancer // Vicious Verse",
+    "oracleId": "e8f755f7-ec93-4d2e-bffc-c719984fa13d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_UHOPN6Dn9v.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "152",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "抉り穿つ言葉"
+    ],
+    "enNames": [
+      "Stinging Vitriol"
+    ],
+    "scryfallName": "Stinging Vitriol",
+    "oracleId": "624cf822-0b4e-4f0c-9893-a53cb094f616",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_EeCEmgkkC1.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "153",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "タムの抵抗術"
+    ],
+    "enNames": [
+      "Tam's Resistance"
+    ],
+    "scryfallName": "Tam's Resistance",
+    "oracleId": "7500b7dc-588d-46bd-acc5-885dcd464668",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_QjM1akwCod.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "154",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "任期無期限の繋操魔道士"
+    ],
+    "enNames": [
+      "Tenured Tethermage"
+    ],
+    "scryfallName": "Tenured Tethermage",
+    "oracleId": "571cb06d-55b5-46e4-9678-1f74aca73068",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_y1oaJeZXSn.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "155",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "セオリクスの魔除け"
+    ],
+    "enNames": [
+      "Theorix Charm"
+    ],
+    "scryfallName": "Theorix Charm",
+    "oracleId": "cf527bbd-e898-4aa9-909d-daec2f4b62ad",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_H776DaECsC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "156",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "セオリクスの変転魔道士 // 変数の削除",
+      "セオリクスの変転魔道士",
+      "変数の削除"
+    ],
+    "enNames": [
+      "Theorix Metamage // Omit Variables",
+      "Theorix Metamage",
+      "Omit Variables"
+    ],
+    "scryfallName": "Theorix Metamage // Omit Variables",
+    "oracleId": "92a0aa44-0ef7-4e6f-8288-7c33067c5fd1",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_QGhKwF8BZo.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "157",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "対なす幻視"
+    ],
+    "enNames": [
+      "Twinned Vision"
+    ],
+    "scryfallName": "Twinned Vision",
+    "oracleId": "fa1cc78f-26bc-4d5d-973b-7cb7d7490973",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_2B3xh12KTw.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "158",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ねじれた宿命"
+    ],
+    "enNames": [
+      "Twisted Fates"
+    ],
+    "scryfallName": "Twisted Fates",
+    "oracleId": "3ce30a19-e716-478f-be89-e2d95753cfed",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_JQtwUOB0hU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "159",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ウルダロス・セオリクス"
+    ],
+    "enNames": [
+      "Uldaros Theorix"
+    ],
+    "scryfallName": "Uldaros Theorix",
+    "oracleId": "020d561b-2e5d-439e-9e6a-318d23e73542",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_94usvQJRuZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "160",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヴィゴーブルームの魔除け"
+    ],
+    "enNames": [
+      "Vigorbloom Charm"
+    ],
+    "scryfallName": "Vigorbloom Charm",
+    "oracleId": "826f17d1-3806-4579-8b1b-2082b7b03d69",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_VEl4HCZagM.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "161",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヴィゴーブルームの先兵 // 種子縫合",
+      "ヴィゴーブルームの先兵",
+      "種子縫合"
+    ],
+    "enNames": [
+      "Vigorbloom Vanguard // Seed Suture",
+      "Vigorbloom Vanguard",
+      "Seed Suture"
+    ],
+    "scryfallName": "Vigorbloom Vanguard // Seed Suture",
+    "oracleId": "bd416426-d037-45e3-9647-816bf982cbea",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_YocNO8KNmr.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "162",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "報復の勝利"
+    ],
+    "enNames": [
+      "Vindictive Triumph"
+    ],
+    "scryfallName": "Vindictive Triumph",
+    "oracleId": "d6b478d1-5015-49ba-b1aa-cbc2b08107a6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_QDRcttSu39.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "163",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "戦士の刃"
+    ],
+    "enNames": [
+      "Warrior's Blades"
+    ],
+    "scryfallName": "Warrior's Blades",
+    "oracleId": "f47419a5-b975-4934-a987-ea064a0c7c1a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/j8KZMXQ2SP/jp_tNCAV8RzPO.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "164",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "鞭打つ弁舌家 // 敵意ある一節",
+      "鞭打つ弁舌家",
+      "敵意ある一節"
+    ],
+    "enNames": [
+      "Whiplash Wordsmith // Vicious Verse",
+      "Whiplash Wordsmith",
+      "Vicious Verse"
+    ],
+    "scryfallName": "Whiplash Wordsmith // Vicious Verse",
+    "oracleId": "e1ffb884-a89e-4e2a-9beb-8bd5838b6a94",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_MPWfiWOSSU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "165",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "木工の神童 // 魂魄繋操術",
+      "木工の神童",
+      "魂魄繋操術"
+    ],
+    "enNames": [
+      "Woodwork Prodigy // Soul Tether",
+      "Woodwork Prodigy",
+      "Soul Tether"
+    ],
+    "scryfallName": "Woodwork Prodigy // Soul Tether",
+    "oracleId": "f3ed157f-a09b-405f-aec4-0e7a81d80fc8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_UkpC3YyoSe.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "166",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "佇想の歩哨"
+    ],
+    "enNames": [
+      "Afterthought Sentry"
+    ],
+    "scryfallName": "Afterthought Sentry",
+    "oracleId": "f0c533a2-751a-4c5a-8cec-b83da3c8c62f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_NU1Y9OAtQQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "167",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "書庫の調停者"
+    ],
+    "enNames": [
+      "Archive Arbiter"
+    ],
+    "scryfallName": "Archive Arbiter",
+    "oracleId": "36cb3d18-019c-464d-b591-8c87e1b81f31",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_JHVP0Z3L8g.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "168",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "貪欲な写本、コーディ"
+    ],
+    "enNames": [
+      "Codie, Ravenous Codex"
+    ],
+    "scryfallName": "Codie, Ravenous Codex",
+    "oracleId": "a17e414c-8de0-47fd-bcbc-540c7fec7642",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_B9SaFcJWNE.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "169",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "模倣宇宙の支点"
+    ],
+    "enNames": [
+      "The Echoverse Fulcrum"
+    ],
+    "scryfallName": "The Echoverse Fulcrum",
+    "oracleId": "c04197ad-d2f3-499f-b863-bed0c869519c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_YJRwG5ouiD.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "170",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ジェイスの眼"
+    ],
+    "enNames": [
+      "Eye of Jace"
+    ],
+    "scryfallName": "Eye of Jace",
+    "oracleId": "c8f802ad-4621-4f71-b52d-fbc55853dc88",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_43ikE1teAQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "171",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "静寂時間の番人"
+    ],
+    "enNames": [
+      "Keeper of the Quiet Hour"
+    ],
+    "scryfallName": "Keeper of the Quiet Hour",
+    "oracleId": "ecdfee75-15fd-41ea-89d4-4bfc1fa4d032",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_lMqSjM08gt.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "172",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "生ける図書館"
+    ],
+    "enNames": [
+      "Living Library"
+    ],
+    "scryfallName": "Living Library",
+    "oracleId": "81f022a7-fd19-4340-b8a0-6b11ab3e9d91",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_QpPrAvamUz.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "173",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "医学生の帆凧"
+    ],
+    "enNames": [
+      "Medic's Kitesail"
+    ],
+    "scryfallName": "Medic's Kitesail",
+    "oracleId": "eacfe895-5106-437c-b8c1-2ff03c107744",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_JpRQKekgEr.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "174",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "つぶやく書物"
+    ],
+    "enNames": [
+      "Murmuring Volume"
+    ],
+    "scryfallName": "Murmuring Volume",
+    "oracleId": "4baa7847-dfcc-4aa3-aa64-2deeaa3f013b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_I7bCbEzn4J.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "175",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "献身の広場"
+    ],
+    "enNames": [
+      "Dedicated Commons"
+    ],
+    "scryfallName": "Dedicated Commons",
+    "oracleId": "d4e0749a-e179-4c19-8536-bf8f1a198549",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_DvBh6XiEFV.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "176",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "さびれた浜"
+    ],
+    "enNames": [
+      "Deserted Beach"
+    ],
+    "scryfallName": "Deserted Beach",
+    "oracleId": "f0ec8681-da50-466b-8cdd-1dc710deccd9",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_bc1biDq6WM.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "177",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "フェイトホールド別館"
+    ],
+    "enNames": [
+      "Fatehold Annex"
+    ],
+    "scryfallName": "Fatehold Annex",
+    "oracleId": "d35876a3-e891-43d3-a50c-69e8469497e0",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_PGmRR9QaQq.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "178",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "畏怖の広場"
+    ],
+    "enNames": [
+      "Formidable Commons"
+    ],
+    "scryfallName": "Formidable Commons",
+    "oracleId": "3e51c060-1e86-4a0e-8fee-8b7273161468",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_bomsHb0bfi.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "179",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "こだまの大広間"
+    ],
+    "enNames": [
+      "Hall of Echoes"
+    ],
+    "scryfallName": "Hall of Echoes",
+    "oracleId": "dc0a51d4-5b7e-4987-b1fe-349fd118a625",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_x6nQrYqEwG.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "180",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "憑依された峰"
+    ],
+    "enNames": [
+      "Haunted Ridge"
+    ],
+    "scryfallName": "Haunted Ridge",
+    "oracleId": "e2a37967-4212-4553-9f77-bcb613405807",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_xngu5rerWo.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "181",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヘクスヘイヴンの決闘場"
+    ],
+    "enNames": [
+      "Hexhaven Dueling Arena"
+    ],
+    "scryfallName": "Hexhaven Dueling Arena",
+    "oracleId": "2cc075da-f79b-4050-84eb-2c1b9a30260c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_pH13mGo47C.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "182",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "革新の広場"
+    ],
+    "enNames": [
+      "Innovative Commons"
+    ],
+    "scryfallName": "Innovative Commons",
+    "oracleId": "6812e4d3-0034-4fc8-9ee9-520f76a0ea94",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_h2Ct00N4BW.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "183",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "コンストラリ別館"
+    ],
+    "enNames": [
+      "Konstrari Annex"
+    ],
+    "scryfallName": "Konstrari Annex",
+    "oracleId": "31ea4f3f-392a-4319-a95b-eb28790a80e6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_DdJWlGsFLa.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "184",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "詳細の広場"
+    ],
+    "enNames": [
+      "Meticulous Commons"
+    ],
+    "scryfallName": "Meticulous Commons",
+    "oracleId": "7fdd471f-ec95-4aa7-8f8a-ad8946de5ab4",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_HvOsG8KgSH.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "185",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "草茂る農地"
+    ],
+    "enNames": [
+      "Overgrown Farmland"
+    ],
+    "scryfallName": "Overgrown Farmland",
+    "oracleId": "709d2f10-1585-48c3-9058-ddd5f62f0452",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_s0uPq8TzF8.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "186",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "落石の谷間"
+    ],
+    "enNames": [
+      "Rockfall Vale"
+    ],
+    "scryfallName": "Rockfall Vale",
+    "oracleId": "185c70c1-8403-4ae5-b45d-3679d4ee092a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_vOJ2vKRJNa.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "187",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "乱動する梢"
+    ],
+    "enNames": [
+      "Roiling Canopy"
+    ],
+    "scryfallName": "Roiling Canopy",
+    "oracleId": "c6e87760-4cd0-4281-82d4-7a377ea960ad",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_m1tw2eYkN3.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "188",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "避難の広間"
+    ],
+    "enNames": [
+      "Room of Refuge"
+    ],
+    "scryfallName": "Room of Refuge",
+    "oracleId": "27d5b2eb-94fe-45fb-806c-354044de7ba5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_jbWor4nkBy.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "189",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "難破船の湿地"
+    ],
+    "enNames": [
+      "Shipwreck Marsh"
+    ],
+    "scryfallName": "Shipwreck Marsh",
+    "oracleId": "5f42b67f-87fd-4f98-a0e8-0c8313f4bbc8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_cCbsnPm1yB.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "190",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "スティンガークイル別館"
+    ],
+    "enNames": [
+      "Stingerquill Annex"
+    ],
+    "scryfallName": "Stingerquill Annex",
+    "oracleId": "26e20ae5-4059-4d63-9db5-6e12421d1aba",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_ogWcGFSdEo.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "191",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "理論家の聖域"
+    ],
+    "enNames": [
+      "Theorist's Sanctum"
+    ],
+    "scryfallName": "Theorist's Sanctum",
+    "oracleId": "37513bd8-7303-4ac6-a7a7-224184faf758",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_Lk7EyjuG8c.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "192",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "セオリクス別館"
+    ],
+    "enNames": [
+      "Theorix Annex"
+    ],
+    "scryfallName": "Theorix Annex",
+    "oracleId": "00ad5200-5179-4d1b-8bb3-a09e1b31be58",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_KOytCx5XoG.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "193",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "変容の広場"
+    ],
+    "enNames": [
+      "Transformative Commons"
+    ],
+    "scryfallName": "Transformative Commons",
+    "oracleId": "8ec56e2a-380f-4de7-9fb7-52de803008fc",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_8T5kcG5nHu.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "194",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヴィゴーブルーム別館"
+    ],
+    "enNames": [
+      "Vigorbloom Annex"
+    ],
+    "scryfallName": "Vigorbloom Annex",
+    "oracleId": "fcb35d42-bcd2-427c-9640-ff3602b79912",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_Snmt2BpYt5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "195",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "意志堅固なるアジャニ"
+    ],
+    "enNames": [
+      "Ajani Resolute"
+    ],
+    "scryfallName": "Ajani Resolute",
+    "oracleId": "0d60c095-4c6c-4618-8ef3-508f3d454efa",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_Hw4W5Jv2NU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "196",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "希望の剣、ダニサ"
+    ],
+    "enNames": [
+      "Danitha, Sword of Hope"
+    ],
+    "scryfallName": "Danitha, Sword of Hope",
+    "oracleId": "f7b754d3-9863-420d-895d-00e70b8b078a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_PtREvfogs9.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "197",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "動かし得ぬもの、ガルタ"
+    ],
+    "enNames": [
+      "Ghalta the Immovable"
+    ],
+    "scryfallName": "Ghalta the Immovable",
+    "oracleId": "0d496c6e-8f7b-420f-9197-dacd2feb528f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_ILLM7lL8RJ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "198",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ギデオンの記念碑"
+    ],
+    "enNames": [
+      "Gideon's Memorial"
+    ],
+    "scryfallName": "Gideon's Memorial",
+    "oracleId": "c8f08704-7330-4fa9-b456-2e96aa252a2c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_SiTRwB0awL.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "199",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "故郷に生きるコス"
+    ],
+    "enNames": [
+      "Koth of the Homestead"
+    ],
+    "scryfallName": "Koth of the Homestead",
+    "oracleId": "567aeb60-a441-41b1-98f4-54510d299317",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_d07oZILoQD.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "200",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "過ち無き者、リリアナ"
+    ],
+    "enNames": [
+      "Liliana the Faultless"
+    ],
+    "scryfallName": "Liliana the Faultless",
+    "oracleId": "22c2e66d-a2a1-46db-a70a-dff5ad5d6c14",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_oGhtPrFTuj.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "201",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "黎明の大天使、ライラ"
+    ],
+    "enNames": [
+      "Lyra, Archangel of Dawn"
+    ],
+    "scryfallName": "Lyra, Archangel of Dawn",
+    "oracleId": "0fca3328-484f-4050-925e-91840710b5d6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_ZQSXyDnBxs.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "202",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "第一対応者、救命少女"
+    ],
+    "enNames": [
+      "Rescue Girl, First Responder"
+    ],
+    "scryfallName": "Rescue Girl, First Responder",
+    "oracleId": "df6fc0b4-333b-4f6c-804c-ba6c8e29c88e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_acOdXueRlH.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "203",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "監視の領事、サヒーリ"
+    ],
+    "enNames": [
+      "Saheeli, Consul of Oversight"
+    ],
+    "scryfallName": "Saheeli, Consul of Oversight",
+    "oracleId": "dfa95c0e-393d-4b22-9de3-45a7efc0ba14",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_gdphLZKLMx.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "204",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "光盾の熟練者、テヨ"
+    ],
+    "enNames": [
+      "Teyo, Lightshield Expert"
+    ],
+    "scryfallName": "Teyo, Lightshield Expert",
+    "oracleId": "77a9fac6-3c26-4456-9e0b-f5839a3dcae2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_MsJpZMdEk2.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "205",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "生存者、サリア"
+    ],
+    "enNames": [
+      "Thalia, the Survivor"
+    ],
+    "scryfallName": "Thalia, the Survivor",
+    "oracleId": "55ef129e-698e-424f-be3c-3fbba6c2cc3e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_WWy0zC6ICx.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "206",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "オルゾフの法魔道士、トミク"
+    ],
+    "enNames": [
+      "Tomik, Orzhov Lawmage"
+    ],
+    "scryfallName": "Tomik, Orzhov Lawmage",
+    "oracleId": "7a501f7e-eec8-45f7-9ac3-483fd8f5ca5e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_aQ1bmLOF6E.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "207",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "癒し手としての歩み"
+    ],
+    "enNames": [
+      "Way of the Healer"
+    ],
+    "scryfallName": "Way of the Healer",
+    "oracleId": "cb27dc83-85ee-4f54-b032-41cd1806d3ac",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_BcfY016KLx.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "208",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "導師としての歩み"
+    ],
+    "enNames": [
+      "Way of the Mentor"
+    ],
+    "scryfallName": "Way of the Mentor",
+    "oracleId": "ce924285-f4c5-44e6-909b-f5f7d302ebaf",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_7ylQtgP8Zt.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "209",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "寵愛受けし友、義丸"
+    ],
+    "enNames": [
+      "Yoshimaru, Beloved Companion"
+    ],
+    "scryfallName": "Yoshimaru, Beloved Companion",
+    "oracleId": "c00a0be5-d9a9-4263-a87e-7bf2d128ab3a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_tLR8pmmDmN.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "210",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "剛毅なる刃、百合子"
+    ],
+    "enNames": [
+      "Yuriko, Blade of the Mighty"
+    ],
+    "scryfallName": "Yuriko, Blade of the Mighty",
+    "oracleId": "f89b0143-4b19-4ab1-a96b-356b21e435ef",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_HB935G9AtA.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "211",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "謙虚な書記、アーニ"
+    ],
+    "enNames": [
+      "Arni, Humble Scribe"
+    ],
+    "scryfallName": "Arni, Humble Scribe",
+    "oracleId": "a680d1ab-99f2-43d0-b289-5fdba4083d03",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_LorwW4IP0y.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "212",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "遵守の冷気、チャンドラ"
+    ],
+    "enNames": [
+      "Chandra, Chill of Compliance"
+    ],
+    "scryfallName": "Chandra, Chill of Compliance",
+    "oracleId": "c3dfa1e2-6785-49a0-a194-fb842a8eb63c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/np46fp3fn1/jp_swpSjBXL2Y.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "213",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "極端な迷い子、フブルスプ"
+    ],
+    "enNames": [
+      "Fblthp, Impossibly Lost"
+    ],
+    "scryfallName": "Fblthp, Impossibly Lost",
+    "oracleId": "17e7212e-69d8-4014-af98-447baed2cae7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_jQnf7zxVxs.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "214",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "聖サリアの霊"
+    ],
+    "enNames": [
+      "Geist of Saint Thalia"
+    ],
+    "scryfallName": "Geist of Saint Thalia",
+    "oracleId": "ef32a4a9-14e2-4738-b4c2-53ce5e1d2a53",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_bRThaqgD2r.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "215",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "砂漠の霜、ハパチラ"
+    ],
+    "enNames": [
+      "Hapatra, the Desert Frost"
+    ],
+    "scryfallName": "Hapatra, the Desert Frost",
+    "oracleId": "ac0f161a-e5ec-4a95-9f37-305bdf1ac900",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_95nMawXKIk.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "216",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "現実を彫る者、ジェイス"
+    ],
+    "enNames": [
+      "Jace, Reality Sculptor"
+    ],
+    "scryfallName": "Jace, Reality Sculptor",
+    "oracleId": "bf0e9e00-fba5-448a-9052-ae730aea4bf8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_eCgRSjy8i2.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "217",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "トレイリアの大天使、ライラ"
+    ],
+    "enNames": [
+      "Lyra, Tolarian Archangel"
+    ],
+    "scryfallName": "Lyra, Tolarian Archangel",
+    "oracleId": "d9060fff-0b65-4b3d-930d-6e36315b802c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_cq6y7pru34.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "218",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "名探偵、プロフト"
+    ],
+    "enNames": [
+      "Proft, Consulting Detective"
+    ],
+    "scryfallName": "Proft, Consulting Detective",
+    "oracleId": "45473bdb-b96f-4213-a46d-b2dbdf6b5e56",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_7NQJRHPAE0.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "219",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "生命大魔術師、ルーリク・サー"
+    ],
+    "enNames": [
+      "Ruric Thar, Biomagus"
+    ],
+    "scryfallName": "Ruric Thar, Biomagus",
+    "oracleId": "873fa095-5662-407a-bd24-9a1c4712a428",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_Aqbp5QDNqz.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "220",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ナクタムンの専制君主、サムト"
+    ],
+    "enNames": [
+      "Samut, Tyrant of Naktamun"
+    ],
+    "scryfallName": "Samut, Tyrant of Naktamun",
+    "oracleId": "a275f7ac-7dae-4422-875a-f34f24b6f28a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_gKW2qeqOZz.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "221",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "逃亡者、梅澤哲子"
+    ],
+    "enNames": [
+      "Tetsuko Umezawa, Fugitive"
+    ],
+    "scryfallName": "Tetsuko Umezawa, Fugitive",
+    "oracleId": "ceeeacbc-01b0-4421-aaca-2ce6cdbe45d7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_uHxJTmJUSD.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "222",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "アカデミーの守護者、トラクソス"
+    ],
+    "enNames": [
+      "Traxos, Academy Guardian"
+    ],
+    "scryfallName": "Traxos, Academy Guardian",
+    "oracleId": "7b9a574f-6d56-421b-8fbd-94da1e6e3ce1",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_cuPdeEdGrz.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "223",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "冷術師としての歩み"
+    ],
+    "enNames": [
+      "Way of the Cryomancer"
+    ],
+    "scryfallName": "Way of the Cryomancer",
+    "oracleId": "7d32c63d-aa9e-4f5d-a3e6-51377a786009",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_pALQ2bpMRF.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "224",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "精神を刻む者としての歩み"
+    ],
+    "enNames": [
+      "Way of the Mind Sculptor"
+    ],
+    "scryfallName": "Way of the Mind Sculptor",
+    "oracleId": "94be2e86-ba0e-4b8d-9b9c-114adacb26db",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_uDtaHtEXzU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "225",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "オタリアの大巨獣、ヤーグル"
+    ],
+    "enNames": [
+      "Yargle, Goliath of Otaria"
+    ],
+    "scryfallName": "Yargle, Goliath of Otaria",
+    "oracleId": "014d0bcd-b80f-4c43-8f00-f4c31e8f3370",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_RmodhuxL9h.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "226",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "影からの希望、百合子"
+    ],
+    "enNames": [
+      "Yuriko, Hope from the Shadows"
+    ],
+    "scryfallName": "Yuriko, Hope from the Shadows",
+    "oracleId": "983f4fde-ab04-44f0-a294-c3b472de0b19",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_U90LtpGwax.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "227",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "苦悶の槍、ダニサ"
+    ],
+    "enNames": [
+      "Danitha, Spear of Agony"
+    ],
+    "scryfallName": "Danitha, Spear of Agony",
+    "oracleId": "4b5c7f11-75f2-4bad-86cd-f0232861f569",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_g7z1oXpbJW.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "228",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "悲しきもてなし役、ガリア"
+    ],
+    "enNames": [
+      "Gallia, Tragic Host"
+    ],
+    "scryfallName": "Gallia, Tragic Host",
+    "oracleId": "58285b70-0d13-4723-b5a4-91fb6f9ccf03",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_NLbTYvmmCm.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "229",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヴェール被りの解体者、ガラク"
+    ],
+    "enNames": [
+      "Garruk, Veiled Butcher"
+    ],
+    "scryfallName": "Garruk, Veiled Butcher",
+    "oracleId": "4a6972fe-348a-4a19-a1d0-bdf8f1f9c792",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_HC5yRGG7ca.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "230",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "誓い知らず、ギデオン"
+    ],
+    "enNames": [
+      "Gideon the Oathless"
+    ],
+    "scryfallName": "Gideon the Oathless",
+    "oracleId": "7afa530f-ea51-4bee-af3b-59b83ea5cb25",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_K1hHSId91f.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "231",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "悔いし者、リリアナ"
+    ],
+    "enNames": [
+      "Liliana the Repentant"
+    ],
+    "scryfallName": "Liliana the Repentant",
+    "oracleId": "5eb4403f-f199-4f75-a7c6-e76783f9b07d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_x4gklwvp1G.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "232",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "特異点、おたから"
+    ],
+    "enNames": [
+      "Loot, the Anomaly"
+    ],
+    "scryfallName": "Loot, the Anomaly",
+    "oracleId": "e0142e7d-7b0b-4290-a56c-5fa950fdccf8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_NwECUjCewh.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "233",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "憎しみの世捨て、メイブル"
+    ],
+    "enNames": [
+      "Mabel, Bitter Recluse"
+    ],
+    "scryfallName": "Mabel, Bitter Recluse",
+    "oracleId": "36924990-8e3a-434e-bcd1-f03603cb350d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_h7niXO3Fyg.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "234",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "最重要指名手配、虐殺少女"
+    ],
+    "enNames": [
+      "Massacre Girl, Most Wanted"
+    ],
+    "scryfallName": "Massacre Girl, Most Wanted",
+    "oracleId": "81f35914-73bf-429f-ba20-32e23ac30159",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_JIBLOSq2tt.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "235",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "悪意ある首謀者、プロフト"
+    ],
+    "enNames": [
+      "Proft, Sinister Mastermind"
+    ],
+    "scryfallName": "Proft, Sinister Mastermind",
+    "oracleId": "a350856c-87f2-4605-999f-4e26aa362a55",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_wdEIx5Y57N.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "236",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "金剛刃の魔道士、テヨ"
+    ],
+    "enNames": [
+      "Teyo, Diamondblade Mage"
+    ],
+    "scryfallName": "Teyo, Diamondblade Mage",
+    "oracleId": "a3bfbe1a-7831-45bd-9e42-790c28f6054c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_WfF2U2NtFC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "237",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ポケットのお邪魔虫、チビボネ"
+    ],
+    "enNames": [
+      "Tinybones, Pocket Nuisance"
+    ],
+    "scryfallName": "Tinybones, Pocket Nuisance",
+    "oracleId": "97dcf9fb-3f2f-4aa6-959a-e3c4889c1673",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_6cN2DNQoq8.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "238",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "死をもたらす者としての歩み"
+    ],
+    "enNames": [
+      "Way of the Deathbringer"
+    ],
+    "scryfallName": "Way of the Deathbringer",
+    "oracleId": "54775625-bf44-4035-969e-7e70578c8b98",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_cvfeGPmAs6.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "239",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "屍術師としての歩み"
+    ],
+    "enNames": [
+      "Way of the Necromancer"
+    ],
+    "scryfallName": "Way of the Necromancer",
+    "oracleId": "f3087daa-d2ff-4227-abff-3398da6297af",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_JOlbadGw5c.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "240",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "苛まれし一匹狼、ウィンター"
+    ],
+    "enNames": [
+      "Winter, Tormented Loner"
+    ],
+    "scryfallName": "Winter, Tormented Loner",
+    "oracleId": "84eaac2e-74ce-4a16-9faa-409df7c58eb3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_aXziKA0f7R.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "241",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "アーボーグの暴食、ヤーグル"
+    ],
+    "enNames": [
+      "Yargle, Glutton of Urborg"
+    ],
+    "scryfallName": "Yargle, Glutton of Urborg",
+    "oracleId": "ed66cd31-958f-4b28-82a3-e04acc819afc",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_iSHIztK7p6.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "242",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "容赦なきアジャニ"
+    ],
+    "enNames": [
+      "Ajani Unrelenting"
+    ],
+    "scryfallName": "Ajani Unrelenting",
+    "oracleId": "71620e92-45a4-49cb-94d5-348013ecf886",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_6kwVwJjsgh.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "243",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "名高き勇者、アーニ"
+    ],
+    "enNames": [
+      "Arni, Renowned Champion"
+    ],
+    "scryfallName": "Arni, Renowned Champion",
+    "oracleId": "1a929c4f-ae1f-44d9-a0a7-2ca2dc928dee",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_nLBkrdy4nN.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "244",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "反逆の先導者、チャンドラ"
+    ],
+    "enNames": [
+      "Chandra, Torch of Defiance"
+    ],
+    "scryfallName": "Chandra, Torch of Defiance",
+    "oracleId": "12cc800c-c7be-4811-8207-fd01a99cc892",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/np46fp3fn1/jp_EGFxhl588r.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "245",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "浮かれ騒ぐ、ガリア"
+    ],
+    "enNames": [
+      "Gallia, the Merrymaker"
+    ],
+    "scryfallName": "Gallia, the Merrymaker",
+    "oracleId": "87f39199-3e4b-44fa-8406-62019eb43c10",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_RgNCdNQdJZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "246",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "独法師、ジアン・ヤングー"
+    ],
+    "enNames": [
+      "Jiang Yanggu, Alone"
+    ],
+    "scryfallName": "Jiang Yanggu, Alone",
+    "oracleId": "fa8b3557-b35a-4a68-ab85-cf09683f3bc5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_cQ8iUj5KVR.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "247",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "炎と灰のキオーラ"
+    ],
+    "enNames": [
+      "Kiora of Fire and Ashes"
+    ],
+    "scryfallName": "Kiora of Fire and Ashes",
+    "oracleId": "02b41d0e-82e7-4307-8cc4-8175ff78ea1f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_cY2U1VncQc.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "248",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "地操術士、コス"
+    ],
+    "enNames": [
+      "Koth, the Geomancer"
+    ],
+    "scryfallName": "Koth, the Geomancer",
+    "oracleId": "3b17da84-ae4d-4fc1-a327-85e54e6156c6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_TTmEb8plW2.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "249",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "乱伐者、マーウィン"
+    ],
+    "enNames": [
+      "Marwyn, the Clearcutter"
+    ],
+    "scryfallName": "Marwyn, the Clearcutter",
+    "oracleId": "aff4e43d-cafa-47de-8e39-011f9254a26a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_15FOlQhrn9.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "250",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "決意の再建者、ピア"
+    ],
+    "enNames": [
+      "Pia, Determined Rebuilder"
+    ],
+    "scryfallName": "Pia, Determined Rebuilder",
+    "oracleId": "a49c0c64-ea87-44f4-9acf-e7181962aeb2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_EtL3BOxR6r.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "251",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ハゾレトの勇者、サムト"
+    ],
+    "enNames": [
+      "Samut, Hazoret's Champion"
+    ],
+    "scryfallName": "Samut, Hazoret's Champion",
+    "oracleId": "add02a36-8811-438b-a8e1-f5c8a8146b4e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_6AJdt2orxe.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "252",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "追跡者、梅澤哲子"
+    ],
+    "enNames": [
+      "Tetsuko Umezawa, Pursuer"
+    ],
+    "scryfallName": "Tetsuko Umezawa, Pursuer",
+    "oracleId": "708d4567-a5a3-437f-bae4-ae10f1537aa9",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_cQJLc3MKiw.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "253",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "イゼットの火花魔道士、トミク"
+    ],
+    "enNames": [
+      "Tomik, Izzet Sparkmage"
+    ],
+    "scryfallName": "Tomik, Izzet Sparkmage",
+    "oracleId": "16604fee-cd8d-41e4-8269-3c7ff756613d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_fFQnjbbJeK.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "254",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "紅蓮術師としての歩み"
+    ],
+    "enNames": [
+      "Way of the Pyromancer"
+    ],
+    "scryfallName": "Way of the Pyromancer",
+    "oracleId": "68d3f547-674a-4d8a-b02f-01bc2f161916",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_E3bRHqegvs.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "255",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "大将軍としての歩み"
+    ],
+    "enNames": [
+      "Way of the Warlord"
+    ],
+    "scryfallName": "Way of the Warlord",
+    "oracleId": "10721d62-dc68-43b4-bfa2-dcb8cf8ea980",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_FDcXuH9Eu7.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "256",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "チームプレイヤー、ウィンター"
+    ],
+    "enNames": [
+      "Winter, Team Player"
+    ],
+    "scryfallName": "Winter, Team Player",
+    "oracleId": "254f133a-eee5-48b9-b19f-110555e49300",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_d4onXRvyFW.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "257",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "月光の君主、エドガー"
+    ],
+    "enNames": [
+      "Edgar, Moonlit Sovereign"
+    ],
+    "scryfallName": "Edgar, Moonlit Sovereign",
+    "oracleId": "1917bda6-c0e1-4c80-8009-74c28cf6b8e9",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_zgn4zISPXy.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "258",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "道を知る者、フブルスプ"
+    ],
+    "enNames": [
+      "Fblthp, Knows the Way"
+    ],
+    "scryfallName": "Fblthp, Knows the Way",
+    "oracleId": "48b891b6-3175-4864-bb98-af131098c557",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_yX9czLmW0N.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "259",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "呪い破り、ガラク"
+    ],
+    "enNames": [
+      "Garruk, Curse Breaker"
+    ],
+    "scryfallName": "Garruk, Curse Breaker",
+    "oracleId": "184d4672-05a9-4182-8b3f-3561fb33ed62",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_8RNTarC9JQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "260",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "とどめ得ぬもの、ガルタ"
+    ],
+    "enNames": [
+      "Ghalta the Unstoppable"
+    ],
+    "scryfallName": "Ghalta the Unstoppable",
+    "oracleId": "8e5ea773-a60b-4502-9db5-ce93fa61cc89",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_lgCcobdR1d.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "261",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "常に友と、ジアン・ヤングー"
+    ],
+    "enNames": [
+      "Jiang Yanggu, Never Alone"
+    ],
+    "scryfallName": "Jiang Yanggu, Never Alone",
+    "oracleId": "4ba661d7-1cb8-4fec-bfaa-5f2797235fcf",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_WeKiSgEc5i.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "262",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "結節点、おたから"
+    ],
+    "enNames": [
+      "Loot, the Nexus"
+    ],
+    "scryfallName": "Loot, the Nexus",
+    "oracleId": "a99ce9db-9b7d-45a0-bee7-0875fc62ca48",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_1FsAALq2br.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "263",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "保全者、マーウィン"
+    ],
+    "enNames": [
+      "Marwyn, the Preserver"
+    ],
+    "scryfallName": "Marwyn, the Preserver",
+    "oracleId": "eb03f6c1-c94f-4f09-b2e9-a55ce5533653",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_jfmntYaRNg.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "264",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "霊気の苦行者、ピア"
+    ],
+    "enNames": [
+      "Pia, Aether Ascetic"
+    ],
+    "scryfallName": "Pia, Aether Ascetic",
+    "oracleId": "6519dc16-4960-4220-aaa8-7e4279743714",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_RZKOFrvnoK.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "265",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "魔道士壊し、ルーリク・サー"
+    ],
+    "enNames": [
+      "Ruric Thar, Magecrusher"
+    ],
+    "scryfallName": "Ruric Thar, Magecrusher",
+    "oracleId": "453b2b3c-7df5-4515-9565-82f603cf451b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_oWplaFnH1b.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "266",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "屹立する思いやり、デカボネ"
+    ],
+    "enNames": [
+      "Titanbones, Towering Heart"
+    ],
+    "scryfallName": "Titanbones, Towering Heart",
+    "oracleId": "510bccb1-61cd-49f1-a54a-80352653d1e3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_1s00FKku6h.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "267",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "パラドックスとしての歩み"
+    ],
+    "enNames": [
+      "Way of the Paradox"
+    ],
+    "scryfallName": "Way of the Paradox",
+    "oracleId": "76771cd1-6b74-49bb-9421-8845fe344567",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_6rmd5CFCuW.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "268",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "野生語りとしての歩み"
+    ],
+    "enNames": [
+      "Way of the Wildspeaker"
+    ],
+    "scryfallName": "Way of the Wildspeaker",
+    "oracleId": "501580b9-692c-4804-be34-012a25ba8adf",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_R1FnRzOTeZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "269",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "争い好きの野良犬、義丸"
+    ],
+    "enNames": [
+      "Yoshimaru, Scrappy Stray"
+    ],
+    "scryfallName": "Yoshimaru, Scrappy Stray",
+    "oracleId": "c87da757-3daa-4874-a1e4-be0aa2adcb28",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_Rp3xJiS1KQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "270",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "古の血王、エドガー"
+    ],
+    "enNames": [
+      "Edgar, Ancient Bloodlord"
+    ],
+    "scryfallName": "Edgar, Ancient Bloodlord",
+    "oracleId": "cab2bc93-f38b-4301-ac42-05765615586b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_5jqLiT0F7P.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "271",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "砂漠の牙、ハパチラ"
+    ],
+    "enNames": [
+      "Hapatra, the Desert Fang"
+    ],
+    "scryfallName": "Hapatra, the Desert Fang",
+    "oracleId": "6894345f-52a6-46e4-b278-0783087daee1",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_X54APv3bmS.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "272",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "金色の守護者、カーン"
+    ],
+    "enNames": [
+      "Karn, Gilded Guardian"
+    ],
+    "scryfallName": "Karn, Gilded Guardian",
+    "oracleId": "20b90a18-ff62-4995-b0d6-fbef44dca357",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_0ntA0GFjG1.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "273",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "塩と砂のキオーラ"
+    ],
+    "enNames": [
+      "Kiora of Salt and Sand"
+    ],
+    "scryfallName": "Kiora of Salt and Sand",
+    "oracleId": "e70bb7f8-8098-49c5-929c-68f63cd821c5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_LEmM8dRWGE.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "274",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "渓間の英雄、メイブル"
+    ],
+    "enNames": [
+      "Mabel, Valley Hero"
+    ],
+    "scryfallName": "Mabel, Valley Hero",
+    "oracleId": "ab56f7cf-9538-45b5-a657-1e2ebef1e92b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_iFmDDhSp9u.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "275",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "アヴィシュカーの宝石、サヒーリ"
+    ],
+    "enNames": [
+      "Saheeli, Jewel of Avishkar"
+    ],
+    "scryfallName": "Saheeli, Jewel of Avishkar",
+    "oracleId": "83705258-1f42-41db-a32e-de99ffd759eb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_lIYbjopt20.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "276",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "可能性、タム"
+    ],
+    "enNames": [
+      "Tam, the Possibility"
+    ],
+    "scryfallName": "Tam, the Possibility",
+    "oracleId": "c92c7744-0c92-4a36-9ada-4ffca812009e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_TREhAFHwKP.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "277",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "石の魂、ヴラスカ"
+    ],
+    "enNames": [
+      "Vraska, Soul of Stone"
+    ],
+    "scryfallName": "Vraska, Soul of Stone",
+    "oracleId": "cad63b31-667b-4518-bc49-be4ffb82bc63",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_a6yzjI5Azd.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "278",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "鋭き一瞥、ヴラスカ"
+    ],
+    "enNames": [
+      "Vraska, the Cutting Glare"
+    ],
+    "scryfallName": "Vraska, the Cutting Glare",
+    "oracleId": "580de511-863c-4b7a-9d2e-fcdf6e12d54b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_mok3VVdUxQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "279",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "銀白の防衛者、カーン"
+    ],
+    "enNames": [
+      "Karn, Argent Defender"
+    ],
+    "scryfallName": "Karn, Argent Defender",
+    "oracleId": "aecc621f-67da-41a7-9d47-05ded302ae35",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_EoIBG3sNsw.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "280",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "永劫なる災い魔、トラクソス"
+    ],
+    "enNames": [
+      "Traxos, Scourge Eternal"
+    ],
+    "scryfallName": "Traxos, Scourge Eternal",
+    "oracleId": "acf4abde-4034-4fcf-b531-78c935aecd8c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_xcTT0vgzxN.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "281",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "平地"
+    ],
+    "enNames": [
+      "Plains"
+    ],
+    "scryfallName": "Plains",
+    "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/ZZwdhCbeDs/jp_lTU2m9egKa.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "282",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "平地"
+    ],
+    "enNames": [
+      "Plains"
+    ],
+    "scryfallName": "Plains",
+    "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/ZZwdhCbeDs/jp_d03HlysJQQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "283",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "島"
+    ],
+    "enNames": [
+      "Island"
+    ],
+    "scryfallName": "Island",
+    "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/ZZwdhCbeDs/jp_6StwRHTCQV.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "284",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "島"
+    ],
+    "enNames": [
+      "Island"
+    ],
+    "scryfallName": "Island",
+    "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/ZZwdhCbeDs/jp_ZZwdhCbeDs.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "285",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "沼"
+    ],
+    "enNames": [
+      "Swamp"
+    ],
+    "scryfallName": "Swamp",
+    "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/ZZwdhCbeDs/jp_JJ1qx4H0bY.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "286",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "沼"
+    ],
+    "enNames": [
+      "Swamp"
+    ],
+    "scryfallName": "Swamp",
+    "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/ZZwdhCbeDs/jp_qC9R4YrdGu.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "287",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "山"
+    ],
+    "enNames": [
+      "Mountain"
+    ],
+    "scryfallName": "Mountain",
+    "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/ZZwdhCbeDs/jp_jEDEghlQ05.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "288",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "山"
+    ],
+    "enNames": [
+      "Mountain"
+    ],
+    "scryfallName": "Mountain",
+    "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/ZZwdhCbeDs/jp_xDKfMxUWmK.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "289",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "森"
+    ],
+    "enNames": [
+      "Forest"
+    ],
+    "scryfallName": "Forest",
+    "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_BBrshny4ip.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "290",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "森"
+    ],
+    "enNames": [
+      "Forest"
+    ],
+    "scryfallName": "Forest",
+    "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_0ciuqfcQ04.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "291",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "意志堅固なるアジャニ"
+    ],
+    "enNames": [
+      "Ajani Resolute"
+    ],
+    "scryfallName": "Ajani Resolute",
+    "oracleId": "0d60c095-4c6c-4618-8ef3-508f3d454efa",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_jzlvPvqfXC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "292",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ギデオンの記念碑"
+    ],
+    "enNames": [
+      "Gideon's Memorial"
+    ],
+    "scryfallName": "Gideon's Memorial",
+    "oracleId": "c8f08704-7330-4fa9-b456-2e96aa252a2c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_5udBNAqPRY.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "293",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "過ち無き者、リリアナ"
+    ],
+    "enNames": [
+      "Liliana the Faultless"
+    ],
+    "scryfallName": "Liliana the Faultless",
+    "oracleId": "22c2e66d-a2a1-46db-a70a-dff5ad5d6c14",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_Q6VSurS8OP.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "294",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "黎明の大天使、ライラ"
+    ],
+    "enNames": [
+      "Lyra, Archangel of Dawn"
+    ],
+    "scryfallName": "Lyra, Archangel of Dawn",
+    "oracleId": "0fca3328-484f-4050-925e-91840710b5d6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_Sngb2Wic8Z.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "295",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "光盾の熟練者、テヨ"
+    ],
+    "enNames": [
+      "Teyo, Lightshield Expert"
+    ],
+    "scryfallName": "Teyo, Lightshield Expert",
+    "oracleId": "77a9fac6-3c26-4456-9e0b-f5839a3dcae2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_luwT5zmIQO.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "296",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "生存者、サリア"
+    ],
+    "enNames": [
+      "Thalia, the Survivor"
+    ],
+    "scryfallName": "Thalia, the Survivor",
+    "oracleId": "55ef129e-698e-424f-be3c-3fbba6c2cc3e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_KCoIWx4R5o.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "297",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "遵守の冷気、チャンドラ"
+    ],
+    "enNames": [
+      "Chandra, Chill of Compliance"
+    ],
+    "scryfallName": "Chandra, Chill of Compliance",
+    "oracleId": "c3dfa1e2-6785-49a0-a194-fb842a8eb63c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_tOYyOF1LNw.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "298",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "極端な迷い子、フブルスプ"
+    ],
+    "enNames": [
+      "Fblthp, Impossibly Lost"
+    ],
+    "scryfallName": "Fblthp, Impossibly Lost",
+    "oracleId": "17e7212e-69d8-4014-af98-447baed2cae7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_yLGG5jExrf.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "299",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "聖サリアの霊"
+    ],
+    "enNames": [
+      "Geist of Saint Thalia"
+    ],
+    "scryfallName": "Geist of Saint Thalia",
+    "oracleId": "ef32a4a9-14e2-4738-b4c2-53ce5e1d2a53",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_WjXcw8GYWR.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "300",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "現実を彫る者、ジェイス"
+    ],
+    "enNames": [
+      "Jace, Reality Sculptor"
+    ],
+    "scryfallName": "Jace, Reality Sculptor",
+    "oracleId": "bf0e9e00-fba5-448a-9052-ae730aea4bf8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_tCEwLYXFRw.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "301",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "トレイリアの大天使、ライラ"
+    ],
+    "enNames": [
+      "Lyra, Tolarian Archangel"
+    ],
+    "scryfallName": "Lyra, Tolarian Archangel",
+    "oracleId": "d9060fff-0b65-4b3d-930d-6e36315b802c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_vDLMiPHKpG.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "302",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ナクタムンの専制君主、サムト"
+    ],
+    "enNames": [
+      "Samut, Tyrant of Naktamun"
+    ],
+    "scryfallName": "Samut, Tyrant of Naktamun",
+    "oracleId": "a275f7ac-7dae-4422-875a-f34f24b6f28a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_alkpTEgASy.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "303",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヴェール被りの解体者、ガラク"
+    ],
+    "enNames": [
+      "Garruk, Veiled Butcher"
+    ],
+    "scryfallName": "Garruk, Veiled Butcher",
+    "oracleId": "4a6972fe-348a-4a19-a1d0-bdf8f1f9c792",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_Lhsw3QYy15.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "304",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "誓い知らず、ギデオン"
+    ],
+    "enNames": [
+      "Gideon the Oathless"
+    ],
+    "scryfallName": "Gideon the Oathless",
+    "oracleId": "7afa530f-ea51-4bee-af3b-59b83ea5cb25",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_sN60trr5zU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "305",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "悔いし者、リリアナ"
+    ],
+    "enNames": [
+      "Liliana the Repentant"
+    ],
+    "scryfallName": "Liliana the Repentant",
+    "oracleId": "5eb4403f-f199-4f75-a7c6-e76783f9b07d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_nBeIf5U07t.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "306",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "金剛刃の魔道士、テヨ"
+    ],
+    "enNames": [
+      "Teyo, Diamondblade Mage"
+    ],
+    "scryfallName": "Teyo, Diamondblade Mage",
+    "oracleId": "a3bfbe1a-7831-45bd-9e42-790c28f6054c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_oAmOly5JZl.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "307",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "苛まれし一匹狼、ウィンター"
+    ],
+    "enNames": [
+      "Winter, Tormented Loner"
+    ],
+    "scryfallName": "Winter, Tormented Loner",
+    "oracleId": "84eaac2e-74ce-4a16-9faa-409df7c58eb3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_q7yVl1l1gq.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "308",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "容赦なきアジャニ"
+    ],
+    "enNames": [
+      "Ajani Unrelenting"
+    ],
+    "scryfallName": "Ajani Unrelenting",
+    "oracleId": "71620e92-45a4-49cb-94d5-348013ecf886",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_94DkcO8T58.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "309",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "反逆の先導者、チャンドラ"
+    ],
+    "enNames": [
+      "Chandra, Torch of Defiance"
+    ],
+    "scryfallName": "Chandra, Torch of Defiance",
+    "oracleId": "12cc800c-c7be-4811-8207-fd01a99cc892",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_jDsXwjUgAO.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "310",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "乱伐者、マーウィン"
+    ],
+    "enNames": [
+      "Marwyn, the Clearcutter"
+    ],
+    "scryfallName": "Marwyn, the Clearcutter",
+    "oracleId": "aff4e43d-cafa-47de-8e39-011f9254a26a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_bxUg5HXuW4.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "311",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ハゾレトの勇者、サムト"
+    ],
+    "enNames": [
+      "Samut, Hazoret's Champion"
+    ],
+    "scryfallName": "Samut, Hazoret's Champion",
+    "oracleId": "add02a36-8811-438b-a8e1-f5c8a8146b4e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_UARQ8J0hXs.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "312",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "チームプレイヤー、ウィンター"
+    ],
+    "enNames": [
+      "Winter, Team Player"
+    ],
+    "scryfallName": "Winter, Team Player",
+    "oracleId": "254f133a-eee5-48b9-b19f-110555e49300",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_VmKKc8EPF2.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "313",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "道を知る者、フブルスプ"
+    ],
+    "enNames": [
+      "Fblthp, Knows the Way"
+    ],
+    "scryfallName": "Fblthp, Knows the Way",
+    "oracleId": "48b891b6-3175-4864-bb98-af131098c557",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_bgb1mMvsC6.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "314",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "呪い破り、ガラク"
+    ],
+    "enNames": [
+      "Garruk, Curse Breaker"
+    ],
+    "scryfallName": "Garruk, Curse Breaker",
+    "oracleId": "184d4672-05a9-4182-8b3f-3561fb33ed62",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_hrJg5bpCdi.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "315",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "保全者、マーウィン"
+    ],
+    "enNames": [
+      "Marwyn, the Preserver"
+    ],
+    "scryfallName": "Marwyn, the Preserver",
+    "oracleId": "eb03f6c1-c94f-4f09-b2e9-a55ce5533653",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_XKTL2BAvQY.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "316",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "金色の守護者、カーン"
+    ],
+    "enNames": [
+      "Karn, Gilded Guardian"
+    ],
+    "scryfallName": "Karn, Gilded Guardian",
+    "oracleId": "20b90a18-ff62-4995-b0d6-fbef44dca357",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_x3Z9y6WUgp.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "317",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "可能性、タム"
+    ],
+    "enNames": [
+      "Tam, the Possibility"
+    ],
+    "scryfallName": "Tam, the Possibility",
+    "oracleId": "c92c7744-0c92-4a36-9ada-4ffca812009e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_Q70IryfJHU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "318",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "石の魂、ヴラスカ"
+    ],
+    "enNames": [
+      "Vraska, Soul of Stone"
+    ],
+    "scryfallName": "Vraska, Soul of Stone",
+    "oracleId": "cad63b31-667b-4518-bc49-be4ffb82bc63",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_uY1qAHsNO5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "319",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "鋭き一瞥、ヴラスカ"
+    ],
+    "enNames": [
+      "Vraska, the Cutting Glare"
+    ],
+    "scryfallName": "Vraska, the Cutting Glare",
+    "oracleId": "580de511-863c-4b7a-9d2e-fcdf6e12d54b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_7mW9hxyVSc.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "320",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "銀白の防衛者、カーン"
+    ],
+    "enNames": [
+      "Karn, Argent Defender"
+    ],
+    "scryfallName": "Karn, Argent Defender",
+    "oracleId": "aecc621f-67da-41a7-9d47-05ded302ae35",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_FEYt7HKLHW.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "321",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "光の腹心"
+    ],
+    "enNames": [
+      "Enlightened Confidant"
+    ],
+    "scryfallName": "Enlightened Confidant",
+    "oracleId": "a139eb7f-3853-490c-a839-35d0e5aed7b5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_AhzAlqRT0Q.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "322",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "同族の審判"
+    ],
+    "enNames": [
+      "Kindred Judgment"
+    ],
+    "scryfallName": "Kindred Judgment",
+    "oracleId": "b5dce42a-a769-4d7d-b29e-8722f79d4092",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_dF1sWKzzNN.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "323",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "光の領域への帰還"
+    ],
+    "enNames": [
+      "Return to the Light Realms"
+    ],
+    "scryfallName": "Return to the Light Realms",
+    "oracleId": "217e76ca-ea94-417c-b5b0-82e2302eeee8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_vSZvHmmMtd.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "324",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "歴戦の冷術士"
+    ],
+    "enNames": [
+      "Seasoned Cryomancer"
+    ],
+    "scryfallName": "Seasoned Cryomancer",
+    "oracleId": "c3936db3-d3b6-4a92-9773-6f3c52dc419d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_2iiv8bq9f0.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "325",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "夜光のフェニックス"
+    ],
+    "enNames": [
+      "Darklight Phoenix"
+    ],
+    "scryfallName": "Darklight Phoenix",
+    "oracleId": "e4b51c2d-7e56-435b-89d6-85e33df65879",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_7rQ33hrs0j.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "326",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "死をもたらす者の隆盛"
+    ],
+    "enNames": [
+      "Rise of the Deathbringer"
+    ],
+    "scryfallName": "Rise of the Deathbringer",
+    "oracleId": "57ea9f63-8267-4303-a3dd-9ded220294dc",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_FyqnAu2RuC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "327",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "孔爪の巨像"
+    ],
+    "enNames": [
+      "Craterclaw Colossus"
+    ],
+    "scryfallName": "Craterclaw Colossus",
+    "oracleId": "71355b51-e70e-47b0-8460-933af3567141",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_O5K90XPZwX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "328",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "呪い傷の悪魔"
+    ],
+    "enNames": [
+      "Curse-Marred Demon"
+    ],
+    "scryfallName": "Curse-Marred Demon",
+    "oracleId": "f30a084c-5705-40f5-8e0d-2083d33973c7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_ybyHKEcTMP.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "329",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "棘唱の魔道士"
+    ],
+    "enNames": [
+      "Stingcaster Mage"
+    ],
+    "scryfallName": "Stingcaster Mage",
+    "oracleId": "056b651e-e0e2-4333-9235-d1ffe8fcca29",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/np46fp3fn1/jp_t2vLNynKnI.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "330",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヘクスヘイヴンの活性者"
+    ],
+    "enNames": [
+      "Hexhaven Invigorator"
+    ],
+    "scryfallName": "Hexhaven Invigorator",
+    "oracleId": "12d617b1-c95b-4b1c-a586-ccfdf5898b03",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_DXL8aAQDg3.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "331",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "遍在"
+    ],
+    "enNames": [
+      "Omnipresence"
+    ],
+    "scryfallName": "Omnipresence",
+    "oracleId": "8dad1fa8-3533-4e3c-b9b3-fcd57b20a33d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_P3NvpcD1nX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "332",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "身代わりの形成師"
+    ],
+    "enNames": [
+      "Simulacrum Shaper"
+    ],
+    "scryfallName": "Simulacrum Shaper",
+    "oracleId": "9e45e2da-7064-4ec0-8d09-55fc7d1aeaa8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_0yIdHWc1YH.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "333",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "凍傷の紅蓮精霊"
+    ],
+    "enNames": [
+      "Frostbite Pyromental"
+    ],
+    "scryfallName": "Frostbite Pyromental",
+    "oracleId": "9a104f73-597b-49e3-8088-13db31f61900",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_lkULymYVTC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "334",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "芽吹く補充兵"
+    ],
+    "enNames": [
+      "Germinate Recruits"
+    ],
+    "scryfallName": "Germinate Recruits",
+    "oracleId": "2c3a1313-a66e-4317-9732-e4ff9288b0db",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_LANgXHmrKV.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "335",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "転用された執行人"
+    ],
+    "enNames": [
+      "Repurposed Enforcer"
+    ],
+    "scryfallName": "Repurposed Enforcer",
+    "oracleId": "b775a404-ec0a-47ff-bb9d-eae2273d945b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_BrH2jikiVZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "336",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "酷薄な計算"
+    ],
+    "enNames": [
+      "Cruel Calculations"
+    ],
+    "scryfallName": "Cruel Calculations",
+    "oracleId": "69b96fe5-9733-4b43-bd66-075742e142d9",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_hHLnRGs6PS.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "337",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ジェイスの策謀"
+    ],
+    "enNames": [
+      "Jace's Machinations"
+    ],
+    "scryfallName": "Jace's Machinations",
+    "oracleId": "89bd056d-8f5b-4d0e-b80a-58a984e21100",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_95t9L3thhZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "338",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "誤謬結論のスフィンクス"
+    ],
+    "enNames": [
+      "Sphinx of False Conclusions"
+    ],
+    "scryfallName": "Sphinx of False Conclusions",
+    "oracleId": "9f004382-c57b-4fde-af97-0c85516c3cf4",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_9Q6prIS0Do.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "339",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "理論家の代理"
+    ],
+    "enNames": [
+      "Theorist's Proxy"
+    ],
+    "scryfallName": "Theorist's Proxy",
+    "oracleId": "0089acfe-da66-4dd7-b1e5-4d7407f58257",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_U4kf9vc6CU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "340",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "暗黒物質の操り手"
+    ],
+    "enNames": [
+      "Dark Matter Manipulator"
+    ],
+    "scryfallName": "Dark Matter Manipulator",
+    "oracleId": "6a3862f0-8dfc-4ac9-8eb9-faefcad685d4",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_98zAHBPvLU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "341",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "多元宇宙の上書き"
+    ],
+    "enNames": [
+      "Overwrite the Multiverse"
+    ],
+    "scryfallName": "Overwrite the Multiverse",
+    "oracleId": "d0372cde-bf30-4a1b-93bb-9ff4ac1c116d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/0079027850/jp_VIYOqFTecV.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "342",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "聖域に潜むもの"
+    ],
+    "enNames": [
+      "Sanctum Lurker"
+    ],
+    "scryfallName": "Sanctum Lurker",
+    "oracleId": "3ebd64d2-c178-45a2-a51f-9869754baa0f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_uMtIjJmWnQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "343",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヴラスカの最後の慈悲"
+    ],
+    "enNames": [
+      "Vraska's Final Mercy"
+    ],
+    "scryfallName": "Vraska's Final Mercy",
+    "oracleId": "7799413d-e313-4a05-ad28-f4c926c26d28",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_Vt4mWzPrnT.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "344",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "棘ある言葉の達人"
+    ],
+    "enNames": [
+      "Master of Barbs"
+    ],
+    "scryfallName": "Master of Barbs",
+    "oracleId": "e8c36337-135c-460d-a1da-cc01743dda71",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_mX1GLo8fPo.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "345",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "庭園化"
+    ],
+    "enNames": [
+      "Gardenize"
+    ],
+    "scryfallName": "Gardenize",
+    "oracleId": "e74a2a4c-ca3c-49e8-9b0f-b4d1bb91fb54",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_IvToVLBYut.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "346",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "飢餓の傀儡獣"
+    ],
+    "enNames": [
+      "Hungering Puppetbeast"
+    ],
+    "scryfallName": "Hungering Puppetbeast",
+    "oracleId": "690ae865-87bd-46b2-8e65-c53bd80c1a18",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_A68QwYKfb5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "347",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "アエリド・コンストラリ"
+    ],
+    "enNames": [
+      "Aerid Konstrari"
+    ],
+    "scryfallName": "Aerid Konstrari",
+    "oracleId": "172a8f58-c420-4497-b962-c5853f923667",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_IciisiET5b.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "348",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "芽生えこだまの化身"
+    ],
+    "enNames": [
+      "Avatar of Burgeoning Echoes"
+    ],
+    "scryfallName": "Avatar of Burgeoning Echoes",
+    "oracleId": "08e8a63c-9fcc-48cf-a9af-15cbaeec943f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_WLc4I6wAaN.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "349",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "デンジロア・フェイトホールド"
+    ],
+    "enNames": [
+      "Denzilore Fatehold"
+    ],
+    "scryfallName": "Denzilore Fatehold",
+    "oracleId": "0f8de7f0-c61d-415d-b4db-4959374343da",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_wCIdlDromp.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "350",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "灯を委ねる"
+    ],
+    "enNames": [
+      "Entrust the Spark"
+    ],
+    "scryfallName": "Entrust the Spark",
+    "oracleId": "b796ecc8-a2e8-4ab9-8736-6825b650434d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/afh2374h74h/jp_Qaeb2Pyggm.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "351",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "イングリス・スティンガークイル"
+    ],
+    "enNames": [
+      "Ingris Stingerquill"
+    ],
+    "scryfallName": "Ingris Stingerquill",
+    "oracleId": "bda098cb-31ec-41a1-a9d7-122877cc69d2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_B5VwjNsmKA.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "352",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "クウィア・ヴィゴーブルーム"
+    ],
+    "enNames": [
+      "Kwia Vigorbloom"
+    ],
+    "scryfallName": "Kwia Vigorbloom",
+    "oracleId": "07a28621-e617-46b0-af3e-2efb03b5056a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_jG64ubOioP.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "353",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "絶無の召喚士"
+    ],
+    "enNames": [
+      "Null Summoner"
+    ],
+    "scryfallName": "Null Summoner",
+    "oracleId": "56c412be-daab-4461-931f-1e2ea8ecd75d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_gSbl41oVSU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "354",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "潜在能力の試験官"
+    ],
+    "enNames": [
+      "Proctor of Potential"
+    ],
+    "scryfallName": "Proctor of Potential",
+    "oracleId": "c612ba0a-5134-45fa-a762-f4621bda4f83",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_d10OQf6TDB.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "355",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "独居房"
+    ],
+    "enNames": [
+      "Solitary Cell"
+    ],
+    "scryfallName": "Solitary Cell",
+    "oracleId": "66a22b35-3dc0-4a74-8474-e73293403de6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/qf8YUZ6Dd3/jp_FutbGvMw9S.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "356",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "抉り穿つ言葉"
+    ],
+    "enNames": [
+      "Stinging Vitriol"
+    ],
+    "scryfallName": "Stinging Vitriol",
+    "oracleId": "624cf822-0b4e-4f0c-9893-a53cb094f616",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_fBhlCLCwnC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "357",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "任期無期限の繋操魔道士"
+    ],
+    "enNames": [
+      "Tenured Tethermage"
+    ],
+    "scryfallName": "Tenured Tethermage",
+    "oracleId": "571cb06d-55b5-46e4-9678-1f74aca73068",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_N5PiPmE15l.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "358",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ウルダロス・セオリクス"
+    ],
+    "enNames": [
+      "Uldaros Theorix"
+    ],
+    "scryfallName": "Uldaros Theorix",
+    "oracleId": "020d561b-2e5d-439e-9e6a-318d23e73542",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_WbbuusP9NC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "359",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "見え隠れする猟犬"
+    ],
+    "enNames": [
+      "Flickering Hound"
+    ],
+    "scryfallName": "Flickering Hound",
+    "oracleId": "162421d2-8761-437f-bed9-578b61c96f1f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_mgQ7wMxewj.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "360",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "導きのハイドラ"
+    ],
+    "enNames": [
+      "Guiding Hydra"
+    ],
+    "scryfallName": "Guiding Hydra",
+    "oracleId": "24f1445c-16c9-45c0-be56-0266e6c78cdb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_PJDGdu5MPw.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "361",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "運命への論駁"
+    ],
+    "enNames": [
+      "Refute Destiny"
+    ],
+    "scryfallName": "Refute Destiny",
+    "oracleId": "2a18b3f0-8a78-46d8-b60f-3cd634062f1b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_b0c25nxMja.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "362",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "正確な改訂"
+    ],
+    "enNames": [
+      "Precise Redaction"
+    ],
+    "scryfallName": "Precise Redaction",
+    "oracleId": "c251b676-0e98-4047-bed1-d72c83aa8da0",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_Uh2Hztq8w1.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "363",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "理論家、ジェイス・ベレレン"
+    ],
+    "enNames": [
+      "The Theorist, Jace Beleren"
+    ],
+    "scryfallName": "The Theorist, Jace Beleren",
+    "oracleId": "89a6e876-0b00-4671-9652-766fd7ef9bf2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_rVUEgj3nT9.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "364",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "不可能の外挿"
+    ],
+    "enNames": [
+      "Extrapolate the Impossible"
+    ],
+    "scryfallName": "Extrapolate the Impossible",
+    "oracleId": "1f47c869-f4a9-43b0-aec0-8da4e3a3fec5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/P3BCYJntzr/jp_P3BCYJntzr.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "365",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "リッチの秘宝"
+    ],
+    "enNames": [
+      "Lich's Relic"
+    ],
+    "scryfallName": "Lich's Relic",
+    "oracleId": "0540eaca-0e03-4831-955a-192ae2b87d35",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_kccYZ8oTPU.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "366",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "絶望的批評"
+    ],
+    "enNames": [
+      "Terminal Criticism"
+    ],
+    "scryfallName": "Terminal Criticism",
+    "oracleId": "213b0814-f768-4408-9cb7-6f5960bcbb7a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_A0yzsIfQED.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "367",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "アジャニの苦悶"
+    ],
+    "enNames": [
+      "Ajani's Anguish"
+    ],
+    "scryfallName": "Ajani's Anguish",
+    "oracleId": "4a37f4a0-2869-4f81-b51b-4c3e7e0e0671",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_Yb2sjAEqgZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "368",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ドラゴンの訪問者"
+    ],
+    "enNames": [
+      "Draconic Visitor"
+    ],
+    "scryfallName": "Draconic Visitor",
+    "oracleId": "6745e850-68f6-480b-a1e0-e06180dde169",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_Pmc8dHyFe8.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "369",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "本質の焼却"
+    ],
+    "enNames": [
+      "Essence Burn"
+    ],
+    "scryfallName": "Essence Burn",
+    "oracleId": "f1216f36-00fd-4d03-85c1-f4910a02d4d0",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_SCc0TPq3FI.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "370",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "自分との対峙"
+    ],
+    "enNames": [
+      "Face Yourself"
+    ],
+    "scryfallName": "Face Yourself",
+    "oracleId": "3c0fe71c-bee1-41d3-aeb5-1723028eedde",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_tlXbucb7Cy.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "371",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "個性のこだま"
+    ],
+    "enNames": [
+      "Identity Echo"
+    ],
+    "scryfallName": "Identity Echo",
+    "oracleId": "4dbf8c43-d7c5-4037-875e-6accd87aaf6f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_Q1JRyNownX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "372",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "繁茂の組みつき"
+    ],
+    "enNames": [
+      "Flourishing Grapple"
+    ],
+    "scryfallName": "Flourishing Grapple",
+    "oracleId": "6b4f1569-2025-46a8-89ba-79859208b04e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_9jbN2iJwS0.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "373",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "傀儡造り"
+    ],
+    "enNames": [
+      "Puppet Crafting"
+    ],
+    "scryfallName": "Puppet Crafting",
+    "oracleId": "d13c111a-ebfc-48ac-b734-f203c7c29d21",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_NcTiXo6HjG.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "374",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "タルモゴイフ"
+    ],
+    "enNames": [
+      "Tarmogoyf"
+    ],
+    "scryfallName": "Tarmogoyf",
+    "oracleId": "45900b2f-f6a9-4c42-9642-008f3c1cf6dd",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_qGsMg2r5oX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "375",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "新緑のクラーケン"
+    ],
+    "enNames": [
+      "Verdant Kraken"
+    ],
+    "scryfallName": "Verdant Kraken",
+    "oracleId": "83c61083-b357-4775-a855-5a9013cc2bdf",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_R3NY6tCs3T.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "376",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "日光浴室の歩哨"
+    ],
+    "enNames": [
+      "Solarium Sentry"
+    ],
+    "scryfallName": "Solarium Sentry",
+    "oracleId": "afddba56-f9a0-4917-8167-c9fd17ca9954",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_tFnZUVHqC1.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "377",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "報復の勝利"
+    ],
+    "enNames": [
+      "Vindictive Triumph"
+    ],
+    "scryfallName": "Vindictive Triumph",
+    "oracleId": "d6b478d1-5015-49ba-b1aa-cbc2b08107a6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_z6IqXAgWq0.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "378",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "模倣宇宙の支点"
+    ],
+    "enNames": [
+      "The Echoverse Fulcrum"
+    ],
+    "scryfallName": "The Echoverse Fulcrum",
+    "oracleId": "c04197ad-d2f3-499f-b863-bed0c869519c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_GlZFAPXhmO.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "379",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "こだまの大広間"
+    ],
+    "enNames": [
+      "Hall of Echoes"
+    ],
+    "scryfallName": "Hall of Echoes",
+    "oracleId": "dc0a51d4-5b7e-4987-b1fe-349fd118a625",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_JxiEMjP52q.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "380",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "乱動する梢"
+    ],
+    "enNames": [
+      "Roiling Canopy"
+    ],
+    "scryfallName": "Roiling Canopy",
+    "oracleId": "c6e87760-4cd0-4281-82d4-7a377ea960ad",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_CBzLOCnEVS.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "381",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "理論家の聖域"
+    ],
+    "enNames": [
+      "Theorist's Sanctum"
+    ],
+    "scryfallName": "Theorist's Sanctum",
+    "oracleId": "37513bd8-7303-4ac6-a7a7-224184faf758",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_HRCchCJk2j.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "382",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "平地"
+    ],
+    "enNames": [
+      "Plains"
+    ],
+    "scryfallName": "Plains",
+    "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_aa4VI3hciQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "383",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "平地"
+    ],
+    "enNames": [
+      "Plains"
+    ],
+    "scryfallName": "Plains",
+    "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_QeJomO8J1k.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "384",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "平地"
+    ],
+    "enNames": [
+      "Plains"
+    ],
+    "scryfallName": "Plains",
+    "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_YyOGK2pevW.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "385",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "島"
+    ],
+    "enNames": [
+      "Island"
+    ],
+    "scryfallName": "Island",
+    "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_pLE0rzlTtL.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "386",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "島"
+    ],
+    "enNames": [
+      "Island"
+    ],
+    "scryfallName": "Island",
+    "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_zSeDToDg2d.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "387",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "島"
+    ],
+    "enNames": [
+      "Island"
+    ],
+    "scryfallName": "Island",
+    "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_ploS2UzgJ6.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "388",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "沼"
+    ],
+    "enNames": [
+      "Swamp"
+    ],
+    "scryfallName": "Swamp",
+    "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_zZWMvESwGI.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "389",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "沼"
+    ],
+    "enNames": [
+      "Swamp"
+    ],
+    "scryfallName": "Swamp",
+    "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_BlUW7nioc7.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "390",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "沼"
+    ],
+    "enNames": [
+      "Swamp"
+    ],
+    "scryfallName": "Swamp",
+    "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_AbKdKeTZxI.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "391",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "山"
+    ],
+    "enNames": [
+      "Mountain"
+    ],
+    "scryfallName": "Mountain",
+    "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_TNkzhj0geV.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "392",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "山"
+    ],
+    "enNames": [
+      "Mountain"
+    ],
+    "scryfallName": "Mountain",
+    "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_0t3uAXgyPV.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "393",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "山"
+    ],
+    "enNames": [
+      "Mountain"
+    ],
+    "scryfallName": "Mountain",
+    "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_IXIk26hIUo.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "394",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "森"
+    ],
+    "enNames": [
+      "Forest"
+    ],
+    "scryfallName": "Forest",
+    "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_r31lFhNIbJ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "395",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "森"
+    ],
+    "enNames": [
+      "Forest"
+    ],
+    "scryfallName": "Forest",
+    "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_KhIkfJg8ZK.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "396",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "森"
+    ],
+    "enNames": [
+      "Forest"
+    ],
+    "scryfallName": "Forest",
+    "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_yZICi80Yr1.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "397",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "さびれた浜"
+    ],
+    "enNames": [
+      "Deserted Beach"
+    ],
+    "scryfallName": "Deserted Beach",
+    "oracleId": "f0ec8681-da50-466b-8cdd-1dc710deccd9",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_kcNyJCSqMj.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "398",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "憑依された峰"
+    ],
+    "enNames": [
+      "Haunted Ridge"
+    ],
+    "scryfallName": "Haunted Ridge",
+    "oracleId": "e2a37967-4212-4553-9f77-bcb613405807",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_419U0cQ2ss.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "399",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "草茂る農地"
+    ],
+    "enNames": [
+      "Overgrown Farmland"
+    ],
+    "scryfallName": "Overgrown Farmland",
+    "oracleId": "709d2f10-1585-48c3-9058-ddd5f62f0452",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_Y0YUuc00qj.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "400",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "落石の谷間"
+    ],
+    "enNames": [
+      "Rockfall Vale"
+    ],
+    "scryfallName": "Rockfall Vale",
+    "oracleId": "185c70c1-8403-4ae5-b45d-3679d4ee092a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_cebpIuZrdZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "401",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "難破船の湿地"
+    ],
+    "enNames": [
+      "Shipwreck Marsh"
+    ],
+    "scryfallName": "Shipwreck Marsh",
+    "oracleId": "5f42b67f-87fd-4f98-a0e8-0c8313f4bbc8",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_rmU1fAY6hv.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "403",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "迫り来る破滅、エムラクール"
+    ],
+    "enNames": [
+      "Emrakul, the Exigent Doom"
+    ],
+    "scryfallName": "Emrakul, the Exigent Doom",
+    "oracleId": "4421ab7d-6d9b-4edd-b5a0-53a8ed84da6f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/j8KZMXQ2SP/jp_yQ5cEKGZuG.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "404",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "忠誠の教示者"
+    ],
+    "enNames": [
+      "Loyal Tutor"
+    ],
+    "scryfallName": "Loyal Tutor",
+    "oracleId": "7e52f151-d1f6-4fcb-9b21-1baecae27da6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_gsF5jKyLQ4.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "405",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "理論家、ジェイス・ベレレン"
+    ],
+    "enNames": [
+      "The Theorist, Jace Beleren"
+    ],
+    "scryfallName": "The Theorist, Jace Beleren",
+    "oracleId": "89a6e876-0b00-4671-9652-766fd7ef9bf2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_ZfRj8p0DB3.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "406",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "庭園化"
+    ],
+    "enNames": [
+      "Gardenize"
+    ],
+    "scryfallName": "Gardenize",
+    "oracleId": "e74a2a4c-ca3c-49e8-9b0f-b4d1bb91fb54",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_ByYj05FseT.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "407",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "アエリド・コンストラリ"
+    ],
+    "enNames": [
+      "Aerid Konstrari"
+    ],
+    "scryfallName": "Aerid Konstrari",
+    "oracleId": "172a8f58-c420-4497-b962-c5853f923667",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_tGjQhPh23W.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "408",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "デンジロア・フェイトホールド"
+    ],
+    "enNames": [
+      "Denzilore Fatehold"
+    ],
+    "scryfallName": "Denzilore Fatehold",
+    "oracleId": "0f8de7f0-c61d-415d-b4db-4959374343da",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_mdLM40ZNnl.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "409",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "イングリス・スティンガークイル"
+    ],
+    "enNames": [
+      "Ingris Stingerquill"
+    ],
+    "scryfallName": "Ingris Stingerquill",
+    "oracleId": "bda098cb-31ec-41a1-a9d7-122877cc69d2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_Yruypftyam.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "410",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "クウィア・ヴィゴーブルーム"
+    ],
+    "enNames": [
+      "Kwia Vigorbloom"
+    ],
+    "scryfallName": "Kwia Vigorbloom",
+    "oracleId": "07a28621-e617-46b0-af3e-2efb03b5056a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_RKxeviS0mB.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "411",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ウルダロス・セオリクス"
+    ],
+    "enNames": [
+      "Uldaros Theorix"
+    ],
+    "scryfallName": "Uldaros Theorix",
+    "oracleId": "020d561b-2e5d-439e-9e6a-318d23e73542",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_2k1TV5flaf.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "412",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "貪欲な写本、コーディ"
+    ],
+    "enNames": [
+      "Codie, Ravenous Codex"
+    ],
+    "scryfallName": "Codie, Ravenous Codex",
+    "oracleId": "a17e414c-8de0-47fd-bcbc-540c7fec7642",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_1tsmtwQi6Q.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "413",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "迫り来る破滅、エムラクール"
+    ],
+    "enNames": [
+      "Emrakul, the Exigent Doom"
+    ],
+    "scryfallName": "Emrakul, the Exigent Doom",
+    "oracleId": "4421ab7d-6d9b-4edd-b5a0-53a8ed84da6f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/j8KZMXQ2SP/jp_ADDdNPtn6r.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "414",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "忠誠の教示者"
+    ],
+    "enNames": [
+      "Loyal Tutor"
+    ],
+    "scryfallName": "Loyal Tutor",
+    "oracleId": "7e52f151-d1f6-4fcb-9b21-1baecae27da6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_9CrGMPxKjS.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "415",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "理論家、ジェイス・ベレレン"
+    ],
+    "enNames": [
+      "The Theorist, Jace Beleren"
+    ],
+    "scryfallName": "The Theorist, Jace Beleren",
+    "oracleId": "89a6e876-0b00-4671-9652-766fd7ef9bf2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_4sUjd0RDH8.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "416",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "庭園化"
+    ],
+    "enNames": [
+      "Gardenize"
+    ],
+    "scryfallName": "Gardenize",
+    "oracleId": "e74a2a4c-ca3c-49e8-9b0f-b4d1bb91fb54",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_uuz4E7YxhO.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "417",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "アエリド・コンストラリ"
+    ],
+    "enNames": [
+      "Aerid Konstrari"
+    ],
+    "scryfallName": "Aerid Konstrari",
+    "oracleId": "172a8f58-c420-4497-b962-c5853f923667",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_v3TC9Rq85R.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "418",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "デンジロア・フェイトホールド"
+    ],
+    "enNames": [
+      "Denzilore Fatehold"
+    ],
+    "scryfallName": "Denzilore Fatehold",
+    "oracleId": "0f8de7f0-c61d-415d-b4db-4959374343da",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_vSDqPz5PUL.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "419",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "イングリス・スティンガークイル"
+    ],
+    "enNames": [
+      "Ingris Stingerquill"
+    ],
+    "scryfallName": "Ingris Stingerquill",
+    "oracleId": "bda098cb-31ec-41a1-a9d7-122877cc69d2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_DlBKCBxdE7.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "420",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "クウィア・ヴィゴーブルーム"
+    ],
+    "enNames": [
+      "Kwia Vigorbloom"
+    ],
+    "scryfallName": "Kwia Vigorbloom",
+    "oracleId": "07a28621-e617-46b0-af3e-2efb03b5056a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_LHv072ofiR.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "421",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ウルダロス・セオリクス"
+    ],
+    "enNames": [
+      "Uldaros Theorix"
+    ],
+    "scryfallName": "Uldaros Theorix",
+    "oracleId": "020d561b-2e5d-439e-9e6a-318d23e73542",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_9By0TJINHY.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "422",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "貪欲な写本、コーディ"
+    ],
+    "enNames": [
+      "Codie, Ravenous Codex"
+    ],
+    "scryfallName": "Codie, Ravenous Codex",
+    "oracleId": "a17e414c-8de0-47fd-bcbc-540c7fec7642",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_zCowou8nar.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "423",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "迫り来る破滅、エムラクール"
+    ],
+    "enNames": [
+      "Emrakul, the Exigent Doom"
+    ],
+    "scryfallName": "Emrakul, the Exigent Doom",
+    "oracleId": "4421ab7d-6d9b-4edd-b5a0-53a8ed84da6f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/j8KZMXQ2SP/jp_zyDE77GeJy.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "424",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "忠誠の教示者"
+    ],
+    "enNames": [
+      "Loyal Tutor"
+    ],
+    "scryfallName": "Loyal Tutor",
+    "oracleId": "7e52f151-d1f6-4fcb-9b21-1baecae27da6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_nYN2SKRr3G.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "425",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "勝利の預言者 // 歴史の巻き戻し",
+      "勝利の預言者",
+      "歴史の巻き戻し"
+    ],
+    "enNames": [
+      "Diviner of Victory // Unwind History",
+      "Diviner of Victory",
+      "Unwind History"
+    ],
+    "scryfallName": "Diviner of Victory // Unwind History",
+    "oracleId": "e7b78acd-5288-4528-97a8-a5b43de90bf5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_w8fzPd2mzF.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "426",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "変数の追跡者 // 運命の弧",
+      "変数の追跡者",
+      "運命の弧"
+    ],
+    "enNames": [
+      "Variable Chaser // Arc of Fortune",
+      "Variable Chaser",
+      "Arc of Fortune"
+    ],
+    "scryfallName": "Variable Chaser // Arc of Fortune",
+    "oracleId": "67c603cc-ad66-4a1c-8386-5901c9c01bfb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_nvcPNHQrQB.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "427",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "血統想起者 // 祖先の渇望",
+      "血統想起者",
+      "祖先の渇望"
+    ],
+    "enNames": [
+      "Bloodline Recollector // Ancestral Craving",
+      "Bloodline Recollector",
+      "Ancestral Craving"
+    ],
+    "scryfallName": "Bloodline Recollector // Ancestral Craving",
+    "oracleId": "c8e9a7e1-28ae-40e3-8715-1bb0aa2057c7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/np46fp3fn1/jp_tpYO5OOZyP.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "428",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "驕慢な戦闘魔道士 // 即興演技",
+      "驕慢な戦闘魔道士",
+      "即興演技"
+    ],
+    "enNames": [
+      "Pompous Battlemage // Improvised Act",
+      "Pompous Battlemage",
+      "Improvised Act"
+    ],
+    "scryfallName": "Pompous Battlemage // Improvised Act",
+    "oracleId": "33e3793c-098f-4897-88f3-9f9ce9081e0f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/jj47dDe90Dll/jp_sRVIb6FuBa.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "429",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "焼尽の詩人 // 融潮",
+      "焼尽の詩人",
+      "融潮"
+    ],
+    "enNames": [
+      "Pyre Rhymer // Molten Tide",
+      "Pyre Rhymer",
+      "Molten Tide"
+    ],
+    "scryfallName": "Pyre Rhymer // Molten Tide",
+    "oracleId": "8940f503-fc6d-4fae-be74-22c660cae1a7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/9apfjhjy2t/jp_Ol5Pyp7ioF.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "430",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "人喰い植物の耕作者 // 埋根",
+      "人喰い植物の耕作者",
+      "埋根"
+    ],
+    "enNames": [
+      "Carnivorous Cultivator // Enroot",
+      "Carnivorous Cultivator",
+      "Enroot"
+    ],
+    "scryfallName": "Carnivorous Cultivator // Enroot",
+    "oracleId": "db655c5a-06f6-42bc-8180-d9ca1c1d939a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1dUQzR0rAR/jp_s01q79CFYG.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "431",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "貪欲な写本、コーディ"
+    ],
+    "enNames": [
+      "Codie, Ravenous Codex"
+    ],
+    "scryfallName": "Codie, Ravenous Codex",
+    "oracleId": "a17e414c-8de0-47fd-bcbc-540c7fec7642",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_wDNnJXptSN.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "432",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "フェイトホールドの魔除け"
+    ],
+    "enNames": [
+      "Fatehold Charm"
+    ],
+    "scryfallName": "Fatehold Charm",
+    "oracleId": "313aee0e-4090-4589-b323-a4edbda21c68",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_xcPluDiMuZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "433",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "コンストラリの魔除け"
+    ],
+    "enNames": [
+      "Konstrari Charm"
+    ],
+    "scryfallName": "Konstrari Charm",
+    "oracleId": "40961b23-b153-434a-aeb9-b9c2ff613dcb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_kDpwL9CjPO.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "434",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "スティンガークイルの魔除け"
+    ],
+    "enNames": [
+      "Stingerquill Charm"
+    ],
+    "scryfallName": "Stingerquill Charm",
+    "oracleId": "987aadac-d6a6-4e50-9468-9e8e53cc5529",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_nYLxWipcxp.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "435",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "セオリクスの魔除け"
+    ],
+    "enNames": [
+      "Theorix Charm"
+    ],
+    "scryfallName": "Theorix Charm",
+    "oracleId": "cf527bbd-e898-4aa9-909d-daec2f4b62ad",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_IcdR6Kdb4r.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRA",
+    "collectorNumber": "436",
+    "setNameJa": "リアリティ・フラクチャー",
+    "jaNames": [
+      "ヴィゴーブルームの魔除け"
+    ],
+    "enNames": [
+      "Vigorbloom Charm"
+    ],
+    "scryfallName": "Vigorbloom Charm",
+    "oracleId": "826f17d1-3806-4579-8b1b-2082b7b03d69",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/MIRQX4Ud43/jp_gw1nHhZBlc.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "1",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "多元宇宙を築く者、ジェイス"
+    ],
+    "enNames": [
+      "Jace, Multiverse Architect"
+    ],
+    "scryfallName": "Jace, Multiverse Architect",
+    "oracleId": "3321c134-bf5b-4f63-8035-fca0bbdfa86b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_UYg1XbMVLQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "2",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "力線の世話人、ニッサ"
+    ],
+    "enNames": [
+      "Nissa, Leyline Tamer"
+    ],
+    "scryfallName": "Nissa, Leyline Tamer",
+    "oracleId": "6067b8d0-5b00-402c-967d-e35a1304fafc",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_hGDZXy1ne0.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "3",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "虚空の座、オムナス"
+    ],
+    "enNames": [
+      "Omnath, Locus of the Void"
+    ],
+    "scryfallName": "Omnath, Locus of the Void",
+    "oracleId": "579225b5-50e2-4891-8871-0bf6dbc07e33",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_dhS5sR4ZV3.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "4",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "救いの手、ダク・フェイデン"
+    ],
+    "enNames": [
+      "Dack Fayden, Helping Hand"
+    ],
+    "scryfallName": "Dack Fayden, Helping Hand",
+    "oracleId": "3b21abb0-9a58-4e62-9650-4b04ce2bfb12",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_ys9XAZDznD.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "5",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "昇りたる者、オブ・ニクシリス"
+    ],
+    "enNames": [
+      "Ob Nixilis, the Ascended"
+    ],
+    "scryfallName": "Ob Nixilis, the Ascended",
+    "oracleId": "3a49b518-61c8-4dea-8008-c5edf8384581",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_RsyqLe6dZq.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "6",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "テフェリーの叱責"
+    ],
+    "enNames": [
+      "Teferi's Reproach"
+    ],
+    "scryfallName": "Teferi's Reproach",
+    "oracleId": "9381b4a5-a8e0-412d-bc7f-ae15afa0f135",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_1CY6A3EFWA.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "7",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "恐怖の天使、アヴァシン"
+    ],
+    "enNames": [
+      "Avacyn, Angel of Horror"
+    ],
+    "scryfallName": "Avacyn, Angel of Horror",
+    "oracleId": "4af61d45-7114-4eb4-a905-9e03caf87454",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_1pQfLhnAEk.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "8",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "ウェザーライトの海賊、ジョイラ"
+    ],
+    "enNames": [
+      "Jhoira, Weatherlight Corsair"
+    ],
+    "scryfallName": "Jhoira, Weatherlight Corsair",
+    "oracleId": "cf9b0bb5-d545-4efd-9255-39b10c2be0ee",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_tf6qL7NYXX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "9",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "熱意ある偽造者、ヴェンセール"
+    ],
+    "enNames": [
+      "Venser, Fervent Forger"
+    ],
+    "scryfallName": "Venser, Fervent Forger",
+    "oracleId": "9b1ae6d8-0cf3-4a67-9241-37f4bc5ddbdd",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_A5bpCIn5jn.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "10",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "幽霊弁護士、ニヴ＝ミゼット"
+    ],
+    "enNames": [
+      "Niv-Mizzet, Ghost Counsel"
+    ],
+    "scryfallName": "Niv-Mizzet, Ghost Counsel",
+    "oracleId": "a5350327-e84c-44b6-8359-87882e521048",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_X2eHIAb2bH.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "11",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "戴冠せし反乱者、タミヨウ"
+    ],
+    "enNames": [
+      "Tamiyo, Upriser Crowned"
+    ],
+    "scryfallName": "Tamiyo, Upriser Crowned",
+    "oracleId": "8e0f2e26-1e14-422a-aafe-e1da38ab10a3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_JrfYrJq1W4.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "12",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "始祖スフィンクス"
+    ],
+    "enNames": [
+      "The Ur-Sphinx"
+    ],
+    "scryfallName": "The Ur-Sphinx",
+    "oracleId": "4a3fdb8e-4699-4bd9-84e6-3cc7fea0e1ef",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_wCkM4bz5SZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "13",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "ダークスティールの天使"
+    ],
+    "enNames": [
+      "Darksteel Angel"
+    ],
+    "scryfallName": "Darksteel Angel",
+    "oracleId": "d0259f7d-9bd7-4722-8fb9-439768308516",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_29Jr2SGLGO.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "14",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "お菓子の女王、ジンジャー"
+    ],
+    "enNames": [
+      "Ginger, Queen of Sweets"
+    ],
+    "scryfallName": "Ginger, Queen of Sweets",
+    "oracleId": "5ea93956-085d-409b-bd95-dd669fa69eeb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_a27OyeiTD0.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "15",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "管理者、メムナーク"
+    ],
+    "enNames": [
+      "Memnarch, the Warden"
+    ],
+    "scryfallName": "Memnarch, the Warden",
+    "oracleId": "f2630b02-fb48-4167-8a47-8284f7d4c484",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_JFJdemRrVJ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "16",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "渦巻く火口"
+    ],
+    "enNames": [
+      "Turbulent Crater"
+    ],
+    "scryfallName": "Turbulent Crater",
+    "oracleId": "e86a0b64-fe4a-4ea8-99e8-35860dbac765",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_nRw4FNrnul.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "17",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "渦巻く海岸"
+    ],
+    "enNames": [
+      "Turbulent Shore"
+    ],
+    "scryfallName": "Turbulent Shore",
+    "oracleId": "c13c5f07-dac5-47d0-a088-e24b9fbec3c5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_5IaJdfA9jX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "18",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "渦巻く沼地"
+    ],
+    "enNames": [
+      "Turbulent Wetlands"
+    ],
+    "scryfallName": "Turbulent Wetlands",
+    "oracleId": "b51c8659-ec4f-4213-beb1-49a7acd7366c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_c5Qp28Pe5u.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "19",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "憤怒の天使アクローマ"
+    ],
+    "enNames": [
+      "Akroma, Angel of Fury"
+    ],
+    "scryfallName": "Akroma, Angel of Fury",
+    "oracleId": "2b80faaf-92fd-4fa0-a3f6-8bb263e7ff1d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_bGPrSy5Ls3.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "20",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "秘儀の印鑑"
+    ],
+    "enNames": [
+      "Arcane Signet"
+    ],
+    "scryfallName": "Arcane Signet",
+    "oracleId": "0bc7f093-bef0-4f1a-852c-4b75ebf54838",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_SA2ildrMBt.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "21",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "太陽の指輪"
+    ],
+    "enNames": [
+      "Sol Ring"
+    ],
+    "scryfallName": "Sol Ring",
+    "oracleId": "6ad8011d-3471-4369-9d68-b264cc027487",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_ycDtEA3yim.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "22",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "統率の塔"
+    ],
+    "enNames": [
+      "Command Tower"
+    ],
+    "scryfallName": "Command Tower",
+    "oracleId": "0895c9b7-ae7d-4bb3-af17-3b75deb50a25",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_fXOnnz3YZH.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "23",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "反射池"
+    ],
+    "enNames": [
+      "Reflecting Pool"
+    ],
+    "scryfallName": "Reflecting Pool",
+    "oracleId": "67f43ac6-2a58-4b53-b5d7-0330e2a252e2",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_wPEKWgZAeY.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "24",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "太陽の勇者、エルズペス"
+    ],
+    "enNames": [
+      "Elspeth, Sun's Champion"
+    ],
+    "scryfallName": "Elspeth, Sun's Champion",
+    "oracleId": "05e6b243-48a6-4a42-bc5f-413441de9c33",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_ZQHySkkIMz.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "25",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "完璧な策略"
+    ],
+    "enNames": [
+      "Flawless Maneuver"
+    ],
+    "scryfallName": "Flawless Maneuver",
+    "oracleId": "4e183439-17d2-47ff-9d99-5e22821d91e3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_ISvYC72N27.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "26",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "盛大なるクレッシェンド"
+    ],
+    "enNames": [
+      "Grand Crescendo"
+    ],
+    "scryfallName": "Grand Crescendo",
+    "oracleId": "dc600c06-8239-409e-b53d-20f813a3f5e7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_KCGriWUMwQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "27",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "未練ある魂"
+    ],
+    "enNames": [
+      "Lingering Souls"
+    ],
+    "scryfallName": "Lingering Souls",
+    "oracleId": "0b8c3337-04dd-4798-8203-6d8b8cfb936b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_cEEex8PVMn.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "28",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "軍部政変"
+    ],
+    "enNames": [
+      "Martial Coup"
+    ],
+    "scryfallName": "Martial Coup",
+    "oracleId": "2b7c4dab-e432-4b34-b058-3cec5c0d72df",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_VtUbfh308T.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "29",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "ミストムーアの大主"
+    ],
+    "enNames": [
+      "Overlord of the Mistmoors"
+    ],
+    "scryfallName": "Overlord of the Mistmoors",
+    "oracleId": "7e64b1dc-a238-4bff-98ff-2bea44340568",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_W1zWFrj3l5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "30",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "流刑への道"
+    ],
+    "enNames": [
+      "Path to Exile"
+    ],
+    "scryfallName": "Path to Exile",
+    "oracleId": "d683d985-9888-4d21-8b5f-69e69ce4a03b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_ew4bKMxWrP.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "31",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "荒野の確保"
+    ],
+    "enNames": [
+      "Secure the Wastes"
+    ],
+    "scryfallName": "Secure the Wastes",
+    "oracleId": "b2347910-d6c6-4681-8316-7ef27056485c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_JONaRK89CB.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "32",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "セラの使者"
+    ],
+    "enNames": [
+      "Serra's Emissary"
+    ],
+    "scryfallName": "Serra's Emissary",
+    "oracleId": "7a56c6e1-0509-4783-9b29-cf3163977166",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_zTKCjAoitl.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "33",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "スクレルヴの巣"
+    ],
+    "enNames": [
+      "Skrelv's Hive"
+    ],
+    "scryfallName": "Skrelv's Hive",
+    "oracleId": "06d219ff-0083-4c2a-b5b3-2b84bb58f57e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_zenVU4LtCo.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "34",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "語り部の杖"
+    ],
+    "enNames": [
+      "Staff of the Storyteller"
+    ],
+    "scryfallName": "Staff of the Storyteller",
+    "oracleId": "0c4e2c90-c17b-42cc-b4d7-cf75970fbe90",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_aosIHTH5Pu.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "35",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "真夜中の一撃"
+    ],
+    "enNames": [
+      "Stroke of Midnight"
+    ],
+    "scryfallName": "Stroke of Midnight",
+    "oracleId": "9a107e48-3d50-4941-95b1-10f2b29a4245",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_BnSsFpmeV9.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "36",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "太陽降下"
+    ],
+    "enNames": [
+      "Sunfall"
+    ],
+    "scryfallName": "Sunfall",
+    "oracleId": "fb3f5097-0da0-458c-8508-60823567e2da",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_hxlv0mthFQ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "37",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "剣を鍬に"
+    ],
+    "enNames": [
+      "Swords to Plowshares"
+    ],
+    "scryfallName": "Swords to Plowshares",
+    "oracleId": "b1544f21-7e98-461b-aed5-e748b0168c52",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_kFZSNY7fnJ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "38",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "白の太陽の黄昏"
+    ],
+    "enNames": [
+      "White Sun's Twilight"
+    ],
+    "scryfallName": "White Sun's Twilight",
+    "oracleId": "a38828be-781e-4340-9c6f-f40b1d34773f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_a1DzSz9VzL.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "39",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "渦まく知識"
+    ],
+    "enNames": [
+      "Brainstorm"
+    ],
+    "scryfallName": "Brainstorm",
+    "oracleId": "36cd2364-d113-47d1-b2c4-b088d9eb88dd",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_RT4lRpjW7M.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "40",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "脈打つ知識"
+    ],
+    "enNames": [
+      "Brainsurge"
+    ],
+    "scryfallName": "Brainsurge",
+    "oracleId": "46c727cb-1f47-4775-8af4-0230ef53966b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_kEjA5t4CiJ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "41",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "嘘か真か"
+    ],
+    "enNames": [
+      "Fact or Fiction"
+    ],
+    "scryfallName": "Fact or Fiction",
+    "oracleId": "437b2dab-15e0-4b9a-a204-58622d37a3b3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_LuY0v4by3q.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "42",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "集団変身"
+    ],
+    "enNames": [
+      "Mass Polymorph"
+    ],
+    "scryfallName": "Mass Polymorph",
+    "oracleId": "b133129d-1ffb-4b78-9f5b-852d163cc9b7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_yUWBTAA0LE.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "43",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "密教の天啓"
+    ],
+    "enNames": [
+      "Occult Epiphany"
+    ],
+    "scryfallName": "Occult Epiphany",
+    "oracleId": "6df1c314-b97b-4bbc-8b7e-a07785347a49",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_1tYKyeq1Zj.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "44",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "サメ台風"
+    ],
+    "enNames": [
+      "Shark Typhoon"
+    ],
+    "scryfallName": "Shark Typhoon",
+    "oracleId": "8c0520fa-276b-4d21-b4a9-dce1fce59f6b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_lIfVHrEXu5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "45",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "模造運命"
+    ],
+    "enNames": [
+      "Synthetic Destiny"
+    ],
+    "scryfallName": "Synthetic Destiny",
+    "oracleId": "640a7d2c-42c4-4ea7-bd5b-72f12a65785e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_cHGHtiOkXC.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "46",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "絶望の魔神"
+    ],
+    "enNames": [
+      "Archfiend of Despair"
+    ],
+    "scryfallName": "Archfiend of Despair",
+    "oracleId": "9c36760b-57c5-488b-afc9-ef141942c6ab",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_RZaQn2jWM6.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "47",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "残虐の執政官"
+    ],
+    "enNames": [
+      "Archon of Cruelty"
+    ],
+    "scryfallName": "Archon of Cruelty",
+    "oracleId": "aa1a6646-c1e6-4bff-9092-43ee3e137914",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_X1nu2jUviv.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "48",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "戦慄衆の侵略"
+    ],
+    "enNames": [
+      "Dreadhorde Invasion"
+    ],
+    "scryfallName": "Dreadhorde Invasion",
+    "oracleId": "01deabbb-af6a-4998-99a7-35b7cfa9ef77",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_rTlWp1Y9f4.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "49",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "呪われた鏡"
+    ],
+    "enNames": [
+      "Cursed Mirror"
+    ],
+    "scryfallName": "Cursed Mirror",
+    "oracleId": "4d67e2a7-4aa7-44cc-853b-500d7aac046d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_zyEAZb0HO7.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "50",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "灯の燼滅"
+    ],
+    "enNames": [
+      "Despark"
+    ],
+    "scryfallName": "Despark",
+    "oracleId": "bd16434d-55ea-4c5a-a9ef-752971a4af16",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_7S7MoZBxCn.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "51",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "思考の旋風"
+    ],
+    "enNames": [
+      "Whirlwind of Thought"
+    ],
+    "scryfallName": "Whirlwind of Thought",
+    "oracleId": "6467cbb7-1e4e-482d-a20f-6cb9fc0f1ad1",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_H9OGFGRTHL.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "52",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "強風岩峰の包囲"
+    ],
+    "enNames": [
+      "Windcrag Siege"
+    ],
+    "scryfallName": "Windcrag Siege",
+    "oracleId": "64df560a-905f-45d1-bc70-14d99e3112d3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_6IeqBTkwEj.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "53",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "アゾリウスの印鑑"
+    ],
+    "enNames": [
+      "Azorius Signet"
+    ],
+    "scryfallName": "Azorius Signet",
+    "oracleId": "e018773f-95b3-49a3-9674-6f04ddef2092",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_sIRHtPITbd.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "54",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "彩色の灯籠"
+    ],
+    "enNames": [
+      "Chromatic Lantern"
+    ],
+    "scryfallName": "Chromatic Lantern",
+    "oracleId": "539f5396-d99a-417d-a84c-dff7930b5900",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_c7UadQd7Qf.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "55",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "両替機"
+    ],
+    "enNames": [
+      "Currency Converter"
+    ],
+    "scryfallName": "Currency Converter",
+    "oracleId": "981298e6-ddee-49c0-9377-f47f019b4138",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_jNujxLbnHf.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "56",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "ディミーアの印鑑"
+    ],
+    "enNames": [
+      "Dimir Signet"
+    ],
+    "scryfallName": "Dimir Signet",
+    "oracleId": "7d881c57-0bd9-4c57-aa4a-b10808b86143",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_hNGeOWQXg0.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "57",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "友なる石"
+    ],
+    "enNames": [
+      "Fellwar Stone"
+    ],
+    "scryfallName": "Fellwar Stone",
+    "oracleId": "95560508-7ac9-4be9-8a3f-3c7d5b52807b",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_mJuKB5kqhm.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "58",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "イゼットの印鑑"
+    ],
+    "enNames": [
+      "Izzet Signet"
+    ],
+    "scryfallName": "Izzet Signet",
+    "oracleId": "2fda4fe7-8b0c-489c-a000-6d358e614e34",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_bg9Z2dNfeF.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "59",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "変幻の杖"
+    ],
+    "enNames": [
+      "Proteus Staff"
+    ],
+    "scryfallName": "Proteus Staff",
+    "oracleId": "97024e8e-dfde-4769-bc27-c3d6fad19e7c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_87Q9Fn3gRV.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "60",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "ラクドスの印鑑"
+    ],
+    "enNames": [
+      "Rakdos Signet"
+    ],
+    "scryfallName": "Rakdos Signet",
+    "oracleId": "3adb7681-977f-4a32-9ec8-51481b958268",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_iwnShZSEB2.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "61",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "独創のタリスマン"
+    ],
+    "enNames": [
+      "Talisman of Creativity"
+    ],
+    "scryfallName": "Talisman of Creativity",
+    "oracleId": "14d2979d-5728-42d7-a027-0eb1f754655d",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_t8TqWWFRhq.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "62",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "威圧のタリスマン"
+    ],
+    "enNames": [
+      "Talisman of Dominance"
+    ],
+    "scryfallName": "Talisman of Dominance",
+    "oracleId": "4c0a0448-b9d6-43a0-8549-64066dac63f0",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_pZwbdDjQFm.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "63",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "耽溺のタリスマン"
+    ],
+    "enNames": [
+      "Talisman of Indulgence"
+    ],
+    "scryfallName": "Talisman of Indulgence",
+    "oracleId": "1d9aeaaa-66f6-41cb-9bac-162d6fd8662c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_PE17oqlwgL.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "64",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "発展のタリスマン"
+    ],
+    "enNames": [
+      "Talisman of Progress"
+    ],
+    "scryfallName": "Talisman of Progress",
+    "oracleId": "00e35322-1a9a-41e3-9ce1-359c8eaa3bc7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_OObu8cutTY.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "65",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "戦場の鍛冶場"
+    ],
+    "enNames": [
+      "Battlefield Forge"
+    ],
+    "scryfallName": "Battlefield Forge",
+    "oracleId": "6b75b94e-83b7-457e-ac41-7ca90b5a59aa",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_GJYbWFpO9x.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "66",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "コイロスの洞窟"
+    ],
+    "enNames": [
+      "Caves of Koilos"
+    ],
+    "scryfallName": "Caves of Koilos",
+    "oracleId": "33de01e9-ce5a-42d4-afcb-343cd54a6d80",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_8GdW9BBqmZ.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "67",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "断崖の避難所"
+    ],
+    "enNames": [
+      "Clifftop Retreat"
+    ],
+    "scryfallName": "Clifftop Retreat",
+    "oracleId": "d7faa3c8-46cf-46b2-bfa4-89000307cf18",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_VCjOfGWrpg.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "68",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "汚染地帯"
+    ],
+    "enNames": [
+      "Contaminated Landscape"
+    ],
+    "scryfallName": "Contaminated Landscape",
+    "oracleId": "28196fd9-00c9-4cd0-b603-0eec8511ec79",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_7HXSQbOWrP.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "69",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "水没した地下墓地"
+    ],
+    "enNames": [
+      "Drowned Catacomb"
+    ],
+    "scryfallName": "Drowned Catacomb",
+    "oracleId": "819fc966-434e-470f-91e9-a38df974ad17",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_ddkj6A9PSH.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "70",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "風変わりな果樹園"
+    ],
+    "enNames": [
+      "Exotic Orchard"
+    ],
+    "scryfallName": "Exotic Orchard",
+    "oracleId": "27b047e3-0d41-45e2-98e9-9391d7923a1e",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_qXp3Gdul2T.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "71",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "寓話の小道"
+    ],
+    "enNames": [
+      "Fabled Passage"
+    ],
+    "scryfallName": "Fabled Passage",
+    "oracleId": "0c85b8f7-0bd0-4680-9ec5-d4b110460a54",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_W2OrR0vLD5.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "72",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "悪臭の荒野"
+    ],
+    "enNames": [
+      "Fetid Heath"
+    ],
+    "scryfallName": "Fetid Heath",
+    "oracleId": "42bf259d-4bb9-49c3-b4ec-223dca62f4d6",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_J47lWKPVrG.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "73",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "氷河の城砦"
+    ],
+    "enNames": [
+      "Glacial Fortress"
+    ],
+    "scryfallName": "Glacial Fortress",
+    "oracleId": "027dd013-baa7-4111-b3c9-f4d1414e9c45",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_tNum9sMfne.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "74",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "孤立した礼拝堂"
+    ],
+    "enNames": [
+      "Isolated Chapel"
+    ],
+    "scryfallName": "Isolated Chapel",
+    "oracleId": "7e5d9efe-48a9-434b-bb09-056e0e09cc9a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_2xnoQFvRo9.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "75",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "カー砦"
+    ],
+    "enNames": [
+      "Kher Keep"
+    ],
+    "scryfallName": "Kher Keep",
+    "oracleId": "79638767-fbc7-451a-b29f-d93f2ac6f102",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_DXjsSnsQ3b.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "76",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "秘教の門"
+    ],
+    "enNames": [
+      "Mystic Gate"
+    ],
+    "scryfallName": "Mystic Gate",
+    "oracleId": "e9f5feb2-2c1a-46ce-885a-4f378d7d10af",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_b7UKygzfD7.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "77",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "祖先の道"
+    ],
+    "enNames": [
+      "Path of Ancestry"
+    ],
+    "scryfallName": "Path of Ancestry",
+    "oracleId": "b473e293-59e3-4e04-acf2-622604aeb25f",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_o161XpQ8en.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "78",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "危険地帯"
+    ],
+    "enNames": [
+      "Perilous Landscape"
+    ],
+    "scryfallName": "Perilous Landscape",
+    "oracleId": "e2b472dd-047d-47eb-9ebb-df6aa4b52dd4",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_zWyUB3UcZe.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "79",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "大草原の川"
+    ],
+    "enNames": [
+      "Prairie Stream"
+    ],
+    "scryfallName": "Prairie Stream",
+    "oracleId": "5330e24a-8568-446e-840a-594cd08bd1bc",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_9XR9yJPwJf.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "80",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "光輝の山頂"
+    ],
+    "enNames": [
+      "Radiant Summit"
+    ],
+    "scryfallName": "Radiant Summit",
+    "oracleId": "5dd0cc44-4647-4857-ad3b-22494099d08a",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_eKH9OVeufu.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "81",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "不穏な投錨地"
+    ],
+    "enNames": [
+      "Restless Anchorage"
+    ],
+    "scryfallName": "Restless Anchorage",
+    "oracleId": "91320daf-f69c-4350-b0fc-4bb37a6904b1",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_3OcrzHPHH4.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "82",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "眠らずの尖塔"
+    ],
+    "enNames": [
+      "Restless Spire"
+    ],
+    "scryfallName": "Restless Spire",
+    "oracleId": "0ca4e80e-c19c-4b74-b531-c5a4dc5a8ba9",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_mWrArwQ28A.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "83",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "シヴの浅瀬"
+    ],
+    "enNames": [
+      "Shivan Reef"
+    ],
+    "scryfallName": "Shivan Reef",
+    "oracleId": "0fe16212-66c3-4e45-a641-7391e9b2e304",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_kycDZi45Rn.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "84",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "硫黄の滝"
+    ],
+    "enNames": [
+      "Sulfur Falls"
+    ],
+    "scryfallName": "Sulfur Falls",
+    "oracleId": "6a6c5e17-6465-4a1f-9d63-8a3ce2edc522",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_fiqNQ9ddye.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "85",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "硫黄泉"
+    ],
+    "enNames": [
+      "Sulfurous Springs"
+    ],
+    "scryfallName": "Sulfurous Springs",
+    "oracleId": "f5c38c01-4a40-469f-91a0-7479daf4e8e7",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_7OqDg60AWY.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "86",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "沈んだ廃墟"
+    ],
+    "enNames": [
+      "Sunken Ruins"
+    ],
+    "scryfallName": "Sunken Ruins",
+    "oracleId": "e6415ffb-8b7a-41c3-bedf-0d4112b7b795",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_ngMIzVHx7f.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "87",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "地底の大河"
+    ],
+    "enNames": [
+      "Underground River"
+    ],
+    "scryfallName": "Underground River",
+    "oracleId": "857febd9-cdd7-4f8e-a852-d88084b0cfbc",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/1pQfLhnAEk/jp_Ag668qT3yx.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "88",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "虚空の座、オムナス"
+    ],
+    "enNames": [
+      "Omnath, Locus of the Void"
+    ],
+    "scryfallName": "Omnath, Locus of the Void",
+    "oracleId": "579225b5-50e2-4891-8871-0bf6dbc07e33",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_JP4MjlwwDI.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "89",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "救いの手、ダク・フェイデン"
+    ],
+    "enNames": [
+      "Dack Fayden, Helping Hand"
+    ],
+    "scryfallName": "Dack Fayden, Helping Hand",
+    "oracleId": "3b21abb0-9a58-4e62-9650-4b04ce2bfb12",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_Oz59NXz4mb.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "90",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "昇りたる者、オブ・ニクシリス"
+    ],
+    "enNames": [
+      "Ob Nixilis, the Ascended"
+    ],
+    "scryfallName": "Ob Nixilis, the Ascended",
+    "oracleId": "3a49b518-61c8-4dea-8008-c5edf8384581",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_ic3PorHopx.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "91",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "テフェリーの叱責"
+    ],
+    "enNames": [
+      "Teferi's Reproach"
+    ],
+    "scryfallName": "Teferi's Reproach",
+    "oracleId": "9381b4a5-a8e0-412d-bc7f-ae15afa0f135",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_B1G3Dl2Jlq.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "92",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "恐怖の天使、アヴァシン"
+    ],
+    "enNames": [
+      "Avacyn, Angel of Horror"
+    ],
+    "scryfallName": "Avacyn, Angel of Horror",
+    "oracleId": "4af61d45-7114-4eb4-a905-9e03caf87454",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_KpK9yscy33.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "93",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "ウェザーライトの海賊、ジョイラ"
+    ],
+    "enNames": [
+      "Jhoira, Weatherlight Corsair"
+    ],
+    "scryfallName": "Jhoira, Weatherlight Corsair",
+    "oracleId": "cf9b0bb5-d545-4efd-9255-39b10c2be0ee",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_AnDXxgTbdf.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "94",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "熱意ある偽造者、ヴェンセール"
+    ],
+    "enNames": [
+      "Venser, Fervent Forger"
+    ],
+    "scryfallName": "Venser, Fervent Forger",
+    "oracleId": "9b1ae6d8-0cf3-4a67-9241-37f4bc5ddbdd",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_xkHsrLdG2x.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "95",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "幽霊弁護士、ニヴ＝ミゼット"
+    ],
+    "enNames": [
+      "Niv-Mizzet, Ghost Counsel"
+    ],
+    "scryfallName": "Niv-Mizzet, Ghost Counsel",
+    "oracleId": "a5350327-e84c-44b6-8359-87882e521048",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_EIctNNaVuo.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "96",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "戴冠せし反乱者、タミヨウ"
+    ],
+    "enNames": [
+      "Tamiyo, Upriser Crowned"
+    ],
+    "scryfallName": "Tamiyo, Upriser Crowned",
+    "oracleId": "8e0f2e26-1e14-422a-aafe-e1da38ab10a3",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_Hb8JLP9BH6.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "97",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "始祖スフィンクス"
+    ],
+    "enNames": [
+      "The Ur-Sphinx"
+    ],
+    "scryfallName": "The Ur-Sphinx",
+    "oracleId": "4a3fdb8e-4699-4bd9-84e6-3cc7fea0e1ef",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_1jWuKttNuR.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "98",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "ダークスティールの天使"
+    ],
+    "enNames": [
+      "Darksteel Angel"
+    ],
+    "scryfallName": "Darksteel Angel",
+    "oracleId": "d0259f7d-9bd7-4722-8fb9-439768308516",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/8UZL9YFBMJ/jp_zhdVqLc1RT.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "99",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "お菓子の女王、ジンジャー"
+    ],
+    "enNames": [
+      "Ginger, Queen of Sweets"
+    ],
+    "scryfallName": "Ginger, Queen of Sweets",
+    "oracleId": "5ea93956-085d-409b-bd95-dd669fa69eeb",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_ulPkSvv92H.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "100",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "管理者、メムナーク"
+    ],
+    "enNames": [
+      "Memnarch, the Warden"
+    ],
+    "scryfallName": "Memnarch, the Warden",
+    "oracleId": "f2630b02-fb48-4167-8a47-8284f7d4c484",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_MMZZktpN5T.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "101",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "渦巻く火口"
+    ],
+    "enNames": [
+      "Turbulent Crater"
+    ],
+    "scryfallName": "Turbulent Crater",
+    "oracleId": "e86a0b64-fe4a-4ea8-99e8-35860dbac765",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_A42WSv2XHV.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "102",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "渦巻く海岸"
+    ],
+    "enNames": [
+      "Turbulent Shore"
+    ],
+    "scryfallName": "Turbulent Shore",
+    "oracleId": "c13c5f07-dac5-47d0-a088-e24b9fbec3c5",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_KmCpw4XtIr.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://magic.wizards.com/ja/products/reality-fracture/card-image-gallery",
+    "setCode": "FRC",
+    "collectorNumber": "103",
+    "setNameJa": "リアリティ・フラクチャー 統率者",
+    "jaNames": [
+      "渦巻く沼地"
+    ],
+    "enNames": [
+      "Turbulent Wetlands"
+    ],
+    "scryfallName": "Turbulent Wetlands",
+    "oracleId": "b51c8659-ec4f-4213-beb1-49a7acd7366c",
+    "images": {
+      "normal": "https://media.wizards.com/2026/fra/A42WSv2XHV/jp_wHCAGQaaEX.webp"
+    },
+    "releasedAt": "2026-10-02",
+    "setName": "Reality Fracture Commander"
   }
 ];

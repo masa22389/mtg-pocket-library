@@ -1,4 +1,4 @@
-const APP_VERSION = "v244";
+const APP_VERSION = "v247";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2844,6 +2844,15 @@ async function fetchCompleteSetCandidates(setCode, filters) {
     ? await fetchScryfallCardsByIdChunks(localItems.map(item => item.scryfallId))
     : { cards: [], error: null };
   const liveResult = await fetchAllScryfallSearch(normalizedFilters, { unique: "cards", order: "name" });
+  // Official Japanese prints may be available before Scryfall's Japanese records.
+  // Keep every other search condition and only localize exact, verified prints.
+  const officialPrints = new Map(localItems
+    .filter(item => item.source === "mtg-jp-card-gallery" && item.images?.normal && item.jaNames?.length)
+    .map(item => [String(item.collectorNumber), item]));
+  const needsOfficialJapanese = /\blang:ja\b/i.test(normalizedFilters) && officialPrints.size > 0;
+  const officialFallback = needsOfficialJapanese
+    ? await fetchAllScryfallSearch(`${neutralFilters} lang:en`, { unique: "prints", order: "set" })
+    : { ok: true, data: { data: [] }, error: null };
   const completeSetFallback = setLanguageOnly && COMPLETE_SET_OVERRIDES[normalizedSet]
     ? await fetchAllScryfallSearch(`set:${normalizedSet} lang:en`, { unique: "cards", order: "set" })
     : { ok: true, data: { data: [] }, error: null };
@@ -2858,6 +2867,13 @@ async function fetchCompleteSetCandidates(setCode, filters) {
   };
   localCards.cards.forEach(push);
   if (liveResult.ok) (liveResult.data.data || []).forEach(push);
+  const japanesePrints = new Set(cards.filter(isJapaneseCard).map(card => `${card.set}:${card.collector_number}`));
+  if (officialFallback.ok) for (const card of officialFallback.data.data || []) {
+    const item = officialPrints.get(String(card.collector_number));
+    if (String(card.set).toLowerCase() !== normalizedSet || !item || japanesePrints.has(`${card.set}:${card.collector_number}`)) continue;
+    if (item.oracleId ? item.oracleId !== card.oracle_id : item.scryfallName !== card.name) continue;
+    push(supplementalJpVariantForCard(card));
+  }
   if (completeSetFallback.ok) completeSetOverrideCards(normalizedSet, completeSetFallback.data.data).forEach(push);
 
   const orderById = new Map(localItems.map((item, index) => [item.scryfallId, index]));
@@ -3096,6 +3112,22 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
     }
     state.variantCache.set(key, variants);
   }
+  // Scryfall may not have the official Japanese prints yet. Enrich even cached
+  // print lists, and retain the Japanese print the user actually opened.
+  const japaneseVariants = variants.filter(isJapaneseCard);
+  const japaneseIds = new Set(japaneseVariants.map(item => item.id));
+  for (const print of variants) {
+    if (isJapaneseCard(print)) continue;
+    const indexed = jpIndexForCard(print);
+    if (indexed?.source !== "mtg-jp-card-gallery" || !indexed.images?.normal || !jpIndexImageMatchesCard(indexed, print)) continue;
+    const localized = supplementalJpVariantForCard(print);
+    if (localized && !japaneseIds.has(localized.id)) {
+      japaneseVariants.push(localized);
+      japaneseIds.add(localized.id);
+    }
+  }
+  if (card._supplementalJpVariant && !japaneseIds.has(card.id)) japaneseVariants.unshift(card);
+  variants = sortUnifiedPrints([...japaneseVariants, ...variants.filter(item => !isJapaneseCard(item))]);
   state.cardVariants = variants;
   const sameVariant = variants.find(item => item.id === card.id) || variants[0] || card;
   selectVariant(sameVariant);
