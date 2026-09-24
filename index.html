@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=241">
+  <link rel="stylesheet" href="styles.css?v=244">
 </head>
 <body>
   <header class="app-header">
@@ -94,6 +94,13 @@
         <label>表示フォーマット<select id="deckFormatFilter"><option value="">すべて</option></select></label>
       </section>
       <div id="deckList" class="deck-grid"></div>
+    </section>
+
+    <section id="purchasesView" class="view">
+      <div class="hero-card"><div><span class="eyebrow">WISHLIST</span><h1>購入予定</h1></div><p id="purchaseSummary">まだ登録されていません</p></div>
+      <p class="muted">カード検索でカードを開き、購入予定枚数を指定して「購入候補」を押すと登録できます。</p>
+      <div class="purchase-reorder-help"><p class="muted">画像を長押し → 別の画像を選ぶと順番を入れ替えます。</p><button id="cancelPurchaseReorder" type="button" class="ghost compact" hidden>並び替えを終了</button></div>
+      <div id="purchaseList" class="purchase-list"></div>
     </section>
 
     <section id="settingsView" class="view">
@@ -178,6 +185,7 @@
   <nav class="bottom-nav" aria-label="メインメニュー">
     <button data-view="collection" class="active"><span>◫</span>カード</button>
     <button data-view="decks"><span>▤</span>デッキ</button>
+    <button data-view="purchases"><span>＋</span>購入予定</button>
     <button data-view="settings"><span>⚙</span>設定</button>
   </nav>
 
@@ -205,6 +213,11 @@
         <button type="button" data-deck-section-target="maybe">候補</button>
       </div>
       <div class="card-action-row"><button id="addCardButton" type="button">所持枚数を保存</button><button id="addCardToDeckButton" type="button" hidden>このイラストをデッキへ追加</button></div>
+      <section class="purchase-add-panel">
+        <label for="purchaseQuantity">購入予定枚数<input id="purchaseQuantity" type="number" min="1" max="9999" step="1" value="1" inputmode="numeric"></label>
+        <button id="addPurchaseButton" type="button" class="ghost">購入候補</button>
+        <p class="muted">選択中の収録版・状態・仕様で登録します。同じ候補は枚数を加算します。</p>
+      </section>
       <p id="cardActionStatus" class="deck-add-status" aria-live="polite"></p>
       <section id="manualPricePanel" class="manual-price-panel" hidden>
         <h3>価格</h3><p id="cardPriceSummary" class="muted"></p>
@@ -347,8 +360,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=241" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=241" defer></script>
-  <script src="app.js?v=241" defer></script>
+  <script src="mtg-jp-card-index.js?v=244" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=244" defer></script>
+  <script src="app.js?v=244" defer></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
-const APP_VERSION = "v241";
-const KEYS = { collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
+const APP_VERSION = "v244";
+const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
 const COLLECTION_RENDER_LIMIT = 50;
@@ -24,6 +24,7 @@ const BACKGROUND_THEME_CHROME = {
   violet: { green: "#68327c", green2: "#82449a", gold: "#b77a56" },
 };
 const state = {
+  purchases: read(KEYS.purchases, []),
   collection: read(KEYS.collection, []),
   decks: read(KEYS.decks, []),
   fx: read(KEYS.fx, { usdJpy: 0, updatedAt: 0, source: "" }),
@@ -2254,9 +2255,11 @@ function showInlineStatus(element, message, options = {}) {
 }
 
 function showView(name) {
+  if (name !== "purchases") cancelPurchaseReorder();
   document.querySelectorAll(".view").forEach(view => view.classList.toggle("active", view.id === `${name}View`));
   document.querySelectorAll(".bottom-nav button").forEach(button => button.classList.toggle("active", button.dataset.view === name));
   if (name === "decks") renderDecks();
+  if (name === "purchases") renderPurchases();
   if (name === "settings") { renderBackupSummary(); updateWisdomGuildSettingsUi(); updateCardTraderSettingsUi(); }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -3068,6 +3071,7 @@ function clearSearchResults() {
 async function openCardDialog(card, mode = "collection", ownedId = null) {
   state.selectedCard = card;
   state.cardDialogMode = mode;
+  $("#purchaseQuantity").value = 1;
   state.selectedOwnedId = ownedId;
   state.cardVariants = [];
   state.variantRenderLimit = VARIANT_RENDER_LIMIT;
@@ -5672,6 +5676,142 @@ function deleteDeck() {
   persist(); els.deckDialog.close(); renderDecks(); showToast("デッキを削除しました");
 }
 
+function purchaseIdentity(card) {
+  return JSON.stringify([card.scryfallId || [card.set, card.collectorNumber, card.name], card.language, card.finish, card.condition]);
+}
+
+function validatePurchases(items) {
+  if (!Array.isArray(items)) throw new Error("購入予定の形式が不正です");
+  const ids = new Set();
+  for (const item of items) {
+    if (!item || typeof item.id !== "string" || ids.has(item.id) || !Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > 9999) throw new Error("購入予定の形式が不正です");
+    ids.add(item.id);
+  }
+  return items;
+}
+
+function savePurchases(items) {
+  // Save first so a quota error never leaves the UI pretending a change was saved.
+  try {
+    localStorage.setItem(KEYS.purchases, JSON.stringify(validatePurchases(items)));
+    state.purchases = items;
+    renderPurchases();
+    return true;
+  } catch {
+    showToast("購入予定を保存できませんでした。枚数と端末の空き容量を確認してください");
+    return false;
+  }
+}
+
+function addSelectedPurchase() {
+  if (!state.selectedCard) return;
+  const quantity = Number($("#purchaseQuantity").value);
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 9999) {
+    showInlineStatus(els.cardActionStatus, "購入予定枚数は1〜9999の整数で入力してください", { sticky: true });
+    return;
+  }
+  const incoming = compactCard(state.selectedCard);
+  incoming.quantity = quantity;
+  const existing = state.purchases.find(item => purchaseIdentity(item) === purchaseIdentity(incoming));
+  if (existing && existing.quantity + quantity > 9999) {
+    showInlineStatus(els.cardActionStatus, "購入予定枚数の合計は9999枚までです", { sticky: true });
+    return;
+  }
+  const items = existing ? state.purchases.map(item => item.id === existing.id ? { ...item, quantity: item.quantity + quantity } : item) : [...state.purchases, incoming];
+  if (savePurchases(items)) showInlineStatus(els.cardActionStatus, `購入予定に${quantity}枚追加しました（合計${existing ? existing.quantity + quantity : quantity}枚）`, { sticky: true });
+}
+
+let purchasePress = null;
+let purchaseSelection = null;
+let suppressPurchaseClick = false;
+
+function renderPurchases() {
+  endPurchasePress();
+  if (!state.purchases.some(card => card.id === purchaseSelection)) purchaseSelection = null;
+  $("#cancelPurchaseReorder").hidden = !purchaseSelection;
+  const total = state.purchases.reduce((sum, card) => sum + card.quantity, 0);
+  $("#purchaseSummary").textContent = `${state.purchases.length}種類・${total.toLocaleString("ja-JP")}枚`;
+  $("#purchaseList").innerHTML = state.purchases.length ? state.purchases.map(card => `
+    <article class="purchase-item card" data-purchase-id="${esc(card.id)}">
+      <button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))}：長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img src="${esc(card.image || "")}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async" draggable="false"><span class="purchase-quantity" aria-label="購入予定 ${card.quantity}枚">${card.quantity}</span></button>
+      <div class="purchase-info"><h2>${esc(nameOf(card))}</h2><p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${card.language === "ja" ? "日本語" : card.language === "en" ? "英語" : "その他"} · ${esc(card.condition)} · ${card.finish === "foil" ? "Foil" : card.finish === "etched" ? "Etched" : "通常"}</p></div>
+      <div class="purchase-controls"><button type="button" data-purchase-action="minus" aria-label="購入予定枚数を1枚減らす" ${card.quantity <= 1 ? "disabled" : ""}>−</button><button type="button" data-purchase-action="plus" aria-label="購入予定枚数を1枚増やす" ${card.quantity >= 9999 ? "disabled" : ""}>＋</button><button type="button" class="ghost" data-purchase-action="delete">削除</button></div>
+    </article>`).join("") : '<div class="empty">購入予定のカードはまだありません。</div>';
+}
+
+$("#addPurchaseButton").addEventListener("click", addSelectedPurchase);
+$("#purchaseList").addEventListener("click", event => {
+  const button = event.target.closest("[data-purchase-action]");
+  if (!button) return;
+  const card = state.purchases.find(item => item.id === button.closest("[data-purchase-id]").dataset.purchaseId);
+  if (!card) return;
+  const action = button.dataset.purchaseAction;
+  if (action === "delete") {
+    if (confirm(`${nameOf(card)}を購入予定から削除しますか？`)) savePurchases(state.purchases.filter(item => item.id !== card.id));
+  } else {
+    const quantity = card.quantity + (action === "plus" ? 1 : -1);
+    if (quantity >= 1 && quantity <= 9999) savePurchases(state.purchases.map(item => item.id === card.id ? { ...item, quantity } : item));
+  }
+});
+
+function endPurchasePress() {
+  if (purchasePress) clearTimeout(purchasePress.timer);
+  purchasePress = null;
+}
+function cancelPurchaseReorder() {
+  endPurchasePress(); purchaseSelection = null; suppressPurchaseClick = false;
+  $("#cancelPurchaseReorder").hidden = true;
+  document.querySelectorAll(".purchase-image").forEach(button => {
+    button.classList.remove("purchase-selected"); button.setAttribute("aria-pressed", "false");
+  });
+}
+$("#cancelPurchaseReorder").addEventListener("click", cancelPurchaseReorder);
+$("#purchaseList").addEventListener("pointerdown", event => {
+  const button = event.target.closest(".purchase-image");
+  if (!button || (event.pointerType === "mouse" && event.button !== 0) || purchaseSelection) return;
+  endPurchasePress();
+  purchasePress = { x: event.clientX, y: event.clientY, pointerId: event.pointerId, timer: setTimeout(() => {
+    purchaseSelection = button.closest("[data-purchase-id]").dataset.purchaseId;
+    suppressPurchaseClick = true;
+    endPurchasePress();
+    button.classList.add("purchase-selected"); button.setAttribute("aria-pressed", "true");
+    $("#cancelPurchaseReorder").hidden = false;
+    showToast("入れ替えるカード画像を選んでください");
+  }, 450) };
+});
+$("#purchaseList").addEventListener("pointermove", event => {
+  if (purchasePress && Math.hypot(event.clientX - purchasePress.x, event.clientY - purchasePress.y) > 18) endPurchasePress();
+});
+["pointerup", "pointercancel"].forEach(type => document.addEventListener(type, endPurchasePress, { passive: true }));
+$("#purchaseList").addEventListener("pointerleave", endPurchasePress);
+$("#purchaseList").addEventListener("contextmenu", event => { if (event.target.closest(".purchase-image")) event.preventDefault(); });
+$("#purchaseList").addEventListener("dragstart", event => { if (event.target.closest(".purchase-image")) event.preventDefault(); });
+$("#purchaseList").addEventListener("click", event => {
+  const button = event.target.closest(".purchase-image"); if (!button) return;
+  const targetId = button.closest("[data-purchase-id]").dataset.purchaseId;
+  if (suppressPurchaseClick) {
+    suppressPurchaseClick = false;
+    if (targetId === purchaseSelection) return;
+  }
+  if (!purchaseSelection) {
+    if (event.detail === 0) {
+      purchaseSelection = targetId; renderPurchases();
+      showToast("入れ替えるカード画像を選んでください");
+    }
+    return;
+  }
+  const from = state.purchases.findIndex(card => card.id === purchaseSelection);
+  const to = state.purchases.findIndex(card => card.id === targetId);
+  cancelPurchaseReorder();
+  if (from < 0 || to < 0 || from === to) return;
+  const items = [...state.purchases];
+  [items[from], items[to]] = [items[to], items[from]];
+  if (savePurchases(items)) showToast("購入予定の並び順を変更しました");
+});
+document.addEventListener("keydown", event => { if (event.key === "Escape") cancelPurchaseReorder(); });
+window.addEventListener("blur", endPurchasePress);
+
+
 function backupPayload() {
   return {
     version: 2,
@@ -5684,6 +5824,7 @@ function backupPayload() {
     },
     collection: state.collection,
     decks: state.decks,
+    purchases: state.purchases,
     priceCache: state.priceCache || {},
     fx: state.fx,
     favoriteGroups: state.favoriteGroups,
@@ -5722,9 +5863,12 @@ async function importBackup(file) {
       "",
       `現在のデータ：所持${currentTotal}枚 / ${state.collection.length}種類、デッキ${state.decks.length}件`,
       "",
+      data.purchases === undefined ? "このバックアップには購入予定がないため、現在の購入予定は維持します。" : `購入予定：${Array.isArray(data.purchases) ? data.purchases.length : 0}種類に置き換えます。`,
       "復元してよろしいですか？",
     ].join("\n");
     if (!confirm(message)) { els.importInput.value = ""; return; }
+    const purchases = data.purchases === undefined ? state.purchases : validatePurchases(data.purchases);
+    state.purchases = purchases;
     state.collection = data.collection;
     state.decks = data.decks;
     state.priceCache = data.priceCache && typeof data.priceCache === "object" ? data.priceCache : {};
@@ -5737,7 +5881,7 @@ async function importBackup(file) {
     normalizeCollectionConditions();
     normalizeFavoriteGroups();
     renderFavoriteGroupOptions();
-    persist(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("バックアップを復元しました");
+    persist(); persist(["purchases"]); renderCollection(); renderDecks(); renderPurchases(); renderBackupSummary(); showToast("バックアップを復元しました");
   } catch { showToast("正しいバックアップファイルではありません"); }
   els.importInput.value = "";
 }
@@ -5959,7 +6103,7 @@ els.cardTraderToken?.addEventListener("focus", () => {
 });
 els.cardTraderToken?.addEventListener("blur", updateCardTraderSettingsUi);
 els.importInput.addEventListener("change", () => els.importInput.files[0] && importBackup(els.importInput.files[0]));
-$("#clearButton").addEventListener("click", () => { if (!confirm("所持カードとデッキをすべて削除しますか？")) return; state.collection = []; state.decks = []; state.priceCache = {}; persist(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("すべて削除しました"); });
+$("#clearButton").addEventListener("click", () => { if (!confirm("所持カード・デッキ・購入予定をすべて削除しますか？")) return; state.collection = []; state.decks = []; state.purchases = []; state.priceCache = {}; persist(); persist(["purchases"]); renderPurchases(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("すべて削除しました"); });
 
 window.addEventListener("beforeinstallprompt", event => { event.preventDefault(); state.installPrompt = event; els.installButton.hidden = false; });
 els.installButton.addEventListener("click", async () => { if (!state.installPrompt) return; state.installPrompt.prompt(); await state.installPrompt.userChoice; state.installPrompt = null; els.installButton.hidden = true; });
