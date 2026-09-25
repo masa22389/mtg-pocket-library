@@ -1,4 +1,4 @@
-const APP_VERSION = "v247";
+const APP_VERSION = "v256";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -58,6 +58,10 @@ const state = {
   deckEntryVariants: [],
   installPrompt: null,
 };
+const setBrowser = { code: "", cards: [], visible: [], limit: 50, catalogLimit: 50, request: 0, loading: false };
+let searchRequestId = 0;
+let cardDialogRequestId = 0;
+let searchRenderLimit = 50;
 let deckDragState = null;
 let suppressNextDeckCardClick = false;
 let deckReorderMode = false;
@@ -1926,6 +1930,7 @@ async function hydrateSetOptions() {
     }));
     localStorage.setItem(KEYS.sets, JSON.stringify(state.sets));
     renderSetSelects();
+    if (!$("#setCollection").hidden) renderSetCatalog();
   } catch {
     renderSetSelects();
   }
@@ -2278,6 +2283,9 @@ function renderBackupSummary() {
 }
 
 async function searchCards() {
+  const requestId = ++searchRequestId;
+  searchRenderLimit = 50;
+  $("#moreSearchResults").hidden = true;
   const query = els.cardSearch.value.trim();
   const rawSubtype = $("#searchSubtype")?.value.trim() || "";
   const clientSubtype = rawSubtype;
@@ -2285,8 +2293,8 @@ async function searchCards() {
   const filters = buildCardSearchFilters({ omitSubtype: Boolean(localizedSubtype) });
   const exactMatch = Boolean(query) && els.searchMatch.value === "exact";
   const exhaustiveAdvancedSearch = Boolean(filters || clientSubtype);
-  const maxCandidates = exhaustiveAdvancedSearch ? Number.POSITIVE_INFINITY : 30;
-  if (!query && !filters && !clientSubtype) { els.searchStatus.textContent = "カード名または検索条件を指定してください"; return; }
+  const maxCandidates = exactMatch ? 30 : Number.POSITIVE_INFINITY;
+  if (!query && !filters && !clientSubtype) { els.searchButton.disabled = false; els.searchStatus.textContent = "カード名または検索条件を指定してください"; return; }
   els.searchButton.disabled = true;
   els.searchStatus.textContent = navigator.onLine ? "検索中…" : "オフラインのため検索できません";
     state.searchResults = [];
@@ -2308,6 +2316,7 @@ async function searchCards() {
     if (isSetScopedCardSearch(query)) {
       els.searchStatus.textContent = "セットの全カードを取得中…";
       const completeSet = await fetchCompleteSetCandidates(els.searchSet.value, filters);
+      if (requestId !== searchRequestId) return;
       const matchingSetCards = applySubtypeFilter(completeSet.cards);
       if (!matchingSetCards.length) throw new Error(completeSet.error?.details || "カードが見つかりませんでした");
       const preferJpDisplay = selectedLanguage === "ja";
@@ -2324,24 +2333,29 @@ async function searchCards() {
       exhaustive: exhaustiveAdvancedSearch,
       localizedSubtype: clientSubtype,
     });
+    if (requestId !== searchRequestId) return;
     primaryCards = searchResult.cards;
     lastError = searchResult.error;
     if (!primaryCards.length) throw new Error(lastError?.details || "カードが見つかりませんでした");
 
+    state.searchResults = applySubtypeFilter(applyJpIndexToCards(primaryCards));
+    renderSearchResults();
     const exactOracleIds = findExactOracleIds(primaryCards, query);
     if (exactMatch && exactOracleIds.length) {
       els.searchStatus.textContent = "同じカードの日英版を取得中…";
       const unifiedPrints = await fetchUnifiedPrints(exactOracleIds.slice(0, 3), filters);
+      if (requestId !== searchRequestId) return;
       const unifiedCards = sortUnifiedPrints(unifiedPrints).map(card => sourceLang === "ja" ? { ...card, _preferJpDisplay: true } : card);
-      state.searchResults = applySubtypeFilter(applyJpIndexToCards(unifiedCards)).slice(0, 24);
+      state.searchResults = applySubtypeFilter(applyJpIndexToCards(unifiedCards));
     } else {
       els.searchStatus.textContent = "反対言語のカードも検索中…";
       const counterpartCards = await fetchCounterparts(primaryCards, targetLang, filters);
+      if (requestId !== searchRequestId) return;
       const mergedCards = searchResult.source === "local" || exhaustiveAdvancedSearch
         ? [...primaryCards, ...counterpartCards]
         : mergeLanguageResults(primaryCards, counterpartCards);
       const indexedCards = applySubtypeFilter(applyJpIndexToCards(mergedCards));
-      state.searchResults = exhaustiveAdvancedSearch ? indexedCards : indexedCards.slice(0, 24);
+      state.searchResults = indexedCards;
     }
     renderSearchResults();
     const displayedCards = state.searchGroups.map(group => group.card).filter(Boolean);
@@ -2349,20 +2363,58 @@ async function searchCards() {
     const enCount = displayedCards.length - jaCount;
     els.searchStatus.textContent = `${displayedCards.length}種類を表示（日本語 ${jaCount}件・英語 ${enCount}件）`;
   } catch (err) {
+    if (requestId !== searchRequestId) return;
     els.searchStatus.textContent = err.message || "検索に失敗しました。通信状態を確認してください";
   } finally {
-    els.searchButton.disabled = false;
-    updateClearSearchResultsButton();
+    if (requestId === searchRequestId) {
+      els.searchButton.disabled = false;
+      updateClearSearchResultsButton();
+    }
   }
+}
+
+// Short-lived search-only cache. Store serialized responses so callers cannot
+// mutate cached cards; bound memory and never persist these pages to storage.
+const searchPageCache = new Map();
+const searchPagePending = new Map();
+function cachedSearchPage(url) {
+  const entry = searchPageCache.get(url);
+  if (entry && Date.now() - entry.time < 300000) return entry;
+  searchPageCache.delete(url);
+  return null;
+}
+async function fetchSearchPage(url) {
+  const cached = cachedSearchPage(url);
+  if (cached) return JSON.parse(cached.json);
+  if (!searchPagePending.has(url)) {
+    const pending = (async () => {
+      const response = await fetch(url);
+      const data = await response.json();
+      const json = JSON.stringify({ ok: response.ok, data });
+      if ((response.ok || response.status === 404) && json.length * 2 <= 8000000) {
+        searchPageCache.set(url, { time: Date.now(), json });
+        let size = [...searchPageCache.values()].reduce((sum, entry) => sum + entry.json.length * 2, 0);
+        while (searchPageCache.size > 24 || size > 8000000) {
+          const key = searchPageCache.keys().next().value;
+          size -= searchPageCache.get(key).json.length * 2;
+          searchPageCache.delete(key);
+        }
+      }
+      return json;
+    })();
+    searchPagePending.set(url, pending);
+  }
+  const pending = searchPagePending.get(url);
+  try { return JSON.parse(await pending); }
+  finally { if (searchPagePending.get(url) === pending) searchPagePending.delete(url); }
 }
 
 async function fetchScryfallSearch(q, options = {}) {
   const params = new URLSearchParams({ q, unique: options.unique || "prints", order: options.order || "name", include_multilingual: "true" });
   if (options.dir) params.set("dir", options.dir);
   try {
-    const response = await fetch(`https://api.scryfall.com/cards/search?${params}`, { headers: { Accept: "application/json" } });
-    if (response.ok) return { ok: true, data: await response.json() };
-    return { ok: false, error: await response.json().catch(() => null) };
+    const response = await fetchSearchPage(`https://api.scryfall.com/cards/search?${params}`);
+    return response.ok ? { ok: true, data: response.data } : { ok: false, error: response.data };
   } catch {
     return { ok: false, error: { details: "Scryfallへの通信に失敗しました。時間をおいて再検索してください。" } };
   }
@@ -2390,10 +2442,10 @@ async function fetchAllScryfallSearch(q, options = {}) {
   const cards = [...first.data.data];
   let nextPage = first.data.has_more ? first.data.next_page : null;
   while (nextPage) {
-    await new Promise(resolve => setTimeout(resolve, 80));
-    const response = await fetch(nextPage, { headers: { Accept: "application/json" } });
-    if (!response.ok) return { ok: false, error: await response.json().catch(() => null) };
-    const page = await response.json();
+    if (!cachedSearchPage(nextPage)) await new Promise(resolve => setTimeout(resolve, 80));
+    const response = await fetchSearchPage(nextPage);
+    if (!response.ok) return { ok: false, error: response.data };
+    const page = response.data;
     cards.push(...page.data);
     nextPage = page.has_more ? page.next_page : null;
   }
@@ -2730,7 +2782,7 @@ function buildLocalIndexScryfallQueryChunks(items, filters, options = {}) {
 async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards = 30) {
   const queryKey = normalizeAliasKey(query);
   const isShortJapaneseQuery = /^[\u3041-\u3093\u30a1-\u30f6\u30fc]{1,3}$/.test(queryKey);
-  const localLimit = exactMatch ? 20 : isShortJapaneseQuery ? 80 : 48;
+  const localLimit = Number.isFinite(maxCards) ? (exactMatch ? 20 : Math.max(maxCards, isShortJapaneseQuery ? 80 : 48)) : Number.POSITIVE_INFINITY;
   const localItems = localSearchIndexMatches(query, exactMatch, localLimit);
   if (!localItems.length) return { cards: [], items: [], error: null };
   const queries = exactMatch
@@ -2745,7 +2797,7 @@ async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards =
   const seen = new Set();
   let lastError = null;
   for (const scryfallQuery of queries) {
-    const result = await fetchScryfallSearch(scryfallQuery, exactMatch
+    const result = await (exactMatch ? fetchScryfallSearch : fetchAllScryfallSearch)(scryfallQuery, exactMatch
       ? { unique: "prints", order: "released", dir: "desc" }
       : { unique: "cards", order: "name" });
     if (!result.ok) {
@@ -2897,12 +2949,12 @@ async function fetchCompleteSetCandidates(setCode, filters) {
 async function fetchSearchCandidates(query, filters, preferredLang, exactMatch, maxCards = 30, options = {}) {
   const exhaustive = Boolean(options.exhaustive);
   const localizedSubtype = String(options.localizedSubtype || "").trim();
-  const runSearch = exhaustive ? fetchAllScryfallSearch : fetchScryfallSearch;
+  const runSearch = exhaustive || !Number.isFinite(maxCards) ? fetchAllScryfallSearch : fetchScryfallSearch;
   const applyClientFilters = source => localizedSubtype
     ? (source || []).filter(card => cardMatchesLocalizedSubtype(card, localizedSubtype))
     : (source || []);
   const limitCards = source => Number.isFinite(maxCards) ? source.slice(0, maxCards) : source;
-  const localMaxCards = Number.isFinite(maxCards) ? maxCards : 5000;
+  const localMaxCards = maxCards;
   const setAliasCodes = exactMatch ? [] : setAliasCodesForQuery(query);
   if (setAliasCodes.length) {
     const setAliasQuery = buildSetAliasSearchQuery(setAliasCodes, filters);
@@ -3047,7 +3099,9 @@ function mergeLanguageResults(primaryCards, counterpartCards) {
   return merged;
 }
 
-function renderSearchResults() {
+function renderSearchResults(append = false) {
+  const previousScroll = els.searchResults.scrollTop;
+  const oldButtons = [...els.searchResults.querySelectorAll(".search-result")];
   const groups = new Map();
   for (const card of state.searchResults) {
     const key = card._setScopedResult
@@ -3057,12 +3111,17 @@ function renderSearchResults() {
     groups.get(key).cards.push(card);
   }
   state.searchGroups = [...groups.values()];
-  els.searchResults.innerHTML = state.searchGroups.map((group, index) => `
+  const visibleGroups = state.searchGroups.slice(0, searchRenderLimit);
+  const html = (group, index) => `
     <button class="search-result" data-index="${index}">
-      <img src="${esc(imageOf(group.card))}" alt="" loading="lazy">
+      <img src="${esc(imageOf(group.card))}" alt="" loading="lazy" decoding="async">
       <span><strong>${esc(nameOf(group.card))}</strong><small><span class="language-tag">日英版</span>${altNameOf(group.card) ? `${esc(altNameOf(group.card))} · ` : ""}タップして別イラストを選択</small></span>
-    </button>`).join("");
-  els.searchResults.querySelectorAll("button").forEach(button => button.addEventListener("click", () => openCardDialog(state.searchGroups[Number(button.dataset.index)].card)));
+    </button>`;
+  if (!append) els.searchResults.innerHTML = visibleGroups.map(html).join("");
+  else els.searchResults.insertAdjacentHTML("beforeend", visibleGroups.slice(oldButtons.length).map((group, index) => html(group, index + oldButtons.length)).join(""));
+  els.searchResults.scrollTop = previousScroll;
+  $("#moreSearchResults").hidden = visibleGroups.length >= state.searchGroups.length;
+  $("#moreSearchResults").textContent = `さらに50件表示（${visibleGroups.length} / ${state.searchGroups.length}件）`;
   updateClearSearchResultsButton();
 }
 
@@ -3076,6 +3135,10 @@ function updateClearSearchResultsButton() {
 }
 
 function clearSearchResults() {
+  ++searchRequestId;
+  els.searchButton.disabled = false;
+  searchRenderLimit = 50;
+  $("#moreSearchResults").hidden = true;
   state.searchResults = [];
   state.searchGroups = [];
   if (els.searchResults) els.searchResults.innerHTML = "";
@@ -3084,7 +3147,11 @@ function clearSearchResults() {
   showToast("検索結果をクリアしました");
 }
 
+let variantPickerRequestId = 0;
+let cardLanguageRequestId = 0;
 async function openCardDialog(card, mode = "collection", ownedId = null) {
+  ++cardDialogRequestId;
+  ++cardLanguageRequestId;
   state.selectedCard = card;
   state.cardDialogMode = mode;
   $("#purchaseQuantity").value = 1;
@@ -3092,46 +3159,98 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   state.cardVariants = [];
   state.variantRenderLimit = VARIANT_RENDER_LIMIT;
   hideInlineStatus(els.cardActionStatus);
+  $("#cardLanguageStatus").hidden = true;
   els.addCardToDeckButton.hidden = mode !== "deck";
   document.querySelectorAll(".card-deck-targets").forEach(element => element.hidden = mode !== "deck");
-  els.variantFilter.value = "";
+  els.cardVariants.replaceChildren();
   renderSelectedVariant();
-  els.cardVariants.innerHTML = '<span class="muted">収録版を読み込み中…</span>';
   els.cardDialog.showModal();
+  // Opening a card never fetches or renders its complete print gallery.
+  if (!ownedId && mode !== "set" && card.lang === "ja") await changeCardLanguage("en");
+}
 
-  const key = card.oracle_id || card.name;
-  let variants = state.variantCache.get(key);
-  if (!variants) {
-    const prints = card.oracle_id ? await fetchUnifiedPrints([card.oracle_id]) : [card];
-    const shouldPreferJpDisplay = Boolean(card._preferJpDisplay);
-    const variantSource = sortUnifiedPrints(prints.length ? prints : [card]).map(item => shouldPreferJpDisplay ? { ...item, _preferJpDisplay: true } : item);
-    variants = applyJpIndexToCards(variantSource);
-    if (shouldPreferJpDisplay && !variants.some(isJapaneseCard)) {
-      const supplementalVariant = supplementalJpVariantForCard(card);
-      if (supplementalVariant) variants = [supplementalVariant, ...variants];
-    }
-    state.variantCache.set(key, variants);
+function sameCardPrint(a, b) {
+  return a.oracle_id === b.oracle_id && a.set === b.set && String(a.collector_number) === String(b.collector_number);
+}
+
+async function changeCardLanguage(lang) {
+  const card = state.selectedCard;
+  const request = ++cardLanguageRequestId;
+  if (!card || !["en", "ja"].includes(lang) || card.lang === lang) {
+    els.cardLanguage.value = card?.lang || "other";
+    $("#cardLanguageStatus").hidden = true;
+    return;
   }
-  // Scryfall may not have the official Japanese prints yet. Enrich even cached
-  // print lists, and retain the Japanese print the user actually opened.
-  const japaneseVariants = variants.filter(isJapaneseCard);
-  const japaneseIds = new Set(japaneseVariants.map(item => item.id));
-  for (const print of variants) {
-    if (isJapaneseCard(print)) continue;
-    const indexed = jpIndexForCard(print);
-    if (indexed?.source !== "mtg-jp-card-gallery" || !indexed.images?.normal || !jpIndexImageMatchesCard(indexed, print)) continue;
-    const localized = supplementalJpVariantForCard(print);
-    if (localized && !japaneseIds.has(localized.id)) {
-      japaneseVariants.push(localized);
-      japaneseIds.add(localized.id);
-    }
+  const dialogRequest = cardDialogRequestId;
+  const status = $("#cardLanguageStatus");
+  status.hidden = false;
+  status.textContent = "選択した言語の画像を確認中…";
+  // Keep the form's language consistent with its actual card while loading.
+  els.cardLanguage.value = card.lang;
+  let peer = state.cardVariants.find(item => item.lang === lang && sameCardPrint(item, card));
+  if (!peer && lang === "ja") {
+    const indexed = jpIndexForCard(card);
+    if (indexed?.source === "mtg-jp-card-gallery" && indexed.images?.normal && jpIndexImageMatchesCard(indexed, card)) peer = supplementalJpVariantForCard(card);
   }
-  if (card._supplementalJpVariant && !japaneseIds.has(card.id)) japaneseVariants.unshift(card);
-  variants = sortUnifiedPrints([...japaneseVariants, ...variants.filter(item => !isJapaneseCard(item))]);
-  state.cardVariants = variants;
-  const sameVariant = variants.find(item => item.id === card.id) || variants[0] || card;
-  selectVariant(sameVariant);
-  renderVariantGallery();
+  if (!peer && card.oracle_id) {
+    const result = await fetchScryfallSearch(`oracleid:${card.oracle_id} set:${card.set} cn:${JSON.stringify(String(card.collector_number))} lang:${lang}`);
+    if (result.ok) peer = result.data.data.find(item => item.lang === lang && sameCardPrint(item, card));
+  }
+  if (request !== cardLanguageRequestId || dialogRequest !== cardDialogRequestId || !els.cardDialog.open || state.selectedCard !== card) return;
+  if (!peer) {
+    status.textContent = `${lang === "ja" ? "日本語" : "英語"}版が見つかりませんでした。この収録版の表示言語を維持します。`;
+    return;
+  }
+  const purchaseQuantity = $("#purchaseQuantity").value;
+  selectVariant(applyJpIndexToCards([{ ...peer, _preferJpDisplay: lang === "ja" }])[0]);
+  $("#purchaseQuantity").value = purchaseQuantity;
+  status.hidden = true;
+}
+
+async function openCardVariantPicker() {
+  els.variantFilter.value = state.selectedCard.lang === "ja" ? "ja" : "en";
+  $("#cardVariantDialog").showModal();
+  await loadCardVariantLanguage();
+}
+
+async function loadCardVariantLanguage() {
+  const request = ++variantPickerRequestId;
+  const dialogRequest = cardDialogRequestId;
+  const card = state.selectedCard;
+  const lang = els.variantFilter.value;
+  state.variantRenderLimit = VARIANT_RENDER_LIMIT;
+  state.cardVariants = [];
+  els.variantCount.textContent = "";
+  els.cardVariants.innerHTML = '<span class="muted">収録版を読み込み中…</span>';
+  try {
+    const variants = await fetchPrintsForLanguage(card, lang);
+    if (request !== variantPickerRequestId || dialogRequest !== cardDialogRequestId || !$("#cardVariantDialog").open) return;
+    state.cardVariants = variants;
+    renderVariantGallery();
+  } catch (error) {
+    if (request === variantPickerRequestId && $("#cardVariantDialog").open) els.cardVariants.textContent = error.message;
+  }
+}
+
+async function fetchPrintsForLanguage(card, lang) {
+    const query = card.oracle_id ? `oracleid:${card.oracle_id}` : `!${JSON.stringify(card.name)}`;
+    const result = await fetchAllScryfallSearch(`${query} lang:${lang}`, { order: "released", dir: "desc" });
+    if (!result.ok && result.error?.status !== 404) throw new Error("収録版を取得できませんでした。言語を選び直すか、もう一度開いてください。");
+    let variants = result.ok ? result.data.data : [];
+    // Official Japanese gallery records can precede Scryfall's Japanese prints.
+    if (lang === "ja" && MTG_JP_CARD_INDEX.some(row => row.oracleId === card.oracle_id && row.source === "mtg-jp-card-gallery")) {
+      const english = await fetchAllScryfallSearch(`${query} lang:en`, { order: "released", dir: "desc" });
+      for (const print of english.ok ? english.data.data : []) {
+        const indexed = jpIndexForCard(print);
+        if (indexed?.source !== "mtg-jp-card-gallery" || !indexed.images?.normal || !jpIndexImageMatchesCard(indexed, print)) continue;
+        const localized = supplementalJpVariantForCard(print);
+        if (localized && !variants.some(item => sameCardPrint(item, localized))) variants.push(localized);
+      }
+    }
+    if (card.lang === lang && !variants.some(item => sameCardPrint(item, card))) variants.unshift(card);
+    const unique = new Map();
+    for (const item of variants) if (item.lang === lang) unique.set(`${item.set}:${item.collector_number}`, item);
+    return applyJpIndexToCards(sortUnifiedPrints([...unique.values()]).map(item => ({ ...item, _preferJpDisplay: lang === "ja" })));
 }
 
 function ownedCardForVariant(card, preferredId = state.selectedOwnedId) {
@@ -3410,11 +3529,11 @@ function renderVariantGallery() {
   if (!variants.length) { els.cardVariants.innerHTML = '<span class="muted">該当する収録版がありません</span>'; return; }
   els.cardVariants.innerHTML = `${visibleVariants.map(card => `
     <button type="button" class="variant-option ${card.id === state.selectedCard.id ? "selected" : ""}" data-id="${card.id}" aria-label="${esc(nameOf(card))} ${(card.set || "").toUpperCase()} ${card.collector_number || ""} ${displayLanguageLabel(card)}">
-      <img src="${esc(imageOf(card))}" alt="" loading="lazy"><span>${actualLanguageLabel(card)} · ${esc((card.set || "").toUpperCase())}</span>
+      <img src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async"><span>${actualLanguageLabel(card)} · ${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")}</span>
     </button>`).join("")}${visibleVariants.length < variants.length ? `<button type="button" class="variant-option variant-more" data-variant-more="1"><span>さらに表示<br>${variants.length - visibleVariants.length}版</span></button>` : ""}`;
   els.cardVariants.querySelectorAll("button[data-id]").forEach(button => button.addEventListener("click", () => {
     const card = state.cardVariants.find(item => item.id === button.dataset.id);
-    if (card) selectVariant(card);
+    if (card) { ++cardLanguageRequestId; selectVariant(card); $("#cardLanguageStatus").hidden = true; $("#cardVariantDialog").close(); }
   }));
   els.cardVariants.querySelector("[data-variant-more]")?.addEventListener("click", () => {
     state.variantRenderLimit = Number(state.variantRenderLimit || VARIANT_RENDER_LIMIT) + VARIANT_RENDER_LIMIT;
@@ -3501,6 +3620,7 @@ function saveSelectedCardQuantity() {
 }
 
 function renderCollection() {
+  if (!$("#setCollection").hidden) { renderSetCatalog(); if (setBrowser.code && !setBrowser.loading) renderSetCards(); }
   const query = els.collectionFilter.value.trim().toLowerCase();
   const color = els.collectionColor.value;
   const mana = els.collectionMana.value;
@@ -4448,6 +4568,7 @@ function fillDeckDialog() {
   if (els.deckOwnedFavoritesOnly) els.deckOwnedFavoritesOnly.checked = false;
   els.deckGlobalSearch.value = "";
   els.deckGlobalSearchStatus.textContent = "未所持のカードもデッキに追加できます";
+  deckSearchRenderLimit = 50;
   state.deckSearchResults = [];
   state.deckMissingOpen = false;
   renderDeckEditor();
@@ -4459,6 +4580,7 @@ function deckCardSnapshot(card) {
     scryfallId: cardScryfallId(card), oracleId: card.oracleId || card.oracle_id || "",
     name: card.name || "", printedName: nameOf(card) || card.printedName || card.printed_name || "",
     set: (card.set || "").toUpperCase(), collectorNumber: card.collectorNumber || card.collector_number || "",
+    language: card.language || card.lang || "",
     image: imageOf(card), typeLine: card.typeLine || card.type_line || "",
     manaValue: Number(card.manaValue ?? card.cmc ?? 0), colorIdentity: card.colorIdentity || card.color_identity || card.colors || [],
   };
@@ -5146,8 +5268,15 @@ function renderDeckOwnedAddDialog() {
   });
 }
 
+let deckSearchRenderLimit = 50;
 function renderDeckSearchAddDialog() {
-  els.deckGlobalSearchResults.innerHTML = state.deckSearchResults.map((card, index) => deckImageButton(card, `${(card.set || "").toUpperCase()} #${card.collector_number || ""}`, `data-index="${index}"`, "詳細とイラストを選択")).join("");
+  els.deckGlobalSearchResults.innerHTML = state.deckSearchResults.slice(0, deckSearchRenderLimit).map((card, index) => `
+    <button type="button" class="search-result" data-index="${index}">
+      <img src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async">
+      <span><strong>${esc(nameOf(card))}</strong><small>${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")} · 詳細とイラストを選択</small></span>
+    </button>`).join("");
+  $("#moreDeckSearchResults").hidden = state.deckSearchResults.length <= deckSearchRenderLimit;
+  $("#moreDeckSearchResults").textContent = `さらに50件表示（${Math.min(deckSearchRenderLimit, state.deckSearchResults.length)} / ${state.deckSearchResults.length}件）`;
   els.deckGlobalSearchResults.querySelectorAll("button").forEach(button => button.addEventListener("click", () => openDeckSearchCard(Number(button.dataset.index))));
 }
 
@@ -5169,6 +5298,7 @@ function resetDeckSearchAddForm() {
   els.deckSearchType.value = "";
   els.deckSearchSet.value = "";
   if (els.deckSearchSetIncludeExtras) els.deckSearchSetIncludeExtras.checked = false;
+  deckSearchRenderLimit = 50;
   state.deckSearchResults = [];
   els.deckGlobalSearchStatus.textContent = "";
   renderSetSelects();
@@ -5247,6 +5377,7 @@ function apiSeedFromDeckCard(card) {
     id: card.scryfallId || card.id || "",
     oracle_id: card.oracleId || card.oracle_id || "",
     name: card.name || card.printedName || "",
+    lang: card.language || card.lang || "",
     printed_name: card.printedName || "",
     set: String(card.set || "").toLowerCase(),
     collector_number: card.collectorNumber || "",
@@ -5258,55 +5389,75 @@ function apiSeedFromDeckCard(card) {
   };
 }
 
+let deckVariantRequestId = 0;
+let deckVariantRenderLimit = VARIANT_RENDER_LIMIT;
 async function loadDeckEntryVariants() {
   const card = deckEntryCurrentCard();
-  if (!card || !els.deckEntryVariants) return;
+  if (!card) return;
+  const request = ++deckVariantRequestId;
+  const lang = els.deckEntryVariantFilter.value;
+  deckVariantRenderLimit = VARIANT_RENDER_LIMIT;
   state.deckEntryVariants = [];
-  els.deckEntryVariantFilter.value = "";
   els.deckEntryVariantCount.textContent = "";
   els.deckEntryVariants.innerHTML = '<span class="muted">収録版を読み込み中…</span>';
-  const seed = apiSeedFromDeckCard(card);
-  const key = seed.oracle_id || seed.name || seed.id;
-  let variants = state.variantCache.get(`deck:${key}`);
-  if (!variants) {
-    let prints = [];
-    if (seed.oracle_id) prints = await fetchUnifiedPrints([seed.oracle_id]);
-    if (!prints.length && seed.name) {
-      const result = await fetchSearchCandidates(seed.name, "", isJapanese(seed.name) ? "ja" : "en", true, 40);
-      prints = result.cards;
-    }
-    variants = applyJpIndexToCards(sortUnifiedPrints(prints.length ? prints : [seed]));
-    state.variantCache.set(`deck:${key}`, variants);
+  try {
+    const variants = await fetchPrintsForLanguage(apiSeedFromDeckCard(card), lang);
+    if (request !== deckVariantRequestId || !els.deckEntryVariantDialog.open) return;
+    state.deckEntryVariants = variants;
+    renderDeckEntryVariantGallery();
+  } catch (error) {
+    if (request === deckVariantRequestId && els.deckEntryVariantDialog.open) els.deckEntryVariants.textContent = error.message;
   }
-  state.deckEntryVariants = variants;
-  renderDeckEntryVariantGallery();
 }
 
 async function openDeckEntryVariantDialog() {
-  if (!state.editingDeckEntry) return;
+  const card = deckEntryCurrentCard();
+  if (!state.editingDeckEntry || !card) return;
+  const request = ++deckVariantRequestId;
   els.deckEntryVariantDialog.showModal();
-  await loadDeckEntryVariants();
+  state.deckEntryVariants = [];
+  els.deckEntryVariants.textContent = "カードの言語を確認中…";
+  els.deckEntryVariantCount.textContent = "";
+  els.deckEntryVariantFilter.disabled = true;
+  let lang = card.language || card.lang;
+  try {
+    // Old deck snapshots did not store language. Resolve their actual print
+    // instead of inferring it from the localized display name.
+    if (!lang && /\/jp_/.test(card.image || "")) lang = "ja";
+    if (!lang && card.scryfallId) {
+      const result = await fetchScryfallCardsByIds([card.scryfallId]);
+      if (result.ok) lang = result.data.data[0]?.lang;
+    }
+  } finally {
+    if (request === deckVariantRequestId && els.deckEntryVariantDialog.open) {
+      els.deckEntryVariantFilter.disabled = false;
+      els.deckEntryVariantFilter.value = lang === "ja" ? "ja" : "en";
+      await loadDeckEntryVariants();
+    }
+  }
 }
 
 function renderDeckEntryVariantGallery() {
   const currentId = deckEntryCurrentScryfallId();
-  const lang = els.deckEntryVariantFilter?.value || "";
-  const variants = state.deckEntryVariants.filter(card => !lang || card.lang === lang);
-  const jaCount = state.deckEntryVariants.filter(card => card.lang === "ja").length;
-  const enCount = state.deckEntryVariants.filter(card => card.lang === "en").length;
-  els.deckEntryVariantCount.textContent = lang ? `${variants.length}版` : `${state.deckEntryVariants.length}版（日${jaCount}・英${enCount}）`;
+  const variants = state.deckEntryVariants;
+  const visible = variants.slice(0, deckVariantRenderLimit);
+  els.deckEntryVariantCount.textContent = `${variants.length}版`;
   if (!variants.length) {
     els.deckEntryVariants.innerHTML = '<span class="muted">該当する収録版がありません</span>';
     return;
   }
-  els.deckEntryVariants.innerHTML = variants.map(card => `
+  els.deckEntryVariants.innerHTML = visible.map(card => `
     <button type="button" class="variant-option ${card.id === currentId ? "selected" : ""}" data-id="${esc(card.id)}" aria-label="${esc(nameOf(card))} ${(card.set || "").toUpperCase()} ${card.collector_number || ""}">
-      <img src="${esc(imageOf(card))}" alt="" loading="lazy"><span>${card.lang === "ja" ? "日" : "英"} · ${esc((card.set || "").toUpperCase())}</span>
-    </button>`).join("");
-  els.deckEntryVariants.querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
+      <img src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async"><span>${card.lang === "ja" ? "日" : "英"} · ${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")}</span>
+    </button>`).join("") + (visible.length < variants.length ? '<button type="button" class="variant-option" data-more>さらに表示</button>' : "");
+  els.deckEntryVariants.querySelectorAll("button[data-id]").forEach(button => button.addEventListener("click", () => {
     const card = state.deckEntryVariants.find(item => item.id === button.dataset.id);
     if (card) replaceDeckEntryVariant(card);
   }));
+  els.deckEntryVariants.querySelector("[data-more]")?.addEventListener("click", () => {
+    deckVariantRenderLimit += VARIANT_RENDER_LIMIT;
+    renderDeckEntryVariantGallery();
+  });
 }
 
 function replaceDeckEntryVariant(card) {
@@ -5611,10 +5762,11 @@ async function searchDeckCards() {
   }
   els.deckGlobalSearchButton.disabled = true;
   els.deckGlobalSearchStatus.textContent = "検索中…";
+  deckSearchRenderLimit = 50;
   state.deckSearchResults = [];
   renderDeckEditor();
   try {
-    let cards = (await fetchSearchCandidates(query, filters, isJapanese(query) ? "ja" : "en", exactMatch, 40)).cards;
+    let cards = (await fetchSearchCandidates(query, filters, isJapanese(query) ? "ja" : "en", exactMatch, exactMatch ? 40 : Number.POSITIVE_INFINITY)).cards;
     const needle = normalizeCardName(query);
     const aliasNeedles = aliasTargetsForQuery(query, { exactOnly: exactMatch }).map(normalizeCardName);
     cards.sort((a, b) => {
@@ -5631,7 +5783,7 @@ async function searchDeckCards() {
     cards = applyJpIndexToCards(cards);
     const groups = new Map();
     cards.forEach(card => { const key = card.oracle_id || card.name; if (!groups.has(key)) groups.set(key, card); });
-    state.deckSearchResults = [...groups.values()].slice(0, 30);
+    state.deckSearchResults = [...groups.values()];
     els.deckGlobalSearchStatus.textContent = state.deckSearchResults.length ? `${state.deckSearchResults.length}種類を表示` : "カードが見つかりませんでした";
     renderDeckEditor();
   } catch {
@@ -5928,6 +6080,15 @@ renderFavoriteGroupOptions();
 initAdvancedSearchUi();
 els.deckSearchSetIncludeExtras?.closest("label")?.remove();
 els.searchButton.addEventListener("click", searchCards);
+els.searchResults.addEventListener("click", event => {
+  const button = event.target.closest(".search-result");
+  const group = button && state.searchGroups[Number(button.dataset.index)];
+  if (group) openCardDialog(group.card);
+});
+$("#moreSearchResults").addEventListener("click", () => {
+  searchRenderLimit += 50;
+  renderSearchResults(true);
+});
 els.clearSearchResults?.addEventListener("click", clearSearchResults);
 els.cardSearch.addEventListener("keydown", event => { if (event.key === "Enter") searchCards(); });
 els.searchSet.addEventListener("keydown", event => { if (event.key === "Enter") searchCards(); });
@@ -6021,10 +6182,10 @@ els.decrementQuantity.addEventListener("pointerdown", event => { event.preventDe
 els.incrementQuantity.addEventListener("pointerdown", event => { event.preventDefault(); stepSelectedCardQuantity(1); });
 els.decrementQuantity.addEventListener("click", event => { if (event.detail === 0) stepSelectedCardQuantity(-1); });
 els.incrementQuantity.addEventListener("click", event => { if (event.detail === 0) stepSelectedCardQuantity(1); });
-els.variantFilter.addEventListener("change", () => {
-  state.variantRenderLimit = VARIANT_RENDER_LIMIT;
-  renderVariantGallery();
-});
+els.variantFilter.addEventListener("change", loadCardVariantLanguage);
+$("#openCardVariants").addEventListener("click", openCardVariantPicker);
+els.cardLanguage.addEventListener("change", () => changeCardLanguage(els.cardLanguage.value));
+$("#cardVariantDialog").addEventListener("close", () => { ++variantPickerRequestId; els.cardVariants.replaceChildren(); });
 $("#newDeckButton").addEventListener("click", newDeck);
 els.deckImportInput?.addEventListener("change", async event => {
   const file = event.target.files?.[0];
@@ -6107,7 +6268,8 @@ els.moveDeckEntryDown.addEventListener("click", () => moveCurrentDeckEntry(1));
 els.deckEntryQuantity.addEventListener("change", () => setDeckEntryQuantity(els.deckEntryQuantity.value));
 els.deckEntrySection.addEventListener("change", () => moveDeckEntrySection(els.deckEntrySection.value));
 els.openDeckEntryVariants?.addEventListener("click", openDeckEntryVariantDialog);
-els.deckEntryVariantFilter?.addEventListener("change", renderDeckEntryVariantGallery);
+els.deckEntryVariantFilter?.addEventListener("change", loadDeckEntryVariants);
+els.deckEntryVariantDialog.addEventListener("close", () => { ++deckVariantRequestId; els.deckEntryVariants.replaceChildren(); });
 els.addDeckEntryToCollection?.addEventListener("click", addCurrentDeckEntryToCollection);
 els.removeDeckEntry.addEventListener("click", removeCurrentDeckEntry);
 els.deckEntryDialog.querySelector(".dialog-close")?.addEventListener("click", event => {
@@ -6207,3 +6369,106 @@ $("#openSettingsGroupManager").addEventListener("click", openFavoriteGroupManage
   });
   updateDialogScrollLock();
 })();
+
+$("#moreDeckSearchResults").addEventListener("click", () => { deckSearchRenderLimit += 50; renderDeckSearchAddDialog(); });
+function setPrintKey(card) { return `${String(card.set || '').toLowerCase()}:${card.collector_number || card.collectorNumber || ''}`; }
+function setOwnedCounts() {
+  const counts = new Map();
+  for (const card of state.collection) {
+    const key = setPrintKey(card);
+    counts.set(key, (counts.get(key) || 0) + Number(card.quantity || 0));
+  }
+  return counts;
+}
+function setCatalogLabel(set, sets = getAllKnownSets(), visited = new Set()) {
+  const code = normalizeSetCode(set?.code);
+  const direct = getSetJapaneseName(code);
+  if (direct) return compactSetDisplayName(direct);
+  if (visited.has(code)) return setPickerLabel(set);
+  visited.add(code);
+  const name = compactSetDisplayName(set?.name);
+  const suffix = name.match(/\s+(Commander Tokens|Tokens|Promos?|Commander)$/i);
+  if (suffix) {
+    const baseName = normalizeSetPickerText(name.slice(0, -suffix[0].length));
+    const base = sets.find(item => normalizeSetCode(item.code) !== code && normalizeSetPickerText(compactSetDisplayName(item.name)) === baseName);
+    if (base) {
+      const label = setCatalogLabel(base, sets, visited);
+      if (/[\u3040-\u30ff\u3400-\u9fff]/.test(label)) {
+        const translated = { 'commander tokens': '統率者 トークン', tokens: 'トークン', promo: 'プロモ', promos: 'プロモ', commander: '統率者' };
+        return `${label} ${translated[suffix[1].toLowerCase()]}`;
+      }
+    }
+  }
+  return setPickerLabel(set);
+}
+function isPlayableSetCatalogEntry(set) {
+  return !['memorabilia', 'minigame'].includes(set.set_type)
+    && !/\b(Art Series|Art Cards|Front Cards|Substitute Cards|Helper Cards)\b/i.test(set.name || '');
+}
+function renderSetCatalog() {
+  const query = normalizeCardName($('#setCatalogQuery').value).replace(/[ー・\s-]/g, '');
+  const owned = setOwnedCounts();
+  const bySet = new Map();
+  for (const [key, count] of owned) if (count > 0) { const code = key.split(':')[0]; bySet.set(code, (bySet.get(code) || 0) + 1); }
+  const knownSets = getAllKnownSets();
+  const sets = knownSets.filter(isPlayableSetCatalogEntry).filter(set => normalizeCardName(`${set.name} ${setCatalogLabel(set, knownSets)} ${set.code}`).replace(/[ー・\s-]/g, "").includes(query))
+    .sort((a,b) => b.released_at.localeCompare(a.released_at) || a.name.localeCompare(b.name));
+  $('#setCatalogStatus').textContent = `${sets.length}セット`;
+  $('#setCatalogList').innerHTML = sets.slice(0,setBrowser.catalogLimit).map(set => `<button type="button" class="set-catalog-item" data-set-code="${esc(set.code)}"><span><strong>${esc(setCatalogLabel(set, knownSets))}</strong><small>${esc(set.code.toUpperCase())} · ${esc(set.released_at)}</small></span><span>所持 ${bySet.get(set.code) || 0}種 ›</span></button>`).join('');
+  $('#moreSetCatalog').hidden = sets.length <= setBrowser.catalogLimit;
+}
+async function openSetCollection(code) {
+  const request = ++setBrowser.request;
+  setBrowser.code = code; setBrowser.cards = []; setBrowser.limit = 50; setBrowser.loading = true;
+  $('#setCatalog').hidden = true; $('#setContents').hidden = false;
+  const set = getAllKnownSets().find(item => item.code === code);
+  $('#setContentsTitle').textContent = `${setCatalogLabel(set || { code })} (${code.toUpperCase()})`;
+  $('#setContentsStatus').textContent = '収録カードを取得中…';
+  $('#retrySetContents').hidden = true; $('#moreSetCards').hidden = true; $('#setCardGrid').replaceChildren();
+  try {
+    const lang = $('#setCardLanguage').value;
+    let cards;
+    if (lang === 'ja') {
+      const result = await fetchCompleteSetCandidates(code, `set:${code} lang:ja`);
+      if (!result.cards.length && result.error && result.error.status !== 404) throw new Error('取得に失敗しました。通信状態を確認してください。');
+      cards = result.cards.filter(card => card.lang === 'ja');
+    } else {
+      const result = await fetchAllScryfallSearch(`set:${code} lang:en`, {unique:'prints',order:'set'});
+      if (!result.ok && result.error?.status !== 404) throw new Error('取得に失敗しました。通信状態を確認してください。');
+      cards = result.ok ? result.data.data : [];
+    }
+    if (request !== setBrowser.request) return;
+    const unique = new Map();
+    for (const card of cards) unique.set(setPrintKey(card),card);
+    setBrowser.cards = applyJpIndexToCards([...unique.values()]).sort((a,b)=>String(a.collector_number).localeCompare(String(b.collector_number),undefined,{numeric:true}));
+    setBrowser.loading = false; renderSetCards();
+  } catch (error) {
+    if (request !== setBrowser.request) return;
+    setBrowser.loading = false; $('#setContentsStatus').textContent = error.message; $('#retrySetContents').hidden = false;
+  }
+}
+function renderSetCards() {
+  const owned = setOwnedCounts(), query = normalizeCardName($('#setCardQuery').value), filter = $('#setOwnershipFilter').value;
+  const cards = setBrowser.cards.filter(card => (!query || cardSearchNames(card).some(name=>normalizeCardName(name).includes(query))) && (!filter || (filter === 'owned' ? (owned.get(setPrintKey(card)) || 0)>0 : !(owned.get(setPrintKey(card)) || 0))));
+  const collected = setBrowser.cards.filter(card => (owned.get(setPrintKey(card)) || 0)>0).length;
+  $('#setContentsStatus').textContent = setBrowser.cards.length ? `収録 ${setBrowser.cards.length}種 · 所持 ${collected}種 · 該当 ${cards.length}種（所持枚数は全言語・状態・仕様の合計）` : '選択した言語の収録カードが見つかりませんでした。';
+  setBrowser.visible = cards.slice(0,setBrowser.limit);
+  $('#setCardGrid').innerHTML = setBrowser.visible.map((card,index)=>`<button type="button" class="set-card" data-set-card="${index}" aria-label="${esc(nameOf(card))} #${esc(card.collector_number)}"><span class="set-card-image"><img src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async"><b>所持 ${owned.get(setPrintKey(card)) || 0}</b></span><span>#${esc(card.collector_number)} ${esc(nameOf(card))}</span></button>`).join('');
+  $('#moreSetCards').hidden = cards.length <= setBrowser.limit;
+  $('#moreSetCards').textContent = `さらに50件表示（${setBrowser.visible.length} / ${cards.length}件）`;
+}
+document.querySelectorAll('[data-collection-mode]').forEach(button=>button.addEventListener('click',()=>{
+  const sets = button.dataset.collectionMode === 'sets';
+  $('#individualCollection').hidden = sets; $('#setCollection').hidden = !sets;
+  document.querySelectorAll('[data-collection-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b === button)));
+  if (sets) {renderSetCatalog(); if(setBrowser.code && !setBrowser.loading)renderSetCards();}
+}));
+$('#setCatalogQuery').addEventListener('input',()=>{setBrowser.catalogLimit=50;renderSetCatalog()});
+$('#moreSetCatalog').addEventListener('click',()=>{setBrowser.catalogLimit+=50;renderSetCatalog()});
+$('#setCatalogList').addEventListener('click',event=>{const button=event.target.closest('[data-set-code]');if(button){$('#setCardQuery').value='';$('#setOwnershipFilter').value='';openSetCollection(button.dataset.setCode)}});
+$('#backToSetCatalog').addEventListener('click',()=>{++setBrowser.request;setBrowser.loading=false;setBrowser.code='';setBrowser.cards=[];$('#setContents').hidden=true;$('#setCatalog').hidden=false;renderSetCatalog()});
+$('#setCardLanguage').addEventListener('change',()=>{if(setBrowser.code)openSetCollection(setBrowser.code)});
+$('#retrySetContents').addEventListener('click',()=>{if(setBrowser.code)openSetCollection(setBrowser.code)});
+for (const id of ['setCardQuery','setOwnershipFilter']) $('#'+id).addEventListener(id==='setCardQuery'?'input':'change',()=>{setBrowser.limit=50;if(!setBrowser.loading)renderSetCards()});
+$('#moreSetCards').addEventListener('click',()=>{setBrowser.limit+=50;renderSetCards()});
+$('#setCardGrid').addEventListener('click',event=>{const button=event.target.closest('[data-set-card]');if(button){const card=setBrowser.visible[Number(button.dataset.setCard)];if(card)openCardDialog(card,'set',ownedCardForVariant(card)?.id || null)}});
