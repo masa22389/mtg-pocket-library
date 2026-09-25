@@ -324,3 +324,5 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 
 /* Space below the shared set language selector in both catalog and detail views. */
 #setCollection > label { margin-bottom: 16px; }
+
+.purchase-receive{grid-column:2;min-width:0;width:100%;padding:8px;font-size:12px;min-height:40px;margin-top:4px}

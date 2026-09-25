@@ -1,4 +1,4 @@
-const APP_VERSION = "v257";
+const APP_VERSION = "v258";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5860,6 +5860,64 @@ function deleteDeck() {
   persist(); els.deckDialog.close(); renderDecks(); showToast("デッキを削除しました");
 }
 
+function buildPurchaseTransfer(purchases, collection, purchaseId, quantity) {
+  const card = purchases.find(item => item.id === purchaseId);
+  if (!card || !Number.isInteger(quantity) || quantity < 1 || quantity > card.quantity) throw new Error('購入済み枚数は購入予定の範囲内で入力してください');
+  const condition = normalizeCardCondition(card.condition);
+  const target = collection.find(item =>
+    (card.scryfallId ? item.scryfallId === card.scryfallId : item.set === card.set && item.collectorNumber === card.collectorNumber && item.name === card.name) &&
+    item.language === card.language && item.finish === card.finish &&
+    normalizeCardCondition(item.condition) === condition && (item.location || '') === (card.location || '')
+  );
+  const nextCollection = target
+    ? collection.map(item => item.id === target.id ? {...item, quantity:Number(item.quantity || 0) + quantity} : item)
+    : [{...card, id:uid(), quantity, condition, location:card.location || '', favorite:false, favoriteGroupIds:[], addedAt:Date.now()}, ...collection];
+  const nextPurchases = purchases.flatMap(item => item.id !== purchaseId ? [item] : item.quantity === quantity ? [] : [{...item, quantity:item.quantity-quantity}]);
+  return {collection:nextCollection, purchases:nextPurchases};
+}
+
+function savePurchaseTransfer(next) {
+  const previous = localStorage.getItem(KEYS.collection);
+  localStorage.setItem(KEYS.collection, JSON.stringify(next.collection));
+  try {
+    localStorage.setItem(KEYS.purchases, JSON.stringify(next.purchases));
+  } catch (error) {
+    if (previous === null) localStorage.removeItem(KEYS.collection);
+    else localStorage.setItem(KEYS.collection, previous);
+    throw error;
+  }
+  state.collection = next.collection;
+  state.purchases = next.purchases;
+}
+
+function openPurchaseTransfer(card) {
+  const dialog = $('#purchaseTransferDialog');
+  dialog.dataset.purchaseId = card.id;
+  $('#purchaseTransferName').textContent = nameOf(card);
+  $('#purchaseTransferQuantity').value = card.quantity;
+  $('#purchaseTransferQuantity').max = card.quantity;
+  $('#purchaseTransferStatus').textContent = `購入予定：${card.quantity}枚。追加した分だけ購入予定から減らします。`;
+  dialog.showModal();
+}
+
+$('#purchaseTransferCancel').addEventListener('click', () => $('#purchaseTransferDialog').close());
+$('#purchaseTransferForm').addEventListener('submit', event => {
+  event.preventDefault();
+  const dialog = $('#purchaseTransferDialog');
+  if (!dialog.open) return;
+  const quantity = Number($('#purchaseTransferQuantity').value);
+  try {
+    const next = buildPurchaseTransfer(state.purchases, state.collection, dialog.dataset.purchaseId, quantity);
+    savePurchaseTransfer(next);
+  } catch (error) {
+    $('#purchaseTransferStatus').textContent = error.message.includes('購入済み枚数') ? error.message : '保存できませんでした。端末の空き容量を確認して再試行してください。';
+    return;
+  }
+  dialog.close();
+  renderPurchases(); renderCollection(); renderDecks(); renderBackupSummary();
+  showToast(`購入済みの${quantity}枚をコレクションに追加しました`);
+});
+
 function purchaseIdentity(card) {
   return JSON.stringify([card.scryfallId || [card.set, card.collectorNumber, card.name], card.language, card.finish, card.condition]);
 }
@@ -5920,6 +5978,7 @@ function renderPurchases() {
       <button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))}：長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img src="${esc(card.image || "")}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async" draggable="false"><span class="purchase-quantity" aria-label="購入予定 ${card.quantity}枚">${card.quantity}</span></button>
       <div class="purchase-info"><h2>${esc(nameOf(card))}</h2><p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${card.language === "ja" ? "日本語" : card.language === "en" ? "英語" : "その他"} · ${esc(card.condition)} · ${card.finish === "foil" ? "Foil" : card.finish === "etched" ? "Etched" : "通常"}</p></div>
       <div class="purchase-controls"><button type="button" data-purchase-action="minus" aria-label="購入予定枚数を1枚減らす" ${card.quantity <= 1 ? "disabled" : ""}>−</button><button type="button" data-purchase-action="plus" aria-label="購入予定枚数を1枚増やす" ${card.quantity >= 9999 ? "disabled" : ""}>＋</button><button type="button" class="ghost" data-purchase-action="delete">削除</button></div>
+      <button type="button" class="purchase-receive" data-purchase-action="receive">購入済み・所持に追加</button>
     </article>`).join("") : '<div class="empty">購入予定のカードはまだありません。</div>';
 }
 
@@ -5930,6 +5989,7 @@ $("#purchaseList").addEventListener("click", event => {
   const card = state.purchases.find(item => item.id === button.closest("[data-purchase-id]").dataset.purchaseId);
   if (!card) return;
   const action = button.dataset.purchaseAction;
+  if (action === "receive") { openPurchaseTransfer(card); return; }
   if (action === "delete") {
     if (confirm(`${nameOf(card)}を購入予定から削除しますか？`)) savePurchases(state.purchases.filter(item => item.id !== card.id));
   } else {

@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=257">
+  <link rel="stylesheet" href="styles.css?v=258">
 </head>
 <body>
   <header class="app-header">
@@ -389,9 +389,19 @@
     </form>
   </dialog>
 
+  <dialog id="purchaseTransferDialog">
+    <form id="purchaseTransferForm" class="dialog-card stack">
+      <h2>購入済みカードをコレクションへ</h2>
+      <p id="purchaseTransferName"></p>
+      <label>購入済み枚数<input id="purchaseTransferQuantity" type="number" min="1" step="1" required inputmode="numeric"></label>
+      <p id="purchaseTransferStatus" class="muted" role="status"></p>
+      <button type="submit">コレクションに追加</button>
+      <button id="purchaseTransferCancel" type="button" class="ghost">キャンセル</button>
+    </form>
+  </dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=257" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=257" defer></script>
-  <script src="app.js?v=257" defer></script>
+  <script src="mtg-jp-card-index.js?v=258" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=258" defer></script>
+  <script src="app.js?v=258" defer></script>
 </body>
 </html>
