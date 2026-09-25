@@ -1,4 +1,4 @@
-const APP_VERSION = "v258";
+const APP_VERSION = "v259";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -58,7 +58,7 @@ const state = {
   deckEntryVariants: [],
   installPrompt: null,
 };
-const setBrowser = { code: "", cards: [], visible: [], limit: 50, catalogLimit: 50, request: 0, loading: false };
+const setBrowser = { code: "", cards: [], visible: [], limit: 50, request: 0, loading: false };
 let searchRequestId = 0;
 let cardDialogRequestId = 0;
 let searchRenderLimit = 50;
@@ -1953,17 +1953,17 @@ function quoteScryfall(value) {
   return String(value || "").trim().replaceAll('"', '\\"');
 }
 
-function selectedSearchColors() {
-  return [...document.querySelectorAll("[data-search-color]:checked")].map(input => input.value);
+function selectedSearchColors(prefix = "search") {
+  return [...document.querySelectorAll(prefix === "deckSearch" ? "[data-deck-search-color]:checked" : "[data-search-color]:checked")].map(input => input.value);
 }
 
-function buildSearchColorFilter() {
-  const colors = selectedSearchColors();
+function buildSearchColorFilter(prefix = "search") {
+  const colors = selectedSearchColors(prefix);
   if (!colors.length) return "";
   const order = ["W", "U", "B", "R", "G"];
   const nonColorless = order.filter(color => colors.includes(color));
   const hasColorless = colors.includes("C");
-  const mode = $("#searchColorMode")?.value || "and";
+  const mode = $("#" + prefix + "ColorMode")?.value || "and";
   const colorText = nonColorless.join("").toLowerCase();
   const exactTerms = [];
   if (hasColorless) exactTerms.push("c=c");
@@ -2071,13 +2071,14 @@ function stripLanguageFilter(filters) {
 }
 
 function buildCardSearchFilters(options = {}) {
-  const terms = [buildScryfallFilters("", els.searchMana.value, els.searchType.value, els.searchSet.value)];
-  const language = $("#searchLanguage")?.value || "";
-  const oracleText = $("#searchOracleText")?.value.trim() || "";
-  const format = $("#searchFormat")?.value || "";
-  const subtype = options.omitSubtype ? "" : normalizeScryfallSubtype($("#searchSubtype")?.value);
-  const rarity = $("#searchRarity")?.value || "";
-  const colorFilter = buildSearchColorFilter();
+  const prefix = options.prefix || "search";
+  const terms = [buildScryfallFilters("", $("#" + prefix + "Mana").value, $("#" + prefix + "Type").value, $("#" + prefix + "Set").value)];
+  const language = $("#" + prefix + "Language")?.value || "";
+  const oracleText = $("#" + prefix + "OracleText")?.value.trim() || "";
+  const format = $("#" + prefix + "Format")?.value || "";
+  const subtype = options.omitSubtype ? "" : normalizeScryfallSubtype($("#" + prefix + "Subtype")?.value);
+  const rarity = $("#" + prefix + "Rarity")?.value || "";
+  const colorFilter = buildSearchColorFilter(prefix);
   if (language) terms.push(`lang:${language}`);
   if (oracleText) terms.push(`o:"${quoteScryfall(oracleText)}"`);
   if (format) terms.push(`legal:${format}`);
@@ -2088,6 +2089,7 @@ function buildCardSearchFilters(options = {}) {
 }
 
 function updateAdvancedSearchSummary() {
+  updateDeckAdvancedSearchSummary();
   const summary = $("#advancedSearchSummary");
   if (!summary) return;
   const chips = [];
@@ -2204,6 +2206,46 @@ function initAdvancedSearchUi() {
   panel.addEventListener("input", updateAdvancedSearchSummary);
   updateAdvancedSearchSummary();
 }
+
+function updateDeckAdvancedSearchSummary() {
+  const summary = $('#deckAdvancedSearchSummary');
+  if (!summary) return;
+  const panel = $('#deckAdvancedSearchPanel');
+  const chips = [...panel.querySelectorAll('select,input:not([type="checkbox"])')]
+    .filter(input => input.value && !['deckSearchColor','deckSearchColorMode'].includes(input.id) && !(input.id === 'deckSearchMatch' && input.value === 'partial') && input.id !== 'deckSearchSetPickerQuery')
+    .map(input => input.tagName === 'SELECT' ? selectedOptionText(input) : input.value);
+  const colors = selectedSearchColors('deckSearch');
+  if (colors.length) chips.push(`色:${colors.join('')}/${selectedOptionText($('#deckSearchColorMode'))}`);
+  summary.textContent = chips.length ? `詳細条件：${chips.join(' / ')}` : '詳細条件：指定なし';
+}
+
+function initDeckAdvancedSearchUi() {
+  const panel = $('#deckSearchAddDialog .search-filters');
+  const row = els.deckGlobalSearch.closest('.search-row');
+  const button = document.createElement('button');
+  button.type = 'button'; button.id = 'openDeckAdvancedSearch';
+  button.className = 'ghost advanced-search-open'; button.textContent = '詳細検索';
+  row.append(button);
+  const summary = document.createElement('p');
+  summary.id = 'deckAdvancedSearchSummary'; summary.className = 'advanced-search-summary';
+  row.after(summary);
+  const dialog = document.createElement('dialog'); dialog.id = 'deckAdvancedSearchDialog';
+  dialog.innerHTML = `<form method="dialog" class="dialog-card advanced-search-dialog"><button class="dialog-close" aria-label="閉じる" value="cancel">×</button><h2>詳細検索</h2><div id="deckAdvancedSearchMount"></div><div class="advanced-search-actions"><button type="button" id="applyDeckAdvancedSearch">条件を適用</button><button type="button" id="closeDeckAdvancedSearch" class="filter-reset">閉じる</button></div></form>`;
+  document.body.append(dialog);
+  panel.id = 'deckAdvancedSearchPanel'; panel.classList.remove('compact-search-filters'); panel.classList.add('advanced-search-panel');
+  $('#deckAdvancedSearchMount').append(panel);
+  els.deckSearchColor.closest('label').hidden = true;
+  const extra = document.createElement('div'); extra.className = 'advanced-extra-fields';
+  extra.innerHTML = $('#searchAdvancedDialog .advanced-extra-fields').innerHTML.replaceAll('id="search','id="deckSearch').replaceAll('data-search-color','data-deck-search-color');
+  panel.insertBefore(extra, els.clearDeckSearchFilters);
+  panel.addEventListener('input', updateDeckAdvancedSearchSummary);
+  panel.addEventListener('change', updateDeckAdvancedSearchSummary);
+  dialog.addEventListener('close', updateDeckAdvancedSearchSummary);
+  button.addEventListener('click',()=>{updateDeckAdvancedSearchSummary();dialog.showModal();});
+  for (const id of ['applyDeckAdvancedSearch','closeDeckAdvancedSearch']) $('#'+id).addEventListener('click',()=>dialog.close());
+  updateDeckAdvancedSearchSummary();
+}
+
 
 function hideToast() {
   if (!els.toast) return;
@@ -5298,6 +5340,10 @@ function resetDeckSearchAddForm() {
   els.deckSearchType.value = "";
   els.deckSearchSet.value = "";
   if (els.deckSearchSetIncludeExtras) els.deckSearchSetIncludeExtras.checked = false;
+  for (const key of ["Language","OracleText","Format","Subtype","Rarity"]) { const input = $("#deckSearch"+key); if(input) input.value=""; }
+  if ($("#deckSearchColorMode")) $("#deckSearchColorMode").value="and";
+  document.querySelectorAll("[data-deck-search-color]").forEach(input=>input.checked=false);
+  updateDeckAdvancedSearchSummary();
   deckSearchRenderLimit = 50;
   state.deckSearchResults = [];
   els.deckGlobalSearchStatus.textContent = "";
@@ -5754,9 +5800,10 @@ function stepSelectedCardQuantity(delta) {
 
 async function searchDeckCards() {
   const query = els.deckGlobalSearch.value.trim();
-  const filters = buildScryfallFilters(els.deckSearchColor.value, els.deckSearchMana.value, els.deckSearchType.value, els.deckSearchSet.value);
+  const subtype = $("#deckSearchSubtype")?.value.trim() || "";
+  const filters = buildCardSearchFilters({prefix:"deckSearch", omitSubtype:localizedSubtypeNeedsClientFilter(subtype)});
   const exactMatch = Boolean(query) && els.deckSearchMatch.value === "exact";
-  if ((!query && !filters) || !navigator.onLine) {
+  if ((!query && !filters && !subtype) || !navigator.onLine) {
     els.deckGlobalSearchStatus.textContent = navigator.onLine ? "カード名または検索条件を指定してください" : "オフラインのため検索できません";
     return;
   }
@@ -5766,7 +5813,7 @@ async function searchDeckCards() {
   state.deckSearchResults = [];
   renderDeckEditor();
   try {
-    let cards = (await fetchSearchCandidates(query, filters, isJapanese(query) ? "ja" : "en", exactMatch, exactMatch ? 40 : Number.POSITIVE_INFINITY)).cards;
+    let cards = (await fetchSearchCandidates(query, filters, $("#deckSearchLanguage")?.value || (isJapanese(query) ? "ja" : "en"), exactMatch, exactMatch ? 40 : Number.POSITIVE_INFINITY, {localizedSubtype:subtype, exhaustive:Boolean(filters || subtype)})).cards;
     const needle = normalizeCardName(query);
     const aliasNeedles = aliasTargetsForQuery(query, { exactOnly: exactMatch }).map(normalizeCardName);
     cards.sort((a, b) => {
@@ -6138,6 +6185,7 @@ document.addEventListener("contextmenu", event => {
 }, { capture: true });
 renderFavoriteGroupOptions();
 initAdvancedSearchUi();
+initDeckAdvancedSearchUi();
 els.deckSearchSetIncludeExtras?.closest("label")?.remove();
 els.searchButton.addEventListener("click", searchCards);
 els.searchResults.addEventListener("click", event => {
@@ -6474,8 +6522,7 @@ function renderSetCatalog() {
   const sets = knownSets.filter(isPlayableSetCatalogEntry).filter(set => normalizeCardName(`${set.name} ${setCatalogLabel(set, knownSets)} ${set.code}`).replace(/[ー・\s-]/g, "").includes(query))
     .sort((a,b) => b.released_at.localeCompare(a.released_at) || a.name.localeCompare(b.name));
   $('#setCatalogStatus').textContent = `${sets.length}セット`;
-  $('#setCatalogList').innerHTML = sets.slice(0,setBrowser.catalogLimit).map(set => `<button type="button" class="set-catalog-item" data-set-code="${esc(set.code)}"><span><strong>${esc(setCatalogLabel(set, knownSets))}</strong><small>${esc(set.code.toUpperCase())} · ${esc(set.released_at)}</small></span><span>所持 ${bySet.get(set.code) || 0}種 ›</span></button>`).join('');
-  $('#moreSetCatalog').hidden = sets.length <= setBrowser.catalogLimit;
+  $('#setCatalogList').innerHTML = sets.map(set => `<button type="button" class="set-catalog-item" data-set-code="${esc(set.code)}"><span><strong>${esc(setCatalogLabel(set, knownSets))}</strong><small>${esc(set.code.toUpperCase())} · ${esc(set.released_at)}</small></span><span>所持 ${bySet.get(set.code) || 0}種 ›</span></button>`).join('');
 }
 async function openSetCollection(code) {
   const request = ++setBrowser.request;
@@ -6523,8 +6570,7 @@ document.querySelectorAll('[data-collection-mode]').forEach(button=>button.addEv
   document.querySelectorAll('[data-collection-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b === button)));
   if (sets) {renderSetCatalog(); if(setBrowser.code && !setBrowser.loading)renderSetCards();}
 }));
-$('#setCatalogQuery').addEventListener('input',()=>{setBrowser.catalogLimit=50;renderSetCatalog()});
-$('#moreSetCatalog').addEventListener('click',()=>{setBrowser.catalogLimit+=50;renderSetCatalog()});
+$('#setCatalogQuery').addEventListener('input',renderSetCatalog);
 $('#setCatalogList').addEventListener('click',event=>{const button=event.target.closest('[data-set-code]');if(button){$('#setCardQuery').value='';$('#setOwnershipFilter').value='';openSetCollection(button.dataset.setCode)}});
 $('#backToSetCatalog').addEventListener('click',()=>{++setBrowser.request;setBrowser.loading=false;setBrowser.code='';setBrowser.cards=[];$('#setContents').hidden=true;$('#setCatalog').hidden=false;renderSetCatalog()});
 $('#setCardLanguage').addEventListener('change',()=>{if(setBrowser.code)openSetCollection(setBrowser.code)});
