@@ -1,6 +1,6 @@
-const CACHE = "mtg-pocket-v256";
-const OFFLINE_PAGE = "./index.html?v=256";
-const SHELL = [OFFLINE_PAGE, "./styles.css?v=256", "./mtg-jp-card-index.js?v=256", "./mtgjson-jp-search-index.js?v=256", "./app.js?v=256", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v257";
+const OFFLINE_PAGE = "./index.html?v=257";
+const SHELL = [OFFLINE_PAGE, "./styles.css?v=257", "./mtg-jp-card-index.js?v=257", "./mtgjson-jp-search-index.js?v=257", "./app.js?v=257", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)));
@@ -19,6 +19,10 @@ self.addEventListener("message", event => {
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
   const url = new URL(event.request.url);
+  // BEGIN SCANNER TRIAL BYPASS
+  // Never cache the trial page as the main app's offline shell, or retain its assets.
+  if (url.pathname.includes('/scanner-trial/') || url.hostname === 'hanclinto.github.io') return;
+  // END SCANNER TRIAL BYPASS
   if (["api.scryfall.com", "wonder.wisdom-guild.net", "r.jina.ai", "api.allorigins.win"].includes(url.hostname)) return;
 
   if (event.request.mode === "navigate") {

@@ -1,4 +1,4 @@
-const APP_VERSION = "v256";
+const APP_VERSION = "v257";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -6472,3 +6472,26 @@ $('#retrySetContents').addEventListener('click',()=>{if(setBrowser.code)openSetC
 for (const id of ['setCardQuery','setOwnershipFilter']) $('#'+id).addEventListener(id==='setCardQuery'?'input':'change',()=>{setBrowser.limit=50;if(!setBrowser.loading)renderSetCards()});
 $('#moreSetCards').addEventListener('click',()=>{setBrowser.limit+=50;renderSetCards()});
 $('#setCardGrid').addEventListener('click',event=>{const button=event.target.closest('[data-set-card]');if(button){const card=setBrowser.visible[Number(button.dataset.setCard)];if(card)openCardDialog(card,'set',ownedCardForVariant(card)?.id || null)}});
+
+
+// BEGIN SCANNER TRIAL BRIDGE
+// Receives a user-selected candidate; never changes collection data automatically.
+(async () => {
+  const url = new URL(location.href);
+  const id = url.searchParams.get('scannerCard');
+  if (!id) return;
+  url.searchParams.delete('scannerCard');
+  history.replaceState(null, '', url);
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return;
+  try {
+    els.searchStatus.textContent = 'スキャン候補を読み込み中…';
+    const response = await fetch(`https://api.scryfall.com/cards/${encodeURIComponent(id)}`);
+    if (!response.ok) throw new Error();
+    const card = await response.json();
+    await openCardDialog(card, 'set');
+    els.searchStatus.textContent = 'スキャン候補です。版・言語・仕様を確認してから登録してください。';
+  } catch {
+    els.searchStatus.textContent = 'スキャン候補を読み込めませんでした。カード名で検索するか、スキャナーから再度選んでください。';
+  }
+})();
+// END SCANNER TRIAL BRIDGE

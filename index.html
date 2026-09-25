@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=256">
+  <link rel="stylesheet" href="styles.css?v=257">
 </head>
 <body>
   <header class="app-header">
@@ -22,6 +22,9 @@
 
   <main>
     <section id="searchView" class="view active"><div class="hero-card"><div><span class="eyebrow">CARD SEARCH</span><h1>カード検索</h1></div></div>
+      <!-- BEGIN SCANNER TRIAL LINK -->
+      <p><a href="scanner-trial/" style="display:inline-block;padding:12px 16px;border-radius:12px;background:var(--paper);color:var(--green);font-weight:700">カメラでカードを読み取る（試用）</a></p>
+      <!-- END SCANNER TRIAL LINK -->
       <section class="card search-card">
         <label for="cardSearch">カードを日本語・英語で検索</label>
         <div class="search-row"><input id="cardSearch" type="search" enterkeyhint="search" placeholder="例：稲妻 / Lightning Bolt"><button id="searchButton">検索</button></div>
@@ -387,8 +390,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=256" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=256" defer></script>
-  <script src="app.js?v=256" defer></script>
+  <script src="mtg-jp-card-index.js?v=257" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=257" defer></script>
+  <script src="app.js?v=257" defer></script>
 </body>
 </html>

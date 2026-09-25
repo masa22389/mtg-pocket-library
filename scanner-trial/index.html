@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>カードスキャナー（試用） | MTG Pocket</title>
+  <link rel="stylesheet" href="trial.css">
+</head>
+<body>
+<main>
+  <a class="back" href="../?v=257">← カード検索に戻る</a>
+  <header><span class="badge">試用版</span><h1>カードスキャナー</h1><p>カードを1枚撮影して、候補を確認します。</p></header>
+  <section class="panel">
+    <p>初回は認識データなど約50〜80MBを読み込みます。Wi-Fiでの利用をおすすめします。写真は端末内で処理し、候補のカード情報だけScryfallから取得します。</p>
+    <div class="actions"><button id="start">カメラを起動</button><label class="button secondary" for="photo">写真を選ぶ<input id="photo" type="file" accept="image/*"></label><button id="stop" class="secondary" disabled>停止</button></div>
+    <div class="stage"><video id="video" muted playsinline hidden></video><canvas id="preview" hidden></canvas><p id="placeholder">明るい場所で、カードの四隅を画面に収めてください。</p></div>
+    <button id="capture" disabled>この画像を読み取る</button>
+    <p id="status" role="status" aria-live="polite">カメラまたは写真を選んで開始してください。</p>
+    <progress id="progress" max="1" hidden></progress>
+  </section>
+  <section class="panel"><h2>認識候補</h2><p>版・言語・Foilは必ず確認してください。似ている度合いは正解率ではありません。選ぶだけでは所持枚数は増えません。</p><div id="results"><p>まだ読み取っていません。</p></div></section>
+  <details class="panel"><summary>動作確認・試用データの削除</summary><p>カメラが使えない場合はサンプル写真で認識処理を確認できます。</p><div class="actions"><button id="sample" class="secondary">サンプル画像で試す</button><button id="clear" class="secondary">認識データを削除</button></div><p>削除するのはダウンロードした認識データのみです。所持カード・デッキ・設定には触れません。</p><p>認識用カード一覧：2026年7月9日版。それ以降のカードや未収録の版は一致しない場合があります。</p></details>
+  <footer>認識エンジン：<a href="https://github.com/HanClinto/CollectorVision" target="_blank" rel="noopener noreferrer">CollectorVision</a>（AGPL-3.0）<br><a href="vendor/LICENSE">ライセンス</a> · <a href="SOURCE.md">ソース・変更点・削除手順</a></footer>
+</main>
+<script type="module" src="trial.js"></script>
+</body></html>
