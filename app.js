@@ -1,4 +1,4 @@
-const APP_VERSION = "v259";
+const APP_VERSION = "v260";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -517,7 +517,10 @@ function backImageOf(card) {
   return localizedBackImage || nativeBackImage;
 }
 function typeOf(card) { return card.printed_type_line || card.printedTypeLine || card.type_line || card.typeLine || ""; }
-function nameOf(card) { return normalizeDisplayName((prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName || card.name || "名称不明"); }
+function nameOf(card) {
+  const name = normalizeDisplayName((prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName || card.name || "名称不明");
+  return prefersJapaneseDisplay(card) ? localizeJapaneseFaceNames(name) : name;
+}
 function altNameOf(card) {
   const printed = normalizeDisplayName((prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName);
   const englishName = normalizeDisplayName(card.name);
@@ -1551,6 +1554,7 @@ const JP_CARD_SEARCH_INDEX = [...MTG_JP_CARD_INDEX, ...MTGJSON_JP_SEARCH_INDEX];
 const JP_INDEX_BY_SCRYFALL_ID = new Map();
 const JP_INDEX_BY_ORACLE_ID = new Map();
 const JP_INDEX_BY_EN_NAME = new Map();
+const JP_STANDALONE_NAMES = new Map();
 const JP_ALIAS_TARGETS_EXACT = new Map();
 const JP_ALIAS_TARGET_CACHE = new Map();
 // The bundled DB is immutable during a page session. Build these only on use.
@@ -2553,6 +2557,14 @@ function pushUniqueTarget(map, key, targets) {
 function buildJpSearchIndexes() {
   JP_CARD_SEARCH_INDEX.forEach(item => {
     const targets = [item.scryfallName, ...(item.enNames || [])].filter(Boolean);
+    // Multi-face aliases also contain spell names: never map those to the full card title.
+    const singleNames = [...new Set(targets)];
+    if (singleNames.length === 1 && !singleNames[0].includes("//")) {
+      const japaneseName = sortJapaneseDisplayNames((item.jaNames || [])
+        .map(stripJapaneseReadings).filter(name => isJapanese(name) && !name.includes("//")))[0];
+      const key = normalizeCardName(singleNames[0]);
+      if (japaneseName && !JP_STANDALONE_NAMES.has(key)) JP_STANDALONE_NAMES.set(key, japaneseName);
+    }
     if (item.scryfallId && !JP_INDEX_BY_SCRYFALL_ID.has(item.scryfallId)) JP_INDEX_BY_SCRYFALL_ID.set(item.scryfallId, item);
     if (item.oracleId && !JP_INDEX_BY_ORACLE_ID.has(item.oracleId)) JP_INDEX_BY_ORACLE_ID.set(item.oracleId, item);
     targets.forEach(name => {
@@ -2607,9 +2619,17 @@ function jpIndexImageMatchesCard(item, card) {
   return Boolean(cardSet && itemSet && cardNumber && itemNumber && cardSet === itemSet && cardNumber === itemNumber);
 }
 
+function localizeJapaneseFaceNames(value) {
+  const name = normalizeDisplayName(value);
+  if (!name.includes("//") || !isJapanese(name)) return name;
+  return name.split(/\s*\/\/\s*/).map(part =>
+    isJapanese(part) ? part : (JP_STANDALONE_NAMES.get(normalizeCardName(part)) || part)
+  ).join(" // ");
+}
+
 function displayJaNamesForIndexItem(item) {
   const names = item?.jaNames || [];
-  const cleanNames = names.map(stripJapaneseReadings).map(normalizeDisplayName).filter(Boolean);
+  const cleanNames = names.map(stripJapaneseReadings).map(localizeJapaneseFaceNames).filter(Boolean);
   const japaneseNames = cleanNames.filter(isJapanese);
   const preferred = japaneseNames.length ? japaneseNames : cleanNames;
   return preferred.length ? sortJapaneseDisplayNames(preferred) : names.map(normalizeDisplayName);
