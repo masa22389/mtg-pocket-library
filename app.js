@@ -1,4 +1,4 @@
-const APP_VERSION = "v262";
+const APP_VERSION = "v263";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2577,7 +2577,11 @@ function buildJpSearchIndexes() {
       const key = normalizeCardName(name);
       if (key && !JP_INDEX_BY_EN_NAME.has(key)) JP_INDEX_BY_EN_NAME.set(key, item);
     });
-    [...(item.jaNames || []), ...(item.enNames || []), item.scryfallName].filter(Boolean).forEach(name => {
+  });
+  // Localized spell names depend on the complete standalone-name map above.
+  JP_CARD_SEARCH_INDEX.forEach(item => {
+    const targets = jpIndexCardTitles(item);
+    jpIndexNames(item).forEach(name => {
       pushUniqueTarget(JP_ALIAS_TARGETS_EXACT, normalizeAliasKey(name), targets);
     });
   });
@@ -2743,7 +2747,7 @@ function aliasTargetsForQuery(query, options = {}) {
   const exactTargets = JP_ALIAS_TARGETS_EXACT.get(key) || [];
   const partialTargets = [];
   if (!exactOnly && key.length >= 2 && exactTargets.length < limit) for (const item of JP_CARD_SEARCH_INDEX) {
-      const names = [...(item.jaNames || []), ...(item.enNames || []), item.scryfallName].filter(Boolean);
+      const names = jpIndexNames(item);
       let partialHit = false;
       for (const name of names) {
         const nameKey = normalizeAliasKey(name);
@@ -2759,7 +2763,10 @@ function aliasTargetsForQuery(query, options = {}) {
 }
 
 function jpIndexNames(item) {
-  return [...(item.jaNames || []), ...(item.enNames || []), item.scryfallName].filter(Boolean);
+  const localizedNames = (item.jaNames || []).map(stripJapaneseReadings).map(localizeJapaneseFaceNames);
+  // Search may match any face; identity and import matching still use card titles.
+  return [...new Set([...(item.jaNames || []), ...(item.enNames || []), item.scryfallName,
+    ...localizedNames.flatMap(name => [name, ...name.split(/\s*\/\/\s*/)])].filter(Boolean))];
 }
 
 function jpIndexNormalizedNames(item) {

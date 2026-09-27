@@ -7,7 +7,7 @@ for (const file of ['mtg-jp-card-index.js', 'mtgjson-jp-search-index.js']) vm.ru
 c.MTG_JP_CARD_INDEX = c.window.MTG_JP_CARD_INDEX;
 c.JP_CARD_SEARCH_INDEX = [...c.MTG_JP_CARD_INDEX, ...c.window.MTGJSON_JP_SEARCH_INDEX];
 for (const name of ['JP_INDEX_BY_SCRYFALL_ID', 'JP_INDEX_BY_ORACLE_ID', 'JP_INDEX_BY_EN_NAME', 'JP_STANDALONE_NAMES', 'JP_ALIAS_TARGETS_EXACT']) c[name] = new Map();
-for (const name of ['normalizeDisplayName', 'normalizeCardName', 'stripJapaneseReadings', 'normalizeAliasKey', 'isJapanese', 'pushUniqueTarget', 'buildJpSearchIndexes', 'jpIndexCardTitles', 'scryfallNameQuery', 'buildLocalIndexScryfallQuery', 'buildLocalIndexScryfallQueryChunks', 'scoreJapaneseDisplayName', 'sortJapaneseDisplayNames', 'localizeJapaneseFaceNames', 'displayJaNamesForIndexItem', 'splitDisplayNamesForFaces', 'joinedDisplayNameForFaces', 'cardSearchNames', 'jpIndexForCard', 'jpIndexMatchesCard', 'jpIndexImageMatchesCard', 'applyJpIndexToCard', 'cardLanguage', 'isJapaneseCard', 'isEnglishCard', 'shouldLocalizeDisplay', 'prefersJapaneseDisplay', 'nameOf']) {
+for (const name of ['normalizeDisplayName', 'normalizeCardName', 'stripJapaneseReadings', 'normalizeAliasKey', 'isJapanese', 'pushUniqueTarget', 'buildJpSearchIndexes', 'jpIndexCardTitles', 'jpIndexNames', 'jpIndexNormalizedNames', 'jpIndexMatchesQuery', 'scryfallNameQuery', 'buildLocalIndexScryfallQuery', 'buildLocalIndexScryfallQueryChunks', 'scoreJapaneseDisplayName', 'sortJapaneseDisplayNames', 'localizeJapaneseFaceNames', 'displayJaNamesForIndexItem', 'splitDisplayNamesForFaces', 'joinedDisplayNameForFaces', 'cardSearchNames', 'jpIndexForCard', 'jpIndexMatchesCard', 'jpIndexImageMatchesCard', 'applyJpIndexToCard', 'cardLanguage', 'isJapaneseCard', 'isEnglishCard', 'shouldLocalizeDisplay', 'prefersJapaneseDisplay', 'nameOf']) {
   const start = code.indexOf(`function ${name}(`);
   assert(start >= 0, name);
   const lineEnd = code.indexOf('\n', start);
@@ -66,3 +66,15 @@ console.log('PASS: standalone spells keep their own identity and host search tar
 assert(!c.buildLocalIndexScryfallQuery([ideation], '').includes('!"Ancestral Recall"'));
 assert(!c.buildLocalIndexScryfallQueryChunks([ideation], '').join(' ').includes('!"Ancestral Recall"'));
 console.log('PASS: both local search query paths exclude the separate prepared spell.');
+
+c.JP_NORMALIZED_NAMES = new WeakMap();
+for (const [spell, host] of [['祖先の回想', 'Emeritus of Ideation'], ['稲妻', 'Emeritus of Conflict'], ['剣を鍬に', 'Emeritus of Truce']]) {
+  const item = c.JP_CARD_SEARCH_INDEX.find(item => (item.enNames || []).includes(host));
+  assert(c.jpIndexMatchesQuery(item, spell, true));
+  assert(c.jpIndexMatchesQuery(item, spell.slice(0, 2), false));
+  assert(c.JP_ALIAS_TARGETS_EXACT.get(c.normalizeAliasKey(spell)).includes(host));
+  assert(c.buildLocalIndexScryfallQuery([item], '').includes(host));
+}
+assert(!c.jpIndexMatchesQuery(ideation, '稲妻', false));
+assert(!c.deckImportCardMatches({ name: 'Emeritus of Ideation // Ancestral Recall' }, ['祖先の回想']));
+console.log('PASS: localized spell exact/partial searches resolve host cards without changing import identity.');
