@@ -1,4 +1,4 @@
-const APP_VERSION = "v261";
+const APP_VERSION = "v262";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2554,9 +2554,15 @@ function pushUniqueTarget(map, key, targets) {
   map.set(key, existing);
 }
 
+function jpIndexCardTitles(item) {
+  const names = [item.scryfallName, ...(item.enNames || [])].filter(Boolean);
+  const fullNames = names.filter(name => name.includes("//"));
+  return fullNames.length ? [...new Set(fullNames.flatMap(name => [name, name.split("//")[0].trim()]))] : names;
+}
+
 function buildJpSearchIndexes() {
   JP_CARD_SEARCH_INDEX.forEach(item => {
-    const targets = [item.scryfallName, ...(item.enNames || [])].filter(Boolean);
+    const targets = jpIndexCardTitles(item);
     // Multi-face aliases also contain spell names: never map those to the full card title.
     const singleNames = [...new Set(targets)];
     if (singleNames.length === 1 && !singleNames[0].includes("//")) {
@@ -2588,8 +2594,8 @@ function jpIndexMatchesCard(item, card) {
   const numberMatch = item.collectorNumber && String(card.collector_number || card.collectorNumber || "") === String(item.collectorNumber);
   if (setMatch && numberMatch) return true;
   if (item.collectorNumber && String(card.collector_number || card.collectorNumber || "")) return false;
-  const names = cardSearchNames(card).map(normalizeCardName);
-  const indexNames = [item.scryfallName, ...(item.enNames || [])].filter(Boolean).map(normalizeCardName);
+  const names = [card.name, card.card_faces?.[0]?.name].filter(Boolean).map(normalizeCardName);
+  const indexNames = jpIndexCardTitles(item).map(normalizeCardName);
   return indexNames.some(name => names.includes(name));
 }
 
@@ -2600,7 +2606,7 @@ function jpIndexForCard(card) {
   if (exactPrint) return exactPrint;
   const oracleId = card.oracle_id || card.oracleId || "";
   if (oracleId && JP_INDEX_BY_ORACLE_ID.has(oracleId)) return JP_INDEX_BY_ORACLE_ID.get(oracleId);
-  const names = cardSearchNames(card).map(normalizeCardName);
+  const names = [card.name, card.card_faces?.[0]?.name].filter(Boolean).map(normalizeCardName);
   for (const name of names) {
     const item = JP_INDEX_BY_EN_NAME.get(name);
     if (item) return item;
@@ -2619,11 +2625,12 @@ function jpIndexImageMatchesCard(item, card) {
   return Boolean(cardSet && itemSet && cardNumber && itemNumber && cardSet === itemSet && cardNumber === itemNumber);
 }
 
+// Prepared Ancestral Recall: https://mtg-jp.com/reading/iwashowdeck/0039415/
 function localizeJapaneseFaceNames(value) {
   const name = normalizeDisplayName(value);
   if (!name.includes("//") || !isJapanese(name)) return name;
   return name.split(/\s*\/\/\s*/).map(part =>
-    isJapanese(part) ? part : (JP_STANDALONE_NAMES.get(normalizeCardName(part)) || part)
+    isJapanese(part) ? part : (JP_STANDALONE_NAMES.get(normalizeCardName(part)) || (normalizeCardName(part) === "ancestral recall" ? "祖先の回想" : part))
   ).join(" // ");
 }
 
@@ -2742,7 +2749,7 @@ function aliasTargetsForQuery(query, options = {}) {
         const nameKey = normalizeAliasKey(name);
         if (nameKey !== key && nameKey.includes(key)) partialHit = true;
       }
-      const targets = [item.scryfallName, ...(item.enNames || [])].filter(Boolean);
+      const targets = jpIndexCardTitles(item);
       if (partialHit) partialTargets.push(...targets);
       if (partialTargets.length >= limit * 3) break;
   }
@@ -2816,7 +2823,7 @@ function scryfallNameQuery(name) {
 }
 
 function buildLocalIndexScryfallQuery(items, filters) {
-  const names = [...new Set(items.flatMap(item => [item.scryfallName, ...(item.enNames || [])]).filter(Boolean))].slice(0, 8);
+  const names = [...new Set(items.flatMap(jpIndexCardTitles).filter(Boolean))].slice(0, 8);
   if (names.length) return `(${names.map(scryfallNameQuery).join(" or ")}) ${filters}`.trim();
   const oracleIds = [...new Set(items.map(item => item.oracleId).filter(Boolean))].slice(0, 16);
   if (oracleIds.length) return `(${oracleIds.map(id => `oracleid:${id}`).join(" or ")}) ${filters}`.trim();
@@ -2826,7 +2833,7 @@ function buildLocalIndexScryfallQuery(items, filters) {
 function buildLocalIndexScryfallQueryChunks(items, filters, options = {}) {
   const nameChunkSize = Number(options.nameChunkSize || 8);
   const oracleChunkSize = Number(options.oracleChunkSize || 16);
-  const names = [...new Set(items.flatMap(item => [item.scryfallName, ...(item.enNames || [])]).filter(Boolean))];
+  const names = [...new Set(items.flatMap(jpIndexCardTitles).filter(Boolean))];
   const queries = [];
   for (let i = 0; i < names.length; i += nameChunkSize) {
     const chunk = names.slice(i, i + nameChunkSize);
@@ -2854,7 +2861,7 @@ async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards =
   const localOrder = new Map(localItems.map((item, index) => [item, index]));
   const localByOracle = new Map(localItems.map(item => [item.oracleId, item]).filter(([key]) => key));
   const localByName = new Map();
-  localItems.forEach(item => jpIndexNames(item).forEach(name => localByName.set(normalizeCardName(name), item)));
+  localItems.forEach(item => jpIndexCardTitles(item).forEach(name => localByName.set(normalizeCardName(name), item)));
   const cards = [];
   const seen = new Set();
   let lastError = null;

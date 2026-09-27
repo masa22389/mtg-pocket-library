@@ -7,7 +7,7 @@ for (const file of ['mtg-jp-card-index.js', 'mtgjson-jp-search-index.js']) vm.ru
 c.MTG_JP_CARD_INDEX = c.window.MTG_JP_CARD_INDEX;
 c.JP_CARD_SEARCH_INDEX = [...c.MTG_JP_CARD_INDEX, ...c.window.MTGJSON_JP_SEARCH_INDEX];
 for (const name of ['JP_INDEX_BY_SCRYFALL_ID', 'JP_INDEX_BY_ORACLE_ID', 'JP_INDEX_BY_EN_NAME', 'JP_STANDALONE_NAMES', 'JP_ALIAS_TARGETS_EXACT']) c[name] = new Map();
-for (const name of ['normalizeDisplayName', 'normalizeCardName', 'stripJapaneseReadings', 'normalizeAliasKey', 'isJapanese', 'pushUniqueTarget', 'buildJpSearchIndexes', 'scoreJapaneseDisplayName', 'sortJapaneseDisplayNames', 'localizeJapaneseFaceNames', 'displayJaNamesForIndexItem', 'splitDisplayNamesForFaces', 'joinedDisplayNameForFaces', 'cardSearchNames', 'jpIndexForCard', 'jpIndexMatchesCard', 'jpIndexImageMatchesCard', 'applyJpIndexToCard', 'cardLanguage', 'isJapaneseCard', 'isEnglishCard', 'shouldLocalizeDisplay', 'prefersJapaneseDisplay', 'nameOf']) {
+for (const name of ['normalizeDisplayName', 'normalizeCardName', 'stripJapaneseReadings', 'normalizeAliasKey', 'isJapanese', 'pushUniqueTarget', 'buildJpSearchIndexes', 'jpIndexCardTitles', 'scryfallNameQuery', 'buildLocalIndexScryfallQuery', 'buildLocalIndexScryfallQueryChunks', 'scoreJapaneseDisplayName', 'sortJapaneseDisplayNames', 'localizeJapaneseFaceNames', 'displayJaNamesForIndexItem', 'splitDisplayNamesForFaces', 'joinedDisplayNameForFaces', 'cardSearchNames', 'jpIndexForCard', 'jpIndexMatchesCard', 'jpIndexImageMatchesCard', 'applyJpIndexToCard', 'cardLanguage', 'isJapaneseCard', 'isEnglishCard', 'shouldLocalizeDisplay', 'prefersJapaneseDisplay', 'nameOf']) {
   const start = code.indexOf(`function ${name}(`);
   assert(start >= 0, name);
   const lineEnd = code.indexOf('\n', start);
@@ -26,7 +26,7 @@ for (const [english, japanese] of [['Conflict', '対立の名誉教授 // 稲妻
   assert.equal(c.nameOf(c.applyJpIndexToCard({ name, lang: 'en' })), name);
   assert.equal(c.nameOf({ jpName: item.jaNames[0], lang: 'ja' }), japanese, 'previously cached mixed title');
 }
-assert.equal(c.localizeJapaneseFaceNames('観念の名誉教授 // Ancestral Recall'), '観念の名誉教授 // Ancestral Recall');
+assert.equal(c.localizeJapaneseFaceNames('観念の名誉教授 // Ancestral Recall'), '観念の名誉教授 // 祖先の回想');
 assert.equal(c.localizeJapaneseFaceNames('対立の名誉教授 // 未知の呪文'), '対立の名誉教授 // 未知の呪文');
 assert.equal(c.localizeJapaneseFaceNames('English // Lightning Bolt'), 'English // Lightning Bolt');
 assert.equal(c.localizeJapaneseFaceNames('稲妻'), '稲妻');
@@ -53,3 +53,16 @@ vm.runInContext(code.slice(code.indexOf('function escapeScryfallText('), code.in
   assert.equal((await c.findCardForDeckImport('Fire // Ice')).name, 'Fire // Ice');
   console.log('PASS: import Japanese/English/bilingual exact names, host-first results, host/full-face imports, and no incorrect fallback.');
 })().catch(error => { console.error(error); process.exitCode = 1; });
+
+assert.equal(c.jpIndexForCard({ name: 'Ancestral Recall' }), null);
+assert.equal(c.nameOf(c.applyJpIndexToCard({ name: 'Ancestral Recall', _preferJpDisplay: true })), 'Ancestral Recall');
+assert.equal(c.nameOf(c.applyJpIndexToCard({ name: 'Emeritus of Ideation // Ancestral Recall', _preferJpDisplay: true })), '観念の名誉教授 // 祖先の回想');
+assert.equal(c.nameOf(c.applyJpIndexToCard({ name: 'Swords to Plowshares', _preferJpDisplay: true })), '剣を鍬に');
+const ideation = c.JP_CARD_SEARCH_INDEX.find(item => (item.enNames || []).includes('Emeritus of Ideation'));
+assert(!c.jpIndexCardTitles(ideation).includes('Ancestral Recall'));
+assert(!c.JP_ALIAS_TARGETS_EXACT.get(c.normalizeAliasKey('観念の名誉教授 // Ancestral Recall')).includes('Ancestral Recall'));
+console.log('PASS: standalone spells keep their own identity and host search targets exclude separate spell cards.');
+
+assert(!c.buildLocalIndexScryfallQuery([ideation], '').includes('!"Ancestral Recall"'));
+assert(!c.buildLocalIndexScryfallQueryChunks([ideation], '').join(' ').includes('!"Ancestral Recall"'));
+console.log('PASS: both local search query paths exclude the separate prepared spell.');
