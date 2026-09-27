@@ -31,3 +31,25 @@ assert.equal(c.localizeJapaneseFaceNames('対立の名誉教授 // 未知の呪�
 assert.equal(c.localizeJapaneseFaceNames('English // Lightning Bolt'), 'English // Lightning Bolt');
 assert.equal(c.localizeJapaneseFaceNames('稲妻'), '稲妻');
 console.log('PASS: prepared spell names, both display language paths, face names, cached names, English preference and unknown-name fallback.');
+
+// Import must not select a prepared spell's host card even when the API returns it first.
+vm.runInContext(code.slice(code.indexOf('function escapeScryfallText('), code.indexOf('function pushImportedDeckEntry(')), c);
+(async () => {
+  const host = { name: 'Emeritus of Truce // Swords to Plowshares', lang: 'en', card_faces: [{ name: 'Emeritus of Truce' }, { name: 'Swords to Plowshares' }] };
+  const swords = { name: 'Swords to Plowshares', lang: 'en' };
+  let candidates = [host, swords];
+  c.fetchScryfallSearch = async () => ({ ok: true, data: { data: candidates } });
+  c.fetchSearchCandidates = async () => ({ cards: candidates });
+  for (const input of ['Swords to Plowshares', '剣を鍬に', '剣を鍬に/Swords to Plowshares']) {
+    assert.equal((await c.findCardForDeckImport(input)).name, swords.name, input);
+  }
+  assert.equal((await c.findCardForDeckImport('Emeritus of Truce')).name, host.name);
+  assert.equal((await c.findCardForDeckImport(host.name)).name, host.name);
+  candidates = [host];
+  assert.equal(await c.findCardForDeckImport('Swords to Plowshares'), null);
+  assert.equal(await c.findCardForDeckImport('剣を鍬に'), null);
+  assert.equal(await c.findCardForDeckImport('Swords to Plowshare'), null);
+  candidates = [{ name: 'Fire // Ice', card_faces: [{ name: 'Fire' }, { name: 'Ice' }] }];
+  assert.equal((await c.findCardForDeckImport('Fire // Ice')).name, 'Fire // Ice');
+  console.log('PASS: import Japanese/English/bilingual exact names, host-first results, host/full-face imports, and no incorrect fallback.');
+})().catch(error => { console.error(error); process.exitCode = 1; });

@@ -1,4 +1,4 @@
-const APP_VERSION = "v260";
+const APP_VERSION = "v261";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4529,18 +4529,42 @@ function escapeScryfallText(value) {
   return String(value || "").replaceAll("\\", "\\\\").replaceAll('"', '\\"');
 }
 
+function deckImportNames(name) {
+  const names = [String(name || "").trim()];
+  // Accept Japanese / English notation, while preserving multi-face " // " names.
+  if (!name.includes("//") && isJapanese(name)) {
+    const parts = name.split("/").map(part => part.trim());
+    if (parts.length === 2 && isJapanese(parts[0]) && !isJapanese(parts[1])) names.push(...parts);
+  }
+  for (const [english, japanese] of JP_STANDALONE_NAMES) {
+    if (names.some(value => normalizeCardName(value) === normalizeCardName(japanese))) names.push(english);
+  }
+  return [...new Set(names)];
+}
+
+function deckImportCardMatches(card, names) {
+  const localized = applyJpIndexToCard({ ...card, _preferJpDisplay: true });
+  // Only the full title or front face identifies the imported card, never its spell/back face.
+  const titles = [card.name, card.printed_name, localized.jpName,
+    card.card_faces?.[0]?.name, card.card_faces?.[0]?.printed_name,
+    localized.card_faces?.[0]?.printed_name].filter(Boolean).map(normalizeCardName);
+  return names.some(name => titles.includes(normalizeCardName(name)));
+}
+
 async function findCardForDeckImport(name) {
   const preferredLang = isJapanese(name) ? "ja" : "en";
-  const exactName = escapeScryfallText(name);
-  const exactQueries = [`!"${exactName}" lang:${preferredLang}`, `!"${exactName}"`];
-  for (const query of exactQueries) {
-    const result = await fetchScryfallSearch(query, { unique: "cards", order: "name" });
-    if (result.ok && result.data.data?.length) return applyJpIndexToCard(result.data.data[0]);
+  const names = deckImportNames(name);
+  for (const target of names) {
+    const exactName = escapeScryfallText(target);
+    for (const query of [`!"${exactName}" lang:${preferredLang}`, `!"${exactName}"`]) {
+      const result = await fetchScryfallSearch(query, { unique: "cards", order: "name" });
+      const card = result.ok && result.data.data?.find(card => deckImportCardMatches(card, names));
+      if (card) return applyJpIndexToCard(card);
+    }
   }
-  const exactCandidates = await fetchSearchCandidates(name, "", preferredLang, true, 5);
-  if (exactCandidates.cards.length) return applyJpIndexToCard(exactCandidates.cards[0]);
-  const looseCandidates = await fetchSearchCandidates(name, "", preferredLang, false, 5);
-  return looseCandidates.cards.length ? applyJpIndexToCard(looseCandidates.cards[0]) : null;
+  const exactCandidates = await fetchSearchCandidates(name, "", preferredLang, true, 30);
+  const card = exactCandidates.cards.find(card => deckImportCardMatches(card, names));
+  return card ? applyJpIndexToCard(card) : null;
 }
 
 function pushImportedDeckEntry(entries, cardId, card, section, quantity) {
