@@ -330,3 +330,5 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 .collection-quick-filters { margin: 16px 0 8px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
 .collection-expansion-heading { grid-column: 1 / -1; margin: 20px 0 4px; padding: 12px 14px; background: var(--surface, #eef5fa); border-bottom: 2px solid #b7cbdc; overflow-wrap: anywhere; }
 .collection-expansion-heading small { display: block; font-size: .8rem; font-weight: normal; margin-top: 6px; }
+
+.collection-set-picker { grid-column: 1 / -1; }

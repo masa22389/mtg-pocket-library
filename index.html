@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=264">
+  <link rel="stylesheet" href="styles.css?v=265">
 </head>
 <body>
   <header class="app-header">
@@ -69,11 +69,20 @@
         <label>色（カードの色）<select id="collectionColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
         <label>マナ総量<select id="collectionMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label>
         <label>カードタイプ<select id="collectionType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label>
-        <label>収録エキスパンション<select id="collectionSetFilter"><option value="">すべて</option></select></label>
-        <label>まとめ方<select id="collectionGrouping"><option value="">一覧</option><option value="set">エキスパンション別（新しい順）</option></select></label>
+        <label hidden>収録エキスパンション<select id="collectionSetFilter"><option value="">すべて</option></select></label>
+        <label>フォーマット<select id="collectionFormat"><option value="">すべて</option><option value="standard">スタン</option><option value="pioneer">パイオニア</option><option value="modern">モダン</option><option value="legacy">レガシー</option></select></label>
+        <label>まとめ方<select id="collectionGrouping"><option value="">一覧</option><option value="set">エキスパンション別（新しい順）</option><option value="set-oldest">エキスパンション別（古い順）</option></select></label>
+        <details id="collectionSetPicker" class="set-picker-accordion collection-set-picker">
+          <summary><span>収録エキスパンション</span><strong id="collectionSetSelected">指定なし</strong></summary>
+          <div class="set-picker-body">
+            <div class="set-picker-tools"><input id="collectionSetQuery" class="set-picker-search" type="search" placeholder="セット名・略号で絞り込み" aria-label="所持セットを検索"><button id="clearCollectionSet" class="filter-reset" type="button">指定なし</button></div>
+            <div id="collectionSetOptions" class="set-picker-list"></div>
+          </div>
+        </details>
         <button id="clearCollectionQuickFilters" class="filter-reset" type="button">絞り込みをクリア</button>
       </section>
       <p class="muted">選んだ条件すべてに合う所持カードを表示します。マナはマナ総量で指定します。</p>
+      <p id="collectionFormatStatus" class="muted" role="status" hidden></p>
       <p id="collectionFilterSummary" class="advanced-search-summary collection-filter-summary">詳細条件：指定なし</p>
       <dialog id="collectionFilterDialog" class="advanced-search-dialog">
         <form method="dialog" class="dialog-card collection-filter-dialog">
@@ -406,8 +415,8 @@
     </form>
   </dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=264" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=264" defer></script>
-  <script src="app.js?v=264" defer></script>
+  <script src="mtg-jp-card-index.js?v=265" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=265" defer></script>
+  <script src="app.js?v=265" defer></script>
 </body>
 </html>

@@ -24,3 +24,19 @@ assert.equal(groups.map(g=>g.code).join(','),'new,old,unknown');assert.equal(gro
 assert.equal(groups.flatMap(g=>g.cards).length,cards.length);assert.equal(JSON.stringify(cards),snapshot);
 assert.equal(c.collectionExpansionGroups([],[]).length,0);
 console.log('PASS: inclusive colors, AND filters, colorless vs identity, mana ranges, set normalization, newest-first groups and non-mutating behavior.');
+const known=[{code:'old',released_at:'2020-01-01'},{code:'new',released_at:'2026-09-01'}];
+assert.equal(c.collectionExpansionGroups(cards,known,true).map(g=>g.code).join(','),'old,new,unknown');
+for(const format of ['standard','pioneer','modern','legacy']) {
+ const legal={...cards[1],legalities:{[format]:'legal'}};
+ assert(c.collectionMatchesCardFilters(legal,{format,color:'U',type:'Instant'}));
+ for(const status of ['banned','not_legal','restricted',undefined]) assert(!c.collectionMatchesCardFilters({...legal,legalities:{[format]:status}},{format}));
+ assert(!c.collectionMatchesCardFilters(cards[0],{format}));
+ assert(c.collectionMatchesCardFilters(cards[0],{}));
+}
+c.state={useScryfallPrices:false};
+const metadataStart=code.indexOf('function applyCardMetadata(');
+vm.runInContext(code.slice(metadataStart,code.indexOf('\n}',metadataStart)+2),c);
+const owned={quantity:4};
+c.applyCardMetadata(owned,{name:'Old printing',legalities:{standard:'legal',modern:'banned'}});
+assert.equal(owned.legalities.standard,'legal');assert.equal(owned.legalities.modern,'banned');assert.equal(owned.quantity,4);
+console.log('PASS: oldest-first with unknown dates last, four format legalities, banned/unknown exclusion and metadata hydration.');
