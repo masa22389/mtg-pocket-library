@@ -1,4 +1,4 @@
-const APP_VERSION = "v263";
+const APP_VERSION = "v264";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -348,7 +348,7 @@ function renderFavoriteGroupManager(preferredId = "") {
         <img src="${esc(card.image)}" alt="" loading="lazy">
         <span><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} ・ ${Number(card.quantity || 0)}枚</small></span>
         <span class="favorite-manage-card-actions">
-          <button type="button" class="ghost" data-favorite-group-move="${esc(card.id)}" data-direction="-1" ${index === 0 ? "disabled" : ""}>↑</button>
+          <button type="button" class="ghost" data-favorite-group-move="${esc(card.id)}" data-direction="-1" ${groupBySet || index === 0 ? "disabled" : ""}>↑</button>
           <button type="button" class="ghost" data-favorite-group-move="${esc(card.id)}" data-direction="1" ${index === memberCards.length - 1 ? "disabled" : ""}>↓</button>
           <button type="button" class="danger tiny" data-favorite-group-remove="${esc(card.id)}">解除</button>
         </span>
@@ -2125,6 +2125,8 @@ function updateCollectionFilterSummary() {
   const type = selectedOptionText(els.collectionType);
   const price = selectedOptionText(els.collectionPriceFilter);
   const favoriteGroup = selectedOptionText(els.collectionFavoriteGroup);
+  const setLabel = selectedOptionText($("#collectionSetFilter"));
+  if (setLabel) chips.push(`セット:${setLabel}`);
   if (color) chips.push(`色:${color}`);
   if (mana) chips.push(`マナ:${mana}`);
   if (type) chips.push(`タイプ:${type}`);
@@ -3695,8 +3697,43 @@ function saveSelectedCardQuantity() {
   showToast("所持枚数を保存しました");
 }
 
+function collectionMatchesCardFilters(card, { color = "", mana = "", type = "", set = "" } = {}) {
+  const colors = Array.isArray(card.colors) ? card.colors : [];
+  const colorMatch = !color || (color === "C" ? colors.length === 0 : color === "M" ? colors.length > 1 : colors.includes(color));
+  const manaValue = Number(card.manaValue || 0);
+  return colorMatch && (!mana || (mana === "7+" ? manaValue >= 7 : manaValue === Number(mana)))
+    && (!type || String(card.typeLine || "").toLowerCase().includes(type.toLowerCase()))
+    && (!set || normalizeSetCode(card.set) === set);
+}
+
+function collectionExpansionGroups(cards, knownSets) {
+  const byCode = new Map(knownSets.map(set => [normalizeSetCode(set.code), set]));
+  const groups = new Map();
+  for (const card of cards) {
+    const code = normalizeSetCode(card.set);
+    if (!groups.has(code)) {
+      const set = byCode.get(code) || { code, name: card.setName || code.toUpperCase() || "不明なセット", released_at: card.releasedAt || "" };
+      groups.set(code, { code, set, cards: [] });
+    }
+    groups.get(code).cards.push(card);
+  }
+  return [...groups.values()].sort((a, b) => String(b.set.released_at || "").localeCompare(String(a.set.released_at || "")) || a.code.localeCompare(b.code));
+}
+
+function updateCollectionSetFilter(knownSets) {
+  const select = $("#collectionSetFilter");
+  const selected = select.value;
+  const groups = collectionExpansionGroups(state.collection, knownSets);
+  const options = `<option value="">すべて</option>` + groups.map(group => `<option value="${esc(group.code)}">${esc(setCatalogLabel(group.set, knownSets))}</option>`).join("");
+  if (select.innerHTML !== options) { select.innerHTML = options; select.value = selected; }
+}
+
 function renderCollection() {
   if (!$("#setCollection").hidden) { renderSetCatalog(); if (setBrowser.code && !setBrowser.loading) renderSetCards(); }
+  const knownSets = getAllKnownSets();
+  updateCollectionSetFilter(knownSets);
+  const groupBySet = $("#collectionGrouping").value === "set";
+  const setFilter = $("#collectionSetFilter").value;
   const query = els.collectionFilter.value.trim().toLowerCase();
   const color = els.collectionColor.value;
   const mana = els.collectionMana.value;
@@ -3706,11 +3743,7 @@ function renderCollection() {
   const favoriteGroupId = els.collectionFavoriteGroup?.value || "";
   let cards = state.collection.filter(card => {
     const textMatch = [card.name, card.printedName, card.setName, card.typeLine, card.printedTypeLine, card.location].join(" ").toLowerCase().includes(query);
-    const identity = card.colorIdentity || card.colors || [];
-    const colorMatch = !color || (color === "C" ? identity.length === 0 : color === "M" ? identity.length > 1 : identity.includes(color));
-    const manaValue = Number(card.manaValue || 0);
-    const manaMatch = !mana || (mana === "7+" ? manaValue >= 7 : manaValue === Number(mana));
-    const typeMatch = !type || String(card.typeLine || "").toLowerCase().includes(type.toLowerCase());
+    const cardMatch = collectionMatchesCardFilters(card, { color, mana, type, set: setFilter });
     const yenValue = yenValueOf(card);
     const priceMatch = !priceFilter
       || (priceFilter === "priced" && yenValue != null)
@@ -3719,9 +3752,16 @@ function renderCollection() {
       || (priceFilter === "over10000" && yenValue != null && yenValue >= 10000)
       || (priceFilter === "over50000" && yenValue != null && yenValue >= 50000);
     const favoriteMatch = (!favoritesOnly || card.favorite === true) && favoriteGroupMatch(card, favoriteGroupId);
-    return textMatch && colorMatch && manaMatch && typeMatch && priceMatch && favoriteMatch;
+    return textMatch && cardMatch && priceMatch && favoriteMatch;
   });
   cards = sortedCollectionCards(cards);
+  const expansionGroups = groupBySet ? collectionExpansionGroups(cards, knownSets) : [];
+  if (groupBySet) cards = expansionGroups.flatMap(group => group.cards);
+  const groupStarts = new Map(expansionGroups.map(group => [group.cards[0].id, group]));
+  const groupHeading = card => {
+    const group = groupStarts.get(card.id);
+    return group ? `<h3 class="collection-expansion-heading">${esc(setCatalogLabel(group.set, knownSets))}<small>${esc(group.code.toUpperCase())} · ${esc(group.set.released_at || "発売日不明")} · ${group.cards.length}件 / ${group.cards.reduce((sum, item) => sum + Number(item.quantity || 0), 0)}枚</small></h3>` : "";
+  };
   updateCollectionSortUi();
   updateCollectionFilterSummary();
   els.totalCards.textContent = state.collection.reduce((sum, card) => sum + Number(card.quantity), 0);
@@ -3754,7 +3794,7 @@ function renderCollection() {
     ? `<button type="button" class="collection-load-more collection-collapse" data-collection-collapse>表示を減らす（先頭${collectionPageSize().toLocaleString("ja-JP")}件に戻す）</button>`
     : "";
   if (imageMode) {
-    els.collectionList.innerHTML = visibleCards.map(card => `
+    els.collectionList.innerHTML = visibleCards.map(card => `${groupHeading(card)}
       <button type="button" class="collection-image-card" data-id="${card.id}" aria-label="${esc(nameOf(card))}の詳細を開く">
         <img src="${esc(card.image)}" alt="" loading="lazy">
         <span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>
@@ -3772,12 +3812,12 @@ function renderCollection() {
   els.collectionList.innerHTML = visibleCards.map(card => {
     const index = indexById.get(card.id) ?? 0;
     return `
-    <article class="list-item" data-id="${card.id}">
+    ${groupHeading(card)}<article class="list-item" data-id="${card.id}">
       <button class="collection-card-open" type="button" aria-label="${esc(nameOf(card))}の詳細を開く">
         <span class="collection-thumb-wrap"><img class="thumb" src="${esc(card.image)}" alt="" loading="lazy"><span class="collection-qty-badge">×${Number(card.quantity || 0)}</span></span>
         <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(normalizeCardCondition(card.condition))} · ${card.finish === "normal" ? "通常" : esc(card.finish)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${favoriteGroupNames(card).map(name => `<span class="chip">★ ${esc(name)}</span>`).join("")}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
       </button>
-      <div class="item-actions"><button class="tiny move-owned-up" aria-label="${esc(nameOf(card))}を前へ移動" ${index === 0 ? "disabled" : ""}>↑</button><button class="tiny move-owned-down" aria-label="${esc(nameOf(card))}を後へ移動" ${index === cards.length - 1 ? "disabled" : ""}>↓</button><button class="tiny minus" aria-label="1枚減らす">−</button><span class="qty-pill">×${card.quantity}</span><button class="tiny plus" aria-label="1枚増やす">＋</button><button class="tiny favorite-owned ${card.favorite ? "active" : ""}" aria-label="${esc(nameOf(card))}を${card.favorite ? "お気に入りから外す" : "お気に入りに追加"}" aria-pressed="${card.favorite ? "true" : "false"}">${card.favorite ? "★" : "☆"}</button><button class="tiny delete-owned" aria-label="${esc(nameOf(card))}をコレクションから削除">削除</button></div>
+      <div class="item-actions"><button class="tiny move-owned-up" aria-label="${esc(nameOf(card))}を前へ移動" ${groupBySet || index === 0 ? "disabled" : ""}>↑</button><button class="tiny move-owned-down" aria-label="${esc(nameOf(card))}を後へ移動" ${groupBySet || index === cards.length - 1 ? "disabled" : ""}>↓</button><button class="tiny minus" aria-label="1枚減らす">−</button><span class="qty-pill">×${card.quantity}</span><button class="tiny plus" aria-label="1枚増やす">＋</button><button class="tiny favorite-owned ${card.favorite ? "active" : ""}" aria-label="${esc(nameOf(card))}を${card.favorite ? "お気に入りから外す" : "お気に入りに追加"}" aria-pressed="${card.favorite ? "true" : "false"}">${card.favorite ? "★" : "☆"}</button><button class="tiny delete-owned" aria-label="${esc(nameOf(card))}をコレクションから削除">削除</button></div>
     </article>`;
   }).join("") + loadMoreButton + collapseButton;
   els.collectionList.querySelectorAll(".list-item").forEach(row => {
@@ -6295,10 +6335,24 @@ document.querySelectorAll("[data-collection-price-mode]").forEach(button => butt
   resetCollectionRenderLimit();
   renderCollection();
 }));
-[els.collectionColor, els.collectionMana, els.collectionType, els.collectionPriceFilter, els.collectionFavoriteGroup].filter(Boolean).forEach(filter => filter.addEventListener("change", () => { resetCollectionRenderLimit(); renderCollection(); }));
+[els.collectionPriceFilter, els.collectionFavoriteGroup].filter(Boolean).forEach(filter => filter.addEventListener("change", () => { resetCollectionRenderLimit(); renderCollection(); }));
+function showFilteredCollection() {
+  if (state.collectionViewMode === "hidden") {
+    state.collectionViewMode = "detail";
+    els.collectionViewMode.value = "detail";
+    localStorage.setItem(KEYS.collectionViewMode, "detail");
+  }
+  resetCollectionRenderLimit(); renderCollection();
+}
+[els.collectionColor, els.collectionMana, els.collectionType, $("#collectionSetFilter"), $("#collectionGrouping")].forEach(select => select.addEventListener("change", showFilteredCollection));
+$("#clearCollectionQuickFilters").addEventListener("click", () => {
+  els.collectionFilter.value = "";
+  els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; $("#collectionSetFilter").value = "";
+  showFilteredCollection();
+});
 els.collectionFavoritesOnly.addEventListener("change", () => { resetCollectionRenderLimit(); renderCollection(); });
 els.clearCollectionFilters.addEventListener("click", () => {
-  els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
+  $("#collectionSetFilter").value = ""; els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
 });
 els.resetCollectionSort.addEventListener("click", resetCollectionSortOrder);
 els.priceSourceMode?.addEventListener("change", savePriceSourceMode);

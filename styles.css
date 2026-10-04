@@ -326,3 +326,7 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 #setCollection > label { margin-bottom: 16px; }
 
 .purchase-receive{grid-column:2;min-width:0;width:100%;padding:8px;font-size:12px;min-height:40px;margin-top:4px}
+
+.collection-quick-filters { margin: 16px 0 8px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
+.collection-expansion-heading { grid-column: 1 / -1; margin: 20px 0 4px; padding: 12px 14px; background: var(--surface, #eef5fa); border-bottom: 2px solid #b7cbdc; overflow-wrap: anywhere; }
+.collection-expansion-heading small { display: block; font-size: .8rem; font-weight: normal; margin-top: 6px; }

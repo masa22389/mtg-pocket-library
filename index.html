@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=263">
+  <link rel="stylesheet" href="styles.css?v=264">
 </head>
 <body>
   <header class="app-header">
@@ -65,15 +65,21 @@
           <button id="openCollectionAdvanced" class="compact ghost" type="button">詳細設定</button>
         </div>
       </section>
+      <section class="collection-filters collection-quick-filters" aria-label="所持カードの絞り込み">
+        <label>色（カードの色）<select id="collectionColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
+        <label>マナ総量<select id="collectionMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label>
+        <label>カードタイプ<select id="collectionType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label>
+        <label>収録エキスパンション<select id="collectionSetFilter"><option value="">すべて</option></select></label>
+        <label>まとめ方<select id="collectionGrouping"><option value="">一覧</option><option value="set">エキスパンション別（新しい順）</option></select></label>
+        <button id="clearCollectionQuickFilters" class="filter-reset" type="button">絞り込みをクリア</button>
+      </section>
+      <p class="muted">選んだ条件すべてに合う所持カードを表示します。マナはマナ総量で指定します。</p>
       <p id="collectionFilterSummary" class="advanced-search-summary collection-filter-summary">詳細条件：指定なし</p>
       <dialog id="collectionFilterDialog" class="advanced-search-dialog">
         <form method="dialog" class="dialog-card collection-filter-dialog">
           <button id="closeCollectionAdvanced" class="dialog-close" type="button" aria-label="閉じる">×</button>
           <h2>コレクション詳細設定</h2>
       <section class="collection-filters" aria-label="コレクションの詳細フィルター">
-        <label>色（固有色）<select id="collectionColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
-        <label>マナ総量<select id="collectionMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label>
-        <label>カードタイプ<select id="collectionType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label>
         <label>価格<select id="collectionPriceFilter"><option value="">すべて</option><option value="priced">価格あり</option><option value="missing">価格なし</option><option value="english">英語版参考</option><option value="over10000">1万円以上</option><option value="over50000">5万円以上</option></select></label>
         <label class="favorite-filter"><input id="collectionFavoritesOnly" type="checkbox"><span>★ お気に入りのみ</span></label>
         <label>お気に入りグループ<select id="collectionFavoriteGroup"><option value="">すべて</option></select></label>
@@ -400,8 +406,8 @@
     </form>
   </dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=263" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=263" defer></script>
-  <script src="app.js?v=263" defer></script>
+  <script src="mtg-jp-card-index.js?v=264" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=264" defer></script>
+  <script src="app.js?v=264" defer></script>
 </body>
 </html>
