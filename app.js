@@ -1,4 +1,4 @@
-const APP_VERSION = "v269";
+const APP_VERSION = "v270";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4760,7 +4760,64 @@ function openDeck(id) {
   fillDeckDialog();
 }
 
+function deckVersionContent(deck) {
+  return structuredClone({ name: deck.name, format: deck.format, memo: deck.memo || "", entries: deck.entries || [] });
+}
+
+function ensureDeckVersions(deck) {
+  if (!Array.isArray(deck.versions) || !deck.versions.length) {
+    deck.versions = [{ number: 1, savedAt: deck.updatedAt || Date.now(), ...deckVersionContent(deck) }];
+    deck.activeVersion = 1;
+  }
+  if (!deck.versions.some(version => version.number === deck.activeVersion)) deck.activeVersion = deck.versions[0].number;
+}
+
+function storeDeckVersion(deck, asNew = false) {
+  ensureDeckVersions(deck);
+  const number = asNew ? Math.max(...deck.versions.map(version => version.number)) + 1 : deck.activeVersion;
+  const snapshot = { number, savedAt: Date.now(), ...deckVersionContent(deck) };
+  const index = deck.versions.findIndex(version => version.number === number);
+  if (index >= 0) deck.versions[index] = snapshot; else deck.versions.push(snapshot);
+  deck.activeVersion = number;
+}
+
+function renderDeckVersionPicker() {
+  const deck = state.editingDeck;
+  ensureDeckVersions(deck);
+  $("#deckVersionSelect").innerHTML = deck.versions.map(version => `<option value="${version.number}">バージョン ${version.number}（${formatDeckDate(version.savedAt)}）</option>`).join("");
+  $("#deckVersionSelect").value = String(deck.activeVersion);
+}
+
+function saveNewDeckVersion() {
+  applyDeckFormFields();
+  storeDeckVersion(state.editingDeck, true);
+  autoSaveEditingDeck();
+  renderDeckVersionPicker();
+  showToast(`バージョン ${state.editingDeck.activeVersion} として保存しました`);
+}
+
+function switchDeckVersion(number) {
+  const deck = state.editingDeck;
+  const target = deck.versions.find(version => version.number === number);
+  if (!target || number === deck.activeVersion) return;
+  applyDeckFormFields();
+  const current = deck.versions.find(version => version.number === deck.activeVersion);
+  if (JSON.stringify(deckVersionContent(deck)) !== JSON.stringify(deckVersionContent(current))) {
+    if (!confirm("編集中の内容を現在のバージョンに保存して切り替えますか？別バージョンとして残す場合はキャンセルし、「新バージョンとして保存」を押してください。")) {
+      renderDeckVersionPicker();
+      return;
+    }
+    storeDeckVersion(deck);
+  }
+  cancelDeckTextSave();
+  Object.assign(deck, deckVersionContent(target));
+  deck.activeVersion = number;
+  fillDeckDialog();
+  autoSaveEditingDeck();
+}
+
 function fillDeckDialog() {
+  renderDeckVersionPicker();
   ensureDeckDates(state.editingDeck);
   els.deckName.value = state.editingDeck.name;
   els.deckFormat.value = state.editingDeck.format;
@@ -6032,6 +6089,7 @@ function saveDeck() {
   deck.memo = els.deckMemo.value.trim();
   normalizeDeckSectionsForFormat();
   deck.updatedAt = Date.now();
+  storeDeckVersion(deck);
   const index = state.decks.findIndex(item => item.id === deck.id);
   if (index >= 0) state.decks[index] = deck; else state.decks.unshift(deck);
   persist(); els.deckDialog.close(); renderDecks(); showToast("デッキを保存しました");
@@ -6049,6 +6107,8 @@ function duplicateDeck() {
   normalizeDeckSectionsForFormat();
   const source = structuredClone(state.editingDeck);
   const copy = structuredClone(source);
+  delete copy.versions;
+  delete copy.activeVersion;
   copy.id = uid();
   copy.name = `${source.name} コピー`;
   copy.createdAt = now;
@@ -6064,7 +6124,7 @@ function duplicateDeck() {
 }
 
 function deleteDeck() {
-  if (!confirm(`「${state.editingDeck.name}」を削除しますか？`)) return;
+  if (!confirm(`「${state.editingDeck.name}」を全バージョンごと削除しますか？`)) return;
   cancelDeckTextSave();
   deckTextListDirty = false;
   state.decks = state.decks.filter(deck => deck.id !== state.editingDeck.id);
@@ -6586,6 +6646,8 @@ els.deckEntryDialog.addEventListener("close", () => {
   if (state.editingDeck && els.deckDialog.open) renderDeckEditor();
 });
 $("#saveDeckButton").addEventListener("click", saveDeck);
+$("#saveNewDeckVersion").addEventListener("click", saveNewDeckVersion);
+$("#deckVersionSelect").addEventListener("change", event => switchDeckVersion(Number(event.target.value)));
 els.duplicateDeckButton.addEventListener("click", duplicateDeck);
 els.deleteDeckButton.addEventListener("click", deleteDeck);
 $("#exportButton").addEventListener("click", exportBackup);

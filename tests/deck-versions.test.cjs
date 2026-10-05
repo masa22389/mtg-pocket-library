@@ -1,0 +1,26 @@
+const fs=require('node:fs'), vm=require('node:vm'), assert=require('node:assert/strict');
+const code=fs.readFileSync(require('node:path').join(__dirname,'../app.js'),'utf8');
+const c={structuredClone, Date, state:{decks:[]}, cancelDeckTextSave(){},applyDeckFormFields(){},persist(){},renderDecks(){},renderDeckVersionPicker(){},showToast(){},fillDeckDialog(){},confirm:()=>true};
+vm.createContext(c);
+for(const name of ['deckVersionContent','ensureDeckVersions','storeDeckVersion','autoSaveEditingDeck','saveNewDeckVersion','switchDeckVersion']) {
+ const start=code.indexOf(`function ${name}(`);vm.runInContext(code.slice(start,code.indexOf('\n}',start)+2),c);
+}
+const deck={id:'deck1',name:'Test',format:'Legacy',memo:'v1',entries:[{cardId:'a',quantity:4,section:'main',card:{name:'A'}}]};
+c.state.editingDeck=deck;
+c.ensureDeckVersions(deck);
+deck.entries[0].quantity=3;deck.memo='v2';c.autoSaveEditingDeck();
+assert.equal(deck.versions[0].entries[0].quantity,4);
+assert.equal(c.state.decks.length,1);
+c.saveNewDeckVersion();
+assert.equal(deck.activeVersion,2);assert.equal(deck.versions.length,2);
+assert.equal(deck.versions[0].memo,'v1');assert.equal(deck.versions[1].memo,'v2');
+c.switchDeckVersion(1);assert.equal(deck.entries[0].quantity,4);assert.equal(deck.memo,'v1');
+deck.entries[0].quantity=2;c.saveNewDeckVersion();assert.equal(deck.activeVersion,3);
+assert.equal(deck.versions[0].entries[0].quantity,4);assert.equal(deck.versions[1].entries[0].quantity,3);
+assert.equal(c.state.decks.length,1);
+deck.memo='updated';c.storeDeckVersion(deck);assert.equal(deck.versions[2].memo,'updated');
+const reload=JSON.parse(JSON.stringify(deck));c.state.editingDeck=reload;c.ensureDeckVersions(reload);
+c.switchDeckVersion(2);assert.equal(reload.memo,'v2');assert.equal(reload.entries[0].quantity,3);
+reload.memo='draft';c.confirm=()=>false;c.switchDeckVersion(1);assert.equal(reload.activeVersion,2);assert.equal(reload.memo,'draft');
+c.confirm=()=>true;c.switchDeckVersion(1);assert.equal(reload.versions[1].memo,'draft');assert.equal(reload.activeVersion,1);
+console.log('PASS: existing deck migration, autosave isolation, new versions, branching, switching, cancel, overwrite, serialized history and one list entry.');
