@@ -336,3 +336,6 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 .same-name-owned-summary { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; padding:14px; border-radius:14px; background:#e8f1f8; color:var(--ink); }
 .same-name-owned-summary strong { font-size:1.35rem; }
 .same-name-owned-summary small { flex-basis:100%; color:var(--muted); line-height:1.5; }
+
+.same-name-owned-summary[hidden] { display:none; }
+#sameNameCollectionBanner { margin-bottom:14px; }

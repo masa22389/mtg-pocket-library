@@ -1,4 +1,4 @@
-const APP_VERSION = "v266";
+const APP_VERSION = "v267";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3355,18 +3355,47 @@ function selectedOwnedCard() {
   return owned;
 }
 
-function sameCardNameOwnedTotal(card, collection) {
-  if (!card) return 0;
+function isSameOwnedCardName(card, item) {
+  if (!card || !item) return false;
   const oracleId = card.oracle_id || card.oracleId || "";
+  const itemOracleId = item.oracle_id || item.oracleId || "";
+  if (oracleId && itemOracleId) return oracleId === itemOracleId;
   const name = normalizeCardName(card.name);
+  return Boolean(name && name === normalizeCardName(item.name));
+}
+
+function sameCardNameOwnedTotal(card, collection) {
   return collection.reduce((sum, item) => {
-    const itemOracleId = item.oracle_id || item.oracleId || "";
-    // Compare complete names only: a prepared spell is not its host card.
-    const matches = oracleId && itemOracleId ? oracleId === itemOracleId
-      : Boolean(name && name === normalizeCardName(item.name));
     const quantity = Number(item.quantity || 0);
-    return sum + (matches && Number.isFinite(quantity) ? Math.max(0, quantity) : 0);
+    return sum + (isSameOwnedCardName(card, item) && Number.isFinite(quantity) ? Math.max(0, quantity) : 0);
   }, 0);
+}
+
+function showSameNameCollection() {
+  if (!state.selectedCard) return;
+  const ids = ["collectionFilter", "collectionColor", "collectionMana", "collectionType", "collectionSetFilter", "collectionFormat", "collectionPriceFilter", "collectionFavoriteGroup", "collectionSetQuery"];
+  if (!state.sameNamePreviousFilters) state.sameNamePreviousFilters = {
+    values: Object.fromEntries(ids.map(id => [id, $("#" + id).value])),
+    favorites: els.collectionFavoritesOnly.checked
+  };
+  state.sameNameCollectionCard = { name: state.selectedCard.name, oracleId: state.selectedCard.oracle_id || state.selectedCard.oracleId || "", label: nameOf(state.selectedCard) };
+  ids.forEach(id => { $("#" + id).value = ""; });
+  els.collectionFavoritesOnly.checked = false;
+  els.cardDialog.close();
+  $("#individualCollection").hidden = false; $("#setCollection").hidden = true;
+  document.querySelectorAll("[data-collection-mode]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.collectionMode === "individual")));
+  showView("collection");
+  showFilteredCollection();
+  $("#sameNameCollectionBanner").scrollIntoView({ block: "center", behavior: "smooth" });
+}
+
+function clearSameNameCollection(restore = true) {
+  if (restore && state.sameNamePreviousFilters) {
+    Object.entries(state.sameNamePreviousFilters.values).forEach(([id, value]) => { $("#" + id).value = value; });
+    els.collectionFavoritesOnly.checked = state.sameNamePreviousFilters.favorites;
+  }
+  state.sameNameCollectionCard = null;
+  state.sameNamePreviousFilters = null;
 }
 
 function updateCardOwnedActions() {
@@ -3764,6 +3793,8 @@ function renderCollection() {
   const groupBySet = grouping === "set" || grouping === "set-oldest";
   const format = $("#collectionFormat").value;
   const setFilter = $("#collectionSetFilter").value;
+  $("#sameNameCollectionBanner").hidden = !state.sameNameCollectionCard;
+  $("#sameNameCollectionLabel").textContent = state.sameNameCollectionCard ? `${state.sameNameCollectionCard.label} の所持カード（同名合計 ${sameCardNameOwnedTotal(state.sameNameCollectionCard, state.collection)}枚）` : "";
   const query = els.collectionFilter.value.trim().toLowerCase();
   const color = els.collectionColor.value;
   const mana = els.collectionMana.value;
@@ -3782,7 +3813,7 @@ function renderCollection() {
       || (priceFilter === "over10000" && yenValue != null && yenValue >= 10000)
       || (priceFilter === "over50000" && yenValue != null && yenValue >= 50000);
     const favoriteMatch = (!favoritesOnly || card.favorite === true) && favoriteGroupMatch(card, favoriteGroupId);
-    return textMatch && cardMatch && priceMatch && favoriteMatch;
+    return (!state.sameNameCollectionCard || isSameOwnedCardName(state.sameNameCollectionCard, card)) && textMatch && cardMatch && priceMatch && favoriteMatch;
   });
   cards = sortedCollectionCards(cards);
   const expansionGroups = groupBySet ? collectionExpansionGroups(cards, knownSets, grouping === "set-oldest") : [];
@@ -6392,7 +6423,10 @@ $("#clearCollectionSet").addEventListener("click", () => {
   $("#collectionSetFilter").value = ""; $("#collectionSetQuery").value = "";
   showFilteredCollection();
 });
+$("#showSameNameCollection").addEventListener("click", showSameNameCollection);
+$("#clearSameNameCollection").addEventListener("click", () => { clearSameNameCollection(); showFilteredCollection(); });
 $("#clearCollectionQuickFilters").addEventListener("click", () => {
+  clearSameNameCollection(false);
   els.collectionFilter.value = "";
   $("#collectionFormat").value = ""; $("#collectionSetQuery").value = "";
   els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; $("#collectionSetFilter").value = "";
@@ -6400,6 +6434,7 @@ $("#clearCollectionQuickFilters").addEventListener("click", () => {
 });
 els.collectionFavoritesOnly.addEventListener("change", () => { resetCollectionRenderLimit(); renderCollection(); });
 els.clearCollectionFilters.addEventListener("click", () => {
+  clearSameNameCollection(false);
   $("#collectionFormat").value = ""; $("#collectionSetQuery").value = ""; $("#collectionSetFilter").value = ""; els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
 });
 els.resetCollectionSort.addEventListener("click", resetCollectionSortOrder);

@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=266">
+  <link rel="stylesheet" href="styles.css?v=267">
 </head>
 <body>
   <header class="app-header">
@@ -105,6 +105,7 @@
           <button id="resetCollectionSort" type="button" class="compact filter-reset">初期化</button>
         </div>
       </section>
+      <div id="sameNameCollectionBanner" class="same-name-owned-summary" hidden><strong id="sameNameCollectionLabel"></strong><button id="clearSameNameCollection" type="button" class="ghost">同名の絞り込みを解除</button></div>
       <div id="collectionList" class="item-list"></div>
       </div>
       <section id="setCollection" hidden>
@@ -236,6 +237,7 @@
       </label>
       <div class="same-name-owned-summary" role="status">
         <span>同名カードの合計所持枚数</span><strong id="sameNameOwnedTotal">0枚</strong>
+        <button id="showSameNameCollection" type="button" class="ghost">同名カードを確認</button>
         <small>このカードを含む、別イラスト・収録版・言語・仕様の合計（保存済み）</small>
       </div>
       <div class="form-grid">
@@ -419,8 +421,8 @@
     </form>
   </dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=266" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=266" defer></script>
-  <script src="app.js?v=266" defer></script>
+  <script src="mtg-jp-card-index.js?v=267" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=267" defer></script>
+  <script src="app.js?v=267" defer></script>
 </body>
 </html>
