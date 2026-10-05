@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=265">
+  <link rel="stylesheet" href="styles.css?v=266">
 </head>
 <body>
   <header class="app-header">
@@ -234,6 +234,10 @@
       <label class="owned-control">この個別カードの所持枚数
         <span class="quantity-stepper"><button id="decrementQuantity" type="button" aria-label="所持枚数を1枚減らす">−</button><input id="cardQuantity" type="number" min="0" value="0" inputmode="numeric"><button id="incrementQuantity" type="button" aria-label="所持枚数を1枚増やす">＋</button></span>
       </label>
+      <div class="same-name-owned-summary" role="status">
+        <span>同名カードの合計所持枚数</span><strong id="sameNameOwnedTotal">0枚</strong>
+        <small>このカードを含む、別イラスト・収録版・言語・仕様の合計（保存済み）</small>
+      </div>
       <div class="form-grid">
         <label>状態<select id="cardCondition"><option>NM</option><option>SP</option><option>MP</option><option>HP</option><option>Poor</option></select></label>
         <label>仕様<select id="cardFinish"><option value="normal">通常</option><option value="foil">Foil</option><option value="etched">Etched</option></select></label>
@@ -415,8 +419,8 @@
     </form>
   </dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=265" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=265" defer></script>
-  <script src="app.js?v=265" defer></script>
+  <script src="mtg-jp-card-index.js?v=266" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=266" defer></script>
+  <script src="app.js?v=266" defer></script>
 </body>
 </html>

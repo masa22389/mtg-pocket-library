@@ -1,4 +1,4 @@
-const APP_VERSION = "v265";
+const APP_VERSION = "v266";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3355,7 +3355,23 @@ function selectedOwnedCard() {
   return owned;
 }
 
+function sameCardNameOwnedTotal(card, collection) {
+  if (!card) return 0;
+  const oracleId = card.oracle_id || card.oracleId || "";
+  const name = normalizeCardName(card.name);
+  return collection.reduce((sum, item) => {
+    const itemOracleId = item.oracle_id || item.oracleId || "";
+    // Compare complete names only: a prepared spell is not its host card.
+    const matches = oracleId && itemOracleId ? oracleId === itemOracleId
+      : Boolean(name && name === normalizeCardName(item.name));
+    const quantity = Number(item.quantity || 0);
+    return sum + (matches && Number.isFinite(quantity) ? Math.max(0, quantity) : 0);
+  }, 0);
+}
+
 function updateCardOwnedActions() {
+  const total = $("#sameNameOwnedTotal");
+  if (total) total.textContent = `${sameCardNameOwnedTotal(state.selectedCard, state.collection).toLocaleString("ja-JP")}枚`;
   const owned = selectedOwnedCard();
   const hidden = state.cardDialogMode === "deck" || !owned;
   if (els.favoriteCardButton) els.favoriteCardButton.hidden = true;
