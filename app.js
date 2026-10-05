@@ -1,4 +1,4 @@
-const APP_VERSION = "v268";
+const APP_VERSION = "v269";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -1052,13 +1052,12 @@ async function ensureCardTraderScryfallId(card) {
   if (!cardTraderEnglishIdCache.has(key)) {
     cardTraderEnglishIdCache.set(key, fetch(`https://api.scryfall.com/cards/${encodeURIComponent(String(card.set).toLowerCase())}/${encodeURIComponent(card.collectorNumber)}/en`, {
       headers: { Accept: "application/json" },
-    }).then(response => response.ok ? response.json() : null).then(card => card?.id || null).catch(() => null));
-    while (cardTraderEnglishIdCache.size > 128) cardTraderEnglishIdCache.delete(cardTraderEnglishIdCache.keys().next().value);
+    }).then(response => response.ok ? response.json() : null).catch(() => null));
   }
-  const englishId = await cardTraderEnglishIdCache.get(key);
-  if (englishId) {
-    card.englishScryfallId = englishId;
-    return englishId;
+  const englishCard = await cardTraderEnglishIdCache.get(key);
+  if (englishCard?.id) {
+    card.englishScryfallId = englishCard.id;
+    return englishCard.id;
   }
   return card.scryfallId;
 }
@@ -1080,9 +1079,6 @@ async function cardTraderMarketplaceForSet(setCode, language, foil, setName = ""
   if (cardTraderMarketplaceCache.has(key)) return cardTraderMarketplaceCache.get(key);
   const query = new URLSearchParams({ expansion_id: String(expansionId) });
   const data = await fetchCardTrader(`/marketplace/products?${query}`);
-  // A marketplace response contains every listing in a set, not just owned cards.
-  // Retain only the current set so visiting many sets cannot accumulate all listings.
-  cardTraderMarketplaceCache.clear();
   cardTraderMarketplaceCache.set(key, data || {});
   return data || {};
 }
@@ -2767,7 +2763,6 @@ function aliasTargetsForQuery(query, options = {}) {
   }
   const result = [...new Set([...manualTargets, ...exactTargets, ...partialTargets])].slice(0, limit);
   JP_ALIAS_TARGET_CACHE.set(cacheKey, result);
-  while (JP_ALIAS_TARGET_CACHE.size > 128) JP_ALIAS_TARGET_CACHE.delete(JP_ALIAS_TARGET_CACHE.keys().next().value);
   return result;
 }
 
@@ -4079,7 +4074,7 @@ async function hydrateCardTraderPrices(options = {}) {
   persist(["collection", "priceCache", "cardTrader"]);
   updateCardTraderSettingsUi();
   let changed = false;
-  for (const groupItems of [...groups.values()].sort((a, b) => String(a[0].lookupCard.set || "").toLowerCase().localeCompare(String(b[0].lookupCard.set || "").toLowerCase()))) {
+  for (const groupItems of groups.values()) {
     try {
       const sample = groupItems[0].lookupCard;
       const setCode = String(sample.set || "").toLowerCase();
