@@ -24,3 +24,10 @@ c.switchDeckVersion(2);assert.equal(reload.memo,'v2');assert.equal(reload.entrie
 reload.memo='draft';c.confirm=()=>false;c.switchDeckVersion(1);assert.equal(reload.activeVersion,2);assert.equal(reload.memo,'draft');
 c.confirm=()=>true;c.switchDeckVersion(1);assert.equal(reload.versions[1].memo,'draft');assert.equal(reload.activeVersion,1);
 console.log('PASS: existing deck migration, autosave isolation, new versions, branching, switching, cancel, overwrite, serialized history and one list entry.');
+const latestStart=code.indexOf('function selectLatestDeckVersion(');
+vm.runInContext(code.slice(latestStart,code.indexOf('\n}',latestStart)+2),c);
+const versions={id:'latest',name:'old draft',format:'Legacy',memo:'pending',entries:[],activeVersion:1,versions:[{number:1,name:'old',format:'Legacy',memo:'',entries:[]},{number:3,name:'newest',format:'Legacy',memo:'latest',entries:[]},{number:2,name:'middle',format:'Legacy',memo:'',entries:[]}]};
+c.selectLatestDeckVersion(versions);assert.equal(versions.activeVersion,3);assert.equal(versions.name,'newest');assert.equal(versions.versions[0].draft.memo,'pending');
+versions.memo='latest draft';c.selectLatestDeckVersion(versions);assert.equal(versions.memo,'latest draft');
+c.state.editingDeck=versions;c.switchDeckVersion(1);assert.equal(versions.memo,'pending');
+console.log('PASS: highest version number opens regardless of order, latest draft retained, older draft remains accessible.');

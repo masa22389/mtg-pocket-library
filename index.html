@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=271">
+  <link rel="stylesheet" href="styles.css?v=272">
 </head>
 <body>
   <header class="app-header">
@@ -312,6 +312,13 @@
   <dialog id="deckDialog">
     <form method="dialog" class="dialog-card deck-editor">
       <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+      <label>デッキ名<input id="deckName" maxlength="60" placeholder="新しいデッキ"></label>
+      <label>フォーマット<select id="deckFormat"><option>統率者戦</option><option>スタンダード</option><option>パイオニア</option><option>モダン</option><option>レガシー</option><option>パウパー</option><option>カジュアル</option></select></label>
+      <div class="deck-summary"><b id="deckCount">0枚</b><span id="deckMissing">不足なし</span></div>
+      <section id="deckStats" class="deck-stats" hidden></section>
+      <section id="deckMissingList" class="deck-missing-list" hidden></section>
+      <p id="deckDates" class="deck-dates"></p>
+      <details id="deckVersionPanel" class="deck-merge-panel"><summary>バージョン管理</summary>
       <label>表示するバージョン<select id="deckVersionSelect"></select></label>
       <p class="muted">「保存」は選択中のバージョンを更新します。変更前の構成を残すには「新バージョンとして保存」を押してください。</p>
       <details class="deck-merge-panel"><summary>既存デッキをバージョンとして取り込む</summary>
@@ -320,12 +327,7 @@
         <button id="mergeDeckButton" type="button" disabled>確認して取り込む</button>
       </details>
       <button id="undoDeckMerge" type="button" class="ghost" hidden>直前の統合を元に戻す</button>
-      <label>デッキ名<input id="deckName" maxlength="60" placeholder="新しいデッキ"></label>
-      <label>フォーマット<select id="deckFormat"><option>統率者戦</option><option>スタンダード</option><option>パイオニア</option><option>モダン</option><option>レガシー</option><option>パウパー</option><option>カジュアル</option></select></label>
-      <div class="deck-summary"><b id="deckCount">0枚</b><span id="deckMissing">不足なし</span></div>
-      <section id="deckStats" class="deck-stats" hidden></section>
-      <section id="deckMissingList" class="deck-missing-list" hidden></section>
-      <p id="deckDates" class="deck-dates"></p>
+      </details>
       <label>メモ<textarea id="deckMemo" rows="4" maxlength="2000" placeholder="採用理由、調整メモ、次に試したいカードなど"></textarea></label>
       <label hidden>カード追加先<select id="deckSection"><option value="main">メイン</option><option value="side">サイド</option><option value="commander">統率者</option><option value="maybe">候補</option></select></label>
       <section class="deck-add-menu" aria-label="カード追加方法">
@@ -429,8 +431,8 @@
     </form>
   </dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=271" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=271" defer></script>
-  <script src="app.js?v=271" defer></script>
+  <script src="mtg-jp-card-index.js?v=272" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=272" defer></script>
+  <script src="app.js?v=272" defer></script>
 </body>
 </html>

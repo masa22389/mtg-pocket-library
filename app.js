@@ -1,4 +1,4 @@
-const APP_VERSION = "v271";
+const APP_VERSION = "v272";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4756,6 +4756,9 @@ function openDeck(id) {
   const deck = state.decks.find(item => item.id === id);
   ensureDeckDates(deck);
   state.editingDeck = structuredClone(deck);
+  selectLatestDeckVersion(state.editingDeck);
+  $("#deckVersionPanel").open = false;
+  $("#deckVersionPanel details").open = false;
   els.deleteDeckButton.hidden = false;
   fillDeckDialog();
 }
@@ -4770,6 +4773,16 @@ function ensureDeckVersions(deck) {
     deck.activeVersion = 1;
   }
   if (!deck.versions.some(version => version.number === deck.activeVersion)) deck.activeVersion = deck.versions[0].number;
+}
+
+function selectLatestDeckVersion(deck) {
+  ensureDeckVersions(deck);
+  const latest = deck.versions.reduce((a, b) => a.number > b.number ? a : b);
+  if (deck.activeVersion === latest.number) return;
+  const current = deck.versions.find(version => version.number === deck.activeVersion);
+  if (JSON.stringify(deckVersionContent(current)) !== JSON.stringify(deckVersionContent(deck))) current.draft = deckVersionContent(deck);
+  Object.assign(deck, deckVersionContent(latest.draft || latest));
+  deck.activeVersion = latest.number;
 }
 
 function storeDeckVersion(deck, asNew = false) {
@@ -4890,13 +4903,17 @@ function switchDeckVersion(number) {
     storeDeckVersion(deck);
   }
   cancelDeckTextSave();
-  Object.assign(deck, deckVersionContent(target));
+  Object.assign(deck, deckVersionContent(target.draft || target));
   deck.activeVersion = number;
   fillDeckDialog();
   autoSaveEditingDeck();
 }
 
 function fillDeckDialog() {
+  if (!els.deckDialog.open) {
+    $("#deckVersionPanel").open = false;
+    $("#deckVersionPanel details").open = false;
+  }
   renderDeckVersionPicker();
   renderDeckMergeChoices();
   ensureDeckDates(state.editingDeck);
