@@ -1,4 +1,6 @@
-const APP_VERSION = "v273";
+async function startMtgApp() {
+const appStorage = await window.mtgStorage.ready;
+const APP_VERSION = "v275";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -39,17 +41,17 @@ const state = {
   selectedCard: null,
   cardVariants: [],
   collectionRenderLimit: COLLECTION_RENDER_LIMIT,
-  collectionPageSize: ["50", "100", "all"].includes(localStorage.getItem("mtg-pocket.collectionPageSize")) ? localStorage.getItem("mtg-pocket.collectionPageSize") : "50",
-  useScryfallPrices: localStorage.getItem("mtg-pocket.useScryfallPrices") !== "false",
+  collectionPageSize: ["50", "100", "all"].includes(appStorage.getItem("mtg-pocket.collectionPageSize")) ? appStorage.getItem("mtg-pocket.collectionPageSize") : "50",
+  useScryfallPrices: appStorage.getItem("mtg-pocket.useScryfallPrices") !== "false",
   cardDialogMode: "collection",
   variantCache: new Map(),
   selectedOwnedId: null,
-  collectionViewMode: localStorage.getItem(KEYS.collectionViewMode) || "hidden",
-  collectionPriceDisplayMode: localStorage.getItem(KEYS.collectionPriceDisplayMode) || "total",
-  priceSourceMode: localStorage.getItem(KEYS.priceSourceMode) || "manual-wisdom-cardtrader",
+  collectionViewMode: appStorage.getItem(KEYS.collectionViewMode) || "hidden",
+  collectionPriceDisplayMode: appStorage.getItem(KEYS.collectionPriceDisplayMode) || "total",
+  priceSourceMode: appStorage.getItem(KEYS.priceSourceMode) || "manual-wisdom-cardtrader",
   collectionSortStack: read(KEYS.collectionSortStack, []),
-  deckFormatFilter: localStorage.getItem(KEYS.deckFormatFilter) || "",
-  backgroundTheme: localStorage.getItem(KEYS.backgroundTheme) || "default",
+  deckFormatFilter: appStorage.getItem(KEYS.deckFormatFilter) || "",
+  backgroundTheme: appStorage.getItem(KEYS.backgroundTheme) || "default",
   editingDeck: null,
   editingDeckEntry: null,
   deckMissingOpen: false,
@@ -166,7 +168,7 @@ function applyBackgroundTheme(themeKey = state.backgroundTheme, options = {}) {
     document.documentElement.style.setProperty(`--${name}`, chrome[name]);
   });
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", chrome.green);
-  if (options.persist) localStorage.setItem(KEYS.backgroundTheme, key);
+  if (options.persist) appStorage.setItem(KEYS.backgroundTheme, key);
   if (els.backgroundColorChoices) {
     $("#backgroundSelectedLabel").textContent = theme.label;
     $("#backgroundSelectedSwatch").className = `background-swatch swatch-${key}`;
@@ -180,15 +182,11 @@ function applyBackgroundTheme(themeKey = state.backgroundTheme, options = {}) {
 applyBackgroundTheme();
 
 function read(key, fallback) {
-  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+  try { return JSON.parse(appStorage.getItem(key)) ?? fallback; } catch { return fallback; }
 }
 
 function persist(fields = ["collection", "decks", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups", "priceSourceMode"]) {
-  for (const field of fields) {
-    const value = field === "priceSourceMode" ? priceSourceMode()
-      : JSON.stringify(field === "priceCache" ? state.priceCache || {} : state[field]);
-    localStorage.setItem(KEYS[field], value);
-  }
+  return appStorage.writeBatch(fields.map(field => [KEYS[field], field === "priceSourceMode" ? priceSourceMode() : JSON.stringify(field === "priceCache" ? state.priceCache || {} : state[field])]));
 }
 
 function uid() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`; }
@@ -1042,7 +1040,7 @@ async function cardTraderBlueprintsForSet(setCode, setName = "") {
   state.cardTrader.blueprintsUpdatedAt = state.cardTrader.blueprintsUpdatedAt || {};
   state.cardTrader.blueprintsBySet[normalizedSet] = map;
   state.cardTrader.blueprintsUpdatedAt[normalizedSet] = Date.now();
-  persist();
+  await persist();
   return map;
 }
 
@@ -1932,7 +1930,7 @@ async function hydrateSetOptions() {
       released_at: set.released_at,
       set_type: set.set_type,
     }));
-    localStorage.setItem(KEYS.sets, JSON.stringify(state.sets));
+    appStorage.setItem(KEYS.sets, JSON.stringify(state.sets));
     renderSetSelects();
     if (!$("#setCollection").hidden) renderSetCatalog();
   } catch {
@@ -3433,7 +3431,7 @@ function collectionSortLabel(mode) {
 }
 
 function saveCollectionSortStack() {
-  localStorage.setItem(KEYS.collectionSortStack, JSON.stringify(state.collectionSortStack));
+  appStorage.setItem(KEYS.collectionSortStack, JSON.stringify(state.collectionSortStack));
 }
 
 function collectionTypeRank(card) {
@@ -3702,7 +3700,7 @@ function compactCard(card) {
   };
 }
 
-function saveSelectedCardQuantity() {
+async function saveSelectedCardQuantity() {
   const target = Number(els.cardQuantity.value || 0);
   const selectedId = cardScryfallId(state.selectedCard);
   const owned = selectedOwnedCard();
@@ -3752,7 +3750,7 @@ function saveSelectedCardQuantity() {
         state.selectedOwnedId = incoming.id;
       }
     }
-    persist(["collection"]);
+    await persist(["collection"]);
   } catch (error) {
     state.collection = previousCollection;
     state.selectedOwnedId = previousOwnedId;
@@ -4023,7 +4021,7 @@ async function hydrateEnglishPriceFallbacks() {
       });
     } catch { /* 次回オンライン時に再試行 */ }
   }
-  if (changed) { persist(); renderCollection(); }
+  if (changed) { await persist(); renderCollection(); }
 }
 
 async function hydrateCollectionMetadata() {
@@ -4052,7 +4050,7 @@ async function hydrateCollectionMetadata() {
       }
     } catch { /* 次回オンライン時に再試行 */ }
   }
-  if (changed) { persist(["collection"]); renderCollection(); }
+  if (changed) { await persist(["collection"]); renderCollection(); }
   await hydrateEnglishPriceFallbacks();
   await hydrateCardTraderPrices();
 }
@@ -4095,7 +4093,7 @@ async function hydrateCardTraderPrices(options = {}) {
   stats.inProgress = true;
   state.cardTrader.lastError = "";
   state.cardTrader.lastStats = stats;
-  persist(["collection", "priceCache", "cardTrader"]);
+  await persist(["collection", "priceCache", "cardTrader"]);
   updateCardTraderSettingsUi();
   let changed = false;
   for (const groupItems of groups.values()) {
@@ -4132,7 +4130,7 @@ async function hydrateCardTraderPrices(options = {}) {
     } finally {
       stats.groupsDone += 1;
       state.cardTrader.lastStats = { ...stats };
-      persist(["collection", "priceCache", "cardTrader"]);
+      await persist(["collection", "priceCache", "cardTrader"]);
       updateCardTraderSettingsUi();
     }
   }
@@ -4144,7 +4142,7 @@ async function hydrateCardTraderPrices(options = {}) {
     if (stats.failedGroups) showToast(`CardTrader価格取得：${stats.priced}件更新、一部失敗${stats.failedGroups}件`, { sticky: true });
     else showToast(`CardTrader価格取得：${stats.priced}件更新`, { sticky: true });
   }
-  if (changed || state.cardTrader.lastError || candidates.length === 0) { persist(["collection", "priceCache", "cardTrader"]); renderCollection(); }
+  if (changed || state.cardTrader.lastError || candidates.length === 0) { await persist(["collection", "priceCache", "cardTrader"]); renderCollection(); }
   updateCardTraderSettingsUi();
 }
 
@@ -4172,7 +4170,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
   };
   state.wisdomGuild.lastError = "";
   state.wisdomGuild.lastStats = stats;
-  persist(["priceCache", "wisdomGuild"]);
+  await persist(["priceCache", "wisdomGuild"]);
   updateWisdomGuildSettingsUi();
   let changed = false;
   for (const card of candidates) {
@@ -4196,7 +4194,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
     } finally {
       stats.done += 1;
       state.wisdomGuild.lastStats = { ...stats };
-      persist(["priceCache", "wisdomGuild"]);
+      await persist(["priceCache", "wisdomGuild"]);
       updateWisdomGuildSettingsUi();
     }
     if (candidates.length > 1) await new Promise(resolve => setTimeout(resolve, 350));
@@ -4209,7 +4207,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
     if (stats.failed) showToast(`Wisdom Guild価格取得：${stats.priced}/${stats.candidates}件更新、一部失敗${stats.failed}件`, { sticky: true });
     else showToast(`Wisdom Guild価格取得：${stats.priced}/${stats.candidates}件更新、出品なし${stats.noProduct}件`, { sticky: true });
   }
-  if (changed || state.wisdomGuild.lastError || candidates.length === 0) { persist(["priceCache", "wisdomGuild"]); renderCollection(); }
+  if (changed || state.wisdomGuild.lastError || candidates.length === 0) { await persist(["priceCache", "wisdomGuild"]); renderCollection(); }
   updateWisdomGuildSettingsUi();
 }
 
@@ -4239,13 +4237,13 @@ async function refreshExchangeRate() {
       const rate = Number(data.rates?.JPY || data.conversion_rates?.JPY || 0);
       if (!rate) continue;
       state.fx = { usdJpy: rate, rates: { ...(data.rates || data.conversion_rates || {}), USD: 1 }, updatedAt: Date.now(), source: "auto" };
-      persist(["fx"]); renderCollection();
+      await persist(["fx"]); renderCollection();
       return;
     } catch { /* 次の取得先を試す */ }
     finally { clearTimeout(timer); }
   }
   if (!state.fx.usdJpy) state.fx = { usdJpy: 150, rates: { USD: 1, JPY: 150 }, updatedAt: Date.now(), source: "fallback" };
-  persist(["fx"]); renderCollection();
+  await persist(["fx"]); renderCollection();
 }
 
 function saveExchangeRate() {
@@ -4258,7 +4256,7 @@ function saveExchangeRate() {
 
 function savePriceSourceMode() {
   state.priceSourceMode = String(els.priceSourceMode?.value || "manual-wisdom-cardtrader");
-  localStorage.setItem(KEYS.priceSourceMode, state.priceSourceMode);
+  appStorage.setItem(KEYS.priceSourceMode, state.priceSourceMode);
   renderCollection();
   updateCardOwnedActions();
   showToast("価格表示に使う取得元を保存しました", { sticky: true });
@@ -4498,7 +4496,7 @@ function renderDeckFormatFilter() {
   els.deckFormatFilter.innerHTML = `<option value="">すべて</option>${deckFormats().map(format => `<option value="${esc(format)}">${esc(format)}</option>`).join("")}`;
   els.deckFormatFilter.value = deckFormats().includes(current) ? current : "";
   state.deckFormatFilter = els.deckFormatFilter.value;
-  localStorage.setItem(KEYS.deckFormatFilter, state.deckFormatFilter);
+  appStorage.setItem(KEYS.deckFormatFilter, state.deckFormatFilter);
 }
 
 function endDeckListPress() {
@@ -4768,7 +4766,7 @@ async function importDeckFromTextFile(file) {
   deck.memo = deckImportMemo(file.name, imported, skipped);
   state.decks.unshift(deck);
   state.editingDeck = structuredClone(deck);
-  persist();
+  await persist();
   renderDecks();
   els.deleteDeckButton.hidden = false;
   fillDeckDialog();
@@ -4858,9 +4856,9 @@ function buildDeckMergeUndo(decks, targetId) {
   return { decks: next, deck: restored };
 }
 
-function commitDeckMerge(result) {
+async function commitDeckMerge(result) {
   // Save the complete transaction before changing the displayed state.
-  localStorage.setItem(KEYS.decks, JSON.stringify(result.decks));
+  await appStorage.setItem(KEYS.decks, JSON.stringify(result.decks));
   cancelDeckTextSave();
   state.decks = result.decks;
   state.editingDeck = structuredClone(result.deck);
@@ -4885,30 +4883,30 @@ function previewDeckMerge() {
   $("#deckMergePreview").textContent = imported.map(version => `バージョン ${version.number}：${version.name} / ${version.entries.filter(entry => entry.section !== "maybe").reduce((sum, entry) => sum + Number(entry.quantity || 0), 0)}枚（候補 ${version.entries.filter(entry => entry.section === "maybe").reduce((sum, entry) => sum + Number(entry.quantity || 0), 0)}枚） / ${version.format}`).join("\n");
 }
 
-function mergeExistingDeck() {
+async function mergeExistingDeck() {
   try {
     applyDeckFormFields();
     const sourceId = $("#deckMergeSource").value;
     const source = state.decks.find(deck => deck.id === sourceId);
     const result = buildDeckMerge(state.decks, state.editingDeck, sourceId);
     if (!confirm(`「${source.name}」の${result.added}バージョンを「${state.editingDeck.name}」に取り込みます。元デッキは一覧からまとまります。直前の統合のみ元に戻せます。よろしいですか？`)) return;
-    commitDeckMerge(result);
+    await commitDeckMerge(result);
     showToast("既存デッキをバージョンとして取り込みました");
   } catch (error) { showToast(`統合できませんでした：${error.message}`); }
 }
 
-function undoDeckMerge() {
+async function undoDeckMerge() {
   if (!confirm("直前の統合前の状態に戻します。統合後のこのデッキの編集・追加バージョンは取り消され、取り込んだ元デッキが一覧に戻ります。よろしいですか？")) return;
   try {
-    commitDeckMerge(buildDeckMergeUndo(state.decks, state.editingDeck.id));
+    await commitDeckMerge(buildDeckMergeUndo(state.decks, state.editingDeck.id));
     showToast("統合前のデッキに戻しました");
   } catch (error) { showToast(`復元できませんでした：${error.message}`); }
 }
 
-function saveNewDeckVersion() {
+async function saveNewDeckVersion() {
   applyDeckFormFields();
   storeDeckVersion(state.editingDeck, true);
-  autoSaveEditingDeck();
+  await autoSaveEditingDeck();
   renderDeckVersionPicker();
   showToast(`バージョン ${state.editingDeck.activeVersion} として保存しました`);
 }
@@ -5313,9 +5311,10 @@ function autoSaveEditingDeck(refreshList = true) {
   const savedDeck = structuredClone(state.editingDeck);
   const index = state.decks.findIndex(item => item.id === savedDeck.id);
   if (index >= 0) state.decks[index] = savedDeck; else state.decks.unshift(savedDeck);
-  persist(["decks"]);
+  const saving = persist(["decks"]);
   if (refreshList) { renderDecks(); deckTextListDirty = false; }
   else deckTextListDirty = true;
+  return saving;
 }
 
 function syncCommanderOptions() {
@@ -6202,7 +6201,7 @@ function missingCount(deck) {
   }, 0);
 }
 
-function saveDeck() {
+async function saveDeck() {
   cancelDeckTextSave();
   deckTextListDirty = false;
   const deck = state.editingDeck;
@@ -6214,10 +6213,10 @@ function saveDeck() {
   storeDeckVersion(deck);
   const index = state.decks.findIndex(item => item.id === deck.id);
   if (index >= 0) state.decks[index] = deck; else state.decks.unshift(deck);
-  persist(); els.deckDialog.close(); renderDecks(); showToast("デッキを保存しました");
+  await persist(); els.deckDialog.close(); renderDecks(); showToast("デッキを保存しました");
 }
 
-function duplicateDeck() {
+async function duplicateDeck() {
   if (!state.editingDeck) return;
   const sourceName = els.deckName.value.trim() || state.editingDeck.name || "\u540d\u79f0\u672a\u8a2d\u5b9a\u306e\u30c7\u30c3\u30ad";
   if (!confirm(`\u300c${sourceName}\u300d\u3092\u30b3\u30d4\u30fc\u3057\u307e\u3059\u304b\uff1f`)) return;
@@ -6238,7 +6237,7 @@ function duplicateDeck() {
   copy.updatedAt = now;
   state.decks.unshift(copy);
   state.editingDeck = structuredClone(copy);
-  persist();
+  await persist();
   els.deleteDeckButton.hidden = false;
   fillDeckDialog();
   renderDecks();
@@ -6246,12 +6245,12 @@ function duplicateDeck() {
   showToast("デッキをコピーしました");
 }
 
-function deleteDeck() {
+async function deleteDeck() {
   if (!confirm(`「${state.editingDeck.name}」を全バージョンごと削除しますか？`)) return;
   cancelDeckTextSave();
   deckTextListDirty = false;
   state.decks = state.decks.filter(deck => deck.id !== state.editingDeck.id);
-  persist(); els.deckDialog.close(); renderDecks(); showToast("デッキを削除しました");
+  await persist(); els.deckDialog.close(); renderDecks(); showToast("デッキを削除しました");
 }
 
 function buildPurchaseTransfer(purchases, collection, purchaseId, quantity) {
@@ -6270,16 +6269,8 @@ function buildPurchaseTransfer(purchases, collection, purchaseId, quantity) {
   return {collection:nextCollection, purchases:nextPurchases};
 }
 
-function savePurchaseTransfer(next) {
-  const previous = localStorage.getItem(KEYS.collection);
-  localStorage.setItem(KEYS.collection, JSON.stringify(next.collection));
-  try {
-    localStorage.setItem(KEYS.purchases, JSON.stringify(next.purchases));
-  } catch (error) {
-    if (previous === null) localStorage.removeItem(KEYS.collection);
-    else localStorage.setItem(KEYS.collection, previous);
-    throw error;
-  }
+async function savePurchaseTransfer(next) {
+  await appStorage.writeBatch([[KEYS.collection, JSON.stringify(next.collection)], [KEYS.purchases, JSON.stringify(next.purchases)]]);
   state.collection = next.collection;
   state.purchases = next.purchases;
 }
@@ -6295,14 +6286,14 @@ function openPurchaseTransfer(card) {
 }
 
 $('#purchaseTransferCancel').addEventListener('click', () => $('#purchaseTransferDialog').close());
-$('#purchaseTransferForm').addEventListener('submit', event => {
+$('#purchaseTransferForm').addEventListener('submit', async event => {
   event.preventDefault();
   const dialog = $('#purchaseTransferDialog');
   if (!dialog.open) return;
   const quantity = Number($('#purchaseTransferQuantity').value);
   try {
     const next = buildPurchaseTransfer(state.purchases, state.collection, dialog.dataset.purchaseId, quantity);
-    savePurchaseTransfer(next);
+    await savePurchaseTransfer(next);
   } catch (error) {
     $('#purchaseTransferStatus').textContent = error.message.includes('購入済み枚数') ? error.message : '保存できませんでした。端末の空き容量を確認して再試行してください。';
     return;
@@ -6326,10 +6317,10 @@ function validatePurchases(items) {
   return items;
 }
 
-function savePurchases(items) {
+async function savePurchases(items) {
   // Save first so a quota error never leaves the UI pretending a change was saved.
   try {
-    localStorage.setItem(KEYS.purchases, JSON.stringify(validatePurchases(items)));
+    await appStorage.setItem(KEYS.purchases, JSON.stringify(validatePurchases(items)));
     state.purchases = items;
     renderPurchases();
     return true;
@@ -6339,7 +6330,7 @@ function savePurchases(items) {
   }
 }
 
-function addSelectedPurchase() {
+async function addSelectedPurchase() {
   if (!state.selectedCard) return;
   const quantity = Number($("#purchaseQuantity").value);
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 9999) {
@@ -6354,7 +6345,7 @@ function addSelectedPurchase() {
     return;
   }
   const items = existing ? state.purchases.map(item => item.id === existing.id ? { ...item, quantity: item.quantity + quantity } : item) : [...state.purchases, incoming];
-  if (savePurchases(items)) showInlineStatus(els.cardActionStatus, `購入予定に${quantity}枚追加しました（合計${existing ? existing.quantity + quantity : quantity}枚）`, { sticky: true });
+  if (await savePurchases(items)) showInlineStatus(els.cardActionStatus, `購入予定に${quantity}枚追加しました（合計${existing ? existing.quantity + quantity : quantity}枚）`, { sticky: true });
 }
 
 let purchasePress = null;
@@ -6377,7 +6368,7 @@ function renderPurchases() {
 }
 
 $("#addPurchaseButton").addEventListener("click", addSelectedPurchase);
-$("#purchaseList").addEventListener("click", event => {
+$("#purchaseList").addEventListener("click", async event => {
   const button = event.target.closest("[data-purchase-action]");
   if (!button) return;
   const card = state.purchases.find(item => item.id === button.closest("[data-purchase-id]").dataset.purchaseId);
@@ -6424,7 +6415,7 @@ $("#purchaseList").addEventListener("pointermove", event => {
 $("#purchaseList").addEventListener("pointerleave", endPurchasePress);
 $("#purchaseList").addEventListener("contextmenu", event => { if (event.target.closest(".purchase-image")) event.preventDefault(); });
 $("#purchaseList").addEventListener("dragstart", event => { if (event.target.closest(".purchase-image")) event.preventDefault(); });
-$("#purchaseList").addEventListener("click", event => {
+$("#purchaseList").addEventListener("click", async event => {
   const button = event.target.closest(".purchase-image"); if (!button) return;
   const targetId = button.closest("[data-purchase-id]").dataset.purchaseId;
   if (suppressPurchaseClick) {
@@ -6444,7 +6435,7 @@ $("#purchaseList").addEventListener("click", event => {
   if (from < 0 || to < 0 || from === to) return;
   const items = [...state.purchases];
   [items[from], items[to]] = [items[to], items[from]];
-  if (savePurchases(items)) showToast("購入予定の並び順を変更しました");
+  if (await savePurchases(items)) showToast("購入予定の並び順を変更しました");
 });
 document.addEventListener("keydown", event => { if (event.key === "Escape") cancelPurchaseReorder(); });
 window.addEventListener("blur", endPurchasePress);
@@ -6472,7 +6463,7 @@ function backupPayload() {
 
 function saveBackupMeta() {
   state.backupMeta = { lastExportedAt: Date.now() };
-  localStorage.setItem(KEYS.backupMeta, JSON.stringify(state.backupMeta));
+  appStorage.setItem(KEYS.backupMeta, JSON.stringify(state.backupMeta));
   renderBackupSummary();
 }
 
@@ -6519,7 +6510,7 @@ async function importBackup(file) {
     normalizeCollectionConditions();
     normalizeFavoriteGroups();
     renderFavoriteGroupOptions();
-    persist(); persist(["purchases"]); renderCollection(); renderDecks(); renderPurchases(); renderBackupSummary(); showToast("バックアップを復元しました");
+    await persist(["collection", "decks", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups", "priceSourceMode", "purchases"]); renderCollection(); renderDecks(); renderPurchases(); renderBackupSummary(); showToast("バックアップを復元しました");
   } catch { showToast("正しいバックアップファイルではありません"); }
   els.importInput.value = "";
 }
@@ -6565,7 +6556,7 @@ els.closeCollectionAdvanced?.addEventListener("click", () => els.collectionFilte
 els.collectionViewMode.value = state.collectionViewMode;
 els.collectionViewMode.addEventListener("change", () => {
   state.collectionViewMode = els.collectionViewMode.value;
-  localStorage.setItem(KEYS.collectionViewMode, state.collectionViewMode);
+  appStorage.setItem(KEYS.collectionViewMode, state.collectionViewMode);
   resetCollectionRenderLimit();
   renderCollection();
 });
@@ -6573,14 +6564,14 @@ if (els.collectionPriceDisplayMode) {
   els.collectionPriceDisplayMode.value = state.collectionPriceDisplayMode;
   els.collectionPriceDisplayMode.addEventListener("change", () => {
     state.collectionPriceDisplayMode = els.collectionPriceDisplayMode.value;
-    localStorage.setItem(KEYS.collectionPriceDisplayMode, state.collectionPriceDisplayMode);
+    appStorage.setItem(KEYS.collectionPriceDisplayMode, state.collectionPriceDisplayMode);
     resetCollectionRenderLimit();
     renderCollection();
   });
 }
 document.querySelectorAll("[data-collection-price-mode]").forEach(button => button.addEventListener("click", () => {
   state.collectionPriceDisplayMode = button.dataset.collectionPriceMode;
-  localStorage.setItem(KEYS.collectionPriceDisplayMode, state.collectionPriceDisplayMode);
+  appStorage.setItem(KEYS.collectionPriceDisplayMode, state.collectionPriceDisplayMode);
   resetCollectionRenderLimit();
   renderCollection();
 }));
@@ -6589,7 +6580,7 @@ function showFilteredCollection() {
   if (state.collectionViewMode === "hidden") {
     state.collectionViewMode = "detail";
     els.collectionViewMode.value = "detail";
-    localStorage.setItem(KEYS.collectionViewMode, "detail");
+    appStorage.setItem(KEYS.collectionViewMode, "detail");
   }
   resetCollectionRenderLimit(); renderCollection();
 }
@@ -6686,7 +6677,7 @@ els.deckImportInput?.addEventListener("change", async event => {
 });
 els.deckFormatFilter.addEventListener("change", () => {
   state.deckFormatFilter = els.deckFormatFilter.value;
-  localStorage.setItem(KEYS.deckFormatFilter, state.deckFormatFilter);
+  appStorage.setItem(KEYS.deckFormatFilter, state.deckFormatFilter);
   renderDecks();
 });
 els.backgroundColorChoices?.querySelectorAll("[data-background-theme]").forEach(button => button.addEventListener("click", () => {
@@ -6788,7 +6779,13 @@ els.cardTraderToken?.addEventListener("focus", () => {
 });
 els.cardTraderToken?.addEventListener("blur", updateCardTraderSettingsUi);
 els.importInput.addEventListener("change", () => els.importInput.files[0] && importBackup(els.importInput.files[0]));
-$("#clearButton").addEventListener("click", () => { if (!confirm("所持カード・デッキ・購入予定をすべて削除しますか？")) return; state.collection = []; state.decks = []; state.purchases = []; state.priceCache = {}; persist(); persist(["purchases"]); renderPurchases(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("すべて削除しました"); });
+$("#clearButton").addEventListener("click", async () => {
+  if (!confirm("所持カード・デッキ・購入予定をすべて削除しますか？")) return;
+  await appStorage.writeBatch([[KEYS.collection, "[]"], [KEYS.decks, "[]"], [KEYS.purchases, "[]"], [KEYS.priceCache, "{}"]]);
+  appStorage.removeLegacy([KEYS.collection, KEYS.decks, KEYS.purchases, KEYS.priceCache]);
+  state.collection = []; state.decks = []; state.purchases = []; state.priceCache = {};
+  renderPurchases(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("すべて削除しました");
+});
 
 window.addEventListener("beforeinstallprompt", event => { event.preventDefault(); state.installPrompt = event; els.installButton.hidden = false; });
 els.installButton.addEventListener("click", async () => { if (!state.installPrompt) return; state.installPrompt.prompt(); await state.installPrompt.userChoice; state.installPrompt = null; els.installButton.hidden = true; });
@@ -6796,16 +6793,16 @@ window.addEventListener("appinstalled", () => { els.installButton.hidden = true;
 window.addEventListener("online", () => { els.searchStatus.textContent = "オンライン：カードを検索できます"; refreshExchangeRate(); hydrateCollectionMetadata(); hydrateSetOptions(); });
 window.addEventListener("offline", () => { els.searchStatus.textContent = "オフライン：保存済みデータは利用できます"; });
 
-if ("serviceWorker" in navigator) window.addEventListener("load", async () => {
+async function registerAppServiceWorker() {
   try {
     let reloadedForUpdate = false;
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
+    navigator.serviceWorker.addEventListener("controllerchange", async () => {
       if (reloadedForUpdate) return;
       const key = `mtg-pocket.swReloaded.${APP_VERSION}`;
       if (sessionStorage.getItem(key)) return;
       reloadedForUpdate = true;
       sessionStorage.setItem(key, "1");
-      location.reload();
+      try { await appStorage.flush(); location.reload(); } catch { /* Keep the save failure visible. */ }
     });
     const registration = await navigator.serviceWorker.register(`./sw.js?v=${encodeURIComponent(APP_VERSION)}`);
     await registration.update();
@@ -6813,14 +6810,18 @@ if ("serviceWorker" in navigator) window.addEventListener("load", async () => {
   } catch (error) {
     console.warn("Service Worker update failed", error);
   }
-});
+}
+if ("serviceWorker" in navigator) {
+  if (document.readyState === "complete") registerAppServiceWorker();
+  else window.addEventListener("load", registerAppServiceWorker);
+}
 if (normalizeCollectionConditions()) persist();
 resetCollectionRenderLimit(); renderSetSelects(); renderCollection(); renderDecks(); renderBackupSummary(); updateWisdomGuildSettingsUi(); updateCardTraderSettingsUi(); refreshExchangeRate(); hydrateCollectionMetadata(); hydrateSetOptions();
 
 $("#collectionPageSize").value = state.collectionPageSize;
 $("#collectionPageSize").addEventListener("change", event => {
   state.collectionPageSize = event.target.value;
-  localStorage.setItem("mtg-pocket.collectionPageSize", state.collectionPageSize);
+  appStorage.setItem("mtg-pocket.collectionPageSize", state.collectionPageSize);
   resetCollectionRenderLimit(); renderCollection();
 });
 $("#collectionSortMenu").addEventListener("change", event => { if (event.target.value) applyCollectionSort(event.target.value); event.target.value = ""; });
@@ -6828,7 +6829,7 @@ $("#deckSortMenu").addEventListener("change", event => { if (event.target.value)
 $("#useScryfallPrices").checked = state.useScryfallPrices;
 $("#useScryfallPrices").addEventListener("change", event => {
   state.useScryfallPrices = event.target.checked;
-  localStorage.setItem("mtg-pocket.useScryfallPrices", String(state.useScryfallPrices));
+  appStorage.setItem("mtg-pocket.useScryfallPrices", String(state.useScryfallPrices));
   renderCollection(); updateCardTraderSettingsUi();
   if (state.selectedCard) updateCardOwnedActions();
 });
@@ -6969,8 +6970,11 @@ $('#setCardGrid').addEventListener('click',event=>{const button=event.target.clo
   const url = new URL(location.href);
   const id = url.searchParams.get('scannerCard');
   if (!id) return;
-  url.searchParams.delete('scannerCard');
-  history.replaceState(null, '', url);
+  els.cardDialog.addEventListener('close', () => {
+    const current = new URL(location.href);
+    current.searchParams.delete('scannerCard');
+    history.replaceState(null, '', current);
+  }, { once: true });
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return;
   try {
     els.searchStatus.textContent = 'スキャン候補を読み込み中…';
@@ -6984,3 +6988,5 @@ $('#setCardGrid').addEventListener('click',event=>{const button=event.target.clo
   }
 })();
 // END SCANNER TRIAL BRIDGE
+}
+startMtgApp().catch(window.mtgStorage.showStartupError);

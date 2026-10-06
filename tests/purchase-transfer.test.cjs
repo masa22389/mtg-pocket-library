@@ -1,3 +1,4 @@
+(async()=>{
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const code=fs.readFileSync(require('node:path').join(__dirname,'../app.js'),'utf8');
 const context={normalizeCardCondition:x=>x||'NM',uid:()=> 'new-owned',state:{},KEYS:{collection:'collection',purchases:'purchases'}};
@@ -16,9 +17,11 @@ for(const quantity of [0,-1,4,1.5,NaN]) assert.throws(()=>context.buildPurchaseT
 assert.throws(()=>context.buildPurchaseTransfer([],[],'wish',1));
 const memory=new Map([['collection','original collection'],['purchases','original purchases']]);
 context.state={collection:[owned],purchases:[card]};
-context.localStorage={getItem:key=>memory.get(key)??null,setItem:(key,value)=>{if(key==='purchases')throw new Error('quota');memory.set(key,value)},removeItem:key=>memory.delete(key)};
-assert.throws(()=>context.savePurchaseTransfer(next));
-assert.equal(memory.get('collection'),'original collection');assert.equal(memory.get('purchases'),'original purchases');assert.equal(context.state.collection[0].quantity,4);
-context.localStorage.setItem=(key,value)=>memory.set(key,value);
-context.savePurchaseTransfer(next);assert.equal(context.state.collection[0].quantity,7);assert.equal(context.state.purchases.length,0);
+context.appStorage={writeBatch:async()=>{throw Error('quota');}};
+await assert.rejects(context.savePurchaseTransfer(next));
+assert.equal(memory.get('collection'),'original collection');assert.equal(context.state.collection[0].quantity,4);
+context.appStorage.writeBatch=async entries=>{for(const [key,value] of entries)memory.set(key,value);};
+await context.savePurchaseTransfer(next);assert.equal(context.state.collection[0].quantity,7);assert.equal(context.state.purchases.length,0);
 console.log('PASS: partial/full transfer, matching lots, metadata preservation, invalid/repeated submissions, quota rollback and successful persistence.');
+
+})().catch(error=>{console.error(error);process.exitCode=1;});

@@ -1,9 +1,10 @@
+(async()=>{
 const fs=require('node:fs'), vm=require('node:vm'), assert=require('node:assert/strict');
 const code=fs.readFileSync(require('node:path').join(__dirname,'../app.js'),'utf8');
 const c={structuredClone, Date, state:{decks:[]}, cancelDeckTextSave(){},applyDeckFormFields(){},persist(){},renderDecks(){},renderDeckVersionPicker(){},showToast(){},fillDeckDialog(){},confirm:()=>true};
 vm.createContext(c);
 for(const name of ['deckVersionContent','ensureDeckVersions','storeDeckVersion','autoSaveEditingDeck','saveNewDeckVersion','switchDeckVersion']) {
- const start=code.indexOf(`function ${name}(`);vm.runInContext(code.slice(start,code.indexOf('\n}',start)+2),c);
+ let start=code.indexOf(`function ${name}(`);if(code.slice(start-6,start)==="async ")start-=6;vm.runInContext(code.slice(start,code.indexOf('\n}',start)+2),c);
 }
 const deck={id:'deck1',name:'Test',format:'Legacy',memo:'v1',entries:[{cardId:'a',quantity:4,section:'main',card:{name:'A'}}]};
 c.state.editingDeck=deck;
@@ -11,11 +12,11 @@ c.ensureDeckVersions(deck);
 deck.entries[0].quantity=3;deck.memo='v2';c.autoSaveEditingDeck();
 assert.equal(deck.versions[0].entries[0].quantity,4);
 assert.equal(c.state.decks.length,1);
-c.saveNewDeckVersion();
+await c.saveNewDeckVersion();
 assert.equal(deck.activeVersion,2);assert.equal(deck.versions.length,2);
 assert.equal(deck.versions[0].memo,'v1');assert.equal(deck.versions[1].memo,'v2');
 c.switchDeckVersion(1);assert.equal(deck.entries[0].quantity,4);assert.equal(deck.memo,'v1');
-deck.entries[0].quantity=2;c.saveNewDeckVersion();assert.equal(deck.activeVersion,3);
+deck.entries[0].quantity=2;await c.saveNewDeckVersion();assert.equal(deck.activeVersion,3);
 assert.equal(deck.versions[0].entries[0].quantity,4);assert.equal(deck.versions[1].entries[0].quantity,3);
 assert.equal(c.state.decks.length,1);
 deck.memo='updated';c.storeDeckVersion(deck);assert.equal(deck.versions[2].memo,'updated');
@@ -31,3 +32,5 @@ c.selectLatestDeckVersion(versions);assert.equal(versions.activeVersion,3);asser
 versions.memo='latest draft';c.selectLatestDeckVersion(versions);assert.equal(versions.memo,'latest draft');
 c.state.editingDeck=versions;c.switchDeckVersion(1);assert.equal(versions.memo,'pending');
 console.log('PASS: highest version number opens regardless of order, latest draft retained, older draft remains accessible.');
+
+})().catch(error=>{console.error(error);process.exitCode=1;});
