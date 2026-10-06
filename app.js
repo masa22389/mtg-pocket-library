@@ -1,4 +1,4 @@
-const APP_VERSION = "v272";
+const APP_VERSION = "v273";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3246,7 +3246,7 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   renderSelectedVariant();
   els.cardDialog.showModal();
   // Opening a card never fetches or renders its complete print gallery.
-  if (!ownedId && mode !== "set" && card.lang === "ja") await changeCardLanguage("en");
+  if (!ownedId && !["set", "scanner"].includes(mode) && card.lang === "ja") await changeCardLanguage("en");
 }
 
 function sameCardPrint(a, b) {
@@ -3631,12 +3631,16 @@ function attachCollectionCardHandlers(button, card) {
   button.addEventListener("dragstart", event => event.preventDefault());
 }
 
+function initialCardOwnedQuantity(mode, quantity) {
+  return mode === "scanner" ? Math.max(1, quantity) : quantity;
+}
+
 function renderSelectedVariant() {
   const card = state.selectedCard;
   const owned = selectedOwnedCard();
   const backImage = backImageOf(card);
   els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images"><img class="card-detail-image" src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
-  els.cardQuantity.value = selectedOwnedQuantity();
+  els.cardQuantity.value = initialCardOwnedQuantity(state.cardDialogMode, selectedOwnedQuantity());
   els.cardCondition.value = normalizeCardCondition(owned?.condition || "NM");
   els.cardFinish.value = owned?.finish || "normal";
   els.cardLanguage.value = owned?.language || (card.lang === "ja" ? "ja" : card.lang === "en" ? "en" : "other");
@@ -3699,44 +3703,64 @@ function compactCard(card) {
 }
 
 function saveSelectedCardQuantity() {
-  const target = Math.max(0, Number(els.cardQuantity.value || 0));
+  const target = Number(els.cardQuantity.value || 0);
   const selectedId = cardScryfallId(state.selectedCard);
   const owned = selectedOwnedCard();
-  if (target <= 0) {
-    if (owned) state.collection = state.collection.filter(card => card.id !== owned.id);
-    state.selectedOwnedId = null;
-  } else {
-    const incoming = compactCard(state.selectedCard);
-    incoming.quantity = target;
-    const sameLot = card =>
-      card.id !== owned?.id &&
-      card.scryfallId === selectedId &&
-      normalizeCardCondition(card.condition) === incoming.condition &&
-      card.finish === incoming.finish &&
-      card.language === incoming.language &&
-      card.location === incoming.location;
-    const mergeTarget = state.collection.find(sameLot);
-    if (mergeTarget) {
-      mergeTarget.quantity = Number(mergeTarget.quantity || 0) + target;
-      mergeTarget.favorite = mergeTarget.favorite || owned?.favorite || false;
-      mergeTarget.favoriteGroupIds = [...new Set([...(mergeTarget.favoriteGroupIds || []), ...(owned?.favoriteGroupIds || [])])];
-      if (owned) state.collection = state.collection.filter(card => card.id !== owned.id);
-      state.selectedOwnedId = mergeTarget.id;
-    } else if (owned) {
-      Object.assign(owned, incoming, {
-        id: owned.id,
-        quantity: target,
-        favorite: owned.favorite || false,
-        favoriteGroupIds: Array.isArray(owned.favoriteGroupIds) ? owned.favoriteGroupIds : [],
-        addedAt: owned.addedAt || incoming.addedAt,
-      });
-      state.selectedOwnedId = owned.id;
-    } else {
-      state.collection.unshift(incoming);
-      state.selectedOwnedId = incoming.id;
-    }
+  if (!Number.isFinite(target) || !Number.isInteger(target) || target < 0) {
+    showInlineStatus(els.cardActionStatus, "所持枚数は0以上の整数で入力してください", { sticky: true });
+    return;
   }
-  persist();
+  if (target === 0 && !owned) {
+    showInlineStatus(els.cardActionStatus, "0枚のため追加していません。1枚以上を指定して保存してください。", { sticky: true });
+    showToast("追加する枚数を1枚以上にしてください");
+    return;
+  }
+  const previousCollection = structuredClone(state.collection);
+  const previousOwnedId = state.selectedOwnedId;
+  try {
+    if (target <= 0) {
+      if (owned) state.collection = state.collection.filter(card => card.id !== owned.id);
+      state.selectedOwnedId = null;
+    } else {
+      const incoming = compactCard(state.selectedCard);
+      incoming.quantity = target;
+      const sameLot = card =>
+        card.id !== owned?.id &&
+        card.scryfallId === selectedId &&
+        normalizeCardCondition(card.condition) === incoming.condition &&
+        card.finish === incoming.finish &&
+        card.language === incoming.language &&
+        card.location === incoming.location;
+      const mergeTarget = state.collection.find(sameLot);
+      if (mergeTarget) {
+        mergeTarget.quantity = Number(mergeTarget.quantity || 0) + target;
+        mergeTarget.favorite = mergeTarget.favorite || owned?.favorite || false;
+        mergeTarget.favoriteGroupIds = [...new Set([...(mergeTarget.favoriteGroupIds || []), ...(owned?.favoriteGroupIds || [])])];
+        if (owned) state.collection = state.collection.filter(card => card.id !== owned.id);
+        state.selectedOwnedId = mergeTarget.id;
+      } else if (owned) {
+        Object.assign(owned, incoming, {
+          id: owned.id,
+          quantity: target,
+          favorite: owned.favorite || false,
+          favoriteGroupIds: Array.isArray(owned.favoriteGroupIds) ? owned.favoriteGroupIds : [],
+          addedAt: owned.addedAt || incoming.addedAt,
+        });
+        state.selectedOwnedId = owned.id;
+      } else {
+        state.collection.unshift(incoming);
+        state.selectedOwnedId = incoming.id;
+      }
+    }
+    persist(["collection"]);
+  } catch (error) {
+    state.collection = previousCollection;
+    state.selectedOwnedId = previousOwnedId;
+    const reason = error?.name === "QuotaExceededError" ? "端末の保存領域が不足しています" : `保存処理でエラーが発生しました（${error?.name || "不明"}）`;
+    showInlineStatus(els.cardActionStatus, `保存できませんでした：${reason}。入力した枚数は変更せず、再度お試しください。`, { sticky: true });
+    showToast(`保存できませんでした：${reason}`, { sticky: true });
+    return;
+  }
   renderCollection();
   if (state.editingDeck && els.deckDialog.open) renderDeckEditor();
   els.cardQuantity.value = selectedOwnedQuantity();
@@ -6953,8 +6977,8 @@ $('#setCardGrid').addEventListener('click',event=>{const button=event.target.clo
     const response = await fetch(`https://api.scryfall.com/cards/${encodeURIComponent(id)}`);
     if (!response.ok) throw new Error();
     const card = await response.json();
-    await openCardDialog(card, 'set');
-    els.searchStatus.textContent = 'スキャン候補です。版・言語・仕様を確認してから登録してください。';
+    await openCardDialog(card, 'scanner');
+    els.searchStatus.textContent = 'スキャン候補です。版・言語・仕様と所持枚数を確認し、「所持枚数を保存」を押してください。';
   } catch {
     els.searchStatus.textContent = 'スキャン候補を読み込めませんでした。カード名で検索するか、スキャナーから再度選んでください。';
   }

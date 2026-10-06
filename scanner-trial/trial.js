@@ -159,7 +159,7 @@ async function showResult(data, token) {
     const body=document.createElement('div'),title=document.createElement('strong'),meta=document.createElement('p'),link=document.createElement('a');
     title.textContent=card.printed_name || card.name;
     meta.textContent=`${card.set_name} · ${card.set.toUpperCase()} #${card.collector_number} · ${card.lang} / 類似度 ${hit.score.toFixed(3)}`;
-    link.textContent='この候補をカード詳細で確認';link.href=`../?v=257&scannerCard=${encodeURIComponent(card.id)}`;
+    link.textContent='この候補をカード詳細で確認';link.href=`../?scannerCard=${encodeURIComponent(card.id)}`;
     link.addEventListener('click',()=>stop());
     body.append(title,meta,link);row.append(img,body);$('results').append(row);
   }

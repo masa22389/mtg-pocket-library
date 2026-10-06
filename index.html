@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=272">
+  <link rel="stylesheet" href="styles.css?v=273">
 </head>
 <body>
   <header class="app-header">
@@ -252,13 +252,13 @@
         <button type="button" data-deck-section-target="commander">統率者</button>
         <button type="button" data-deck-section-target="maybe">候補</button>
       </div>
+      <p id="cardActionStatus" class="deck-add-status" aria-live="polite"></p>
       <div class="card-action-row"><button id="addCardButton" type="button">所持枚数を保存</button><button id="addCardToDeckButton" type="button" hidden>このイラストをデッキへ追加</button></div>
       <section class="purchase-add-panel">
         <label for="purchaseQuantity">購入予定枚数<input id="purchaseQuantity" type="number" min="1" max="9999" step="1" value="1" inputmode="numeric"></label>
         <button id="addPurchaseButton" type="button" class="ghost">購入候補</button>
         <p class="muted">選択中の収録版・状態・仕様で登録します。同じ候補は枚数を加算します。</p>
       </section>
-      <p id="cardActionStatus" class="deck-add-status" aria-live="polite"></p>
       <section id="manualPricePanel" class="manual-price-panel" hidden>
         <h3>価格</h3><p id="cardPriceSummary" class="muted"></p>
         <button id="refreshCardPriceButton" type="button" class="ghost">価格を取得</button>
@@ -431,8 +431,8 @@
     </form>
   </dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=272" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=272" defer></script>
-  <script src="app.js?v=272" defer></script>
+  <script src="mtg-jp-card-index.js?v=273" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=273" defer></script>
+  <script src="app.js?v=273" defer></script>
 </body>
 </html>
