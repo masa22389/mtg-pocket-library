@@ -71,15 +71,29 @@ async function createMtgStorage({ name = "mtg-pocket-data-v1", legacy = localSto
 
 if (typeof window !== "undefined" && !window.MTG_STORAGE_TEST) {
   const status = document.createElement("div");
+  status.hidden = true;
   status.id = "storageStatus"; status.setAttribute("role", "status");
   Object.assign(status.style, { position:"fixed", top:"0", left:"0", right:"0", zIndex:"10000", background:"#fff4d7", color:"#272727", padding:"12px", fontSize:"14px" });
   const message = document.createElement("span"); status.append(message); document.body.append(status);
-  const notify = (kind, text) => { status.hidden = kind === "saved"; message.textContent = text; };
+  let startupTimer = null;
+  let hasError = false;
+  const notify = (kind, text) => {
+    if (hasError && kind !== "error") return;
+    if (kind === "saving") return; // Background writes should never flash a banner.
+    clearTimeout(startupTimer);
+    if (kind === "error") hasError = true;
+    status.hidden = kind !== "error";
+    message.textContent = kind === "error" ? text : "";
+  };
   const showStartupError = () => {
     notify("error", "保存データを開けませんでした。元データは削除していません。他の画面を閉じて再読み込みしてください。");
     if (!status.querySelector("button")) { const button=document.createElement("button"); button.textContent="再読み込み"; button.onclick=()=>location.reload(); status.append(button); }
   };
-  notify("saving", "保存データを準備しています。初回は既存データを引き継ぎます…");
+  startupTimer = setTimeout(() => {
+    if (hasError) return;
+    message.textContent = "保存データを準備しています。初回は既存データを引き継ぎます…";
+    status.hidden = false;
+  }, 1000);
   const ready = createMtgStorage({notify});
   ready.catch(showStartupError);
   window.mtgStorage = {ready, showStartupError};
