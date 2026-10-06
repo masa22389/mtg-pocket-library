@@ -341,3 +341,5 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 
 .same-name-owned-summary[hidden] { display:none; }
 #sameNameCollectionBanner { margin-bottom:14px; }
+
+.deck-merge-panel{padding:12px;border:1px solid var(--border,#ccd5d9);border-radius:12px;margin-bottom:12px}.deck-merge-panel summary{cursor:pointer;font-weight:600}.deck-merge-panel label{margin-top:12px}

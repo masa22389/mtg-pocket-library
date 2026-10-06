@@ -1,4 +1,4 @@
-const APP_VERSION = "v270";
+const APP_VERSION = "v271";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4784,8 +4784,88 @@ function storeDeckVersion(deck, asNew = false) {
 function renderDeckVersionPicker() {
   const deck = state.editingDeck;
   ensureDeckVersions(deck);
-  $("#deckVersionSelect").innerHTML = deck.versions.map(version => `<option value="${version.number}">バージョン ${version.number}（${formatDeckDate(version.savedAt)}）</option>`).join("");
+  $("#deckVersionSelect").innerHTML = deck.versions.map(version => `<option value="${version.number}">バージョン ${version.number}：${esc(version.name)}（${formatDeckDate(version.savedAt)}）</option>`).join("");
   $("#deckVersionSelect").value = String(deck.activeVersion);
+}
+
+function buildDeckMerge(decks, targetDeck, sourceId) {
+  const source = decks.find(deck => deck.id === sourceId);
+  if (!source || source.id === targetDeck.id) throw new Error("取り込む別デッキを選んでください");
+  const merged = structuredClone(targetDeck);
+  const before = structuredClone(targetDeck);
+  delete before.mergeUndo;
+  ensureDeckVersions(merged);
+  const current = merged.versions.find(version => version.number === merged.activeVersion);
+  if (JSON.stringify(deckVersionContent(current)) !== JSON.stringify(deckVersionContent(merged))) storeDeckVersion(merged, true);
+  const incoming = structuredClone(source);
+  ensureDeckVersions(incoming);
+  const saved = incoming.versions.find(version => version.number === incoming.activeVersion);
+  if (JSON.stringify(deckVersionContent(saved)) !== JSON.stringify(deckVersionContent(incoming))) storeDeckVersion(incoming, true);
+  let number = Math.max(...merged.versions.map(version => version.number));
+  incoming.versions.forEach(version => merged.versions.push({ ...structuredClone(version), number: ++number }));
+  merged.mergeUndo = { target: before, source: structuredClone(source), sourceIndex: decks.findIndex(deck => deck.id === sourceId) };
+  merged.updatedAt = Date.now();
+  const next = decks.filter(deck => deck.id !== sourceId).map(deck => deck.id === merged.id ? merged : structuredClone(deck));
+  if (!next.some(deck => deck.id === merged.id)) next.unshift(merged);
+  return { decks: next, deck: merged, added: incoming.versions.length };
+}
+
+function buildDeckMergeUndo(decks, targetId) {
+  const target = decks.find(deck => deck.id === targetId);
+  const backup = target?.mergeUndo;
+  if (!backup) throw new Error("元に戻せる統合がありません");
+  if (decks.some(deck => deck.id === backup.source.id)) throw new Error("元のデッキと同じIDが存在するため復元できません");
+  const restored = structuredClone(backup.target);
+  const next = decks.map(deck => deck.id === targetId ? restored : structuredClone(deck));
+  next.splice(Math.min(backup.sourceIndex, next.length), 0, structuredClone(backup.source));
+  return { decks: next, deck: restored };
+}
+
+function commitDeckMerge(result) {
+  // Save the complete transaction before changing the displayed state.
+  localStorage.setItem(KEYS.decks, JSON.stringify(result.decks));
+  cancelDeckTextSave();
+  state.decks = result.decks;
+  state.editingDeck = structuredClone(result.deck);
+  fillDeckDialog();
+  renderDecks();
+}
+
+function renderDeckMergeChoices() {
+  const candidates = state.decks.filter(deck => deck.id !== state.editingDeck.id);
+  $("#deckMergeSource").innerHTML = '<option value="">取り込むデッキを選択</option>' + candidates.map(deck => `<option value="${esc(deck.id)}">${esc(deck.name)}（${esc(deck.format)}）</option>`).join("");
+  $("#undoDeckMerge").hidden = !state.editingDeck.mergeUndo;
+  $("#deckMergePreview").textContent = "取り込んだ元デッキは一覧からまとめられます。カード構成・メモ・保存済みバージョンを引き継ぎます。";
+  $("#mergeDeckButton").disabled = true;
+}
+
+function previewDeckMerge() {
+  const sourceId = $("#deckMergeSource").value;
+  $("#mergeDeckButton").disabled = !sourceId;
+  if (!sourceId) { renderDeckMergeChoices(); return; }
+  const result = buildDeckMerge(state.decks, state.editingDeck, sourceId);
+  const imported = result.deck.versions.slice(-result.added);
+  $("#deckMergePreview").textContent = imported.map(version => `バージョン ${version.number}：${version.name} / ${version.entries.filter(entry => entry.section !== "maybe").reduce((sum, entry) => sum + Number(entry.quantity || 0), 0)}枚（候補 ${version.entries.filter(entry => entry.section === "maybe").reduce((sum, entry) => sum + Number(entry.quantity || 0), 0)}枚） / ${version.format}`).join("\n");
+}
+
+function mergeExistingDeck() {
+  try {
+    applyDeckFormFields();
+    const sourceId = $("#deckMergeSource").value;
+    const source = state.decks.find(deck => deck.id === sourceId);
+    const result = buildDeckMerge(state.decks, state.editingDeck, sourceId);
+    if (!confirm(`「${source.name}」の${result.added}バージョンを「${state.editingDeck.name}」に取り込みます。元デッキは一覧からまとまります。直前の統合のみ元に戻せます。よろしいですか？`)) return;
+    commitDeckMerge(result);
+    showToast("既存デッキをバージョンとして取り込みました");
+  } catch (error) { showToast(`統合できませんでした：${error.message}`); }
+}
+
+function undoDeckMerge() {
+  if (!confirm("直前の統合前の状態に戻します。統合後のこのデッキの編集・追加バージョンは取り消され、取り込んだ元デッキが一覧に戻ります。よろしいですか？")) return;
+  try {
+    commitDeckMerge(buildDeckMergeUndo(state.decks, state.editingDeck.id));
+    showToast("統合前のデッキに戻しました");
+  } catch (error) { showToast(`復元できませんでした：${error.message}`); }
 }
 
 function saveNewDeckVersion() {
@@ -4818,6 +4898,7 @@ function switchDeckVersion(number) {
 
 function fillDeckDialog() {
   renderDeckVersionPicker();
+  renderDeckMergeChoices();
   ensureDeckDates(state.editingDeck);
   els.deckName.value = state.editingDeck.name;
   els.deckFormat.value = state.editingDeck.format;
@@ -6107,6 +6188,7 @@ function duplicateDeck() {
   normalizeDeckSectionsForFormat();
   const source = structuredClone(state.editingDeck);
   const copy = structuredClone(source);
+  delete copy.mergeUndo;
   delete copy.versions;
   delete copy.activeVersion;
   copy.id = uid();
@@ -6646,6 +6728,9 @@ els.deckEntryDialog.addEventListener("close", () => {
   if (state.editingDeck && els.deckDialog.open) renderDeckEditor();
 });
 $("#saveDeckButton").addEventListener("click", saveDeck);
+$("#deckMergeSource").addEventListener("change", previewDeckMerge);
+$("#mergeDeckButton").addEventListener("click", mergeExistingDeck);
+$("#undoDeckMerge").addEventListener("click", undoDeckMerge);
 $("#saveNewDeckVersion").addEventListener("click", saveNewDeckVersion);
 $("#deckVersionSelect").addEventListener("change", event => switchDeckVersion(Number(event.target.value)));
 els.duplicateDeckButton.addEventListener("click", duplicateDeck);

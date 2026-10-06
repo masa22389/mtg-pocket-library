@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=270">
+  <link rel="stylesheet" href="styles.css?v=271">
 </head>
 <body>
   <header class="app-header">
@@ -314,6 +314,12 @@
       <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
       <label>表示するバージョン<select id="deckVersionSelect"></select></label>
       <p class="muted">「保存」は選択中のバージョンを更新します。変更前の構成を残すには「新バージョンとして保存」を押してください。</p>
+      <details class="deck-merge-panel"><summary>既存デッキをバージョンとして取り込む</summary>
+        <label>取り込むデッキ<select id="deckMergeSource"></select></label>
+        <p id="deckMergePreview" style="white-space:pre-line"></p>
+        <button id="mergeDeckButton" type="button" disabled>確認して取り込む</button>
+      </details>
+      <button id="undoDeckMerge" type="button" class="ghost" hidden>直前の統合を元に戻す</button>
       <label>デッキ名<input id="deckName" maxlength="60" placeholder="新しいデッキ"></label>
       <label>フォーマット<select id="deckFormat"><option>統率者戦</option><option>スタンダード</option><option>パイオニア</option><option>モダン</option><option>レガシー</option><option>パウパー</option><option>カジュアル</option></select></label>
       <div class="deck-summary"><b id="deckCount">0枚</b><span id="deckMissing">不足なし</span></div>
@@ -423,8 +429,8 @@
     </form>
   </dialog>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=270" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=270" defer></script>
-  <script src="app.js?v=270" defer></script>
+  <script src="mtg-jp-card-index.js?v=271" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=271" defer></script>
+  <script src="app.js?v=271" defer></script>
 </body>
 </html>
