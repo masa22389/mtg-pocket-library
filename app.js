@@ -1,6 +1,6 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v276";
+const APP_VERSION = "v277";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4823,9 +4823,15 @@ function renderDeckVersionPicker() {
   $("#deckVersionSelect").value = String(deck.activeVersion);
 }
 
+function canMergeDeckFormat(source, target) {
+  const format = String(target?.format || "").trim();
+  return Boolean(format) && String(source?.format || "").trim() === format;
+}
+
 function buildDeckMerge(decks, targetDeck, sourceId) {
   const source = decks.find(deck => deck.id === sourceId);
   if (!source || source.id === targetDeck.id) throw new Error("取り込む別デッキを選んでください");
+  if (!canMergeDeckFormat(source, targetDeck)) throw new Error("同じフォーマットのデッキだけ取り込めます");
   const merged = structuredClone(targetDeck);
   const before = structuredClone(targetDeck);
   delete before.mergeUndo;
@@ -4867,10 +4873,10 @@ async function commitDeckMerge(result) {
 }
 
 function renderDeckMergeChoices() {
-  const candidates = state.decks.filter(deck => deck.id !== state.editingDeck.id);
+  const candidates = state.decks.filter(deck => deck.id !== state.editingDeck.id && canMergeDeckFormat(deck, state.editingDeck));
   $("#deckMergeSource").innerHTML = '<option value="">取り込むデッキを選択</option>' + candidates.map(deck => `<option value="${esc(deck.id)}">${esc(deck.name)}（${esc(deck.format)}）</option>`).join("");
   $("#undoDeckMerge").hidden = !state.editingDeck.mergeUndo;
-  $("#deckMergePreview").textContent = "取り込んだ元デッキは一覧からまとめられます。カード構成・メモ・保存済みバージョンを引き継ぎます。";
+  $("#deckMergePreview").textContent = candidates.length ? "同じフォーマットのデッキを選択できます。取り込んだ元デッキは一覧からまとめられます。カード構成・メモ・保存済みバージョンを引き継ぎます。" : "同じフォーマットの取り込み可能なデッキがありません。";
   $("#mergeDeckButton").disabled = true;
 }
 
@@ -6704,7 +6710,7 @@ els.deckDialog.addEventListener("close", () => {
 });
 window.addEventListener("pagehide", flushDeckTextSave);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") flushDeckTextSave(); });
-els.deckFormat.addEventListener("change", () => { renderDeckEditor(); autoSaveEditingDeck(); });
+els.deckFormat.addEventListener("change", () => { renderDeckEditor(); autoSaveEditingDeck(); renderDeckMergeChoices(); });
 els.deckCardFilter.addEventListener("input", renderDeckEditor);
 els.openDeckOwnedAdvanced.addEventListener("click", () => {
   const nextOpen = els.deckOwnedAdvancedPanel.hidden;

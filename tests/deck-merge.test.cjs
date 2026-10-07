@@ -2,12 +2,16 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const code=fs.readFileSync(require('node:path').join(__dirname,'../app.js'),'utf8');
 const c={structuredClone,Date};vm.createContext(c);
-for(const name of ['deckVersionContent','ensureDeckVersions','storeDeckVersion','buildDeckMerge','buildDeckMergeUndo','commitDeckMerge']){
+for(const name of ['canMergeDeckFormat','deckVersionContent','ensureDeckVersions','storeDeckVersion','buildDeckMerge','buildDeckMergeUndo','commitDeckMerge']){
  let start=code.indexOf(`function ${name}(`);if(code.slice(start-6,start)==="async ")start-=6;vm.runInContext(code.slice(start,code.indexOf('\n}',start)+2),c);
 }
 const a={id:'a',name:'Base',format:'Legacy',memo:'old',entries:[{cardId:'x',quantity:4,section:'main'}]};
 const b={id:'b',name:'ver2',format:'Legacy',memo:'new',entries:[{cardId:'x',quantity:3,section:'main'},{cardId:'y',quantity:1,section:'side'}]};
 const decks=[a,b,{...a,id:'c'}];const initial=JSON.stringify(decks);
+assert.equal(c.canMergeDeckFormat(b,a),true);
+assert.equal(c.canMergeDeckFormat({...b,format:'Modern'},a),false);
+assert.equal(c.canMergeDeckFormat({format:''},{format:''}),false);
+assert.throws(()=>c.buildDeckMerge([a,{...b,format:'Modern'}],a,'b'),/同じフォーマット/);
 const result=c.buildDeckMerge(decks,a,'b');
 assert.equal(result.decks.length,2);assert.equal(result.deck.versions.length,2);assert.equal(result.deck.versions[1].memo,'new');assert.equal(result.deck.versions[1].entries[1].section,'side');assert.equal(JSON.stringify(decks),initial);
 const roundtrip=JSON.parse(JSON.stringify(result.decks));
