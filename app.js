@@ -1,6 +1,6 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v278";
+const APP_VERSION = "v279";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -6944,9 +6944,20 @@ async function openSetCollection(code) {
     setBrowser.loading = false; $('#setContentsStatus').textContent = error.message; $('#retrySetContents').hidden = false;
   }
 }
+function setCardMatchesFilters(card, filters) {
+  const normalized = {
+    ...card,
+    colors: card.colors ?? [...new Set((card.card_faces || []).flatMap(face => face.colors || []))],
+    manaValue: card.cmc ?? card.manaValue ?? 0,
+    typeLine: card.type_line || card.typeLine || (card.card_faces || []).map(face => face.type_line || "").join(" // ")
+  };
+  return collectionMatchesCardFilters(normalized, filters)
+    && (!filters.rarity || card.rarity === filters.rarity);
+}
 function renderSetCards() {
   const owned = setOwnedCounts(), query = normalizeCardName($('#setCardQuery').value), filter = $('#setOwnershipFilter').value;
-  const cards = setBrowser.cards.filter(card => (!query || cardSearchNames(card).some(name=>normalizeCardName(name).includes(query))) && (!filter || (filter === 'owned' ? (owned.get(setPrintKey(card)) || 0)>0 : !(owned.get(setPrintKey(card)) || 0))));
+  const filters = {color: $('#setCardColor').value, mana: $('#setCardMana').value, type: $('#setCardType').value, rarity: $('#setCardRarity').value};
+  const cards = setBrowser.cards.filter(card => setCardMatchesFilters(card, filters) && (!query || cardSearchNames(card).some(name=>normalizeCardName(name).includes(query))) && (!filter || (filter === 'owned' ? (owned.get(setPrintKey(card)) || 0)>0 : !(owned.get(setPrintKey(card)) || 0))));
   const collected = setBrowser.cards.filter(card => (owned.get(setPrintKey(card)) || 0)>0).length;
   $('#setContentsStatus').textContent = setBrowser.cards.length ? `収録 ${setBrowser.cards.length}種 · 所持 ${collected}種 · 該当 ${cards.length}種（所持枚数は全言語・状態・仕様の合計）` : '選択した言語の収録カードが見つかりませんでした。';
   setBrowser.visible = cards.slice(0,setBrowser.limit);
@@ -6961,11 +6972,12 @@ document.querySelectorAll('[data-collection-mode]').forEach(button=>button.addEv
   if (sets) {renderSetCatalog(); if(setBrowser.code && !setBrowser.loading)renderSetCards();}
 }));
 $('#setCatalogQuery').addEventListener('input',renderSetCatalog);
-$('#setCatalogList').addEventListener('click',event=>{const button=event.target.closest('[data-set-code]');if(button){$('#setCardQuery').value='';$('#setOwnershipFilter').value='';openSetCollection(button.dataset.setCode)}});
+$('#setCatalogList').addEventListener('click',event=>{const button=event.target.closest('[data-set-code]');if(button){for (const id of ['setCardQuery','setOwnershipFilter','setCardColor','setCardMana','setCardType','setCardRarity']) $('#'+id).value='';openSetCollection(button.dataset.setCode)}});
 $('#backToSetCatalog').addEventListener('click',()=>{++setBrowser.request;setBrowser.loading=false;setBrowser.code='';setBrowser.cards=[];$('#setContents').hidden=true;$('#setCatalog').hidden=false;renderSetCatalog()});
 $('#setCardLanguage').addEventListener('change',()=>{if(setBrowser.code)openSetCollection(setBrowser.code)});
 $('#retrySetContents').addEventListener('click',()=>{if(setBrowser.code)openSetCollection(setBrowser.code)});
-for (const id of ['setCardQuery','setOwnershipFilter']) $('#'+id).addEventListener(id==='setCardQuery'?'input':'change',()=>{setBrowser.limit=50;if(!setBrowser.loading)renderSetCards()});
+$('#clearSetFilters').addEventListener('click',()=>{for (const id of ['setCardQuery','setOwnershipFilter','setCardColor','setCardMana','setCardType','setCardRarity']) $('#'+id).value='';setBrowser.limit=50;if(!setBrowser.loading)renderSetCards();});
+for (const id of ['setCardQuery','setOwnershipFilter','setCardColor','setCardMana','setCardType','setCardRarity']) $('#'+id).addEventListener(id==='setCardQuery'?'input':'change',()=>{setBrowser.limit=50;if(!setBrowser.loading)renderSetCards()});
 $('#moreSetCards').addEventListener('click',()=>{setBrowser.limit+=50;renderSetCards()});
 $('#setCardGrid').addEventListener('click',event=>{const button=event.target.closest('[data-set-card]');if(button){const card=setBrowser.visible[Number(button.dataset.setCard)];if(card)openCardDialog(card,'set',ownedCardForVariant(card)?.id || null)}});
 
