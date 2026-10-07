@@ -343,3 +343,6 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 #sameNameCollectionBanner { margin-bottom:14px; }
 
 .deck-merge-panel{padding:12px;border:1px solid var(--border,#ccd5d9);border-radius:12px;margin-bottom:12px}.deck-merge-panel summary{cursor:pointer;font-weight:600}.deck-merge-panel label{margin-top:12px}
+
+.back-to-top{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:calc(78px + env(safe-area-inset-bottom));z-index:25;min-height:44px;padding:0 12px;border-radius:22px;font-size:12px;box-shadow:0 3px 12px #0003;border:1px solid #ffffff80}
+@media(min-width:760px){.back-to-top{bottom:20px}}
