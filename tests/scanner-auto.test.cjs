@@ -1,0 +1,12 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const code=fs.readFileSync(require('node:path').join(__dirname,'../scanner-trial/trial.js'),'utf8');
+const nodes=new Map();const el=id=>{if(!nodes.has(id))nodes.set(id,{checked:true,hidden:false,disabled:false,addEventListener(){},replaceChildren(){},srcObject:null});return nodes.get(id);};
+let callback=null, stopped=0,captures=0;
+const c={document:{hidden:true,getElementById:el,addEventListener(){}},window:{addEventListener(){}},setTimeout:fn=>{callback=fn;return 1},clearTimeout:()=>{callback=null},DOMException};vm.createContext(c);vm.runInContext(code,c);
+vm.runInContext('capture=()=>{captures++}; stream={getTracks:()=>[{stop:()=>stopped++}]};',Object.assign(c,{captures:0,stopped:0}));
+c.document.hidden=false;vm.runInContext('scheduleAuto()',c);assert.ok(callback);callback();assert.equal(c.captures,1);
+el('auto').checked=false;vm.runInContext('scheduleAuto()',c);assert.equal(callback,null);
+el('auto').checked=true;vm.runInContext('busy=true;scheduleAuto()',c);assert.equal(callback,null);
+vm.runInContext('busy=false',c);c.document.hidden=true;vm.runInContext('scheduleAuto()',c);assert.equal(callback,null);
+c.document.hidden=false;vm.runInContext('scheduleAuto();stop()',c);assert.equal(callback,null);assert.equal(c.stopped,1);assert.equal(el('video').srcObject,null);
+console.log('scanner auto scheduling, manual toggle, busy/hidden gating and stop passed');

@@ -5,8 +5,17 @@ const DB_NAME = 'mtg-pocket.scanner-trial.assets.v1';
 let worker = null, stream = null, readyTask = null, pendingReject = null;
 let generation = 0, busy = false, operation = 0;
 let requestController = null, watchdog = null;
+let autoTimer = null, autoFrame = false;
+function scheduleAuto() {
+  clearTimeout(autoTimer);
+  if (!$('auto').checked || !stream || busy || document.hidden) return;
+  autoTimer = setTimeout(() => {
+    if ($('auto').checked && stream && !busy && !document.hidden) capture(true);
+  }, 1800);
+}
 const status = message => { $('status').textContent = message; };
 function releaseCamera() {
+  clearTimeout(autoTimer);
   for (const track of stream?.getTracks() || []) track.stop();
   stream = null;
   $('video').srcObject = null;
@@ -18,9 +27,11 @@ function setBusy(value) {
   $('start').disabled = value;
   $('photo').disabled = value;
   $('sample').disabled = value;
+  $('next').disabled = value;
 }
 function stop(message = '停止しました。もう一度開始できます。') {
   ++generation; ++operation;
+  autoFrame = false;
   clearTimeout(watchdog);
   requestController?.abort(); requestController = null;
   releaseCamera();
@@ -94,7 +105,8 @@ async function startCamera() {
     await $('video').play();
     await ensureReady();
     if (attempt !== operation) return;
-    setBusy(false); status('四隅が入るように構え、「この画像を読み取る」を押してください。');
+    setBusy(false); status($('auto').checked ? 'カードの四隅を画面に収めてください。自動で読み取ります。' : '四隅が入るように構え、「この画像を読み取る」を押してください。');
+    scheduleAuto();
   } catch(error) {if(attempt === operation) fail(error);}
 }
 function drawPreview(source, width, height) {
@@ -114,8 +126,10 @@ async function loadPhoto(blob) {
     await capture();
   } catch(error){if(attempt === operation) fail(error);}
 }
-async function capture() {
+async function capture(automatic = false) {
   if(busy)return;
+  clearTimeout(autoTimer);
+  autoFrame = automatic === true;
   const token = generation;
   setBusy(true); $('stop').disabled = false;
   $('results').replaceChildren();
@@ -124,9 +138,10 @@ async function capture() {
       const video = $('video');
       if(!video.videoWidth)throw new Error('カメラの準備を待ってから再試行してください');
       drawPreview(video,video.videoWidth,video.videoHeight);
-      releaseCamera();
+      if (!autoFrame) releaseCamera();
+      else $('preview').hidden = true;
     }
-    if($('preview').hidden)throw new Error('写真を選んでください');
+    if($('preview').hidden && !autoFrame)throw new Error('写真を選んでください');
     await ensureReady();
     if(token !== generation)return;
     const bitmap = await createImageBitmap($('preview'));
@@ -138,7 +153,9 @@ async function capture() {
 }
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 async function showResult(data, token) {
-  if(!data.cardPresent || !data.cornersValid || !data.cardId){setBusy(false);status('カードを検出できませんでした。四隅を入れ、背景とカードを離して撮り直してください。');return;}
+  if(!data.cardPresent || !data.cornersValid || !data.cardId){setBusy(false);status(autoFrame ? 'カードを探しています。四隅を画面に収めてください。' : 'カードを検出できませんでした。四隅を入れ、背景とカードを離して撮り直してください。');scheduleAuto();return;}
+  releaseCamera();
+  $('preview').hidden = false;
   const hits = (data.candidates || [{cardId:data.cardId,score:data.score}]).filter(hit=>uuidPattern.test(hit.cardId)).slice(0,3);
   if(!hits.length)throw new Error('対応するカードIDがありません');
   status('候補のカード情報を取得しています…');
@@ -168,7 +185,13 @@ async function showResult(data, token) {
   status(`候補を表示しました（認識 ${Math.round(data.timing?.totalMs || 0)}ms）。${data.score < .5 ? '類似度が低いため、該当なしの可能性があります。' : '版・言語を確認して選んでください。'}`);
 }
 $('start').addEventListener('click',startCamera);
-$('capture').addEventListener('click',capture);
+$('capture').addEventListener('click',()=>capture());
+$('auto').addEventListener('change',()=>{
+  clearTimeout(autoTimer);
+  scheduleAuto();
+  if(stream && !busy) status($('auto').checked ? '自動読み取りを開始します。' : '手動に切り替えました。「この画像を読み取る」を押してください。');
+});
+$('next').addEventListener('click',()=>{ $('results').replaceChildren(); startCamera(); });
 $('stop').addEventListener('click',()=>stop());
 $('photo').addEventListener('change',()=>{const file=$('photo').files[0];$('photo').value='';if(file)loadPhoto(file);});
 $('sample').addEventListener('click',async()=>{
@@ -184,3 +207,6 @@ $('clear').addEventListener('click',()=>{
 });
 window.addEventListener('pagehide',()=>stop());
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop('画面を離れたため停止しました。再開できます。');});
+
+// Entering the scanner requests the camera; permission denial leaves manual controls available.
+if (!document.hidden) startCamera();
