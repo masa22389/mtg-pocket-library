@@ -1,6 +1,6 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v280";
+const APP_VERSION = "v281";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -6978,7 +6978,7 @@ document.querySelectorAll('[data-collection-mode]').forEach(button=>button.addEv
   if (sets) {renderSetCatalog(); if(setBrowser.code && !setBrowser.loading)renderSetCards();}
 }));
 $('#setCatalogQuery').addEventListener('input',renderSetCatalog);
-$('#setCatalogList').addEventListener('click',event=>{const button=event.target.closest('[data-set-code]');if(button){for (const id of ['setCardQuery','setOwnershipFilter','setCardColor','setCardMana','setCardType','setCardRarity']) $('#'+id).value='';openSetCollection(button.dataset.setCode)}});
+$('#setCatalogList').addEventListener('click',event=>{const button=event.target.closest('[data-set-code]');if(button){$('#setFilterPanel').open=false;for (const id of ['setCardQuery','setOwnershipFilter','setCardColor','setCardMana','setCardType','setCardRarity']) $('#'+id).value='';openSetCollection(button.dataset.setCode)}});
 $('#backToSetCatalog').addEventListener('click',()=>{++setBrowser.request;setBrowser.loading=false;setBrowser.code='';setBrowser.cards=[];$('#setContents').hidden=true;$('#setCatalog').hidden=false;renderSetCatalog()});
 $('#setCardLanguage').addEventListener('change',()=>{if(setBrowser.code)openSetCollection(setBrowser.code)});
 $('#retrySetContents').addEventListener('click',()=>{if(setBrowser.code)openSetCollection(setBrowser.code)});

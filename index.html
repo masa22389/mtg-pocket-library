@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=280">
+  <link rel="stylesheet" href="styles.css?v=281">
 </head>
 <body>
   <header class="app-header">
@@ -114,7 +114,7 @@
         <div id="setContents" hidden>
           <button id="backToSetCatalog" type="button" class="ghost">← エキスパンション一覧</button>
           <h2 id="setContentsTitle"></h2>
-          <div class="set-controls"><label>色（カードの色）<select id="setCardColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label><label>マナ総量<select id="setCardMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label><label>カードタイプ<select id="setCardType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label><label>レアリティ<select id="setCardRarity"><option value="">すべて</option><option value="common">コモン</option><option value="uncommon">アンコモン</option><option value="rare">レア</option><option value="mythic">神話レア</option><option value="special">スペシャル</option><option value="bonus">ボーナス</option></select></label><label>カード名<input id="setCardQuery" type="search" placeholder="セット内を検索"></label><label>所持状況<select id="setOwnershipFilter"><option value="">すべて</option><option value="owned">所持</option><option value="missing">未所持</option></select></label><button id="clearSetFilters" type="button" class="ghost">条件をクリア</button></div>
+          <details id="setFilterPanel" class="set-filter-panel"><summary>フィルター設定</summary><div class="set-controls"><label>色（カードの色）<select id="setCardColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label><label>マナ総量<select id="setCardMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label><label>カードタイプ<select id="setCardType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label><label>レアリティ<select id="setCardRarity"><option value="">すべて</option><option value="common">コモン</option><option value="uncommon">アンコモン</option><option value="rare">レア</option><option value="mythic">神話レア</option><option value="special">スペシャル</option><option value="bonus">ボーナス</option></select></label><label>カード名<input id="setCardQuery" type="search" placeholder="セット内を検索"></label><label>所持状況<select id="setOwnershipFilter"><option value="">すべて</option><option value="owned">所持</option><option value="missing">未所持</option></select></label><button id="clearSetFilters" type="button" class="ghost compact">条件をクリア</button></div></details>
           <p id="setContentsStatus" class="muted" role="status"></p><button id="retrySetContents" type="button" class="ghost" hidden>再取得</button>
           <div id="setCardGrid" class="set-card-grid"></div><button id="moreSetCards" type="button" class="ghost" hidden>さらに50件表示</button>
         </div>
@@ -432,9 +432,9 @@
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=280" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=280" defer></script>
-  <script src="storage.js?v=280" defer></script>
-  <script src="app.js?v=280" defer></script>
+  <script src="mtg-jp-card-index.js?v=281" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=281" defer></script>
+  <script src="storage.js?v=281" defer></script>
+  <script src="app.js?v=281" defer></script>
 </body>
 </html>
