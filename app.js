@@ -1,6 +1,6 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v282";
+const APP_VERSION = "v283";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2127,6 +2127,7 @@ function updateCollectionFilterSummary() {
   if (setLabel) chips.push(`セット:${setLabel}`);
   const formatLabel = selectedOptionText($("#collectionFormat"));
   if (formatLabel) chips.push(`フォーマット:${formatLabel}`);
+  if ($("#collectionUnderFour").checked) chips.push("所持枚数4枚未満");
   if (color) chips.push(`色:${color}`);
   if (mana) chips.push(`マナ:${mana}`);
   if (type) chips.push(`タイプ:${type}`);
@@ -3683,8 +3684,32 @@ function selectVariant(card) {
   updateVariantSelectionUi();
 }
 
+function cardIllustrationKey(card) {
+  return card.illustration_id || card.illustrationId || (card.card_faces || []).map(face => face.illustration_id || "").filter(Boolean).join("/");
+}
+function ownedArtworkTotals(cards) {
+  const totals = new Map();
+  for (const card of cards) {
+    const key = ownedArtworkKey(card);
+    if (key) totals.set(key, (totals.get(key) || 0) + Math.max(0, Number(card.quantity) || 0));
+  }
+  // Do not report a partial count while matching lots still lack artwork metadata.
+  for (const card of cards) {
+    if (cardIllustrationKey(card) || !(Number(card.quantity) > 0)) continue;
+    for (const other of cards) {
+      if (card.language === other.language && ((card.oracleId && card.oracleId === other.oracleId) || (card.name && card.name === other.name))) totals.delete(ownedArtworkKey(other));
+    }
+  }
+  return totals;
+}
+function ownedArtworkKey(card) {
+  const art = cardIllustrationKey(card);
+  const name = card.oracleId || card.oracle_id || card.name;
+  return art && name && card.language ? JSON.stringify([name, art, card.language]) : "";
+}
 function compactCard(card) {
   return {
+    illustrationId: cardIllustrationKey(card), illustrationMetadataVersion: 1,
     id: uid(), scryfallId: cardScryfallId(card), oracleId: card.oracle_id || "", name: card.name || "", printedName: nameOf(card) || card.printed_name || "",
     set: (card.set || "").toUpperCase(), setName: card.set_name || "", collectorNumber: card.collector_number || "",
     typeLine: card.type_line || "", printedTypeLine: card.printed_type_line || "", image: imageOf(card),
@@ -3824,6 +3849,8 @@ function renderCollection() {
   const priceFilter = els.collectionPriceFilter.value;
   const favoritesOnly = els.collectionFavoritesOnly.checked;
   const favoriteGroupId = els.collectionFavoriteGroup?.value || "";
+  const underFour = $("#collectionUnderFour").checked;
+  const artworkTotals = underFour ? ownedArtworkTotals(state.collection) : new Map();
   let cards = state.collection.filter(card => {
     const textMatch = [card.name, card.printedName, card.setName, card.typeLine, card.printedTypeLine, card.location].join(" ").toLowerCase().includes(query);
     const cardMatch = collectionMatchesCardFilters(card, { color, mana, type, set: setFilter, format });
@@ -3835,7 +3862,8 @@ function renderCollection() {
       || (priceFilter === "over10000" && yenValue != null && yenValue >= 10000)
       || (priceFilter === "over50000" && yenValue != null && yenValue >= 50000);
     const favoriteMatch = (!favoritesOnly || card.favorite === true) && favoriteGroupMatch(card, favoriteGroupId);
-    return (!state.sameNameCollectionCard || isSameOwnedCardName(state.sameNameCollectionCard, card)) && textMatch && cardMatch && priceMatch && favoriteMatch;
+    const artworkQuantity = artworkTotals.get(ownedArtworkKey(card)) || 0;
+    return (!underFour || (artworkQuantity >= 1 && artworkQuantity < 4 && Number(card.quantity) > 0)) && (!state.sameNameCollectionCard || isSameOwnedCardName(state.sameNameCollectionCard, card)) && textMatch && cardMatch && priceMatch && favoriteMatch;
   });
   cards = sortedCollectionCards(cards);
   const expansionGroups = groupBySet ? collectionExpansionGroups(cards, knownSets, grouping === "set-oldest") : [];
@@ -3965,6 +3993,8 @@ function applyCardMetadata(ownedCard, apiCard) {
   const keepCardTraderFoil = ownedCard.priceUsdFoilSource === "cardtrader" && cardTraderPriceFresh(ownedCard);
   const keepCardTraderEtched = ownedCard.priceUsdEtchedSource === "cardtrader" && cardTraderPriceFresh(ownedCard);
   if (apiCard.legalities) ownedCard.legalities = { ...apiCard.legalities };
+  ownedCard.illustrationId = cardIllustrationKey(apiCard);
+  ownedCard.illustrationMetadataVersion = 1;
   ownedCard.oracleId = apiCard.oracle_id || ownedCard.oracleId || "";
   ownedCard.typeLine = apiCard.type_line || ownedCard.typeLine || "";
   ownedCard.printedTypeLine = apiCard.printed_type_line || ownedCard.printedTypeLine || "";
@@ -4027,7 +4057,7 @@ async function hydrateEnglishPriceFallbacks() {
 async function hydrateCollectionMetadata() {
   if (!navigator.onLine) return;
   const pendingIds = [...new Set(state.collection
-    .filter(card => (!card.legalities || !card.metadataVersion || !card.priceUpdatedAt || Date.now() - card.priceUpdatedAt > DAY_MS) && card.scryfallId && !card.scryfallId.startsWith("sample-"))
+    .filter(card => (!card.illustrationMetadataVersion || !card.legalities || !card.metadataVersion || !card.priceUpdatedAt || Date.now() - card.priceUpdatedAt > DAY_MS) && card.scryfallId && !card.scryfallId.startsWith("sample-"))
     .map(card => card.scryfallId))];
   let changed = false;
   for (let index = 0; index < pendingIds.length; index += 75) {
@@ -6612,14 +6642,17 @@ $("#clearCollectionSet").addEventListener("click", () => {
 $("#showSameNameCollection").addEventListener("click", showSameNameCollection);
 $("#clearSameNameCollection").addEventListener("click", () => { clearSameNameCollection(); showFilteredCollection(); });
 $("#clearCollectionQuickFilters").addEventListener("click", () => {
+  $("#collectionUnderFour").checked = false;
   clearSameNameCollection(false);
   els.collectionFilter.value = "";
   $("#collectionFormat").value = ""; $("#collectionSetQuery").value = "";
   els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; $("#collectionSetFilter").value = "";
   showFilteredCollection();
 });
+$("#collectionUnderFour").addEventListener("change", showFilteredCollection);
 els.collectionFavoritesOnly.addEventListener("change", () => { resetCollectionRenderLimit(); renderCollection(); });
 els.clearCollectionFilters.addEventListener("click", () => {
+  $("#collectionUnderFour").checked = false;
   clearSameNameCollection(false);
   $("#collectionFormat").value = ""; $("#collectionSetQuery").value = ""; $("#collectionSetFilter").value = ""; els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
 });
