@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=283">
+  <link rel="stylesheet" href="styles.css?v=284">
 </head>
 <body>
   <header class="app-header">
@@ -156,6 +156,13 @@
         <div class="background-setting-heading"><h3 id="backgroundColorHeading">背景色</h3><span id="backgroundColorStatus" class="muted" aria-live="polite">現在の背景色：標準</span></div>
 <details id="backgroundColorChoices" class="background-dropdown"><summary aria-labelledby="backgroundColorHeading backgroundSelectedLabel"><span id="backgroundSelectedSwatch" class="background-swatch swatch-default" aria-hidden="true"></span><span id="backgroundSelectedLabel">標準</span><span class="background-dropdown-arrow" aria-hidden="true">▾</span></summary><div class="background-dropdown-options"><button type="button" data-background-theme="default" aria-pressed="false"><span class="background-swatch swatch-default" aria-hidden="true"></span>標準</button><button type="button" data-background-theme="red" aria-pressed="false"><span class="background-swatch swatch-red" aria-hidden="true"></span>赤</button><button type="button" data-background-theme="orange" aria-pressed="false"><span class="background-swatch swatch-orange" aria-hidden="true"></span>橙</button><button type="button" data-background-theme="yellow" aria-pressed="false"><span class="background-swatch swatch-yellow" aria-hidden="true"></span>黄</button><button type="button" data-background-theme="green" aria-pressed="false"><span class="background-swatch swatch-green" aria-hidden="true"></span>緑</button><button type="button" data-background-theme="blue" aria-pressed="false"><span class="background-swatch swatch-blue" aria-hidden="true"></span>青</button><button type="button" data-background-theme="indigo" aria-pressed="false"><span class="background-swatch swatch-indigo" aria-hidden="true"></span>藍</button><button type="button" data-background-theme="violet" aria-pressed="false"><span class="background-swatch swatch-violet" aria-hidden="true"></span>紫</button></div></details>
         <hr>
+        <details class="settings-details"><summary>長時間動作の診断（試用）</summary>
+          <p class="muted">通常は停止しています。開始後は再読み込み後も記録を続けます。クラッシュ後は再度開いて「診断を停止」、続いて書き出してください。最新720件を保存します。カード名・APIトークン・通信内容は記録しません。</p>
+          <button id="diagnosticStart" type="button" class="compact">診断を開始</button>
+          <button id="diagnosticStop" type="button" class="compact ghost">診断を停止</button>
+          <button id="diagnosticExport" type="button" class="compact ghost">診断記録を書き出す</button>
+          <p id="diagnosticStatus" class="muted" role="status">診断記録を確認中…</p>
+        </details>
         <h3>お気に入りグループ</h3>
         <button id="openSettingsGroupManager" type="button" class="ghost">グループ管理を開く</button>
 
@@ -435,9 +442,10 @@
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=283" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=283" defer></script>
-  <script src="storage.js?v=283" defer></script>
-  <script src="app.js?v=283" defer></script>
+  <script src="mtg-jp-card-index.js?v=284" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=284" defer></script>
+  <script src="storage.js?v=284" defer></script>
+  <script src="diagnostics.js?v=284" defer></script>
+  <script src="app.js?v=284" defer></script>
 </body>
 </html>
