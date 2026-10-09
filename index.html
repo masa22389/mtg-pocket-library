@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=286">
+  <link rel="stylesheet" href="styles.css?v=287">
 </head>
 <body>
   <header class="app-header">
@@ -152,6 +152,11 @@
         <label class="file-button">バックアップを復元<input id="importInput" type="file" accept="application/json,.json"></label>
         <button id="clearButton" class="danger">すべてのデータを削除</button>
         <p class="version-note">現在のバージョン：<b id="currentAppVersion">読み込み中</b></p>
+        <details id="initialSettings" class="settings-details"><summary>初期設定</summary>
+          <label>言語表示<select id="defaultCardLanguage"><option value="ja">日本語</option><option value="en">英語</option></select></label>
+          <p class="muted">カード検索の初期言語です。変更は自動保存され、次回起動時も維持されます。検索ごとに詳細検索で変更できます。</p>
+          <p id="defaultCardLanguageStatus" class="muted" role="status"></p>
+        </details>
         <hr>
         <div class="background-setting-heading"><h3 id="backgroundColorHeading">背景色</h3><span id="backgroundColorStatus" class="muted" aria-live="polite">現在の背景色：標準</span></div>
 <details id="backgroundColorChoices" class="background-dropdown"><summary aria-labelledby="backgroundColorHeading backgroundSelectedLabel"><span id="backgroundSelectedSwatch" class="background-swatch swatch-default" aria-hidden="true"></span><span id="backgroundSelectedLabel">標準</span><span class="background-dropdown-arrow" aria-hidden="true">▾</span></summary><div class="background-dropdown-options"><button type="button" data-background-theme="default" aria-pressed="false"><span class="background-swatch swatch-default" aria-hidden="true"></span>標準</button><button type="button" data-background-theme="red" aria-pressed="false"><span class="background-swatch swatch-red" aria-hidden="true"></span>赤</button><button type="button" data-background-theme="orange" aria-pressed="false"><span class="background-swatch swatch-orange" aria-hidden="true"></span>橙</button><button type="button" data-background-theme="yellow" aria-pressed="false"><span class="background-swatch swatch-yellow" aria-hidden="true"></span>黄</button><button type="button" data-background-theme="green" aria-pressed="false"><span class="background-swatch swatch-green" aria-hidden="true"></span>緑</button><button type="button" data-background-theme="blue" aria-pressed="false"><span class="background-swatch swatch-blue" aria-hidden="true"></span>青</button><button type="button" data-background-theme="indigo" aria-pressed="false"><span class="background-swatch swatch-indigo" aria-hidden="true"></span>藍</button><button type="button" data-background-theme="violet" aria-pressed="false"><span class="background-swatch swatch-violet" aria-hidden="true"></span>紫</button></div></details>
@@ -442,10 +447,10 @@
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=286" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=286" defer></script>
-  <script src="storage.js?v=286" defer></script>
-  <script src="diagnostics.js?v=286" defer></script>
-  <script src="app.js?v=286" defer></script>
+  <script src="mtg-jp-card-index.js?v=287" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=287" defer></script>
+  <script src="storage.js?v=287" defer></script>
+  <script src="diagnostics.js?v=287" defer></script>
+  <script src="app.js?v=287" defer></script>
 </body>
 </html>

@@ -22,7 +22,7 @@
       let app = null;
       try { app = window.mtgDiagnosticProbe?.() || null; } catch { event('probe-error'); }
       log.samples.push({at:Date.now(), elapsedMs:Math.round(performance.now()-started),
-        session:log.sessions, version:'v286',
+        session:log.sessions, version:'v287',
         view:document.querySelector('main > section:not([hidden])')?.id || null,
         visible:document.visibilityState, online:navigator.onLine,
         heapUsed:memory?.usedJSHeapSize ?? null, heapTotal:memory?.totalJSHeapSize ?? null,

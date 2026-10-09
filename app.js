@@ -1,7 +1,7 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v286";
-const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
+const APP_VERSION = "v287";
+const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
 const COLLECTION_RENDER_LIMIT = 50;
@@ -51,6 +51,7 @@ const state = {
   priceSourceMode: appStorage.getItem(KEYS.priceSourceMode) || "manual-wisdom-cardtrader",
   collectionSortStack: read(KEYS.collectionSortStack, []),
   deckFormatFilter: appStorage.getItem(KEYS.deckFormatFilter) || "",
+  defaultCardLanguage: appStorage.getItem(KEYS.defaultCardLanguage) === "ja" ? "ja" : "en",
   backgroundTheme: appStorage.getItem(KEYS.backgroundTheme) || "default",
   editingDeck: null,
   editingDeckEntry: null,
@@ -2343,9 +2344,9 @@ async function searchCards() {
   const localizedSubtype = localizedSubtypeNeedsClientFilter(rawSubtype) ? rawSubtype : "";
   const filters = buildCardSearchFilters({ omitSubtype: Boolean(localizedSubtype) });
   const exactMatch = Boolean(query) && els.searchMatch.value === "exact";
-  const exhaustiveAdvancedSearch = Boolean(filters || clientSubtype);
+  const exhaustiveAdvancedSearch = Boolean(stripLanguageFilter(filters) || clientSubtype);
   const maxCandidates = exactMatch ? 30 : Number.POSITIVE_INFINITY;
-  if (!query && !filters && !clientSubtype) { els.searchButton.disabled = false; els.searchStatus.textContent = "カード名または検索条件を指定してください"; return; }
+  if (!query && !stripLanguageFilter(filters) && !clientSubtype) { els.searchButton.disabled = false; els.searchStatus.textContent = "カード名または検索条件を指定してください"; return; }
   els.searchButton.disabled = true;
   els.searchStatus.textContent = navigator.onLine ? "検索中…" : "オフラインのため検索できません";
     state.searchResults = [];
@@ -3202,7 +3203,11 @@ function renderSearchResults(append = false) {
       ? `${String(card.set || "").toLocaleLowerCase("en")}:${card.collector_number || card.id || card.name}`
       : card.oracle_id || card.name;
     if (!groups.has(key)) groups.set(key, { key, card, cards: [] });
-    groups.get(key).cards.push(card);
+    const group = groups.get(key);
+    const preferredLanguage = $("#searchLanguage")?.value || state.defaultCardLanguage;
+    if (card.lang === preferredLanguage && group.card.lang !== preferredLanguage) group.card = card;
+    if (preferredLanguage === "en" && group.card.lang === "en") group.card = { ...group.card, _preferJpDisplay: false };
+    group.cards.push(card);
   }
   state.searchGroups = [...groups.values()];
   const visibleGroups = state.searchGroups.slice(0, searchRenderLimit);
@@ -5732,7 +5737,7 @@ function resetDeckSearchAddForm() {
   els.deckSearchType.value = "";
   els.deckSearchSet.value = "";
   if (els.deckSearchSetIncludeExtras) els.deckSearchSetIncludeExtras.checked = false;
-  for (const key of ["Language","OracleText","Format","Subtype","Rarity"]) { const input = $("#deckSearch"+key); if(input) input.value=""; }
+  for (const key of ["Language","OracleText","Format","Subtype","Rarity"]) { const input = $("#deckSearch"+key); if(input) input.value=key === "Language" ? state.defaultCardLanguage : ""; }
   if ($("#deckSearchColorMode")) $("#deckSearchColorMode").value="and";
   document.querySelectorAll("[data-deck-search-color]").forEach(input=>input.checked=false);
   updateDeckAdvancedSearchSummary();
@@ -6196,7 +6201,7 @@ async function searchDeckCards() {
   const subtype = $("#deckSearchSubtype")?.value.trim() || "";
   const filters = buildCardSearchFilters({prefix:"deckSearch", omitSubtype:localizedSubtypeNeedsClientFilter(subtype)});
   const exactMatch = Boolean(query) && els.deckSearchMatch.value === "exact";
-  if ((!query && !filters && !subtype) || !navigator.onLine) {
+  if ((!query && !stripLanguageFilter(filters) && !subtype) || !navigator.onLine) {
     els.deckGlobalSearchStatus.textContent = navigator.onLine ? "カード名または検索条件を指定してください" : "オフラインのため検索できません";
     return;
   }
@@ -6206,7 +6211,7 @@ async function searchDeckCards() {
   state.deckSearchResults = [];
   renderDeckEditor();
   try {
-    let cards = (await fetchSearchCandidates(query, filters, $("#deckSearchLanguage")?.value || (isJapanese(query) ? "ja" : "en"), exactMatch, exactMatch ? 40 : Number.POSITIVE_INFINITY, {localizedSubtype:subtype, exhaustive:Boolean(filters || subtype)})).cards;
+    let cards = (await fetchSearchCandidates(query, filters, $("#deckSearchLanguage")?.value || (isJapanese(query) ? "ja" : "en"), exactMatch, exactMatch ? 40 : Number.POSITIVE_INFINITY, {localizedSubtype:subtype, exhaustive:Boolean(stripLanguageFilter(filters) || subtype)})).cards;
     const needle = normalizeCardName(query);
     const aliasNeedles = aliasTargetsForQuery(query, { exactOnly: exactMatch }).map(normalizeCardName);
     cards.sort((a, b) => {
@@ -6220,7 +6225,8 @@ async function searchDeckCards() {
       }) ? 1 : 0;
       return bExact - aExact;
     });
-    cards = applyJpIndexToCards(cards);
+    const displayLanguage = $("#deckSearchLanguage")?.value || state.defaultCardLanguage;
+    cards = applyJpIndexToCards(cards.map(card => ({ ...card, _preferJpDisplay: displayLanguage === "ja" })));
     const groups = new Map();
     cards.forEach(card => { const key = card.oracle_id || card.name; if (!groups.has(key)) groups.set(key, card); });
     state.deckSearchResults = [...groups.values()];
@@ -6508,7 +6514,7 @@ function backupPayload() {
     priceCache: state.priceCache || {},
     fx: state.fx,
     favoriteGroups: state.favoriteGroups,
-    settings: { backgroundTheme: state.backgroundTheme, priceSourceMode: priceSourceMode() },
+    settings: { defaultCardLanguage: state.defaultCardLanguage, backgroundTheme: state.backgroundTheme, priceSourceMode: priceSourceMode() },
   };
 }
 
@@ -6554,6 +6560,11 @@ async function importBackup(file) {
     state.priceCache = data.priceCache && typeof data.priceCache === "object" ? data.priceCache : {};
     if (data.fx && typeof data.fx === "object") state.fx = data.fx;
     state.favoriteGroups = Array.isArray(data.favoriteGroups) ? data.favoriteGroups : [];
+    if (["ja", "en"].includes(data.settings?.defaultCardLanguage)) {
+      await appStorage.setItem(KEYS.defaultCardLanguage, data.settings.defaultCardLanguage);
+      state.defaultCardLanguage = data.settings.defaultCardLanguage;
+      applyDefaultCardLanguage();
+    }
     if (data.settings?.backgroundTheme && BACKGROUND_THEMES[data.settings.backgroundTheme]) {
       applyBackgroundTheme(data.settings.backgroundTheme, { persist: true });
     }
@@ -6581,6 +6592,27 @@ document.addEventListener("contextmenu", event => {
 renderFavoriteGroupOptions();
 initAdvancedSearchUi();
 initDeckAdvancedSearchUi();
+function applyDefaultCardLanguage() {
+  for (const id of ["defaultCardLanguage", "searchLanguage", "deckSearchLanguage"]) {
+    const input = $("#" + id); if (input) input.value = state.defaultCardLanguage;
+  }
+  updateAdvancedSearchSummary();
+  updateDeckAdvancedSearchSummary();
+}
+applyDefaultCardLanguage();
+$("#defaultCardLanguage").addEventListener("change", async event => {
+  const value = event.target.value === "ja" ? "ja" : "en";
+  const status = $("#defaultCardLanguageStatus");
+  try {
+    await appStorage.setItem(KEYS.defaultCardLanguage, value);
+    state.defaultCardLanguage = value;
+    applyDefaultCardLanguage();
+    status.textContent = "保存しました";
+  } catch {
+    event.target.value = state.defaultCardLanguage;
+    status.textContent = "保存できませんでした。端末の保存状態を確認してください。";
+  }
+});
 els.deckSearchSetIncludeExtras?.closest("label")?.remove();
 els.searchButton.addEventListener("click", searchCards);
 els.searchResults.addEventListener("click", event => {
@@ -6599,7 +6631,7 @@ els.searchSetIncludeExtras?.addEventListener("change", renderSetSelects);
 els.clearSearchFilters.addEventListener("click", () => {
   els.searchMatch.value = "partial"; els.searchColor.value = ""; els.searchMana.value = ""; els.searchType.value = ""; els.searchSet.value = ""; if (els.searchSetIncludeExtras) els.searchSetIncludeExtras.checked = false; renderSetSelects();
   const resetIds = ["searchLanguage", "searchOracleText", "searchFormat", "searchSubtype", "searchRarity"];
-  resetIds.forEach(id => { const field = $(`#${id}`); if (field) field.value = ""; });
+  resetIds.forEach(id => { const field = $(`#${id}`); if (field) field.value = id === "searchLanguage" ? state.defaultCardLanguage : ""; });
   const colorMode = $("#searchColorMode"); if (colorMode) colorMode.value = "and";
   document.querySelectorAll("[data-search-color]").forEach(input => { input.checked = false; });
   updateAdvancedSearchSummary();
