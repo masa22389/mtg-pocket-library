@@ -7,7 +7,7 @@ for (const file of ['mtg-jp-card-index.js', 'mtgjson-jp-search-index.js']) vm.ru
 c.MTG_JP_CARD_INDEX = c.window.MTG_JP_CARD_INDEX;
 c.JP_CARD_SEARCH_INDEX = [...c.MTG_JP_CARD_INDEX, ...c.window.MTGJSON_JP_SEARCH_INDEX];
 for (const name of ['JP_INDEX_BY_SCRYFALL_ID', 'JP_INDEX_BY_ORACLE_ID', 'JP_INDEX_BY_EN_NAME', 'JP_STANDALONE_NAMES', 'JP_ALIAS_TARGETS_EXACT']) c[name] = new Map();
-for (const name of ['normalizeDisplayName', 'normalizeCardName', 'stripJapaneseReadings', 'normalizeAliasKey', 'isJapanese', 'pushUniqueTarget', 'buildJpSearchIndexes', 'jpIndexCardTitles', 'jpIndexNames', 'jpIndexNormalizedNames', 'jpIndexMatchesQuery', 'scryfallNameQuery', 'buildLocalIndexScryfallQuery', 'buildLocalIndexScryfallQueryChunks', 'scoreJapaneseDisplayName', 'sortJapaneseDisplayNames', 'localizeJapaneseFaceNames', 'displayJaNamesForIndexItem', 'splitDisplayNamesForFaces', 'joinedDisplayNameForFaces', 'cardSearchNames', 'jpIndexForCard', 'jpIndexMatchesCard', 'jpIndexImageMatchesCard', 'applyJpIndexToCard', 'cardLanguage', 'isJapaneseCard', 'isEnglishCard', 'shouldLocalizeDisplay', 'prefersJapaneseDisplay', 'nameOf']) {
+for (const name of ['normalizeDisplayName', 'normalizeCardName', 'stripJapaneseReadings', 'normalizeAliasKey', 'isJapanese', 'pushUniqueTarget', 'buildJpSearchIndexes', 'betterJapaneseIndexItem', 'preferredIndexedJapaneseName', 'jpIndexCardTitles', 'jpIndexNames', 'jpIndexNormalizedNames', 'jpIndexMatchesQuery', 'scryfallNameQuery', 'buildLocalIndexScryfallQuery', 'buildLocalIndexScryfallQueryChunks', 'scoreJapaneseDisplayName', 'sortJapaneseDisplayNames', 'localizeJapaneseFaceNames', 'displayJaNamesForIndexItem', 'splitDisplayNamesForFaces', 'joinedDisplayNameForFaces', 'cardSearchNames', 'jpIndexForCard', 'jpIndexMatchesCard', 'jpIndexImageMatchesCard', 'applyJpIndexToCard', 'cardLanguage', 'isJapaneseCard', 'isEnglishCard', 'shouldLocalizeDisplay', 'prefersJapaneseDisplay', 'nameOf']) {
   const start = code.indexOf(`function ${name}(`);
   assert(start >= 0, name);
   const lineEnd = code.indexOf('\n', start);
@@ -78,3 +78,23 @@ for (const [spell, host] of [['祖先の回想', 'Emeritus of Ideation'], ['稲�
 assert(!c.jpIndexMatchesQuery(ideation, '稲妻', false));
 assert(!c.deckImportCardMatches({ name: 'Emeritus of Ideation // Ancestral Recall' }, ['祖先の回想']));
 console.log('PASS: localized spell exact/partial searches resolve host cards without changing import identity.');
+
+// Official gallery corrections must work for live API cards, old saved cards,
+// Japanese partial searches and alternate printings without replacing images.
+const corrections = c.window.MTG_JP_CARD_INDEX.filter(item => item.source === 'mtg-jp-card-gallery-name');
+assert(corrections.length >= 89);
+for (const item of corrections) {
+  const name = item.scryfallName, expected = item.jaNames[0];
+  const original = c.window.MTGJSON_JP_SEARCH_INDEX.find(row => row.oracleId === item.oracleId);
+  const raw = { name, id: original?.scryfallId || item.scryfallId, oracle_id: item.oracleId, lang: 'ja', image_uris: {normal:'original-image'} };
+  if (name.includes('//')) raw.card_faces = name.split(' // ').map(name => ({name}));
+  const localized = c.applyJpIndexToCard(raw);
+  assert.equal(c.nameOf(localized), expected, name);
+  assert.equal(localized.image_uris.normal, 'original-image');
+  assert.equal(c.nameOf({name, oracleId:item.oracleId, language:'ja', printedName:original?.jaNames[0] || name}), expected, 'saved '+name);
+  assert(c.jpIndexMatchesQuery(item, expected.split(' // ')[0], true), name);
+  assert(c.jpIndexMatchesQuery(item, expected.slice(0,3), false), name);
+  assert(c.JP_ALIAS_TARGETS_EXACT.get(c.normalizeAliasKey(expected.split(' // ')[0])).includes(name), name);
+  assert.equal(c.nameOf({...raw, lang:'en'}), name);
+}
+console.log('PASS: 89 official corrections, API and saved names, exact/partial aliases, English preference and image preservation.');

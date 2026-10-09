@@ -1,6 +1,6 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v285";
+const APP_VERSION = "v286";
 const KEYS = { purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -517,7 +517,9 @@ function backImageOf(card) {
 function typeOf(card) { return card.printed_type_line || card.printedTypeLine || card.type_line || card.typeLine || ""; }
 function nameOf(card) {
   const name = normalizeDisplayName((prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName || card.name || "名称不明");
-  return prefersJapaneseDisplay(card) ? localizeJapaneseFaceNames(name) : name;
+  if (!prefersJapaneseDisplay(card)) return name;
+  const indexed = preferredIndexedJapaneseName(card);
+  return localizeJapaneseFaceNames(indexed && scoreJapaneseDisplayName(indexed) > scoreJapaneseDisplayName(name) ? indexed : name);
 }
 function altNameOf(card) {
   const printed = normalizeDisplayName((prefersJapaneseDisplay(card) ? card.jpName : "") || card.printed_name || card.printedName);
@@ -2563,6 +2565,17 @@ function jpIndexCardTitles(item) {
   return fullNames.length ? [...new Set(fullNames.flatMap(name => [name, name.split("//")[0].trim()]))] : names;
 }
 
+function betterJapaneseIndexItem(candidate, current) {
+  const score = item => Math.max(-Infinity, ...(item?.jaNames || []).map(scoreJapaneseDisplayName));
+  return !current || score(candidate) > score(current);
+}
+
+function preferredIndexedJapaneseName(card) {
+  const items = [JP_INDEX_BY_ORACLE_ID.get(card.oracle_id || card.oracleId),
+    JP_INDEX_BY_EN_NAME.get(normalizeCardName(card.name || ""))].filter(Boolean);
+  return sortJapaneseDisplayNames(items.flatMap(displayJaNamesForIndexItem))[0] || "";
+}
+
 function buildJpSearchIndexes() {
   JP_CARD_SEARCH_INDEX.forEach(item => {
     const targets = jpIndexCardTitles(item);
@@ -2575,10 +2588,10 @@ function buildJpSearchIndexes() {
       if (japaneseName && !JP_STANDALONE_NAMES.has(key)) JP_STANDALONE_NAMES.set(key, japaneseName);
     }
     if (item.scryfallId && !JP_INDEX_BY_SCRYFALL_ID.has(item.scryfallId)) JP_INDEX_BY_SCRYFALL_ID.set(item.scryfallId, item);
-    if (item.oracleId && !JP_INDEX_BY_ORACLE_ID.has(item.oracleId)) JP_INDEX_BY_ORACLE_ID.set(item.oracleId, item);
+    if (item.oracleId && betterJapaneseIndexItem(item, JP_INDEX_BY_ORACLE_ID.get(item.oracleId))) JP_INDEX_BY_ORACLE_ID.set(item.oracleId, item);
     targets.forEach(name => {
       const key = normalizeCardName(name);
-      if (key && !JP_INDEX_BY_EN_NAME.has(key)) JP_INDEX_BY_EN_NAME.set(key, item);
+      if (key && betterJapaneseIndexItem(item, JP_INDEX_BY_EN_NAME.get(key))) JP_INDEX_BY_EN_NAME.set(key, item);
     });
   });
   // Localized spell names depend on the complete standalone-name map above.
@@ -2687,7 +2700,9 @@ function applyJpIndexToCard(card) {
   const localizeImage = jpIndexImageMatchesCard(item, card);
   const canUseJpImage = isJapaneseCard(card) || Boolean(card._supplementalJpVariant);
   const localizeTopImage = canUseJpImage && localizeImage;
-  const rawDisplayJaNames = displayJaNamesForIndexItem(item).map(normalizeDisplayName);
+  const itemNames = displayJaNamesForIndexItem(item);
+  const preferredName = preferredIndexedJapaneseName(card);
+  const rawDisplayJaNames = (preferredName && scoreJapaneseDisplayName(preferredName) > scoreJapaneseDisplayName(itemNames[0] || "") ? [preferredName] : itemNames).map(normalizeDisplayName);
   const faceCount = Array.isArray(card.card_faces) ? card.card_faces.length : 0;
   const faceJaNames = splitDisplayNamesForFaces(rawDisplayJaNames, faceCount);
   const displayJaNames = faceJaNames.length ? faceJaNames : rawDisplayJaNames;

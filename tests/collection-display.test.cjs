@@ -1,7 +1,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const code=fs.readFileSync(require('node:path').join(__dirname,'../app.js'),'utf8');
 const c={};vm.createContext(c);
-for(const name of ['normalizeSetCode','collectionMatchesCardFilters','collectionExpansionGroups']) {
+for(const name of ['cardIllustrationKey','normalizeSetCode','collectionMatchesCardFilters','collectionExpansionGroups']) {
  const start=code.indexOf(`function ${name}(`);const end=code.indexOf('\n}',start)+2;vm.runInContext(code.slice(start,end),c);
 }
 const cards=[
