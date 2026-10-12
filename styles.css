@@ -358,3 +358,5 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 .deck-tile.has-cover{display:grid;grid-template-columns:clamp(80px,22vw,120px) minmax(0,1fr);gap:16px;align-items:center}.deck-cover-image{display:block;width:100%;aspect-ratio:488/680;object-fit:cover;border-radius:9px}.deck-tile-info{min-width:0;overflow-wrap:anywhere}.deck-cover-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.deck-cover-actions button{font-size:13px;padding:10px 12px}
 
 .deck-tile.has-cover{display:block;padding:0;overflow:hidden}.deck-tile.has-cover .deck-tile-info{padding:18px 20px}.deck-cover-art{display:block;position:relative;width:100%;height:150px;overflow:hidden;background:var(--line)}.deck-cover-art .deck-cover-image{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center;border-radius:0}.deck-cover-art .deck-cover-cropped{position:absolute;top:-18%;left:0;height:auto;aspect-ratio:488/680;transform:translateY(-9%)}
+
+#deckEntryCollectionStatus:not(.show){display:none}
