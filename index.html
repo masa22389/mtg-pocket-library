@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=287">
+  <link rel="stylesheet" href="styles.css?v=288">
 </head>
 <body>
   <header class="app-header">
@@ -410,6 +410,7 @@
     <form method="dialog" class="dialog-card deck-entry-editor">
       <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
       <div class="deck-entry-preview"><button id="openDeckEntryVariants" type="button" class="deck-entry-image-button" aria-label="イラストを変更"><img id="deckEntryImage" alt=""><span>イラスト変更</span></button><div><span id="deckEntrySet" class="eyebrow"></span><h2 id="deckEntryName"></h2><p id="deckEntryOwned" class="muted"></p><button id="addDeckEntryToCollection" type="button" class="ghost deck-entry-owned-add">所持カードに1枚追加</button></div></div>
+      <div class="deck-cover-actions"><button id="setDeckCover" type="button" class="ghost">デッキの代表画像に設定</button><button id="clearDeckCover" type="button" class="ghost" hidden>代表画像を解除</button></div>
       <p id="deckEntryCollectionStatus" class="deck-add-status" aria-live="polite"></p>
       <label hidden>追加先<select id="deckEntrySection"><option value="main">メイン</option><option value="side">サイド</option><option value="commander">統率者</option><option value="maybe">候補</option></select></label>
       <div class="deck-order-actions"><button id="moveDeckEntryUp" type="button" class="ghost">↑ 前へ</button><button id="moveDeckEntryDown" type="button" class="ghost">↓ 後へ</button></div>
@@ -447,10 +448,10 @@
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=287" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=287" defer></script>
-  <script src="storage.js?v=287" defer></script>
-  <script src="diagnostics.js?v=287" defer></script>
-  <script src="app.js?v=287" defer></script>
+  <script src="mtg-jp-card-index.js?v=288" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=288" defer></script>
+  <script src="storage.js?v=288" defer></script>
+  <script src="diagnostics.js?v=288" defer></script>
+  <script src="app.js?v=288" defer></script>
 </body>
 </html>

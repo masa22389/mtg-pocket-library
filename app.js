@@ -1,6 +1,6 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v287";
+const APP_VERSION = "v288";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4667,7 +4667,7 @@ function renderDecks() {
     const memo = String(deck.memo || "").trim();
     const memoPreview = memo ? `<p class="deck-memo-preview">${esc(memo.slice(0, 90))}${memo.length > 90 ? "…" : ""}</p>` : "";
     const selected = deckListReorderMode && deckListReorderSelection === deck.id;
-    return `<button type="button" class="deck-tile${selected ? " deck-list-reorder-selected" : ""}" data-id="${deck.id}"><span class="eyebrow">${esc(deck.format)}</span><h2>${esc(deck.name)}</h2><span class="deck-total">${total}</span> 枚<p>${deck.entries.length}種類${missing ? ` · <b>${missing}枚不足</b>` : " · 所持内で構築可能"}</p>${memoPreview}<small class="deck-date-line">作成 ${formatDeckDate(deck.createdAt)} · 更新 ${formatDeckDate(deck.updatedAt)}</small></button>`;
+    return `<button type="button" class="deck-tile${deck.coverImage ? " has-cover" : ""}${selected ? " deck-list-reorder-selected" : ""}" data-id="${deck.id}">${deck.coverImage ? `<img class="deck-cover-image" src="${esc(deck.coverImage)}" alt="" loading="lazy" decoding="async">` : ""}<div class="deck-tile-info"><span class="eyebrow">${esc(deck.format)}</span><h2>${esc(deck.name)}</h2><span class="deck-total">${total}</span> 枚<p>${deck.entries.length}種類${missing ? ` · <b>${missing}枚不足</b>` : " · 所持内で構築可能"}</p>${memoPreview}<small class="deck-date-line">作成 ${formatDeckDate(deck.createdAt)} · 更新 ${formatDeckDate(deck.updatedAt)}</small></div></button>`;
   }).join("");
   if (migrated) persist();
   els.deckList.querySelectorAll(".deck-tile").forEach(button => {
@@ -5809,6 +5809,26 @@ function deckEntryCurrentCard() {
   return entry ? cardForDeckEntry(entry) : state.editingDeckEntry?.draftCard || null;
 }
 
+async function setDeckCover(clear = false) {
+  const deck = state.editingDeck;
+  const card = deckEntryCurrentCard();
+  const image = card?.image || "";
+  if (!deck || (!clear && !image)) return;
+  const previous = deck.coverImage;
+  deck.coverImage = clear ? "" : image;
+  try {
+    await autoSaveEditingDeck();
+    showInlineStatus(els.deckEntryCollectionStatus, clear ? "代表画像を解除しました" : "デッキの代表画像を保存しました");
+  } catch {
+    deck.coverImage = previous;
+    const saved = state.decks.find(item => item.id === deck.id);
+    if (saved) saved.coverImage = previous;
+    renderDecks();
+    showInlineStatus(els.deckEntryCollectionStatus, "代表画像を保存できませんでした");
+  }
+  $("#clearDeckCover").hidden = !deck.coverImage;
+}
+
 function deckEntryCurrentScryfallId() {
   const card = deckEntryCurrentCard();
   return card?.scryfallId || card?.id || "";
@@ -5942,6 +5962,8 @@ function renderDeckEntryEditor() {
   const owned = entry ? ownedQuantityForEntry(entry) : ownedQuantityForDeckCard(card);
   const deckTotalForCard = deckEntriesForCurrentCard().filter(item => isDeckBuildSection(item.section)).reduce((sum, item) => sum + Number(item.quantity || 0), 0);
   els.deckEntryImage.src = card?.image || "";
+  $("#setDeckCover").disabled = !card?.image;
+  $("#clearDeckCover").hidden = !state.editingDeck?.coverImage;
   els.deckEntryImage.alt = card ? nameOf(card) : "削除済みカード";
   els.deckEntrySet.textContent = `${card?.set || ""} #${card?.collectorNumber || ""}`;
   els.deckEntryName.textContent = card ? nameOf(card) : "削除済みカード";
@@ -7100,6 +7122,8 @@ $('#setCardGrid').addEventListener('click',event=>{const button=event.target.clo
     els.searchStatus.textContent = 'スキャン候補を読み込めませんでした。カード名で検索するか、スキャナーから再度選んでください。';
   }
 })();
+$("#setDeckCover").addEventListener("click", () => setDeckCover());
+$("#clearDeckCover").addEventListener("click", () => setDeckCover(true));
 // END SCANNER TRIAL BRIDGE
 }
 startMtgApp().catch(window.mtgStorage.showStartupError);
