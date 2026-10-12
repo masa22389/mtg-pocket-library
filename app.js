@@ -1,6 +1,6 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v290";
+const APP_VERSION = "v291";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5820,6 +5820,61 @@ function deckEntryCurrentCard() {
   return entry ? cardForDeckEntry(entry) : state.editingDeckEntry?.draftCard || null;
 }
 
+let copyDeckCard = null;
+function updateCopyDeckTarget() {
+  const deck = state.decks.find(item => item.id === $("#copyDeckTarget").value);
+  const latest = deck ? structuredClone(deck) : null;
+  if (latest) selectLatestDeckVersion(latest);
+  const option = $("#copyDeckSection option[value=commander]");
+  option.disabled = latest?.format !== "統率者戦";
+  option.hidden = option.disabled;
+  if (option.disabled && $("#copyDeckSection").value === "commander") $("#copyDeckSection").value = "main";
+  $("#confirmCopyDeckCard").disabled = !deck;
+}
+function openCopyDeckCard() {
+  const card = deckEntryCurrentCard();
+  if (!card) return;
+  copyDeckCard = deckCardSnapshot(card);
+  $("#copyDeckCardName").textContent = nameOf(card);
+  $("#copyDeckTarget").innerHTML = '<option value="">追加先を選択</option>' + state.decks.filter(deck => deck.id !== state.editingDeck.id).map(deck => `<option value="${esc(deck.id)}">${esc(deck.name)}（${esc(deck.format)}）</option>`).join("");
+  $("#copyDeckQuantity").value = "1";
+  $("#copyDeckSection").value = "main";
+  $("#copyDeckStatus").textContent = state.decks.some(deck => deck.id !== state.editingDeck.id) ? "" : "追加先の別デッキがありません";
+  updateCopyDeckTarget();
+  $("#copyDeckCardDialog").showModal();
+}
+function copyCardIntoDeck(target, card, quantity, section) {
+  if (!Number.isSafeInteger(quantity) || quantity < 1) throw new Error("枚数は1以上の整数で指定してください");
+  const deck = structuredClone(target);
+  selectLatestDeckVersion(deck);
+  if (!["main", "side", "maybe", "commander"].includes(section) || (section === "commander" && deck.format !== "統率者戦")) throw new Error("追加先を選び直してください");
+  const existing = deck.entries.find(entry => entry.section === section && card.scryfallId && cardForDeckEntry(entry)?.scryfallId === card.scryfallId);
+  if (existing) existing.quantity = Number(existing.quantity || 0) + quantity;
+  else deck.entries.push({ cardId: uid(), card: structuredClone(card), section, quantity });
+  deck.updatedAt = Date.now();
+  storeDeckVersion(deck);
+  return deck;
+}
+async function confirmCopyDeckCard() {
+  const button = $("#confirmCopyDeckCard");
+  if (button.disabled) return;
+  const target = state.decks.find(deck => deck.id === $("#copyDeckTarget").value);
+  if (!target || target.id === state.editingDeck?.id || !copyDeckCard) return;
+  button.disabled = true;
+  try {
+    const updated = copyCardIntoDeck(target, copyDeckCard, Number($("#copyDeckQuantity").value), $("#copyDeckSection").value);
+    const index = state.decks.indexOf(target);
+    state.decks[index] = updated;
+    try { await persist(["decks"]); }
+    catch (error) { state.decks[index] = target; throw error; }
+    renderDecks();
+    $("#copyDeckCardDialog").close();
+    showInlineStatus(els.deckEntryCollectionStatus, `${updated.name}に${$("#copyDeckQuantity").value}枚追加しました`);
+  } catch (error) {
+    $("#copyDeckStatus").textContent = `追加できませんでした：${error.message}`;
+  } finally { button.disabled = false; }
+}
+
 async function setDeckCover(clear = false) {
   const deck = state.editingDeck;
   const card = deckEntryCurrentCard();
@@ -7135,6 +7190,9 @@ $('#setCardGrid').addEventListener('click',event=>{const button=event.target.clo
 })();
 $("#setDeckCover").addEventListener("click", () => setDeckCover());
 $("#clearDeckCover").addEventListener("click", () => setDeckCover(true));
+$("#openCopyDeckCard").addEventListener("click", openCopyDeckCard);
+$("#copyDeckTarget").addEventListener("change", updateCopyDeckTarget);
+$("#confirmCopyDeckCard").addEventListener("click", confirmCopyDeckCard);
 // END SCANNER TRIAL BRIDGE
 }
 startMtgApp().catch(window.mtgStorage.showStartupError);
