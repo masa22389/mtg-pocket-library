@@ -1,6 +1,6 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v288";
+const APP_VERSION = "v289";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4643,6 +4643,17 @@ function attachDeckTileHandlers(button, deck) {
   button.addEventListener("dragstart", event => event.preventDefault());
 }
 
+function deckCoverArtUrl(image) {
+  try {
+    const url = new URL(image);
+    if (url.hostname === "cards.scryfall.io" && /^\/(normal|large|small|png)\//.test(url.pathname)) {
+      url.pathname = url.pathname.replace(/^\/(normal|large|small|png)\//, "/art_crop/").replace(/\.png$/, ".jpg");
+      return url.href;
+    }
+  } catch {}
+  return image || "";
+}
+
 function renderDecks() {
   renderDeckFormatFilter();
   if (!state.decks.length) {
@@ -4667,7 +4678,7 @@ function renderDecks() {
     const memo = String(deck.memo || "").trim();
     const memoPreview = memo ? `<p class="deck-memo-preview">${esc(memo.slice(0, 90))}${memo.length > 90 ? "…" : ""}</p>` : "";
     const selected = deckListReorderMode && deckListReorderSelection === deck.id;
-    return `<button type="button" class="deck-tile${deck.coverImage ? " has-cover" : ""}${selected ? " deck-list-reorder-selected" : ""}" data-id="${deck.id}">${deck.coverImage ? `<img class="deck-cover-image" src="${esc(deck.coverImage)}" alt="" loading="lazy" decoding="async">` : ""}<div class="deck-tile-info"><span class="eyebrow">${esc(deck.format)}</span><h2>${esc(deck.name)}</h2><span class="deck-total">${total}</span> 枚<p>${deck.entries.length}種類${missing ? ` · <b>${missing}枚不足</b>` : " · 所持内で構築可能"}</p>${memoPreview}<small class="deck-date-line">作成 ${formatDeckDate(deck.createdAt)} · 更新 ${formatDeckDate(deck.updatedAt)}</small></div></button>`;
+    return `<button type="button" class="deck-tile${deck.coverImage ? " has-cover" : ""}${selected ? " deck-list-reorder-selected" : ""}" data-id="${deck.id}">${deck.coverImage ? `<span class="deck-cover-art"><img class="deck-cover-image${deckCoverArtUrl(deck.coverImage) === deck.coverImage && !deck.coverImage.includes("/art_crop/") ? " deck-cover-cropped" : ""}" src="${esc(deckCoverArtUrl(deck.coverImage))}" alt="" loading="lazy" decoding="async"></span>` : ""}<div class="deck-tile-info"><span class="eyebrow">${esc(deck.format)}</span><h2>${esc(deck.name)}</h2><span class="deck-total">${total}</span> 枚<p>${deck.entries.length}種類${missing ? ` · <b>${missing}枚不足</b>` : " · 所持内で構築可能"}</p>${memoPreview}<small class="deck-date-line">作成 ${formatDeckDate(deck.createdAt)} · 更新 ${formatDeckDate(deck.updatedAt)}</small></div></button>`;
   }).join("");
   if (migrated) persist();
   els.deckList.querySelectorAll(".deck-tile").forEach(button => {
