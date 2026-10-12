@@ -1,6 +1,6 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v291";
+const APP_VERSION = "v292";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5831,16 +5831,26 @@ function updateCopyDeckTarget() {
   if (option.disabled && $("#copyDeckSection").value === "commander") $("#copyDeckSection").value = "main";
   $("#confirmCopyDeckCard").disabled = !deck;
 }
+function copyDeckTargets(decks, sourceId, format) {
+  return decks.filter(deck => deck.id !== sourceId && (!format || deck.format === format))
+    .sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja", { numeric: true }) || String(a.id).localeCompare(String(b.id)));
+}
+function renderCopyDeckTargets() {
+  const decks = copyDeckTargets(state.decks, state.editingDeck.id, $("#copyDeckFormat").value);
+  $("#copyDeckTarget").innerHTML = '<option value="">追加先を選択</option>' + decks.map(deck => `<option value="${esc(deck.id)}">${esc(deck.name)}（${esc(deck.format)}）</option>`).join("");
+  $("#copyDeckStatus").textContent = decks.length ? "" : "該当する別デッキがありません。フォーマットを変更してください。";
+  updateCopyDeckTarget();
+}
 function openCopyDeckCard() {
   const card = deckEntryCurrentCard();
   if (!card) return;
   copyDeckCard = deckCardSnapshot(card);
   $("#copyDeckCardName").textContent = nameOf(card);
-  $("#copyDeckTarget").innerHTML = '<option value="">追加先を選択</option>' + state.decks.filter(deck => deck.id !== state.editingDeck.id).map(deck => `<option value="${esc(deck.id)}">${esc(deck.name)}（${esc(deck.format)}）</option>`).join("");
+  $("#copyDeckFormat").innerHTML = '<option value="">すべて</option>' + deckFormats().map(format => `<option value="${esc(format)}">${esc(format)}</option>`).join("");
+  $("#copyDeckFormat").value = els.deckFormat.value || state.editingDeck.format || "";
   $("#copyDeckQuantity").value = "1";
   $("#copyDeckSection").value = "main";
-  $("#copyDeckStatus").textContent = state.decks.some(deck => deck.id !== state.editingDeck.id) ? "" : "追加先の別デッキがありません";
-  updateCopyDeckTarget();
+  renderCopyDeckTargets();
   $("#copyDeckCardDialog").showModal();
 }
 function copyCardIntoDeck(target, card, quantity, section) {
@@ -7192,6 +7202,7 @@ $("#setDeckCover").addEventListener("click", () => setDeckCover());
 $("#clearDeckCover").addEventListener("click", () => setDeckCover(true));
 $("#openCopyDeckCard").addEventListener("click", openCopyDeckCard);
 $("#copyDeckTarget").addEventListener("change", updateCopyDeckTarget);
+$("#copyDeckFormat").addEventListener("change", renderCopyDeckTargets);
 $("#confirmCopyDeckCard").addEventListener("click", confirmCopyDeckCard);
 // END SCANNER TRIAL BRIDGE
 }

@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=291">
+  <link rel="stylesheet" href="styles.css?v=292">
 </head>
 <body>
   <header class="app-header">
@@ -450,6 +450,7 @@
     <form method="dialog" class="dialog-card">
       <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
       <h2>別デッキに追加</h2><p id="copyDeckCardName"></p>
+      <label>フォーマット<select id="copyDeckFormat"></select></label>
       <label>追加先デッキ<select id="copyDeckTarget"></select></label>
       <p class="muted">追加先の最新バージョンに追加します。</p>
       <div class="form-grid"><label>追加先<select id="copyDeckSection"><option value="main">メイン</option><option value="side">サイド</option><option value="maybe">候補</option><option value="commander">統率者</option></select></label><label>枚数<input id="copyDeckQuantity" type="number" min="1" step="1" value="1"></label></div>
@@ -458,10 +459,10 @@
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=291" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=291" defer></script>
-  <script src="storage.js?v=291" defer></script>
-  <script src="diagnostics.js?v=291" defer></script>
-  <script src="app.js?v=291" defer></script>
+  <script src="mtg-jp-card-index.js?v=292" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=292" defer></script>
+  <script src="storage.js?v=292" defer></script>
+  <script src="diagnostics.js?v=292" defer></script>
+  <script src="app.js?v=292" defer></script>
 </body>
 </html>
