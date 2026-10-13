@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=295">
+  <link rel="stylesheet" href="styles.css?v=296">
 </head>
 <body>
   <header class="app-header">
@@ -164,6 +164,7 @@
         <details class="settings-details"><summary>長時間動作の診断（試用）</summary>
           <p class="muted">通常は停止しています。開始後は再読み込み後も記録を続けます。クラッシュ後は再度開いて「診断を停止」、続いて書き出してください。最新720件を保存します。カード名・APIトークン・通信内容は記録しません。</p>
           <button id="diagnosticStart" type="button" class="compact">診断を開始</button>
+          <button id="diagnosticReset" type="button" class="compact ghost">リセットして診断開始</button>
           <button id="diagnosticStop" type="button" class="compact ghost">診断を停止</button>
           <button id="diagnosticExport" type="button" class="compact ghost">診断記録を書き出す</button>
           <p id="diagnosticStatus" class="muted" role="status">診断記録を確認中…</p>
@@ -459,10 +460,10 @@
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="mtg-jp-card-index.js?v=295" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=295" defer></script>
-  <script src="storage.js?v=295" defer></script>
-  <script src="diagnostics.js?v=295" defer></script>
-  <script src="app.js?v=295" defer></script>
+  <script src="mtg-jp-card-index.js?v=296" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=296" defer></script>
+  <script src="storage.js?v=296" defer></script>
+  <script src="diagnostics.js?v=296" defer></script>
+  <script src="app.js?v=296" defer></script>
 </body>
 </html>

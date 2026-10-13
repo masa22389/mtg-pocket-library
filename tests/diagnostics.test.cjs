@@ -9,5 +9,9 @@ await node('diagnosticStart').onclick();await settle();assert.equal(saved.sample
 await node('diagnosticStart').onclick();assert.equal(timers.size,1);
 for(let i=0;i<725;i++){const [id,fn]=timers.entries().next().value;timers.delete(id);await fn();await settle()}
 assert.equal(saved.samples.length,720);await node('diagnosticStop').onclick();assert.equal(timers.size,0);assert.equal(saved.enabled,false);
+c.confirm=()=>false;await node('diagnosticReset').onclick();assert.equal(saved.samples.length,720);
+c.confirm=()=>true;await node('diagnosticReset').onclick();assert.equal(saved.samples.length,1);assert.equal(saved.sessions,1);assert.equal(saved.enabled,true);assert.equal(timers.size,1);assert.equal(saved.samples[0].elapsedMs,0);
+await node('diagnosticReset').onclick();assert.equal(saved.samples.length,1);assert.equal(timers.size,1);
+console.log('PASS reset: cancellation, new session, cleared samples, elapsed time and single timer');
 console.log('PASS diagnostics: off by default, single timer, 720 limit, persistent stop');
 })();

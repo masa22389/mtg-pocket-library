@@ -4,6 +4,7 @@
   const LIMIT = 720; // Six hours at 30 seconds; bounded across reloads.
   let db, log = { enabled:false, samples:[], events:[], sessions:0 }, timer, observer;
   let resources = 0, duration = 0, started = performance.now(), saving = false;
+  let resetting = false, sampleDone = Promise.resolve(), finishSample;
   const status = text => { $('diagnosticStatus').textContent = text; };
   const persist = () => new Promise((resolve, reject) => {
     const tx = db.transaction('log','readwrite');
@@ -17,12 +18,13 @@
   async function sample() {
     if (!log.enabled || saving) return;
     saving = true;
+    sampleDone = new Promise(resolve => { finishSample = resolve; });
     try {
       const memory = performance.memory;
       let app = null;
       try { app = window.mtgDiagnosticProbe?.() || null; } catch { event('probe-error'); }
       log.samples.push({at:Date.now(), elapsedMs:Math.round(performance.now()-started),
-        session:log.sessions, version:'v295',
+        session:log.sessions, version:'v296',
         view:document.querySelector('main > section:not([hidden])')?.id || null,
         visible:document.visibilityState, online:navigator.onLine,
         heapUsed:memory?.usedJSHeapSize ?? null, heapTotal:memory?.totalJSHeapSize ?? null,
@@ -37,6 +39,7 @@
       status('診断記録を保存できなかったため停止しました。通常の保存データは変更していません。');
     } finally {
       saving = false;
+      finishSample();
       if(log.enabled) timer = setTimeout(sample,30000);
     }
   }
@@ -65,8 +68,22 @@
     if(log.enabled){event('page-start');observe();sample();}
     else status(log.samples.length ? `停止中：保存済み${log.samples.length}件。書き出せます。` : '停止中。調査するときだけ開始してください。');
   }).catch(()=>status('診断保存領域を開けませんでした。'));
-  $('diagnosticStart').onclick=async()=>{await ready;if(!db || log.enabled || saving)return;log.enabled=true;event('start');observe();sample();};
-  $('diagnosticStop').onclick=async()=>{await ready;if(!db)return;event('stop');log.enabled=false;clearTimeout(timer);observer?.disconnect();try{await persist();status(`停止中：保存済み${log.samples.length}件。書き出せます。`);}catch{status('停止しましたが、診断記録の保存に失敗しました。');}};
+  $('diagnosticStart').onclick=async()=>{await ready;if(!db || log.enabled || saving || resetting)return;log.enabled=true;event('start');observe();sample();};
+  $('diagnosticStop').onclick=async()=>{await ready;if(!db || resetting)return;event('stop');log.enabled=false;clearTimeout(timer);observer?.disconnect();try{await persist();status(`停止中：保存済み${log.samples.length}件。書き出せます。`);}catch{status('停止しましたが、診断記録の保存に失敗しました。');}};
+  $('diagnosticReset').onclick=async()=>{
+    await ready;if(!db || resetting)return;
+    if(!confirm('これまでの診断記録を消去し、最初から診断を開始します。よろしいですか？\nコレクション・デッキ・価格データは変更しません。'))return;
+    resetting=true;$('diagnosticReset').disabled=true;
+    log.enabled=false;clearTimeout(timer);observer?.disconnect();
+    await sampleDone;
+    resources=0;duration=0;started=performance.now();
+    log={enabled:false,samples:[],events:[],sessions:1};
+    try {
+      await persist();
+      log.enabled=true;event('start');observe();await sample();
+    } catch { status('診断記録のリセットに失敗しました。再度お試しください。'); }
+    finally {resetting=false;$('diagnosticReset').disabled=false;}
+  };
   $('diagnosticExport').onclick=async()=>{await ready;if(!db)return;
     const blob=new Blob([JSON.stringify({schema:1,exportedAt:Date.now(),note:'JS heap is approximate, not total process/GPU memory. Resources count completed observed requests, not active requests or timers.',...log},null,2)],{type:'application/json'});
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mtg-diagnostics-'+Date.now()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
