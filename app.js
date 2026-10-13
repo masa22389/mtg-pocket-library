@@ -1,6 +1,6 @@
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v294";
+const APP_VERSION = "v295";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4105,7 +4105,27 @@ async function hydrateCollectionMetadata() {
   await hydrateCardTraderPrices();
 }
 
-async function hydrateCardTraderPrices(options = {}) {
+let cardTraderPriceQueue = Promise.resolve();
+let cardTraderAutomaticRefresh = null;
+function hydrateCardTraderPrices(options = {}) {
+  const automatic = !options.force && !options.cards;
+  if (automatic && cardTraderAutomaticRefresh) return cardTraderAutomaticRefresh;
+  // Serialize manual requests too, preserving their individual options/results.
+  const task = cardTraderPriceQueue.then(async () => {
+    cardTraderMarketplaceCache.clear();
+    try { await runCardTraderPrices(options); }
+    finally { cardTraderMarketplaceCache.clear(); }
+  });
+  cardTraderPriceQueue = task.catch(() => {});
+  if (automatic) {
+    cardTraderAutomaticRefresh = task;
+    const reset = () => { if (cardTraderAutomaticRefresh === task) cardTraderAutomaticRefresh = null; };
+    task.then(reset, reset);
+  }
+  return task;
+}
+
+async function runCardTraderPrices(options = {}) {
   if (!navigator.onLine || !cardTraderToken()) { updateCardTraderSettingsUi(); return; }
   if (!state.fx?.usdJpy || !state.fx?.rates?.EUR) await refreshExchangeRate();
   const force = options.force === true;
@@ -4134,7 +4154,7 @@ async function hydrateCardTraderPrices(options = {}) {
   const groups = new Map();
   candidates.forEach(card => {
     const lookupCard = cardTraderLookupCard(card);
-    const key = `${String(lookupCard.set || "").toLowerCase()}:${cardTraderLanguageForCard(lookupCard)}:${cardTraderFoilForCard(lookupCard)}`;
+    const key = String(lookupCard.set || "").toLowerCase();
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key).push({ card, lookupCard });
   });
@@ -4178,6 +4198,8 @@ async function hydrateCardTraderPrices(options = {}) {
       const failedCard = groupItems[0]?.lookupCard || groupItems[0]?.card;
       if (stats.errorExamples.length < 8) stats.errorExamples.push(`${failedCard?.setName || failedCard?.set || "不明なセット"}：${state.cardTrader.lastError}`);
     } finally {
+      // Prices are stored separately; raw listings are no longer needed.
+      cardTraderMarketplaceCache.clear();
       stats.groupsDone += 1;
       state.cardTrader.lastStats = { ...stats };
       await persist(["collection", "priceCache", "cardTrader"]);

@@ -1,0 +1,12 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const code=fs.readFileSync(require('node:path').join(__dirname,'../app.js'),'utf8');
+const cards=[{set:'a',scryfallId:'1',language:'jp',foil:false},{set:'b',scryfallId:'2',language:'en',foil:false},{set:'a',scryfallId:'3',language:'en',foil:true}];
+let calls=[],peak=0,applied=[];
+const cache=new Map();
+const c={Map,Promise,Date,DAY_MS:86400000,navigator:{onLine:true},state:{fx:{usdJpy:150,rates:{EUR:1}},collection:cards,cardTrader:{}},cardTraderMarketplaceCache:cache,cardTraderToken:()=>true,updateCardTraderSettingsUi(){},cardTraderLanguageForCard:c=>c.language,cardTraderFoilForCard:c=>c.foil,cardTraderPriceUpdatedAtForCard:c=>c.cardTraderPriceUpdatedAt,cardTraderLookupCard:c=>c,persist:async()=>{},cardTraderBlueprintsForSet:async()=>({}),cardTraderMarketplaceForSet:async(set)=>{assert.equal(cache.size,0);calls.push(set);const data={'1':[1],'2':[2],'3':[3]};cache.set(set,data);peak=Math.max(peak,cache.size);return data;},cardTraderBlueprintIdForCard:async c=>c.scryfallId,chooseCardTraderProduct:(p,c)=>{applied.push([c.scryfallId,c.language,c.foil,p[0]]);return {jpy:100,product:{}};},applyCardTraderPrice(){},nameOf:()=>'',normalizeCardCondition:()=>'',priceCacheFinish:()=>'',formatYen:()=>'',showToast(){},renderCollection(){}};
+vm.createContext(c);
+const start=code.indexOf('let cardTraderPriceQueue =');const end=code.indexOf('\nasync function hydrateWisdomGuildPrices',start);vm.runInContext(code.slice(start,end),c);
+(async()=>{const a=c.hydrateCardTraderPrices();const b=c.hydrateCardTraderPrices();assert.equal(a,b);await a;assert.deepEqual(calls,['a','b']);assert.equal(peak,1);assert.equal(cache.size,0);assert.deepEqual(applied,[['1','jp',false,1],['3','en',true,3],['2','en',false,2]]);
+calls=[];await Promise.all([c.hydrateCardTraderPrices({force:true,cards:[cards[0]]}),c.hydrateCardTraderPrices({force:true,cards:[cards[1]]})]);assert.deepEqual(calls,['a','b']);assert.equal(cache.size,0);
+c.cardTraderBlueprintIdForCard=async()=>{throw Error('test failure');};await c.hydrateCardTraderPrices({force:true});assert.equal(cache.size,0);assert.equal(c.state.cardTrader.lastStats.failedGroups,2);
+console.log('PASS set batching, per-card language/foil, bounded raw cache, automatic deduplication, manual queue, failure cleanup');})();
