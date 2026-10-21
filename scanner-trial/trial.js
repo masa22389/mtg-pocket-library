@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-// Isolated scanner trial. No collection/deck/localStorage writes.
+// Scanner recognition; explicit collection saves are handled by quick-store.js.
 const $ = id => document.getElementById(id);
 const DB_NAME = 'mtg-pocket.scanner-trial.assets.v1';
 let worker = null, stream = null, readyTask = null, pendingReject = null;
@@ -133,6 +133,7 @@ async function capture(automatic = false) {
   const token = generation;
   setBusy(true); $('stop').disabled = false;
   $('results').replaceChildren();
+  $('results').hidden = true;
   try {
     if(stream){
       const video = $('video');
@@ -156,7 +157,7 @@ async function showResult(data, token) {
   if(!data.cardPresent || !data.cornersValid || !data.cardId){setBusy(false);status(autoFrame ? 'カードを探しています。四隅を画面に収めてください。' : 'カードを検出できませんでした。四隅を入れ、背景とカードを離して撮り直してください。');scheduleAuto();return;}
   releaseCamera();
   $('preview').hidden = false;
-  const hits = (data.candidates || [{cardId:data.cardId,score:data.score}]).filter(hit=>uuidPattern.test(hit.cardId)).slice(0,3);
+  const hits = (data.candidates?.length ? data.candidates : [{cardId:data.cardId,score:data.score}]).filter(hit=>uuidPattern.test(hit.cardId)).sort((a,b)=>(b.score || 0)-(a.score || 0)).slice(0,3);
   if(!hits.length)throw new Error('対応するカードIDがありません');
   status('候補のカード情報を取得しています…');
   requestController = new AbortController();
@@ -182,6 +183,9 @@ async function showResult(data, token) {
   }
   setBusy(false);
   if(!$('results').children.length)throw new Error('候補のカード情報が見つかりませんでした');
+  const best = hits.map(hit=>cards.get(hit.cardId)).find(Boolean);
+  $('results').hidden = true;
+  await window.scannerQuickAdd.open(best);
   status(`候補を表示しました（認識 ${Math.round(data.timing?.totalMs || 0)}ms）。${data.score < .5 ? '類似度が低いため、該当なしの可能性があります。' : '版・言語を確認して選んでください。'}`);
 }
 $('start').addEventListener('click',startCamera);
