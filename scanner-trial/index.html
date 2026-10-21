@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>カードスキャナー（試用） | MTG Pocket</title>
-  <link rel="stylesheet" href="trial.css?v=297">
+  <link rel="stylesheet" href="trial.css?v=299">
 </head>
 <body>
 <main>
   <a class="back" href="../">← カード検索に戻る</a>
   <header><span class="badge">試用版</span><h1>カードスキャナー</h1><p>カードを1枚かざすと、自動で候補を表示します。</p></header>
   <section class="panel">
-    <p>初回は認識データなど約50〜80MBを読み込みます。Wi-Fiでの利用をおすすめします。写真は端末内で処理し、候補のカード情報だけScryfallから取得します。</p>
+    <p>初回は認識データなど約50〜80MBを読み込みます。Wi-Fiでの利用をおすすめします。言語判定用データも初回に取得します。日本語を判定できない場合は英語版を表示します。写真は端末内で処理し、候補のカード情報だけScryfallから取得します。</p>
     <div class="actions"><button id="start">カメラを起動</button><label class="button secondary" for="photo">写真を選ぶ<input id="photo" type="file" accept="image/*"></label><button id="stop" class="secondary" disabled>停止</button></div>
     <p><label><input id="auto" type="checkbox" checked> 自動読み取り（試用）</label><br>約2秒間隔で確認します。候補が出たらカメラと解析を停止します。オフにすると手動で読み取れます。</p>
     <div class="stage"><video id="video" muted playsinline hidden></video><canvas id="preview" hidden></canvas><p id="placeholder">明るい場所で、カードの四隅を画面に収めてください。</p></div>
@@ -19,7 +19,7 @@
     <progress id="progress" max="1" hidden></progress>
   </section>
   <section class="panel"><h2>認識候補</h2><p>版・言語・Foilは必ず確認してください。似ている度合いは正解率ではありません。最有力候補の確認画面から枚数を指定して追加できます。</p><button id="next" class="secondary">次のカードを読み取る</button><div id="results"><p>まだ読み取っていません。</p></div></section>
-  <details class="panel"><summary>動作確認・試用データの削除</summary><p>カメラが使えない場合はサンプル写真で認識処理を確認できます。</p><div class="actions"><button id="sample" class="secondary">サンプル画像で試す</button><button id="clear" class="secondary">認識データを削除</button></div><p>削除するのはダウンロードした認識データのみです。所持カード・デッキ・設定には触れません。</p><p>認識用カード一覧：2026年7月9日版。それ以降のカードや未収録の版は一致しない場合があります。</p></details>
+  <details class="panel"><summary>動作確認・試用データの削除</summary><p>カメラが使えない場合はサンプル写真で認識処理を確認できます。</p><div class="actions"><button id="sample" class="secondary">サンプル画像で試す</button><button id="clear" class="secondary">認識データを削除</button></div><p>削除するのはダウンロードした認識データのみです。所持カード・デッキ・設定には触れません。</p><p>認識用カード一覧：2026年7月9日版＋リアリティ・フラクチャー（FRA）461版。未収録のカードや版は一致しない場合があります。</p></details>
   <footer>認識エンジン：<a href="https://github.com/HanClinto/CollectorVision" target="_blank" rel="noopener noreferrer">CollectorVision</a>（AGPL-3.0）<br><a href="vendor/LICENSE">ライセンス</a> · <a href="SOURCE.md">ソース・変更点・削除手順</a></footer>
 </main>
 <dialog id="quickDialog" aria-labelledby="quickName">
@@ -32,8 +32,9 @@
   <button id="quickNext" type="button" hidden>次のカードを読み取る</button>
 </dialog>
 <script>window.MTG_STORAGE_TEST = true;</script>
-<script src="../storage.js?v=297"></script>
-<script src="quick-store.js?v=297"></script>
-<script src="quick-add.js?v=297"></script>
-<script type="module" src="trial.js?v=297"></script>
+<script src="../storage.js?v=299"></script>
+<script src="quick-store.js?v=299"></script>
+<script src="quick-add.js?v=299"></script>
+<script src="scanner-language.js?v=299"></script>
+<script type="module" src="trial.js?v=299"></script>
 </body></html>

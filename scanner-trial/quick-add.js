@@ -41,13 +41,13 @@
       if (request === revision) message(error.name === 'AbortError' ? '取得が中断されました。言語を選び直してください。' : error.message);
     } finally { clearTimeout(timeout); if (request === revision) { loading = false; enabled(); } }
   }
-  async function open(card) {
+  async function open(card, initialLanguage = card.lang) {
     original = card; selected = null; saved = false; saving = false;
     el('quickQuantity').value = 1; el('quickFinish').value = 'normal';
     display(card);
     el('quickLanguage').replaceChildren();
     for (const [value,label] of [['ja','日本語'],['en','英語'], ...(!['ja','en'].includes(card.lang) ? [[card.lang,card.lang]] : [])]) el('quickLanguage').add(new Option(label,value));
-    el('quickLanguage').value = card.lang;
+    el('quickLanguage').value = initialLanguage;
     el('quickDialog').showModal();
     await changeLanguage();
   }

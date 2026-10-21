@@ -30,6 +30,7 @@ function setBusy(value) {
   $('next').disabled = value;
 }
 function stop(message = '停止しました。もう一度開始できます。') {
+  window.scannerLanguage?.cancel();
   ++generation; ++operation;
   autoFrame = false;
   clearTimeout(watchdog);
@@ -56,18 +57,19 @@ async function ensureReady() {
   status('認識データを準備しています… 初回は時間がかかります。');
   requestController = new AbortController();
   readyTask = (async () => {
-    const response = await fetch('vendor/manifest.json', {signal:requestController.signal});
+    const response = await fetch('vendor/manifest.json?v=299', {signal:requestController.signal});
     if (!response.ok) throw new Error('認識データの案内を取得できませんでした');
     const manifest = await response.json();
     if (token !== generation) throw new DOMException('Stopped','AbortError');
     await new Promise((resolve, reject) => {
       pendingReject = reject;
-      worker = new Worker('vendor/scanner.worker.mjs', {type:'module'});
+      worker = new Worker('vendor/scanner.worker.mjs?v=299', {type:'module'});
       watchdog = setTimeout(() => fail(new Error('準備がタイムアウトしました。通信状態を確認してください。')), 180000);
       worker.onerror = event => { reject(new Error(event.message)); fail(new Error(event.message)); };
       worker.onmessage = event => {
-        if (token !== generation) return;
         const data = event.data;
+        data.detectorBitmap?.close();
+        if (token !== generation) { data.cropBitmap?.close(); return; }
         if (data.type === 'progress') {
           const labels = {detector:'カード検出モデル',embedder:'カード認識モデル',catalog:'カード一覧',dewarp:'画像補正',webgpu:'実行環境',milo:'カード認識モデル',cornelius:'カード検出モデル'};
           const percent = Number.isFinite(data.ratio) ? ` ${Math.round(data.ratio*100)}%` : '';
@@ -149,13 +151,16 @@ async function capture(automatic = false) {
     if(token !== generation){bitmap.close();return;}
     status('カードを認識しています…');
     watchdog = setTimeout(()=>fail(new Error('認識がタイムアウトしました。')),45000);
-    worker.postMessage({type:'frame',bitmap},[bitmap]);
+    worker.postMessage({type:'frame',bitmap,includeDebugBitmaps:true},[bitmap]);
   }catch(error){if(token === generation)fail(error);}
 }
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 async function showResult(data, token) {
   if(!data.cardPresent || !data.cornersValid || !data.cardId){setBusy(false);status(autoFrame ? 'カードを探しています。四隅を画面に収めてください。' : 'カードを検出できませんでした。四隅を入れ、背景とカードを離して撮り直してください。');scheduleAuto();return;}
   releaseCamera();
+  status('カードの文字から言語を確認しています…');
+  const detectedLanguage = await window.scannerLanguage.detect(data.cropBitmap, data.orientation === 'rotated_180');
+  if (token !== generation) return;
   $('preview').hidden = false;
   const hits = (data.candidates?.length ? data.candidates : [{cardId:data.cardId,score:data.score}]).filter(hit=>uuidPattern.test(hit.cardId)).sort((a,b)=>(b.score || 0)-(a.score || 0)).slice(0,3);
   if(!hits.length)throw new Error('対応するカードIDがありません');
@@ -181,11 +186,12 @@ async function showResult(data, token) {
     link.addEventListener('click',()=>stop());
     body.append(title,meta,link);row.append(img,body);$('results').append(row);
   }
-  setBusy(false);
   if(!$('results').children.length)throw new Error('候補のカード情報が見つかりませんでした');
   const best = hits.map(hit=>cards.get(hit.cardId)).find(Boolean);
   $('results').hidden = true;
-  await window.scannerQuickAdd.open(best);
+  await window.scannerQuickAdd.open(best, detectedLanguage === 'ja' ? 'ja' : 'en');
+  if (token !== generation) return;
+  setBusy(false);
   status(`候補を表示しました（認識 ${Math.round(data.timing?.totalMs || 0)}ms）。${data.score < .5 ? '類似度が低いため、該当なしの可能性があります。' : '版・言語を確認して選んでください。'}`);
 }
 $('start').addEventListener('click',startCamera);

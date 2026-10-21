@@ -1,0 +1,86 @@
+[
+  {
+    "id": "730d8c28-1e58-4b8e-89e9-445d154d2e83",
+    "best": "730d8c28-1e58-4b8e-89e9-445d154d2e83",
+    "score": 0.9938698410987854,
+    "oldBestScore": 0.6549838185310364,
+    "sameOracle": true
+  },
+  {
+    "id": "1913788b-36d3-4488-a744-71e52b1ecb5c",
+    "best": "1913788b-36d3-4488-a744-71e52b1ecb5c",
+    "score": 0.9988570809364319,
+    "oldBestScore": 0.48705676198005676,
+    "sameOracle": true
+  },
+  {
+    "id": "112f8478-bd89-4a14-9721-8ab750613129",
+    "best": "112f8478-bd89-4a14-9721-8ab750613129",
+    "score": 0.9987693428993225,
+    "oldBestScore": 0.5027691125869751,
+    "sameOracle": true
+  },
+  {
+    "id": "25e36841-3242-436b-8e82-9099063fa461",
+    "best": "25e36841-3242-436b-8e82-9099063fa461",
+    "score": 0.9860914945602417,
+    "oldBestScore": 0.5383884906768799,
+    "sameOracle": true
+  },
+  {
+    "id": "a4e4966b-8963-4fac-a8bf-e778e063c7dd",
+    "best": "a4e4966b-8963-4fac-a8bf-e778e063c7dd",
+    "score": 0.9991487860679626,
+    "oldBestScore": 0.5313218832015991,
+    "sameOracle": true
+  },
+  {
+    "id": "e24ab744-0033-4793-b379-ae6b51114d17",
+    "best": "e24ab744-0033-4793-b379-ae6b51114d17",
+    "score": 0.9962877035140991,
+    "oldBestScore": 0.5484581589698792,
+    "sameOracle": true
+  },
+  {
+    "id": "8b07409a-1dce-461d-95e4-1130521ff4c4",
+    "best": "8b07409a-1dce-461d-95e4-1130521ff4c4",
+    "score": 0.9904466271400452,
+    "oldBestScore": 0.45420095324516296,
+    "sameOracle": true
+  },
+  {
+    "id": "cf0eec8c-0475-4050-8144-481a9bb13a0f",
+    "best": "cf0eec8c-0475-4050-8144-481a9bb13a0f",
+    "score": 0.9968992471694946,
+    "oldBestScore": 0.4488196074962616,
+    "sameOracle": true
+  },
+  {
+    "id": "7081f960-3476-4acd-8272-600c1e50b560",
+    "best": "7081f960-3476-4acd-8272-600c1e50b560",
+    "score": 0.9962453842163086,
+    "oldBestScore": 0.6184735894203186,
+    "sameOracle": true
+  },
+  {
+    "id": "30693b85-550d-4c98-8c5b-4fd4e91c9f28",
+    "best": "30693b85-550d-4c98-8c5b-4fd4e91c9f28",
+    "score": 0.9960465431213379,
+    "oldBestScore": 0.5900731086730957,
+    "sameOracle": true
+  },
+  {
+    "id": "2f47ddf7-35b6-4205-8045-f057914c5f64",
+    "best": "2f47ddf7-35b6-4205-8045-f057914c5f64",
+    "score": 0.9989222884178162,
+    "oldBestScore": 0.56648188829422,
+    "sameOracle": true
+  },
+  {
+    "id": "5838af68-66c3-4fe8-ab89-0a1721b0cfeb",
+    "best": "5838af68-66c3-4fe8-ab89-0a1721b0cfeb",
+    "score": 0.9984127879142761,
+    "oldBestScore": 0.5224254727363586,
+    "sameOracle": true
+  }
+]

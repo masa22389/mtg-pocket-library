@@ -20,6 +20,8 @@ vm.createContext(ui);vm.runInContext(fs.readFileSync(path.join(root,'scanner-tri
 await ui.window.scannerQuickAdd.open(card);assert.equal(el('quickSave').disabled,false);
 const first=el('quickSave').handlers.click();await el('quickSave').handlers.click();assert.equal(saves,1);release();await first;assert.equal(el('quickSave').disabled,true);assert.equal(el('quickNext').hidden,false);assert.equal(el('quickClose').disabled,false);
 await ui.window.scannerQuickAdd.open(card);el('quickLanguage').value='ja';await el('quickLanguage').handlers.change();assert.equal(el('quickSave').disabled,true);assert.match(el('quickStatus').textContent,/取得できません/);
+ui.fetch=async()=>({ok:true,json:async()=>({...card,id:'ja-id',lang:'ja',printed_name:'日本語カード'})});
+await ui.window.scannerQuickAdd.open(card,'ja');assert.equal(el('quickLanguage').value,'ja');assert.equal(el('quickName').textContent,'日本語カード');assert.equal(el('quickSave').disabled,false);
 console.log('PASS quick UI: best candidate, double-click protection, completion/next, language fetch failure blocks save');
 })().catch(e=>{console.error(e);process.exitCode=1});
 

@@ -44,5 +44,13 @@
     "dims": 128,
     "dtype": "float16"
   },
-  "sample_frame": "samples/mtg-sample.jpg"
+  "sample_frame": "samples/mtg-sample.jpg",
+  "catalogSupplement": {
+    "version": "fra-2026-10-22-v1",
+    "rows": 461,
+    "dims": 128,
+    "embeddings": "catalog/fra.f16.bin",
+    "card_ids": "catalog/fra-ids.json",
+    "oracle_ids": "catalog/fra-oracles.json"
+  }
 }

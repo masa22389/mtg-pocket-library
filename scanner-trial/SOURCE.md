@@ -1,4 +1,4 @@
-# カードスキャナー試用版 v297
+# カードスキャナー試用版 v298
 
 このディレクトリの試用コードは AGPL-3.0-only で提供します。ライセンス全文は vendor/LICENSE。
 trial.js、quick-add.js、quick-store.js、trial.css、index.html と vendor/scanner.worker.mjs が、試用版の対応するソースです。ビルド工程はありません。
@@ -41,3 +41,20 @@ trial.js、quick-add.js、quick-store.js、trial.css、index.html と vendor/sca
 
 ## v278 自動読み取りの試用
 専用画面でカメラを自動起動。自動モードは処理完了後1.8秒空けて再試行し、候補取得時にカメラ停止。手動切替、停止、画面非表示時の解放に対応。自動登録はしません。
+
+## v298 FRA recognition supplement
+
+- Base catalog remains the upstream 2026-07-09 snapshot. A local supplement covers 461 FRA print IDs fetched from Scryfall on 2026-10-22; 454 IDs were missing from the base catalog. Duplicate IDs are not appended.
+- Generated using the identical pinned Milo ONNX SHA-256, ImageNet normalization, 448x448 RGB input, normalized 128-dimensional vectors stored as float16. No model retraining or runtime image upload.
+- `scripts/build-fra-scanner-catalog.py --work-dir <temporary-directory>` reproduces assets with Python, numpy, Pillow, onnxruntime >= 1.20. Downloaded card images remain in the specified temporary directory; only vectors/IDs are shipped.
+- `catalog/validation.json` records brightness-modified reference-image checks against the full base catalog. This is not a smartphone camera accuracy measurement. Language detection remains unchanged.
+- Added assets: about 155 KB, cached separately by supplement version; original model/catalog cache remains reusable. Asset dimensions are validated before merging.
+
+## v299 Local Japanese-language detection (trial)
+- After one successful card identification, transfer the rectified 448px crop, rotate to the recognized orientation, and OCR the lower text area at 896px width. No camera frame or OCR text is uploaded.
+- Tesseract.js 6.0.1 and tesseract.js-core 6.0.0 (Apache-2.0) are loaded from jsDelivr. Japanese/English traineddata is downloaded on first use and cached by Tesseract. The existing scanner-data removal button removes only the CollectorVision cache, not Tesseract's language cache.
+- Japanese requires OCR confidence >=45, kana evidence, at least six Japanese characters and more Japanese than Latin letters. Otherwise English is requested. This is conservative heuristic detection, not guaranteed language identification.
+- A separate OCR worker runs once per recognized card, with a 25-second timeout, and terminates on completion, cancellation, error or page exit. Initial downloads add latency and temporary memory use; mobile performance is not yet measured.
+- Language retrieval uses the existing exact set/collector-number/Oracle-ID check. Missing Japanese printing blocks saving and offers manual language/alternate-candidate selection, rather than silently saving English as Japanese.
+- PC reference-image test: TDM #5 Japanese detected Japanese (confidence 74), English detected unknown/default-English (confidence 74); OCR about 0.7–0.8 seconds excluding initial downloads. This is not smartphone camera validation.
+- Upstream documentation: https://github.com/naptha/tesseract.js/blob/master/docs/api.md

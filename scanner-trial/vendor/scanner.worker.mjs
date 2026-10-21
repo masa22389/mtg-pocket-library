@@ -726,6 +726,30 @@ class WorkerRuntime {
       Math.floor(this.embeddings.length / dims),
     );
     this.catalogTotalRows = declaredRows;
+    // Small local supplement uses the same Milo model and packed float16 format.
+    const extra = this.manifest.catalogSupplement;
+    if (extra) {
+      onStage?.("catalog", 0, 0, extra.rows, false);
+      const base = new URL("../", import.meta.url);
+      const extraIds = await fetchJsonCached(new URL(extra.card_ids, base).href, extra.version);
+      const extraOracles = await fetchJsonCached(new URL(extra.oracle_ids, base).href, extra.version);
+      const buffer = await fetchBufferCached(new URL(extra.embeddings, base).href, extra.version);
+      if (extra.dims !== dims || extraIds.length !== extra.rows || extraOracles.length !== extra.rows || buffer.byteLength !== extra.rows * dims * 2) {
+        throw new Error("追加認識データの形式が一致しません");
+      }
+      const existing = new Set(this.cardIds);
+      const added = extraIds.map((id, index) => index).filter(index => !existing.has(extraIds[index]));
+      const packed = new Uint16Array((this.catalogRows + added.length) * dims);
+      packed.set(this.embeddings.subarray(0, this.catalogRows * dims));
+      const extraPacked = wrapFloat16Buffer(buffer);
+      added.forEach((index, offset) => packed.set(extraPacked.subarray(index * dims, (index + 1) * dims), (this.catalogRows + offset) * dims));
+      this.embeddings = packed;
+      this.cardIds = this.cardIds.slice(0, this.catalogRows).concat(added.map(index => extraIds[index]));
+      if (this.secondaryIds) this.secondaryIds = this.secondaryIds.slice(0, this.catalogRows).concat(added.map(index => extraOracles[index]));
+      this.catalogRows += added.length;
+      this.catalogTotalRows += added.length;
+      onStage?.("catalog", 1, extra.rows, extra.rows, false);
+    }
   }
 
   async loadCatalogV2(onStage) {

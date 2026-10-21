@@ -4,7 +4,7 @@ const {readFileSync}=require('node:fs');
 const {join}=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
-const source=readFileSync(join(__dirname,'vendor/scanner.worker.mjs'),'utf8');
+const source=readFileSync(join(__dirname,'vendor/scanner.worker.mjs'),'utf8').replace(/\r\n/g, '\n');
 const start=source.indexOf('  search(query) {');
 const end=source.indexOf('\n}\n',start);
 assert(start>0 && end>start);
