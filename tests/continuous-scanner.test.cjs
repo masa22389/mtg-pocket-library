@@ -1,0 +1,22 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+const {indexedDB,IDBObjectStore}=require(process.argv[2] || 'fake-indexeddb');
+const c={indexedDB,crypto:require('node:crypto').webcrypto,sessionStorage:{setItem(){}},createMtgStorage:async()=>new Promise((resolve,reject)=>{const r=indexedDB.open('mtg-pocket-data-v1',1);r.onupgradeneeded=()=>r.result.createObjectStore('values');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);})};c.window=c;vm.createContext(c);
+for(const f of ['quick-store.js','continuous-store.js','continuous-flow.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'../scanner-trial',f),'utf8'),c);
+(async()=>{
+ const motion=c.scanFlow.createMotion(),sample=Array(20).fill(0);for(let i=0;i<3;i++)assert.equal(motion.observe(sample).stable,false);assert.equal(motion.observe(sample).stable,true);motion.attempted(sample);assert.equal(motion.observe(sample).changed,false);assert.equal(motion.observe(Array(20).fill(20)).changed,true);
+ assert.equal(c.scanFlow.classify({cardPresent:true,cornersValid:true,identityCandidates:[{identity:'a',score:.92},{identity:'b',score:.7}]}).automatic,true);
+ for(const scores of [[.8,.7],[.92,.9]])assert.equal(c.scanFlow.classify({cardPresent:true,cornersValid:true,identityCandidates:scores.map((score,i)=>({score,identity:i}))}).automatic,false);
+ const api=c.continuousDraft,template={name:'Test',candidateIds:['x'],language:'en',finish:'normal'};
+ await Promise.all([api.add(template),api.add(template)]);let rows=await api.read();assert.equal(rows.length,2);
+ await assert.rejects(api.commit(),/確認/);
+ const card={id:'x',oracle_id:'o',lang:'en',set:'tst',collector_number:'1',name:'Test',finishes:['nonfoil','foil']};
+ await assert.rejects(async()=>api.confirm(rows[0].id,card,{language:'ja',finish:'normal'}),/言語/);
+ for(const r of rows)await api.confirm(r.id,card,{language:'en',finish:'normal'});
+ const db=await c.scannerCollection.database(),owned=()=>new Promise(r=>{const q=db.transaction('values').objectStore('values').get('mtg-pocket.collection.v1');q.onsuccess=()=>r(JSON.parse(q.result||'[]'));});
+ assert.equal((await owned()).length,0);const put=IDBObjectStore.prototype.put;
+ IDBObjectStore.prototype.put=function(value,key){if(key==='mtg-pocket.collection.v1')throw new Error('quota test');return put.call(this,value,key)};
+ await assert.rejects(api.commit(),/quota/);assert.equal((await api.read()).length,2);assert.equal((await owned()).length,0);IDBObjectStore.prototype.put=put;
+ await Promise.all([api.commit(),api.commit()]);assert.equal((await api.read()).length,0);assert.equal((await owned())[0].quantity,2);assert.equal('review' in (await owned())[0],false);
+ rows=await api.add(template);await api.add(template);await api.remove(rows[0].id);assert.equal((await api.read()).length,1);
+ console.log('PASS motion/stability, identity confidence, provisional save guard, language guard, concurrent additions, atomic rollback, duplicate commit, one-copy undo, collection compatibility');db.close();
+})().catch(e=>{console.error(e);process.exitCode=1});

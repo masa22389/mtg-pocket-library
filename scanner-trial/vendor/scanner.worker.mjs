@@ -968,12 +968,21 @@ class WorkerRuntime {
     let bestScore = -Infinity;
     let bestIndex = -1;
     const top = [];
+    const identities = [];
 
     for (let row = 0; row < rows; row += 1) {
       const offset = row * dims;
       let score = 0;
       for (let col = 0; col < dims; col += 1) {
         score += FLOAT16_LOOKUP[this.embeddings[offset + col]] * query[col];
+      }
+      const identity = this.secondaryIds?.[row] || this.cardIds[row];
+      const existing = identities.find(item => item.identity === identity);
+      if (existing) { if (score > existing.score) { existing.score = score; existing.cardId = this.cardIds[row]; identities.sort((a,b)=>b.score-a.score); } }
+      else if (identities.length < 3 || score > identities[identities.length - 1].score) {
+        identities.push({identity, cardId:this.cardIds[row], score});
+        identities.sort((a,b)=>b.score-a.score);
+        if (identities.length > 3) identities.pop();
       }
       if (top.length < 3 || score > top[top.length - 1].score) {
         top.push({ cardId: this.cardIds[row], score });
@@ -989,6 +998,7 @@ class WorkerRuntime {
     const secondaryId = this.secondaryIds?.[bestIndex] ?? null;
     const best = {
       candidates: top,
+      identityCandidates: identities,
       score: bestScore,
       cardId: this.cardIds[bestIndex],
       cardName: this.cardNames?.[bestIndex] ?? null,
@@ -1011,7 +1021,7 @@ let runtime = null;
 let frameCanvas = null;
 let frameCtx = null;
 
-async function processFrame(bitmap, captureRequested = false, includeDebugBitmaps = false) {
+async function processFrame(bitmap, captureRequested = false, includeDebugBitmaps = false, detectionOnly = false) {
   const tFrameStart = performance.now();
   if (!frameCanvas || frameCanvas.width !== bitmap.width || frameCanvas.height !== bitmap.height) {
     frameCanvas = new OffscreenCanvas(bitmap.width, bitmap.height);
@@ -1036,6 +1046,14 @@ async function processFrame(bitmap, captureRequested = false, includeDebugBitmap
     captureMs: tCaptureReady - tFrameReady,
     ...detection.timing,
   };
+
+  if (detectionOnly) {
+    self.postMessage({type:"result", detectionOnly:true, cardPresent:detection.cardPresent,
+      cornersValid:detection.cardPresent && isUsableQuad(detection.corners), corners:detection.corners,
+      timing:roundTiming({...baseTiming,totalMs:performance.now()-tFrameStart})});
+    captureFrameBitmap?.close();
+    return;
+  }
 
   if (!detection.cardPresent) {
     const transfer0 = captureFrameBitmap ? [captureFrameBitmap] : [];
@@ -1117,6 +1135,7 @@ async function processFrame(bitmap, captureRequested = false, includeDebugBitmap
     sharpness: detection.sharpness,
     confidence: detection.confidence,
     candidates: best.candidates,
+    identityCandidates: best.identityCandidates,
     cardId: best.cardId,
     cardName: best.cardName,
     secondaryId: best.secondaryId,
@@ -1205,6 +1224,7 @@ self.onmessage = async ({ data }) => {
         data.bitmap,
         data.captureRequested ?? false,
         data.includeDebugBitmaps ?? false,
+        data.detectionOnly ?? false,
       );
     } else if (data.type === "config") {
       runtime?.updateConfig({

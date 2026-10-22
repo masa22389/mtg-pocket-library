@@ -64,3 +64,27 @@ Camera preview remains active during confirmation. Recognition pauses until Next
 
 ## v302 live scanning
 Camera-first interface with a compact result overlay. scan-gate.js requires two consecutive matching print IDs, score >= 0.85 and runner-up margin >= 0.06 for trial automatic draft insertion. These thresholds are not calibrated accuracy claims. Same oracle is suppressed until a different stable card or two absent frames; use More for identical copies. Uncertain results require confirmation. Japanese/English session selection bypasses OCR; Auto retains OCR. The list remains local and final collection writes remain atomic.
+
+## v304 continuous scanner (comparison trial)
+
+New entry: `continuous.html`; the previous `index.html?mode=legacy` remains available.
+The main app scanner link opens the new entry. The v303 default-card-language fix is retained.
+
+### Flow and safety
+- `continuous-flow.js`: 32x40 luminance samples, mean-normalized motion check. Three settled intervals trigger recognition only after a change from the last attempted sample. These thresholds are trial settings, not validated accuracy claims.
+- While moving, detector-only requests at most once per second update corners, without embedding or catalog search. When stable, one full worker frame recognizes the card (including the existing upright/180-degree passes). No mandatory two-frame heavy recognition.
+- Worker returns top distinct oracle identities as well as printing candidates. Identity score >= .85 and distinct-identity margin >= .06 allow provisional registration. Missing comparator or low margin requires explicit user action. Scores are not calibrated probabilities.
+- Last identity stays locked even across absence: an identical physical replacement must use More. A different identity unlocks the next card. Tiny visual changes below the motion threshold may need Rescan. Rescan does not bypass the identity lock.
+- Every new entry has `review:true`. Matching images alone do not prove edition, language or foil. The confirmation sheet loads candidate images, supports additional editions and language/finish choice. No unresolved entry can be committed.
+- Pending rows use `mtg-pocket.scannerPending.v1`, separate from the legacy draft. Each event is one copy; Undo deletes only its event. This survives reload; no image blobs are stored.
+- Confirmed rows use the existing scannerCollection.compact format. Final merge and pending-list consumption occur in one IndexedDB transaction. Failed writes roll back; repeated commit does not duplicate copies. Existing collection/deck formats are unchanged.
+- Stop/hidden/pagehide terminate the worker, camera tracks, pending requests and OCR. One worker RPC at a time. Metadata cache maximum 100 items / five-minute read TTL. Logs maximum 100 samples. No camera frames uploaded.
+- Scryfall metadata is still required for first-time results/review. No new promise of fully offline scanner recognition. Main PWA offline shell behavior is unchanged.
+
+### Measurement and verification
+Diagnostic export contains worker stage timings, detector-only calls, stable-observed-to-recognition, metadata, optional language OCR, result display, save, total and JS heap when supported. JS heap is not total process/GPU/WASM memory. The ring does not contain camera frames.
+
+Unit tests: continuous-scanner.test.cjs (fake-indexeddb path argument), continuous-worker.test.cjs, plus existing scanner and default language regressions.
+Isolated browser mock: confirmed one recognition for held A, More, one-copy Undo, B automatic pending, review blocks commit, both confirmations enable atomic commit. This is flow verification, NOT image accuracy or phone speed measurement.
+
+Device comparison still required: same lighting/cards/distance, cold vs warm model separately; Japanese/English, same-art reprints, different artwork, rotated and blurred cards; 50+ labelled attempts per condition, 100 exchanges, 30-minute continuous sessions; Android Galaxy M23 5G and iPhone Safari/home-screen. Record correct oracle/printing versus ground truth, false additions, duplicate events, missed exchanges, median/p95 display/save time, memory and heat. 1–2 seconds remains a goal, not a verified result. Legacy mode is not removed until results support it.
