@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>カードスキャナー（試用） | MTG Pocket</title>
-  <link rel="stylesheet" href="trial.css?v=299">
+  <link rel="stylesheet" href="trial.css?v=300">
 </head>
 <body>
 <main>
@@ -26,15 +26,16 @@
   <button id="quickClose" class="secondary close" type="button" aria-label="閉じる">×</button>
   <img id="quickImage" alt=""><h2 id="quickName"></h2><p id="quickMeta"></p>
   <div class="quick-fields"><label>仕様<select id="quickFinish"></select></label><label>言語<select id="quickLanguage"></select></label><label>追加枚数<input id="quickQuantity" type="number" min="1" step="1" value="1" inputmode="numeric"></label></div>
+  <p id="quickLanguageStatus" role="status"></p>
   <p id="quickStatus" role="status" aria-live="polite"></p>
   <button id="quickSave" type="button">コレクションに追加</button>
   <button id="quickOther" type="button" class="secondary">別の候補を選ぶ</button>
   <button id="quickNext" type="button" hidden>次のカードを読み取る</button>
 </dialog>
 <script>window.MTG_STORAGE_TEST = true;</script>
-<script src="../storage.js?v=299"></script>
-<script src="quick-store.js?v=299"></script>
-<script src="quick-add.js?v=299"></script>
-<script src="scanner-language.js?v=299"></script>
-<script type="module" src="trial.js?v=299"></script>
+<script src="../storage.js?v=300"></script>
+<script src="quick-store.js?v=300"></script>
+<script src="quick-add.js?v=300"></script>
+<script src="scanner-language.js?v=300"></script>
+<script type="module" src="trial.js?v=300"></script>
 </body></html>

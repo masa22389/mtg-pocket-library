@@ -13,5 +13,7 @@ assert.equal(api.classify('龍 王 天 地',90),'unknown');
  reply=null;let p=api.detect(bitmap());api.cancel();assert.equal(await p,'unknown');assert.equal(terminated,2);
  p=api.detect(bitmap());timer();assert.equal(await p,'unknown');assert.equal(terminated,3);
  p=api.detect(bitmap());currentWorker.onerror();assert.equal(await p,'unknown');assert.equal(terminated,4);
+ assert.match(api.lastReason,/起動/);
+ reply={error:true,text:'',confidence:0};assert.equal(await api.detect(bitmap()),'unknown');assert.match(api.lastReason,/失敗/);
  console.log('PASS Japanese classification, English decoration rejection, low confidence, cancel/timeout/error resource cleanup');
 })();

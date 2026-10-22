@@ -10,6 +10,6 @@ self.onmessage=async event=>{
     await ocr.setParameters({tessedit_pageseg_mode:'6'});
     const {data}=await ocr.recognize(event.data);
     self.postMessage({text:data.text,confidence:data.confidence});
-  } catch { self.postMessage({text:'',confidence:0}); }
+  } catch { self.postMessage({text:'',confidence:0,error:true}); }
   finally {await ocr?.terminate();}
 };

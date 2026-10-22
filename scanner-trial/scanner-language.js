@@ -12,7 +12,7 @@
   function cancel() { active?.(); }
   async function detect(bitmap, rotated = false) {
     cancel();
-    if (!bitmap) return 'unknown';
+    if (!bitmap) { window.scannerLanguage.lastReason = '画像を取得できませんでした'; return 'unknown'; }
     // Only the rules text area is needed; no continuous OCR while aiming.
     const canvas = document.createElement('canvas'); canvas.width = 896; canvas.height = 896;
     const ctx = canvas.getContext('2d');
@@ -23,13 +23,16 @@
     canvas.width=canvas.height=0;
     const image = text.toDataURL('image/png'); text.width=text.height=0;
     return new Promise(resolve => {
-      const worker = new Worker('language.worker.js?v=299');
+      const worker = new Worker('language.worker.js?v=300');
       let done=false;
-      const finish=value=>{if(done)return;done=true;clearTimeout(timer);worker.terminate();if(active===abort)active=null;resolve(value);};
-      const abort=()=>finish('unknown');
-      const timer=setTimeout(abort,25000);active=abort;
-      worker.onmessage=event=>finish(classify(event.data.text || '',event.data.confidence));
-      worker.onerror=abort;
+      const finish=(value,reason)=>{if(done)return;done=true;window.scannerLanguage.lastReason=reason;clearTimeout(timer);worker.terminate();if(active===abort)active=null;resolve(value);};
+      const abort=()=>finish('unknown','判定を中断しました');
+      const timer=setTimeout(()=>finish('unknown','文字認識が時間切れになりました'),25000);active=abort;
+      worker.onmessage=event=>{
+        const value=classify(event.data.text || '',event.data.confidence);
+        finish(value,event.data.error ? '文字認識の読み込み・実行に失敗しました' : value === 'ja' ? '日本語の文字を検出しました' : '日本語と判定できませんでした');
+      };
+      worker.onerror=()=>finish('unknown','文字認識を起動できませんでした');
       worker.postMessage(image);
     });
   }

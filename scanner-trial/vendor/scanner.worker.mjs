@@ -848,7 +848,9 @@ class WorkerRuntime {
     };
   }
 
-  dewarp(frameCanvas, corners) {
+  dewarp(frameCanvas, corners, size = DEWARP_W) {
+    const output = size === DEWARP_W ? this.dewarpCanvas : new OffscreenCanvas(size, size);
+    const context = output.getContext("2d");
     const t0 = performance.now();
     const width = frameCanvas.width;
     const height = frameCanvas.height;
@@ -860,9 +862,9 @@ class WorkerRuntime {
     ];
     const dstPts = [
       0, 0,
-      DEWARP_W - 1, 0,
-      DEWARP_W - 1, DEWARP_H - 1,
-      0, DEWARP_H - 1,
+      size - 1, 0,
+      size - 1, size - 1,
+      0, size - 1,
     ];
     const sourcePoints = [
       [srcPts[0], srcPts[1]],
@@ -879,13 +881,13 @@ class WorkerRuntime {
     const inverse = computeHomography(targetPoints, sourcePoints);
     const t1 = performance.now();
     const srcData = frameCanvas.getContext("2d", { willReadFrequently: true }).getImageData(0, 0, width, height);
-    const dstData = this.dewarpImageData;
+    const dstData = size === DEWARP_W ? this.dewarpImageData : context.createImageData(size, size);
     const t2 = performance.now();
 
-    for (let y = 0; y < DEWARP_H; y += 1) {
-      for (let x = 0; x < DEWARP_W; x += 1) {
+    for (let y = 0; y < size; y += 1) {
+      for (let x = 0; x < size; x += 1) {
         const [sx, sy] = applyHomography(inverse, x, y);
-        const offset = (y * DEWARP_W + x) * 4;
+        const offset = (y * size + x) * 4;
         dstData.data[offset] = sampleBilinear(srcData.data, width, height, sx, sy, 0);
         dstData.data[offset + 1] = sampleBilinear(srcData.data, width, height, sx, sy, 1);
         dstData.data[offset + 2] = sampleBilinear(srcData.data, width, height, sx, sy, 2);
@@ -894,7 +896,7 @@ class WorkerRuntime {
     }
 
     const t3 = performance.now();
-    this.dewarpCtx.putImageData(dstData, 0, 0);
+    context.putImageData(dstData, 0, 0);
     const t4 = performance.now();
     this._lastDewarpTiming = {
       dewarpSetupMs: t1 - t0,
@@ -903,7 +905,7 @@ class WorkerRuntime {
       dewarpWriteMs: t4 - t3,
       dewarpMs: t4 - t0,
     };
-    return this.dewarpCanvas;
+    return output;
   }
 
   async embed(cropCanvas, rotate180 = false) {
@@ -1097,7 +1099,9 @@ async function processFrame(bitmap, captureRequested = false, includeDebugBitmap
   const { best, timing: embedTiming, searchMs } = await runtime.identify(cropCanvas);
 
   // Transfer the dewarp canvas bitmap (zero-copy) then it gets a fresh blank.
-  const cropBitmap = includeDebugBitmaps ? cropCanvas.transferToImageBitmap() : null;
+  const languageCanvas = includeDebugBitmaps ? runtime.dewarp(frameCanvas, detection.corners, 896) : null;
+  const cropBitmap = languageCanvas ? languageCanvas.transferToImageBitmap() : null;
+  if (languageCanvas) languageCanvas.width = languageCanvas.height = 0;
 
   const transfer2 = [];
   if (detectorBitmap) transfer2.push(detectorBitmap);

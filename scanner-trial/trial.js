@@ -57,13 +57,13 @@ async function ensureReady() {
   status('認識データを準備しています… 初回は時間がかかります。');
   requestController = new AbortController();
   readyTask = (async () => {
-    const response = await fetch('vendor/manifest.json?v=299', {signal:requestController.signal});
+    const response = await fetch('vendor/manifest.json?v=300', {signal:requestController.signal});
     if (!response.ok) throw new Error('認識データの案内を取得できませんでした');
     const manifest = await response.json();
     if (token !== generation) throw new DOMException('Stopped','AbortError');
     await new Promise((resolve, reject) => {
       pendingReject = reject;
-      worker = new Worker('vendor/scanner.worker.mjs?v=299', {type:'module'});
+      worker = new Worker('vendor/scanner.worker.mjs?v=300', {type:'module'});
       watchdog = setTimeout(() => fail(new Error('準備がタイムアウトしました。通信状態を確認してください。')), 180000);
       worker.onerror = event => { reject(new Error(event.message)); fail(new Error(event.message)); };
       worker.onmessage = event => {
@@ -189,6 +189,7 @@ async function showResult(data, token) {
   if(!$('results').children.length)throw new Error('候補のカード情報が見つかりませんでした');
   const best = hits.map(hit=>cards.get(hit.cardId)).find(Boolean);
   $('results').hidden = true;
+  $('quickLanguageStatus').textContent = `${window.scannerLanguage.lastReason}。${detectedLanguage === 'ja' ? '日本語版を表示します。' : '英語版を表示しています。必要なら言語を変更してください。'}`;
   await window.scannerQuickAdd.open(best, detectedLanguage === 'ja' ? 'ja' : 'en');
   if (token !== generation) return;
   setBusy(false);
