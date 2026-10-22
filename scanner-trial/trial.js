@@ -5,10 +5,10 @@ const DB_NAME = 'mtg-pocket.scanner-trial.assets.v1';
 let worker = null, stream = null, readyTask = null, pendingReject = null;
 let generation = 0, busy = false, operation = 0;
 let requestController = null, watchdog = null;
-let autoTimer = null, autoFrame = false;
+let autoTimer = null, autoFrame = false, awaitingNext = false;
 function scheduleAuto() {
   clearTimeout(autoTimer);
-  if (!$('auto').checked || !stream || busy || document.hidden) return;
+  if (awaitingNext || !$('auto').checked || !stream || busy || document.hidden) return;
   autoTimer = setTimeout(() => {
     if ($('auto').checked && stream && !busy && !document.hidden) capture(true);
   }, 1800);
@@ -57,13 +57,13 @@ async function ensureReady() {
   status('認識データを準備しています… 初回は時間がかかります。');
   requestController = new AbortController();
   readyTask = (async () => {
-    const response = await fetch('vendor/manifest.json?v=300', {signal:requestController.signal});
+    const response = await fetch('vendor/manifest.json?v=301', {signal:requestController.signal});
     if (!response.ok) throw new Error('認識データの案内を取得できませんでした');
     const manifest = await response.json();
     if (token !== generation) throw new DOMException('Stopped','AbortError');
     await new Promise((resolve, reject) => {
       pendingReject = reject;
-      worker = new Worker('vendor/scanner.worker.mjs?v=300', {type:'module'});
+      worker = new Worker('vendor/scanner.worker.mjs?v=301', {type:'module'});
       watchdog = setTimeout(() => fail(new Error('準備がタイムアウトしました。通信状態を確認してください。')), 180000);
       worker.onerror = event => { reject(new Error(event.message)); fail(new Error(event.message)); };
       worker.onmessage = event => {
@@ -95,6 +95,7 @@ async function ensureReady() {
   return readyTask;
 }
 async function startCamera() {
+  awaitingNext = false; window.scannerQuickAdd.close();
   const attempt = ++operation;
   try {
     setBusy(true); $('stop').disabled = false;
@@ -141,10 +142,10 @@ async function capture(automatic = false) {
       const video = $('video');
       if(!video.videoWidth)throw new Error('カメラの準備を待ってから再試行してください');
       drawPreview(video,video.videoWidth,video.videoHeight);
-      if (!autoFrame) releaseCamera();
-      else $('preview').hidden = true;
+      // Keep the preview live while confirming a candidate.
+      $('preview').hidden = true;
     }
-    if($('preview').hidden && !autoFrame)throw new Error('写真を選んでください');
+    if($('preview').hidden && !stream)throw new Error('写真を選んでください');
     await ensureReady();
     if(token !== generation)return;
     const bitmap = await createImageBitmap($('preview'));
@@ -157,11 +158,11 @@ async function capture(automatic = false) {
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 async function showResult(data, token) {
   if(!data.cardPresent || !data.cornersValid || !data.cardId){setBusy(false);status(autoFrame ? 'カードを探しています。四隅を画面に収めてください。' : 'カードを検出できませんでした。四隅を入れ、背景とカードを離して撮り直してください。');scheduleAuto();return;}
-  releaseCamera();
+  awaitingNext = true;
   status('カードの文字から言語を確認しています…');
   const detectedLanguage = await window.scannerLanguage.detect(data.cropBitmap, data.orientation === 'rotated_180');
   if (token !== generation) return;
-  $('preview').hidden = false;
+  $('preview').hidden = !!stream;
   const hits = (data.candidates?.length ? data.candidates : [{cardId:data.cardId,score:data.score}]).filter(hit=>uuidPattern.test(hit.cardId)).sort((a,b)=>(b.score || 0)-(a.score || 0)).slice(0,3);
   if(!hits.length)throw new Error('対応するカードIDがありません');
   status('候補のカード情報を取得しています…');
@@ -202,7 +203,7 @@ $('auto').addEventListener('change',()=>{
   scheduleAuto();
   if(stream && !busy) status($('auto').checked ? '自動読み取りを開始します。' : '手動に切り替えました。「この画像を読み取る」を押してください。');
 });
-$('next').addEventListener('click',()=>{ $('results').replaceChildren(); startCamera(); });
+$('next').addEventListener('click',()=>{ window.scannerQuickAdd.close(); $('results').replaceChildren(); awaitingNext = false; if(stream) { scheduleAuto(); status('次のカードをかざしてください。'); } else startCamera(); });
 $('stop').addEventListener('click',()=>stop());
 $('photo').addEventListener('change',()=>{const file=$('photo').files[0];$('photo').value='';if(file)loadPhoto(file);});
 $('sample').addEventListener('click',async()=>{

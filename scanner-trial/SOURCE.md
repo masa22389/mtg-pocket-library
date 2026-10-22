@@ -58,3 +58,6 @@ trial.js、quick-add.js、quick-store.js、trial.css、index.html と vendor/sca
 - Language retrieval uses the existing exact set/collector-number/Oracle-ID check. Missing Japanese printing blocks saving and offers manual language/alternate-candidate selection, rather than silently saving English as Japanese.
 - PC reference-image test: TDM #5 Japanese detected Japanese (confidence 74), English detected unknown/default-English (confidence 74); OCR about 0.7–0.8 seconds excluding initial downloads. This is not smartphone camera validation.
 - Upstream documentation: https://github.com/naptha/tesseract.js/blob/master/docs/api.md
+
+## v301 continuous preview and draft list
+Camera preview remains active during confirmation. Recognition pauses until Next; automatic registration is not enabled. scanner-list.js stores a compact draft in the existing values store and consumes it in the same transaction as collection merging. scanner-list-ui.js supports removal and final save. Photos are not stored. These source files are AGPL-3.0-only.

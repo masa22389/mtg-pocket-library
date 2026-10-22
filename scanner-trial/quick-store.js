@@ -71,5 +71,5 @@
       r.onsuccess = () => resolve(r.result === 'ja' ? 'ja' : 'en'); r.onerror = () => reject(r.error);
     });
   }
-  window.scannerCollection = {add, language, compact, merge};
+  window.scannerCollection = {add, language, compact, merge, database};
 })();
