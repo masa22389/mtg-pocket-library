@@ -1,0 +1,17 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+const c={window:{}};vm.createContext(c);vm.runInContext(fs.readFileSync(path.join(__dirname,'../scanner-trial/scan-gate.js'),'utf8'),c);
+const gate=c.window.scannerGate.create();
+const card=(id,score=.94,second=.70,oracle=id)=>({cardPresent:true,cornersValid:true,cardId:id,secondaryId:oracle,score,candidates:[{cardId:id,score},{cardId:'other',score:second}]});
+assert.equal(gate.observe(card('a')).action,'wait');
+assert.equal(gate.observe(card('a')).automatic,true);
+for(let i=0;i<20;i++)assert.equal(gate.observe(card('a')).action,'duplicate');
+assert.equal(gate.observe(card('alternate',.95,.7,'a')).action,'duplicate');
+assert.equal(gate.observe(card('b')).action,'wait');
+assert.equal(gate.observe(card('a')).action,'duplicate');
+assert.equal(gate.observe(card('b')).action,'wait');
+assert.equal(gate.observe(card('b')).automatic,true);
+gate.observe({cardPresent:false});assert.equal(gate.observe(card('b')).action,'duplicate');
+gate.observe({cardPresent:false});gate.observe({cardPresent:false});gate.observe(card('b'));assert.equal(gate.observe(card('b')).automatic,true);
+gate.observe(card('c',.8));assert.equal(gate.observe(card('c',.8)).automatic,false);
+gate.observe(card('d',.95,.94));assert.equal(gate.observe(card('d',.95,.94)).automatic,false);
+console.log('PASS stable recognition, held-card deduplication, alternate printing jitter, card replacement, transient absence and uncertain confirmation');

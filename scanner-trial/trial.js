@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Scanner recognition; explicit collection saves are handled by quick-store.js.
 const $ = id => document.getElementById(id);
+const gate = window.scannerGate.create();
 const DB_NAME = 'mtg-pocket.scanner-trial.assets.v1';
 let worker = null, stream = null, readyTask = null, pendingReject = null;
 let generation = 0, busy = false, operation = 0;
@@ -8,10 +9,10 @@ let requestController = null, watchdog = null;
 let autoTimer = null, autoFrame = false, awaitingNext = false;
 function scheduleAuto() {
   clearTimeout(autoTimer);
-  if (awaitingNext || !$('auto').checked || !stream || busy || document.hidden) return;
+  if ($('scanListPanel').open || window.scannerQuickAdd.isSaving() || awaitingNext || !$('auto').checked || !stream || busy || document.hidden) return;
   autoTimer = setTimeout(() => {
     if ($('auto').checked && stream && !busy && !document.hidden) capture(true);
-  }, 1800);
+  }, 400);
 }
 const status = message => { $('status').textContent = message; };
 function releaseCamera() {
@@ -19,7 +20,7 @@ function releaseCamera() {
   for (const track of stream?.getTracks() || []) track.stop();
   stream = null;
   $('video').srcObject = null;
-  $('video').hidden = true;
+  $('video').hidden = true; $('cardOutline').setAttribute('points','');
 }
 function setBusy(value) {
   busy = value;
@@ -30,7 +31,7 @@ function setBusy(value) {
   $('next').disabled = value;
 }
 function stop(message = '停止しました。もう一度開始できます。') {
-  window.scannerLanguage?.cancel();
+  window.scannerLanguage?.cancel(); window.scannerQuickAdd.close();
   ++generation; ++operation;
   autoFrame = false;
   clearTimeout(watchdog);
@@ -57,13 +58,13 @@ async function ensureReady() {
   status('認識データを準備しています… 初回は時間がかかります。');
   requestController = new AbortController();
   readyTask = (async () => {
-    const response = await fetch('vendor/manifest.json?v=301', {signal:requestController.signal});
+    const response = await fetch('vendor/manifest.json?v=302', {signal:requestController.signal});
     if (!response.ok) throw new Error('認識データの案内を取得できませんでした');
     const manifest = await response.json();
     if (token !== generation) throw new DOMException('Stopped','AbortError');
     await new Promise((resolve, reject) => {
       pendingReject = reject;
-      worker = new Worker('vendor/scanner.worker.mjs?v=301', {type:'module'});
+      worker = new Worker('vendor/scanner.worker.mjs?v=302', {type:'module'});
       watchdog = setTimeout(() => fail(new Error('準備がタイムアウトしました。通信状態を確認してください。')), 180000);
       worker.onerror = event => { reject(new Error(event.message)); fail(new Error(event.message)); };
       worker.onmessage = event => {
@@ -135,8 +136,7 @@ async function capture(automatic = false) {
   autoFrame = automatic === true;
   const token = generation;
   setBusy(true); $('stop').disabled = false;
-  $('results').replaceChildren();
-  $('results').hidden = true;
+
   try {
     if(stream){
       const video = $('video');
@@ -152,15 +152,28 @@ async function capture(automatic = false) {
     if(token !== generation){bitmap.close();return;}
     status('カードを認識しています…');
     watchdog = setTimeout(()=>fail(new Error('認識がタイムアウトしました。')),45000);
-    worker.postMessage({type:'frame',bitmap,includeDebugBitmaps:true},[bitmap]);
+    worker.postMessage({type:'frame',bitmap,includeDebugBitmaps:$('scanLanguage').value === 'auto'},[bitmap]);
   }catch(error){if(token === generation)fail(error);}
 }
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 async function showResult(data, token) {
-  if(!data.cardPresent || !data.cornersValid || !data.cardId){setBusy(false);status(autoFrame ? 'カードを探しています。四隅を画面に収めてください。' : 'カードを検出できませんでした。四隅を入れ、背景とカードを離して撮り直してください。');scheduleAuto();return;}
+  const guide=$('cardGuide'), outline=$('cardOutline');
+  guide.setAttribute('viewBox',`0 0 ${$('preview').width || 1} ${$('preview').height || 1}`);
+  outline.setAttribute('points',data.cornersValid && data.corners ? data.corners.map(([x,y])=>`${x * $('preview').width},${y * $('preview').height}`).join(' ') : '');
+  if ($('scanListPanel').open || (autoFrame && awaitingNext)) {data.cropBitmap?.close();setBusy(false);return;}
+  if(window.scannerQuickAdd.isSaving()){data.cropBitmap?.close();setBusy(false);scheduleAuto();return;}
+  const decision = autoFrame ? gate.observe(data) : {action:data.cardPresent && data.cornersValid && data.cardId ? 'candidate' : 'empty', automatic:false};
+  if (decision.action !== 'candidate' || window.scannerQuickAdd.isSaving()) {
+    data.cropBitmap?.close(); setBusy(false);
+    status(decision.action === 'duplicate' ? '追加済みです。別のカードに替えるか「もう1枚」を押してください。' : decision.action === 'empty' ? 'カードをかざしてください。' : 'カードを動かさずにお待ちください…');
+    scheduleAuto(); return;
+  }
   awaitingNext = true;
-  status('カードの文字から言語を確認しています…');
-  const detectedLanguage = await window.scannerLanguage.detect(data.cropBitmap, data.orientation === 'rotated_180');
+  window.scannerQuickAdd.close();
+  $('results').replaceChildren(); $('results').hidden = true;
+  const preferred = $('scanLanguage').value;
+  status('カードの版・言語を確認しています…');
+  const detectedLanguage = preferred === 'auto' ? await window.scannerLanguage.detect(data.cropBitmap, data.orientation === 'rotated_180') : (data.cropBitmap?.close(), preferred);
   if (token !== generation) return;
   $('preview').hidden = !!stream;
   const hits = (data.candidates?.length ? data.candidates : [{cardId:data.cardId,score:data.score}]).filter(hit=>uuidPattern.test(hit.cardId)).sort((a,b)=>(b.score || 0)-(a.score || 0)).slice(0,3);
@@ -190,10 +203,12 @@ async function showResult(data, token) {
   if(!$('results').children.length)throw new Error('候補のカード情報が見つかりませんでした');
   const best = hits.map(hit=>cards.get(hit.cardId)).find(Boolean);
   $('results').hidden = true;
-  $('quickLanguageStatus').textContent = `${window.scannerLanguage.lastReason}。${detectedLanguage === 'ja' ? '日本語版を表示します。' : '英語版を表示しています。必要なら言語を変更してください。'}`;
-  await window.scannerQuickAdd.open(best, detectedLanguage === 'ja' ? 'ja' : 'en');
+  $('quickLanguageStatus').textContent = `${preferred === 'auto' ? window.scannerLanguage.lastReason : '指定言語：' + (preferred === 'ja' ? '日本語' : '英語')}。${detectedLanguage === 'ja' ? '日本語版を表示します。' : '英語版を表示しています。必要なら言語を変更してください。'}`;
+  const saved = await window.scannerQuickAdd.open(best, detectedLanguage === 'ja' ? 'ja' : 'en', {automatic:decision.automatic && detectedLanguage !== 'unknown',finish:$('scanFinish').value});
+  awaitingNext = !saved;
   if (token !== generation) return;
   setBusy(false);
+  scheduleAuto();
   status(`候補を表示しました（認識 ${Math.round(data.timing?.totalMs || 0)}ms）。${data.score < .5 ? '類似度が低いため、該当なしの可能性があります。' : '版・言語を確認して選んでください。'}`);
 }
 $('start').addEventListener('click',startCamera);
@@ -203,6 +218,9 @@ $('auto').addEventListener('change',()=>{
   scheduleAuto();
   if(stream && !busy) status($('auto').checked ? '自動読み取りを開始します。' : '手動に切り替えました。「この画像を読み取る」を押してください。');
 });
+window.addEventListener('scanner-resume',()=>{awaitingNext=false;scheduleAuto();});
+window.addEventListener('scanner-pause',()=>{awaitingNext=true;clearTimeout(autoTimer);});
+$('scanListPanel').addEventListener('toggle',()=>{awaitingNext=$('scanListPanel').open;if(awaitingNext)clearTimeout(autoTimer);else scheduleAuto();});
 $('next').addEventListener('click',()=>{ window.scannerQuickAdd.close(); $('results').replaceChildren(); awaitingNext = false; if(stream) { scheduleAuto(); status('次のカードをかざしてください。'); } else startCamera(); });
 $('stop').addEventListener('click',()=>stop());
 $('photo').addEventListener('change',()=>{const file=$('photo').files[0];$('photo').value='';if(file)loadPhoto(file);});

@@ -61,3 +61,6 @@ trial.js、quick-add.js、quick-store.js、trial.css、index.html と vendor/sca
 
 ## v301 continuous preview and draft list
 Camera preview remains active during confirmation. Recognition pauses until Next; automatic registration is not enabled. scanner-list.js stores a compact draft in the existing values store and consumes it in the same transaction as collection merging. scanner-list-ui.js supports removal and final save. Photos are not stored. These source files are AGPL-3.0-only.
+
+## v302 live scanning
+Camera-first interface with a compact result overlay. scan-gate.js requires two consecutive matching print IDs, score >= 0.85 and runner-up margin >= 0.06 for trial automatic draft insertion. These thresholds are not calibrated accuracy claims. Same oracle is suppressed until a different stable card or two absent frames; use More for identical copies. Uncertain results require confirmation. Japanese/English session selection bypasses OCR; Auto retains OCR. The list remains local and final collection writes remain atomic.

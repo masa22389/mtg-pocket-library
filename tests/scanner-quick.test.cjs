@@ -15,7 +15,7 @@ raw='invalid';await assert.rejects(api.add(card,opts));assert.equal(raw,'invalid
 console.log('PASS quick save: accumulation, finish separation, invalid/language/finish validation, quota failure and malformed-data preservation');
 const nodes=new Map();function el(id){if(!nodes.has(id))nodes.set(id,{value:'',options:[],hidden:false,disabled:false,handlers:{},addEventListener(n,f){this.handlers[n]=f},replaceChildren(){this.options=[];this.value=''},add(o){this.options.push(o);if(!this.value)this.value=o.value},showModal(){},close(){},scrollIntoView(){},click(){}});return nodes.get(id)};
 let saves=0,release;
-const ui={document:{getElementById:el},window:{scannerListUI:{refresh:async()=>{}},scannerDraft:{add:()=>{saves++;return new Promise(r=>release=r)}}},Option:function(label,value){this.value=value},AbortController,setTimeout,clearTimeout,fetch:async()=>({ok:false})};
+const ui={document:{getElementById:el},window:{dispatchEvent(){},scannerListUI:{refresh:async()=>{}},scannerDraft:{add:()=>{saves++;return new Promise(r=>release=r)}}},Event:class{},Option:function(label,value){this.value=value},AbortController,setTimeout,clearTimeout,fetch:async()=>({ok:false})};
 vm.createContext(ui);vm.runInContext(fs.readFileSync(path.join(root,'scanner-trial/quick-add.js'),'utf8'),ui);
 await ui.window.scannerQuickAdd.open(card);assert.equal(el('quickSave').disabled,false);
 const first=el('quickSave').handlers.click();await el('quickSave').handlers.click();assert.equal(saves,1);release();await first;assert.equal(el('quickSave').disabled,true);assert.equal(el('quickNext').hidden,false);assert.equal(el('quickClose').disabled,false);

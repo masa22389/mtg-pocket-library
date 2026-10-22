@@ -23,7 +23,7 @@
     canvas.width=canvas.height=0;
     const image = text.toDataURL('image/png'); text.width=text.height=0;
     return new Promise(resolve => {
-      const worker = new Worker('language.worker.js?v=301');
+      const worker = new Worker('language.worker.js?v=302');
       let done=false;
       const finish=(value,reason)=>{if(done)return;done=true;window.scannerLanguage.lastReason=reason;clearTimeout(timer);worker.terminate();if(active===abort)active=null;resolve(value);};
       const abort=()=>finish('unknown','判定を中断しました');

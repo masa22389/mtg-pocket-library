@@ -5,8 +5,9 @@
   const message = text => { el('quickStatus').textContent = text; };
   function enabled() {
     el('quickSave').disabled = loading || saving || saved || !selected;
-    for (const id of ['quickLanguage','quickFinish','quickQuantity','quickOther']) el(id).disabled = saving || saved;
-    el('quickClose').disabled = saving;
+    for (const id of ['quickLanguage','quickFinish','quickQuantity']) el(id).disabled = saving || saved;
+    el('quickClose').disabled = saving; el('quickOther').disabled = saving;
+    el('quickOptions').hidden = saved; el('quickSave').hidden = saved;
     el('quickNext').hidden = false; el('quickNext').disabled = saving;
     el('quickMore').hidden = !saved; el('quickMore').disabled = saving;
   }
@@ -42,7 +43,7 @@
       if (request === revision) message(error.name === 'AbortError' ? '取得が中断されました。言語を選び直してください。' : error.message);
     } finally { clearTimeout(timeout); if (request === revision) { loading = false; enabled(); } }
   }
-  async function open(card, initialLanguage = card.lang) {
+  async function open(card, initialLanguage = card.lang, options = {}) {
     original = card; selected = null; saved = false; saving = false;
     el('quickQuantity').value = 1; el('quickFinish').value = 'normal';
     display(card);
@@ -50,10 +51,16 @@
     for (const [value,label] of [['ja','日本語'],['en','英語'], ...(!['ja','en'].includes(card.lang) ? [[card.lang,card.lang]] : [])]) el('quickLanguage').add(new Option(label,value));
     el('quickLanguage').value = initialLanguage;
     el('quickDialog').hidden = false;
-    await changeLanguage();
+    const pending=changeLanguage(), ticket=revision; await pending;
+    if(ticket !== revision) return false;
+    if ([...el('quickFinish').options].some(o=>o.value===options.finish)) el('quickFinish').value=options.finish;
+    else if (options.finish && options.finish !== 'normal') { message('この版には指定した仕様がありません。仕様を確認してください。'); return false; }
+    if (options.automatic && selected) await save();
+    else if(selected) message('版または言語が未確定です。内容を確認して追加してください。');
+    return saved;
   }
   el('quickLanguage').addEventListener('change',changeLanguage);
-  el('quickSave').addEventListener('click',async()=>{
+  async function save() {
     if (saving || saved || loading || !selected) return;
     const quantity = Number(el('quickQuantity').value);
     if (!Number.isSafeInteger(quantity) || quantity < 1) { message('枚数は1以上の整数で入力してください。'); return; }
@@ -62,12 +69,13 @@
       await window.scannerDraft.add(selected,{language:el('quickLanguage').value,finish:el('quickFinish').value,quantity});
       saved = true; await window.scannerListUI.refresh(); message(`${quantity}枚をリストに追加しました。最後にまとめて保存してください。`);
     } catch(error) { message(error.name === 'QuotaExceededError' ? '保存できませんでした：端末保存領域が不足しています。' : `保存できませんでした：${error.message}`); }
-    finally { saving = false; enabled(); }
-  });
-  function close() { ++revision; controller?.abort(); el('quickDialog').hidden = true; }
-  el('quickClose').addEventListener('click',close);
+    finally { saving = false; enabled(); if(saved) window.dispatchEvent(new Event('scanner-resume')); }
+  }
+  el('quickSave').addEventListener('click',save);
+  function close() { selected=null; ++revision; controller?.abort(); el('quickDialog').hidden = true; }
+  el('quickClose').addEventListener('click',()=>{close();window.dispatchEvent(new Event('scanner-resume'));});
   el('quickOther').addEventListener('click',()=>{
-    close(); el('results').hidden = false; el('results').scrollIntoView({block:'start',behavior:'smooth'});
+    window.dispatchEvent(new Event('scanner-pause')); close(); el('results').hidden = false; el('results').scrollIntoView({block:'start',behavior:'smooth'});
   });
   el('quickMore').addEventListener('click',async()=>{
     if (saving || !saved || !selected) return;
@@ -76,8 +84,8 @@
       await window.scannerDraft.add(selected,{language:el('quickLanguage').value,finish:el('quickFinish').value,quantity:1});
       await window.scannerListUI.refresh(); message('リストにもう1枚追加しました。');
     } catch(error) { message(`追加できませんでした：${error.message}`); }
-    finally { saving = false; enabled(); }
+    finally { saving = false; enabled(); if(saved) window.dispatchEvent(new Event('scanner-resume')); }
   });
   el('quickNext').addEventListener('click',()=>{close();el('next').click();});
-  window.scannerQuickAdd = {open, close};
+  window.scannerQuickAdd = {open, close, isSaving:()=>saving};
 })();
