@@ -1,3 +1,4 @@
+import {EditionPicker,finishName} from './edition-picker.mjs';
 import {integratedStore,verifyPrinting} from './integrated-store.mjs';
 import {provisionalCard,correctProvisional} from './queue-model.mjs';
 import {AutoReadCycle} from './auto-cycle.mjs';
@@ -6,35 +7,36 @@ import {guideGeometry,presenceGray,cardWithinGuide,sceneSignature,sceneDifferenc
 import {VisionClient} from './rpc.mjs';
 const $=id=>document.getElementById(id),state=s=>$('status').textContent=s,storageKey='mtg-full-live-v1';
 let exchangeAnchor=null,exchangeCount=0,exchangeReading=false,exchangeOracle=null;let refineBusy=false,queuedRefine=false,queuedReview=null;let identities=new Map(),printsByOracle=new Map(),refById=new Map(),refByOracle=new Map(),activePopup=null,pendingPopup=null,lastAutoRow=null;let cards=[],pack,stream=null,vision=null,hashWorker=null,hashReady=null,sequence=0,pending=new Map(),epoch=0,active=false,busy=false,ready=false,timer,refineRequested=false,choiceSnapshot=[],signature='',logs=[],events=[],lastSelected=null,lastSelectedName='',selectionVersion=0,refinedAnchor=null;const cycle=new AutoReadCycle();let frozenCrop=null;let alignClient=null;let inFrame=false,changedTop=null,changedCount=0;
-let storageFailed=false,collectionBusy=false;
+let storageFailed=false,collectionBusy=false,printsPromise=null;let printDisplay={};
 try{const saved=await integratedStore.read();logs=saved.logs;events=saved.events;}catch(e){storageFailed=true;state('スキャンリストを読み込めません：'+e.message);}
 function persist(){integratedStore.save({events,logs:logs.slice(-500)}).catch(e=>{storageFailed=true;ready=false;stop();state('端末への保存に失敗しました。再読み込みして保存済みデータを確認してください：'+e.message);});}
 function addLog(record){logs.push({...record,at:new Date().toISOString(),packBuildId:pack.buildId});logs=logs.slice(-500);persist();}
 function buttons(){$('start').disabled=!ready||active||busy;$('stop').disabled=!active&&!busy;$('refine').disabled=!active||refineBusy||queuedRefine||!activePopup?.crop;$('readAgain').disabled=!active||busy;$('readAgain').textContent='候補が違うときだけ読み直す';$('region').disabled=active||busy;$('more').disabled=busy||!events.length;$('undo').disabled=busy||!events.length;$('prepare').disabled=active||busy;$('commitCollection').disabled=collectionBusy||storageFailed||!events.some(r=>r.confirmed);}
 function displayName(oracleId){const c=identities.get(oracleId);if(!c)return oracleId;return (c.aliases||[]).find(n=>/[ぁ-んァ-ン一-龯]/u.test(n))||c.name;}
 function identityHits(hits){const seen=new Set();return hits.filter(h=>!seen.has(h.oracleId)&&seen.add(h.oracleId));}
+async function ensurePrints(){
+ if(!printsPromise)printsPromise=Promise.all([fetch('./data/prints.json').then(r=>{if(!r.ok)throw Error('版データを取得できません');return r.json()}),fetch('./data/print-display.json').then(r=>{if(!r.ok)throw Error('セット名を取得できません');return r.json()})]).then(([prints,display])=>{printDisplay=display;printsByOracle.clear();for(const c of prints){if(!printsByOracle.has(c.oracleId))printsByOracle.set(c.oracleId,[]);printsByOracle.get(c.oracleId).push(c);}}).catch(e=>{printsPromise=null;throw e;});
+ await printsPromise;
+}
+function editionLabel(row){const printing=(printsByOracle.get(row?.oracleId)||[]).find(p=>p.id===row.printId);if(!printing)return '収録版を選ぶ ›';return `${printDisplay.sets?.[printing.set]||printing.set.toUpperCase()} · #${printing.number} / ${row.language||'ja'} / ${finishName(row.finish||'normal')} ›`;}
+function updatePopupEdition(){const row=events.find(e=>e.id===activePopup?.rowId);$('popupEdition').disabled=!row;$('popupEdition').textContent=editionLabel(row);}
 function renderList(){
  const frag=document.createDocumentFragment();
  for(const row of ($('listPanel').open?events.slice(-100).reverse():[])){
   const host=document.createElement('article'),title=document.createElement('strong');title.textContent=row.name+(row.confirmed?'（版・言語・仕様を確認済み）':'（仮登録）');
-  const select=document.createElement('select');select.setAttribute('aria-label',row.name+'の収録エキスパンション');select.add(new Option('収録エキスパンションを選択',''));
-  for(const c of printsByOracle.get(row.oracleId)||[])select.add(new Option(`${c.set.toUpperCase()} #${c.number}`,c.id));select.value=row.printId||'';
-  const language=document.createElement('select');language.setAttribute('aria-label',row.name+'の言語');for(const [v,n]of [['ja','日本語'],['en','英語']])language.add(new Option(n,v));language.value=row.language||'ja';
-  const finish=document.createElement('select');finish.setAttribute('aria-label',row.name+'の仕様');for(const [v,n]of [['normal','通常'],['foil','Foil'],['etched','エッチング']])finish.add(new Option(n,v));finish.value=row.finish||'normal';
-  const info=document.createElement('p');info.className='rowStatus';info.textContent=row.confirmed?`${row.confirmed.set} #${row.confirmed.collectorNumber} / ${row.confirmed.language} / ${row.confirmed.finish}`:'版・言語・仕様を確認してください';
-  const invalidate=()=>{row.printId=select.value||null;row.language=language.value;row.finish=finish.value;row.confirmed=null;persist();info.textContent='選択を変更しました。再確認してください';buttons();};select.onchange=language.onchange=finish.onchange=invalidate;
-  const confirm=document.createElement('button');confirm.textContent='版・言語・仕様を確認';confirm.onclick=async()=>{
-   const printing=(printsByOracle.get(row.oracleId)||[]).find(c=>c.id===select.value);if(!printing){info.textContent='収録エキスパンションを選択してください';return;}
-   const selectedLanguage=language.value,selectedFinish=finish.value;select.disabled=language.disabled=finish.disabled=confirm.disabled=true;
-   info.textContent='カード情報を取得しています…';
-   try{const url=`https://api.scryfall.com/cards/${encodeURIComponent(printing.set)}/${encodeURIComponent(printing.number)}/${selectedLanguage}`,response=await fetch(url,{signal:AbortSignal.timeout(15000)});if(!response.ok)throw Error('この版・言語の情報を取得できません。別の言語または版を選択してください');const card=await response.json();const compact=verifyPrinting(row,printing,card,selectedLanguage,selectedFinish);if(!events.includes(row)||row.printId!==select.value)throw Error('対象の仮登録が変更されました');row.confirmed=compact;row.identityConfirmed=true;row.language=selectedLanguage;row.finish=selectedFinish;persist();await integratedStore.flush();renderList();}catch(e){info.textContent='確認できません：'+e.message;}finally{select.disabled=language.disabled=finish.disabled=confirm.disabled=false;}
-  };
-  const remove=document.createElement('button');remove.textContent='この仮登録を削除';remove.onclick=()=>{events=events.filter(e=>e.id!==row.id);persist();renderList();};
-  const label=(name,input)=>{const l=document.createElement('label');l.textContent=name;l.append(input);return l};
-  host.append(title,label('収録エキスパンション',select),label('言語',language),label('仕様',finish),info,confirm,remove);frag.append(host);
+  const choose=document.createElement('button');choose.className='editionEntry';choose.textContent=editionLabel(row);choose.setAttribute('aria-label',row.name+'の収録版を選ぶ');choose.onclick=()=>editionPicker.open(row);
+  const info=document.createElement('p');info.className='rowStatus';info.textContent=row.confirmed?`${row.confirmed.set} #${row.confirmed.collectorNumber} / ${row.confirmed.language} / ${finishName(row.confirmed.finish)}（確認済み）`:'収録版・言語・仕様を選択できます';
+  const remove=document.createElement('button');remove.textContent='この仮登録を削除';remove.onclick=()=>{events=events.filter(e=>e.id!==row.id);persist();renderList();};host.append(title,choose,info,remove);frag.append(host);
  }
- $('list').replaceChildren(frag);$('count').textContent=events.length+'枚';renderRecent();const last=events.at(-1);$('last').textContent=last?'直前の追加：'+last.name:'まだ追加していません';buttons();
+ $('list').replaceChildren(frag);$('count').textContent=events.length+'枚';renderRecent();updatePopupEdition();const last=events.at(-1);$('last').textContent=last?'直前の追加：'+last.name:'まだ追加していません';buttons();
 }
+function flushPendingPopup(){if(!$('candidateOptions').open&&!$('editionDialog').open&&pendingPopup){const p=pendingPopup,lastCrop=frozenCrop;frozenCrop=p.crop;showChoices(p.hits,p.method,p.rowId,true);frozenCrop=lastCrop;}}
+const editionPicker=new EditionPicker({dialog:$('editionDialog'),load:async oracleId=>{await ensurePrints();return {rows:printsByOracle.get(oracleId)||[],display:printDisplay}},apply:async(row,printing,language,finish)=>{
+ const oracleId=row.oracleId,response=await fetch(`https://api.scryfall.com/cards/${encodeURIComponent(printing.set)}/${encodeURIComponent(printing.number)}/${language}`,{signal:AbortSignal.timeout(15000)});
+ if(!response.ok)throw Error('この版・言語のカード情報を取得できません。言語か収録版を変更してください。');const card=await response.json(),compact=verifyPrinting(row,printing,card,language,finish);
+ if(!events.includes(row)||row.oracleId!==oracleId)throw Error('対象の仮登録が変更されました。');row.printId=printing.id;row.language=language;row.finish=finish;row.confirmed=compact;row.identityConfirmed=true;persist();await integratedStore.flush();renderList();state('収録版・言語・仕様を選択しました。所持カードへの保存はスキャンリストから行えます。');
+},onClose:flushPendingPopup});
+$('popupEdition').onclick=()=>{const row=events.find(e=>e.id===activePopup?.rowId);if(row)editionPicker.open(row);};
 $('commitCollection').onclick=async()=>{
  if(collectionBusy||busy)return;collectionBusy=true;busy=true;clearTimeout(timer);$('list').inert=true;buttons();
  try{await integratedStore.flush();const saved=await integratedStore.commit();events=saved.events;logs=saved.logs;activePopup=null;pendingPopup=null;$('candidates').hidden=true;renderList();$('collectionStatus').textContent='確認済みカードを所持カードへ保存しました。未確認カードはリストに残しています。';}
@@ -54,13 +56,13 @@ $('popupRemove').onclick=()=>{const id=activePopup?.rowId;if(!id||!events.some(e
 function append(hit){if(events.length>=5000){state('試用リストの上限です。記録を書き出してください。');return;}const row={id:crypto.randomUUID(),oracleId:hit.oracleId,name:displayName(hit.oracleId),printId:null,review:true,manual:true,identityConfirmed:true,at:new Date().toISOString()};events.push(row);lastAutoRow=null;cycle.selected();clearTimeout(timer);schedule();lastSelected=hit.oracleId;lastSelectedName=row.name;selectionVersion++;persist();renderList();for(const b of $('choices').querySelectorAll('button'))b.disabled=true;state(row.name+'を仮登録しました。カードを一度枠から外し、次のカードを合わせてください。');$('candidateHint').textContent='選択済みです。同じカードを増やすときは「同じカードをもう1枚」。';}
 function autoQueue(hits){const hit=hits[0];if(!hit||events.length>=5000)return null;const row=provisionalCard(hit,displayName(hit.oracleId),identityHits(hits).slice(0,5).map(h=>h.oracleId),{id:crypto.randomUUID(),at:new Date().toISOString()});events.push(row);lastAutoRow=row.id;lastSelected=hit.oracleId;selectionVersion++;cycle.selected();persist();renderList();return row;}
 function showChoices(hits,method,rowId=null,force=false){
- const payload={hits,method,rowId,crop:frozenCrop};if($('candidateOptions').open&&!force){pendingPopup=payload;$('popupNotice').textContent='新しいカードもスキャンリストへ仮追加しました。候補変更を閉じると表示します。';return;}
- activePopup=payload;pendingPopup=null;$('candidates').hidden=false;const top=identityHits(hits).slice(0,5);choiceSnapshot=top;const row=events.find(e=>e.id===rowId),displayId=row?.oracleId||top[0]?.oracleId;$('popupName').textContent=displayId?displayName(displayId):'候補なし';$('popupState').textContent=row?'スキャンリストへ自動仮追加済み・要確認':'カード名を選ぶと仮追加します';$('popupNotice').textContent='';
+ const payload={hits,method,rowId,crop:frozenCrop};if(($('candidateOptions').open||$('editionDialog').open)&&!force){pendingPopup=payload;$('popupNotice').textContent='新しいカードもスキャンリストへ仮追加しました。候補変更を閉じると表示します。';return;}
+ activePopup=payload;pendingPopup=null;$('candidates').hidden=false;updatePopupEdition();const top=identityHits(hits).slice(0,5);choiceSnapshot=top;const row=events.find(e=>e.id===rowId),displayId=row?.oracleId||top[0]?.oracleId;$('popupName').textContent=displayId?displayName(displayId):'候補なし';$('popupState').textContent=row?'スキャンリストへ自動仮追加済み・要確認':'カード名を選ぶと仮追加します';$('popupNotice').textContent='';
  const image=$('popupImage');image.hidden=!payload.crop;if(payload.crop){image.alt='読み取ったカード';image.src=payload.crop.toDataURL('image/jpeg',.8);}
  const nodes=top.map((hit,i)=>{const b=document.createElement('button');b.textContent=(i+1)+'. '+displayName(hit.oracleId);b.onclick=()=>{const target=events.find(e=>e.id===rowId);if(target){correctProvisional(events,rowId,hit,displayName(hit.oracleId));target.confirmed=null;persist();renderList();$('popupName').textContent=target.name;$('popupState').textContent='スキャンリストのカード名を確認・修正しました';state('仮登録の候補を修正しました。枚数は増やしていません。');}else if(rowId){state('この仮登録は削除済みです。新たな追加はしていません。');}else append(hit);$('candidateOptions').open=false;};return b;});$('choices').replaceChildren(...nodes);$('candidateHint').textContent='収録エキスパンションは後から選べます。候補が違う場合は変更してください。';buttons();
 }
-$('candidateOptions').addEventListener('toggle',()=>{if(!$('candidateOptions').open&&pendingPopup){const p=pendingPopup;const lastCrop=frozenCrop;frozenCrop=p.crop;showChoices(p.hits,p.method,p.rowId,true);frozenCrop=lastCrop;}});
-$('listPanel').addEventListener('toggle',async()=>{if($('listPanel').open&&!printsByOracle.size){state('収録エキスパンションの一覧を準備しています…');try{const prints=await(await fetch('./data/prints.json')).json();for(const c of prints){if(!printsByOracle.has(c.oracleId))printsByOracle.set(c.oracleId,[]);printsByOracle.get(c.oracleId).push(c);}state('リストで版・言語・仕様を確認してください。');}catch(e){state('版データを読み込めません：'+e.message);}}renderList();});
+$('candidateOptions').addEventListener('toggle',flushPendingPopup);
+$('listPanel').addEventListener('toggle',async()=>{if($('listPanel').open){try{await ensurePrints();state('カードの収録版を押すと、画像付きの一覧から選べます。');}catch(e){state('版データを読み込めません：'+e.message);}}renderList();});
 async function getVision(){if(!vision)vision=new VisionClient(cards);await vision.ready;return vision;}
 function rpc(type,data={},transfer=[]){return new Promise((resolve,reject)=>{const id=++sequence,t=setTimeout(()=>{pending.delete(id);reject(Error('画像指紋が60秒で完了しませんでした'));},60000);pending.set(id,{resolve,reject,t});try{hashWorker.postMessage({type,id,...data},transfer);}catch(e){clearTimeout(t);pending.delete(id);reject(e);}});}
 function closeHash(){for(const p of pending.values()){clearTimeout(p.t);p.reject(Error('停止しました'));}pending.clear();hashWorker?.terminate();hashWorker=null;hashReady=null;}
@@ -69,7 +71,7 @@ function stop(){refineBusy=false;queuedRefine=false;queuedReview=null;const comm
 function schedule(){if(active&&cycle.reading)timer=setTimeout(scan,160);}
 function beginRead(){if(!active||busy)return;cycle.begin(performance.now());frozenCrop=null;refinedAnchor=null;refineRequested=false;changedTop=null;changedCount=0;signature='';choiceSnapshot=[];$('choices').replaceChildren();$('frozenFrame').hidden=true;$('candidateHint').textContent='読み取り中です。結果が出たら表示を固定します。';state('カードを読み取っています…');buttons();clearTimeout(timer);scan();}
 function freezeFrame(frame){$('frozenFrame').hidden=true;}
-async function scan(){if(!active||busy)return;if($('listPanel').open){schedule();return;}if(!cycle.next(performance.now())){state('今回は読み取れませんでした。枠を合わせて「読み直す」を押してください。');$('candidateHint').textContent='読み取りを停止しました。自動では再開しません。';$('processing').textContent='';buttons();return;}busy=true;const token=epoch,selectedAtStart=selectionVersion,t=performance.now(),record={source:'live-camera',method:'phash',region:$('region').value,outcome:'error'};buttons();$('processing').textContent=cycle.state==='waiting-exit'?'カード交換を待っています':'枠内を確認中…';try{const v=$('video');if(!v.videoWidth)throw Error('カメラ画像を取得できません');const frame=document.createElement('canvas'),scale=Math.min(1,1280/Math.max(v.videoWidth,v.videoHeight));frame.width=Math.round(v.videoWidth*scale);frame.height=Math.round(v.videoHeight*scale);frame.getContext('2d').drawImage(v,0,0,frame.width,frame.height);let crop,signatureNow;
+async function scan(){if(!active||busy)return;if($('listPanel').open||$('editionDialog').open){schedule();return;}if(!cycle.next(performance.now())){state('今回は読み取れませんでした。枠を合わせて「読み直す」を押してください。');$('candidateHint').textContent='読み取りを停止しました。自動では再開しません。';$('processing').textContent='';buttons();return;}busy=true;const token=epoch,selectedAtStart=selectionVersion,t=performance.now(),record={source:'live-camera',method:'phash',region:$('region').value,outcome:'error'};buttons();$('processing').textContent=cycle.state==='waiting-exit'?'カード交換を待っています':'枠内を確認中…';try{const v=$('video');if(!v.videoWidth)throw Error('カメラ画像を取得できません');const frame=document.createElement('canvas'),scale=Math.min(1,1280/Math.max(v.videoWidth,v.videoHeight));frame.width=Math.round(v.videoWidth*scale);frame.height=Math.round(v.videoHeight*scale);frame.getContext('2d').drawImage(v,0,0,frame.width,frame.height);let crop,signatureNow;
 if($('region').value.startsWith('guide')){
  const pt=performance.now(),g=fitGuide();if(!g)throw Error('枠の準備ができません');
  const sx=g.sx*scale,sy=g.sy*scale,sw=g.sw*scale,sh=g.sh*scale;

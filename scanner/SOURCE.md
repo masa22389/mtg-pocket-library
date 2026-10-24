@@ -12,3 +12,5 @@
 - このスキャナーの実装・改変部分：AGPL-3.0-only、LICENSE参照。モデルとデータのSHA256はpack.json。カード・イラストの権利は各権利者に帰属。
 
 shared-storage.jsとcollection-store.jsは本体storage.js / scanner-trial/quick-store.jsの同一コピー。オフライン準備をスキャナー配下で完結させるため同梱する。更新時は同期する。OCRは利用していない。全体カタログは全カードの認識精度を保証するものではない。
+
+v306のdata/print-display.json：同じScryfall bulk snapshotからセット名・セット内の最新公開日を抽出。サムネイルURLは同bulk内のsmall/front形式と全paperカードで一致することを確認したID形式から構成する。一覧を開いた際にのみcards.scryfall.ioへ画像取得を行う。セット単位の日付は一覧の並べ替え用。

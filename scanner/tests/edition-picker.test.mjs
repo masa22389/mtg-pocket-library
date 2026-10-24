@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {printingMatches,printingImage,sortPrintings} from '../edition-picker.mjs';
+test('edition search accepts set names, codes and full-width collector numbers',()=>{const p={set:'rtr',number:'44'};for(const q of ['RTR #44','ｒｔｒ ＃４４','Return to Ravnica','44'])assert.equal(printingMatches(p,q,'Return to Ravnica'),true);assert.equal(printingMatches(p,'NEC #44','Return to Ravnica'),false);assert.equal(printingMatches(p,'rtr #45','Return to Ravnica'),false);});
+test('printing thumbnails use the printing ID, not the scanned artwork identity',()=>{const p={id:'11111111-1111-4111-8111-111111111111'};assert.equal(printingImage(p),'https://cards.scryfall.io/small/front/1/1/'+p.id+'.jpg');assert.equal(printingImage({id:'invalid'}),'');});
+
+test('newer sets are first without mutating the recognition catalogue',()=>{const rows=[{set:'rtr',number:'44'},{set:'cmm',number:'851'}];assert.equal(sortPrintings(rows,{releaseDates:{rtr:'2012-10-05',cmm:'2023-08-04'}})[0].set,'cmm');assert.equal(rows[0].set,'rtr');});
