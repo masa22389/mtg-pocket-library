@@ -15,6 +15,7 @@ async function transact(action,snapshot){
   const req=store.get(draftKey);req.onsuccess=()=>{try{
    const saved=JSON.parse(req.result||'{"events":[],"logs":[]}');if(!Array.isArray(saved.events)||!Array.isArray(saved.logs))throw Error('スキャンリストを読み込めません');
    if(action!=='read'&&revision!==null&&(saved.revision||0)!==revision)throw Error('別のスキャン画面でリストが変更されました。再読み込みしてください');result=saved;if(action==='save'){result={...snapshot,revision:(saved.revision||0)+1};store.put(JSON.stringify(result),draftKey);}
+   if(action==='remove'){result={...saved,revision:(saved.revision||0)+1,events:saved.events.filter(row=>row.id!==snapshot.id)};store.put(JSON.stringify(result),draftKey);}
    if(action==='commit'||action==='commitOne'){
     const confirmed=saved.events.filter(r=>r.confirmed&&(action==='commit'||r.id===snapshot.id));if(!confirmed.length)throw Error('版・言語・仕様を確認したカードがありません');
     const request=store.get(ownedKey);request.onsuccess=()=>{try{
@@ -31,6 +32,7 @@ export const integratedStore={
  async ownedTotal(oracleId){const db=await window.scannerCollection.database();return new Promise((resolve,reject)=>{const r=db.transaction('values').objectStore('values').get(ownedKey);r.onsuccess=()=>{try{resolve(JSON.parse(r.result||'[]').filter(c=>c.oracleId===oracleId).reduce((n,c)=>n+Number(c.quantity||0),0))}catch(e){reject(e)}};r.onerror=()=>reject(r.error);});},
  async read(){await queue;if(failure)throw failure;return transact('read');},
  save(snapshot){const copy=structuredClone(snapshot);const operation=queue.then(()=>{if(failure)throw failure;return transact('save',copy)});queue=operation.catch(e=>{failure=e});return operation;},
+ async remove(id){await queue;if(failure)throw failure;return transact('remove',{id});},
  async commit(){await queue;if(failure)throw failure;const result=await transact('commit');try{sessionStorage.setItem('mtg-pocket.scannerCollectionChanged','1')}catch{}return result;},
  async commitOne(id,options){await queue;if(failure)throw failure;const result=await transact('commitOne',{id,options});try{sessionStorage.setItem('mtg-pocket.scannerCollectionChanged','1')}catch{}return result;},
  async flush(){await queue;if(failure)throw failure;}

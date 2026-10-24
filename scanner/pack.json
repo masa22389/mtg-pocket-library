@@ -24,8 +24,8 @@
     },
     {
       "path": "boot-config.js",
-      "bytes": 31,
-      "sha256": "40327255df16a1528c99ec6e4385e53866e489178c4370e4019b9f8e8c4a3052"
+      "bytes": 173,
+      "sha256": "a9c628bb5facfba5ef93c99eaf31f7a6c64f7856569a61f93920a1afceb2736d"
     },
     {
       "path": "collection-store.js",
@@ -114,23 +114,23 @@
     },
     {
       "path": "integrated-store.mjs",
-      "bytes": 4759,
-      "sha256": "4b908feadb146d656f11b70f78d7a7520b4fb328a944b4b1c6fbd825bc249860"
+      "bytes": 5023,
+      "sha256": "d9bd3006e40b81b04da8a924ea2a949382696f9fd32713bb06db5685a97f42ae"
     },
     {
       "path": "live.css",
-      "bytes": 9775,
-      "sha256": "a12d2536832d04d3948d9cb4f4f3194e17d4076cb3381cbe8b5e1ee01b3fa0aa"
+      "bytes": 11355,
+      "sha256": "d22ccfeaf2e8f1d00ff91f243a905b3d34d12683d560b24b5a1225e38760c3cd"
     },
     {
       "path": "live.html",
-      "bytes": 8081,
-      "sha256": "3cd75ecd159024443ab4893e6eda1e9caed5cb2b03ba8a1c725559f43bfc0b52"
+      "bytes": 8176,
+      "sha256": "ff1ddc15da350e0d7ee71918a182858d27cd4089da0f5683809527998592c0df"
     },
     {
       "path": "live.mjs",
-      "bytes": 35158,
-      "sha256": "e544f2608f1d4ece39d4b7e34ee498de5122973cf40923b10629f2f67f3b2406"
+      "bytes": 36758,
+      "sha256": "87306f97cc8df97232f5af682ae49b3ccb8b4cf88f402040b0bcf7c4dfff1fee"
     },
     {
       "path": "mobile-inputs.css",
@@ -203,6 +203,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91533548,
-  "buildId": "934129a5ad7b"
+  "totalBytes": 91537229,
+  "buildId": "c509c3e33fe1"
 }

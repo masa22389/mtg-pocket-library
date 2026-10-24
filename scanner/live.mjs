@@ -5,9 +5,9 @@ import {AutoReadCycle} from './auto-cycle.mjs';
 import {AlignClient} from './align-client.mjs';
 import {guideGeometry,presenceGray,cardWithinGuide,sceneSignature,sceneDifference} from './guide.mjs';
 import {VisionClient} from './rpc.mjs';
-const $=id=>document.getElementById(id),state=s=>$('status').textContent=s,storageKey='mtg-full-live-v1';
+const $=id=>document.getElementById(id),state=message=>{$('status').textContent=message;if(parent!==window&&!ready)parent.postMessage({type:'mtg-scanner-progress',message},location.origin);},storageKey='mtg-full-live-v1';
 let exchangeAnchor=null,exchangeCount=0,exchangeReading=false,exchangeOracle=null;let refineBusy=false,queuedRefine=false,queuedReview=null;let identities=new Map(),printsByOracle=new Map(),refById=new Map(),refByOracle=new Map(),activePopup=null,pendingPopup=null,lastAutoRow=null;let cards=[],pack,stream=null,vision=null,hashWorker=null,hashReady=null,sequence=0,pending=new Map(),epoch=0,active=false,busy=false,ready=false,timer,refineRequested=false,choiceSnapshot=[],signature='',logs=[],events=[],lastSelected=null,lastSelectedName='',selectionVersion=0,refinedAnchor=null;const cycle=new AutoReadCycle();let frozenCrop=null;let alignClient=null;let inFrame=false,changedTop=null,changedCount=0;
-const startupAt=performance.now();let currentView='scan',draftLimit=100,addRowId=null,addSaving=false,runningScan=null;let workerStarts={hash:0,vision:0},prepareStats=null;let storageFailed=false,collectionBusy=false,printsPromise=null;let printDisplay={};
+const startupAt=performance.now();let currentView='scan',draftLimit=100,addRowId=null,addSaving=false,runningScan=null;let workerStarts={hash:0,vision:0},prepareStats=null;let storageFailed=false,collectionBusy=false,draftDeleteBusy=false,printsPromise=null;let printDisplay={};
 try{const saved=await integratedStore.read();logs=saved.logs;events=saved.events;}catch(e){storageFailed=true;state('スキャンリストを読み込めません：'+e.message);}
 function persist(){integratedStore.save({events,logs:logs.slice(-500)}).catch(e=>{storageFailed=true;ready=false;stop();state('端末への保存に失敗しました。再読み込みして保存済みデータを確認してください：'+e.message);});}
 function addLog(record){logs.push({...record,at:new Date().toISOString(),packBuildId:pack.buildId});logs=logs.slice(-500);persist();}
@@ -25,11 +25,18 @@ function renderList(){
  const frag=document.createDocumentFragment();
  if(currentView==='draft')for(const row of events.slice(-draftLimit).reverse()){
   const tile=document.createElement('button');tile.className='draftTile';tile.setAttribute('aria-label',row.name+'をコレクションに追加');
-  const image=document.createElement('img');image.src=rowImage(row);image.alt=row.name;image.loading='lazy';image.onerror=()=>{image.hidden=true;};const name=document.createElement('strong');name.textContent=row.name;const info=document.createElement('small');info.textContent=row.confirmed?`${row.confirmed.set} #${row.confirmed.collectorNumber} / ${row.confirmed.language}`:'収録版は未選択';tile.append(image,name,info);tile.onclick=()=>openDraftCard(row);frag.append(tile);
+  const image=document.createElement('img');image.src=rowImage(row);image.alt=row.name;image.loading='lazy';image.onerror=()=>{image.hidden=true;};const name=document.createElement('strong');name.textContent=row.name;const info=document.createElement('small');info.textContent=row.confirmed?`${row.confirmed.set} #${row.confirmed.collectorNumber} / ${row.confirmed.language}`:'収録版は未選択';tile.append(image,name,info);tile.onclick=()=>openDraftCard(row);const item=document.createElement('article');item.className='draftItem';const remove=document.createElement('button');remove.className='draftDelete';remove.textContent='削除';remove.setAttribute('aria-label',row.name+'を仮リストから削除');remove.disabled=draftDeleteBusy||addSaving||collectionBusy;remove.onclick=()=>removeDraft(row.id);item.append(tile,remove);frag.append(item);
  }
  if(currentView==='draft'&&!events.length){const empty=document.createElement('p');empty.className='draftEmpty';empty.textContent='仮リストは空です。スキャンしたカードがここに表示されます。';frag.append(empty);}
  $('list').replaceChildren(frag);$('count').textContent=events.length+'枚';$('scanCount').textContent=events.length;$('moreDraft').hidden=currentView!=='draft'||events.length<=draftLimit;updatePopupEdition();buttons();
 }
+async function removeDraft(id){
+ if(draftDeleteBusy||addSaving||collectionBusy)return;const row=events.find(r=>r.id===id);if(!row)return;draftDeleteBusy=true;$('list').inert=true;$('addDelete').disabled=true;
+ try{await integratedStore.flush();const saved=await integratedStore.remove(id);events=saved.events;logs=saved.logs;if(activePopup?.rowId===id){activePopup=null;$('candidates').hidden=true;}if(pendingPopup?.rowId===id)pendingPopup=null;if(addRowId===id)$('addDialog').close();renderList();$('collectionStatus').textContent=row.name+'を仮リストから削除しました。';}
+ catch(e){$('collectionStatus').textContent='削除できません：'+e.message;if($('addDialog').open)$('addStatus').textContent='削除できません：'+e.message;}
+ finally{draftDeleteBusy=false;$('list').inert=false;$('addDelete').disabled=false;renderList();}
+}
+$('addDelete').onclick=()=>{if(addRowId)removeDraft(addRowId);};
 function switchView(view){currentView=view;for(const [id,name]of [['tabScan','scan'],['tabDraft','draft']])$(id).setAttribute('aria-selected',String(view===name));$('scanPanel').hidden=view!=='scan';$('draftPanel').hidden=view!=='draft';renderList();if(view==='scan'){fitGuide();clearTimeout(timer);schedule();}window.scrollTo(0,0);}
 $('tabScan').onclick=()=>switchView('scan');$('tabDraft').onclick=()=>switchView('draft');$('moreDraft').onclick=()=>{draftLimit+=100;renderList();};
 let addRequest=0;
@@ -38,14 +45,14 @@ async function openDraftCard(row){addRowId=row.id;const request=++addRequest;ren
 $('addClose').onclick=()=>{if(!addSaving)$('addDialog').close();};$('addDialog').addEventListener('cancel',e=>{if(addSaving)e.preventDefault();});$('addDialog').addEventListener('close',()=>{addRequest++;addRowId=null;});
 $('addEdition').onclick=()=>{const row=events.find(r=>r.id===addRowId);if(row)editionPicker.open(row);};
 $('addSave').onclick=async()=>{
- const row=events.find(r=>r.id===addRowId);if(!row||addSaving)return;addSaving=true;$('addEdition').disabled=true;$('addSave').disabled=true;$('addClose').disabled=true;$('addDialog').querySelector('.addFields').inert=true;
+ const row=events.find(r=>r.id===addRowId);if(!row||addSaving)return;addSaving=true;$('addDelete').disabled=true;$('addEdition').disabled=true;$('addSave').disabled=true;$('addClose').disabled=true;$('addDialog').querySelector('.addFields').inert=true;
  try{const options={quantity:Number($('addQuantity').value),condition:$('addCondition').value,location:$('addLocation').value};
   if(!Number.isSafeInteger(options.quantity)||options.quantity<1||options.quantity>9999)throw Error('追加枚数は1〜9999の整数で指定してください');
   const language=$('addLanguage').value,finish=$('addFinish').value,printing=(printsByOracle.get(row.oracleId)||[]).find(p=>p.id===row.printId);if(!printing)throw Error('収録版を選択してください');
   if(!row.confirmed||row.confirmed.language!==language||row.confirmed.finish!==finish)await confirmPrinting(row,printing,language,finish);
   await integratedStore.flush();const saved=await integratedStore.commitOne(row.id,options);events=saved.events;logs=saved.logs;if(activePopup?.rowId===row.id){activePopup=null;$('candidates').hidden=true;}if(pendingPopup?.rowId===row.id)pendingPopup=null;renderList();$('addDialog').close();$('collectionStatus').textContent=row.name+'を'+options.quantity+'枚、コレクションに追加しました。';notifyCollectionChanged();
  }catch(e){$('addStatus').textContent='追加できません：'+e.message;}
- finally{addSaving=false;$('addEdition').disabled=false;$('addClose').disabled=false;$('addDialog').querySelector('.addFields').inert=false;$('addSave').disabled=false;}
+ finally{addSaving=false;$('addDelete').disabled=false;$('addEdition').disabled=false;$('addClose').disabled=false;$('addDialog').querySelector('.addFields').inert=false;$('addSave').disabled=false;}
 };
 function notifyCollectionChanged(){if(window.parent!==window)window.parent.postMessage({type:'mtg-scanner-collection-changed'},location.origin);}
 async function confirmPrinting(row,printing,language,finish){
@@ -134,4 +141,4 @@ try{
  $('pack').textContent=`${pack.rows}認識用参照 / ${pack.identityCount}個別カード / ${pack.printCount}収録版。公式データ ${pack.sourceDate} 時点。`;$('scope').textContent=`全体カタログ：${pack.identityCount.toLocaleString()}個別カード・${pack.rows.toLocaleString()}参照`;renderList();if(storageFailed)throw Error('保存領域を確認できないためスキャンを開始できません');
  state('認識機能を読み込んでいます…');await Promise.all([getHash(),getVision()]);ready=true;buttons();state('カメラを開始して、枠内にカードを合わせてください。');addLog({source:'scanner-startup',packUpdated:updated,totalMs:performance.now()-startupAt,workerStarts:{...workerStarts},prepareStats});
  if(embedded)parent.postMessage({type:'mtg-scanner-ready'},location.origin);
-}catch(e){state('準備できません：'+e.message);}
+}catch(e){state('準備できません：'+e.message);if(parent!==window)parent.postMessage({type:'mtg-scanner-error',message:e.message},location.origin);}
