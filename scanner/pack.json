@@ -114,23 +114,23 @@
     },
     {
       "path": "integrated-store.mjs",
-      "bytes": 3155,
-      "sha256": "6d1e656fe361d5d520b11075e31dcc07051fe8d613f5a4c206c24f045640902e"
+      "bytes": 4759,
+      "sha256": "4b908feadb146d656f11b70f78d7a7520b4fb328a944b4b1c6fbd825bc249860"
     },
     {
       "path": "live.css",
-      "bytes": 7931,
-      "sha256": "6a78b2f42c3cf7c087fb5c717d751dd1e27a8c9acc526cdcb453743d49915740"
+      "bytes": 9775,
+      "sha256": "a12d2536832d04d3948d9cb4f4f3194e17d4076cb3381cbe8b5e1ee01b3fa0aa"
     },
     {
       "path": "live.html",
-      "bytes": 6854,
-      "sha256": "911c40ba1097ee68e44f26c6b9eea757e99defbbe356b53353d44f6cc4477081"
+      "bytes": 8033,
+      "sha256": "aefb364a481301644e309931347ada481b3d52624931c0ce7e7fc2ea46c3bfb4"
     },
     {
       "path": "live.mjs",
-      "bytes": 30835,
-      "sha256": "62a6a5c4015e7eeb6c1b48837ceba2628409b53c6130e250a94d14c35f13e75b"
+      "bytes": 35158,
+      "sha256": "e544f2608f1d4ece39d4b7e34ee498de5122973cf40923b10629f2f67f3b2406"
     },
     {
       "path": "models/detector.onnx",
@@ -154,13 +154,13 @@
     },
     {
       "path": "rpc.mjs",
-      "bytes": 1234,
-      "sha256": "46b546fe628ad133a84c54cba3b9b1dbc1792f774a41c0dfc1ea8992e15c6cf3"
+      "bytes": 1532,
+      "sha256": "2c51bbb5877fef9235f9d6824d7354e32a54f03870d4eac4740f1efe6c3604c8"
     },
     {
       "path": "shared-storage.js",
-      "bytes": 5560,
-      "sha256": "136e05cfd4caa0677d89aa7546694e7555d69a2391d73b8614f033439276d702"
+      "bytes": 5888,
+      "sha256": "86e070293bd8052bf72c26f2dac0b15258d9a8a1e562e1f0ef45e6a67b9287df"
     },
     {
       "path": "style.css",
@@ -169,8 +169,8 @@
     },
     {
       "path": "sw.js",
-      "bytes": 2353,
-      "sha256": "a7ab979e0657b427868b286301b8cd9b4019e8872b10a059fccffd333f5b98ba"
+      "bytes": 2951,
+      "sha256": "4250a1b173ee8ab68dc1bbce223412dd3bf4327f32512e613e19240e2b2d5811"
     },
     {
       "path": "vendor/ort/LICENSE",
@@ -198,6 +198,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91522793,
-  "buildId": "7ea319d95191"
+  "totalBytes": 91532967,
+  "buildId": "250ae57424d4"
 }

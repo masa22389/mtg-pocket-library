@@ -362,3 +362,5 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 #deckEntryCollectionStatus:not(.show){display:none}
 
 .deck-tile:not(.has-cover){display:flex;flex-direction:column;justify-content:flex-end;padding:18px 20px}.deck-tile:not(.has-cover) .deck-tile-info{width:100%}
+
+#scannerHostFrame{position:fixed;inset:0;width:100%;height:100dvh;border:0;background:#0d1118;z-index:5000}#scannerHostFrame[hidden]{display:none}body.scannerHostOpen{overflow:hidden}

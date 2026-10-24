@@ -38,6 +38,10 @@ async function createMtgStorage({ name = "mtg-pocket-data-v1", legacy = localSto
   db.onversionchange = () => { db.close(); failed = new Error("別の画面で保存領域が更新されました。再読み込みしてください。"); notify("error", failed.message); };
   const api = {
     getItem: key => cache.get(key) ?? null,
+    async refreshItem(key) {
+      await api.flush();const tx=db.transaction('values','readonly'),done=complete(tx),request=tx.objectStore('values').get(key);let value;
+      request.onsuccess=()=>{value=request.result;};await done;if(value===undefined)cache.delete(key);else cache.set(key,value);return value??null;
+    },
     setItem: (key, value) => api.writeBatch([[key, String(value)]]),
     removeItem: key => api.writeBatch([[key, null]]),
     writeBatch(entries) {
