@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v307";
+const APP_VERSION = "v308";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3829,6 +3829,23 @@ async function saveSelectedCardQuantity() {
   showToast("所持枚数を保存しました");
 }
 
+function collectionCardMatchesText(card, query) {
+  const normalizedQuery = normalizeCardName(query);
+  if (!normalizedQuery) return true;
+  // Compact owned rows may have English-only names and no card_faces. Resolve aliases locally.
+  const indexItems = [
+    JP_INDEX_BY_ORACLE_ID.get(card.oracleId || card.oracle_id || ''),
+    JP_INDEX_BY_SCRYFALL_ID.get(card.scryfallId || card.id || ''),
+    JP_INDEX_BY_EN_NAME.get(normalizeCardName(card.name || '')),
+    JP_INDEX_BY_EN_NAME.get(normalizeCardName(String(card.name || '').split('//')[0])),
+  ].filter(Boolean);
+  const names = [card.name, card.printedName, card.printed_name, card.jpName,
+    ...(card.card_faces || card.cardFaces || []).flatMap(face => [face.name, face.printed_name, face.printedName]),
+    ...indexItems.flatMap(item => [item.scryfallName, ...(item.jaNames || []), ...(item.enNames || [])]),
+    card.setName, card.typeLine, card.printedTypeLine, card.location];
+  return normalizeCardName(names.filter(Boolean).join(' ')).includes(normalizedQuery);
+}
+
 function collectionMatchesCardFilters(card, { color = "", mana = "", type = "", set = "", format = "" } = {}) {
   const colors = Array.isArray(card.colors) ? card.colors : [];
   const colorMatch = !color || (color === "C" ? colors.length === 0 : color === "M" ? colors.length > 1 : colors.includes(color));
@@ -3889,7 +3906,7 @@ function renderCollection() {
   const underFour = $("#collectionUnderFour").checked;
   const artworkTotals = underFour ? ownedArtworkTotals(state.collection) : new Map();
   let cards = state.collection.filter(card => {
-    const textMatch = [card.name, card.printedName, card.setName, card.typeLine, card.printedTypeLine, card.location].join(" ").toLowerCase().includes(query);
+    const textMatch = collectionCardMatchesText(card, query);
     const cardMatch = collectionMatchesCardFilters(card, { color, mana, type, set: setFilter, format });
     const yenValue = yenValueOf(card);
     const priceMatch = !priceFilter

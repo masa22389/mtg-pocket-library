@@ -1,0 +1,7 @@
+/* iOS focus zoom: keep editable control text at least 16px without disabling pinch zoom. */
+@media (pointer: coarse), (max-width: 1024px) {
+  :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"]),
+  textarea, select, [contenteditable="true"]) { font-size: 16px !important; }
+  .quantity-stepper input { font-size: 20px !important; }
+  .deck-section-quantity-row input { font-size: 18px !important; }
+}

@@ -16,3 +16,5 @@ shared-storage.jsとcollection-store.jsは本体storage.js / scanner-trial/quick
 v306のdata/print-display.json：同じScryfall bulk snapshotからセット名・セット内の最新公開日を抽出。サムネイルURLは同bulk内のsmall/front形式と全paperカードで一致することを確認したID形式から構成する。一覧を開いた際にのみcards.scryfall.ioへ画像取得を行う。セット単位の日付は一覧の並べ替え用。
 
 v307では画像取得のタイミングを仮リストおよび版選択画面に限定。候補の切り出しは表示中だけ保持し、永続保存しない。本体の通常のスキャン照合は端末内で実行する。
+
+v308 mobile-inputs.cssは本体と同じCSSをスキャナー配下にも同梱し、オフライン時も入力サイズを維持する。iOS自動ズームの16px対策の一次資料例： https://docs.flutter.dev/ui/accessibility/web-accessibility#viewport-zoom-and-mobile-text-inputs 。手動の拡大を禁止するviewport指定は追加しない。

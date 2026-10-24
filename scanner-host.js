@@ -1,7 +1,7 @@
 // Keep the scanner document and its local recognition workers alive across app views.
 (() => {
  let frame,visible=false;
- function ensure(){if(frame)return frame;frame=document.createElement('iframe');frame.id='scannerHostFrame';frame.title='カードスキャナー';frame.allow='camera';frame.src='scanner/live.html?embedded=1&v=307';frame.hidden=true;document.body.append(frame);return frame;}
+ function ensure(){if(frame)return frame;frame=document.createElement('iframe');frame.id='scannerHostFrame';frame.title='カードスキャナー';frame.allow='camera';frame.src='scanner/live.html?embedded=1&v=308';frame.hidden=true;document.body.append(frame);return frame;}
  function open(event){event?.preventDefault();visible=true;ensure().hidden=false;document.body.classList.add('scannerHostOpen');frame.contentWindow?.postMessage({type:'mtg-scanner-resume'},location.origin);}
  function close(){visible=false;if(frame){frame.contentWindow?.postMessage({type:'mtg-scanner-suspend'},location.origin);frame.hidden=true;}document.body.classList.remove('scannerHostOpen');}
  document.addEventListener('click',event=>{if(event.target.closest('a[href^="scanner/live.html"]'))open(event);});

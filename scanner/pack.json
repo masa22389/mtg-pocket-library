@@ -124,13 +124,18 @@
     },
     {
       "path": "live.html",
-      "bytes": 8033,
-      "sha256": "aefb364a481301644e309931347ada481b3d52624931c0ce7e7fc2ea46c3bfb4"
+      "bytes": 8081,
+      "sha256": "3cd75ecd159024443ab4893e6eda1e9caed5cb2b03ba8a1c725559f43bfc0b52"
     },
     {
       "path": "live.mjs",
       "bytes": 35158,
       "sha256": "e544f2608f1d4ece39d4b7e34ee498de5122973cf40923b10629f2f67f3b2406"
+    },
+    {
+      "path": "mobile-inputs.css",
+      "bytes": 533,
+      "sha256": "749c6611a13e91ada9e1a1c2079e3e2a63ee48bbec0f47bfa7b29f86d5ea41fc"
     },
     {
       "path": "models/detector.onnx",
@@ -198,6 +203,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91532967,
-  "buildId": "250ae57424d4"
+  "totalBytes": 91533548,
+  "buildId": "934129a5ad7b"
 }
