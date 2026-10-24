@@ -1,6 +1,6 @@
-const CACHE = "mtg-pocket-v304";
-const OFFLINE_PAGE = "./index.html?v=304";
-const SHELL = ["./diagnostics.js?v=304", OFFLINE_PAGE, "./styles.css?v=304", "./mtg-jp-card-index.js?v=304", "./mtgjson-jp-search-index.js?v=304", "./app.js?v=304", "./storage.js?v=304", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v305";
+const OFFLINE_PAGE = "./index.html?v=305";
+const SHELL = ["./diagnostics.js?v=305", OFFLINE_PAGE, "./styles.css?v=305", "./mtg-jp-card-index.js?v=305", "./mtgjson-jp-search-index.js?v=305", "./app.js?v=305", "./storage.js?v=305", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)));
@@ -8,7 +8,7 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("activate", event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))));
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("mtg-pocket-v") && key !== CACHE).map(key => caches.delete(key)))));
   self.clients.claim();
 });
 
@@ -21,7 +21,7 @@ self.addEventListener("fetch", event => {
   const url = new URL(event.request.url);
   // BEGIN SCANNER TRIAL BYPASS
   // Never cache the trial page as the main app's offline shell, or retain its assets.
-  if (url.pathname.includes('/scanner-trial/') || url.hostname === 'hanclinto.github.io') return;
+  if (url.pathname.includes('/scanner/') || url.pathname.includes('/scanner-trial/') || url.hostname === 'hanclinto.github.io') return;
   // END SCANNER TRIAL BYPASS
   if (["api.scryfall.com", "wonder.wisdom-guild.net", "r.jina.ai", "api.allorigins.win"].includes(url.hostname)) return;
 

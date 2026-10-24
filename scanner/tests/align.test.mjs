@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {findGuideQuad} from '../guide-align.mjs';
+test('no straight edges in flat background means no alignment',()=>{assert.equal(findGuideQuad(new Float64Array(140*196).fill(55),140,196).valid,false);});
+test('a shifted and slanted card boundary is found near the fixed guide',()=>{const w=140,h=196,a=new Float64Array(w*h).fill(75);for(let y=0;y<h;y++)for(let x=0;x<w;x++){const u=x-.05*(y-h/2),v=y+.04*(x-w/2);if(u>=17&&u<=126&&v>=17&&v<=173)a[y*w+x]=(u<20||u>123||v<20||v>170)?5:((x*7+y*11)%90+140);}const r=findGuideQuad(a,w,h);assert.equal(r.valid,true);assert.ok(Math.abs(r.corners[0][0]-17/140)<.06);assert.ok(Math.abs(r.corners[2][1]-173/196)<.06);});
+test('a single foreground edge is not sufficient evidence for a quadrilateral',()=>{const w=140,h=196,a=Float64Array.from({length:w*h},(_,i)=>i%w<20?0:180);assert.equal(findGuideQuad(a,w,h).valid,false);});

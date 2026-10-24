@@ -1,0 +1,193 @@
+{
+  "ready": true,
+  "version": "full-0.1",
+  "rows": 58676,
+  "identityCount": 38091,
+  "printCount": 109991,
+  "sourceDate": "2026-10-23",
+  "scope": "Scryfall default/unique_artwork snapshots 2026-10-23; paper cards and available faces/artwork. Language-independent identity matching, English-first printing metadata; not a claim of perfect recognition.",
+  "assets": [
+    {
+      "path": "align-client.mjs",
+      "bytes": 991,
+      "sha256": "60b9a564293b3e9805e54f4c5eb3febb2769494c7d24578f15f82ba73e14586c"
+    },
+    {
+      "path": "align.worker.mjs",
+      "bytes": 983,
+      "sha256": "8a176ef65878e1c1c37021b5d46c62cdf6bfade1c211455a4286be1c3b313254"
+    },
+    {
+      "path": "auto-cycle.mjs",
+      "bytes": 839,
+      "sha256": "2fc553e5efe5138048843631d34aad44ef9b7b0ac56ed3f2d8fd483ddd4d3120"
+    },
+    {
+      "path": "boot-config.js",
+      "bytes": 31,
+      "sha256": "40327255df16a1528c99ec6e4385e53866e489178c4370e4019b9f8e8c4a3052"
+    },
+    {
+      "path": "collection-store.js",
+      "bytes": 4679,
+      "sha256": "f7580c0c7554c961f0a5dce31978ba011de99835db95e00e3a38eadc96487cef"
+    },
+    {
+      "path": "data/cards.json",
+      "bytes": 5654509,
+      "sha256": "3039ce650ffb55610f126078c6044787ccf9eaf5f152dccd9c7213228af1beff"
+    },
+    {
+      "path": "data/full-features.f16.bin",
+      "bytes": 29156352,
+      "sha256": "48d72304363ff95feb72c45452f04fa5d60ffc73104b2b9946bd0f9de6270220"
+    },
+    {
+      "path": "data/identities.json",
+      "bytes": 5094010,
+      "sha256": "84e9c6a07dff452392493302567b0a9b3430921a7bf4f9916b0412a17244bbf5"
+    },
+    {
+      "path": "data/milo-cards.json",
+      "bytes": 10958197,
+      "sha256": "d1207e71c2ebc3d15917d4946f8065de731b2beb9bc9c2d3e7039f93c5224cd1"
+    },
+    {
+      "path": "data/milo-source.json",
+      "bytes": 426,
+      "sha256": "5f1e36382fcce672301a02f78e466c4e6703e2703f0d22b62c18b87b519eef54"
+    },
+    {
+      "path": "data/phash-meta.json",
+      "bytes": 352,
+      "sha256": "61738b3aa7b414f01075c6b572c9b035f23dbfbf808fd908fea38115f04ff765"
+    },
+    {
+      "path": "data/phash.bin",
+      "bytes": 1877632,
+      "sha256": "4602cef1a10292ce2e42796af7d01a94c0c202ca3a2f3de51509128b02d617ef"
+    },
+    {
+      "path": "data/prints.json",
+      "bytes": 17744517,
+      "sha256": "01ed5d721641df0b1d9581bd05754b5436353f919cbacd09acc5e7c2c5a683bb"
+    },
+    {
+      "path": "engine.mjs",
+      "bytes": 7609,
+      "sha256": "c09b2830c3649c686add47eb38a6e88de32e152d1fa0980b6ae333bf10428ed9"
+    },
+    {
+      "path": "fingerprint.mjs",
+      "bytes": 1455,
+      "sha256": "cc471b32dd9f3b76953f3ed1c917f9253c6fb4a312d4bae4477cb9741e52337b"
+    },
+    {
+      "path": "geometry.mjs",
+      "bytes": 5906,
+      "sha256": "a5a20965084daf7205af167292eacb08972be5237b3894cffbace4f7ef49dcbe"
+    },
+    {
+      "path": "guide-align.mjs",
+      "bytes": 3328,
+      "sha256": "04e0791963d9442b950c373bcc3b3dc135391ffbcf44e489d3a18e858e07017a"
+    },
+    {
+      "path": "guide.mjs",
+      "bytes": 2558,
+      "sha256": "3b9c7a648341b0743d1881915edd9bbe28f305e10c267be92053e66014f9f8f8"
+    },
+    {
+      "path": "hash.worker.mjs",
+      "bytes": 1519,
+      "sha256": "56edfa4985caad4042cd79a546cdeb0afb69e08d5354f8770fb65c92546eca6b"
+    },
+    {
+      "path": "integrated-store.mjs",
+      "bytes": 3155,
+      "sha256": "6d1e656fe361d5d520b11075e31dcc07051fe8d613f5a4c206c24f045640902e"
+    },
+    {
+      "path": "live.css",
+      "bytes": 5225,
+      "sha256": "03357cca25901daeefcd5261384610948346b9ed69e702adb4adcc824e449f5e"
+    },
+    {
+      "path": "live.html",
+      "bytes": 5614,
+      "sha256": "4d56791a0abc5efc60e4a299c1cd014f077d0526ff6b9f12fc45d107134c77be"
+    },
+    {
+      "path": "live.mjs",
+      "bytes": 31003,
+      "sha256": "0023e0576d0b81f2fdde231429b7d95a06510f5ade3b614aa235f3540fb17ae0"
+    },
+    {
+      "path": "models/detector.onnx",
+      "bytes": 4407545,
+      "sha256": "650da3cc3e9ac778c6951de631f824ec1e63bdabf3aaa39a35d7435af625612e"
+    },
+    {
+      "path": "models/milo.onnx",
+      "bytes": 5191100,
+      "sha256": "bd13d8d60383c69da04dce261f32e93fdaeaa8fd618fbc991e7385f71b3d45df"
+    },
+    {
+      "path": "queue-model.mjs",
+      "bytes": 579,
+      "sha256": "dd860d1bccbe1dbd7803bb0da974bde7667a665b1722dffe11df288edfa745aa"
+    },
+    {
+      "path": "read-cycle.mjs",
+      "bytes": 663,
+      "sha256": "9322dacabaad388cd59f87414082009ed3c6731e305a29ca58449d369e8389be"
+    },
+    {
+      "path": "rpc.mjs",
+      "bytes": 1234,
+      "sha256": "46b546fe628ad133a84c54cba3b9b1dbc1792f774a41c0dfc1ea8992e15c6cf3"
+    },
+    {
+      "path": "shared-storage.js",
+      "bytes": 5560,
+      "sha256": "136e05cfd4caa0677d89aa7546694e7555d69a2391d73b8614f033439276d702"
+    },
+    {
+      "path": "style.css",
+      "bytes": 1027,
+      "sha256": "76a38c08ad29bf9892dd94c0e81f68b5968d8eeb8228ccd3fedc2c2a34fa8fde"
+    },
+    {
+      "path": "sw.js",
+      "bytes": 2353,
+      "sha256": "a7ab979e0657b427868b286301b8cd9b4019e8872b10a059fccffd333f5b98ba"
+    },
+    {
+      "path": "vendor/ort/LICENSE",
+      "bytes": 1073,
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c"
+    },
+    {
+      "path": "vendor/ort/ort-wasm-simd-threaded.mjs",
+      "bytes": 20856,
+      "sha256": "30dd851d9c00622940500f71ddd2ff8820c5cb65270816080175b958705385a8"
+    },
+    {
+      "path": "vendor/ort/ort-wasm-simd-threaded.wasm",
+      "bytes": 11210254,
+      "sha256": "71aef04959c5c1b6de461b6538e2058e306610034a85aad2742d0c7fd4533fe4"
+    },
+    {
+      "path": "vendor/ort/ort.wasm.min.mjs",
+      "bytes": 48259,
+      "sha256": "6ef726f355b791129f7ddf3f62e7877a16b9b777abe87004b8ab306e6b9cf265"
+    },
+    {
+      "path": "vision.worker.mjs",
+      "bytes": 6454,
+      "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
+    }
+  ],
+  "totalBytes": 91457847,
+  "buildId": "7d3588261d76"
+}

@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {ReadCycle} from '../read-cycle.mjs';
+test('a result stops recognition until explicit restart',()=>{const c=new ReadCycle();c.begin(0);assert.ok(c.next(1));c.hold();for(let t=2;t<10000;t+=100)assert.equal(c.next(t),false);assert.equal(c.state,'choosing');c.selected();assert.equal(c.next(20000),false);c.begin(20001);assert.ok(c.next(20002));});
+test('failed reads are bounded by attempts and elapsed time',()=>{const c=new ReadCycle();c.begin(0);for(let i=0;i<6;i++)assert.ok(c.next(i));assert.equal(c.next(7),false);assert.equal(c.state,'failed');c.begin(100);assert.equal(c.next(2600),false);assert.equal(c.state,'failed');});
+test('stop cancels the recognition cycle',()=>{const c=new ReadCycle();c.begin(0);c.cancel();assert.equal(c.next(1),false);});

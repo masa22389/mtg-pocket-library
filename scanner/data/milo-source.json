@@ -1,0 +1,13 @@
+{
+  "source": "CollectorVision Catalog v2 scryfall/mtg",
+  "version": 64,
+  "updatedAt": "2026-10-23T09:05:40.788Z",
+  "rows": 113892,
+  "embedding": {
+    "model": "collectorvision@9d45a37ebfe40f22ece70507015645de134dc3ec:milo-1.0.0@sha256:bd13d8d60383c69da04dce261f32e93fdaeaa8fd618fbc991e7385f71b3d45df",
+    "dimensions": 128,
+    "dtype": "float16",
+    "byte_order": "little",
+    "layout": "row-major"
+  }
+}

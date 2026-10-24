@@ -1,0 +1,9 @@
+{
+  "algorithm": "art-dct64-low16-median-v1",
+  "rows": 58676,
+  "bits": 256,
+  "sourceSnapshot": "Scryfall 2026-10-23 default_cards + unique_artwork, paper",
+  "sha256": "4602cef1a10292ce2e42796af7d01a94c0c202ca3a2f3de51509128b02d617ef",
+  "buildRuntime": "Chrome canvas + fingerprint.mjs, same code as recognition",
+  "identityCount": 38091
+}
