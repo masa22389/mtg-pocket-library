@@ -1,0 +1,3 @@
+
+# Preserve scanner bytes: pack.json pins SHA256 for offline preparation.
+scanner/** -text
