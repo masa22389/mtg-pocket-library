@@ -53,3 +53,21 @@ The edition picker resolves visible Japanese pictures only; changing language ca
 v317 rejects Scryfall `image_status=placeholder`/`missing` pictures as Japanese scans and never substitutes a different printing. The main app binds this exact-print resolver to Japanese card images, including saved collection and deck images; image replacement is DOM-only. The selected printing, language and quantity remain unchanged. Metadata uses the v3 cache namespace so earlier results are not reused.
 
 Reviewed supplemental images live in `data/japanese-image-overrides.json`. Every record specifies the exact set, collector number, language, Oracle ID, source product page and verification date. The two initial records are Red Elemental Blast, 4BB #218 Japanese black border (Hareruya) and 4ED #218 Japanese white border (Cardshop Serra). The source pages and actual images were visually checked. Rebuilding the Japanese image index merges these records; no generic same-name, same-Oracle or cross-set fallback is allowed. An unavailable exact Japanese image is labeled as unavailable and retains the original image for that printing.
+
+
+### Complete-catalogue image audit (v318)
+
+The runtime also reads `data/japanese-image-manifest.json` and loads only the needed set in `data/japanese-image-sets/`. Each bucket is checked against its byte count and SHA256, cached separately, and matched to exact set, collector number, Japanese language and Oracle ID. Pictures remain lazy; buckets are not part of the initial model pack. `data/japanese-image-coverage.json` lists the unresolved printings and evidence limits. As of this snapshot, 62,680/62,851 Japanese paper printings have a matched front-image URL; 171 remain unresolved. This is a metadata coverage audit, not visual verification of every photo.
+
+Reproduce/update in a fresh or resumable snapshot directory:
+
+```powershell
+python scanner/tools/collect-japanese-image-data.py <snapshot-directory>
+python scanner/tools/build-japanese-images.py
+python scanner/tools/build-japanese-image-catalog.py <snapshot-directory>
+python scanner/tools/refresh-pack.py
+python scanner/tools/test-japanese-image-index.py
+node --test scanner/tests/*.test.mjs
+```
+
+The collector respects public pagination and the 25,000-product global API cap, using explicit set collections for missing-image sets. Candidate pictures from the shop must match set/language/name/number/SKU; ambiguous promotional identifiers are rejected. A numbered crosswalk is allowed only when the English name identifies exactly one printing in both catalogues within that set and language. Multiple-art basic lands are excluded from that rule. Known black-border Japanese Chronicles uses the BCHR set alias. The supplementary Hareruya adapter requires explicit Japanese CSP Theme Deck product labels and JP image paths. No cross-set substitution is allowed.

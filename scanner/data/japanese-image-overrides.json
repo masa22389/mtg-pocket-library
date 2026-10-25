@@ -24,5 +24,203 @@
     "sourcePage": "https://cardshop-serra.com/products/4ed-218-j-wb_nm_wcgn",
     "verifiedAt": "2026-10-25",
     "border": "white"
+  },
+  "bchr:114a": {
+    "set": "bchr",
+    "number": "114a",
+    "language": "ja",
+    "oracleId": "33e85a8a-86df-4cdc-a9cc-8cbabe92c3c0",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/Wt9muDG49hltXiJPXyu7SFdrJ1dm58N5HLSQT6bp.jpg?v=1782218092"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-117-j_nm_ssol",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "117",
+    "artComparison": {
+      "score": 0.93308,
+      "margin": 0.77861
+    }
+  },
+  "bchr:114b": {
+    "set": "bchr",
+    "number": "114b",
+    "language": "ja",
+    "oracleId": "33e85a8a-86df-4cdc-a9cc-8cbabe92c3c0",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/5gnAlYGZzDntFGtVqDtyErwfu945QiobrIZUaENv.jpg?v=1782217509"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-115-j_nm_6rc4",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "115",
+    "artComparison": {
+      "score": 0.87356,
+      "margin": 0.84664
+    }
+  },
+  "bchr:114c": {
+    "set": "bchr",
+    "number": "114c",
+    "language": "ja",
+    "oracleId": "33e85a8a-86df-4cdc-a9cc-8cbabe92c3c0",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/NYT7UJ0m0mOlmj9ECxArzVD5eR6JlSDbWDStjTXV.jpg?v=1782207087"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-116-j_nm_jrbi",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "116",
+    "artComparison": {
+      "score": 0.89971,
+      "margin": 0.8676
+    }
+  },
+  "bchr:114d": {
+    "set": "bchr",
+    "number": "114d",
+    "language": "ja",
+    "oracleId": "33e85a8a-86df-4cdc-a9cc-8cbabe92c3c0",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/fslVkKRjDSZ4GziVQxWmMvDrYoknt6AJMvAYgU4P.jpg?v=1782215086"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-114-j_nm_oznn",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "114",
+    "artComparison": {
+      "score": 0.96315,
+      "margin": 0.90833
+    }
+  },
+  "bchr:115a": {
+    "set": "bchr",
+    "number": "115a",
+    "language": "ja",
+    "oracleId": "e11966cd-2ee3-4df4-b099-abf42dcdf0db",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/QwzruCBEFl2u6Ms7INKZoEKNMy07hvoFmFLNtNc3.jpg?v=1782258669"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-120-j_nm_aexb",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "120",
+    "artComparison": {
+      "score": 0.84264,
+      "margin": 0.7074
+    }
+  },
+  "bchr:115b": {
+    "set": "bchr",
+    "number": "115b",
+    "language": "ja",
+    "oracleId": "e11966cd-2ee3-4df4-b099-abf42dcdf0db",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/aVDYH9e04Uwie45Ukm2qUQLPWlP3GXQ1JJjWwsLr.jpg?v=1782207263"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-119-j_nm_fqf6",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "119",
+    "artComparison": {
+      "score": 0.79387,
+      "margin": 0.65993
+    }
+  },
+  "bchr:115c": {
+    "set": "bchr",
+    "number": "115c",
+    "language": "ja",
+    "oracleId": "e11966cd-2ee3-4df4-b099-abf42dcdf0db",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/IdJo3EMwMeC8dihFh8oaTUhJ1Ea5NMnS1ZMaedAq.jpg?v=1782218129"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-118-j_nm_3nrg",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "118",
+    "artComparison": {
+      "score": 0.96807,
+      "margin": 0.71919
+    }
+  },
+  "bchr:115d": {
+    "set": "bchr",
+    "number": "115d",
+    "language": "ja",
+    "oracleId": "e11966cd-2ee3-4df4-b099-abf42dcdf0db",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/p5LM1aUuzj63GxysmIY1iFA3f77b7IkqhoAJGr2e.jpg?v=1782213877"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-121-j_nm_85an",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "121",
+    "artComparison": {
+      "score": 0.85435,
+      "margin": 0.72861
+    }
+  },
+  "bchr:116a": {
+    "set": "bchr",
+    "number": "116a",
+    "language": "ja",
+    "oracleId": "32fbb638-ab14-4e8b-a07a-d4c44e3496f2",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/T9v8IaAqqMMiYtYiDGBkW7WCYJMYsfjUlucdrRv5.jpg?v=1782223792"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-123-j_nm_4oor",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "123",
+    "artComparison": {
+      "score": 0.94718,
+      "margin": 0.67516
+    }
+  },
+  "bchr:116b": {
+    "set": "bchr",
+    "number": "116b",
+    "language": "ja",
+    "oracleId": "32fbb638-ab14-4e8b-a07a-d4c44e3496f2",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/V2ranYVQDqu1DYb0DvuPeIXU5jNkcSN3U8fDyhLJ.jpg?v=1782217914"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-125-j_nm_993e",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "125",
+    "artComparison": {
+      "score": 0.97342,
+      "margin": 0.68343
+    }
+  },
+  "bchr:116d": {
+    "set": "bchr",
+    "number": "116d",
+    "language": "ja",
+    "oracleId": "32fbb638-ab14-4e8b-a07a-d4c44e3496f2",
+    "images": {
+      "normal": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/wMV0OeibstftimL7SLQyAmQW6YNiYxxxTCzXu9YP.jpg?v=1782223766"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/chr-122-j_nm_cqce",
+    "verifiedAt": "2026-10-25",
+    "validation": "same-set-name-art-variant-manually-reviewed",
+    "sourceNumber": "122",
+    "artComparison": {
+      "score": 0.89413,
+      "margin": 0.73587
+    }
   }
 }

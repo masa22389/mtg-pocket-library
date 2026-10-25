@@ -1,9 +1,11 @@
 // Image lookup never changes a card's identity, printing, language or ownership.
 ((root) => {
-  function createCardImages({fetcher = (...args) => fetch(...args), indexUrl, cacheStorage = root.caches, now = Date.now} = {}) {
+  function createCardImages({fetcher = (...args) => fetch(...args), indexUrl, cacheStorage = root.caches, now = Date.now, manifestUrl} = {}) {
     const memory = new Map(), pending = new Map();
-    let indexPromise, tail = Promise.resolve();
-    const trusted = value => { try { const u = new URL(value); return u.protocol === 'https:' && ['cards.scryfall.io','mtg-jp.com','media.wizards.com','files.hareruyamtg.com','cardshop-serra.com'].includes(u.hostname); } catch { return false; } };
+    let indexPromise, manifestPromise;const buckets=new Map();
+    if(!manifestUrl&&/^https?:/.test(indexUrl||''))manifestUrl=new URL('./japanese-image-manifest.json',indexUrl).href;
+    let tail = Promise.resolve();
+    const trusted = value => { try { const u = new URL(value); return u.protocol === 'https:' && (['cards.scryfall.io','mtg-jp.com','media.wizards.com','files.hareruyamtg.com','cardshop-serra.com'].includes(u.hostname) || (u.hostname==='cdn.shopify.com'&&u.pathname.startsWith('/s/files/1/0672/8302/6038/'))); } catch { return false; } };
     function displayImage(card, face = 0) {
       const native = face ? card?.card_faces?.[face]?.image_uris?.normal || card?.backImage || '' : card?.image_uris?.normal || card?.card_faces?.[0]?.image_uris?.normal || card?.image || '';
       const japanese = String(card?.lang || card?.language || '').toLowerCase() === 'ja' && card?._jpImageExact;
@@ -13,14 +15,33 @@
       if (!indexPromise) indexPromise = fetcher(indexUrl).then(r => {if (!r.ok) throw Error('image index'); return r.json();}).catch(() => {indexPromise = null; return {};});
       return indexPromise;
     }
+    const numberKey=value=>String(value).replace(/^0+(?=\d)/,'').toLowerCase();
+    async function setIndex(set) {
+      if(!manifestUrl)return {};
+      if(!manifestPromise)manifestPromise=(async()=>{
+        const cache=await cacheStorage?.open('mtg-japanese-image-buckets-v1');
+        try{const response=await fetcher(manifestUrl,{cache:'no-cache'});if(!response.ok)throw Error('manifest');const copy=response.clone(),manifest=await response.json();if(manifest.version!==1||!manifest.sets)throw Error('manifest format');try{await cache?.put(manifestUrl,copy);}catch{}return manifest;}
+        catch{const saved=await cache?.match(manifestUrl);return saved?await saved.json():{sets:{}};}
+      })().catch(()=>({sets:{}}));
+      if(!buckets.has(set))buckets.set(set,(async()=>{
+        const manifest=await manifestPromise,entry=manifest.sets?.[set];if(!entry)return {};
+        const url=new URL(entry.path,manifestUrl);if(url.origin!==new URL(manifestUrl).origin||!url.pathname.endsWith('/japanese-image-sets/set-'+set+'.json')||entry.bytes>4000000||!/^[a-f0-9]{64}$/.test(entry.sha256))return {};
+        url.searchParams.set('sha',entry.sha256);const cache=await cacheStorage?.open('mtg-japanese-image-buckets-v1');let response=await cache?.match(url.href);
+        if(!response){response=await fetcher(url.href);if(!response.ok)throw Error('set images');}
+        const bytes=await response.clone().arrayBuffer();if(bytes.byteLength!==entry.bytes)throw Error('set image bytes');
+        const digest=[...new Uint8Array(await root.crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');if(digest!==entry.sha256)throw Error('set image checksum');
+        const result=await response.clone().json();try{await cache?.put(url.href,response);const keys=await cache?.keys();const sets=keys.filter(k=>String(k.url||k)!==manifestUrl);for(const old of sets.slice(0,Math.max(0,sets.length-80)))await cache.delete(old);}catch{}return result;
+      })().catch(()=>{buckets.delete(set);return {};}));
+      return buckets.get(set);
+    }
     async function cached(key) {
       if (memory.has(key) && memory.get(key).expires > now()) return memory.get(key).value;
-      try {const response = await (await cacheStorage?.open('mtg-card-image-metadata-v3'))?.match(key); if (response) {const record = await response.json(); if (record.expires > now()) {memory.set(key,record); return record.value;}}} catch {}
+      try {const response = await (await cacheStorage?.open('mtg-card-image-metadata-v4'))?.match(key); if (response) {const record = await response.json(); if (record.expires > now()) {memory.set(key,record); return record.value;}}} catch {}
       return null;
     }
     async function remember(key,value,days) {
       const record = {value,expires:now()+days*86400000}; memory.set(key,record);
-      try {const cache = await cacheStorage?.open('mtg-card-image-metadata-v3'); if (cache) {await cache.put(key,new Response(JSON.stringify(record))); const keys = await cache.keys(); for (const old of keys.slice(0,Math.max(0,keys.length-1000))) await cache.delete(old);}} catch {}
+      try {const cache = await cacheStorage?.open('mtg-card-image-metadata-v4'); if (cache) {await cache.put(key,new Response(JSON.stringify(record))); const keys = await cache.keys(); for (const old of keys.slice(0,Math.max(0,keys.length-1000))) await cache.delete(old);}} catch {}
       return value;
     }
     function validCard(card, request) {
@@ -32,9 +53,10 @@
       const key = `https://mtg-pocket.invalid/card-image/${encodeURIComponent(set)}/${encodeURIComponent(number)}/${language}/${face}?oracle=${encodeURIComponent(oracleId)}`;
       const saved = await cached(key); if (saved) return saved;
       if (language === 'ja') {
-        const known = (await index())[set+':'+number];
+        const baseline = (await index())[set+':'+number];
+        const known = baseline&&baseline.source!=='scryfall-ja'?baseline:(await setIndex(set))[numberKey(number)];
         const url = face ? known?.images?.back : known?.images?.normal;
-        if (url && trusted(url) && known.source !== 'scryfall-ja' && (!oracleId || known.oracleId === oracleId)) return remember(key,{url,language:'ja',source:known.source,fallback:false},7);
+        if (url && trusted(url) && known.source !== 'scryfall-ja' && known.set===set && numberKey(known.number)===numberKey(number) && (!known.language||known.language==='ja') && (!oracleId || known.oracleId === oracleId)) return remember(key,{url,language:'ja',source:known.source,fallback:false},7);
       }
       // One in-flight API request, with a minimum gap. Only visible images request metadata.
       const operation = tail.then(async () => {

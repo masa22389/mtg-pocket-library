@@ -29,13 +29,13 @@
     },
     {
       "path": "card-image-cache.js",
-      "bytes": 1173,
-      "sha256": "3859ab560624ea70ae60028d6d6082131912012e0cf50ab45ac999de94b8eec1"
+      "bytes": 1284,
+      "sha256": "4165ea5d33f54ab7829be91c8355773f7156a4de30a94bbcf65fda4c71ad6069"
     },
     {
       "path": "card-images.js",
-      "bytes": 7876,
-      "sha256": "9bc18d71881af9594a753c8e60b7acee7a9d0e1704b4fe2a450bfd730c242f5a"
+      "bytes": 10464,
+      "sha256": "f936fdc96a0da9b525e76e38e15ee0669343e704db73bce2672d0e4c299d6a5d"
     },
     {
       "path": "collection-store.js",
@@ -58,9 +58,14 @@
       "sha256": "84e9c6a07dff452392493302567b0a9b3430921a7bf4f9916b0412a17244bbf5"
     },
     {
+      "path": "data/japanese-image-manifest.json",
+      "bytes": 44515,
+      "sha256": "3a5d3f837d5b8465080850316ab50689bec4241f05356b09ce723601d97941f7"
+    },
+    {
       "path": "data/japanese-images.json",
-      "bytes": 269106,
-      "sha256": "9f50f70c58162e3cd7554852785fea378c85d700a35b2071aa6a2b5cd0424ada"
+      "bytes": 274626,
+      "sha256": "f22d25baabb5ed81a0e9473d311e144dd2b711dbfd7e6b051f8ff67c5386125c"
     },
     {
       "path": "data/milo-cards.json",
@@ -218,6 +223,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91821264,
-  "buildId": "ed9f52b39608"
+  "totalBytes": 91873998,
+  "buildId": "616798d80cca"
 }

@@ -1,0 +1,2790 @@
+{
+  "completeScryfallSnapshot": true,
+  "globalShopApiTruncatedAt": 25000,
+  "completedSourceCollections": {
+    "mmq:49": {
+      "products": 1444,
+      "pages": 6
+    },
+    "10e:76": {
+      "products": 1537,
+      "pages": 7
+    },
+    "2xm:10473": {
+      "products": 1767,
+      "pages": 8
+    },
+    "4ed:82": {
+      "products": 1530,
+      "pages": 7
+    },
+    "5dn:35": {
+      "products": 673,
+      "pages": 3
+    },
+    "5ed:81": {
+      "products": 948,
+      "pages": 4
+    },
+    "6ed:80": {
+      "products": 711,
+      "pages": 3
+    },
+    "7ed:79": {
+      "products": 1412,
+      "pages": 6
+    },
+    "8ed:78": {
+      "products": 1464,
+      "pages": 6
+    },
+    "9ed:77": {
+      "products": 1429,
+      "pages": 6
+    },
+    "apc:44": {
+      "products": 589,
+      "pages": 3
+    },
+    "bfz:2300": {
+      "products": 1159,
+      "pages": 5
+    },
+    "blc:13081": {
+      "products": 859,
+      "pages": 4
+    },
+    "bok:33": {
+      "products": 679,
+      "pages": 3
+    },
+    "bro:12008": {
+      "products": 1599,
+      "pages": 7
+    },
+    "c17:2708": {
+      "products": 649,
+      "pages": 3
+    },
+    "c21:10993": {
+      "products": 868,
+      "pages": 4
+    },
+    "chk:34": {
+      "products": 1247,
+      "pages": 5
+    },
+    "cmm:12290": {
+      "products": 3340,
+      "pages": 14
+    },
+    "ddf:91": {
+      "products": 81,
+      "pages": 1
+    },
+    "ddj:88": {
+      "products": 186,
+      "pages": 1
+    },
+    "dmu:11909": {
+      "products": 1743,
+      "pages": 7
+    },
+    "dsk:13134": {
+      "products": 1688,
+      "pages": 7
+    },
+    "dst:36": {
+      "products": 673,
+      "pages": 3
+    },
+    "exo:53": {
+      "products": 313,
+      "pages": 2
+    },
+    "inv:46": {
+      "products": 1427,
+      "pages": 6
+    },
+    "jud:41": {
+      "products": 602,
+      "pages": 3
+    },
+    "lgn:39": {
+      "products": 603,
+      "pages": 3
+    },
+    "m3c:12987": {
+      "products": 1207,
+      "pages": 5
+    },
+    "mid:11110": {
+      "products": 1649,
+      "pages": 7
+    },
+    "mir:58": {
+      "products": 738,
+      "pages": 3
+    },
+    "mrd:37": {
+      "products": 1248,
+      "pages": 5
+    },
+    "ncc:11279": {
+      "products": 1123,
+      "pages": 5
+    },
+    "nem:48": {
+      "products": 593,
+      "pages": 3
+    },
+    "ody:43": {
+      "products": 1438,
+      "pages": 6
+    },
+    "ons:40": {
+      "products": 1437,
+      "pages": 6
+    },
+    "p02:70": {
+      "products": 357,
+      "pages": 2
+    },
+    "pcy:47": {
+      "products": 587,
+      "pages": 3
+    },
+    "pls:45": {
+      "products": 594,
+      "pages": 3
+    },
+    "por:71": {
+      "products": 485,
+      "pages": 2
+    },
+    "ptk:69": {
+      "products": 398,
+      "pages": 2
+    },
+    "scg:38": {
+      "products": 596,
+      "pages": 3
+    },
+    "shm:22": {
+      "products": 1237,
+      "pages": 5
+    },
+    "snc:11263": {
+      "products": 1776,
+      "pages": 8
+    },
+    "sth:54": {
+      "products": 318,
+      "pages": 2
+    },
+    "stx:10975": {
+      "products": 1645,
+      "pages": 7
+    },
+    "tmp:55": {
+      "products": 752,
+      "pages": 4
+    },
+    "tor:42": {
+      "products": 596,
+      "pages": 3
+    },
+    "tsb:1294": {
+      "products": 485,
+      "pages": 2
+    },
+    "uds:50": {
+      "products": 590,
+      "pages": 3
+    },
+    "ulg:51": {
+      "products": 593,
+      "pages": 3
+    },
+    "uma:2990": {
+      "products": 40,
+      "pages": 1
+    },
+    "uma:2980": {
+      "products": 1063,
+      "pages": 5
+    },
+    "usg:52": {
+      "products": 743,
+      "pages": 3
+    },
+    "vis:57": {
+      "products": 370,
+      "pages": 2
+    },
+    "wth:56": {
+      "products": 360,
+      "pages": 2
+    },
+    "chr:11049": {
+      "products": 255,
+      "pages": 2
+    },
+    "csp:28": {
+      "products": 760,
+      "pages": 4
+    }
+  },
+  "scryfallCards": 62851,
+  "productRecords": 78925,
+  "sourceImageStatuses": {
+    "lowres": 46827,
+    "missing": 6,
+    "placeholder": 8677,
+    "highres_scan": 7341
+  },
+  "stats": {
+    "scryfallAvailable": 54168,
+    "available": 62680,
+    "supplementedFromCatalogue": 8426,
+    "supplementedFromUniquePrintCrosswalk": 45,
+    "supplementedFromReviewedIndex": 11,
+    "supplementedFromSecondCatalogue": 30,
+    "unresolved": 171
+  },
+  "sets": {
+    "10e": {
+      "total": 373,
+      "available": 373
+    },
+    "2x2": {
+      "total": 567,
+      "available": 567
+    },
+    "2xm": {
+      "total": 337,
+      "available": 337
+    },
+    "40k": {
+      "total": 161,
+      "available": 161
+    },
+    "4bb": {
+      "total": 378,
+      "available": 378
+    },
+    "4ed": {
+      "total": 378,
+      "available": 378
+    },
+    "5dn": {
+      "total": 165,
+      "available": 165
+    },
+    "5ed": {
+      "total": 449,
+      "available": 449
+    },
+    "6ed": {
+      "total": 350,
+      "available": 350
+    },
+    "7ed": {
+      "total": 350,
+      "available": 350
+    },
+    "8ed": {
+      "total": 357,
+      "available": 357
+    },
+    "9ed": {
+      "total": 350,
+      "available": 350
+    },
+    "a25": {
+      "total": 249,
+      "available": 249
+    },
+    "acr": {
+      "total": 264,
+      "available": 264
+    },
+    "aer": {
+      "total": 194,
+      "available": 194
+    },
+    "afc": {
+      "total": 331,
+      "available": 331
+    },
+    "afr": {
+      "total": 394,
+      "available": 394
+    },
+    "akh": {
+      "total": 287,
+      "available": 287
+    },
+    "ala": {
+      "total": 249,
+      "available": 249
+    },
+    "apc": {
+      "total": 143,
+      "available": 143
+    },
+    "arb": {
+      "total": 145,
+      "available": 145
+    },
+    "avr": {
+      "total": 244,
+      "available": 244
+    },
+    "bbd": {
+      "total": 254,
+      "available": 254
+    },
+    "bchr": {
+      "total": 125,
+      "available": 125
+    },
+    "bfz": {
+      "total": 250,
+      "available": 250
+    },
+    "big": {
+      "total": 90,
+      "available": 90
+    },
+    "blb": {
+      "total": 372,
+      "available": 372
+    },
+    "blc": {
+      "total": 355,
+      "available": 355
+    },
+    "bng": {
+      "total": 165,
+      "available": 165
+    },
+    "bok": {
+      "total": 160,
+      "available": 160
+    },
+    "brc": {
+      "total": 197,
+      "available": 197
+    },
+    "bro": {
+      "total": 380,
+      "available": 380
+    },
+    "brr": {
+      "total": 126,
+      "available": 126
+    },
+    "c13": {
+      "total": 355,
+      "available": 355
+    },
+    "c14": {
+      "total": 337,
+      "available": 337
+    },
+    "c15": {
+      "total": 342,
+      "available": 342
+    },
+    "c16": {
+      "total": 351,
+      "available": 351
+    },
+    "c17": {
+      "total": 309,
+      "available": 309
+    },
+    "c18": {
+      "total": 306,
+      "available": 306
+    },
+    "c19": {
+      "total": 302,
+      "available": 302
+    },
+    "c20": {
+      "total": 321,
+      "available": 321
+    },
+    "c21": {
+      "total": 408,
+      "available": 408
+    },
+    "chk": {
+      "total": 296,
+      "available": 296
+    },
+    "clb": {
+      "total": 844,
+      "available": 844
+    },
+    "cmd": {
+      "total": 317,
+      "available": 317
+    },
+    "cmm": {
+      "total": 1067,
+      "available": 1067
+    },
+    "cmr": {
+      "total": 715,
+      "available": 715
+    },
+    "cn2": {
+      "total": 222,
+      "available": 222
+    },
+    "cns": {
+      "total": 210,
+      "available": 210
+    },
+    "con": {
+      "total": 145,
+      "available": 145
+    },
+    "csp": {
+      "total": 155,
+      "available": 155
+    },
+    "cst": {
+      "total": 62,
+      "available": 30,
+      "unresolved": 32
+    },
+    "dci": {
+      "total": 1,
+      "unresolved": 1
+    },
+    "dd2": {
+      "total": 62,
+      "available": 62
+    },
+    "dde": {
+      "total": 71,
+      "available": 71
+    },
+    "ddf": {
+      "total": 79,
+      "unresolved": 79
+    },
+    "ddi": {
+      "total": 77,
+      "available": 77
+    },
+    "ddj": {
+      "total": 90,
+      "available": 89,
+      "unresolved": 1
+    },
+    "ddk": {
+      "total": 80,
+      "available": 80
+    },
+    "ddl": {
+      "total": 81,
+      "available": 81
+    },
+    "ddm": {
+      "total": 88,
+      "available": 88
+    },
+    "ddn": {
+      "total": 81,
+      "available": 81
+    },
+    "ddo": {
+      "total": 65,
+      "available": 65
+    },
+    "ddp": {
+      "total": 75,
+      "available": 75
+    },
+    "ddq": {
+      "total": 77,
+      "available": 77
+    },
+    "ddr": {
+      "total": 72,
+      "available": 72
+    },
+    "dds": {
+      "total": 65,
+      "available": 65
+    },
+    "ddt": {
+      "total": 63,
+      "available": 63
+    },
+    "ddu": {
+      "total": 75,
+      "available": 75
+    },
+    "dft": {
+      "total": 538,
+      "available": 538
+    },
+    "dgm": {
+      "total": 141,
+      "available": 141
+    },
+    "dis": {
+      "total": 180,
+      "available": 180
+    },
+    "dka": {
+      "total": 158,
+      "available": 158
+    },
+    "dmc": {
+      "total": 218,
+      "available": 218
+    },
+    "dmr": {
+      "total": 447,
+      "available": 447
+    },
+    "dmu": {
+      "total": 431,
+      "available": 431
+    },
+    "dom": {
+      "total": 280,
+      "available": 280
+    },
+    "drc": {
+      "total": 184,
+      "available": 184
+    },
+    "dsc": {
+      "total": 367,
+      "available": 367
+    },
+    "dsk": {
+      "total": 411,
+      "available": 411
+    },
+    "dst": {
+      "total": 165,
+      "available": 165
+    },
+    "dtk": {
+      "total": 264,
+      "available": 264
+    },
+    "ecc": {
+      "total": 170,
+      "available": 170
+    },
+    "ecl": {
+      "total": 384,
+      "available": 384
+    },
+    "eld": {
+      "total": 280,
+      "available": 280
+    },
+    "ema": {
+      "total": 249,
+      "available": 249
+    },
+    "emn": {
+      "total": 208,
+      "available": 208
+    },
+    "eoc": {
+      "total": 191,
+      "available": 191
+    },
+    "eoe": {
+      "total": 372,
+      "available": 372
+    },
+    "eve": {
+      "total": 180,
+      "available": 180
+    },
+    "exo": {
+      "total": 143,
+      "available": 143
+    },
+    "fca": {
+      "total": 64,
+      "available": 64
+    },
+    "fdn": {
+      "total": 527,
+      "available": 527
+    },
+    "ffdn": {
+      "total": 2,
+      "available": 2
+    },
+    "fic": {
+      "total": 444,
+      "available": 444
+    },
+    "fin": {
+      "total": 581,
+      "available": 581
+    },
+    "fra": {
+      "total": 425,
+      "available": 425
+    },
+    "frc": {
+      "total": 103,
+      "available": 103
+    },
+    "frf": {
+      "total": 185,
+      "available": 185
+    },
+    "fut": {
+      "total": 180,
+      "available": 180
+    },
+    "gk1": {
+      "total": 127,
+      "available": 127
+    },
+    "gk2": {
+      "total": 123,
+      "available": 123
+    },
+    "gn3": {
+      "total": 135,
+      "available": 135
+    },
+    "gpt": {
+      "total": 165,
+      "available": 165
+    },
+    "grn": {
+      "total": 262,
+      "available": 262
+    },
+    "gtc": {
+      "total": 248,
+      "available": 248
+    },
+    "hob": {
+      "total": 276,
+      "available": 276
+    },
+    "hoc": {
+      "total": 113,
+      "available": 113
+    },
+    "hou": {
+      "total": 208,
+      "available": 208
+    },
+    "iko": {
+      "total": 291,
+      "available": 291
+    },
+    "ima": {
+      "total": 249,
+      "available": 249
+    },
+    "inv": {
+      "total": 350,
+      "available": 350
+    },
+    "isd": {
+      "total": 264,
+      "available": 264
+    },
+    "j22": {
+      "total": 834,
+      "available": 834
+    },
+    "j25": {
+      "total": 777,
+      "available": 777
+    },
+    "jou": {
+      "total": 165,
+      "available": 165
+    },
+    "jp1": {
+      "total": 5,
+      "available": 5
+    },
+    "jud": {
+      "total": 143,
+      "available": 143
+    },
+    "khc": {
+      "total": 119,
+      "available": 119
+    },
+    "khm": {
+      "total": 381,
+      "available": 381
+    },
+    "kld": {
+      "total": 274,
+      "available": 274
+    },
+    "ktk": {
+      "total": 269,
+      "available": 269
+    },
+    "lcc": {
+      "total": 353,
+      "available": 353
+    },
+    "lci": {
+      "total": 388,
+      "available": 388
+    },
+    "lgn": {
+      "total": 145,
+      "available": 145
+    },
+    "lrw": {
+      "total": 301,
+      "available": 301
+    },
+    "ltc": {
+      "total": 341,
+      "available": 341
+    },
+    "ltr": {
+      "total": 440,
+      "available": 440
+    },
+    "m10": {
+      "total": 249,
+      "available": 249
+    },
+    "m11": {
+      "total": 249,
+      "available": 249
+    },
+    "m12": {
+      "total": 249,
+      "available": 249
+    },
+    "m13": {
+      "total": 249,
+      "available": 249
+    },
+    "m14": {
+      "total": 249,
+      "available": 249
+    },
+    "m15": {
+      "total": 284,
+      "available": 284
+    },
+    "m19": {
+      "total": 314,
+      "available": 314
+    },
+    "m20": {
+      "total": 344,
+      "available": 344
+    },
+    "m21": {
+      "total": 383,
+      "available": 383
+    },
+    "m3c": {
+      "total": 382,
+      "available": 382
+    },
+    "mar": {
+      "total": 40,
+      "available": 40
+    },
+    "mat": {
+      "total": 223,
+      "available": 223
+    },
+    "mbs": {
+      "total": 155,
+      "available": 155
+    },
+    "mh1": {
+      "total": 255,
+      "available": 255
+    },
+    "mh2": {
+      "total": 489,
+      "available": 489
+    },
+    "mh3": {
+      "total": 487,
+      "available": 487
+    },
+    "mic": {
+      "total": 187,
+      "available": 187
+    },
+    "mid": {
+      "total": 300,
+      "available": 300
+    },
+    "mir": {
+      "total": 350,
+      "available": 350
+    },
+    "mkc": {
+      "total": 351,
+      "available": 351
+    },
+    "mkm": {
+      "total": 417,
+      "available": 417
+    },
+    "mm2": {
+      "total": 249,
+      "available": 249
+    },
+    "mm3": {
+      "total": 249,
+      "available": 249
+    },
+    "mmq": {
+      "total": 350,
+      "available": 350
+    },
+    "moc": {
+      "total": 446,
+      "available": 446
+    },
+    "mom": {
+      "total": 373,
+      "available": 373
+    },
+    "mor": {
+      "total": 150,
+      "available": 150
+    },
+    "mrd": {
+      "total": 288,
+      "available": 288
+    },
+    "msc": {
+      "total": 845,
+      "available": 845
+    },
+    "msh": {
+      "total": 412,
+      "available": 412
+    },
+    "mul": {
+      "total": 65,
+      "available": 65
+    },
+    "ncc": {
+      "total": 447,
+      "available": 447
+    },
+    "nec": {
+      "total": 177,
+      "available": 177
+    },
+    "nem": {
+      "total": 143,
+      "available": 143
+    },
+    "neo": {
+      "total": 475,
+      "available": 475
+    },
+    "nph": {
+      "total": 175,
+      "available": 175
+    },
+    "ody": {
+      "total": 350,
+      "available": 350
+    },
+    "ogw": {
+      "total": 182,
+      "available": 182
+    },
+    "ohop": {
+      "total": 40,
+      "unresolved": 40
+    },
+    "onc": {
+      "total": 172,
+      "available": 172
+    },
+    "one": {
+      "total": 376,
+      "available": 376
+    },
+    "ons": {
+      "total": 350,
+      "available": 350
+    },
+    "opc2": {
+      "total": 40,
+      "available": 40
+    },
+    "ori": {
+      "total": 288,
+      "available": 288
+    },
+    "otc": {
+      "total": 339,
+      "available": 339
+    },
+    "otj": {
+      "total": 373,
+      "available": 373
+    },
+    "otp": {
+      "total": 65,
+      "available": 65
+    },
+    "p02": {
+      "total": 165,
+      "available": 165
+    },
+    "p30a": {
+      "total": 1,
+      "available": 1
+    },
+    "p30h": {
+      "total": 10,
+      "available": 10
+    },
+    "p30t": {
+      "total": 2,
+      "available": 2
+    },
+    "pc2": {
+      "total": 156,
+      "available": 156
+    },
+    "pcbb": {
+      "total": 5,
+      "available": 5
+    },
+    "pcy": {
+      "total": 142,
+      "available": 142
+    },
+    "pdom": {
+      "total": 1,
+      "available": 1
+    },
+    "pf25": {
+      "total": 1,
+      "available": 1
+    },
+    "pip": {
+      "total": 528,
+      "available": 528
+    },
+    "pjjt": {
+      "total": 12,
+      "available": 12
+    },
+    "pjsc": {
+      "total": 4,
+      "available": 4
+    },
+    "pkhm": {
+      "total": 1,
+      "available": 1
+    },
+    "pl21": {
+      "total": 4,
+      "available": 4
+    },
+    "pl22": {
+      "total": 5,
+      "available": 5
+    },
+    "pl23": {
+      "total": 6,
+      "available": 6
+    },
+    "pl24": {
+      "total": 7,
+      "available": 7
+    },
+    "plc": {
+      "total": 165,
+      "available": 165
+    },
+    "plg21": {
+      "total": 3,
+      "available": 3
+    },
+    "plg24": {
+      "total": 6,
+      "available": 6
+    },
+    "pls": {
+      "total": 146,
+      "available": 143,
+      "unresolved": 3
+    },
+    "plst": {
+      "total": 1,
+      "available": 1
+    },
+    "pm11": {
+      "total": 1,
+      "available": 1
+    },
+    "pmda": {
+      "total": 4,
+      "available": 4
+    },
+    "pmei": {
+      "total": 47,
+      "available": 47
+    },
+    "pmps": {
+      "total": 20,
+      "available": 20
+    },
+    "pmps06": {
+      "total": 5,
+      "available": 5
+    },
+    "pmps07": {
+      "total": 5,
+      "available": 5
+    },
+    "pmps08": {
+      "total": 6,
+      "available": 6
+    },
+    "pmps09": {
+      "total": 5,
+      "available": 5
+    },
+    "pmps10": {
+      "total": 5,
+      "available": 5
+    },
+    "pmps11": {
+      "total": 5,
+      "available": 5
+    },
+    "por": {
+      "total": 221,
+      "available": 208,
+      "unresolved": 13
+    },
+    "pred": {
+      "total": 1,
+      "available": 1
+    },
+    "proe": {
+      "total": 1,
+      "available": 1
+    },
+    "pspl": {
+      "total": 1,
+      "available": 1
+    },
+    "psvc": {
+      "total": 3,
+      "available": 3
+    },
+    "ptk": {
+      "total": 180,
+      "available": 179,
+      "unresolved": 1
+    },
+    "purl": {
+      "total": 2,
+      "available": 2
+    },
+    "pw23": {
+      "total": 2,
+      "available": 2
+    },
+    "pw24": {
+      "total": 1,
+      "available": 1
+    },
+    "pw26": {
+      "total": 1,
+      "available": 1
+    },
+    "pwar": {
+      "total": 36,
+      "available": 36
+    },
+    "pwcs": {
+      "total": 46,
+      "available": 46
+    },
+    "pwwk": {
+      "total": 2,
+      "available": 2
+    },
+    "pza": {
+      "total": 20,
+      "available": 20
+    },
+    "pzen": {
+      "total": 2,
+      "available": 2
+    },
+    "rav": {
+      "total": 306,
+      "available": 306
+    },
+    "rex": {
+      "total": 26,
+      "available": 26
+    },
+    "rfin": {
+      "total": 2,
+      "available": 2
+    },
+    "rix": {
+      "total": 205,
+      "available": 205
+    },
+    "rna": {
+      "total": 272,
+      "available": 272
+    },
+    "roe": {
+      "total": 248,
+      "available": 248
+    },
+    "rtr": {
+      "total": 274,
+      "available": 274
+    },
+    "rvr": {
+      "total": 465,
+      "available": 465
+    },
+    "scg": {
+      "total": 143,
+      "available": 143
+    },
+    "shm": {
+      "total": 302,
+      "available": 301,
+      "unresolved": 1
+    },
+    "sld": {
+      "total": 97,
+      "available": 97
+    },
+    "snc": {
+      "total": 399,
+      "available": 399
+    },
+    "soa": {
+      "total": 195,
+      "available": 195
+    },
+    "soc": {
+      "total": 279,
+      "available": 279
+    },
+    "soi": {
+      "total": 297,
+      "available": 297
+    },
+    "sok": {
+      "total": 160,
+      "available": 160
+    },
+    "som": {
+      "total": 249,
+      "available": 249
+    },
+    "sos": {
+      "total": 366,
+      "available": 366
+    },
+    "spe": {
+      "total": 26,
+      "available": 26
+    },
+    "spg": {
+      "total": 152,
+      "available": 152
+    },
+    "spm": {
+      "total": 272,
+      "available": 272
+    },
+    "sta": {
+      "total": 126,
+      "available": 126
+    },
+    "sth": {
+      "total": 143,
+      "available": 143
+    },
+    "stx": {
+      "total": 365,
+      "available": 365
+    },
+    "tdc": {
+      "total": 410,
+      "available": 410
+    },
+    "tdm": {
+      "total": 408,
+      "available": 408
+    },
+    "thb": {
+      "total": 283,
+      "available": 283
+    },
+    "ths": {
+      "total": 249,
+      "available": 249
+    },
+    "tla": {
+      "total": 292,
+      "available": 292
+    },
+    "tle": {
+      "total": 264,
+      "available": 264
+    },
+    "tmc": {
+      "total": 96,
+      "available": 96
+    },
+    "tmp": {
+      "total": 350,
+      "available": 350
+    },
+    "tmt": {
+      "total": 262,
+      "available": 262
+    },
+    "tor": {
+      "total": 143,
+      "available": 143
+    },
+    "tsb": {
+      "total": 121,
+      "available": 121
+    },
+    "tsp": {
+      "total": 301,
+      "available": 301
+    },
+    "tsr": {
+      "total": 411,
+      "available": 411
+    },
+    "uds": {
+      "total": 143,
+      "available": 143
+    },
+    "ugin": {
+      "total": 26,
+      "available": 26
+    },
+    "ulg": {
+      "total": 143,
+      "available": 143
+    },
+    "uma": {
+      "total": 254,
+      "available": 254
+    },
+    "usg": {
+      "total": 350,
+      "available": 350
+    },
+    "vis": {
+      "total": 167,
+      "available": 167
+    },
+    "voc": {
+      "total": 188,
+      "available": 188
+    },
+    "vow": {
+      "total": 380,
+      "available": 380
+    },
+    "w16": {
+      "total": 16,
+      "available": 16
+    },
+    "w17": {
+      "total": 30,
+      "available": 30
+    },
+    "war": {
+      "total": 311,
+      "available": 311
+    },
+    "wdmu": {
+      "total": 5,
+      "available": 5
+    },
+    "who": {
+      "total": 590,
+      "available": 590
+    },
+    "wmkm": {
+      "total": 4,
+      "available": 4
+    },
+    "wmom": {
+      "total": 12,
+      "available": 12
+    },
+    "woc": {
+      "total": 161,
+      "available": 161
+    },
+    "woe": {
+      "total": 359,
+      "available": 359
+    },
+    "wone": {
+      "total": 6,
+      "available": 6
+    },
+    "wot": {
+      "total": 83,
+      "available": 83
+    },
+    "wth": {
+      "total": 167,
+      "available": 167
+    },
+    "wwk": {
+      "total": 145,
+      "available": 145
+    },
+    "wwoe": {
+      "total": 6,
+      "available": 6
+    },
+    "xln": {
+      "total": 289,
+      "available": 289
+    },
+    "zen": {
+      "total": 229,
+      "available": 229
+    },
+    "znc": {
+      "total": 139,
+      "available": 139
+    },
+    "zne": {
+      "total": 30,
+      "available": 30
+    },
+    "znr": {
+      "total": 368,
+      "available": 368
+    }
+  },
+  "productParseRejections": {
+    "not-japanese": 40993,
+    "sku-variant-mismatch": 311,
+    "unsupported-title": 1022
+  },
+  "crossLanguageImageUrlsRejected": 0,
+  "unresolved": [
+    {
+      "set": "cst",
+      "number": "12b",
+      "name": "Reinforcements",
+      "oracleId": "ff27ff96-afd2-45df-b799-3046179e27c6",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "16",
+      "name": "Scars of the Veteran",
+      "oracleId": "5f0ad09f-a9ee-42df-b32d-9d842ce5dd00",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "30b",
+      "name": "Lat-Nam's Legacy",
+      "oracleId": "f885ee54-3b26-4d61-9783-3930b0e625aa",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "42",
+      "name": "Viscerid Drone",
+      "oracleId": "5fd4be4c-70a3-4c91-a4c6-788a2051ff13",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "54",
+      "name": "Swords to Plowshares",
+      "oracleId": "b1544f21-7e98-461b-aed5-e748b0168c52",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "70",
+      "name": "Death Spark",
+      "oracleId": "4b23a89c-89ba-41ad-b894-ec02221689eb",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "73",
+      "name": "Iceberg",
+      "oracleId": "cff3fba2-9c5d-4e98-9ff0-0cc0b3bc8dbe",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "85",
+      "name": "Bounty of the Hunt",
+      "oracleId": "77a43c24-398f-42c6-a0d3-b28b33a0ce12",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "86a",
+      "name": "Deadly Insect",
+      "oracleId": "98273b0d-2b41-486b-9498-30a692c03982",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "112",
+      "name": "Zuran Spellcaster",
+      "oracleId": "bc7b90b1-3517-4e5d-9bd8-68b4d8a259fd",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "114",
+      "name": "Ashen Ghoul",
+      "oracleId": "46fbcbdf-73d0-4fa2-8db7-3b19bfc7ac22",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "120",
+      "name": "Dark Ritual",
+      "oracleId": "53f7c868-b03e-4fc2-8dcf-a75bbfa3272b",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "127",
+      "name": "Gangrenous Zombies",
+      "oracleId": "d0d844f2-6cf4-49f2-95db-64e932a15b17",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "137",
+      "name": "Kjeldoran Dead",
+      "oracleId": "61e00946-7df7-4298-91b2-c656169e6601",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "194",
+      "name": "Incinerate",
+      "oracleId": "d8fd7a34-8418-4e98-b79b-119c4348c667",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "293",
+      "name": "Giant Trap Door Spider",
+      "oracleId": "2c87565b-3902-4b11-b894-6922f66008ba",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "349",
+      "name": "Whalebone Glider",
+      "oracleId": "a65fadeb-c9bc-409f-8e90-ff8e55485a4c",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "369",
+      "name": "Plains",
+      "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "370",
+      "name": "Plains",
+      "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "371",
+      "name": "Plains",
+      "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "372",
+      "name": "Island",
+      "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "373",
+      "name": "Island",
+      "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "374",
+      "name": "Island",
+      "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "375",
+      "name": "Swamp",
+      "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "376",
+      "name": "Swamp",
+      "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "377",
+      "name": "Swamp",
+      "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "378",
+      "name": "Mountain",
+      "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "379",
+      "name": "Mountain",
+      "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "380",
+      "name": "Mountain",
+      "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "381",
+      "name": "Forest",
+      "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "382",
+      "name": "Forest",
+      "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "cst",
+      "number": "383",
+      "name": "Forest",
+      "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "dci",
+      "number": "41",
+      "name": "Tazeem",
+      "oracleId": "97f708de-9271-4137-a9fe-dda25b922900",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "1",
+      "name": "Elspeth, Knight-Errant",
+      "oracleId": "eab0d8b9-c66f-402f-b259-f46f15cefd78",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "2",
+      "name": "Elite Vanguard",
+      "oracleId": "b3b9a87d-cb95-435c-90b6-037406cab32e",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "3",
+      "name": "Goldmeadow Harrier",
+      "oracleId": "546f037b-aea8-4c7a-9b66-373f1be0bac6",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "4",
+      "name": "Infantry Veteran",
+      "oracleId": "42798e2b-9a5c-4f93-8f77-b7bb7a916d07",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "5",
+      "name": "Loyal Sentry",
+      "oracleId": "54b1a496-1f8e-4581-8260-bad57b25c6e3",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "6",
+      "name": "Mosquito Guard",
+      "oracleId": "6beaeec2-b4e9-4904-b817-c0118549d4a9",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "7",
+      "name": "Glory Seeker",
+      "oracleId": "55c60b29-52c5-428c-9229-11ed0e26bd71",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "8",
+      "name": "Kor Skyfisher",
+      "oracleId": "054a0193-861e-4644-ab0a-8aa33407abc8",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "9",
+      "name": "Temple Acolyte",
+      "oracleId": "17e4085e-af44-4ba8-af05-ccfe4b35f96a",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "10",
+      "name": "Kor Aeronaut",
+      "oracleId": "1adb733c-d18a-4019-9229-0ad701a15b1a",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "11",
+      "name": "Burrenton Bombardier",
+      "oracleId": "13ec2390-e08a-4645-99e9-bac7e41917bb",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "12",
+      "name": "Kor Hookmaster",
+      "oracleId": "e6941577-8262-42ef-bf32-f6505d90b73a",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "13",
+      "name": "Kemba's Skyguard",
+      "oracleId": "4c8167af-2eb0-4f0a-a1b9-b61b65bac261",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "14",
+      "name": "Celestial Crusader",
+      "oracleId": "af06a811-7a57-4f68-9d87-7903e043f36d",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "15",
+      "name": "Seasoned Marshal",
+      "oracleId": "0c7239bf-dc8a-4d79-867e-7a4225568c49",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "16",
+      "name": "Conclave Phalanx",
+      "oracleId": "5a1bebe9-c940-4fac-8572-0833808eaa55",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "17",
+      "name": "Stormfront Riders",
+      "oracleId": "9df318b9-16c6-42f1-9f81-6f73ca01e5c1",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "18",
+      "name": "Catapult Master",
+      "oracleId": "02da2145-0edb-44be-8622-360182a8c25a",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "19",
+      "name": "Conclave Equenaut",
+      "oracleId": "4127794b-84d1-4efb-b0e9-543a02b07fa8",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "20",
+      "name": "Angel of Salvation",
+      "oracleId": "27b945ad-92a9-4615-87ec-790682e8c3e7",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "21",
+      "name": "Sunlance",
+      "oracleId": "3c8cc7e2-7bff-46e0-bb5b-1e721a56a3ef",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "22",
+      "name": "Swords to Plowshares",
+      "oracleId": "b1544f21-7e98-461b-aed5-e748b0168c52",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "23",
+      "name": "Journey to Nowhere",
+      "oracleId": "2bfec482-be0d-4768-84e7-1c2c74ea1373",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "24",
+      "name": "Mighty Leap",
+      "oracleId": "593caa15-e1d1-477f-bbb4-124d7a7b81f3",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "25",
+      "name": "Raise the Alarm",
+      "oracleId": "5b2364d7-a811-4595-a1b4-224c70555ffa",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "26",
+      "name": "Razor Barrier",
+      "oracleId": "669701a5-fd7a-43f8-93f4-da7a8c4dd3dc",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "27",
+      "name": "Crusade",
+      "oracleId": "4692740f-be90-459f-8d90-c4ae71771595",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "28",
+      "name": "Blinding Beam",
+      "oracleId": "0766cf02-ea55-4271-8c73-213c93b0baac",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "29",
+      "name": "Abolish",
+      "oracleId": "d6d7faa8-ecc9-408b-9c46-a0f62c74f567",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "30",
+      "name": "Saltblast",
+      "oracleId": "a6a9776b-87f4-4a08-8074-d49fbbe417ae",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "31",
+      "name": "Swell of Courage",
+      "oracleId": "60033841-71c7-4370-a2bc-e570a5c100ea",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "32",
+      "name": "Daru Encampment",
+      "oracleId": "29f27482-724d-4c15-b177-13337246d007",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "33",
+      "name": "Kabira Crossroads",
+      "oracleId": "b3dbb16f-fa8f-4406-bcf3-e647e4337619",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "34",
+      "name": "Rustic Clachan",
+      "oracleId": "cde68428-0033-4ede-92f1-ab91de0a41fb",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "35",
+      "name": "Plains",
+      "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "36",
+      "name": "Plains",
+      "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "37",
+      "name": "Plains",
+      "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "38",
+      "name": "Plains",
+      "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "39",
+      "name": "Tezzeret the Seeker",
+      "oracleId": "4aeafdf3-7828-4114-8c74-3bd46357caec",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "40",
+      "name": "Arcbound Worker",
+      "oracleId": "6d9af084-cd5d-4242-b0f0-24a36d0a75d4",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "41",
+      "name": "Steel Wall",
+      "oracleId": "5ccb57e1-ca94-4b5a-8e5f-b8b5e692cfb9",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "42",
+      "name": "Runed Servitor",
+      "oracleId": "4e5e81e1-ab47-4f08-9c42-dba0adc5cf9a",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "43",
+      "name": "Silver Myr",
+      "oracleId": "66e8f7f8-3a6d-46ba-837c-b9713ddf7f40",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "44",
+      "name": "Steel Overseer",
+      "oracleId": "986ae327-f433-4c58-93dc-afc544b9bfcb",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "45",
+      "name": "Assembly-Worker",
+      "oracleId": "751321ac-af07-4b7e-976f-5bf4e4281470",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "46",
+      "name": "Serrated Biskelion",
+      "oracleId": "c8552706-83f2-41d7-8068-75891abb8bde",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "47",
+      "name": "Esperzoa",
+      "oracleId": "c9a188f9-2e65-4a66-826f-0150f25730af",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "48",
+      "name": "Master of Etherium",
+      "oracleId": "181e6b3e-c33e-49e7-acb8-67473289a856",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "49",
+      "name": "Trinket Mage",
+      "oracleId": "ffc95093-24a2-4616-a44a-24788e8df9c8",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "50",
+      "name": "Clockwork Condor",
+      "oracleId": "3eff8f21-9a1b-4afc-8a7b-75a740d0a4ea",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "51",
+      "name": "Frogmite",
+      "oracleId": "a927fd33-f183-48d9-b582-55d379d70e13",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "52",
+      "name": "Juggernaut",
+      "oracleId": "4ac9116f-36bc-4d71-b696-d6ee064e1d58",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "53",
+      "name": "Synod Centurion",
+      "oracleId": "fe6337dc-df02-4baa-9fe0-b14e8d34186a",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "54",
+      "name": "Faerie Mechanist",
+      "oracleId": "fcbe14c4-1b0d-486f-bb9c-0fed452668cb",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "55",
+      "name": "Clockwork Hydra",
+      "oracleId": "6fd37ff3-e75d-459a-8717-8f6a9865fb32",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "56",
+      "name": "Razormane Masticore",
+      "oracleId": "ee45b588-b424-49d3-9e37-270f2ae9490d",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "57",
+      "name": "Triskelion",
+      "oracleId": "74f67dcf-5afb-45aa-8d4b-3cdb23f6f2a1",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "58",
+      "name": "Pentavus",
+      "oracleId": "1c0d4f28-2494-45b0-acb8-921fee602c01",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "59",
+      "name": "Qumulox",
+      "oracleId": "cec11318-4578-4c66-a9be-1704df0c296c",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "60",
+      "name": "Everflowing Chalice",
+      "oracleId": "0a79237e-0811-4a8a-bd4d-db3ca91bff22",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "61",
+      "name": "Aether Spellbomb",
+      "oracleId": "4b033a0a-c1ae-44d7-9662-72cbbfda024b",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "62",
+      "name": "Elixir of Immortality",
+      "oracleId": "204b71fc-4d5f-40dd-903d-56c733171d84",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "63",
+      "name": "Contagion Clasp",
+      "oracleId": "43f2d81e-aa01-4fa9-9046-6a27a05dbd2d",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "64",
+      "name": "Energy Chamber",
+      "oracleId": "c0880a44-27d5-4e21-915c-678ee46fa3d9",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "65",
+      "name": "Trip Noose",
+      "oracleId": "456f2991-ab64-41bc-9bd1-a1b1e7993ed6",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "66",
+      "name": "Echoing Truth",
+      "oracleId": "ef100544-3e6d-4661-a1d1-8b02e58c059c",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "67",
+      "name": "Moonglove Extract",
+      "oracleId": "ac2711b7-318d-478a-b69c-d44baff46f2d",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "68",
+      "name": "Thirst for Knowledge",
+      "oracleId": "939e6f71-185e-41f2-9d54-72cce06f1dce",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "69",
+      "name": "Argivian Restoration",
+      "oracleId": "d887919a-68d5-455d-977c-4f1f0b4b3141",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "70",
+      "name": "Foil",
+      "oracleId": "7dde4eb6-e9d7-4259-abc2-3af738e0f00f",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "71",
+      "name": "Thoughtcast",
+      "oracleId": "cce9bbff-82dc-4b2f-addd-d6715588de20",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "72",
+      "name": "Darksteel Citadel",
+      "oracleId": "8dc067bf-f78f-4ac4-b6e7-b305c42cf0bc",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "73",
+      "name": "Mishra's Factory",
+      "oracleId": "5963e0ef-e0bc-4611-ad4f-813a4c0eacfb",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "74",
+      "name": "Seat of the Synod",
+      "oracleId": "39451b4d-cd7a-40da-b457-cb51b609173f",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "75",
+      "name": "Stalking Stones",
+      "oracleId": "f3658894-3d3d-4cd4-b0ac-c53e1d08747c",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "76",
+      "name": "Island",
+      "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "77",
+      "name": "Island",
+      "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "78",
+      "name": "Island",
+      "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddf",
+      "number": "79",
+      "name": "Island",
+      "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ddj",
+      "number": "77",
+      "name": "Life // Death",
+      "oracleId": "d476f4b3-db63-4756-ab76-4b35f63c2825",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "1",
+      "name": "Academy at Tolaria West",
+      "oracleId": "15b979de-c8ee-4664-9ca7-6c4eb3346967",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "2",
+      "name": "The Aether Flues",
+      "oracleId": "8eb442a9-5e61-4e2e-983d-b49b04be2575",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "3",
+      "name": "Agyrem",
+      "oracleId": "38f84e55-049c-441e-b4e2-1e207ab5dbe5",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "4",
+      "name": "Bant",
+      "oracleId": "82e67c57-6d7a-44cc-ba63-77ce887ab075",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "5",
+      "name": "Cliffside Market",
+      "oracleId": "b21a71d7-f236-43e2-b576-0b5c9280f0cc",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "6",
+      "name": "The Dark Barony",
+      "oracleId": "5503c308-560d-4d5f-a86a-4b06d9947ddc",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "7",
+      "name": "Eloren Wilds",
+      "oracleId": "23fe1c21-c396-4ebf-a8b0-22d697952b34",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "8",
+      "name": "The Eon Fog",
+      "oracleId": "a04d05ed-1b9b-4407-8780-c75c102a94dd",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "9",
+      "name": "Feeding Grounds",
+      "oracleId": "b1eff630-b56c-48a5-ac21-836a60157b35",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "10",
+      "name": "Fields of Summer",
+      "oracleId": "81a0d96a-7ac8-4947-8779-2102c9b33d38",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "11",
+      "name": "The Fourth Sphere",
+      "oracleId": "13e801cd-e537-4ea6-8c3d-21b142bdc026",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "12",
+      "name": "Glimmervoid Basin",
+      "oracleId": "43a23de7-0738-4b03-b87d-5a7d1144825c",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "13",
+      "name": "Goldmeadow",
+      "oracleId": "f12400e5-8288-48e1-b3b7-0cc4f8d9ca67",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "14",
+      "name": "The Great Forest",
+      "oracleId": "8c56bb41-a8d8-4b0f-bbb7-be8466dc9ed1",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "15",
+      "name": "Grixis",
+      "oracleId": "1aaa60e4-47a8-4255-8a09-5f00922ccf6d",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "16",
+      "name": "The Hippodrome",
+      "oracleId": "cde8d8c4-5e2b-452f-b3e9-bb9f2e745ec9",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "17",
+      "name": "Immersturm",
+      "oracleId": "ece3b5ed-3c07-4586-bf99-72bc1aa6ccef",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "18",
+      "name": "Isle of Vesuva",
+      "oracleId": "f017380f-97db-4a36-b111-b257aa17ebaf",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "19",
+      "name": "Izzet Steam Maze",
+      "oracleId": "e5f8b2bb-e9bb-4a0a-aa88-7fa0299f52a9",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "20",
+      "name": "Krosa",
+      "oracleId": "2732b605-7c88-4995-b46e-62dc09e68919",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "21",
+      "name": "Lethe Lake",
+      "oracleId": "85592710-8637-4726-8b92-552b9be677c0",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "22",
+      "name": "Llanowar",
+      "oracleId": "11b3fcb2-0b66-4d8b-8e66-a21a5da1c1f5",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "23",
+      "name": "The Maelstrom",
+      "oracleId": "e28deac5-d3c4-48e9-974c-093e3122f317",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "24",
+      "name": "Minamo",
+      "oracleId": "6491f511-87e6-4504-84f5-fe5cf44768d7",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "25",
+      "name": "Murasa",
+      "oracleId": "07cc253d-e23c-450c-bfaf-5cb6a3a588ce",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "26",
+      "name": "Naar Isle",
+      "oracleId": "3e0bcf65-1eaf-440f-a59b-0b11e1106135",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "27",
+      "name": "Naya",
+      "oracleId": "5ed6be01-af06-4f3d-8b43-ef8993c52c97",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "28",
+      "name": "Otaria",
+      "oracleId": "29e3371d-aa41-46a9-921a-96565be47eff",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "29",
+      "name": "Panopticon",
+      "oracleId": "cd8ce6f1-9753-40a7-a625-5ed63c15c29e",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "30",
+      "name": "Pools of Becoming",
+      "oracleId": "f133e42a-2962-4781-b413-ce2127f17c26",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "31",
+      "name": "Raven's Run",
+      "oracleId": "b53e06af-be18-4f75-9dd0-7494ec867b13",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "32",
+      "name": "Sanctum of Serra",
+      "oracleId": "f0c8ce35-b627-485c-bd64-d7eae47b8efa",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "33",
+      "name": "Sea of Sand",
+      "oracleId": "edd21d18-98d2-4e3f-8da1-1ba645b8f69c",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "34",
+      "name": "Shiv",
+      "oracleId": "70edae19-e278-401d-9772-508bd66320a6",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "35",
+      "name": "Skybreen",
+      "oracleId": "61006acf-de38-420b-ab7a-685fbd64141c",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "36",
+      "name": "Sokenzan",
+      "oracleId": "c09d304a-87d0-4a2a-bcb2-e81341b2dbf2",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "37",
+      "name": "Stronghold Furnace",
+      "oracleId": "ff76b576-8ad3-44f9-8043-80003a078e84",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "38",
+      "name": "Turri Island",
+      "oracleId": "1300b5e7-d741-4723-bb15-dabd04cb0c11",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "39",
+      "name": "Undercity Reaches",
+      "oracleId": "f3f5a033-d063-4250-9cfe-4c3c1a2725f1",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ohop",
+      "number": "40",
+      "name": "Velis Vel",
+      "oracleId": "1c4e174e-19fb-4c0a-b762-ef6d927392c9",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "pls",
+      "number": "74★",
+      "name": "Tahngarth, Talruum Hero",
+      "oracleId": "c5b4131e-13aa-4a22-b8f5-e5f9d366cb4f",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "pls",
+      "number": "107★",
+      "name": "Ertai, the Corrupted",
+      "oracleId": "36934bd0-b275-4222-926c-b5a74cf0967d",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "pls",
+      "number": "133★",
+      "name": "Skyship Weatherlight",
+      "oracleId": "57889a8e-0039-45c2-a608-ab315d51aa3a",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "38",
+      "name": "Warrior's Charge",
+      "oracleId": "5cf28c04-76af-4eb8-9969-366dc8e04690",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "96",
+      "name": "Hand of Death",
+      "oracleId": "dc45b2e3-272b-479b-8e3b-36eead606a3a",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "96†",
+      "name": "Hand of Death",
+      "oracleId": "dc45b2e3-272b-479b-8e3b-36eead606a3a",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "118",
+      "name": "Blaze",
+      "oracleId": "0596920f-9946-42f4-a03b-24aab67f9f1b",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "118†",
+      "name": "Blaze",
+      "oracleId": "0596920f-9946-42f4-a03b-24aab67f9f1b",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "145",
+      "name": "Raging Goblin",
+      "oracleId": "30997b43-fc13-41d3-8064-1ccc2cb6fd2b",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "145†",
+      "name": "Raging Goblin",
+      "oracleId": "30997b43-fc13-41d3-8064-1ccc2cb6fd2b",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "158",
+      "name": "Anaconda",
+      "oracleId": "3eff03f1-2c5f-4c59-b465-a8c4cd05e1ba",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "158†",
+      "name": "Anaconda",
+      "oracleId": "3eff03f1-2c5f-4c59-b465-a8c4cd05e1ba",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "163",
+      "name": "Elite Cat Warrior",
+      "oracleId": "9297e50f-f8a5-4793-b64d-a119404f94ce",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "163†",
+      "name": "Elite Cat Warrior",
+      "oracleId": "9297e50f-f8a5-4793-b64d-a119404f94ce",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "173",
+      "name": "Monstrous Growth",
+      "oracleId": "35a05836-38d7-45c7-ac9a-996a682c2129",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "por",
+      "number": "173†",
+      "name": "Monstrous Growth",
+      "oracleId": "35a05836-38d7-45c7-ac9a-996a682c2129",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "ptk",
+      "number": "7",
+      "name": "Guan Yu's 1,000-Li March",
+      "oracleId": "a1b87d5d-9493-4001-8c7e-553f40de61ea",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    },
+    {
+      "set": "shm",
+      "number": "278★",
+      "name": "Reflecting Pool",
+      "oracleId": "67f43ac6-2a58-4b53-b5d7-0330e2a252e2",
+      "imageStatus": "placeholder",
+      "reason": "no-safe-exact-source"
+    }
+  ],
+  "backFacesRequired": 531,
+  "backFacesAvailable": 531,
+  "limitations": [
+    "Catalogue joins validate metadata, not OCR of every picture.",
+    "Missing images and unsupported promotional identifiers remain unresolved.",
+    "Back-face supplementation is not inferred from unlabelled shop galleries."
+  ]
+}
