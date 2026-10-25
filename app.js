@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v316";
+const APP_VERSION = "v317";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -526,7 +526,7 @@ function imageOf(card) {
 }
 function localizedImageAttrs(card, face = 0) {
   if (!prefersJapaneseDisplay(card)) return '';
-  const request={set:card.set || card.setCode,number:card.collector_number || card.collectorNumber,oracleId:card.oracle_id || card.oracleId || jpIndexForCard(card)?.oracleId || '',illustrationId:card.illustration_id || card.illustrationId || '',language:'ja',face,allowRepresentative:true,fallbackUrl:face?backImageOf(card):imageOf(card)};
+  const request={set:card.set || card.setCode,number:card.collector_number || card.collectorNumber,oracleId:card.oracle_id || card.oracleId || jpIndexForCard(card)?.oracleId || '',illustrationId:card.illustration_id || card.illustrationId || '',language:'ja',face,fallbackUrl:face?backImageOf(card):imageOf(card)};
   return `data-japanese-image="${esc(JSON.stringify(request))}"`;
 }
 function backImageOf(card) {

@@ -29,13 +29,13 @@
     },
     {
       "path": "card-image-cache.js",
-      "bytes": 1128,
-      "sha256": "f97c7daabec100e2272a3728390f1cc17c0ef7be323035fcafe142b50f14fc85"
+      "bytes": 1173,
+      "sha256": "3859ab560624ea70ae60028d6d6082131912012e0cf50ab45ac999de94b8eec1"
     },
     {
       "path": "card-images.js",
-      "bytes": 10452,
-      "sha256": "54cea192168ce32e728f398f8ff36b63ba6299356d79ee7d9e3967bcceef97ff"
+      "bytes": 7876,
+      "sha256": "9bc18d71881af9594a753c8e60b7acee7a9d0e1704b4fe2a450bfd730c242f5a"
     },
     {
       "path": "collection-store.js",
@@ -59,8 +59,8 @@
     },
     {
       "path": "data/japanese-images.json",
-      "bytes": 268406,
-      "sha256": "7e276d9b3fca243a005e5c84e5e0b64e1c268e218dcb2f2d4427350dce3e125b"
+      "bytes": 269106,
+      "sha256": "9f50f70c58162e3cd7554852785fea378c85d700a35b2071aa6a2b5cd0424ada"
     },
     {
       "path": "data/milo-cards.json",
@@ -94,8 +94,8 @@
     },
     {
       "path": "edition-picker.mjs",
-      "bytes": 6896,
-      "sha256": "6f335ce26edcf677acaf8181d2bdf699b74ce6d21a665416f9471b6474b42f50"
+      "bytes": 6770,
+      "sha256": "b538e90ad987687557acb9b86fc8afb1614d6e0de9fbe5c5c58a4a8306233982"
     },
     {
       "path": "engine.mjs",
@@ -144,8 +144,8 @@
     },
     {
       "path": "live.mjs",
-      "bytes": 41382,
-      "sha256": "7bad6abf1d00102c77098a172eac6ddf3f92c6cabc19e1b923e4d0aabecc51b3"
+      "bytes": 41256,
+      "sha256": "6a57b604585972fe56d0bb336b8e78082809927fde9620395542ac1f0b409468"
     },
     {
       "path": "mobile-inputs.css",
@@ -218,6 +218,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91823347,
-  "buildId": "1d4c9600f3b5"
+  "totalBytes": 91821264,
+  "buildId": "ed9f52b39608"
 }

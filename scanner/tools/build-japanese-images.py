@@ -19,6 +19,12 @@ for item in items:
     if key not in records or item['source'] == 'scryfall-ja':
         records[key] = {'set': item['setCode'].lower(), 'number': str(item['collectorNumber']),
                         'oracleId': item.get('oracleId', ''), 'images': images, 'source': item['source']}
+# Reviewed overrides have exact set/number/language/Oracle and source-page provenance.
+overrides = json.loads((scanner / 'data/japanese-image-overrides.json').read_text(encoding='utf-8'))
+for key, record in overrides.items():
+    assert key == record['set'] + ':' + record['number'] and record['language'] == 'ja'
+    assert record['oracleId'] and record['sourcePage'] and record['verifiedAt']
+    records[key] = record
 (scanner / 'data/japanese-images.json').write_text(
     json.dumps(records, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
 print(len(records), 'exact Japanese image mappings')

@@ -1,0 +1,28 @@
+{
+  "4bb:218": {
+    "set": "4bb",
+    "number": "218",
+    "language": "ja",
+    "oracleId": "bb329a5c-b9f9-4973-a53f-090024146325",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/4EDBB/330.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/67570",
+    "verifiedAt": "2026-10-25",
+    "border": "black"
+  },
+  "4ed:218": {
+    "set": "4ed",
+    "number": "218",
+    "language": "ja",
+    "oracleId": "bb329a5c-b9f9-4973-a53f-090024146325",
+    "images": {
+      "normal": "https://cardshop-serra.com/cdn/shop/files/EkMpI5RaEj8sEsvSPL0B0Nic3WMUY2RneyngQIZn.jpg?v=1782357204"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://cardshop-serra.com/products/4ed-218-j-wb_nm_wcgn",
+    "verifiedAt": "2026-10-25",
+    "border": "white"
+  }
+}

@@ -30,7 +30,7 @@ function bindRowImage(image,row,status){
  const label=confirmed?`${confirmed.set} #${confirmed.collectorNumber} / ${confirmed.language}`:'収録版は未選択・参考画像';
  if(status)status.textContent=label;
  if(!printing||!globalThis.MtgCardImages)return;
- return globalThis.MtgCardImages.bind(image,{set:printing.set,number:printing.number,oracleId:row.oracleId,language:row.language||'ja',allowRepresentative:true,face:!confirmed&&ref?.id.endsWith('-face1')?1:0,fallbackUrl:rowImage(row)},result=>{if(status)status.textContent=label+(result.representative?`・日本語参考画像：${result.imageSet.toUpperCase()} #${result.imageNumber}`:result.fallback?'・日本語画像を取得できません':result.language==='ja'?'・日本語画像':'・英語画像');});
+ return globalThis.MtgCardImages.bind(image,{set:printing.set,number:printing.number,oracleId:row.oracleId,language:row.language||'ja',face:!confirmed&&ref?.id.endsWith('-face1')?1:0,fallbackUrl:rowImage(row)},result=>{if(status)status.textContent=label+(result.fallback?'・この収録版の日本語画像は未取得':result.language==='ja'?'・日本語画像':'・英語画像');});
 }
 let draftImageBindings=[],addImageBinding;
 function renderList(){
