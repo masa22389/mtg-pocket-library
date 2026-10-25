@@ -34,8 +34,8 @@
     },
     {
       "path": "card-images.js",
-      "bytes": 10464,
-      "sha256": "f936fdc96a0da9b525e76e38e15ee0669343e704db73bce2672d0e4c299d6a5d"
+      "bytes": 10869,
+      "sha256": "4eff0ba3d99f2f1c77fe04f20b719ae15a2c8031b527517a79e8927c3d5820db"
     },
     {
       "path": "collection-store.js",
@@ -223,6 +223,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91873998,
-  "buildId": "616798d80cca"
+  "totalBytes": 91874403,
+  "buildId": "607516578c7d"
 }

@@ -1,7 +1,7 @@
 importScripts('./scanner/card-image-cache.js');
-const CACHE = "mtg-pocket-v318";
-const OFFLINE_PAGE = "./index.html?v=318";
-const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=318","./scanner/data/japanese-images.json","./mobile-inputs.css?v=318","./scanner-host.js?v=318","./diagnostics.js?v=318", OFFLINE_PAGE, "./styles.css?v=318", "./mtg-jp-card-index.js?v=318", "./mtgjson-jp-search-index.js?v=318", "./app.js?v=318", "./storage.js?v=318", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v319";
+const OFFLINE_PAGE = "./index.html?v=319";
+const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=319","./scanner/data/japanese-images.json","./mobile-inputs.css?v=319","./scanner-host.js?v=319","./diagnostics.js?v=319", OFFLINE_PAGE, "./styles.css?v=319", "./mtg-jp-card-index.js?v=319", "./mtgjson-jp-search-index.js?v=319", "./app.js?v=319", "./storage.js?v=319", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)));
@@ -21,6 +21,13 @@ self.addEventListener("fetch", event => {
   if(handleCardImageRequest(event))return;
   if (event.request.method !== "GET") return;
   const url = new URL(event.request.url);
+  if (url.origin === self.location.origin && url.pathname.endsWith('/scanner/data/japanese-image-manifest.json')) {
+    event.respondWith(fetch(new Request(event.request, {cache:'no-store'})).then(async response => {
+      if (!response.ok) throw new Error('Image manifest unavailable');
+      const cache = await caches.open(CACHE); await cache.put(event.request,response.clone()); return response;
+    }).catch(() => caches.match(event.request)));
+    return;
+  }
   // BEGIN SCANNER TRIAL BYPASS
   // Never cache the trial page as the main app's offline shell, or retain its assets.
   if ((url.pathname.includes('/scanner/') && !/\/scanner\/(card-images\.js|data\/japanese-images\.json|data\/japanese-image-manifest\.json)$/.test(url.pathname)) || url.pathname.includes('/scanner-trial/') || url.hostname === 'hanclinto.github.io') return;

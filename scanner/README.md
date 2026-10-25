@@ -71,3 +71,6 @@ node --test scanner/tests/*.test.mjs
 ```
 
 The collector respects public pagination and the 25,000-product global API cap, using explicit set collections for missing-image sets. Candidate pictures from the shop must match set/language/name/number/SKU; ambiguous promotional identifiers are rejected. A numbered crosswalk is allowed only when the English name identifies exactly one printing in both catalogues within that set and language. Multiple-art basic lands are excluded from that rule. Known black-border Japanese Chronicles uses the BCHR set alias. The supplementary Hareruya adapter requires explicit Japanese CSP Theme Deck product labels and JP image paths. No cross-set substitution is allowed.
+
+
+v319 fixes an update-path issue: a cached negative lookup must not take precedence over newly available local image data. The main service worker fetches the mutable image manifest network-first with offline fallback, and an initial manifest failure no longer permanently pins an empty set index for the session. Image load failures and lookup/connection failures have separate UI messages from missing catalogue pictures. Regression coverage includes NEM #30 Daze with an existing negative cache and an old manifest path, as well as transient-manifest recovery. The coverage file reports data/URL matching, not successful rendering in every user session.

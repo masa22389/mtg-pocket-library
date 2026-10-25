@@ -21,10 +21,10 @@
       if(!manifestPromise)manifestPromise=(async()=>{
         const cache=await cacheStorage?.open('mtg-japanese-image-buckets-v1');
         try{const response=await fetcher(manifestUrl,{cache:'no-cache'});if(!response.ok)throw Error('manifest');const copy=response.clone(),manifest=await response.json();if(manifest.version!==1||!manifest.sets)throw Error('manifest format');try{await cache?.put(manifestUrl,copy);}catch{}return manifest;}
-        catch{const saved=await cache?.match(manifestUrl);return saved?await saved.json():{sets:{}};}
-      })().catch(()=>({sets:{}}));
+        catch{const saved=await cache?.match(manifestUrl);if(saved)return await saved.json();throw Error('image manifest unavailable');}
+      })().catch(()=>{manifestPromise=null;return {sets:{}};});
       if(!buckets.has(set))buckets.set(set,(async()=>{
-        const manifest=await manifestPromise,entry=manifest.sets?.[set];if(!entry)return {};
+        const manifest=await manifestPromise,entry=manifest.sets?.[set];if(!entry){buckets.delete(set);return {};}
         const url=new URL(entry.path,manifestUrl);if(url.origin!==new URL(manifestUrl).origin||!url.pathname.endsWith('/japanese-image-sets/set-'+set+'.json')||entry.bytes>4000000||!/^[a-f0-9]{64}$/.test(entry.sha256))return {};
         url.searchParams.set('sha',entry.sha256);const cache=await cacheStorage?.open('mtg-japanese-image-buckets-v1');let response=await cache?.match(url.href);
         if(!response){response=await fetcher(url.href);if(!response.ok)throw Error('set images');}
@@ -51,13 +51,15 @@
     async function lookup(request) {
       const {set,number,language,oracleId,face} = request;
       const key = `https://mtg-pocket.invalid/card-image/${encodeURIComponent(set)}/${encodeURIComponent(number)}/${language}/${face}?oracle=${encodeURIComponent(oracleId)}`;
-      const saved = await cached(key); if (saved) return saved;
+      const saved = await cached(key); if (saved?.url) return saved;
       if (language === 'ja') {
         const baseline = (await index())[set+':'+number];
         const known = baseline&&baseline.source!=='scryfall-ja'?baseline:(await setIndex(set))[numberKey(number)];
         const url = face ? known?.images?.back : known?.images?.normal;
         if (url && trusted(url) && known.source !== 'scryfall-ja' && known.set===set && numberKey(known.number)===numberKey(number) && (!known.language||known.language==='ja') && (!oracleId || known.oracleId === oracleId)) return remember(key,{url,language:'ja',source:known.source,fallback:false},7);
       }
+      // A previous negative result must not hide a newly supplied local image.
+      if(saved)return saved;
       // One in-flight API request, with a minimum gap. Only visible images request metadata.
       const operation = tail.then(async () => {
         const started = Date.now();
@@ -105,11 +107,12 @@
           bound.get(image)?.cancel();
           let request;try{request=JSON.parse(attribute);}catch{continue;}
           const cancel=bind(image,request,result=>{
-            image.title=result.fallback?'この収録版の日本語画像は未取得です':'この収録版の日本語画像';
+            const failure=result.reason==='image-load-failed'?'日本語画像の読み込みに失敗しました':result.reason==='unavailable'?'日本語画像を確認できません（通信または索引の読み込みエラー）':'この収録版の日本語画像は未取得です';
+            image.title=result.fallback?failure:'この収録版の日本語画像';
             const pictures=image.closest('.card-detail-images');if(!pictures)return;
             let note=pictures.nextElementSibling;
             if(!note?.classList.contains('localized-image-note')){note=document.createElement('small');note.className='localized-image-note';pictures.after(note);}
-            note.textContent=result.fallback?'この収録版の日本語画像は未取得です':'';
+            note.textContent=result.fallback?failure:'';
             note.hidden=!note.textContent;
           });bound.set(image,{attribute,cancel});
         }
