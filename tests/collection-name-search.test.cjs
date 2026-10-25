@@ -28,3 +28,21 @@ assert.ok(c.collectionCardMatchesText({card_faces:[{printed_name:'表のカー�
 assert.equal(c.collectionCardMatchesText(borrower,'思考を築く者、ジェイス'),false);assert.equal(c.collectionCardMatchesText({name:'Lightning Bolt'},'厚かましい借り手'),false);
 const before=JSON.stringify(borrower);c.collectionCardMatchesText(borrower,'厚かましい借り手');assert.equal(JSON.stringify(borrower),before);
 console.log('PASS owned search: English-only adventure, Japanese aliases/readings, split/transform faces, legacy names, metadata, nonmatching cards, no stored-data mutation');
+
+// Exercise the deck-specific pipeline, including grouping and its other filters.
+const deckStart = code.indexOf('function groupedOwnedDeckCards(');
+vm.runInContext(code.slice(deckStart, code.indexOf('\n}', deckStart) + 2), c);
+c.state = {collection: [{...borrower, quantity: 2, colors: ['U'], manaValue: 3}, {...borrower, id:'second-lot', quantity: 1, colors: ['U'], manaValue: 3}, {id:'bolt',name:'Lightning Bolt',quantity:1,colors:['R'],manaValue:1}]};
+c.els = {deckOwnedColor:{value:''},deckOwnedMana:{value:''},deckOwnedType:{value:''},deckOwnedFavoriteGroup:{value:''}};
+c.favoriteGroupMatch = () => true;
+for (const query of ['厚かましい借り手','些細な盗み','Brazen Borrower']) {
+ const result = c.groupedOwnedDeckCards(query);
+ assert.equal(result.length,1,query);
+ assert.equal(result[0].card.id,borrower.id);
+ assert.equal(result[0].quantity,3,'owned lots remain grouped');
+}
+c.els.deckOwnedColor.value='R';assert.equal(c.groupedOwnedDeckCards('厚かましい借り手').length,0);
+c.els.deckOwnedColor.value='U';assert.equal(c.groupedOwnedDeckCards('厚かましい借り手').length,1);
+c.els.deckOwnedMana.value='2';assert.equal(c.groupedOwnedDeckCards('厚かましい借り手').length,0);
+c.els.deckOwnedMana.value='';c.favoriteGroupMatch=()=>false;assert.equal(c.groupedOwnedDeckCards('厚かましい借り手').length,0);
+console.log('PASS deck-owned search: Japanese adventure aliases, grouped quantities, color/mana/favorite filters');
