@@ -374,3 +374,5 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 .deck-comparison th,.deck-comparison td{padding:9px 5px;border-bottom:1px solid var(--line);text-align:right}
 .deck-comparison th:first-child{text-align:left;min-width:130px;overflow-wrap:anywhere}
 .deck-comparison th:not(:first-child){white-space:nowrap}
+
+.localized-image-note{display:block;font-size:11px;line-height:1.4;color:var(--muted);max-width:100%;white-space:normal}.localized-image-note[hidden]{display:none}

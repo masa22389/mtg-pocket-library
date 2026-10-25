@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v315";
+const APP_VERSION = "v316";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -358,7 +358,7 @@ function renderFavoriteGroupManager(preferredId = "") {
     }
     els.manageFavoriteGroupCards.innerHTML = memberCards.map((card, index) => `
       <div class="favorite-manage-card favorite-manage-card-view">
-        <img src="${esc(card.image)}" alt="" loading="lazy">
+        <img ${localizedImageAttrs(card)} src="${esc(card.image)}" alt="" loading="lazy">
         <span><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} ・ ${Number(card.quantity || 0)}枚</small></span>
         <span class="favorite-manage-card-actions">
           <button type="button" class="ghost" data-favorite-group-move="${esc(card.id)}" data-direction="-1" ${groupBySet || index === 0 ? "disabled" : ""}>↑</button>
@@ -416,7 +416,7 @@ function renderFavoriteGroupManager(preferredId = "") {
     return `
       <label class="favorite-manage-card">
         <input type="checkbox" data-manage-favorite-card="${esc(card.id)}" ${ids.includes(group.id) ? "checked" : ""}>
-        <img src="${esc(card.image)}" alt="" loading="lazy">
+        <img ${localizedImageAttrs(card)} src="${esc(card.image)}" alt="" loading="lazy">
         <span><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ×${Number(card.quantity || 0)}</small></span>
       </label>`;
   }).join("");
@@ -523,6 +523,11 @@ function imageOf(card) {
   const nativeImage = card?.image_uris?.normal || card?.card_faces?.[0]?.image_uris?.normal || card?.image || "";
   const localizedImage = canUseLocalizedImage ? (card?.jpImage || card?.jpImages?.normal || "") : "";
   return localizedImage || nativeImage;
+}
+function localizedImageAttrs(card, face = 0) {
+  if (!prefersJapaneseDisplay(card)) return '';
+  const request={set:card.set || card.setCode,number:card.collector_number || card.collectorNumber,oracleId:card.oracle_id || card.oracleId || jpIndexForCard(card)?.oracleId || '',illustrationId:card.illustration_id || card.illustrationId || '',language:'ja',face,allowRepresentative:true,fallbackUrl:face?backImageOf(card):imageOf(card)};
+  return `data-japanese-image="${esc(JSON.stringify(request))}"`;
 }
 function backImageOf(card) {
   if (window.MtgCardImages) return window.MtgCardImages.displayImage(card, 1);
@@ -3241,7 +3246,7 @@ function renderSearchResults(append = false) {
   const visibleGroups = state.searchGroups.slice(0, searchRenderLimit);
   const html = (group, index) => `
     <button class="search-result" data-index="${index}">
-      <img src="${esc(imageOf(group.card))}" alt="" loading="lazy" decoding="async">
+      <img ${localizedImageAttrs(group.card)} src="${esc(imageOf(group.card))}" alt="" loading="lazy" decoding="async">
       <span><strong>${esc(nameOf(group.card))}</strong><small><span class="language-tag">日英版</span>${altNameOf(group.card) ? `${esc(altNameOf(group.card))} · ` : ""}タップして別イラストを選択</small></span>
     </button>`;
   if (!append) els.searchResults.innerHTML = visibleGroups.map(html).join("");
@@ -3689,7 +3694,7 @@ function renderSelectedVariant() {
   const card = state.selectedCard;
   const owned = selectedOwnedCard();
   const backImage = backImageOf(card);
-  els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images"><img class="card-detail-image" src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
+  els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images"><img class="card-detail-image" ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" ${localizedImageAttrs(card, 1)} src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
   els.cardQuantity.value = initialCardOwnedQuantity(state.cardDialogMode, selectedOwnedQuantity());
   els.cardCondition.value = normalizeCardCondition(owned?.condition || "NM");
   els.cardFinish.value = owned?.finish || "normal";
@@ -3708,7 +3713,7 @@ function renderVariantGallery() {
   if (!variants.length) { els.cardVariants.innerHTML = '<span class="muted">該当する収録版がありません</span>'; return; }
   els.cardVariants.innerHTML = `${visibleVariants.map(card => `
     <button type="button" class="variant-option ${card.id === state.selectedCard.id ? "selected" : ""}" data-id="${card.id}" aria-label="${esc(nameOf(card))} ${(card.set || "").toUpperCase()} ${card.collector_number || ""} ${displayLanguageLabel(card)}">
-      <img src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async"><span>${actualLanguageLabel(card)} · ${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")}</span>
+      <img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async"><span>${actualLanguageLabel(card)} · ${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")}</span>
     </button>`).join("")}${visibleVariants.length < variants.length ? `<button type="button" class="variant-option variant-more" data-variant-more="1"><span>さらに表示<br>${variants.length - visibleVariants.length}版</span></button>` : ""}`;
   els.cardVariants.querySelectorAll("button[data-id]").forEach(button => button.addEventListener("click", () => {
     const card = state.cardVariants.find(item => item.id === button.dataset.id);
@@ -3978,7 +3983,7 @@ function renderCollection() {
   if (imageMode) {
     els.collectionList.innerHTML = visibleCards.map(card => `${groupHeading(card)}
       <button type="button" class="collection-image-card" data-id="${card.id}" aria-label="${esc(nameOf(card))}の詳細を開く">
-        <img src="${esc(card.image)}" alt="" loading="lazy">
+        <img ${localizedImageAttrs(card)} src="${esc(card.image)}" alt="" loading="lazy">
         <span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>
         ${collectionPriceDisplayValue(card) != null ? `<span class="collection-price-badge">${esc(collectionPriceLabel(card, true))}</span>` : ""}
       </button>`).join("") + loadMoreButton + collapseButton;
@@ -3996,7 +4001,7 @@ function renderCollection() {
     return `
     ${groupHeading(card)}<article class="list-item" data-id="${card.id}">
       <button class="collection-card-open" type="button" aria-label="${esc(nameOf(card))}の詳細を開く">
-        <span class="collection-thumb-wrap"><img class="thumb" src="${esc(card.image)}" alt="" loading="lazy"><span class="collection-qty-badge">×${Number(card.quantity || 0)}</span></span>
+        <span class="collection-thumb-wrap"><img class="thumb" ${localizedImageAttrs(card)} src="${esc(card.image)}" alt="" loading="lazy"><span class="collection-qty-badge">×${Number(card.quantity || 0)}</span></span>
         <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(normalizeCardCondition(card.condition))} · ${card.finish === "normal" ? "通常" : esc(card.finish)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${favoriteGroupNames(card).map(name => `<span class="chip">★ ${esc(name)}</span>`).join("")}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
       </button>
       <div class="item-actions"><button class="tiny move-owned-up" aria-label="${esc(nameOf(card))}を前へ移動" ${groupBySet || index === 0 ? "disabled" : ""}>↑</button><button class="tiny move-owned-down" aria-label="${esc(nameOf(card))}を後へ移動" ${groupBySet || index === cards.length - 1 ? "disabled" : ""}>↓</button><button class="tiny minus" aria-label="1枚減らす">−</button><span class="qty-pill">×${card.quantity}</span><button class="tiny plus" aria-label="1枚増やす">＋</button><button class="tiny favorite-owned ${card.favorite ? "active" : ""}" aria-label="${esc(nameOf(card))}を${card.favorite ? "お気に入りから外す" : "お気に入りに追加"}" aria-pressed="${card.favorite ? "true" : "false"}">${card.favorite ? "★" : "☆"}</button><button class="tiny delete-owned" aria-label="${esc(nameOf(card))}をコレクションから削除">削除</button></div>
@@ -5327,7 +5332,7 @@ function groupedOwnedDeckCards(query) {
 }
 
 function deckImageButton(card, metadata, attributes, action = "デッキに追加") {
-  return `<button type="button" class="deck-card-choice" ${attributes} aria-label="${esc(nameOf(card))}の${action}"><img src="${esc(imageOf(card))}" alt="" loading="lazy"><span><b>${esc(nameOf(card))}</b>${esc(metadata)}</span></button>`;
+  return `<button type="button" class="deck-card-choice" ${attributes} aria-label="${esc(nameOf(card))}の${action}"><img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy"><span><b>${esc(nameOf(card))}</b>${esc(metadata)}</span></button>`;
 }
 
 function deckCountsForCard(card) {
@@ -5363,7 +5368,7 @@ function deckOwnedChoiceButton(card) {
   const sections = deckDisplaySections();
   const buttons = sections.map(section => `<button type="button" data-owned-add-section="${section}" data-id="${esc(card.id)}">${sectionLabel(section)}＋</button>`).join("");
   return `<div class="deck-owned-choice" data-id="${esc(card.id)}">
-    <img src="${esc(imageOf(card))}" alt="" loading="lazy">
+    <img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy">
     <span class="deck-owned-main"><strong>${esc(nameOf(card))}</strong><small>${meta}</small></span>
     <span class="deck-added-counts">${deckCountBadgesForCard(card)}</span>
     <span class="deck-owned-add-buttons">${buttons}</span>
@@ -5826,7 +5831,7 @@ let deckSearchRenderLimit = 50;
 function renderDeckSearchAddDialog() {
   els.deckGlobalSearchResults.innerHTML = state.deckSearchResults.slice(0, deckSearchRenderLimit).map((card, index) => `
     <button type="button" class="search-result" data-index="${index}">
-      <img src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async">
+      <img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async">
       <span><strong>${esc(nameOf(card))}</strong><small>${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")} · 詳細とイラストを選択</small></span>
     </button>`).join("");
   $("#moreDeckSearchResults").hidden = state.deckSearchResults.length <= deckSearchRenderLimit;
@@ -6091,7 +6096,7 @@ function renderDeckEntryVariantGallery() {
   }
   els.deckEntryVariants.innerHTML = visible.map(card => `
     <button type="button" class="variant-option ${card.id === currentId ? "selected" : ""}" data-id="${esc(card.id)}" aria-label="${esc(nameOf(card))} ${(card.set || "").toUpperCase()} ${card.collector_number || ""}">
-      <img src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async"><span>${card.lang === "ja" ? "日" : "英"} · ${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")}</span>
+      <img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async"><span>${card.lang === "ja" ? "日" : "英"} · ${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")}</span>
     </button>`).join("") + (visible.length < variants.length ? '<button type="button" class="variant-option" data-more>さらに表示</button>' : "");
   els.deckEntryVariants.querySelectorAll("button[data-id]").forEach(button => button.addEventListener("click", () => {
     const card = state.deckEntryVariants.find(item => item.id === button.dataset.id);
@@ -6142,6 +6147,11 @@ function renderDeckEntryEditor() {
   const owned = entry ? ownedQuantityForEntry(entry) : ownedQuantityForDeckCard(card);
   const deckTotalForCard = deckEntriesForCurrentCard().filter(item => isDeckBuildSection(item.section)).reduce((sum, item) => sum + Number(item.quantity || 0), 0);
   els.deckEntryImage.src = card?.image || "";
+  if (card && prefersJapaneseDisplay(card)) {
+    const attributes=localizedImageAttrs(card);
+    const holder=document.createElement('div');holder.innerHTML=`<img ${attributes}>`;
+    els.deckEntryImage.setAttribute('data-japanese-image',holder.firstElementChild.getAttribute('data-japanese-image'));
+  } else els.deckEntryImage.removeAttribute('data-japanese-image');
   $("#setDeckCover").disabled = !card?.image;
   $("#clearDeckCover").hidden = !state.editingDeck?.coverImage;
   els.deckEntryImage.alt = card ? nameOf(card) : "削除済みカード";
@@ -6619,7 +6629,7 @@ function renderPurchases() {
   $("#purchaseSummary").textContent = `${state.purchases.length}種類・${total.toLocaleString("ja-JP")}枚`;
   $("#purchaseList").innerHTML = state.purchases.length ? state.purchases.map(card => `
     <article class="purchase-item card" data-purchase-id="${esc(card.id)}">
-      <button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))}：長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img src="${esc(card.image || "")}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async" draggable="false"><span class="purchase-quantity" aria-label="購入予定 ${card.quantity}枚">${card.quantity}</span></button>
+      <button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))}：長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img ${localizedImageAttrs(card)} src="${esc(card.image || "")}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async" draggable="false"><span class="purchase-quantity" aria-label="購入予定 ${card.quantity}枚">${card.quantity}</span></button>
       <div class="purchase-info"><h2>${esc(nameOf(card))}</h2><p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${card.language === "ja" ? "日本語" : card.language === "en" ? "英語" : "その他"} · ${esc(card.condition)} · ${card.finish === "foil" ? "Foil" : card.finish === "etched" ? "Etched" : "通常"}</p></div>
       <div class="purchase-controls"><button type="button" data-purchase-action="minus" aria-label="購入予定枚数を1枚減らす" ${card.quantity <= 1 ? "disabled" : ""}>−</button><button type="button" data-purchase-action="plus" aria-label="購入予定枚数を1枚増やす" ${card.quantity >= 9999 ? "disabled" : ""}>＋</button><button type="button" class="ghost" data-purchase-action="delete">削除</button></div>
       <button type="button" class="purchase-receive" data-purchase-action="receive">購入済み・所持に追加</button>
@@ -7258,7 +7268,7 @@ function renderSetCards() {
   const collected = setBrowser.cards.filter(card => (owned.get(setPrintKey(card)) || 0)>0).length;
   $('#setContentsStatus').textContent = setBrowser.cards.length ? `収録 ${setBrowser.cards.length}種 · 所持 ${collected}種 · 該当 ${cards.length}種（所持枚数は全言語・状態・仕様の合計）` : '選択した言語の収録カードが見つかりませんでした。';
   setBrowser.visible = cards.slice(0,setBrowser.limit);
-  $('#setCardGrid').innerHTML = setBrowser.visible.map((card,index)=>`<button type="button" class="set-card" data-set-card="${index}" aria-label="${esc(nameOf(card))} #${esc(card.collector_number)}"><span class="set-card-image"><img src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async"><b>所持 ${owned.get(setPrintKey(card)) || 0}</b></span><span>#${esc(card.collector_number)} ${esc(nameOf(card))}</span></button>`).join('');
+  $('#setCardGrid').innerHTML = setBrowser.visible.map((card,index)=>`<button type="button" class="set-card" data-set-card="${index}" aria-label="${esc(nameOf(card))} #${esc(card.collector_number)}"><span class="set-card-image"><img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async"><b>所持 ${owned.get(setPrintKey(card)) || 0}</b></span><span>#${esc(card.collector_number)} ${esc(nameOf(card))}</span></button>`).join('');
   $('#moreSetCards').hidden = cards.length <= setBrowser.limit;
   $('#moreSetCards').textContent = `さらに50件表示（${setBrowser.visible.length} / ${cards.length}件）`;
 }
@@ -7309,6 +7319,7 @@ $("#copyDeckTarget").addEventListener("change", updateCopyDeckTarget);
 $("#copyDeckFormat").addEventListener("change", renderCopyDeckTargets);
 $("#confirmCopyDeckCard").addEventListener("click", confirmCopyDeckCard);
 $("#deckCompareTarget").addEventListener("change", renderDeckComparison);
+window.MtgCardImages?.observe(document);
 // END SCANNER TRIAL BRIDGE
 }
 startMtgApp().catch(window.mtgStorage.showStartupError);

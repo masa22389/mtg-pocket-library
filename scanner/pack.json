@@ -34,8 +34,8 @@
     },
     {
       "path": "card-images.js",
-      "bytes": 6226,
-      "sha256": "8a3b8a82f2cd93c7b47de2b05bbdaf4e2f83fa6bf20e2bf2bffcad5f5d88d77a"
+      "bytes": 10452,
+      "sha256": "54cea192168ce32e728f398f8ff36b63ba6299356d79ee7d9e3967bcceef97ff"
     },
     {
       "path": "collection-store.js",
@@ -94,8 +94,8 @@
     },
     {
       "path": "edition-picker.mjs",
-      "bytes": 6767,
-      "sha256": "156a872ef73f49303e1b6bdab9dd2deef0c239dd98b0d381e5166e811a806215"
+      "bytes": 6896,
+      "sha256": "6f335ce26edcf677acaf8181d2bdf699b74ce6d21a665416f9471b6474b42f50"
     },
     {
       "path": "engine.mjs",
@@ -144,8 +144,8 @@
     },
     {
       "path": "live.mjs",
-      "bytes": 41189,
-      "sha256": "765923f057da55e6a40452f2c4c3d70621146eb3b97a8e555423364b61fc49c2"
+      "bytes": 41382,
+      "sha256": "7bad6abf1d00102c77098a172eac6ddf3f92c6cabc19e1b923e4d0aabecc51b3"
     },
     {
       "path": "mobile-inputs.css",
@@ -218,6 +218,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91818799,
-  "buildId": "a1d1184f86f2"
+  "totalBytes": 91823347,
+  "buildId": "1d4c9600f3b5"
 }

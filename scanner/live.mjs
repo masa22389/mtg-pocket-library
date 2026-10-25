@@ -26,11 +26,11 @@ function editionLabel(row){const printing=(printsByOracle.get(row?.oracleId)||[]
 function updatePopupEdition(){const row=events.find(e=>e.id===activePopup?.rowId);$('popupEdition').disabled=!row;$('popupEdition').textContent=editionLabel(row);}
 function rowImage(row){if(row.confirmed?.image)return row.confirmed.image.replace('/normal/','/small/');const ref=refByOracle.get(row.oracleId);if(!ref)return '';return printingImage({id:ref.id.slice(0,36)},printDisplay).replace('/front/',ref.id.endsWith('-face1')?'/back/':'/front/');}
 function bindRowImage(image,row,status){
- if(row.confirmed){if(status)status.textContent=`${row.confirmed.set} #${row.confirmed.collectorNumber} / ${row.confirmed.language}`;return;}
- const ref=refByOracle.get(row.oracleId),printing=(printsByOracle.get(row.oracleId)||[]).find(p=>p.id===ref?.id.slice(0,36));
- if(status)status.textContent='収録版は未選択・参考画像（英語）';
+ const confirmed=row.confirmed,ref=refByOracle.get(row.oracleId),printing=confirmed?{set:confirmed.set,number:confirmed.collectorNumber}:(printsByOracle.get(row.oracleId)||[]).find(p=>p.id===ref?.id.slice(0,36));
+ const label=confirmed?`${confirmed.set} #${confirmed.collectorNumber} / ${confirmed.language}`:'収録版は未選択・参考画像';
+ if(status)status.textContent=label;
  if(!printing||!globalThis.MtgCardImages)return;
- return globalThis.MtgCardImages.bind(image,{set:printing.set,number:printing.number,oracleId:row.oracleId,language:row.language||'ja',face:ref.id.endsWith('-face1')?1:0,fallbackUrl:rowImage(row)},result=>{if(status)status.textContent='収録版は未選択・参考画像（'+(result.fallback?'英語':result.language==='ja'?'日本語':'英語')+'）';});
+ return globalThis.MtgCardImages.bind(image,{set:printing.set,number:printing.number,oracleId:row.oracleId,language:row.language||'ja',allowRepresentative:true,face:!confirmed&&ref?.id.endsWith('-face1')?1:0,fallbackUrl:rowImage(row)},result=>{if(status)status.textContent=label+(result.representative?`・日本語参考画像：${result.imageSet.toUpperCase()} #${result.imageNumber}`:result.fallback?'・日本語画像を取得できません':result.language==='ja'?'・日本語画像':'・英語画像');});
 }
 let draftImageBindings=[],addImageBinding;
 function renderList(){
