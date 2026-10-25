@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v312";
+const APP_VERSION = "v313";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5065,6 +5065,7 @@ function switchDeckVersion(number) {
 }
 
 function fillDeckDialog() {
+  $("#deckCompareTarget").value = "";
   if (!els.deckDialog.open) {
     $("#deckVersionPanel").open = false;
     $("#deckVersionPanel details").open = false;
@@ -5730,6 +5731,40 @@ function deckTypeGroup(card) {
   return { key: "other", label: "Other" };
 }
 
+function compareDeckContents(current, other, resolve = cardForDeckEntry) {
+  return ["main", "side"].map(section => {
+    const groups = [];
+    for (const [side, deck] of [["current", current], ["other", other]]) {
+      for (const entry of deck.entries || []) {
+        if (entry.section !== section) continue;
+        const quantity = Number(entry.quantity);
+        if (!Number.isFinite(quantity) || quantity <= 0) continue;
+        const card = resolve(entry) || {};
+        let row = groups.find(item => isSameOwnedCardName(item.card, card) ||
+          (!item.card.name && !card.name && entry.cardId && item.cardId === entry.cardId));
+        if (!row) { row = {card, cardId: entry.cardId, current: 0, other: 0}; groups.push(row); }
+        row[side] += quantity;
+      }
+    }
+    return {section, rows: groups.filter(row => row.current !== row.other).map(row => ({...row, difference: row.current - row.other}))};
+  });
+}
+
+function renderDeckComparison() {
+  const select = $("#deckCompareTarget"), result = $("#deckComparisonResult");
+  const current = state.editingDeck;
+  const selected = select.value;
+  const targets = state.decks.filter(deck => deck.id !== current.id);
+  select.innerHTML = '<option value="">選択してください</option>' + targets.map(deck => `<option value="${esc(deck.id)}">${esc(deck.name)}</option>`).join("");
+  select.value = targets.some(deck => deck.id === selected) ? selected : "";
+  select.disabled = !targets.length;
+  if (!select.value) { result.textContent = targets.length ? "比較するデッキを選んでください。" : "比較できる別のデッキがありません。"; return; }
+  const other = structuredClone(targets.find(deck => deck.id === select.value));
+  selectLatestDeckVersion(other);
+  const differences = compareDeckContents(current, other);
+  result.innerHTML = '<p>枚数の差は「このデッキ − 比較先」です。統率者・候補は比較対象に含みません。</p>' + differences.map(({section, rows}) => `<section><h4>${section === "main" ? "メインデッキ" : "サイドボード"}</h4>${rows.length ? `<div class="deck-comparison-scroll"><table><thead><tr><th scope="col">カード名</th><th scope="col">このデッキ</th><th scope="col">比較先</th><th scope="col">差</th></tr></thead><tbody>${rows.map(row => `<tr><th scope="row">${esc(nameOf(row.card) || "名前不明")}</th><td>${row.current}</td><td>${row.other}</td><td>${row.difference > 0 ? "+" : ""}${row.difference}</td></tr>`).join("")}</tbody></table></div>` : '<p class="muted">違いはありません。</p>'}</section>`).join("");
+}
+
 function renderDeckEditor() {
   const deck = state.editingDeck;
   deck.format = els.deckFormat.value;
@@ -5742,6 +5777,7 @@ function renderDeckEditor() {
   els.deckMissing.style.color = missing ? "#9b332f" : "";
   renderDeckStats();
   renderDeckMissingList();
+  renderDeckComparison();
   updateDeckReorderButton();
 
   renderDeckOwnedAddDialog();
@@ -7270,6 +7306,7 @@ $("#openCopyDeckCard").addEventListener("click", openCopyDeckCard);
 $("#copyDeckTarget").addEventListener("change", updateCopyDeckTarget);
 $("#copyDeckFormat").addEventListener("change", renderCopyDeckTargets);
 $("#confirmCopyDeckCard").addEventListener("click", confirmCopyDeckCard);
+$("#deckCompareTarget").addEventListener("change", renderDeckComparison);
 // END SCANNER TRIAL BRIDGE
 }
 startMtgApp().catch(window.mtgStorage.showStartupError);
