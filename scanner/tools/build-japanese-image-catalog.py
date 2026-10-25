@@ -109,6 +109,12 @@ for card in cards.values():
             row=matches[0]
             record={'set':set_code,'number':str(card['collector_number']),'language':'ja','oracleId':card.get('oracle_id',''),'images':{'normal':row['image_url']},'source':'hareruya-catalog-exact','sourcePage':'https://www.hareruyamtg.com/ja/products/detail/'+row['product'],'validation':'unique-name-in-explicit-csp-theme-japanese-products'}
             stats['supplementedFromSecondCatalogue']+=1
+    # Reviewed full-frame replacements take precedence over cropped suppliers.
+    # They still require exact printing/language/Oracle and never add a border.
+    replacement=overrides.get(key)
+    if record and replacement and replacement.get('frame')=='full-card-reviewed' and replacement.get('oracleId')==card.get('oracle_id') and replacement.get('language')=='ja':
+        record=replacement
+        stats['reviewedFullFrameReplacements']+=1
     by_set[set_code]['total'] += 1
     if record:
         buckets[set_code][number] = record

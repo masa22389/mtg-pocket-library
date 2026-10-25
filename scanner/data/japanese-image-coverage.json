@@ -250,7 +250,8 @@
     "supplementedFromUniquePrintCrosswalk": 45,
     "supplementedFromReviewedIndex": 11,
     "supplementedFromSecondCatalogue": 30,
-    "unresolved": 171
+    "unresolved": 171,
+    "reviewedFullFrameReplacements": 38
   },
   "sets": {
     "10e": {

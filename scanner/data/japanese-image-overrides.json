@@ -222,5 +222,955 @@
       "score": 0.89413,
       "margin": 0.73587
     }
+  },
+  "nem:30": {
+    "set": "nem",
+    "number": "30",
+    "language": "ja",
+    "oracleId": "70486bee-6ee7-41ea-b834-8caf4699302b",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000010210.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000010210/nem/page3/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/wdLrNw4cX7e3SqOnPgsz0Htl1JYSLNKpZGoO6hr2.jpg?v=1782264306",
+    "fullSizeThumbnailSimilarity": 0.9842,
+    "imageWidth": 250,
+    "imageHeight": 347,
+    "sourceImageSha256": "249b98feffda8f34c6f72750cd677b8e96c312fdf4b2cf9cd469d65da5686ad9",
+    "comparison": {
+      "similarity": 0.9571,
+      "titleSimilarity": 0.9356,
+      "bodySimilarity": 0.9169,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "nem:48": {
+    "set": "nem",
+    "number": "48",
+    "language": "ja",
+    "oracleId": "99427ebe-c00d-4206-84ca-9764f6e952c6",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000006464.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000006464/nem/page3/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/bzXunFFnNsrIpiVrgDZQ1SrOyrO2wtv8dDv7Gept.jpg?v=1782264786",
+    "fullSizeThumbnailSimilarity": 0.9819,
+    "imageWidth": 246,
+    "imageHeight": 350,
+    "sourceImageSha256": "1200b1bd23a191f18cc016fd29b1751f2d5210464aaa650275a53aee5c704092",
+    "comparison": {
+      "similarity": 0.915,
+      "titleSimilarity": 0.9195,
+      "bodySimilarity": 0.8755,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "nem:117": {
+    "set": "nem",
+    "number": "117",
+    "language": "ja",
+    "oracleId": "376c9d3f-21d3-4251-bb6a-026fa9e1b0e1",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000019272.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000019272/nem/page3/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/MBM0eGbCYG25WYBqFy1dLeJRt2XTGzDgr53kfjGT.jpg?v=1782200902",
+    "fullSizeThumbnailSimilarity": 0.9687,
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "95c50e5c8633b7b22f7d2341fb80f3e7f144825b85df42f6c656301cd3eea129",
+    "comparison": {
+      "similarity": 0.8794,
+      "titleSimilarity": 0.8051,
+      "bodySimilarity": 0.8948,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "nem:121": {
+    "set": "nem",
+    "number": "121",
+    "language": "ja",
+    "oracleId": "4f437f42-1ac5-4681-9b16-4eae9f49bb22",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000163726_bV7w2tk.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000163726/nem/page1/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/H77Ynikfwu7TswBg3DhqcldXERJn3FoQHfc8ALAb.jpg?v=1782201227",
+    "fullSizeThumbnailSimilarity": 0.9701,
+    "imageWidth": 250,
+    "imageHeight": 345,
+    "sourceImageSha256": "e167282fa4a3fba4eef39128f69fef7bc4e66350707bc1132993886033ffaa87",
+    "comparison": {
+      "similarity": 0.9035,
+      "titleSimilarity": 0.7539,
+      "bodySimilarity": 0.8654,
+      "blackEdgeMin": 0.928
+    }
+  },
+  "mmq:155": {
+    "set": "mmq",
+    "number": "155",
+    "language": "ja",
+    "oracleId": "72cecab3-519e-4a23-9623-b423a5c5a251",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000019293.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000019293/mmq/page1/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/hIloT2XUUZIu4BXEqgRBrNVelaSgwfosnJ7XuIo0.jpg?v=1782258528",
+    "fullSizeThumbnailSimilarity": 0.9652,
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "a38ff60bc56fef0c0c4aa139fd8dc1d5ca0198a905fec981ebc9b61bf9778cf0",
+    "comparison": {
+      "similarity": 0.9562,
+      "titleSimilarity": 0.9248,
+      "bodySimilarity": 0.9631,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "mmq:61": {
+    "set": "mmq",
+    "number": "61",
+    "language": "ja",
+    "oracleId": "36cd2364-d113-47d1-b2c4-b088d9eb88dd",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000019281.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000019281/mmq/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/ViyOhnEo477BXs9Ur5WnIsTmxeaUlHxSWfIE7U0F.jpg?v=1782257267",
+    "fullSizeThumbnailSimilarity": 0.9828,
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "f08ac19ebe0bae8be68ddbb541992421237ff6f552c7023feebf04c8c54cf706",
+    "comparison": {
+      "similarity": 0.9239,
+      "titleSimilarity": 0.861,
+      "bodySimilarity": 0.9095,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "mmq:162": {
+    "set": "mmq",
+    "number": "162",
+    "language": "ja",
+    "oracleId": "324824cb-f938-401c-b9b5-d8908b431ef0",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000015087.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000015087/mmq/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/YYWueRLLVRO1gZBBEK0LzpEsunKGYWO3DLJPSztm.jpg?v=1782257064",
+    "fullSizeThumbnailSimilarity": 0.9764,
+    "imageWidth": 290,
+    "imageHeight": 400,
+    "sourceImageSha256": "ffa74b7fee87903f5f8e1e76dca9eb8071b0906e1fd827279ee416482873930b",
+    "comparison": {
+      "similarity": 0.928,
+      "titleSimilarity": 0.9482,
+      "bodySimilarity": 0.9335,
+      "blackEdgeMin": 0.9909
+    }
+  },
+  "mmq:129": {
+    "set": "mmq",
+    "number": "129",
+    "language": "ja",
+    "oracleId": "53f7c868-b03e-4fc2-8dcf-a75bbfa3272b",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000004794.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000004794/mmq/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/QzqoOGdy76Z88YXtvoBi0HANc8oy134sDUCRhBhH.jpg?v=1782253030",
+    "fullSizeThumbnailSimilarity": 0.9898,
+    "imageWidth": 250,
+    "imageHeight": 350,
+    "sourceImageSha256": "2b667a6a8016f22e2f8b1ba40fad33f0324b10f4647d0e0d82fff67c322dcb0b",
+    "comparison": {
+      "similarity": 0.9508,
+      "titleSimilarity": 0.9335,
+      "bodySimilarity": 0.9479,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "mmq:254": {
+    "set": "mmq",
+    "number": "254",
+    "language": "ja",
+    "oracleId": "9264c198-76c7-4ac0-9334-37c691de1b54",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000010590.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000010590/mmq/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/j73sD9TGJ8vR8f61uLYqDXkmqvvHPqc35sSUz9fe.jpg?v=1782221587",
+    "fullSizeThumbnailSimilarity": 0.9767,
+    "imageWidth": 275,
+    "imageHeight": 384,
+    "sourceImageSha256": "faceae47b84e9adf0c025b827c302fd444a62ca4f98c0df15434c6b10b7c3089",
+    "comparison": {
+      "similarity": 0.9111,
+      "titleSimilarity": 0.943,
+      "bodySimilarity": 0.893,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "usg:105": {
+    "set": "usg",
+    "number": "105",
+    "language": "ja",
+    "oracleId": "715d0777-4d36-463b-9102-6bb6bb00b7e9",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000015693.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000015693/usg/page1/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/7JchQVkyooYSZz44IxLYz2mfCtqonOZF3sphSzcH.jpg?v=1782263524",
+    "fullSizeThumbnailSimilarity": 0.9853,
+    "imageWidth": 246,
+    "imageHeight": 345,
+    "sourceImageSha256": "fdef3569be773228ce062a788df384fde1a95b2616b843c239e2b4022c0ed7f7",
+    "comparison": {
+      "similarity": 0.9188,
+      "titleSimilarity": 0.9353,
+      "bodySimilarity": 0.8659,
+      "blackEdgeMin": 0.9026
+    }
+  },
+  "usg:149": {
+    "set": "usg",
+    "number": "149",
+    "language": "ja",
+    "oracleId": "994e27e1-0bff-47c9-a1e6-b9e3ae4ffb1e",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000015093.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000015093/usg/page6/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/UD158T2kLDVxQTNhDOPy5ekrSE6q8f71PYH7YwEg.jpg?v=1782263486",
+    "fullSizeThumbnailSimilarity": 0.9932,
+    "imageWidth": 220,
+    "imageHeight": 308,
+    "sourceImageSha256": "6f0cddb805b7d50703de8352b7de0e248ce53c792cbf80ec0528b80c4f967de6",
+    "comparison": {
+      "similarity": 0.953,
+      "titleSimilarity": 0.9503,
+      "bodySimilarity": 0.9556,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "usg:190": {
+    "set": "usg",
+    "number": "190",
+    "language": "ja",
+    "oracleId": "213fbbdd-f1bc-4bba-9124-7b26e9a706c8",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000015001.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000015001/usg/page6/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/spNKYRT3e0u2cKeJfv3nuFX11uNQxWFSIeh1MxPA.jpg?v=1782267963",
+    "fullSizeThumbnailSimilarity": 0.9832,
+    "imageWidth": 223,
+    "imageHeight": 313,
+    "sourceImageSha256": "6759c08763c93d25b72601fb142e29721d3ea8f31b4726d39ceed330e8c28003",
+    "comparison": {
+      "similarity": 0.9304,
+      "titleSimilarity": 0.9402,
+      "bodySimilarity": 0.8519,
+      "blackEdgeMin": 0.7112
+    }
+  },
+  "usg:311": {
+    "set": "usg",
+    "number": "311",
+    "language": "ja",
+    "oracleId": "6c31f06d-bf02-48a7-9c17-be2a226b8eae",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000022180.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000022180/usg/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/v03ReGuf57DEw1jn1fCEFzIYSHGVG41TvCMWJKOt.jpg?v=1782275487",
+    "fullSizeThumbnailSimilarity": 0.9551,
+    "imageWidth": 398,
+    "imageHeight": 550,
+    "sourceImageSha256": "838ae88ed92c4a7ccd7d50e017cc39e91089700bc4397e29cf8ca85c12b7f827",
+    "comparison": {
+      "similarity": 0.9282,
+      "titleSimilarity": 0.8646,
+      "bodySimilarity": 0.8949,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "usg:314": {
+    "set": "usg",
+    "number": "314",
+    "language": "ja",
+    "oracleId": "09aeea91-b1dc-443f-a509-4758f052c0a7",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000005855.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000005855/usg/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/8mp8Z3KUyRnLHyOINCssTxOJV7F0QQz9ef1sH9mh.jpg?v=1782211801",
+    "fullSizeThumbnailSimilarity": 0.9812,
+    "imageWidth": 247,
+    "imageHeight": 348,
+    "sourceImageSha256": "90ea5218e41acd286139f1e965f24310df9843eda50fb4aa2573c2a31012eb19",
+    "comparison": {
+      "similarity": 0.9588,
+      "titleSimilarity": 0.9044,
+      "bodySimilarity": 0.9423,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "usg:59": {
+    "set": "usg",
+    "number": "59",
+    "language": "ja",
+    "oracleId": "d08e9784-75f7-4164-ac48-d06160f8c56b",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000000191_VCtD9se.png"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000000191/usg/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/4dQSe6s9UPDaneaTlsalt4Ngc1bhjeMoKuC20Frq.jpg?v=1782267112",
+    "fullSizeThumbnailSimilarity": 0.9883,
+    "imageWidth": 209,
+    "imageHeight": 291,
+    "sourceImageSha256": "ee7096f2c573edb7683f47f0c3f816195d602d8c582c32627b852396d53a1842",
+    "comparison": {
+      "similarity": 0.9503,
+      "titleSimilarity": 0.9168,
+      "bodySimilarity": 0.9315,
+      "blackEdgeMin": 0.7143
+    }
+  },
+  "usg:132": {
+    "set": "usg",
+    "number": "132",
+    "language": "ja",
+    "oracleId": "33d405ea-7a9a-4970-b70f-9c05d90dd6f0",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000019313.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000019313/usg/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/Ll1douBygNLzZ1noynong0rDAdufm38hjafQ7CBK.jpg?v=1782168564",
+    "fullSizeThumbnailSimilarity": 0.9812,
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "36998b0694f5c4ca9de90d9db8891d30403ad98bc3349ce5759aefecd48f74eb",
+    "comparison": {
+      "similarity": 0.9463,
+      "titleSimilarity": 0.9386,
+      "bodySimilarity": 0.9285,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "usg:127": {
+    "set": "usg",
+    "number": "127",
+    "language": "ja",
+    "oracleId": "53f7c868-b03e-4fc2-8dcf-a75bbfa3272b",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000019298.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000019298/usg/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/aOIh8pi0wy9O3hQmL1eDlXzZhNahMI1MvuadzmxT.jpg?v=1782229218",
+    "fullSizeThumbnailSimilarity": 0.9913,
+    "imageWidth": 240,
+    "imageHeight": 339,
+    "sourceImageSha256": "aa8be542c43efc8b3b139d32f1d2ca0828cd6b8d09ea43b2718aeab2a16d5a0d",
+    "comparison": {
+      "similarity": 0.9058,
+      "titleSimilarity": 0.8815,
+      "bodySimilarity": 0.8671,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "usg:118": {
+    "set": "usg",
+    "number": "118",
+    "language": "ja",
+    "oracleId": "f792f40d-1d37-4854-98da-e4020c6a44d4",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000019282.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000019282/usg/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/QZeMbquvpckYZCILd644mTMeRe0y1HQa4uY09sqI.jpg?v=1782208562",
+    "fullSizeThumbnailSimilarity": 0.9836,
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "cfdb1c9b54d51585ca515008ec0eaf98a2800036ce088aeb453112a246c7d3ad",
+    "comparison": {
+      "similarity": 0.9495,
+      "titleSimilarity": 0.8924,
+      "bodySimilarity": 0.9491,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "usg:191": {
+    "set": "usg",
+    "number": "191",
+    "language": "ja",
+    "oracleId": "145737a7-c597-4dec-b752-207c2d0501e3",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000019280.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000019280/usg/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/ONAjKTiJC68GSQ1kl8SbBBBFRg2ayKZYP9VygDtB.jpg?v=1782267938",
+    "fullSizeThumbnailSimilarity": 0.974,
+    "imageWidth": 500,
+    "imageHeight": 704,
+    "sourceImageSha256": "73136f93c1611f3c1063da63cb454a203906b9828d77ead693a2e151d670d454",
+    "comparison": {
+      "similarity": 0.8687,
+      "titleSimilarity": 0.8571,
+      "bodySimilarity": 0.7481,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "ulg:14": {
+    "set": "ulg",
+    "number": "14",
+    "language": "ja",
+    "oracleId": "60433b48-d27f-413c-905c-43839b1943f1",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000010225.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000010225/ulg/page3/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/v4cZuUM4mbXIsc5AizLbGeQic2a74TcoIEqwTsFb.jpg?v=1782263046",
+    "fullSizeThumbnailSimilarity": 0.9483,
+    "imageWidth": 367,
+    "imageHeight": 509,
+    "sourceImageSha256": "635afc90a83bf322a17e089df06573d72dd9928cad784b547acd6f78238353cc",
+    "comparison": {
+      "similarity": 0.9391,
+      "titleSimilarity": 0.9148,
+      "bodySimilarity": 0.7515,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "ulg:49": {
+    "set": "ulg",
+    "number": "49",
+    "language": "ja",
+    "oracleId": "69aa1ac7-17da-4fc9-a3dc-df8a52841f4a",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000019297.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000019297/ulg/page4/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/QdWpXo5J6u5PjY9dSnvehpjQ77Idk9tHfXSzD35U.jpg?v=1782263896",
+    "fullSizeThumbnailSimilarity": 0.9639,
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "0fefad2094521a9de48c12d1f97ba1dfce9d91f3183533409cf69f8e21c87571",
+    "comparison": {
+      "similarity": 0.9167,
+      "titleSimilarity": 0.9309,
+      "bodySimilarity": 0.9191,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "ulg:51": {
+    "set": "ulg",
+    "number": "51",
+    "language": "ja",
+    "oracleId": "dc8210b4-8e17-4156-994b-e95e215e3e34",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000005779.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000005779/ulg/page4/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/cG0AcD5HZ9wV1CHK8fRkGPT49N2vHH1sYcxfXgXa.jpg?v=1782168767",
+    "fullSizeThumbnailSimilarity": 0.9767,
+    "imageWidth": 247,
+    "imageHeight": 350,
+    "sourceImageSha256": "bcf23cda352f4057687f8b389de46de60b084490c1e9cef811fe7644ae829418",
+    "comparison": {
+      "similarity": 0.9302,
+      "titleSimilarity": 0.8756,
+      "bodySimilarity": 0.9273,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "ulg:143": {
+    "set": "ulg",
+    "number": "143",
+    "language": "ja",
+    "oracleId": "b53f216d-1592-4eee-b204-502a805fbc8c",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000010212.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000010212/ulg/page4/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/ZuvJdmke8yME75M5lPvIrltzz7ZZMJqgluBdC6fd.jpg?v=1782168285",
+    "fullSizeThumbnailSimilarity": 0.9837,
+    "imageWidth": 223,
+    "imageHeight": 310,
+    "sourceImageSha256": "60e78e30e2b83f830452ec74f1955938c1880fa88cf19f4adcf32689239bc266",
+    "comparison": {
+      "similarity": 0.9026,
+      "titleSimilarity": 0.9245,
+      "bodySimilarity": 0.8374,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "uds:102": {
+    "set": "uds",
+    "number": "102",
+    "language": "ja",
+    "oracleId": "4681bcc2-8a46-44cd-8b04-6ab140904dea",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000015700.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000015700/uds/page3/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/LJ7BW5Jc7xVBCk5eonN6wNJTtYYsc2mV18JIRJRi.jpg?v=1782261735",
+    "fullSizeThumbnailSimilarity": 0.976,
+    "imageWidth": 223,
+    "imageHeight": 310,
+    "sourceImageSha256": "3127c345c00f5a053aaf167f6d856d7ac72b7492120b0cd859660125249ba2d3",
+    "comparison": {
+      "similarity": 0.923,
+      "titleSimilarity": 0.9211,
+      "bodySimilarity": 0.9321,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "uds:139": {
+    "set": "uds",
+    "number": "139",
+    "language": "ja",
+    "oracleId": "a699c663-8131-4045-9265-a83e86609374",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000008218.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000008218/uds/page3/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/10H8GWAP19wwqqYWeRMcTmkKSTLWqSN2SK2mQgUc.jpg?v=1782262113",
+    "fullSizeThumbnailSimilarity": 0.9852,
+    "imageWidth": 252,
+    "imageHeight": 350,
+    "sourceImageSha256": "240a7edd108be5e9503c5e86ce7217fc4422ea9673051c1bb9915913468baf59",
+    "comparison": {
+      "similarity": 0.9408,
+      "titleSimilarity": 0.857,
+      "bodySimilarity": 0.9294,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "ody:315": {
+    "set": "ody",
+    "number": "315",
+    "language": "ja",
+    "oracleId": "92392467-a22f-4dd7-a0eb-393bef956dc0",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000147180_lIJDSOx.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000147180/ody/page2/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/aB0vx5Ut5r7qeevMmHy5uGDS76kAJMUnpddYvJRK.jpg?v=1782259336",
+    "fullSizeThumbnailSimilarity": 0.957,
+    "imageWidth": 250,
+    "imageHeight": 345,
+    "sourceImageSha256": "b1abe9e159f8454061c4d79e10a453248515e1235b32c0f7d03b44c9d71ca569",
+    "comparison": {
+      "similarity": 0.9086,
+      "titleSimilarity": 0.8833,
+      "bodySimilarity": 0.7613,
+      "blackEdgeMin": 0.7749
+    }
+  },
+  "ody:170": {
+    "set": "ody",
+    "number": "170",
+    "language": "ja",
+    "oracleId": "bdce1af0-3643-4e77-88f9-320206a191d4",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000015080.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000015080/ody/page6/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/DmzFgM4mxIgZKRwkh8KPcRD1eTDLj0NCArwn2Gnz.jpg?v=1782211865",
+    "fullSizeThumbnailSimilarity": 0.947,
+    "imageWidth": 493,
+    "imageHeight": 683,
+    "sourceImageSha256": "bf899945c98be592d70b83e7f7bfab094ebe2e30f9b47488b052958496f67b41",
+    "comparison": {
+      "similarity": 0.9378,
+      "titleSimilarity": 0.9043,
+      "bodySimilarity": 0.9244,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "ody:118": {
+    "set": "ody",
+    "number": "118",
+    "language": "ja",
+    "oracleId": "8203c621-a1a0-4865-8c9a-0d4064c86107",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000008285.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000008285/ody/page6/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/FPQ4OkvTkyWELJxQ88Sr4i9OEYr8274K6ZUcHxPf.jpg?v=1782200313",
+    "fullSizeThumbnailSimilarity": 0.9865,
+    "imageWidth": 250,
+    "imageHeight": 349,
+    "sourceImageSha256": "ffda9e9cf09b7a01beb1ee78bb5ce7ec50cbb7372ea8d08cc72d0bc3aab124e2",
+    "comparison": {
+      "similarity": 0.9503,
+      "titleSimilarity": 0.8548,
+      "bodySimilarity": 0.9373,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "ody:258": {
+    "set": "ody",
+    "number": "258",
+    "language": "ja",
+    "oracleId": "1059f089-2693-4c89-92c5-39fe49beebb3",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000008286.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000008286/ody/page6/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/P3PyO4EWbDYLAtXgjxa20us81nLGKZ4JFapZqpYk.jpg?v=1782265616",
+    "fullSizeThumbnailSimilarity": 0.966,
+    "imageWidth": 250,
+    "imageHeight": 349,
+    "sourceImageSha256": "fed42c6b3f1b340463143c3e3df43b63a4285e98f463bdd8218fa7c694a024e1",
+    "comparison": {
+      "similarity": 0.9256,
+      "titleSimilarity": 0.9081,
+      "bodySimilarity": 0.8991,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "ody:317": {
+    "set": "ody",
+    "number": "317",
+    "language": "ja",
+    "oracleId": "c733873e-77db-471f-8061-139db24f7e7c",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000070949_p05drxZ.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000070949/ody/page6/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/ibXYKWp84NWxmNNywKKOJbe840DrwUhU1y8MsTfX.jpg?v=1782226472",
+    "fullSizeThumbnailSimilarity": 0.9639,
+    "imageWidth": 477,
+    "imageHeight": 673,
+    "sourceImageSha256": "9a39cd16d0287240c669e1ea442bda9c88e08320198dc7bcd5ff635613132aba",
+    "comparison": {
+      "similarity": 0.9148,
+      "titleSimilarity": 0.9026,
+      "bodySimilarity": 0.7887,
+      "blackEdgeMin": 0.8571
+    }
+  },
+  "ody:114": {
+    "set": "ody",
+    "number": "114",
+    "language": "ja",
+    "oracleId": "cff1b9bb-2a4c-4522-94a4-a674f942e376",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000019292.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000019292/ody/page7/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/YDngzRBzpCklMBbna2wboyrXZe4Q5nViEVpZvbdo.jpg?v=1782199815",
+    "fullSizeThumbnailSimilarity": 0.9728,
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "469d793e1b4ab123c31ab281f634b6a8ad7150e822ee3394b50f5130c5fc51b6",
+    "comparison": {
+      "similarity": 0.8154,
+      "titleSimilarity": 0.7117,
+      "bodySimilarity": 0.7278,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "tor:77": {
+    "set": "tor",
+    "number": "77",
+    "language": "ja",
+    "oracleId": "7192ff07-9a84-49ad-a40c-ce255ce21544",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000018243.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000018243/tor/page3/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/iFLJjAXn9ZTpiRRCGzgDGGp9WGGMicIJvfVZXxy5.jpg?v=1782266891",
+    "fullSizeThumbnailSimilarity": 0.9865,
+    "imageWidth": 223,
+    "imageHeight": 310,
+    "sourceImageSha256": "f00902cd62627ace08868f45c900ec9956bc1d550774a219f04b8eadc8cc8e59",
+    "comparison": {
+      "similarity": 0.9288,
+      "titleSimilarity": 0.937,
+      "bodySimilarity": 0.9012,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "tor:97": {
+    "set": "tor",
+    "number": "97",
+    "language": "ja",
+    "oracleId": "f07bd49d-8e71-4d56-be2a-638514011318",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000008364.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000008364/tor/page3/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/vlDUIfg1A2fPpRKrh7CgHo76w5RJajCpGMtApigi.jpg?v=1782273705",
+    "fullSizeThumbnailSimilarity": 0.9773,
+    "imageWidth": 251,
+    "imageHeight": 360,
+    "sourceImageSha256": "2f3756ba0a6228ea9bcac6aee6c5111435ac10d88a9af06d1e40ae8250adb604",
+    "comparison": {
+      "similarity": 0.8745,
+      "titleSimilarity": 0.8665,
+      "bodySimilarity": 0.7853,
+      "blackEdgeMin": 0.9832
+    }
+  },
+  "ons:127": {
+    "set": "ons",
+    "number": "127",
+    "language": "ja",
+    "oracleId": "2dc6da5d-c4d1-4f2c-8f46-11a935bc0044",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000015692.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000015692/ons/page6/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/Nouw2qIotYmh7X01KAN2uSlkREw1elLCDIqGHAge.jpg?v=1782259811",
+    "fullSizeThumbnailSimilarity": 0.982,
+    "imageWidth": 223,
+    "imageHeight": 310,
+    "sourceImageSha256": "b6c1c3360fb29e8c537cebc337348d683dac7be716bde1eba6c43193a399fed0",
+    "comparison": {
+      "similarity": 0.9665,
+      "titleSimilarity": 0.8906,
+      "bodySimilarity": 0.9535,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "ons:170": {
+    "set": "ons",
+    "number": "170",
+    "language": "ja",
+    "oracleId": "acdf9fb0-96eb-4520-bd4b-b6480c7c9b29",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000008208.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000008208/ons/page6/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/hwnhwWeh6Q6tnxEsNnYHCwMAmSeYMrWmTR9C5DRJ.jpg?v=1782259948",
+    "fullSizeThumbnailSimilarity": 0.9926,
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "a6f34119cb11a14131284661af1e9cfffcac64306ba404e7ae44d35a7e5f890a",
+    "comparison": {
+      "similarity": 0.9664,
+      "titleSimilarity": 0.9772,
+      "bodySimilarity": 0.9557,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "scg:75": {
+    "set": "scg",
+    "number": "75",
+    "language": "ja",
+    "oracleId": "78db3190-59bc-4033-95bc-32d8ed872b6a",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000005832.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000005832/scg/page2/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/JIIwoWvPpiMIDuVnR2aMGmCoZgzT9eShY2Uhggif.jpg?v=1782264138",
+    "fullSizeThumbnailSimilarity": 0.9861,
+    "imageWidth": 241,
+    "imageHeight": 324,
+    "sourceImageSha256": "97b1f7091bc85e8311f8955dc6a146062a3a8204b017a989989955f760b9cc37",
+    "comparison": {
+      "similarity": 0.9125,
+      "titleSimilarity": 0.8937,
+      "bodySimilarity": 0.8854,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "scg:23": {
+    "set": "scg",
+    "number": "23",
+    "language": "ja",
+    "oracleId": "aa7cd6e6-35a6-4c18-9d66-dc2a95206401",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000008362.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000008362/scg/page3/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/klpdCjmpWBAAaX8MiYUSUmf0QpIjJJHl0Ss37Szm.jpg?v=1782263807",
+    "fullSizeThumbnailSimilarity": 0.9706,
+    "imageWidth": 367,
+    "imageHeight": 510,
+    "sourceImageSha256": "5a32f42ddd5597d88706664a4b72320606e57808d64eb301cdca0fa8cd3f15e2",
+    "comparison": {
+      "similarity": 0.9607,
+      "titleSimilarity": 0.9756,
+      "bodySimilarity": 0.818,
+      "blackEdgeMin": 1.0
+    }
+  },
+  "scg:29": {
+    "set": "scg",
+    "number": "29",
+    "language": "ja",
+    "oracleId": "464c0150-3dbc-403b-9ada-fef25ab1f29d",
+    "images": {
+      "normal": "https://makeshop-multi-images.akamaized.net/blackfrog/itemimages/000000019284.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://blackfrog.jp/shopdetail/000000019284/scg/page3/recommend/",
+    "verifiedAt": "2026-10-26",
+    "frame": "full-card-reviewed",
+    "validation": "unique-full-name-in-set; manual Japanese printed title/art/set-symbol/physical border review; previous image similarity",
+    "previousImage": "https://cdn.shopify.com/s/files/1/0672/8302/6038/files/WnNKs8WE0TxARxExfwgIIRgje1nKsEUJDEzCUBgp.jpg?v=1782263764",
+    "fullSizeThumbnailSimilarity": 0.9787,
+    "imageWidth": 283,
+    "imageHeight": 400,
+    "sourceImageSha256": "8cdc1dbaa54bfafb9143e33145e2b7b8b91081fe984624c770cf5bcd335fc454",
+    "comparison": {
+      "similarity": 0.8973,
+      "titleSimilarity": 0.9178,
+      "bodySimilarity": 0.7426,
+      "blackEdgeMin": 1.0
+    }
   }
 }

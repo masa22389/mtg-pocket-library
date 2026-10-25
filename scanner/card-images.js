@@ -5,7 +5,7 @@
     let indexPromise, manifestPromise;const buckets=new Map();
     if(!manifestUrl&&/^https?:/.test(indexUrl||''))manifestUrl=new URL('./japanese-image-manifest.json',indexUrl).href;
     let tail = Promise.resolve();
-    const trusted = value => { try { const u = new URL(value); return u.protocol === 'https:' && (['cards.scryfall.io','mtg-jp.com','media.wizards.com','files.hareruyamtg.com','cardshop-serra.com'].includes(u.hostname) || (u.hostname==='cdn.shopify.com'&&u.pathname.startsWith('/s/files/1/0672/8302/6038/'))); } catch { return false; } };
+    const trusted = value => { try { const u = new URL(value); return u.protocol === 'https:' && (['cards.scryfall.io','mtg-jp.com','media.wizards.com','files.hareruyamtg.com','cardshop-serra.com'].includes(u.hostname) || (u.hostname==='makeshop-multi-images.akamaized.net'&&u.pathname.startsWith('/blackfrog/itemimages/')) || (u.hostname==='cdn.shopify.com'&&u.pathname.startsWith('/s/files/1/0672/8302/6038/'))); } catch { return false; } };
     function displayImage(card, face = 0) {
       const native = face ? card?.card_faces?.[face]?.image_uris?.normal || card?.backImage || '' : card?.image_uris?.normal || card?.card_faces?.[0]?.image_uris?.normal || card?.image || '';
       const japanese = String(card?.lang || card?.language || '').toLowerCase() === 'ja' && card?._jpImageExact;
@@ -36,12 +36,12 @@
     }
     async function cached(key) {
       if (memory.has(key) && memory.get(key).expires > now()) return memory.get(key).value;
-      try {const response = await (await cacheStorage?.open('mtg-card-image-metadata-v4'))?.match(key); if (response) {const record = await response.json(); if (record.expires > now()) {memory.set(key,record); return record.value;}}} catch {}
+      try {const response = await (await cacheStorage?.open('mtg-card-image-metadata-v5'))?.match(key); if (response) {const record = await response.json(); if (record.expires > now()) {memory.set(key,record); return record.value;}}} catch {}
       return null;
     }
     async function remember(key,value,days) {
       const record = {value,expires:now()+days*86400000}; memory.set(key,record);
-      try {const cache = await cacheStorage?.open('mtg-card-image-metadata-v4'); if (cache) {await cache.put(key,new Response(JSON.stringify(record))); const keys = await cache.keys(); for (const old of keys.slice(0,Math.max(0,keys.length-1000))) await cache.delete(old);}} catch {}
+      try {const cache = await cacheStorage?.open('mtg-card-image-metadata-v5'); if (cache) {await cache.put(key,new Response(JSON.stringify(record))); const keys = await cache.keys(); for (const old of keys.slice(0,Math.max(0,keys.length-1000))) await cache.delete(old);}} catch {}
       return value;
     }
     function validCard(card, request) {

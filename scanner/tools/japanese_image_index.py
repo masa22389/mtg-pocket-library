@@ -32,6 +32,7 @@ def image_allowed(url):
     return parsed.scheme == 'https' and (
         parsed.netloc in ['cards.scryfall.io', 'mtg-jp.com', 'media.wizards.com',
                           'cardshop-serra.com', 'files.hareruyamtg.com'] or
+        (parsed.netloc == 'makeshop-multi-images.akamaized.net' and parsed.path.startswith('/blackfrog/itemimages/')) or
         (parsed.netloc == 'cdn.shopify.com' and
          parsed.path.startswith('/s/files/1/0672/8302/6038/')))
 

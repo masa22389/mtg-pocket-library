@@ -1,7 +1,7 @@
 // Shared by the app and scanner service workers; keep only recently viewed pictures.
 function handleCardImageRequest(event) {
   const request=event.request,url=new URL(request.url);
-  if(request.method!=='GET'||request.destination!=='image'||url.protocol!=='https:'||!(['cards.scryfall.io','mtg-jp.com','media.wizards.com','files.hareruyamtg.com','cardshop-serra.com'].includes(url.hostname)||(url.hostname==='cdn.shopify.com'&&url.pathname.startsWith('/s/files/1/0672/8302/6038/'))))return false;
+  if(request.method!=='GET'||request.destination!=='image'||url.protocol!=='https:'||!(['cards.scryfall.io','mtg-jp.com','media.wizards.com','files.hareruyamtg.com','cardshop-serra.com'].includes(url.hostname)||(url.hostname==='makeshop-multi-images.akamaized.net'&&url.pathname.startsWith('/blackfrog/itemimages/'))||(url.hostname==='cdn.shopify.com'&&url.pathname.startsWith('/s/files/1/0672/8302/6038/'))))return false;
   event.respondWith((async()=>{
     const cache=await caches.open('mtg-card-pictures-v1'),saved=await cache.match(request,{ignoreVary:true});
     if(saved)return saved;

@@ -376,3 +376,6 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 .deck-comparison th:not(:first-child){white-space:nowrap}
 
 .localized-image-note{display:block;font-size:11px;line-height:1.4;color:var(--muted);max-width:100%;white-space:normal}.localized-image-note[hidden]{display:none}
+
+/* Preserve complete card scans; deck artwork banners intentionally retain their crop. */
+.card-detail-image,.variant-option img,img[data-japanese-image]:not(.deck-cover-image){object-fit:contain;border-radius:0}
