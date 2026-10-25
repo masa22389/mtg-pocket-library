@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v309";
+const APP_VERSION = "v310";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -1572,6 +1572,7 @@ const JP_INDEX_BY_EN_NAME = new Map();
 const JP_STANDALONE_NAMES = new Map();
 const JP_ALIAS_TARGETS_EXACT = new Map();
 const JP_ALIAS_TARGET_CACHE = new Map();
+let jpNormalizationCache = null, jpAliasNormalizationCache = null;
 // The bundled DB is immutable during a page session. Build these only on use.
 const JP_NORMALIZED_NAMES = new WeakMap();
 let jpItemsBySet = null;
@@ -1720,24 +1721,22 @@ function getAllKnownSets() {
 }
 
 const SET_JA_NAME_CACHE = new Map();
+let setJapaneseNamesIndexed = false;
 
 function getSetJapaneseName(code) {
   const normalized = normalizeSetCode(code);
   if (!normalized) return "";
-  if (SET_JA_NAME_CACHE.has(normalized)) return SET_JA_NAME_CACHE.get(normalized);
-
   const direct = SET_JA_NAMES[normalized] || "";
-  if (direct) {
-    SET_JA_NAME_CACHE.set(normalized, direct);
-    return direct;
+  if (direct) return direct;
+  if (!setJapaneseNamesIndexed) {
+    for (const entry of JP_CARD_SEARCH_INDEX) {
+      if (!entry?.setNameJa) continue;
+      const key = normalizeSetCode(entry.setCode);
+      if (key && !SET_JA_NAME_CACHE.has(key)) SET_JA_NAME_CACHE.set(key, entry.setNameJa);
+    }
+    setJapaneseNamesIndexed = true;
   }
-
-  const indexed = JP_CARD_SEARCH_INDEX.find(entry =>
-    normalizeSetCode(entry?.setCode) === normalized && entry?.setNameJa
-  );
-  const name = indexed?.setNameJa || "";
-  SET_JA_NAME_CACHE.set(normalized, name);
-  return name;
+  return SET_JA_NAME_CACHE.get(normalized) || "";
 }
 
 function resolveSetInput(value) {
@@ -2519,7 +2518,12 @@ async function fetchAllScryfallSearch(q, options = {}) {
 }
 
 function normalizeCardName(value) {
-  return stripJapaneseReadings(value).normalize("NFKC").trim().toLocaleLowerCase("ja").replaceAll(/\s+/g, " ");
+  const cache = typeof jpNormalizationCache === "undefined" ? null : jpNormalizationCache;
+  const key = String(value || "");
+  if (cache?.has(key)) return cache.get(key);
+  const normalized = stripJapaneseReadings(key).normalize("NFKC").trim().toLocaleLowerCase("ja").replaceAll(/\s+/g, " ");
+  cache?.set(key, normalized);
+  return normalized;
 }
 
 function stripJapaneseReadings(value) {
@@ -2527,7 +2531,12 @@ function stripJapaneseReadings(value) {
 }
 
 function normalizeAliasKey(value) {
-  return normalizeCardName(value).replaceAll(/[・･\s'’"“”\-‐‑‒–—―]/g, "");
+  const cache = typeof jpAliasNormalizationCache === "undefined" ? null : jpAliasNormalizationCache;
+  const key = String(value || "");
+  if (cache?.has(key)) return cache.get(key);
+  const normalized = normalizeCardName(key).replaceAll(/[・･\s'’"“”\-‐‑‒–—―]/g, "");
+  cache?.set(key, normalized);
+  return normalized;
 }
 
 async function fetchScryfallCardsByIdChunks(ids) {
@@ -2592,6 +2601,8 @@ function preferredIndexedJapaneseName(card) {
 }
 
 function buildJpSearchIndexes() {
+  jpNormalizationCache = new Map(); jpAliasNormalizationCache = new Map();
+  try {
   JP_CARD_SEARCH_INDEX.forEach(item => {
     const targets = jpIndexCardTitles(item);
     // Multi-face aliases also contain spell names: never map those to the full card title.
@@ -2616,6 +2627,7 @@ function buildJpSearchIndexes() {
       pushUniqueTarget(JP_ALIAS_TARGETS_EXACT, normalizeAliasKey(name), targets);
     });
   });
+  } finally { jpNormalizationCache = null; jpAliasNormalizationCache = null; }
 }
 
 buildJpSearchIndexes();

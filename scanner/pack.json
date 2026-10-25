@@ -109,8 +109,8 @@
     },
     {
       "path": "hash.worker.mjs",
-      "bytes": 1519,
-      "sha256": "56edfa4985caad4042cd79a546cdeb0afb69e08d5354f8770fb65c92546eca6b"
+      "bytes": 1567,
+      "sha256": "66e0e574c600da8363a9ff8bd4d40991a72583db398cca637ec7db0a37b99c3b"
     },
     {
       "path": "integrated-store.mjs",
@@ -129,8 +129,8 @@
     },
     {
       "path": "live.mjs",
-      "bytes": 36758,
-      "sha256": "87306f97cc8df97232f5af682ae49b3ccb8b4cf88f402040b0bcf7c4dfff1fee"
+      "bytes": 39062,
+      "sha256": "9ef3512f07df4232a90c969c67a9bb05516bbe976c2f09f8ff9a2ec8fc7a0b13"
     },
     {
       "path": "mobile-inputs.css",
@@ -203,6 +203,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91537229,
-  "buildId": "c509c3e33fe1"
+  "totalBytes": 91539581,
+  "buildId": "f23ec5c00528"
 }
