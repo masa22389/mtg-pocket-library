@@ -41,3 +41,10 @@
 本体はセット日本語名を毎セット全件検索していた処理を一度の索引作成に変更。カード名の正規化結果は検索索引の作成中だけ再利用し、終了時に破棄する。日本語検索の結果・カードの同一性・版選択は変更しない。起動記録に保存領域・パック取得・SW登録・名前読込・認識準備の各時間を追加。
 
 実機の起動時間は端末とブラウザーの状態で異なる。PCでCPU負荷を模擬した測定はGalaxyやiPhoneの実測値として扱わない。tests/set-name-startup.test.cjs と tests/scanner-startup.browser.cjs で重複走査の抑止、SW再利用、オフライン起動、辞書読込中のタップを確認する。
+
+
+### Japanese printing pictures (v315)
+
+`card-images.js` shares image selection with the main app and resolves scanner pictures by exact set, collector number, language, Oracle identity and face. Rebuild `data/japanese-images.json` from the maintained app index with `python scanner/tools/build-japanese-images.py`, then run `python scanner/tools/refresh-pack.py`.
+
+The edition picker resolves visible Japanese pictures only; changing language cancels old bindings. Missing or unavailable Japanese pictures retain the English picture with an explicit label. Unselected draft pictures remain reference pictures and never select a printing. Metadata is cached for seven days (404 misses for one day); temporary network failures are retried. The two service workers share a cache of up to 160 CORS-readable pictures. Other picture hosts use the browser HTTP cache; opaque responses are not placed in CacheStorage because of mobile quota padding.

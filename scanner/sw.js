@@ -1,7 +1,9 @@
+importScripts('./card-image-cache.js');
 const META='mtg-pocket-hybrid-scanner-meta-v1';let active;
 async function name(){if(active)return active;const r=await(await caches.open(META)).match('./active');return active=r?await r.text():null;}
 self.addEventListener('install',e=>e.waitUntil(self.skipWaiting()));self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch',e=>{
+ if(handleCardImageRequest(e))return;
  const url=new URL(e.request.url);if(url.origin!==self.location.origin||e.request.method!=='GET')return;
  e.respondWith((async()=>{const n=await name(),cache=n&&await caches.open(n),saved=cache&&await cache.match(e.request,{ignoreSearch:true});
  // Models/catalogues are verified when staged. Reuse them without a network request.

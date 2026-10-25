@@ -1,7 +1,7 @@
 from pathlib import Path
 import json,hashlib
 r=Path(__file__).resolve().parents[1];assets=[]
-required=['print-display.json','phash.bin','phash-meta.json','cards.json','identities.json','prints.json','full-features.f16.bin','milo-cards.json','milo-source.json']
+required=['japanese-images.json','print-display.json','phash.bin','phash-meta.json','cards.json','identities.json','prints.json','full-features.f16.bin','milo-cards.json','milo-source.json']
 for name in required:
  if not (r/'data'/name).is_file():raise RuntimeError('Missing '+name)
 meta=json.loads((r/'data/phash-meta.json').read_text(encoding='utf-8'));cards=json.loads((r/'data/cards.json').read_text(encoding='utf-8'));assert len(cards)==meta['rows'];assert (r/'data/phash.bin').stat().st_size==len(cards)*32

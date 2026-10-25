@@ -17,9 +17,9 @@ export class EditionPicker{
   el('editionMore').onclick=()=>{this.limit+=60;this.render();};
   el('editionClose').onclick=()=>this.close();
   el('editionDone').onclick=()=>this.done();
-  el('editionLanguage').onchange=()=>{this.language=el('editionLanguage').value;};
+  el('editionLanguage').onchange=()=>{this.language=el('editionLanguage').value;this.render();};
   dialog.addEventListener('cancel',e=>{e.preventDefault();this.close();});
-  dialog.addEventListener('close',()=>{this.token++;this.onClose?.();});
+  dialog.addEventListener('close',()=>{for(const cancel of this.imageBindings||[])cancel();this.token++;this.onClose?.();});
  }
  async open(row){
   if(!row||this.saving)return;const token=++this.token;this.row=row;this.selected=row.printId||null;this.finish=row.finish||'normal';this.language=row.language||'ja';this.limit=60;this.rows=[];this.display={};
@@ -30,13 +30,14 @@ export class EditionPicker{
  }
  close(){if(!this.saving)this.dialog.close();}
  render(){
+  for(const cancel of this.imageBindings||[])cancel();this.imageBindings=[];
   const filtered=this.rows.filter(p=>printingMatches(p,this.el('editionSearch').value,this.display.sets?.[p.set]));
   const frag=document.createDocumentFragment();
   for(const p of filtered.slice(0,this.limit)){
    const button=document.createElement('button');button.className='editionRow';button.type='button';button.setAttribute('aria-pressed',String(p.id===this.selected));button.dataset.printId=p.id;
    const image=document.createElement('img');image.alt='';image.loading='lazy';image.referrerPolicy='no-referrer';image.src=printingImage(p,this.display);image.onerror=()=>{image.hidden=true;};
    const text=document.createElement('span'),title=document.createElement('strong'),number=document.createElement('span'),spec=document.createElement('small'),check=document.createElement('span');
-   title.textContent=this.display.sets?.[p.set]||p.set.toUpperCase();number.textContent=`${p.set.toUpperCase()} · #${p.number}`;spec.textContent=(p.finishes||[]).map(finishName).join(' ・ ');check.textContent=p.id===this.selected?'✓':'';check.className='editionCheck';check.setAttribute('aria-hidden','true');text.append(title,number,spec);button.append(image,text,check);
+   title.textContent=this.display.sets?.[p.set]||p.set.toUpperCase();number.textContent=`${p.set.toUpperCase()} · #${p.number}`;spec.textContent=(p.finishes||[]).map(finishName).join(' ・ ');check.textContent=p.id===this.selected?'✓':'';check.className='editionCheck';check.setAttribute('aria-hidden','true');const imageStatus=document.createElement('small');imageStatus.className='editionImageStatus';imageStatus.textContent=this.language==='ja'?'日本語画像を確認中（英語画像を表示）':'英語画像';text.append(title,number,spec,imageStatus);button.append(image,text,check);if(this.language==='ja'&&globalThis.MtgCardImages){this.imageBindings.push(globalThis.MtgCardImages.bind(image,{set:p.set,number:p.number,oracleId:this.row.oracleId,language:this.language,fallbackUrl:printingImage(p,this.display)},result=>{imageStatus.textContent=result.fallback?'日本語画像を取得できません（英語画像）':'日本語画像';image.alt=this.row.name+' / '+imageStatus.textContent;}));}
    button.onclick=()=>{this.selected=p.id;this.render();};frag.append(button);
   }
   if(!filtered.length){const empty=document.createElement('p');empty.textContent='一致する収録版はありません。セット名・略号・番号で検索できます。';frag.append(empty);}

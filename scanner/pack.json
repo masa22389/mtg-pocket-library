@@ -28,6 +28,16 @@
       "sha256": "a9c628bb5facfba5ef93c99eaf31f7a6c64f7856569a61f93920a1afceb2736d"
     },
     {
+      "path": "card-image-cache.js",
+      "bytes": 1128,
+      "sha256": "f97c7daabec100e2272a3728390f1cc17c0ef7be323035fcafe142b50f14fc85"
+    },
+    {
+      "path": "card-images.js",
+      "bytes": 6226,
+      "sha256": "8a3b8a82f2cd93c7b47de2b05bbdaf4e2f83fa6bf20e2bf2bffcad5f5d88d77a"
+    },
+    {
       "path": "collection-store.js",
       "bytes": 4679,
       "sha256": "f7580c0c7554c961f0a5dce31978ba011de99835db95e00e3a38eadc96487cef"
@@ -46,6 +56,11 @@
       "path": "data/identities.json",
       "bytes": 5094010,
       "sha256": "84e9c6a07dff452392493302567b0a9b3430921a7bf4f9916b0412a17244bbf5"
+    },
+    {
+      "path": "data/japanese-images.json",
+      "bytes": 268406,
+      "sha256": "7e276d9b3fca243a005e5c84e5e0b64e1c268e218dcb2f2d4427350dce3e125b"
     },
     {
       "path": "data/milo-cards.json",
@@ -79,8 +94,8 @@
     },
     {
       "path": "edition-picker.mjs",
-      "bytes": 5984,
-      "sha256": "37c11613fd66cb7ac07293793c8453d3b8091710120c781219b6a6ad37bbd498"
+      "bytes": 6767,
+      "sha256": "156a872ef73f49303e1b6bdab9dd2deef0c239dd98b0d381e5166e811a806215"
     },
     {
       "path": "engine.mjs",
@@ -124,13 +139,13 @@
     },
     {
       "path": "live.html",
-      "bytes": 8176,
-      "sha256": "ff1ddc15da350e0d7ee71918a182858d27cd4089da0f5683809527998592c0df"
+      "bytes": 8214,
+      "sha256": "e8478ee4c6c7c62fe8d2c6b9fdcb23fdce0a5d45793380de5504641f881aae62"
     },
     {
       "path": "live.mjs",
-      "bytes": 39844,
-      "sha256": "de634424be00650f89b6ec4c7ce85726a18a40be79d62f8044c419c89a0ca0c4"
+      "bytes": 41189,
+      "sha256": "765923f057da55e6a40452f2c4c3d70621146eb3b97a8e555423364b61fc49c2"
     },
     {
       "path": "mobile-inputs.css",
@@ -174,8 +189,8 @@
     },
     {
       "path": "sw.js",
-      "bytes": 2951,
-      "sha256": "4250a1b173ee8ab68dc1bbce223412dd3bf4327f32512e613e19240e2b2d5811"
+      "bytes": 3029,
+      "sha256": "80779f2d019b527f8d9d770d19851082ff98a9c4bef9f0ead11a44916db0ed0b"
     },
     {
       "path": "vendor/ort/LICENSE",
@@ -203,6 +218,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91540795,
-  "buildId": "175d18c893da"
+  "totalBytes": 91818799,
+  "buildId": "a1d1184f86f2"
 }
