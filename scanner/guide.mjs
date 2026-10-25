@@ -18,9 +18,9 @@ export function presenceGray(gray,w=84,h=116){
 }
 
 // Detector coordinates are relative to the 1.25x guide ROI.
-// Allow 3% of guide size for corner-estimation error, not a wider scan region.
+// The visible guide occupies [0.1, 0.9] of the 1.25x ROI. Fail closed at its edge.
 export function cardWithinGuide(corners){
- const bounds={min:.076,max:.924}, toleranceGuideFraction=.03;
+ const bounds={min:.1,max:.9}, toleranceGuideFraction=0;
  if(!Array.isArray(corners)||corners.length!==4||corners.some(p=>!Array.isArray(p)||p.length!==2||p.some(v=>!Number.isFinite(v))))return {accepted:false,reason:'missing-corners',bounds,toleranceGuideFraction};
  const accepted=corners.every(([x,y])=>x>=bounds.min&&x<=bounds.max&&y>=bounds.min&&y<=bounds.max);
  return {accepted,reason:accepted?'inside-guide':'outside-guide',bounds,toleranceGuideFraction,corners};
@@ -32,3 +32,10 @@ export function sceneSignature(gray,w=84,h=116){
  return a.map(v=>(v-mean)/Math.max(12,std));
 }
 export function sceneDifference(a,b){return !a||!b||a.length!==b.length?0:a.reduce((s,v,i)=>s+Math.abs(v-b[i]),0)/a.length;}
+
+// Cheap stale-frame guard, not another calibrated card detector.
+export function guideSceneUnchanged(before,after){
+ const valid=Array.isArray(before)&&Array.isArray(after)&&before.length>0&&before.length===after.length&&[...before,...after].every(Number.isFinite);
+ const difference=valid?sceneDifference(before,after):null;
+ return {accepted:valid&&difference<=.25,difference,threshold:.25,thresholds:'uncalibrated-v1'};
+}
