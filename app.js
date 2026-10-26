@@ -9,31 +9,12 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v323";
+const APP_VERSION = "v325";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
 const COLLECTION_RENDER_LIMIT = 50;
-const BACKGROUND_THEMES = {
-  default: { label: "標準", bg: "#f2f4f1", pageBg: "linear-gradient(150deg,#f8f9f5 0,#eef3ef 48%,#f4f1e8 100%)", paper: "#fffdf8", surface: "#f0f3ee", surfaceStrong: "#eef3ef", surfacePanel: "#ffffff99", surfaceSoft: "#f8faf8", surfaceAccent: "#e7eee9", navBg: "#fffdf8ee" },
-  red: { label: "赤", bg: "#f5e9e7", pageBg: "linear-gradient(150deg,#fff8f7 0,#f3d5d2 50%,#f7ece8 100%)", paper: "#fff9f8", surface: "#f8e7e4", surfaceStrong: "#f4dedb", surfacePanel: "#fff7f5cc", surfaceSoft: "#fff6f5", surfaceAccent: "#efd1cd", navBg: "#fff8f7ee" },
-  orange: { label: "橙", bg: "#f5ece2", pageBg: "linear-gradient(150deg,#fff8f1 0,#f0d7bd 52%,#f8eee4 100%)", paper: "#fffaf4", surface: "#f7eadc", surfaceStrong: "#f2dec7", surfacePanel: "#fff8f0cc", surfaceSoft: "#fff7ef", surfaceAccent: "#edcfad", navBg: "#fff8f1ee" },
-  yellow: { label: "黄", bg: "#f4f0dc", pageBg: "linear-gradient(150deg,#fffdf2 0,#eee4b7 50%,#f7f2dd 100%)", paper: "#fffdf4", surface: "#f5efd5", surfaceStrong: "#eee5be", surfacePanel: "#fffbedcc", surfaceSoft: "#fffbea", surfaceAccent: "#e9dda9", navBg: "#fffdf2ee" },
-  green: { label: "緑", bg: "#edf5ed", pageBg: "linear-gradient(150deg,#f8fff7 0,#d7eadb 50%,#eef7ed 100%)", paper: "#fbfff9", surface: "#e6f3e8", surfaceStrong: "#dceee0", surfacePanel: "#f7fff7cc", surfaceSoft: "#f6fff6", surfaceAccent: "#cfe5d4", navBg: "#f8fff7ee" },
-  blue: { label: "青", bg: "#edf3f8", pageBg: "linear-gradient(150deg,#f7fbff 0,#d7e6f3 50%,#edf4fa 100%)", paper: "#f8fcff", surface: "#e4f0f8", surfaceStrong: "#d9e9f5", surfacePanel: "#f5fbffcc", surfaceSoft: "#f4fbff", surfaceAccent: "#cfe0ef", navBg: "#f7fbffee" },
-  indigo: { label: "藍", bg: "#eceef7", pageBg: "linear-gradient(150deg,#f7f8ff 0,#d9ddf0 50%,#eef0fb 100%)", paper: "#fafaff", surface: "#e7eafb", surfaceStrong: "#dde1f4", surfacePanel: "#f7f8ffcc", surfaceSoft: "#f5f6ff", surfaceAccent: "#d1d6ee", navBg: "#f7f8ffee" },
-  violet: { label: "紫", bg: "#f2eaf5", pageBg: "linear-gradient(150deg,#fdf7ff 0,#ead8f0 50%,#f5ecf7 100%)", paper: "#fff9ff", surface: "#f4e6f8", surfaceStrong: "#eadcf1", surfacePanel: "#fdf6ffcc", surfaceSoft: "#fcf5ff", surfaceAccent: "#e2cfe9", navBg: "#fdf7ffee" },
-};
-const BACKGROUND_THEME_CHROME = {
-  default: { green: "#173f35", green2: "#256453", gold: "#c59746" },
-  red: { green: "#7f2f2b", green2: "#a3463f", gold: "#c77f55" },
-  orange: { green: "#855116", green2: "#a5641d", gold: "#d08a2d" },
-  yellow: { green: "#6a5a12", green2: "#837022", gold: "#b89320" },
-  green: { green: "#1e5937", green2: "#2d7048", gold: "#9a8f3a" },
-  blue: { green: "#1f4d78", green2: "#2d689b", gold: "#b78a3e" },
-  indigo: { green: "#343f82", green2: "#4a55a0", gold: "#b98a45" },
-  violet: { green: "#68327c", green2: "#82449a", gold: "#b77a56" },
-};
+const BACKGROUND_THEMES = window.mtgThemes.backgrounds;
 const state = {
   purchases: read(KEYS.purchases, []),
   collection: read(KEYS.collection, []),
@@ -172,17 +153,10 @@ state.cardTrader = {
 };
 
 function applyBackgroundTheme(themeKey = state.backgroundTheme, options = {}) {
-  const key = BACKGROUND_THEMES[themeKey] ? themeKey : "default";
+  const key = Object.prototype.hasOwnProperty.call(BACKGROUND_THEMES, themeKey) ? themeKey : "default";
   const theme = BACKGROUND_THEMES[key];
-  const chrome = BACKGROUND_THEME_CHROME[key] || BACKGROUND_THEME_CHROME.default;
   state.backgroundTheme = key;
-  ["bg", "pageBg", "paper", "surface", "surfaceStrong", "surfacePanel", "surfaceSoft", "surfaceAccent", "navBg"].forEach(name => {
-    document.documentElement.style.setProperty(`--${name.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)}`, theme[name]);
-  });
-  ["green", "green2", "gold"].forEach(name => {
-    document.documentElement.style.setProperty(`--${name}`, chrome[name]);
-  });
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", chrome.green);
+  window.mtgThemes.apply(key);
   if (options.persist) appStorage.setItem(KEYS.backgroundTheme, key);
   if (els.backgroundColorChoices) {
     $("#backgroundSelectedLabel").textContent = theme.label;

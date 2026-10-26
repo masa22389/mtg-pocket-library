@@ -8,10 +8,11 @@ test('invalid corners fail closed',()=>{for(const q of [null,[],[[NaN,0],[1,0],[
 
 test('scene change ignores brightness and distinguishes a changed pattern',()=>{const a=Float64Array.from({length:84*116},(_,i)=>(i*17)%180),b=Float64Array.from(a,v=>v+25),c=Float64Array.from({length:a.length},(_,i)=>(i*39)%180);assert.ok(sceneDifference(sceneSignature(a),sceneSignature(b))<.001);assert.ok(sceneDifference(sceneSignature(a),sceneSignature(c))>.65);});
 
-test('visible guide rejects the former 3 percent outside allowance on every side',()=>{
- for(const corners of [[[.09,.1],[.9,.1],[.9,.9],[.09,.9]],[[.1,.1],[.91,.1],[.91,.9],[.1,.9]],[[.1,.09],[.9,.09],[.9,.9],[.1,.9]],[[.1,.1],[.9,.1],[.9,.91],[.1,.91]]])assert.equal(cardWithinGuide(corners).accepted,false);
- assert.equal(cardWithinGuide([[.1,.1],[.9,.1],[.9,.9],[.1,.9]]).accepted,true);
+test('small corner jitter is tolerated but a clearly outside card is rejected',()=>{
+ for(const q of [[[.09,.1],[.9,.1],[.9,.9],[.09,.9]],[[.1,.1],[.91,.1],[.91,.9],[.1,.9]],[[.1,.09],[.9,.09],[.9,.9],[.1,.9]],[[.1,.1],[.9,.1],[.9,.91],[.1,.91]]])assert.equal(cardWithinGuide(q).accepted,true);
+ for(const q of [[[.07,.1],[.9,.1],[.9,.9],[.07,.9]],[[.1,.1],[.93,.1],[.93,.9],[.1,.9]]])assert.equal(cardWithinGuide(q).accepted,false);
 });
+ test('moderate change is tolerated while a large change still holds publication',()=>{const a=Array(96).fill(0);assert.equal(guideSceneUnchanged(a,Array(96).fill(.4)).accepted,true);assert.equal(guideSceneUnchanged(a,Array(96).fill(.6)).accepted,false);});
 test('changed or missing current frame cannot publish a guided scan',()=>{
  const a=Array(96).fill(0),b=Array(96).fill(1);
  assert.equal(guideSceneUnchanged(a,a).accepted,true);

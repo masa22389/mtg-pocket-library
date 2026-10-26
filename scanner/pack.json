@@ -124,8 +124,8 @@
     },
     {
       "path": "guide.mjs",
-      "bytes": 2990,
-      "sha256": "328e42a9be0672aefc97a0446f9a979dce9812b0608019b449516fab2cfe4c4e"
+      "bytes": 3046,
+      "sha256": "9fd11f6c094ffb7ccca0c8a4ddfacd564c569cd825cc7aa3a3e3192ec9e80a50"
     },
     {
       "path": "hash.worker.mjs",
@@ -223,6 +223,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91909055,
-  "buildId": "b94c04dfad85"
+  "totalBytes": 91909111,
+  "buildId": "79761d11b1d0"
 }

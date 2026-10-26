@@ -18,9 +18,9 @@ export function presenceGray(gray,w=84,h=116){
 }
 
 // Detector coordinates are relative to the 1.25x guide ROI.
-// The visible guide occupies [0.1, 0.9] of the 1.25x ROI. Fail closed at its edge.
+// Allow 2% of guide size for corner-estimation noise and slight hand movement.
 export function cardWithinGuide(corners){
- const bounds={min:.1,max:.9}, toleranceGuideFraction=0;
+ const toleranceGuideFraction=.02,bounds={min:.1-.8*toleranceGuideFraction,max:.9+.8*toleranceGuideFraction};
  if(!Array.isArray(corners)||corners.length!==4||corners.some(p=>!Array.isArray(p)||p.length!==2||p.some(v=>!Number.isFinite(v))))return {accepted:false,reason:'missing-corners',bounds,toleranceGuideFraction};
  const accepted=corners.every(([x,y])=>x>=bounds.min&&x<=bounds.max&&y>=bounds.min&&y<=bounds.max);
  return {accepted,reason:accepted?'inside-guide':'outside-guide',bounds,toleranceGuideFraction,corners};
@@ -37,5 +37,5 @@ export function sceneDifference(a,b){return !a||!b||a.length!==b.length?0:a.redu
 export function guideSceneUnchanged(before,after){
  const valid=Array.isArray(before)&&Array.isArray(after)&&before.length>0&&before.length===after.length&&[...before,...after].every(Number.isFinite);
  const difference=valid?sceneDifference(before,after):null;
- return {accepted:valid&&difference<=.25,difference,threshold:.25,thresholds:'uncalibrated-v1'};
+ return {accepted:valid&&difference<=.5,difference,threshold:.5,thresholds:'uncalibrated-v2-handheld'};
 }
