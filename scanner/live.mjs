@@ -1,3 +1,4 @@
+import {localizedScanName,unselectedJapaneseReference} from './scan-display.mjs';
 import {EditionPicker,finishName,printingImage} from './edition-picker.mjs';
 import {integratedStore,verifyPrinting} from './integrated-store.mjs';
 import {provisionalCard,correctProvisional} from './queue-model.mjs';
@@ -12,7 +13,7 @@ try{const saved=await integratedStore.read();logs=saved.logs;events=saved.events
 function persist(){integratedStore.save({events,logs:logs.slice(-500)}).catch(e=>{storageFailed=true;ready=false;stop();state('端末への保存に失敗しました。再読み込みして保存済みデータを確認してください：'+e.message);});}
 function addLog(record){logs.push({...record,at:new Date().toISOString(),packBuildId:pack.buildId});logs=logs.slice(-500);persist();}
 function buttons(){$('start').disabled=!ready||active||busy;$('stop').disabled=!active&&!busy;$('refine').disabled=!active||refineBusy||queuedRefine||!activePopup?.crop;$('readAgain').disabled=!active||busy;$('readAgain').textContent='候補が違うときだけ読み直す';$('region').disabled=active||busy;$('prepare').disabled=active||busy;$('commitCollection').disabled=collectionBusy||storageFailed||!events.some(r=>r.confirmed);}
-function displayName(oracleId){const c=identities.get(oracleId);if(!c)return oracleId;return (c.aliases||[]).find(n=>/[ぁ-んァ-ン一-龯]/u.test(n))||c.name;}
+function displayName(oracleId){return localizedScanName(identities.get(oracleId),oracleId);}
 function identityHits(hits){const seen=new Set();return hits.filter(h=>!seen.has(h.oracleId)&&seen.add(h.oracleId));}
 async function ensureReferences(){
  if(!referencesPromise)referencesPromise=fetch('./data/cards.json').then(r=>{if(!r.ok)throw Error('参照画像データを取得できません');return r.json()}).then(refs=>{cards=refs;for(const card of cards)if(!refByOracle.has(card.oracleId))refByOracle.set(card.oracleId,card);}).catch(e=>{referencesPromise=null;throw e;});
@@ -24,13 +25,13 @@ async function ensurePrints(){
 }
 function editionLabel(row){const printing=(printsByOracle.get(row?.oracleId)||[]).find(p=>p.id===row.printId);if(!printing)return '収録版を選ぶ ›';return `${printDisplay.sets?.[printing.set]||printing.set.toUpperCase()} · #${printing.number} / ${row.language||'ja'} / ${finishName(row.finish||'normal')} ›`;}
 function updatePopupEdition(){const row=events.find(e=>e.id===activePopup?.rowId);$('popupEdition').disabled=!row;$('popupEdition').textContent=editionLabel(row);}
-function rowImage(row){if(row.confirmed?.image)return row.confirmed.image.replace('/normal/','/small/');const ref=refByOracle.get(row.oracleId);if(!ref)return '';return printingImage({id:ref.id.slice(0,36)},printDisplay).replace('/front/',ref.id.endsWith('-face1')?'/back/':'/front/');}
+function rowImage(row){if(row.confirmed?.image)return row.confirmed.image.replace('/normal/','/small/');const jp=unselectedJapaneseReference(row,printDisplay);if(jp)return jp.image;const ref=refByOracle.get(row.oracleId);if(!ref)return '';return printingImage({id:ref.id.slice(0,36)},printDisplay).replace('/front/',ref.id.endsWith('-face1')?'/back/':'/front/');}
 function bindRowImage(image,row,status){
- const confirmed=row.confirmed,ref=refByOracle.get(row.oracleId),printing=confirmed?{set:confirmed.set,number:confirmed.collectorNumber}:(printsByOracle.get(row.oracleId)||[]).find(p=>p.id===ref?.id.slice(0,36));
+ const confirmed=row.confirmed,ref=refByOracle.get(row.oracleId),jp=unselectedJapaneseReference(row,printDisplay),printing=jp|| (confirmed?{set:confirmed.set,number:confirmed.collectorNumber}:(printsByOracle.get(row.oracleId)||[]).find(p=>p.id===ref?.id.slice(0,36)));
  const label=confirmed?`${confirmed.set} #${confirmed.collectorNumber} / ${confirmed.language}`:'収録版は未選択・参考画像';
  if(status)status.textContent=label;
  if(!printing||!globalThis.MtgCardImages)return;
- return globalThis.MtgCardImages.bind(image,{set:printing.set,number:printing.number,oracleId:row.oracleId,language:row.language||'ja',face:!confirmed&&ref?.id.endsWith('-face1')?1:0,fallbackUrl:rowImage(row)},result=>{if(status)status.textContent=label+(result.fallback?'・この収録版の日本語画像は未取得':result.language==='ja'?'・日本語画像':'・英語画像');});
+ return globalThis.MtgCardImages.bind(image,{set:printing.set,number:printing.number,oracleId:row.oracleId,language:row.language||'ja',face:!jp&&!confirmed&&ref?.id.endsWith('-face1')?1:0,fallbackUrl:rowImage(row)},result=>{if(status)status.textContent=label+(result.fallback?'・この収録版の日本語画像は未取得':result.language==='ja'?'・日本語画像':'・英語画像');});
 }
 let draftImageBindings=[],addImageBinding;
 function renderList(){
@@ -161,7 +162,7 @@ try{
  }
  startupStages.registrationMs=performance.now()-registerAt;startupStages.reusedServiceWorker=reuseWorker;
  if(updated)await preparePack();
- const runtimeAt=performance.now(),runtimeReady=Promise.all([getHash(),getVision()]);runtimeReady.catch(()=>{});const ids=await(await fetch('./data/identities.json')).json();identities=new Map(ids.map(c=>[c.oracleId,c]));const namesReadyMs=performance.now()-runtimeAt;
+ const runtimeAt=performance.now(),runtimeReady=Promise.all([getHash(),getVision()]);runtimeReady.catch(()=>{});const ids=await(await fetch('./data/identities.json')).json();identities=new Map(ids.map(c=>[c.oracleId,c]));let renamed=false;for(const row of events){const identity=identities.get(row.oracleId),name=displayName(row.oracleId);if(identity&&row.name===identity.name&&row.name!==name){row.name=name;renamed=true;}}if(renamed)persist();const namesReadyMs=performance.now()-runtimeAt;
  $('pack').textContent=`${pack.rows}認識用参照 / ${pack.identityCount}個別カード / ${pack.printCount}収録版。公式データ ${pack.sourceDate} 時点。`;$('scope').textContent=`全体カタログ：${pack.identityCount.toLocaleString()}個別カード・${pack.rows.toLocaleString()}参照`;renderList();if(storageFailed)throw Error('保存領域を確認できないためスキャンを開始できません');
  state('認識機能を読み込んでいます…');await runtimeReady;ready=true;buttons();state('カメラを開始して、枠内にカードを合わせてください。');addLog({source:'scanner-startup',packUpdated:updated,stages:startupStages,namesReadyMs,runtimeReadyMs:performance.now()-runtimeAt,totalMs:performance.now()-startupAt,workerStarts:{...workerStarts},prepareStats});
  if(embedded)parent.postMessage({type:'mtg-scanner-ready'},location.origin);

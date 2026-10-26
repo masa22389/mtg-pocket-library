@@ -54,8 +54,8 @@
     },
     {
       "path": "data/identities.json",
-      "bytes": 5094010,
-      "sha256": "84e9c6a07dff452392493302567b0a9b3430921a7bf4f9916b0412a17244bbf5"
+      "bytes": 5120444,
+      "sha256": "8f7dbb7ca2385645debda5c869da76210e365738871894fb1010f4becf78490b"
     },
     {
       "path": "data/japanese-image-manifest.json",
@@ -89,8 +89,8 @@
     },
     {
       "path": "data/print-display.json",
-      "bytes": 55184,
-      "sha256": "784fc7caca579a5b14d7d9750475e1357b5a9a62d84f7d0873d8e9b85ffd1e31"
+      "bytes": 509881,
+      "sha256": "fe76e51a3fb5c2a1199b4607f964d3b141a1213b7085287a096ade277d0d360f"
     },
     {
       "path": "data/prints.json",
@@ -149,8 +149,8 @@
     },
     {
       "path": "live.mjs",
-      "bytes": 41256,
-      "sha256": "6a57b604585972fe56d0bb336b8e78082809927fde9620395542ac1f0b409468"
+      "bytes": 41631,
+      "sha256": "662dd0d4866728b71f704f7a0eb5bcb65a8360410b723f07ab02b463480302a4"
     },
     {
       "path": "mobile-inputs.css",
@@ -181,6 +181,11 @@
       "path": "rpc.mjs",
       "bytes": 1532,
       "sha256": "2c51bbb5877fef9235f9d6824d7354e32a54f03870d4eac4740f1efe6c3604c8"
+    },
+    {
+      "path": "scan-display.mjs",
+      "bytes": 348,
+      "sha256": "1b13eddb0b52d654b827bf8a9e84a97afc55ad48bf61d28a32ee3cde43c9ccf7"
     },
     {
       "path": "shared-storage.js",
@@ -223,6 +228,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 91909111,
-  "buildId": "79761d11b1d0"
+  "totalBytes": 92390965,
+  "buildId": "fd3071c20c79"
 }
