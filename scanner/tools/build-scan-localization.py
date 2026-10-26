@@ -43,6 +43,8 @@ for c in json.loads((data/'cards.json').read_text(encoding='utf-8')):
  # Prefer a normal-numbered recent printing, not an arbitrary special treatment.
  r=sorted(options,key=lambda r:(bool(re.fullmatch(r'\d+',str(r['number']))),display.get('releaseDates',{}).get(r['set'],''),-int(r['number']) if str(r['number']).isdigit() else 0),reverse=True)[0]
  refs[oid]={'set':r['set'],'number':r['number'],'image':r['images']['normal']}
+display['japanesePrintings']={}
+for r in images.values():display['japanesePrintings'].setdefault(r['set'],[]).append(str(r['number']).lower())
 display['japaneseReferences']=refs
 (data/'print-display.json').write_text(json.dumps(display,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
 print(json.dumps({'japaneseNamesAdded':added,'unselectedJapaneseReferences':len(refs)}))

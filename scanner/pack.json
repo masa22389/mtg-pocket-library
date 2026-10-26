@@ -89,8 +89,8 @@
     },
     {
       "path": "data/print-display.json",
-      "bytes": 509881,
-      "sha256": "fe76e51a3fb5c2a1199b4607f964d3b141a1213b7085287a096ade277d0d360f"
+      "bytes": 864763,
+      "sha256": "8a2b2a80758ba41d4d930789f25dca8619200df0599a53c6d54436392ebc7092"
     },
     {
       "path": "data/prints.json",
@@ -134,23 +134,23 @@
     },
     {
       "path": "integrated-store.mjs",
-      "bytes": 5023,
-      "sha256": "d9bd3006e40b81b04da8a924ea2a949382696f9fd32713bb06db5685a97f42ae"
+      "bytes": 5985,
+      "sha256": "722fc03f9899af164fecbcef01ee45dbef1705095411db9e0a6ae8efbaab8571"
     },
     {
       "path": "live.css",
-      "bytes": 11355,
-      "sha256": "d22ccfeaf2e8f1d00ff91f243a905b3d34d12683d560b24b5a1225e38760c3cd"
+      "bytes": 11659,
+      "sha256": "a7f863d3c64fa73d8b52b5fc12d069da4ee232d11c07aef506ce6b7592a18a63"
     },
     {
       "path": "live.html",
-      "bytes": 8214,
-      "sha256": "e8478ee4c6c7c62fe8d2c6b9fdcb23fdce0a5d45793380de5504641f881aae62"
+      "bytes": 8603,
+      "sha256": "1a44f12b84c815eb17b9b65beaec5b0f7aa4a33040433c37430a721a7b19cad6"
     },
     {
       "path": "live.mjs",
-      "bytes": 41631,
-      "sha256": "662dd0d4866728b71f704f7a0eb5bcb65a8360410b723f07ab02b463480302a4"
+      "bytes": 45718,
+      "sha256": "38b3fad377a2774a1e5a280f81a5a91c47a146e36604ad7a124962e6a79cf85c"
     },
     {
       "path": "mobile-inputs.css",
@@ -168,9 +168,14 @@
       "sha256": "bd13d8d60383c69da04dce261f32e93fdaeaa8fd618fbc991e7385f71b3d45df"
     },
     {
+      "path": "printing-default.mjs",
+      "bytes": 1144,
+      "sha256": "8aac6675a71be9d2b61f6abba09a0024ce5404e460118faba03ebaf216a31fbc"
+    },
+    {
       "path": "queue-model.mjs",
-      "bytes": 579,
-      "sha256": "dd860d1bccbe1dbd7803bb0da974bde7667a665b1722dffe11df288edfa745aa"
+      "bytes": 712,
+      "sha256": "509306ffcf2886aba29dfb1701daff12c204a00643e6bdf4860bdb1d0bbeca19"
     },
     {
       "path": "read-cycle.mjs",
@@ -228,6 +233,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 92390965,
-  "buildId": "fd3071c20c79"
+  "totalBytes": 92752866,
+  "buildId": "c0d4b9a3f966"
 }

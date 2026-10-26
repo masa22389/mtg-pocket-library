@@ -7,7 +7,7 @@ const {chromium}=require(process.argv[2]||'playwright'),assert=require('node:ass
  await p.waitForFunction(()=>[...document.querySelectorAll('.draftTile small')].every(e=>e.innerText.includes('日本語画像')&&!e.innerText.includes('未取得')));
  const baseline=require('../scanner/data/japanese-images.json');const expected=['fra:41','fra:118'].map(k=>baseline[k].images.normal).sort();assert.deepEqual((await p.locator('.draftTile img').evaluateAll(imgs=>imgs.map(i=>i.src))).sort(),expected);
 
- const saved=await p.evaluate(async()=>{await(await import('./integrated-store.mjs')).integratedStore.flush();return (await(await import('./integrated-store.mjs')).integratedStore.read()).events});assert.equal(saved.length,2);assert.ok(saved.every(r=>r.printId===null&&!r.confirmed));
+ const saved=await p.evaluate(async()=>{await(await import('./integrated-store.mjs')).integratedStore.flush();return (await(await import('./integrated-store.mjs')).integratedStore.read()).events});assert.equal(saved.length,2);assert.ok(saved.every(r=>r.printId&&r.printingEstimated&&!r.confirmed));
  await p.screenshot({path:process.env.SCREENSHOT_PATH||'scanner-japanese-display.png'});await p.reload();await p.waitForFunction(()=>!document.querySelector('#start').disabled);assert.equal(await p.locator('#scanCount').innerText(),'2');
- console.log(JSON.stringify({passed:true,realPhone:false,existingNamesMigrated:true,realJapaneseImages:true,printingUnselected:true,countPreserved:2}));
+ console.log(JSON.stringify({passed:true,realPhone:false,existingNamesMigrated:true,realJapaneseImages:true,estimatedPrinting:true,countPreserved:2}));
 }finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});

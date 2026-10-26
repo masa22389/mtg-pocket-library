@@ -1,7 +1,7 @@
 importScripts('./scanner/card-image-cache.js');
-const CACHE = "mtg-pocket-v327";
-const OFFLINE_PAGE = "./index.html?v=327";
-const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=327","./scanner/data/japanese-images.json","./mobile-inputs.css?v=327","./scanner-host.js?v=327","./diagnostics.js?v=327", OFFLINE_PAGE, "./styles.css?v=327", "./mtg-jp-card-index.js?v=327", "./mtgjson-jp-search-index.js?v=327", "./app.js?v=327", "./storage.js?v=327", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v328";
+const OFFLINE_PAGE = "./index.html?v=328";
+const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=328","./scanner/data/japanese-images.json","./mobile-inputs.css?v=328","./scanner-host.js?v=328","./diagnostics.js?v=328", OFFLINE_PAGE, "./styles.css?v=328", "./mtg-jp-card-index.js?v=328", "./mtgjson-jp-search-index.js?v=328", "./app.js?v=328", "./storage.js?v=328", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)));
