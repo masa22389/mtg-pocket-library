@@ -98,6 +98,11 @@
       "sha256": "01ed5d721641df0b1d9581bd05754b5436353f919cbacd09acc5e7c2c5a683bb"
     },
     {
+      "path": "draft-press.mjs",
+      "bytes": 1160,
+      "sha256": "e304de69c14a92dc7d4486f0ca89d25ebc1b81a1d820531cc3559f1ba1fdc3da"
+    },
+    {
       "path": "edition-picker.mjs",
       "bytes": 6770,
       "sha256": "b538e90ad987687557acb9b86fc8afb1614d6e0de9fbe5c5c58a4a8306233982"
@@ -139,18 +144,18 @@
     },
     {
       "path": "live.css",
-      "bytes": 11659,
-      "sha256": "a7f863d3c64fa73d8b52b5fc12d069da4ee232d11c07aef506ce6b7592a18a63"
+      "bytes": 13104,
+      "sha256": "de0c48985eca7a33927415e9a38e87afb6323ea8dc062e473053e70343cc4bb6"
     },
     {
       "path": "live.html",
-      "bytes": 8603,
-      "sha256": "1a44f12b84c815eb17b9b65beaec5b0f7aa4a33040433c37430a721a7b19cad6"
+      "bytes": 8589,
+      "sha256": "8af9cc437a1fc813616dd35a1cdba8d4291d69f11a946287f547cf0fb506eb33"
     },
     {
       "path": "live.mjs",
-      "bytes": 45718,
-      "sha256": "38b3fad377a2774a1e5a280f81a5a91c47a146e36604ad7a124962e6a79cf85c"
+      "bytes": 46173,
+      "sha256": "6745653e43088068ac75c12d89a7b9c405dae4a05955f3902dce7d99c9f4f311"
     },
     {
       "path": "mobile-inputs.css",
@@ -233,6 +238,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 92752866,
-  "buildId": "c0d4b9a3f966"
+  "totalBytes": 92755912,
+  "buildId": "04b08d9edd2f"
 }
