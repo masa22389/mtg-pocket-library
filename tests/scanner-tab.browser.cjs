@@ -4,7 +4,7 @@ const version=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8').match(/co
  const c=await b.newContext({viewport:{width:390,height:844}}),p=await c.newPage();
  await p.goto('http://127.0.0.1:4174/styles.css');await p.evaluate(async version=>{await navigator.serviceWorker.register('./sw.js?v='+version);await navigator.serviceWorker.ready},version);
  await p.goto('http://127.0.0.1:4174/?v='+version.slice(1));
- const tabs=p.locator('.bottom-nav button');assert.equal(await tabs.count(),6);assert.equal(await tabs.nth(1).innerText(),'▣\nスキャン');
+ assert.equal(await p.locator('#searchView a[href^="scanner/live.html"]').count(),0);const tabs=p.locator('.bottom-nav button');assert.equal(await tabs.count(),6);assert.equal(await tabs.nth(1).innerText(),'▣\nスキャン');
  await p.locator('[data-action=open-scanner]').click();await p.waitForFunction(()=>window.mtgScannerHost?.visible,{timeout:60000});
  const frame=await p.locator('#scannerHostFrame').elementHandle();
  assert.equal(await p.locator('.bottom-nav .active').getAttribute('data-action'),'open-scanner');
