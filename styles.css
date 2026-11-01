@@ -386,3 +386,53 @@ body.scannerHostOpen .bottom-nav{position:fixed;top:auto;bottom:0;z-index:9001;h
 #scannerWarmStatus{position:fixed;bottom:calc(78px + env(safe-area-inset-bottom));left:12px;right:12px;z-index:9002;background:var(--paper);padding:12px;border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 20px #0002}#scannerWarmStatus[hidden]{display:none}
 
 body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area-inset-bottom))}
+
+/* Settings: compact layout without reducing touch targets or input text. */
+#settingsView .settings-heading{margin:0 0 12px;padding:2px 0}
+#settingsView .settings-heading h1{font-size:22px;line-height:1.4}
+#settingsView>.card.stack{gap:10px;padding:14px;border-radius:14px}
+#settingsView .stack>h2{font-size:17px}
+#settingsView .stack>.muted{margin:0;line-height:1.5}
+#settingsView .data-summary{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+#settingsView .data-summary span{padding:8px 4px;border-radius:9px}
+#settingsView .data-summary span:last-child{grid-column:1/-1;display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:center;gap:8px;padding:4px 2px;background:transparent;text-align:left}
+#settingsView .data-summary span:last-child b{font-size:12px;font-weight:600}
+#settingsView .backup-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#settingsView .backup-actions>*{min-width:0;min-height:44px;font-size:13px;padding:6px 8px;text-align:center}
+#settingsView .settings-details summary{min-height:44px;padding-top:7px;padding-bottom:7px;font-size:14px}
+#settingsView .version-note{padding:7px 10px;font-size:12px}
+#settingsView .version-note b{font-size:13px}
+#settingsView hr{width:100%;margin:2px 0;border:0;border-top:1px solid var(--line)}
+#settingsView .price-settings-body{gap:12px}
+#settingsView .price-settings-section{gap:8px}
+#settingsView .settings-danger .danger{width:100%;min-height:44px}
+
+/* Shared compact detail/editor spacing; keep mobile controls easy to operate. */
+.card-detail-dialog,.deck-editor{gap:10px;padding:14px;border-radius:14px}
+.card-detail-dialog>*,.deck-editor>*{min-width:0}
+.card-detail-dialog .card-detail-preview{gap:8px}
+.card-detail-dialog .card-detail-preview h2{font-size:20px;margin:2px 0 0}
+.card-detail-dialog .owned-control{padding:10px;border-radius:12px;gap:6px}
+.card-detail-dialog .form-grid{gap:8px}
+.card-detail-dialog .same-name-owned-summary{padding:10px;gap:6px}
+.card-detail-dialog .purchase-add-panel,.card-detail-dialog .manual-price-panel{padding:10px;gap:8px;border-radius:12px}
+.card-detail-dialog .manual-price-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.card-detail-dialog .manual-price-actions button{white-space:normal;padding:6px 8px}
+.card-detail-dialog button:not(.dialog-close),.deck-editor button:not(.dialog-close){min-height:44px;border-radius:12px}
+.deck-editor .deck-summary{padding:9px 10px}
+.deck-editor .deck-dates{margin:0;font-size:12px}
+.deck-editor .deck-add-menu{grid-template-columns:repeat(2,minmax(0,1fr));padding:8px;gap:8px;border-radius:12px}
+.deck-editor .deck-add-menu button,.deck-editor .deck-editor-actions button{padding:7px 8px;font-size:13px}
+.deck-editor .deck-editor-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.deck-editor .deck-memo-panel{border:1px solid var(--line);border-radius:12px;padding:0 10px}
+.deck-editor .deck-memo-panel summary{min-height:44px;display:list-item;align-content:center;cursor:pointer;font-size:14px;font-weight:700;color:var(--green)}
+.deck-editor .deck-memo-panel label{padding-bottom:10px}
+.deck-editor .deck-memo-panel textarea{font-size:16px}
+.deck-editor .deck-comparison{padding:10px;gap:8px}
+@media(max-width:520px){
+ .card-detail-dialog,.deck-editor{padding:12px;gap:9px}
+ .deck-editor .deck-content-head{gap:6px}
+ .deck-editor .deck-sort-buttons{width:100%;align-items:end;flex-wrap:nowrap}
+ .deck-editor .deck-sort-buttons label{flex:1;min-width:0}
+ .deck-editor .deck-sort-buttons select{width:100%;min-height:44px}
+}

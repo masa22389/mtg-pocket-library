@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=329">
-  <link rel="stylesheet" href="mobile-inputs.css?v=329">
+  <link rel="stylesheet" href="styles.css?v=332">
+  <link rel="stylesheet" href="mobile-inputs.css?v=332">
 </head>
 <body>
   <header class="app-header">
@@ -185,14 +185,16 @@ const BACKGROUND_THEME_CHROME = {
     </section>
 
     <section id="settingsView" class="view">
-      <div class="hero-card"><div><span class="eyebrow">DATA</span><h1>設定とバックアップ</h1></div></div>
+      <div class="settings-heading"><h1>設定とバックアップ</h1></div>
       <section class="card stack">
         <h2>端末内データ</h2>
         <p class="muted">カードとデッキはこの端末のブラウザー内に保存されます。機種変更前にバックアップしてください。</p>
         <div id="backupSummary" class="data-summary"></div>
-        <button id="exportButton">JSONバックアップを保存</button>
-        <label class="file-button">バックアップを復元<input id="importInput" type="file" accept="application/json,.json"></label>
-        <button id="clearButton" class="danger">すべてのデータを削除</button>
+        <div class="backup-actions">
+          <button id="exportButton">バックアップを保存</button>
+          <label class="file-button">復元<input id="importInput" type="file" accept="application/json,.json"></label>
+        </div>
+        <details class="settings-details settings-danger"><summary>データの削除</summary><div class="settings-details-body"><button id="clearButton" class="danger">すべてのデータを削除</button></div></details>
         <p class="version-note">現在のバージョン：<b id="currentAppVersion">読み込み中</b></p>
         <details id="initialSettings" class="settings-details"><summary>初期設定</summary>
           <label>言語表示<select id="defaultCardLanguage"><option value="ja">日本語</option><option value="en">英語</option></select></label>
@@ -387,7 +389,7 @@ const BACKGROUND_THEME_CHROME = {
       </details>
       <button id="undoDeckMerge" type="button" class="ghost" hidden>直前の統合を元に戻す</button>
       </details>
-      <label>メモ<textarea id="deckMemo" rows="4" maxlength="2000" placeholder="採用理由、調整メモ、次に試したいカードなど"></textarea></label>
+      <details class="deck-memo-panel"><summary>メモ</summary><label>メモ<textarea id="deckMemo" rows="3" maxlength="2000" placeholder="採用理由、調整メモ、次に試したいカードなど"></textarea></label></details>
       <label hidden>カード追加先<select id="deckSection"><option value="main">メイン</option><option value="side">サイド</option><option value="commander">統率者</option><option value="maybe">候補</option></select></label>
       <section class="deck-add-menu" aria-label="カード追加方法">
         <button id="openDeckOwnedAdd" type="button">所持カードから追加</button>
@@ -509,12 +511,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=329" defer></script>
-  <script src="scanner-host.js?v=329" defer></script>
-  <script src="mtg-jp-card-index.js?v=329" defer></script>
-  <script src="mtgjson-jp-search-index.js?v=329" defer></script>
-  <script src="diagnostics.js?v=329" defer></script>
-  <script src="scanner/card-images.js?v=329" defer></script>
-  <script src="app.js?v=329" defer></script>
+  <script src="storage.js?v=332" defer></script>
+  <script src="scanner-host.js?v=332" defer></script>
+  <script src="mtg-jp-card-index.js?v=332" defer></script>
+  <script src="mtgjson-jp-search-index.js?v=332" defer></script>
+  <script src="diagnostics.js?v=332" defer></script>
+  <script src="scanner/card-images.js?v=332" defer></script>
+  <script src="app.js?v=332" defer></script>
 </body>
 </html>
