@@ -13,8 +13,12 @@ let exchangeAnchor=null,exchangeCount=0,exchangeReading=false,exchangeOracle=nul
 const selectedDraftIds=new Set();let guessing=null;
 const startupAt=performance.now(),startupStages={};let currentView='scan',draftLimit=100,addRowId=null,addSaving=false,runningScan=null;let workerStarts={hash:0,vision:0},prepareStats=null;let storageFailed=false,collectionBusy=false,draftDeleteBusy=false,printsPromise=null,referencesPromise=null;let printDisplay={};
 try{const saved=await integratedStore.read();logs=saved.logs;events=saved.events;startupStages.storageMs=performance.now()-startupAt;}catch(e){storageFailed=true;state('スキャンリストを読み込めません：'+e.message);}
-function persist(){integratedStore.save({events,logs:logs.slice(-500)}).catch(e=>{storageFailed=true;ready=false;stop();state('端末への保存に失敗しました。再読み込みして保存済みデータを確認してください：'+e.message);});}
-function addLog(record){logs.push({...record,at:new Date().toISOString(),packBuildId:pack.buildId});logs=logs.slice(-500);persist();}
+let logSaveTimer=null;
+function persist(){clearTimeout(logSaveTimer);logSaveTimer=null;integratedStore.save({events,logs:logs.slice(-500)}).catch(e=>{storageFailed=true;ready=false;stop();state('端末への保存に失敗しました。再読み込みして保存済みデータを確認してください：'+e.message);});}
+// Diagnostic logs arrive every frame while scanning, so they are saved together every few seconds.
+// Draft changes call persist() directly, which saves the pending logs with them.
+function addLog(record){logs.push({...record,at:new Date().toISOString(),packBuildId:pack.buildId});logs=logs.slice(-500);if(!logSaveTimer)logSaveTimer=setTimeout(persist,3000);}
+function flushLogs(){if(logSaveTimer)persist();}
 function buttons(){$('start').disabled=!ready||active||busy;$('stop').disabled=!active&&!busy;$('refine').disabled=!active||refineBusy||queuedRefine||!activePopup?.crop;$('readAgain').disabled=!active||busy;$('readAgain').textContent='候補が違うときだけ読み直す';$('region').disabled=active||busy;$('prepare').disabled=active||busy;updateDraftSelection();}
 function displayName(oracleId){return localizedScanName(identities.get(oracleId),oracleId);}
 function identityHits(hits){const seen=new Set();return hits.filter(h=>!seen.has(h.oracleId)&&seen.add(h.oracleId));}
@@ -164,12 +168,12 @@ async function preparePack(){
  const ch=new MessageChannel();await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('認識データの準備がタイムアウトしました')),240000);ch.port1.onmessage=({data:d})=>{if(d.progress)state('認識データを準備しています '+d.progress);if(d.done||d.error){clearTimeout(timer);ch.port1.close();if(d.error)reject(Error(d.error));else{prepareStats={reusedBytes:d.reusedBytes||0,downloadedBytes:d.downloadedBytes||0};resolve();}}};navigator.serviceWorker.controller.postMessage({type:'PREPARE',pack},[ch.port2]);});
 }
 $('prepare').onclick=async()=>{busy=true;buttons();try{await preparePack();ready=!storageFailed;state('オフライン準備が完了しました。');}catch(e){state(e.message);}finally{busy=false;buttons();}};
-document.addEventListener('visibilitychange',()=>{if(document.hidden){stop();state('画面を離れたため停止しました。仮登録リストは保持しています。');}});window.addEventListener('pagehide',()=>stop(true));
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stop();flushLogs();state('画面を離れたため停止しました。仮登録リストは保持しています。');}});window.addEventListener('pagehide',()=>{stop(true);flushLogs();});
 function fitGuide(){const v=$('video'),box=v.getBoundingClientRect();if(!v.videoWidth||!v.videoHeight||!box.width||!box.height)return null;const g=guideGeometry(v.videoWidth,v.videoHeight,box.width,box.height);const guide=$('fixedGuide');guide.hidden=!$('region').value.startsWith('guide');for(const [k,val]of Object.entries({left:g.left,top:g.top,width:g.width,height:g.height}))guide.style[k]=val+'px';return g;}
 new ResizeObserver(fitGuide).observe($('video'));$('region').onchange=()=>{fitGuide();changedTop=null;changedCount=0;};
 const embedded=new URLSearchParams(location.search).get('embedded')==='1'&&parent!==window;
 if(embedded&&document.querySelector('.backLink'))document.querySelector('.backLink').onclick=e=>{e.preventDefault();stop();parent.postMessage({type:'mtg-scanner-close'},location.origin);};
-window.addEventListener('message',e=>{if(e.source!==parent||e.origin!==location.origin)return;if(e.data?.type==='mtg-scanner-suspend')stop();if(e.data?.type==='mtg-scanner-resume'){fitGuide();if(ready)state('カメラを開始して、枠内にカードを合わせてください。');}});
+window.addEventListener('message',e=>{if(e.source!==parent||e.origin!==location.origin)return;if(e.data?.type==='mtg-scanner-suspend'){stop();flushLogs();}if(e.data?.type==='mtg-scanner-resume'){fitGuide();if(ready)state('カメラを開始して、枠内にカードを合わせてください。');}});
 try{
  const packAt=performance.now();pack=await(await fetch('./pack.json',{cache:'no-store'})).json();startupStages.packMs=performance.now()-packAt;ready=false;const cacheAt=performance.now();
  const meta=await caches.open('mtg-pocket-hybrid-scanner-meta-v1'),activeName=await meta.match('./active');let cachedPack=null;if(activeName){const cache=await caches.open(await activeName.text()),entry=await cache.match(new URL('./pack.json',location.href));if(entry)cachedPack=await entry.json();}
