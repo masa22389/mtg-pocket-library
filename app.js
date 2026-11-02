@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v335";
+const APP_VERSION = "v336";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -6741,46 +6741,60 @@ function exportBackup() {
 }
 
 async function importBackup(file) {
+  let data, purchases;
   try {
-    const data = JSON.parse(await file.text());
-    if (!Array.isArray(data.collection) || !Array.isArray(data.decks)) throw new Error();
-    const incomingTotal = data.collection.reduce((sum, card) => sum + Number(card.quantity || 0), 0);
-    const currentTotal = state.collection.reduce((sum, card) => sum + Number(card.quantity || 0), 0);
-    const exportedAt = data.exportedAt ? new Date(data.exportedAt).toLocaleString("ja-JP") : "不明";
-    const message = [
-      "バックアップを復元すると、現在この端末にあるデータは置き換わります。",
-      "",
-      `復元するデータ：所持${incomingTotal}枚 / ${data.collection.length}種類、デッキ${data.decks.length}件`,
-      `バックアップ作成日時：${exportedAt}`,
-      "",
-      `現在のデータ：所持${currentTotal}枚 / ${state.collection.length}種類、デッキ${state.decks.length}件`,
-      "",
-      data.purchases === undefined ? "このバックアップには購入予定がないため、現在の購入予定は維持します。" : `購入予定：${Array.isArray(data.purchases) ? data.purchases.length : 0}種類に置き換えます。`,
-      "復元してよろしいですか？",
-    ].join("\n");
-    if (!confirm(message)) { els.importInput.value = ""; return; }
-    const purchases = data.purchases === undefined ? state.purchases : validatePurchases(data.purchases);
+    data = JSON.parse(await file.text());
+    const isRecord = item => item !== null && typeof item === "object" && !Array.isArray(item);
+    if (!isRecord(data) || !Array.isArray(data.collection) || !Array.isArray(data.decks) || !data.collection.every(isRecord) || !data.decks.every(isRecord)) throw new Error();
+    purchases = data.purchases === undefined ? state.purchases : validatePurchases(data.purchases);
+  } catch { showToast("正しいバックアップファイルではありません"); els.importInput.value = ""; return; }
+  const incomingTotal = data.collection.reduce((sum, card) => sum + Number(card.quantity || 0), 0);
+  const currentTotal = state.collection.reduce((sum, card) => sum + Number(card.quantity || 0), 0);
+  const exportedAt = data.exportedAt ? new Date(data.exportedAt).toLocaleString("ja-JP") : "不明";
+  const message = [
+    "バックアップを復元すると、現在この端末にあるデータは置き換わります。",
+    "",
+    `復元するデータ：所持${incomingTotal}枚 / ${data.collection.length}種類、デッキ${data.decks.length}件`,
+    `バックアップ作成日時：${exportedAt}`,
+    "",
+    `現在のデータ：所持${currentTotal}枚 / ${state.collection.length}種類、デッキ${state.decks.length}件`,
+    "",
+    data.purchases === undefined ? "このバックアップには購入予定がないため、現在の購入予定は維持します。" : `購入予定：${purchases.length}種類に置き換えます。`,
+    "復元してよろしいですか？",
+  ].join("\n");
+  if (!confirm(message)) { els.importInput.value = ""; return; }
+  // Prepare and save the restored data first; on any failure put the current data back untouched.
+  const restoredFields = ["purchases", "collection", "decks", "priceCache", "fx", "favoriteGroups", "priceSourceMode"];
+  const previous = Object.fromEntries(restoredFields.map(field => [field, state[field]]));
+  try {
     state.purchases = purchases;
     state.collection = data.collection;
     state.decks = data.decks;
     state.priceCache = data.priceCache && typeof data.priceCache === "object" ? data.priceCache : {};
     if (data.fx && typeof data.fx === "object") state.fx = data.fx;
     state.favoriteGroups = Array.isArray(data.favoriteGroups) ? data.favoriteGroups : [];
-    if (["ja", "en"].includes(data.settings?.defaultCardLanguage)) {
-      await appStorage.setItem(KEYS.defaultCardLanguage, data.settings.defaultCardLanguage);
-      state.defaultCardLanguage = data.settings.defaultCardLanguage;
-      applyDefaultCardLanguage();
-    }
-    if (data.settings?.backgroundTheme && BACKGROUND_THEMES[data.settings.backgroundTheme]) {
-      applyBackgroundTheme(data.settings.backgroundTheme, { persist: true });
-    }
     if (data.settings?.priceSourceMode) state.priceSourceMode = data.settings.priceSourceMode;
     normalizeCollectionConditions();
     normalizeFavoriteGroups();
-    renderFavoriteGroupOptions();
     // Restoring intentionally replaces whatever another screen saved.
-    await persist(["collection", "decks", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups", "priceSourceMode", "purchases"], { force: true }); renderCollection(); renderDecks(); renderPurchases(); renderBackupSummary(); showToast("バックアップを復元しました");
-  } catch { showToast("正しいバックアップファイルではありません"); }
+    await persist(["collection", "decks", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups", "priceSourceMode", "purchases"], { force: true });
+  } catch {
+    Object.assign(state, previous);
+    renderFavoriteGroupOptions(); renderCollection(); renderDecks(); renderPurchases();
+    showToast("バックアップを復元できませんでした。現在のデータは変更していません。", { sticky: true });
+    els.importInput.value = "";
+    return;
+  }
+  // Display preferences are applied only after the data itself has been saved.
+  if (["ja", "en"].includes(data.settings?.defaultCardLanguage)) {
+    await appStorage.setItem(KEYS.defaultCardLanguage, data.settings.defaultCardLanguage);
+    state.defaultCardLanguage = data.settings.defaultCardLanguage;
+    applyDefaultCardLanguage();
+  }
+  if (data.settings?.backgroundTheme && BACKGROUND_THEMES[data.settings.backgroundTheme]) {
+    applyBackgroundTheme(data.settings.backgroundTheme, { persist: true });
+  }
+  renderFavoriteGroupOptions(); renderCollection(); renderDecks(); renderPurchases(); renderBackupSummary(); showToast("バックアップを復元しました");
   els.importInput.value = "";
 }
 

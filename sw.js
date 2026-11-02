@@ -1,7 +1,7 @@
 importScripts('./scanner/card-image-cache.js');
-const CACHE = "mtg-pocket-v335";
-const OFFLINE_PAGE = "./index.html?v=335";
-const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=335","./scanner/data/japanese-images.json","./mobile-inputs.css?v=335","./scanner-host.js?v=335","./diagnostics.js?v=335", OFFLINE_PAGE, "./styles.css?v=335", "./mtg-jp-card-index.js?v=335", "./mtgjson-jp-search-index.js?v=335", "./app.js?v=335", "./storage.js?v=335", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v336";
+const OFFLINE_PAGE = "./index.html?v=336";
+const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=336","./scanner/data/japanese-images.json","./mobile-inputs.css?v=336","./scanner-host.js?v=336","./diagnostics.js?v=336", OFFLINE_PAGE, "./styles.css?v=336", "./mtg-jp-card-index.js?v=336", "./mtgjson-jp-search-index.js?v=336", "./app.js?v=336", "./storage.js?v=336", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)));
@@ -35,13 +35,26 @@ self.addEventListener("fetch", event => {
   if (["api.scryfall.com", "wonder.wisdom-guild.net", "r.jina.ai", "api.allorigins.win"].includes(url.hostname)) return;
 
   if (event.request.mode === "navigate") {
-    event.respondWith(
-      fetch(new Request(event.request, { cache: "reload" })).then(response => {
-        const copy = response.clone();
-        caches.open(CACHE).then(cache => cache.put(OFFLINE_PAGE, copy));
-        return response;
-      }).catch(() => caches.match(OFFLINE_PAGE))
-    );
+    // Only a successful, unredirected response for the app's own start page may become the offline page:
+    // never a 404, a server error, a Wi-Fi login page or another page of this site such as tests/.
+    const scope = new URL(self.registration.scope).pathname;
+    const isAppPage = url.origin === self.location.origin && (url.pathname === scope || url.pathname === scope + "index.html");
+    const network = fetch(new Request(event.request, { cache: "reload" }));
+    event.waitUntil(network.then(response => {
+      if (!isAppPage || !response.ok || response.redirected || response.type !== "basic") return;
+      const copy = response.clone();
+      return caches.open(CACHE).then(cache => cache.put(OFFLINE_PAGE, copy));
+    }).catch(() => {}));
+    event.respondWith((async () => {
+      const cached = isAppPage ? await caches.match(OFFLINE_PAGE) : undefined;
+      try {
+        // A stalled connection (weak signal, Wi-Fi login) falls back to the saved app after a few seconds.
+        const response = await (cached ? Promise.race([network, new Promise(resolve => setTimeout(resolve, 5000, cached))]) : network);
+        return !response.ok && cached ? cached : response;
+      } catch {
+        return cached || (await caches.match(OFFLINE_PAGE)) || Response.error();
+      }
+    })());
     return;
   }
 
@@ -52,6 +65,7 @@ self.addEventListener("fetch", event => {
         caches.open(CACHE).then(cache => cache.put(event.request, copy));
       }
       return response;
-    }).catch(() => caches.match(OFFLINE_PAGE)))
+    // A failed image or API request must fail as a network error, not return the app's HTML page.
+    }).catch(() => Response.error()))
   );
 });
