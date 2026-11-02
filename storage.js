@@ -42,26 +42,48 @@ async function createMtgStorage({ name = "mtg-pocket-data-v1", legacy = localSto
       await api.flush();const tx=db.transaction('values','readonly'),done=complete(tx),request=tx.objectStore('values').get(key);let value;
       request.onsuccess=()=>{value=request.result;};await done;if(value===undefined)cache.delete(key);else cache.set(key,value);return value??null;
     },
-    setItem: (key, value) => api.writeBatch([[key, String(value)]]),
-    removeItem: key => api.writeBatch([[key, null]]),
-    writeBatch(entries) {
+    // Single preferences are last-write-wins; data sets go through the guarded writeBatch.
+    setItem: (key, value) => api.writeBatch([[key, String(value)]], {force: true}),
+    removeItem: key => api.writeBatch([[key, null]], {force: true}),
+    onconflict: null,
+    writeBatch(entries, {force = false} = {}) {
       const snapshot = entries.map(([key, value]) => [key, value === null ? null : String(value)]);
       pending++; notify("saving", "端末に保存中…");
       const operation = queue.then(async () => {
         if (failed) throw failed;
         const tx = db.transaction("values", "readwrite");
         const done = complete(tx);
+        const conflicts = new Map();
         try {
+          // Another screen (scanner, other tab) saved since this screen read the key:
+          // abort the whole batch rather than overwrite its data with a stale snapshot.
+          if (!force) snapshot.forEach(([key], index) => {
+            const request = tx.objectStore("values").get(key);
+            request.onsuccess = () => {
+              const stored = request.result ?? null;
+              if (stored !== (cache.get(key) ?? null)) conflicts.set(key, stored);
+              if (index === snapshot.length - 1 && conflicts.size) tx.abort();
+            };
+          });
           for (const [key, value] of snapshot) {
             if (value === null) tx.objectStore("values").delete(key);
             else tx.objectStore("values").put(value, key);
           }
         } catch (error) { tx.abort(); await done.catch(() => {}); throw error; }
-        await done;
+        try { await done; } catch (error) {
+          if (!conflicts.size) throw error;
+          for (const [key, value] of conflicts) { if (value === null) cache.delete(key); else cache.set(key, value); }
+          const conflict = new Error("別の画面で保存された内容があったため、この変更は保存せず最新の内容を読み込みました。");
+          conflict.name = "StorageConflictError"; conflict.keys = [...conflicts.keys()];
+          throw conflict;
+        }
         for (const [key, value] of snapshot) { if (value === null) cache.delete(key); else cache.set(key, value); }
       });
       queue = operation.then(() => { pending--; if (!pending) notify("saved", ""); }, error => {
-        pending--; failed = error;
+        pending--;
+        // A conflict is not a storage failure: later writes stay allowed.
+        if (error.name === "StorageConflictError") { if (!pending) notify("saved", ""); try { api.onconflict?.(error.keys); } catch {} return; }
+        failed = error;
         notify("error", "保存できませんでした。画面上の変更が未保存の可能性があります。再読み込みして保存済みデータを確認してください。（" + (error.name || "Error") + "）");
       });
       return operation;

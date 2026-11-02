@@ -25,6 +25,18 @@ document.querySelector('#run').onclick=async()=>{
   let rejected=false;try{await store.writeBatch([['mtg-pocket.collection.v1','must rollback'],[null,'invalid key']]);}catch{rejected=true;}
   check(rejected&&store.getItem('mtg-pocket.collection.v1')==='new collection','failed transaction leaves cache unchanged');
   store.close();store=await createMtgStorage({name,legacy:legacyOf(entries)});check(store.getItem('mtg-pocket.collection.v1')==='new collection','failed transaction leaves durable data unchanged');
+  peer=await createMtgStorage({name,legacy:legacyOf(entries)});
+  await peer.writeBatch([['mtg-pocket.collection.v1','saved by scanner']]);
+  let seen=null,conflict=null;store.onconflict=keys=>{seen=keys;};
+  try{await store.writeBatch([['mtg-pocket.collection.v1','stale snapshot'],['mtg-pocket.decks.v1','new decks']]);}catch(error){conflict=error;}
+  check(conflict?.name==='StorageConflictError'&&seen?.join()==='mtg-pocket.collection.v1'&&store.getItem('mtg-pocket.collection.v1')==='saved by scanner'&&store.getItem('mtg-pocket.decks.v1')===entries[1][1],'stale write from another screen is rejected whole and newer data reloaded');
+  await store.writeBatch([['mtg-pocket.decks.v1','new decks']]);
+  check(store.getItem('mtg-pocket.decks.v1')==='new decks','conflict does not block later writes');
+  await peer.writeBatch([['mtg-pocket.purchases.v1','peer purchases']],{force:true});
+  await store.writeBatch([['mtg-pocket.purchases.v1','restored purchases']],{force:true});
+  await store.setItem('mtg-pocket.backgroundTheme','green');
+  peer.close();peer=null;store.close();store=await createMtgStorage({name,legacy:legacyOf(entries)});
+  check(store.getItem('mtg-pocket.collection.v1')==='saved by scanner'&&store.getItem('mtg-pocket.decks.v1')==='new decks'&&store.getItem('mtg-pocket.purchases.v1')==='restored purchases','durable data keeps the other screen and forced restore');
   const retryName=name+'-retry';
   let migrationFailed=false;
   try{await createMtgStorage({name:retryName,legacy:{length:2,key:i=>entries[i][0],getItem:key=>{if(key.includes('decks'))throw Error('migration interrupted');return 'partial';}}});}catch{migrationFailed=true;}

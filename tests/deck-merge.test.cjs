@@ -21,7 +21,7 @@ c.ensureDeckVersions(b);b.memo='third';c.storeDeckVersion(b,true);b.memo='draft'
 const withHistory=c.buildDeckMerge(decks,a,'b');assert.equal(withHistory.added,3);assert.equal(withHistory.deck.versions.at(-1).memo,'draft');
 c.ensureDeckVersions(a);a.memo='target draft';const draft=c.buildDeckMerge(decks,a,'b');assert.equal(draft.deck.versions[0].memo,'old');assert.equal(draft.deck.versions[1].memo,'target draft');
 const second=c.buildDeckMerge(result.decks,result.deck,'c');assert.equal(second.decks.length,1);const undoSecond=c.buildDeckMergeUndo(second.decks,'a');assert.equal(undoSecond.decks.length,2);assert.equal(undoSecond.deck.versions.length,2);assert.equal(undoSecond.deck.mergeUndo,undefined);
-c.state={decks,editingDeck:a};c.KEYS={decks:'decks'};c.appStorage={setItem(){throw Error('quota');}};
+c.state={decks,editingDeck:a};c.KEYS={decks:'decks'};c.appStorage={writeBatch(){throw Error('quota');}};
 await assert.rejects(c.commitDeckMerge(result),/quota/);assert.equal(c.state.decks,decks);assert.equal(c.state.editingDeck,a);
 console.log('PASS: merge, all versions/drafts, no input mutation, restore after serialization, repeated merge, invalid selections, quota failure preserves state.');
 

@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v332";
+const APP_VERSION = "v333";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -174,9 +174,29 @@ function read(key, fallback) {
   try { return JSON.parse(appStorage.getItem(key)) ?? fallback; } catch { return fallback; }
 }
 
-function persist(fields = ["collection", "decks", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups", "priceSourceMode"]) {
-  return appStorage.writeBatch(fields.map(field => [KEYS[field], field === "priceSourceMode" ? priceSourceMode() : JSON.stringify(field === "priceCache" ? state.priceCache || {} : state[field])]));
+async function persist(fields = ["collection", "decks", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups", "priceSourceMode"], options = {}) {
+  try {
+    await appStorage.writeBatch(fields.map(field => [KEYS[field], field === "priceSourceMode" ? priceSourceMode() : JSON.stringify(field === "priceCache" ? state.priceCache || {} : state[field])]), options);
+    return true;
+  } catch (error) {
+    if (error?.name !== "StorageConflictError") throw error;
+    // The conflicting fields were reloaded by onconflict; still save this screen's other fields.
+    const remaining = fields.filter(field => !error.keys.includes(KEYS[field]));
+    if (remaining.length) await persist(remaining, options);
+    return false;
+  }
 }
+
+// Another screen (scanner, other tab) saved these keys first: show its data instead of overwriting it.
+function reloadStoredFields(keys) {
+  const fields = ["collection", "decks", "purchases", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups"].filter(field => keys.includes(KEYS[field]));
+  for (const field of fields) state[field] = read(KEYS[field], state[field]);
+  if (keys.includes(KEYS.priceSourceMode)) state.priceSourceMode = appStorage.getItem(KEYS.priceSourceMode) || state.priceSourceMode;
+  if (fields.includes("collection") || fields.includes("favoriteGroups")) { normalizeFavoriteGroups(); renderFavoriteGroupOptions(); }
+  renderCollection(); renderDecks(); renderPurchases(); renderBackupSummary(); updateCardTraderSettingsUi(); updateWisdomGuildSettingsUi();
+  showToast("別の画面で保存された内容があったため、最新の内容を表示しました。この画面の直前の変更が反映されていない場合は、もう一度操作してください。", { sticky: true });
+}
+appStorage.onconflict = keys => reloadStoredFields(keys);
 
 function uid() { return crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`; }
 function esc(value) { return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;"); }
@@ -4972,7 +4992,7 @@ function buildDeckMergeUndo(decks, targetId) {
 
 async function commitDeckMerge(result) {
   // Save the complete transaction before changing the displayed state.
-  await appStorage.setItem(KEYS.decks, JSON.stringify(result.decks));
+  await appStorage.writeBatch([[KEYS.decks, JSON.stringify(result.decks)]]);
   cancelDeckTextSave();
   state.decks = result.decks;
   state.editingDeck = structuredClone(result.deck);
@@ -6538,7 +6558,7 @@ $('#purchaseTransferForm').addEventListener('submit', async event => {
     const next = buildPurchaseTransfer(state.purchases, state.collection, dialog.dataset.purchaseId, quantity);
     await savePurchaseTransfer(next);
   } catch (error) {
-    $('#purchaseTransferStatus').textContent = error.message.includes('購入済み枚数') ? error.message : '保存できませんでした。端末の空き容量を確認して再試行してください。';
+    $('#purchaseTransferStatus').textContent = error.message.includes('購入済み枚数') || error.name === 'StorageConflictError' ? error.message : '保存できませんでした。端末の空き容量を確認して再試行してください。';
     return;
   }
   dialog.close();
@@ -6563,12 +6583,12 @@ function validatePurchases(items) {
 async function savePurchases(items) {
   // Save first so a quota error never leaves the UI pretending a change was saved.
   try {
-    await appStorage.setItem(KEYS.purchases, JSON.stringify(validatePurchases(items)));
+    await appStorage.writeBatch([[KEYS.purchases, JSON.stringify(validatePurchases(items))]]);
     state.purchases = items;
     renderPurchases();
     return true;
-  } catch {
-    showToast("購入予定を保存できませんでした。枚数と端末の空き容量を確認してください");
+  } catch (error) {
+    if (error?.name !== "StorageConflictError") showToast("購入予定を保存できませんでした。枚数と端末の空き容量を確認してください");
     return false;
   }
 }
@@ -6758,7 +6778,8 @@ async function importBackup(file) {
     normalizeCollectionConditions();
     normalizeFavoriteGroups();
     renderFavoriteGroupOptions();
-    await persist(["collection", "decks", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups", "priceSourceMode", "purchases"]); renderCollection(); renderDecks(); renderPurchases(); renderBackupSummary(); showToast("バックアップを復元しました");
+    // Restoring intentionally replaces whatever another screen saved.
+    await persist(["collection", "decks", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups", "priceSourceMode", "purchases"], { force: true }); renderCollection(); renderDecks(); renderPurchases(); renderBackupSummary(); showToast("バックアップを復元しました");
   } catch { showToast("正しいバックアップファイルではありません"); }
   els.importInput.value = "";
 }
@@ -7059,7 +7080,7 @@ els.cardTraderToken?.addEventListener("blur", updateCardTraderSettingsUi);
 els.importInput.addEventListener("change", () => els.importInput.files[0] && importBackup(els.importInput.files[0]));
 $("#clearButton").addEventListener("click", async () => {
   if (!confirm("所持カード・デッキ・購入予定をすべて削除しますか？")) return;
-  await appStorage.writeBatch([[KEYS.collection, "[]"], [KEYS.decks, "[]"], [KEYS.purchases, "[]"], [KEYS.priceCache, "{}"]]);
+  await appStorage.writeBatch([[KEYS.collection, "[]"], [KEYS.decks, "[]"], [KEYS.purchases, "[]"], [KEYS.priceCache, "{}"]], { force: true });
   appStorage.removeLegacy([KEYS.collection, KEYS.decks, KEYS.purchases, KEYS.priceCache]);
   state.collection = []; state.decks = []; state.purchases = []; state.priceCache = {};
   renderPurchases(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("すべて削除しました");

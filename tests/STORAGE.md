@@ -10,5 +10,13 @@ values are retained as a migration-time recovery copy, not kept in sync. Never d
 localStorage-based app and assume that copy reflects later edits. Export a current JSON backup to move
 data to another installation. The normal backup/restore format is unchanged.
 
+Since v333 a data write (`writeBatch`) first compares each key with the value this screen last read.
+If another screen (the scanner frame, another tab or window) saved the key in between, the whole batch
+is aborted instead of overwriting that data, the newer value is loaded into the cache, and the app
+reloads the affected data and saves its remaining fields. Single preferences (`setItem`), backup
+restore and Delete All are intentionally last-write-wins (`{force: true}`). A conflict is not treated
+as a storage failure and does not block later writes. The scanner's `scanner/shared-storage.js` copy
+only uses the migration part and is unchanged.
+
 The UI's explicit Delete All action also removes the corresponding migration-time localStorage copies.
 Scanner recognition data has its own IndexedDB database and is not migrated by this change.
