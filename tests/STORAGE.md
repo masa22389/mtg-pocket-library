@@ -18,5 +18,10 @@ restore and Delete All are intentionally last-write-wins (`{force: true}`). A co
 as a storage failure and does not block later writes. The scanner's `scanner/shared-storage.js` copy
 only uses the migration part and is unchanged.
 
+Since v334 the app asks the browser for persistent storage (`navigator.storage.persist()`) after the
+database opens, so Chrome does not evict the data when the device runs low on space. The browser may
+grant or deny this silently; a denial changes nothing else. Clearing site data by the user still
+deletes everything, so JSON backups remain necessary.
+
 The UI's explicit Delete All action also removes the corresponding migration-time localStorage copies.
 Scanner recognition data has its own IndexedDB database and is not migrated by this change.

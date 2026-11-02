@@ -122,6 +122,9 @@ if (typeof window !== "undefined" && !window.MTG_STORAGE_TEST) {
   }, 1000);
   const ready = createMtgStorage({notify});
   ready.catch(showStartupError);
-  window.mtgStorage = {ready, showStartupError};
+  // Ask the browser not to evict this site's data when the device runs low on space.
+  // Chrome grants or denies silently; denial leaves the existing best-effort storage unchanged.
+  const persisted = ready.then(() => navigator.storage?.persist?.() ?? false).catch(() => false);
+  window.mtgStorage = {ready, showStartupError, persisted};
   ready.then(() => notify("saved", ""), () => {});
 }
