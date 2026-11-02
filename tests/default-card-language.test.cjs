@@ -9,7 +9,7 @@ async function check({cardLang='en', preference='ja', explicit='', mode='collect
   const context={cardDialogRequestId:0, cardLanguageRequestId:0, state:{defaultCardLanguage:preference}, VARIANT_RENDER_LIMIT:20,
     $:id=>id==='#searchLanguage'||id==='#deckSearchLanguage'?{value:explicit}:element,
     els:{cardActionStatus:element,addCardToDeckButton:element,cardVariants:element,cardDialog:element},
-    document:{querySelectorAll:()=>[]},hideInlineStatus(){},renderSelectedVariant(){},changeCardLanguage:async lang=>calls.push(lang)};
+    document:{querySelectorAll:()=>[]},hideInlineStatus(){},renderSelectedVariant(){},selectedOwnedCard:()=>null,refreshOpenedCardPrice:async()=>{},changeCardLanguage:async lang=>calls.push(lang)};
   vm.createContext(context); vm.runInContext(fn,context);
   await context.openCardDialog({lang:cardLang},mode,owned);
   assert.deepEqual(calls,expected);

@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v342";
+const APP_VERSION = "v343";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -758,6 +758,12 @@ function updateCollectionPriceModeUi() {
 
 const CARDTRADER_API_BASE = "https://api.cardtrader.com/api/v2";
 const CARDTRADER_CACHE_MS = 7 * DAY_MS;
+// Prices change slowly: the background refresh renews a price after a week, and opening a card renews it after a day.
+const PRICE_AUTO_REFRESH_MS = 7 * DAY_MS;
+const PRICE_OPEN_REFRESH_MS = DAY_MS;
+// Wisdom Guild is read one card at a time through relay services, so the background refresh takes a few per session.
+const WISDOM_GUILD_AUTO_BATCH = 30;
+const PRICE_AUTO_REFRESH_DELAY_MS = 20000;
 let cardTraderMarketplaceCache = new Map();
 const cardTraderEnglishIdCache = new Map();
 
@@ -3318,6 +3324,7 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   els.cardVariants.replaceChildren();
   renderSelectedVariant();
   els.cardDialog.showModal();
+  void refreshOpenedCardPrice(selectedOwnedCard());
   // Opening a card never fetches or renders its complete print gallery.
   if (!ownedId && !["set", "scanner"].includes(mode)) {
     const preferredLanguage = $(mode === "deck" ? "#deckSearchLanguage" : "#searchLanguage")?.value || state.defaultCardLanguage;
@@ -4148,7 +4155,26 @@ async function hydrateEnglishPriceFallbacks() {
   if (changed) { await persist(); renderCollection(); }
 }
 
-async function hydrateCollectionMetadata() {
+// Startup and every return online call this; a run already in progress is shared instead of starting another.
+let collectionMetadataRun = null;
+function hydrateCollectionMetadata() {
+  if (!collectionMetadataRun) collectionMetadataRun = runCollectionMetadata().finally(() => { collectionMetadataRun = null; });
+  return collectionMetadataRun;
+}
+async function fetchScryfallCollection(identifiers) {
+  const request = () => fetch("https://api.scryfall.com/cards/collection", {
+    method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ identifiers }),
+  });
+  let response = await request();
+  // Scryfall answers 429 when called too fast: wait as it asks, then try once more.
+  if (response.status === 429) {
+    const wait = Math.min(10, Number(response.headers.get("Retry-After")) || 1);
+    await new Promise(resolve => setTimeout(resolve, wait * 1000));
+    response = await request();
+  }
+  return response;
+}
+async function runCollectionMetadata() {
   if (!navigator.onLine) return;
   const pendingIds = [...new Set(state.collection
     .filter(card => (!card.illustrationMetadataVersion || !card.legalities || !card.metadataVersion || !card.priceUpdatedAt || Date.now() - card.priceUpdatedAt > DAY_MS) && card.scryfallId && !card.scryfallId.startsWith("sample-"))
@@ -4157,9 +4183,8 @@ async function hydrateCollectionMetadata() {
   for (let index = 0; index < pendingIds.length; index += 75) {
     const identifiers = pendingIds.slice(index, index + 75).map(id => ({ id }));
     try {
-      const response = await fetch("https://api.scryfall.com/cards/collection", {
-        method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ identifiers }),
-      });
+      if (index) await new Promise(resolve => setTimeout(resolve, 100));
+      const response = await fetchScryfallCollection(identifiers);
       if (!response.ok) continue;
       const data = await response.json();
       // Rebuild after each awaited request so edits made while fetching are respected.
@@ -4176,7 +4201,24 @@ async function hydrateCollectionMetadata() {
   }
   if (changed) { await persist(["collection"]); renderCollection(); }
   await hydrateEnglishPriceFallbacks();
-  await hydrateCardTraderPrices();
+  scheduleAutomaticPriceRefresh();
+}
+
+// The weekly background refresh starts a little after startup so it does not compete with the first screens,
+// and renews only the source shown first (Wisdom Guild, then CardTrader where no Japanese price exists).
+let automaticPriceRefreshTimer = null, automaticPriceRefreshRunning = false;
+function scheduleAutomaticPriceRefresh() {
+  if (automaticPriceRefreshTimer || automaticPriceRefreshRunning) return;
+  automaticPriceRefreshTimer = setTimeout(async () => {
+    automaticPriceRefreshTimer = null;
+    if (!navigator.onLine) return;
+    automaticPriceRefreshRunning = true;
+    try {
+      if (priceSourceOrder().includes("wisdom-guild")) await hydrateWisdomGuildPrices({ automatic: true, quiet: true, mode: "自動" });
+      await hydrateCardTraderPrices();
+    } catch { /* 次回の起動時に再試行 */ }
+    finally { automaticPriceRefreshRunning = false; }
+  }, PRICE_AUTO_REFRESH_DELAY_MS);
 }
 
 let cardTraderPriceQueue = Promise.resolve();
@@ -4203,14 +4245,22 @@ async function runCardTraderPrices(options = {}) {
   if (!navigator.onLine || !cardTraderToken()) { updateCardTraderSettingsUi(); return; }
   if (!state.fx?.usdJpy || !state.fx?.rates?.EUR) await refreshExchangeRate();
   const force = options.force === true;
+  const automatic = !force && !Array.isArray(options.cards);
+  // The background refresh updates CardTrader only where it is the price on screen (no higher-priority price),
+  // and only once a week; manual and single-card refreshes keep the daily threshold.
+  const order = priceSourceOrder(), higherSources = order.slice(0, Math.max(0, order.indexOf("cardtrader")));
+  if (automatic && !order.includes("cardtrader")) { updateCardTraderSettingsUi(); return; }
+  const staleAfter = automatic ? PRICE_AUTO_REFRESH_MS : DAY_MS;
   const sourceCards = Array.isArray(options.cards) ? options.cards : state.collection;
   const candidates = sourceCards.filter(card => (
     card.scryfallId &&
     !card.scryfallId.startsWith("sample-") &&
     cardTraderLanguageForCard(card) &&
     cardTraderFoilForCard(card) !== null &&
-    (force || !cardTraderPriceUpdatedAtForCard(card) || Date.now() - cardTraderPriceUpdatedAtForCard(card) > DAY_MS)
+    !(automatic && higherSources.some(source => priceCacheJpyValue(card, source) != null)) &&
+    (force || !cardTraderPriceUpdatedAtForCard(card) || Date.now() - cardTraderPriceUpdatedAtForCard(card) > staleAfter)
   ));
+  if (automatic && !candidates.length) { updateCardTraderSettingsUi(); return; }
   const stats = {
     mode: options.mode || (options.cards ? "指定カード" : "全量"),
     startedAt: Date.now(),
@@ -4292,15 +4342,25 @@ async function runCardTraderPrices(options = {}) {
   updateCardTraderSettingsUi();
 }
 
+// options.automatic: the weekly background refresh — oldest prices first, a limited batch per session.
+// options.quiet: keep the settings screen's "last result" for manual runs (background and card-open refreshes).
 async function hydrateWisdomGuildPrices(options = {}) {
   if (!navigator.onLine) { updateWisdomGuildSettingsUi(); return; }
   const force = options.force === true;
+  const record = options.quiet ? {} : state.wisdomGuild;
   const sourceCards = Array.isArray(options.cards) ? options.cards : state.collection;
-  const candidates = sourceCards.filter(card =>
+  let candidates = sourceCards.filter(card =>
     wisdomGuildLanguageForCard(card) &&
     priceCacheFinish(card) !== "etched" &&
-    (force || priceCacheEntryNeedsRefresh(priceCacheEntryForCard(card, "wisdom-guild"), "wisdom-guild"))
+    (force || (options.automatic
+      ? Date.now() - priceCacheUpdatedAtForCard(card, "wisdom-guild") > PRICE_AUTO_REFRESH_MS
+      : priceCacheEntryNeedsRefresh(priceCacheEntryForCard(card, "wisdom-guild"), "wisdom-guild")))
   );
+  if (options.automatic) candidates = candidates
+    .sort((a, b) => priceCacheUpdatedAtForCard(a, "wisdom-guild") - priceCacheUpdatedAtForCard(b, "wisdom-guild"))
+    .slice(0, WISDOM_GUILD_AUTO_BATCH);
+  if (options.automatic && !candidates.length) return;
+  let consecutiveFailures = 0;
   const stats = {
     mode: options.mode || "全量",
     startedAt: Date.now(),
@@ -4314,9 +4374,9 @@ async function hydrateWisdomGuildPrices(options = {}) {
     noProductExamples: [],
     errorExamples: [],
   };
-  state.wisdomGuild.lastError = "";
-  state.wisdomGuild.lastStats = stats;
-  await persist(["priceCache", "wisdomGuild"]);
+  record.lastError = "";
+  record.lastStats = stats;
+  if (!options.quiet) await persist(["priceCache", "wisdomGuild"]);
   updateWisdomGuildSettingsUi();
   let changed = false;
   for (const card of candidates) {
@@ -4328,32 +4388,38 @@ async function hydrateWisdomGuildPrices(options = {}) {
         const stockText = result.selection === "in-stock-low" ? `在庫${result.stock}枚` : "在庫なし最高値";
         if (stats.pricedExamples.length < 8) stats.pricedExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""} ${normalizeCardCondition(card.condition)} ${priceCacheFinish(card)} ${formatYen(result.price)}（${stockText}）`);
       } else {
-        deletePriceCacheEntry(card, "wisdom-guild");
+        // Remember "no listing" with its date (no price), so the weekly refresh does not ask again every session.
+        setPriceCacheEntry(card, "wisdom-guild", { source: "wisdom-guild", cacheVersion: WISDOM_GUILD_PRICE_CACHE_VERSION, noListing: true, valueJpy: null, updatedAt: Date.now() });
         stats.noProduct += 1;
         if (stats.noProductExamples.length < 8) stats.noProductExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""} ${wisdomGuildLanguageForCard(card)} ${wisdomGuildConditionForCard(card)}`);
       }
       changed = true;
+      consecutiveFailures = 0;
     } catch (error) {
       stats.failed += 1;
-      state.wisdomGuild.lastError = error?.message || "一部取得に失敗しました";
-      if (stats.errorExamples.length < 8) stats.errorExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} ${wisdomGuildLanguageForCard(card)} ${wisdomGuildConditionForCard(card)}：${state.wisdomGuild.lastError}`);
+      consecutiveFailures += 1;
+      record.lastError = error?.message || "一部取得に失敗しました";
+      if (stats.errorExamples.length < 8) stats.errorExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} ${wisdomGuildLanguageForCard(card)} ${wisdomGuildConditionForCard(card)}：${record.lastError}`);
     } finally {
       stats.done += 1;
-      state.wisdomGuild.lastStats = { ...stats };
-      await persist(["priceCache", "wisdomGuild"]);
+      record.lastStats = { ...stats };
+      // Save every 10 cards instead of after each one: the whole price cache is rewritten on every save.
+      if (stats.done % 10 === 0) await persist(["priceCache", "wisdomGuild"]);
       updateWisdomGuildSettingsUi();
     }
+    // The relay services are failing (rate limit or outage): stop the background run and try another day.
+    if (options.automatic && consecutiveFailures >= 3) break;
     if (candidates.length > 1) await new Promise(resolve => setTimeout(resolve, 350));
   }
   stats.inProgress = false;
   stats.finishedAt = Date.now();
-  state.wisdomGuild.lastStats = { ...stats };
+  record.lastStats = { ...stats };
   if (changed) state.wisdomGuild.priceUpdatedAt = Date.now();
-  if (options.silentToast !== true) {
+  if (options.silentToast !== true && !options.quiet) {
     if (stats.failed) showToast(`Wisdom Guild価格取得：${stats.priced}/${stats.candidates}件更新、一部失敗${stats.failed}件`, { sticky: true });
     else showToast(`Wisdom Guild価格取得：${stats.priced}/${stats.candidates}件更新、出品なし${stats.noProduct}件`, { sticky: true });
   }
-  if (changed || state.wisdomGuild.lastError || candidates.length === 0) { await persist(["priceCache", "wisdomGuild"]); renderCollection(); }
+  if (changed || record.lastError || candidates.length === 0) { await persist(["priceCache", "wisdomGuild"]); renderCollection(); }
   updateWisdomGuildSettingsUi();
 }
 
@@ -4565,6 +4631,20 @@ function clearSelectedManualPrice() {
   renderCollection();
   updateCardOwnedActions();
   showInlineStatus(els.cardActionStatus, "手動価格を削除しました。設定中の取得元に戻します。", { sticky: true });
+}
+
+// Opening an owned card renews its Japanese market price (Wisdom Guild) when it is more than a day old.
+// A card already tried in this session is not asked again, so cards with no listing do not repeat the request.
+const openedCardPriceTried = new Set();
+async function refreshOpenedCardPrice(card) {
+  if (!card || !navigator.onLine || !priceSourceOrder().includes("wisdom-guild") || !wisdomGuildLanguageForCard(card) || priceCacheFinish(card) === "etched") return;
+  if (priceSourceOrder()[0] === "manual" && priceCacheJpyValue(card, "manual") != null) return;
+  if (Date.now() - priceCacheUpdatedAtForCard(card, "wisdom-guild") < PRICE_OPEN_REFRESH_MS) return;
+  const key = `${card.id}|${card.condition || ""}|${card.finish || ""}`;
+  if (openedCardPriceTried.has(key)) return;
+  openedCardPriceTried.add(key);
+  await hydrateWisdomGuildPrices({ force: true, quiet: true, cards: [card], mode: "個別カード" });
+  if (els.cardDialog.open && selectedOwnedCard() === card) updateCardOwnedActions();
 }
 
 async function refreshSelectedCardTraderPrice() {
@@ -5294,6 +5374,27 @@ function renderStatBars(map, maxValue, className = "") {
   }).join("") || '<p class="muted">データなし</p>';
 }
 
+// Deck reference price from the prices already saved on each card; nothing is fetched, so it is cheap to show.
+function unitReferencePriceOf(card) {
+  if (!card) return null;
+  const selected = selectedPriceEntry(card);
+  if (selected) return selected.valueJpy;
+  if (!priceSourceOrder().includes("cardtrader")) return null;
+  const usd = usdPriceOf(card);
+  return usd != null && state.fx.usdJpy ? usd * state.fx.usdJpy : null;
+}
+function deckReferencePrice(entries) {
+  const price = { total: 0, bySection: { commander: 0, main: 0, side: 0 }, unpriced: 0 };
+  for (const entry of entries) {
+    if (!isDeckBuildSection(entry.section)) continue;
+    const unit = unitReferencePriceOf(cardForDeckEntry(entry)), quantity = Number(entry.quantity || 0);
+    if (unit == null) { price.unpriced += quantity; continue; }
+    price.bySection[entry.section] += unit * quantity;
+    price.total += unit * quantity;
+  }
+  return price;
+}
+
 function renderDeckStats() {
   const deck = state.editingDeck;
   if (!deck?.entries?.length) {
@@ -5306,9 +5407,13 @@ function renderDeckStats() {
   const maxMana = Math.max(1, ...stats.mana.values());
   const maxType = Math.max(1, ...stats.types.values());
   const statsOpen = state.deckStatsOpen === true;
+  const price = deckReferencePrice(deck.entries);
+  const priceParts = [["commander", "統率者"], ["main", "メイン"], ["side", "サイド"]]
+    .filter(([section]) => price.bySection[section] > 0).map(([section, label]) => `${label} ${formatYen(price.bySection[section])}`);
+  if (price.unpriced) priceParts.push(`価格未取得 ${price.unpriced}枚`);
   els.deckStats.hidden = false;
   els.deckStats.innerHTML = `<button type="button" class="deck-stats-title" aria-expanded="${statsOpen}">
-      <span><b>デッキ統計</b><small>土地 ${stats.lands}枚 / 非土地 ${stats.nonlands}枚</small></span>
+      <span><b>デッキ統計</b><small>土地 ${stats.lands}枚 / 非土地 ${stats.nonlands}枚${price.total > 0 ? ` ・ 参考価格 約${formatYen(price.total)}` : ""}</small></span>
       <em>${statsOpen ? "▲" : "▼"}</em>
     </button>
     <div class="deck-stats-body" ${statsOpen ? "" : "hidden"}>
@@ -5317,6 +5422,7 @@ function renderDeckStats() {
         <span><b>${stats.lands}</b>土地</span>
         <span><b>${stats.nonlands}</b>非土地</span>
       </div>
+      <p class="deck-price"><b>参考価格 ${price.total > 0 ? `約${formatYen(price.total)}` : "なし"}</b><small>${esc(priceParts.join(" ・ ") || "価格を取得したカードがありません")}。保存済みの価格から計算しています。</small></p>
       <div class="deck-stat-grid">
         <section><h4>色分布</h4>${renderStatBars(stats.colors, maxColor, "color")}</section>
         <section><h4>マナカーブ</h4>${renderStatBars(stats.mana, maxMana, "mana")}</section>

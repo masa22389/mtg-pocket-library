@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=342">
-  <link rel="stylesheet" href="mobile-inputs.css?v=342">
+  <link rel="stylesheet" href="styles.css?v=343">
+  <link rel="stylesheet" href="mobile-inputs.css?v=343">
 </head>
 <body>
   <header class="app-header">
@@ -230,7 +230,8 @@ const BACKGROUND_THEME_CHROME = {
             </section>
             <section class="price-settings-section" aria-labelledby="priceRefreshHeading">
               <h3 id="priceRefreshHeading">価格の更新</h3>
-              <p class="muted price-setting-note">コレクションの価格を取得元ごとに更新します。</p>
+              <p class="muted price-setting-note">コレクションの価格を取得元ごとに更新します。自動更新は、表示している取得元の価格を週1回、起動の少し後に少しずつ（Wisdom Guildは1回30枚まで）行います。カードの詳細を開いたときは、1日以上前の価格をそのカードだけ更新します。</p>
+              <p class="muted price-setting-note">Wisdom Guildの価格は、外部の中継サービス（r.jina.ai、api.allorigins.win）を経由して取得するため、カード名などの検索条件がこれらのサービスに送られます。</p>
               <div class="price-provider">
                 <div class="price-provider-heading"><h4>Wisdom Guild</h4><button id="refreshWisdomGuildPrices" type="button">価格を更新</button></div>
                 <details class="settings-details price-result"><summary id="wisdomGuildRunResultSummary">最終実行結果：まだありません</summary><div class="settings-details-body"><p id="wisdomGuildHelp" class="muted"></p><div id="wisdomGuildRunResultBody"></div></div></details>
@@ -512,12 +513,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=342" defer></script>
-  <script src="scanner-host.js?v=342" defer></script>
+  <script src="storage.js?v=343" defer></script>
+  <script src="scanner-host.js?v=343" defer></script>
   <script src="mtg-jp-card-index.js?h=85c593dfed85" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=342" defer></script>
-  <script src="scanner/card-images.js?v=342" defer></script>
-  <script src="app.js?v=342" defer></script>
+  <script src="diagnostics.js?v=343" defer></script>
+  <script src="scanner/card-images.js?v=343" defer></script>
+  <script src="app.js?v=343" defer></script>
 </body>
 </html>
