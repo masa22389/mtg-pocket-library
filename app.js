@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v336";
+const APP_VERSION = "v337";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2325,7 +2325,20 @@ function showInlineStatus(element, message, options = {}) {
   if (!sticky) element.statusTimer = setTimeout(() => hideInlineStatus(element), 2200);
 }
 
-function showView(name) {
+// Android back button: tabs other than search and open screens on top of a tab (set contents, scanner)
+// are history entries, so back returns to the previous screen and only leaves the app from the search tab.
+const HOME_VIEW = "search";
+function historyDepth() { return Number(history.state?.mtgDepth) || 0; }
+function activeViewName() { return document.querySelector(".view.active")?.id.replace(/View$/, "") || HOME_VIEW; }
+function showView(name, { fromHistory = false } = {}) {
+  if (!fromHistory) {
+    const depth = historyDepth();
+    if (name === HOME_VIEW && depth) { history.go(-depth); return; } // popstate then shows the search tab
+    if (name !== HOME_VIEW) {
+      const entry = { mtgDepth: depth || 1, view: name };
+      if (depth) history.replaceState(entry, ""); else history.pushState(entry, "");
+    }
+  }
   if (name !== "purchases") cancelPurchaseReorder();
   document.querySelectorAll(".view").forEach(view => view.classList.toggle("active", view.id === `${name}View`));
   document.querySelectorAll(".bottom-nav button").forEach(button => button.classList.toggle("active", button.dataset.view === name));
@@ -6805,6 +6818,16 @@ window.addEventListener("pageshow", updateBackToTop);
 backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }));
 updateBackToTop();
 document.querySelectorAll(".bottom-nav button[data-view]").forEach(button => button.addEventListener("click", () => showView(button.dataset.view)));
+window.addEventListener("popstate", event => {
+  const entry = event.state || {};
+  if (entry.overlay !== "scanner" && window.mtgScannerHost?.visible) window.mtgScannerHost.close();
+  if (entry.overlay !== "set" && !$("#setContents").hidden) closeSetContents();
+  const view = entry.view || HOME_VIEW;
+  if (view !== activeViewName()) showView(view, { fromHistory: true });
+});
+// After a reload, return to the saved tab; an overlay (scanner, set contents) is not restored, so step back past it.
+if (history.state?.overlay) history.back();
+else if (history.state?.view && history.state.view !== activeViewName()) showView(history.state.view, { fromHistory: true });
 document.addEventListener("contextmenu", event => {
   if (event.target?.closest?.(".deck-content-card, .collection-image-card, .collection-card-open")) {
     event.preventDefault();
@@ -7233,6 +7256,7 @@ function renderSetCatalog() {
 async function openSetCollection(code) {
   const request = ++setBrowser.request;
   setBrowser.code = code; setBrowser.cards = []; setBrowser.limit = 50; setBrowser.loading = true;
+  if (history.state?.overlay !== 'set') history.pushState({ mtgDepth: historyDepth() + 1, view: 'collection', overlay: 'set' }, '');
   $('#setCatalog').hidden = true; $('#setContents').hidden = false;
   const set = getAllKnownSets().find(item => item.code === code);
   $('#setContentsTitle').textContent = `${setCatalogLabel(set || { code })} (${code.toUpperCase()})`;
@@ -7289,7 +7313,8 @@ document.querySelectorAll('[data-collection-mode]').forEach(button=>button.addEv
 }));
 $('#setCatalogQuery').addEventListener('input',renderSetCatalog);
 $('#setCatalogList').addEventListener('click',event=>{const button=event.target.closest('[data-set-code]');if(button){$('#setFilterPanel').open=false;for (const id of ['setCardQuery','setOwnershipFilter','setCardColor','setCardMana','setCardType','setCardRarity']) $('#'+id).value='';openSetCollection(button.dataset.setCode)}});
-$('#backToSetCatalog').addEventListener('click',()=>{++setBrowser.request;setBrowser.loading=false;setBrowser.code='';setBrowser.cards=[];$('#setContents').hidden=true;$('#setCatalog').hidden=false;renderSetCatalog()});
+function closeSetContents(){++setBrowser.request;setBrowser.loading=false;setBrowser.code='';setBrowser.cards=[];$('#setContents').hidden=true;$('#setCatalog').hidden=false;renderSetCatalog();}
+$('#backToSetCatalog').addEventListener('click',()=>{if(history.state?.overlay==='set')history.back();else closeSetContents();});
 $('#setCardLanguage').addEventListener('change',()=>{if(setBrowser.code)openSetCollection(setBrowser.code)});
 $('#retrySetContents').addEventListener('click',()=>{if(setBrowser.code)openSetCollection(setBrowser.code)});
 $('#clearSetFilters').addEventListener('click',()=>{for (const id of ['setCardQuery','setOwnershipFilter','setCardColor','setCardMana','setCardType','setCardRarity']) $('#'+id).value='';setBrowser.limit=50;if(!setBrowser.loading)renderSetCards();});

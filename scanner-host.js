@@ -33,12 +33,13 @@
    ensure();
   }catch(e){phase='error';errorText=e.message;update();}
  }
- function show(){if(phase!=='ready')return;clearTimeout(idleTimer);if(!visible)previousTab=document.querySelector('.bottom-nav button.active');document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.toggle('active',b.dataset.action==='open-scanner'));visible=true;requested=false;shell.dataset.open='true';shell.inert=false;document.body.classList.add('scannerHostOpen');frame.contentWindow?.postMessage({type:'mtg-scanner-resume'},location.origin);update();}
+ // The open scanner is a history entry so Android's back button closes it instead of leaving the app.
+ function show(){if(phase!=='ready')return;clearTimeout(idleTimer);if(history.state?.overlay!=='scanner')history.pushState({mtgDepth:(Number(history.state?.mtgDepth)||0)+1,view:document.querySelector('.view.active')?.id.replace(/View$/,'')||'search',overlay:'scanner'},'');if(!visible)previousTab=document.querySelector('.bottom-nav button.active');document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.toggle('active',b.dataset.action==='open-scanner'));visible=true;requested=false;shell.dataset.open='true';shell.inert=false;document.body.classList.add('scannerHostOpen');frame.contentWindow?.postMessage({type:'mtg-scanner-resume'},location.origin);update();}
  function open(event){event?.preventDefault();if(phase==='ready'){show();return;}requested=true;if(phase==='error'){if(frame){frame.remove();shell.remove();frame=shell=null;}phase='idle';}if(phase==='idle')start();else update();}
  function close(restore=true){if(visible&&restore){document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.toggle('active',b===previousTab));}visible=false;requested=false;if(frame){frame.contentWindow?.postMessage({type:'mtg-scanner-suspend'},location.origin);shell.dataset.open='false';shell.inert=true;scheduleRelease();}document.body.classList.remove('scannerHostOpen');update();}
  document.addEventListener('click',event=>{if(event.target.closest('a[href^="scanner/live.html"], [data-action="open-scanner"]'))open(event);else if(event.target.closest('[data-view]')){close(false);}});
  window.addEventListener('message',event=>{if(!frame||event.source!==frame.contentWindow||event.origin!==location.origin)return;const data=event.data||{};
-  if(data.type==='mtg-scanner-close')close();
+  if(data.type==='mtg-scanner-close'){if(history.state?.overlay==='scanner')history.back();else close();}
   if(data.type==='mtg-scanner-progress'&&phase==='loading'){progress=data.message||'';update();}
   if(data.type==='mtg-scanner-ready'){phase='ready';progress='';if(requested)show();else{update();scheduleRelease();}}
   if(data.type==='mtg-scanner-error'){phase='error';errorText=data.message||'';progress='';update();}
