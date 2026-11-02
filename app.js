@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v347";
+const APP_VERSION = "v348";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -604,7 +604,7 @@ function priceCacheUpdatedAtForCard(card, source = "cardtrader") {
 
 function priceSourceMode() {
   const mode = String(state.priceSourceMode || "manual-wisdom-cardtrader");
-  return ["manual-wisdom-cardtrader", "manual-cardtrader-wisdom", "wisdom-only", "cardtrader-only", "manual-only"].includes(mode)
+  return ["manual-wisdom-cardtrader", "manual-wisdom-scryfall", "manual-cardtrader-wisdom", "wisdom-only", "cardtrader-only", "manual-only"].includes(mode)
     ? mode
     : "manual-wisdom-cardtrader";
 }
@@ -612,11 +612,23 @@ function priceSourceMode() {
 function priceSourceOrder() {
   return ({
     "manual-wisdom-cardtrader": ["manual", "wisdom-guild", "cardtrader"],
+    "manual-wisdom-scryfall": ["manual", "wisdom-guild", "scryfall"],
     "manual-cardtrader-wisdom": ["manual", "cardtrader", "wisdom-guild"],
     "wisdom-only": ["wisdom-guild"],
     "cardtrader-only": ["cardtrader"],
     "manual-only": ["manual"],
   })[priceSourceMode()];
+}
+
+// The US dollar reference (Scryfall, or CardTrader's dollar price) is the last resort after the yen sources.
+// "scryfall" in the order means Scryfall only; "cardtrader" also allows CardTrader's own dollar price.
+function usesUsdFallback() {
+  const order = priceSourceOrder();
+  return order.includes("cardtrader") || order.includes("scryfall");
+}
+// Foil-only printings are often stored as "normal": price them as foil, like the price cache key does.
+function usdFinishOf(card) {
+  return priceCacheFinish(card);
 }
 
 function priceCacheJpyValue(card, source) {
@@ -638,6 +650,7 @@ function selectedPriceUpdatedAtForCard(card) {
   const selected = selectedPriceEntry(card);
   if (selected?.cached?.updatedAt) return Number(selected.cached.updatedAt);
   if (priceSourceOrder().includes("cardtrader")) return cardTraderPriceUpdatedAtForCard(card);
+  if (priceSourceOrder().includes("scryfall")) return Number(card.englishPriceUpdatedAt || card.priceUpdatedAt || 0);
   return 0;
 }
 
@@ -678,11 +691,13 @@ function manualPriceUpdatedAtForCard(card) {
 }
 
 function usdPriceOf(card) {
-  const cached = priceCacheEntryForCard(card, "cardtrader");
+  const allowCardTrader = priceSourceOrder().includes("cardtrader");
+  const cached = allowCardTrader ? priceCacheEntryForCard(card, "cardtrader") : null;
   if (cached?.valueUsd != null) return Number(cached.valueUsd);
-  const source = card.finish === "foil" ? card.priceUsdFoilSource : card.finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
-  if (!state.useScryfallPrices && source !== "cardtrader") return null;
-  const value = card.finish === "foil" ? card.priceUsdFoil : card.finish === "etched" ? card.priceUsdEtched : card.priceUsd;
+  const finish = usdFinishOf(card);
+  const source = finish === "foil" ? card.priceUsdFoilSource : finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
+  if (source === "cardtrader" ? !allowCardTrader : !state.useScryfallPrices) return null;
+  const value = finish === "foil" ? card.priceUsdFoil : finish === "etched" ? card.priceUsdEtched : card.priceUsd;
   return value == null || value === "" ? null : Number(value);
 }
 function wisdomGuildJpyPriceOf(card) {
@@ -694,18 +709,20 @@ function cardTraderJpyPriceOf(card) {
 function selectedPriceSource(card) {
   const selected = selectedPriceEntry(card);
   if (selected?.source) return selected.source;
-  if (!priceSourceOrder().includes("cardtrader") || usdPriceOf(card) == null) return "";
-  return card.finish === "foil" ? card.priceUsdFoilSource : card.finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
+  if (!usesUsdFallback() || usdPriceOf(card) == null) return "";
+  const finish = usdFinishOf(card);
+  return finish === "foil" ? card.priceUsdFoilSource : finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
 }
 function selectedPriceUsesEnglish(card) {
-  const cached = priceCacheEntryForCard(card, "cardtrader");
+  const cached = priceSourceOrder().includes("cardtrader") ? priceCacheEntryForCard(card, "cardtrader") : null;
   if (cached?.source) return cached.usesEnglish === true;
-  return card.finish === "foil" ? card.priceUsdFoilFromEnglish === true : card.finish === "etched" ? card.priceUsdEtchedFromEnglish === true : card.priceUsdFromEnglish === true;
+  const finish = usdFinishOf(card);
+  return finish === "foil" ? card.priceUsdFoilFromEnglish === true : finish === "etched" ? card.priceUsdEtchedFromEnglish === true : card.priceUsdFromEnglish === true;
 }
 function yenValueOf(card) {
   const selected = selectedPriceEntry(card);
   if (selected) return selected.valueJpy * Number(card.quantity || 0);
-  if (!priceSourceOrder().includes("cardtrader")) return null;
+  if (!usesUsdFallback()) return null;
   const usd = usdPriceOf(card);
   return usd != null && state.fx.usdJpy ? usd * state.fx.usdJpy * Number(card.quantity || 0) : null;
 }
@@ -718,7 +735,7 @@ function collectionPriceLabel(card, compact = false) {
   if (value == null) return compact ? "" : "参考価格なし";
   if (compact) return state.collectionPriceDisplayMode === "unit" ? `${formatYen(value)} / 枚` : formatYen(value);
   const source = selectedPriceSource(card);
-  const prefix = source === "manual" ? "手動価格" : source === "wisdom-guild" ? "Wisdom Guild" : source === "cardtrader" ? (selectedPriceUsesEnglish(card) ? "CardTrader英語版参考" : "CardTrader") : selectedPriceUsesEnglish(card) ? "英語版参考" : "参考";
+  const prefix = source === "manual" ? "手動価格" : source === "wisdom-guild" ? "Wisdom Guild" : source === "cardtrader" ? (selectedPriceUsesEnglish(card) ? "CardTrader英語版参考" : "CardTrader") : source === "scryfall" ? (selectedPriceUsesEnglish(card) ? "Scryfall英語版参考" : "Scryfall参考") : selectedPriceUsesEnglish(card) ? "英語版参考" : "参考";
   return state.collectionPriceDisplayMode === "unit"
     ? `${prefix} ${formatYen(value)} / 枚`
     : `${prefix} ${formatYen(value)}`;
@@ -4122,53 +4139,63 @@ function applyCardMetadata(ownedCard, apiCard) {
   ownedCard.finishes = Array.isArray(apiCard.finishes) ? apiCard.finishes : ownedCard.finishes || [];
   ownedCard.foil = apiCard.foil === true;
   ownedCard.nonfoil = apiCard.nonfoil === true;
-  if (!keepCardTraderNormal && state.useScryfallPrices) {
+  // A Japanese printing has no dollar price on Scryfall: keep the English printing's price filled in earlier.
+  if (!keepCardTraderNormal && state.useScryfallPrices && (apiCard.prices?.usd || !ownedCard.priceUsdFromEnglish)) {
     ownedCard.priceUsd = apiCard.prices?.usd || null;
     ownedCard.priceUsdSource = apiCard.prices?.usd ? "scryfall" : "";
     ownedCard.priceUsdFromEnglish = false;
   }
-  if (!keepCardTraderFoil && state.useScryfallPrices) {
+  // A Japanese printing has no dollar price on Scryfall: keep the English printing's price filled in earlier.
+  if (!keepCardTraderFoil && state.useScryfallPrices && (apiCard.prices?.usd_foil || !ownedCard.priceUsdFoilFromEnglish)) {
     ownedCard.priceUsdFoil = apiCard.prices?.usd_foil || null;
     ownedCard.priceUsdFoilSource = apiCard.prices?.usd_foil ? "scryfall" : "";
     ownedCard.priceUsdFoilFromEnglish = false;
   }
-  if (!keepCardTraderEtched && state.useScryfallPrices) {
+  // A Japanese printing has no dollar price on Scryfall: keep the English printing's price filled in earlier.
+  if (!keepCardTraderEtched && state.useScryfallPrices && (apiCard.prices?.usd_etched || !ownedCard.priceUsdEtchedFromEnglish)) {
     ownedCard.priceUsdEtched = apiCard.prices?.usd_etched || null;
     ownedCard.priceUsdEtchedSource = apiCard.prices?.usd_etched ? "scryfall" : "";
     ownedCard.priceUsdEtchedFromEnglish = false;
   }
-  ownedCard.englishPriceUpdatedAt = 0;
   ownedCard.priceUpdatedAt = Date.now();
   ownedCard.metadataVersion = 1;
 }
 
+// Scryfall has dollar prices for English printings only. Fetch the English printing of each Japanese card
+// 75 at a time by set and number (that lookup returns the English printing) and save after each batch,
+// so the prices survive even if the app is closed partway through.
 async function hydrateEnglishPriceFallbacks() {
   if (!navigator.onLine || !state.useScryfallPrices) return;
+  const printingKey = card => `${String(card.set).toLowerCase()}:${String(card.collectorNumber).toLowerCase()}`;
   const candidates = state.collection.filter(card =>
     card.language === "ja" && card.set && card.collectorNumber &&
-    (!card.englishPriceUpdatedAt || Date.now() - card.englishPriceUpdatedAt > DAY_MS) &&
-    (!card.priceUsd || !card.priceUsdFoil || !card.priceUsdEtched));
-  const printings = [...new Map(candidates.map(card => [`${card.set}:${card.collectorNumber}`, card])).values()];
+    (!card.englishPriceUpdatedAt || Date.now() - card.englishPriceUpdatedAt > DAY_MS));
+  const printings = [...new Map(candidates.map(card => [printingKey(card), card])).values()];
   let changed = false;
-  for (const printing of printings) {
+  for (let index = 0; index < printings.length; index += 75) {
     if (!state.useScryfallPrices) break;
+    const batch = printings.slice(index, index + 75);
     try {
-      const set = encodeURIComponent(String(printing.set).toLowerCase());
-      const number = encodeURIComponent(printing.collectorNumber);
-      const response = await fetch(`https://api.scryfall.com/cards/${set}/${number}/en`, { headers: { Accept: "application/json" } });
-      const englishCard = response.ok ? await response.json() : null;
-      state.collection.filter(card => card.language === "ja" && card.set === printing.set && card.collectorNumber === printing.collectorNumber).forEach(card => {
+      if (index) await new Promise(resolve => setTimeout(resolve, 100));
+      const response = await fetchScryfallCollection(batch.map(card => ({ set: String(card.set).toLowerCase(), collector_number: String(card.collectorNumber) })));
+      if (!response.ok) continue;
+      const english = new Map(((await response.json()).data || []).map(card => [`${card.set}:${String(card.collector_number).toLowerCase()}`, card]));
+      const keys = new Set(batch.map(printingKey));
+      state.collection.filter(card => card.language === "ja" && keys.has(printingKey(card))).forEach(card => {
         card.englishPriceUpdatedAt = Date.now();
-        if (englishCard && state.useScryfallPrices) {
-          if (!card.priceUsd && englishCard.prices?.usd && card.priceUsdSource !== "cardtrader") { card.priceUsd = englishCard.prices.usd; card.priceUsdSource = "scryfall"; card.priceUsdFromEnglish = true; }
-          if (!card.priceUsdFoil && englishCard.prices?.usd_foil && card.priceUsdFoilSource !== "cardtrader") { card.priceUsdFoil = englishCard.prices.usd_foil; card.priceUsdFoilSource = "scryfall"; card.priceUsdFoilFromEnglish = true; }
-          if (!card.priceUsdEtched && englishCard.prices?.usd_etched && card.priceUsdEtchedSource !== "cardtrader") { card.priceUsdEtched = englishCard.prices.usd_etched; card.priceUsdEtchedSource = "scryfall"; card.priceUsdEtchedFromEnglish = true; }
+        const englishCard = english.get(printingKey(card));
+        if (!englishCard) return;
+        // Fill (or refresh) only fields the Japanese printing itself has no price for, and never over CardTrader's.
+        for (const [field, fromEnglish, source, price] of [["priceUsd", "priceUsdFromEnglish", "priceUsdSource", "usd"], ["priceUsdFoil", "priceUsdFoilFromEnglish", "priceUsdFoilSource", "usd_foil"], ["priceUsdEtched", "priceUsdEtchedFromEnglish", "priceUsdEtchedSource", "usd_etched"]]) {
+          if (!englishCard.prices?.[price] || (card[source] === "cardtrader" && priceSourceOrder().includes("cardtrader")) || (card[field] && card[source] !== "cardtrader" && !card[fromEnglish])) continue;
+          card[field] = englishCard.prices[price]; card[source] = "scryfall"; card[fromEnglish] = true;
         }
-        changed = true;
       });
+      changed = true;
+      await persist(["collection"]);
     } catch { /* 次回オンライン時に再試行 */ }
   }
-  if (changed) { await persist(); renderCollection(); }
+  if (changed) renderCollection();
 }
 
 // Startup and every return online call this; a run already in progress is shared instead of starting another.
@@ -5396,7 +5423,7 @@ function unitReferencePriceOf(card) {
   if (!card) return null;
   const selected = selectedPriceEntry(card);
   if (selected) return selected.valueJpy;
-  if (!priceSourceOrder().includes("cardtrader")) return null;
+  if (!usesUsdFallback()) return null;
   const usd = usdPriceOf(card);
   return usd != null && state.fx.usdJpy ? usd * state.fx.usdJpy : null;
 }
