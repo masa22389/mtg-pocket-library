@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v339";
+const APP_VERSION = "v340";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5212,7 +5212,7 @@ function renderDeckMissingList() {
           group.sections.side ? `サイド ${group.sections.side}` : "",
         ].filter(Boolean).join("・");
         return `<button type="button" class="deck-missing-item" data-card-id="${esc(group.entry.cardId)}" data-section="${esc(group.entry.section)}">
-          <img src="${esc(card?.image || "")}" alt="" loading="lazy">
+          <img ${card ? localizedImageAttrs(card) : ""} src="${esc(card?.image || "")}" alt="" loading="lazy">
           <span class="deck-missing-main"><strong>${esc(card ? nameOf(card) : "削除済みカード")}</strong><small>${esc(card?.set || "")} #${esc(card?.collectorNumber || "")}${sectionText ? ` · ${esc(sectionText)}` : ""}</small></span>
           <span class="deck-missing-count"><b>不足 ${group.missing}</b><small>必要 ${group.required} / 所持 ${group.owned}</small></span>
         </button>`;
@@ -5494,7 +5494,7 @@ function renderDeckSection(section, entries, emptyText = "") {
         const selected = deckReorderSelection?.cardId === entry.cardId && deckReorderSelection?.section === entry.section;
         const classes = ["deck-content-card", missing ? "missing-card" : "", dragging ? "deck-dragging-card" : "", deckReorderMode ? "deck-reorder-mode-card" : "", selected ? "deck-reorder-selected" : ""].filter(Boolean).join(" ");
         const cardName = card ? nameOf(card) : "削除済みカード";
-        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img src="${esc(card?.image || "")}" alt="" loading="lazy" draggable="false"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
+        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img ${card ? localizedImageAttrs(card) : ""} src="${esc(card?.image || "")}" alt="" loading="lazy" draggable="false"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
       }).join("")}
     </div>` : `<div class="deck-section-empty">${esc(emptyText || `${label}にカードがありません`)}</div>`;
   return `<section class="deck-section deck-section-${esc(section)}"><div class="deck-section-title"><span>${esc(label)}</span><b>${count}枚</b></div>${content}</section>`;
