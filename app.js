@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v346";
+const APP_VERSION = "v347";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4419,6 +4419,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
     } finally {
       stats.done += 1;
       record.lastStats = { ...stats };
+      options.onProgress?.(stats);
       // Save every 10 cards instead of after each one: the whole price cache is rewritten on every save.
       if (stats.done % 10 === 0) await persist(["priceCache", "wisdomGuild"]);
       updateWisdomGuildSettingsUi();
@@ -5405,7 +5406,10 @@ function priceCardForDeckEntry(entry) {
   const card = cardForDeckEntry(entry);
   if (!card?.scryfallId || state.collection.some(item => item.id === entry.cardId)) return card;
   const copies = state.collection.filter(item => item.scryfallId === card.scryfallId);
-  return copies.find(item => !card.language || item.language === card.language) || copies[0] || card;
+  if (copies.length) return copies.find(item => !card.language || item.language === card.language) || copies[0];
+  // Not owned: price the snapshot as a near-mint, non-foil copy in its language, the same way every time,
+  // so a price fetched for it (B-5) is found again by the same key.
+  return { ...card, language: card.language || card.lang || state.defaultCardLanguage, condition: card.condition || "NM", finish: card.finish || "normal" };
 }
 function deckReferencePrice(entries) {
   const price = { total: 0, bySection: { commander: 0, main: 0, side: 0 }, unpriced: 0, unpricedCards: [] };
@@ -5436,7 +5440,8 @@ function renderDeckStats() {
   const priceParts = [["commander", "統率者"], ["main", "メイン"], ["side", "サイド"]]
     .filter(([section]) => price.bySection[section] > 0).map(([section, label]) => `<span class="nowrap">${label} ${formatYen(price.bySection[section])}</span>`);
   if (price.unpriced) priceParts.push(`<span class="nowrap">価格未取得 ${price.unpriced}枚</span>`);
-  const unpricedList = price.unpricedCards.length ? `<details class="deck-unpriced"><summary>（確認用）価格未取得のカード ${price.unpriced}枚</summary><p>価格は所持カードについてだけ取得します。未所持のカードには価格がありません。</p><ul>${price.unpricedCards
+  const unownedCount = price.unpricedCards.filter(item => !item.owned && item.card?.scryfallId).length;
+  const unpricedList = price.unpricedCards.length ? `<details class="deck-unpriced" ${state.deckUnpricedOpen ? "open" : ""}><summary>（確認用）価格未取得のカード ${price.unpriced}枚</summary><p>価格は所持カードについて自動で取得します。未所持のカードは、下のボタンで必要なときに取得できます（Wisdom Guild、1枚ずつのため少し時間がかかります）。</p>${unownedCount ? `<p class="deck-unpriced-actions"><button type="button" class="ghost deck-unpriced-fetch">未所持カード${unownedCount}種類の価格を取得</button><span class="deck-unpriced-status" role="status"></span></p>` : ""}<ul>${price.unpricedCards
     .map(({ card, quantity, section, owned }) => `<li>${esc(card ? nameOf(card) : "削除済みカード")}${owned ? "" : "（未所持）"} <small>${esc(sectionLabel(section))} ${quantity}枚${card?.set ? ` ・ ${esc(String(card.set).toUpperCase())} #${esc(card.collectorNumber || "")}` : ""}</small></li>`).join("")}</ul></details>` : "";
   els.deckStats.hidden = false;
   els.deckStats.innerHTML = `<button type="button" class="deck-stats-title" aria-expanded="${statsOpen}">
@@ -5461,6 +5466,21 @@ function renderDeckStats() {
     state.deckStatsOpen = !statsOpen;
     renderDeckStats();
   });
+  els.deckStats.querySelector(".deck-unpriced")?.addEventListener("toggle", event => { state.deckUnpricedOpen = event.currentTarget.open; });
+  els.deckStats.querySelector(".deck-unpriced-fetch")?.addEventListener("click", event => fetchUnownedDeckPrices(event.currentTarget, price.unpricedCards));
+}
+
+// B-5: prices for cards the deck uses but the collection does not have are fetched only on request.
+async function fetchUnownedDeckPrices(button, unpricedCards) {
+  const status = button.parentElement.querySelector(".deck-unpriced-status");
+  if (!navigator.onLine) { status.textContent = "オフラインのため取得できません"; return; }
+  const cards = [...new Map(unpricedCards.filter(item => !item.owned && item.card?.scryfallId).map(item => [priceCacheKeyForCard(item.card, "wisdom-guild"), item.card])).values()];
+  button.disabled = true;
+  await hydrateWisdomGuildPrices({ force: true, quiet: true, cards, mode: "デッキの未所持カード", onProgress: stats => { status.textContent = `取得中 ${stats.done}/${stats.candidates}`; } });
+  renderDeckStats();
+  const after = deckReferencePrice(state.editingDeck?.entries || []);
+  const left = after.unpricedCards.filter(item => !item.owned).length;
+  showToast(left ? `未所持カードの価格を取得しました。${left}種類はWisdom Guildに出品がないか、取得できませんでした。` : "未所持カードの価格を取得しました");
 }
 
 function groupedOwnedDeckCards(query) {
@@ -6865,7 +6885,15 @@ document.addEventListener("keydown", event => { if (event.key === "Escape") canc
 window.addEventListener("blur", endPurchasePress);
 
 
+// The scanner's provisional list is written by the scanner frame into the same storage.
+const SCANNER_DRAFTS_KEY = "mtg-pocket.scannerHybrid.v1";
+function scannerDraftsSaved() {
+  try { const saved = JSON.parse(appStorage.getItem(SCANNER_DRAFTS_KEY) || "null"); return saved && Array.isArray(saved.events) ? saved : null; }
+  catch { return null; }
+}
+
 function backupPayload() {
+  const scannerDrafts = scannerDraftsSaved()?.events || [];
   return {
     version: 2,
     appVersion: APP_VERSION,
@@ -6874,6 +6902,7 @@ function backupPayload() {
       collectionLots: state.collection.length,
       totalCards: state.collection.reduce((sum, card) => sum + Number(card.quantity || 0), 0),
       decks: state.decks.length,
+      scannerDrafts: scannerDrafts.length,
     },
     collection: state.collection,
     decks: state.decks,
@@ -6881,6 +6910,7 @@ function backupPayload() {
     priceCache: state.priceCache || {},
     fx: state.fx,
     favoriteGroups: state.favoriteGroups,
+    scannerDrafts,
     settings: { defaultCardLanguage: state.defaultCardLanguage, backgroundTheme: state.backgroundTheme, priceSourceMode: priceSourceMode() },
   };
 }
@@ -6891,7 +6921,9 @@ function saveBackupMeta() {
   renderBackupSummary();
 }
 
-function exportBackup() {
+async function exportBackup() {
+  // The scanner may have changed its list since this screen started: read the saved one.
+  await appStorage.refreshItem(SCANNER_DRAFTS_KEY).catch(() => {});
   const payload = backupPayload();
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const link = document.createElement("a");
@@ -6908,6 +6940,7 @@ async function importBackup(file) {
     const isRecord = item => item !== null && typeof item === "object" && !Array.isArray(item);
     if (!isRecord(data) || !Array.isArray(data.collection) || !Array.isArray(data.decks) || !data.collection.every(isRecord) || !data.decks.every(isRecord)) throw new Error();
     purchases = data.purchases === undefined ? state.purchases : validatePurchases(data.purchases);
+    if (data.scannerDrafts !== undefined && (!Array.isArray(data.scannerDrafts) || !data.scannerDrafts.every(isRecord))) throw new Error();
   } catch { showToast("正しいバックアップファイルではありません"); els.importInput.value = ""; return; }
   const incomingTotal = data.collection.reduce((sum, card) => sum + Number(card.quantity || 0), 0);
   const currentTotal = state.collection.reduce((sum, card) => sum + Number(card.quantity || 0), 0);
@@ -6921,6 +6954,7 @@ async function importBackup(file) {
     `現在のデータ：所持${currentTotal}枚 / ${state.collection.length}種類、デッキ${state.decks.length}件`,
     "",
     data.purchases === undefined ? "このバックアップには購入予定がないため、現在の購入予定は維持します。" : `購入予定：${purchases.length}種類に置き換えます。`,
+    data.scannerDrafts === undefined ? "このバックアップにはスキャンの仮リストがないため、現在の仮リストは維持します。" : `スキャンの仮リスト：${data.scannerDrafts.length}件に置き換えます。`,
     "復元してよろしいですか？",
   ].join("\n");
   if (!confirm(message)) { els.importInput.value = ""; return; }
@@ -6946,6 +6980,16 @@ async function importBackup(file) {
     els.importInput.value = "";
     return;
   }
+  let draftsRestored = true;
+  if (Array.isArray(data.scannerDrafts)) {
+    // Keep the scanner's own log and bump its revision; the scanner frame is released so it rereads the list.
+    try {
+      await appStorage.refreshItem(SCANNER_DRAFTS_KEY);
+      const current = scannerDraftsSaved();
+      await appStorage.writeBatch([[SCANNER_DRAFTS_KEY, JSON.stringify({ events: data.scannerDrafts, logs: current?.logs || [], revision: Number(current?.revision || 0) + 1 })]], { force: true });
+      window.mtgScannerHost?.release?.();
+    } catch { draftsRestored = false; }
+  }
   // Display preferences are applied only after the data itself has been saved.
   if (["ja", "en"].includes(data.settings?.defaultCardLanguage)) {
     await appStorage.setItem(KEYS.defaultCardLanguage, data.settings.defaultCardLanguage);
@@ -6955,7 +6999,8 @@ async function importBackup(file) {
   if (data.settings?.backgroundTheme && BACKGROUND_THEMES[data.settings.backgroundTheme]) {
     applyBackgroundTheme(data.settings.backgroundTheme, { persist: true });
   }
-  renderFavoriteGroupOptions(); renderCollection(); renderDecks(); renderPurchases(); renderBackupSummary(); showToast("バックアップを復元しました");
+  renderFavoriteGroupOptions(); renderCollection(); renderDecks(); renderPurchases(); renderBackupSummary();
+  showToast(draftsRestored ? "バックアップを復元しました" : "バックアップを復元しました。スキャンの仮リストだけは復元できませんでした。", { sticky: !draftsRestored });
   els.importInput.value = "";
 }
 
@@ -7264,10 +7309,13 @@ els.cardTraderToken?.addEventListener("focus", () => {
 els.cardTraderToken?.addEventListener("blur", updateCardTraderSettingsUi);
 els.importInput.addEventListener("change", () => els.importInput.files[0] && importBackup(els.importInput.files[0]));
 $("#clearButton").addEventListener("click", async () => {
-  if (!confirm("所持カード・デッキ・購入予定をすべて削除しますか？")) return;
-  await appStorage.writeBatch([[KEYS.collection, "[]"], [KEYS.decks, "[]"], [KEYS.purchases, "[]"], [KEYS.priceCache, "{}"]], { force: true });
-  appStorage.removeLegacy([KEYS.collection, KEYS.decks, KEYS.purchases, KEYS.priceCache]);
-  state.collection = []; state.decks = []; state.purchases = []; state.priceCache = {};
+  if (!confirm("所持カード・デッキ・購入予定・お気に入りグループ・スキャンの仮リストをすべて削除しますか？")) return;
+  // Everything the backup holds is cleared together, including the scanner's list and the last-backup date.
+  await appStorage.writeBatch([[KEYS.collection, "[]"], [KEYS.decks, "[]"], [KEYS.purchases, "[]"], [KEYS.priceCache, "{}"], [KEYS.favoriteGroups, "[]"], [SCANNER_DRAFTS_KEY, null], [KEYS.backupMeta, null]], { force: true });
+  appStorage.removeLegacy([KEYS.collection, KEYS.decks, KEYS.purchases, KEYS.priceCache, KEYS.favoriteGroups, KEYS.backupMeta]);
+  window.mtgScannerHost?.release?.();
+  state.collection = []; state.decks = []; state.purchases = []; state.priceCache = {}; state.favoriteGroups = []; state.backupMeta = { lastExportedAt: 0 };
+  normalizeFavoriteGroups(); renderFavoriteGroupOptions();
   renderPurchases(); renderCollection(); renderDecks(); renderBackupSummary(); showToast("すべて削除しました");
 });
 
