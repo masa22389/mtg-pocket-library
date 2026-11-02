@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v343";
+const APP_VERSION = "v344";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5383,12 +5383,20 @@ function unitReferencePriceOf(card) {
   const usd = usdPriceOf(card);
   return usd != null && state.fx.usdJpy ? usd * state.fx.usdJpy : null;
 }
+// Cards added from search keep a snapshot without condition or finish, so its price key never matches.
+// Price them like the deck's ownership check does: from an owned copy of the same printing (same language first).
+function priceCardForDeckEntry(entry) {
+  const card = cardForDeckEntry(entry);
+  if (!card?.scryfallId || state.collection.some(item => item.id === entry.cardId)) return card;
+  const copies = state.collection.filter(item => item.scryfallId === card.scryfallId);
+  return copies.find(item => !card.language || item.language === card.language) || copies[0] || card;
+}
 function deckReferencePrice(entries) {
-  const price = { total: 0, bySection: { commander: 0, main: 0, side: 0 }, unpriced: 0 };
+  const price = { total: 0, bySection: { commander: 0, main: 0, side: 0 }, unpriced: 0, unpricedCards: [] };
   for (const entry of entries) {
     if (!isDeckBuildSection(entry.section)) continue;
-    const unit = unitReferencePriceOf(cardForDeckEntry(entry)), quantity = Number(entry.quantity || 0);
-    if (unit == null) { price.unpriced += quantity; continue; }
+    const card = priceCardForDeckEntry(entry), unit = unitReferencePriceOf(card), quantity = Number(entry.quantity || 0);
+    if (unit == null) { price.unpriced += quantity; price.unpricedCards.push({ card, quantity, section: entry.section, owned: Boolean(card?.scryfallId) && state.collection.some(item => item.scryfallId === card.scryfallId) }); continue; }
     price.bySection[entry.section] += unit * quantity;
     price.total += unit * quantity;
   }
@@ -5408,12 +5416,15 @@ function renderDeckStats() {
   const maxType = Math.max(1, ...stats.types.values());
   const statsOpen = state.deckStatsOpen === true;
   const price = deckReferencePrice(deck.entries);
+  // Each part stays on one line, so a narrow screen never splits "参考価格 約" from its amount.
   const priceParts = [["commander", "統率者"], ["main", "メイン"], ["side", "サイド"]]
-    .filter(([section]) => price.bySection[section] > 0).map(([section, label]) => `${label} ${formatYen(price.bySection[section])}`);
-  if (price.unpriced) priceParts.push(`価格未取得 ${price.unpriced}枚`);
+    .filter(([section]) => price.bySection[section] > 0).map(([section, label]) => `<span class="nowrap">${label} ${formatYen(price.bySection[section])}</span>`);
+  if (price.unpriced) priceParts.push(`<span class="nowrap">価格未取得 ${price.unpriced}枚</span>`);
+  const unpricedList = price.unpricedCards.length ? `<details class="deck-unpriced"><summary>（確認用）価格未取得のカード ${price.unpriced}枚</summary><p>価格は所持カードについてだけ取得します。未所持のカードには価格がありません。</p><ul>${price.unpricedCards
+    .map(({ card, quantity, section, owned }) => `<li>${esc(card ? nameOf(card) : "削除済みカード")}${owned ? "" : "（未所持）"} <small>${esc(sectionLabel(section))} ${quantity}枚${card?.set ? ` ・ ${esc(String(card.set).toUpperCase())} #${esc(card.collectorNumber || "")}` : ""}</small></li>`).join("")}</ul></details>` : "";
   els.deckStats.hidden = false;
   els.deckStats.innerHTML = `<button type="button" class="deck-stats-title" aria-expanded="${statsOpen}">
-      <span><b>デッキ統計</b><small>土地 ${stats.lands}枚 / 非土地 ${stats.nonlands}枚${price.total > 0 ? ` ・ 参考価格 約${formatYen(price.total)}` : ""}</small></span>
+      <span><b>デッキ統計</b><small>土地 ${stats.lands}枚 / 非土地 ${stats.nonlands}枚</small>${price.total > 0 ? `<small class="nowrap">参考価格 約${formatYen(price.total)}</small>` : ""}</span>
       <em>${statsOpen ? "▲" : "▼"}</em>
     </button>
     <div class="deck-stats-body" ${statsOpen ? "" : "hidden"}>
@@ -5422,7 +5433,8 @@ function renderDeckStats() {
         <span><b>${stats.lands}</b>土地</span>
         <span><b>${stats.nonlands}</b>非土地</span>
       </div>
-      <p class="deck-price"><b>参考価格 ${price.total > 0 ? `約${formatYen(price.total)}` : "なし"}</b><small>${esc(priceParts.join(" ・ ") || "価格を取得したカードがありません")}。保存済みの価格から計算しています。</small></p>
+      <p class="deck-price"><b class="nowrap">参考価格 ${price.total > 0 ? `約${formatYen(price.total)}` : "なし"}</b><small>${priceParts.join(" ・ ") || "価格を取得したカードがありません"}。保存済みの価格から計算しています。</small></p>
+      ${unpricedList}
       <div class="deck-stat-grid">
         <section><h4>色分布</h4>${renderStatBars(stats.colors, maxColor, "color")}</section>
         <section><h4>マナカーブ</h4>${renderStatBars(stats.mana, maxMana, "mana")}</section>

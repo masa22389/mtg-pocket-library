@@ -1,7 +1,7 @@
 importScripts('./scanner/card-image-cache.js');
-const CACHE = "mtg-pocket-v343";
-const OFFLINE_PAGE = "./index.html?v=343";
-const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=343","./scanner/data/japanese-images.json","./mobile-inputs.css?v=343","./scanner-host.js?v=343","./diagnostics.js?v=343", OFFLINE_PAGE, "./styles.css?v=343", "./app.js?v=343", "./storage.js?v=343", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v344";
+const OFFLINE_PAGE = "./index.html?v=344";
+const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=344","./scanner/data/japanese-images.json","./mobile-inputs.css?v=344","./scanner-host.js?v=344","./diagnostics.js?v=344", OFFLINE_PAGE, "./styles.css?v=344", "./app.js?v=344", "./storage.js?v=344", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 // The large search indexes are named by content hash (scripts/update-asset-hashes.mjs) and kept in their own
 // cache across app versions, so an update downloads them only when their contents change.
 const DATA_CACHE = "mtg-pocket-data";
