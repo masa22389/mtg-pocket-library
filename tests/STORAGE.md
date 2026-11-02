@@ -23,5 +23,10 @@ database opens, so Chrome does not evict the data when the device runs low on sp
 grant or deny this silently; a denial changes nothing else. Clearing site data by the user still
 deletes everything, so JSON backups remain necessary.
 
+Since v342 a single failed write (for example quota exceeded) no longer blocks later writes. The cache keeps
+the last saved value, so the next save writes the unsaved change again, and a successful save clears the error
+banner. Only an unusable connection (closed by an upgrade in another screen) stops all writes until reload.
+The app also skips fields whose saved text is unchanged, so most saves write one key instead of all of them.
+
 The UI's explicit Delete All action also removes the corresponding migration-time localStorage copies.
 Scanner recognition data has its own IndexedDB database and is not migrated by this change.

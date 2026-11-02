@@ -24,6 +24,7 @@ document.querySelector('#run').onclick=async()=>{
   check(store.getItem('mtg-pocket.purchases.v1')==='new purchases'&&store.getItem('mtg-pocket.sequence')==='2','atomic purchase transfer and ordered writes');
   let rejected=false;try{await store.writeBatch([['mtg-pocket.collection.v1','must rollback'],[null,'invalid key']]);}catch{rejected=true;}
   check(rejected&&store.getItem('mtg-pocket.collection.v1')==='new collection','failed transaction leaves cache unchanged');
+  await store.writeBatch([['mtg-pocket.recovery-test','saved after a failure']]);check(store.getItem('mtg-pocket.recovery-test')==='saved after a failure','a failed write does not block later writes');
   store.close();store=await createMtgStorage({name,legacy:legacyOf(entries)});check(store.getItem('mtg-pocket.collection.v1')==='new collection','failed transaction leaves durable data unchanged');
   peer=await createMtgStorage({name,legacy:legacyOf(entries)});
   await peer.writeBatch([['mtg-pocket.collection.v1','saved by scanner']]);

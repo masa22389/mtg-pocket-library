@@ -1,5 +1,5 @@
 importScripts('./card-image-cache.js');
-const META='mtg-pocket-hybrid-scanner-meta-v1';let active;
+const META='mtg-pocket-hybrid-scanner-meta-v1',STAGE='mtg-pocket-hybrid-scanner-stage-';let active;
 async function name(){if(active)return active;const r=await(await caches.open(META)).match('./active');return active=r?await r.text():null;}
 self.addEventListener('install',e=>e.waitUntil(self.skipWaiting()));self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch',e=>{
@@ -12,8 +12,16 @@ self.addEventListener('fetch',e=>{
  if(saved)return saved;return new Response('Offline asset missing',{status:503});
  })());
 });
-self.addEventListener('message',e=>{if(e.data?.type!=='PREPARE')return;const port=e.ports[0];e.waitUntil((async()=>{
- const pack=e.data.pack,n='mtg-pocket-hybrid-scanner-stage-'+Date.now(),cache=await caches.open(n),oldName=await name(),oldCache=oldName&&await caches.open(oldName);let oldPack;
+// One preparation per pack: a retry while it is still running (the page gives up after 240s) joins it
+// instead of downloading everything a second time. Stage caches left by an interrupted run are removed.
+let preparing=null;const staging=new Set();
+self.addEventListener('message',e=>{if(e.data?.type!=='PREPARE')return;const port=e.ports[0],pack=e.data.pack;
+ if(preparing?.buildId===pack.buildId){preparing.ports.add(port);e.waitUntil(preparing.promise);return;}
+ const ports=new Set([port]),send=message=>{for(const p of ports)try{p.postMessage(message);}catch{}};
+ const promise=(async()=>{
+ const oldName=await name();
+ for(const key of await caches.keys())if(key.startsWith(STAGE)&&key!==oldName&&!staging.has(key))await caches.delete(key);
+ const n=STAGE+Date.now(),cache=await caches.open(n),oldCache=oldName&&await caches.open(oldName);let oldPack;staging.add(n);
  if(oldCache){const response=await oldCache.match(new URL('./pack.json',self.location));if(response)oldPack=await response.json();}
  const oldAssets=new Map((oldPack?.assets||[]).map(a=>[a.path,a]));let reusedBytes=0,downloadedBytes=0;
  try{
@@ -22,9 +30,12 @@ self.addEventListener('message',e=>{if(e.data?.type!=='PREPARE')return;const por
    const previous=oldAssets.get(asset.path);let response;
    if(previous?.sha256===asset.sha256&&previous.bytes===asset.bytes&&oldCache){response=await oldCache.match(url);if(response)reusedBytes+=asset.bytes;}
    if(!response){response=await fetch(url,{cache:'no-store'});if(!response.ok)throw Error(asset.path);const bytes=await response.clone().arrayBuffer(),hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(x=>x.toString(16).padStart(2,'0')).join('');if(hash!==asset.sha256||bytes.byteLength!==asset.bytes)throw Error('Checksum: '+asset.path);downloadedBytes+=bytes.byteLength;}
-   await cache.put(url,response);port.postMessage({progress:`${i+1}/${pack.assets.length}`,reusedBytes,downloadedBytes});
+   await cache.put(url,response);send({progress:`${i+1}/${pack.assets.length}`,reusedBytes,downloadedBytes});
   }
-  await cache.put(new URL('./pack.json',self.location),new Response(JSON.stringify(pack),{headers:{'Content-Type':'application/json'}}));await(await caches.open(META)).put('./active',new Response(n));active=n;port.postMessage({done:true,reusedBytes,downloadedBytes});
-  for(const key of await caches.keys())if(key.startsWith('mtg-pocket-hybrid-scanner-stage-')&&key!==n)await caches.delete(key);
- }catch(error){await caches.delete(n);port.postMessage({error:error.message});}
-})());});
+  await cache.put(new URL('./pack.json',self.location),new Response(JSON.stringify(pack),{headers:{'Content-Type':'application/json'}}));await(await caches.open(META)).put('./active',new Response(n));active=n;send({done:true,reusedBytes,downloadedBytes});
+  for(const key of await caches.keys())if(key.startsWith(STAGE)&&key!==n&&!staging.has(key))await caches.delete(key);
+ }catch(error){await caches.delete(n);send({error:error.message});}
+ finally{staging.delete(n);}
+ })().finally(()=>{if(preparing?.promise===promise)preparing=null;});
+ preparing={buildId:pack.buildId,promise,ports};e.waitUntil(promise);
+});

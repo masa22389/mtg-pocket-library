@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v341";
+const APP_VERSION = "v342";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -176,7 +176,10 @@ function read(key, fallback) {
 
 async function persist(fields = ["collection", "decks", "fx", "priceCache", "cardTrader", "wisdomGuild", "favoriteGroups", "priceSourceMode"], options = {}) {
   try {
-    await appStorage.writeBatch(fields.map(field => [KEYS[field], field === "priceSourceMode" ? priceSourceMode() : JSON.stringify(field === "priceCache" ? state.priceCache || {} : state[field])]), options);
+    // Most saves change one field: skip fields whose saved text is already identical instead of rewriting everything.
+    const entries = fields.map(field => [KEYS[field], field === "priceSourceMode" ? priceSourceMode() : JSON.stringify(field === "priceCache" ? state.priceCache || {} : state[field])])
+      .filter(([key, value]) => value !== appStorage.getItem(key));
+    if (entries.length) await appStorage.writeBatch(entries, options);
     return true;
   } catch (error) {
     if (error?.name !== "StorageConflictError") throw error;
@@ -1058,8 +1061,19 @@ async function cardTraderBlueprintsForSet(setCode, setName = "") {
   state.cardTrader.blueprintsUpdatedAt = state.cardTrader.blueprintsUpdatedAt || {};
   state.cardTrader.blueprintsBySet[normalizedSet] = map;
   state.cardTrader.blueprintsUpdatedAt[normalizedSet] = Date.now();
+  pruneCardTraderBlueprints();
   await persist();
   return map;
+}
+
+// Expired set maps are fetched again anyway, so drop them, and keep at most the most recent sets.
+const CARDTRADER_MAX_CACHED_SETS = 40;
+function pruneCardTraderBlueprints(now = Date.now()) {
+  const bySet = state.cardTrader.blueprintsBySet || {}, updatedAt = state.cardTrader.blueprintsUpdatedAt || {};
+  const fresh = Object.keys(bySet).filter(set => now - (updatedAt[set] || 0) < CARDTRADER_CACHE_MS).sort((a, b) => (updatedAt[b] || 0) - (updatedAt[a] || 0));
+  const keep = new Set(fresh.slice(0, CARDTRADER_MAX_CACHED_SETS));
+  for (const set of Object.keys(bySet)) if (!keep.has(set)) delete bySet[set];
+  for (const set of Object.keys(updatedAt)) if (!keep.has(set)) delete updatedAt[set];
 }
 
 async function ensureCardTraderScryfallId(card) {

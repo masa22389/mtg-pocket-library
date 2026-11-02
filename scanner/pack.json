@@ -29,8 +29,8 @@
     },
     {
       "path": "card-image-cache.js",
-      "bytes": 1391,
-      "sha256": "656a0da994591a6730e95b6b233c59fec063912175d2e0d8bca7e6c19f38f437"
+      "bytes": 1782,
+      "sha256": "e45e3883e78e0e1f886acad5545e9c84a4e2f887a22b2e6250937778823f95bd"
     },
     {
       "path": "card-images.js",
@@ -209,8 +209,8 @@
     },
     {
       "path": "sw.js",
-      "bytes": 3029,
-      "sha256": "80779f2d019b527f8d9d770d19851082ff98a9c4bef9f0ead11a44916db0ed0b"
+      "bytes": 3767,
+      "sha256": "ba8888ccc1ee6ed19e09dbb7a2fea7a8f7b98a24204936d106b7be60f7f63a7d"
     },
     {
       "path": "vendor/ort/LICENSE",
@@ -238,6 +238,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 92756083,
-  "buildId": "eefe603a31aa"
+  "totalBytes": 92757212,
+  "buildId": "172964d926da"
 }

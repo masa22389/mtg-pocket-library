@@ -34,7 +34,9 @@ async function createMtgStorage({ name = "mtg-pocket-data-v1", legacy = localSto
     if (cursor) { cache.set(cursor.key, cursor.value); cursor.continue(); }
   };
   await complete(read);
-  let queue = Promise.resolve(), failed = null, pending = 0;
+  // `failed` is set only when the connection itself is unusable (closed by an upgrade elsewhere): then every
+  // later write must stop until reload. A single failed write (quota, aborted transaction) does not block the next.
+  let queue = Promise.resolve(), failed = null, pending = 0, lastWriteFailed = false;
   db.onversionchange = () => { db.close(); failed = new Error("別の画面で保存領域が更新されました。再読み込みしてください。"); notify("error", failed.message); };
   const api = {
     getItem: key => cache.get(key) ?? null,
@@ -79,12 +81,22 @@ async function createMtgStorage({ name = "mtg-pocket-data-v1", legacy = localSto
         }
         for (const [key, value] of snapshot) { if (value === null) cache.delete(key); else cache.set(key, value); }
       });
-      queue = operation.then(() => { pending--; if (!pending) notify("saved", ""); }, error => {
+      queue = operation.then(() => {
+        pending--;
+        if (lastWriteFailed) { lastWriteFailed = false; notify("recovered", ""); }
+        if (!pending) notify("saved", "");
+      }, error => {
         pending--;
         // A conflict is not a storage failure: later writes stay allowed.
         if (error.name === "StorageConflictError") { if (!pending) notify("saved", ""); try { api.onconflict?.(error.keys); } catch {} return; }
-        failed = error;
-        notify("error", "保存できませんでした。画面上の変更が未保存の可能性があります。再読み込みして保存済みデータを確認してください。（" + (error.name || "Error") + "）");
+        if (error === failed || error.name === "InvalidStateError") {
+          failed = failed || error;
+          notify("error", "保存できませんでした。画面上の変更が未保存の可能性があります。再読み込みして保存済みデータを確認してください。（" + (error.name || "Error") + "）");
+          return;
+        }
+        // The unsaved change is still on screen; the next save writes it again, because the cache was not updated.
+        lastWriteFailed = true;
+        notify("error", "保存できませんでした。端末の空き容量が不足している可能性があります。次の操作で自動的に保存を再試行します。（" + (error.name || "Error") + "）");
       });
       return operation;
     },
@@ -104,6 +116,8 @@ if (typeof window !== "undefined" && !window.MTG_STORAGE_TEST) {
   let startupTimer = null;
   let hasError = false;
   const notify = (kind, text) => {
+    // A later successful save clears a temporary save error.
+    if (kind === "recovered") { hasError = false; status.hidden = true; message.textContent = ""; return; }
     if (hasError && kind !== "error") return;
     if (kind === "saving") return; // Background writes should never flash a banner.
     clearTimeout(startupTimer);
