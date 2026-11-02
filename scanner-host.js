@@ -1,5 +1,7 @@
 // Load the scanner frame on first open, keep it while in use, and release it after a while unused.
 (() => {
+ // The scanner page is opened with this app version (scanner-host.js?v=NNN), not a fixed old number.
+ const APP_VERSION=new URL(document.currentScript?.src||location.href).searchParams.get('v')||'';
  const META='mtg-pocket-hybrid-scanner-meta-v1',IDLE_RELEASE_MS=5*60*1000,SW_TIMEOUT_MS=20000;
  let previousTab;
  let frame,shell,visible=false,phase='idle',requested=false,progress='',errorText='',consentMb=0,consentReply=null,idleTimer=null;
@@ -12,7 +14,7 @@
   if(phase==='consent')status.append(button('ダウンロードして開く','',()=>consentReply?.(true),'scannerConsentAccept'),button('やめる','ghost',()=>consentReply?.(false),'scannerConsentDecline'));
   else if(requested)status.append(button(phase==='error'?'閉じる':'開くのをキャンセル','ghost compact',()=>{requested=false;update();}));
  }
- function ensure(){if(frame)return frame;shell=document.createElement('section');shell.id='scannerHostShell';shell.dataset.open='false';shell.inert=true;shell.setAttribute('aria-label','カードスキャナー');frame=document.createElement('iframe');frame.id='scannerHostFrame';frame.title='カードスキャナー';frame.allow='camera';frame.loading='eager';frame.src='scanner/live.html?embedded=1&v=329';shell.append(frame);document.body.append(shell);return frame;}
+ function ensure(){if(frame)return frame;shell=document.createElement('section');shell.id='scannerHostShell';shell.dataset.open='false';shell.inert=true;shell.setAttribute('aria-label','カードスキャナー');frame=document.createElement('iframe');frame.id='scannerHostFrame';frame.title='カードスキャナー';frame.allow='camera';frame.loading='eager';frame.src='scanner/live.html?embedded=1&v='+APP_VERSION;shell.append(frame);document.body.append(shell);return frame;}
  // Destroying the frame frees its workers, recognition data and camera pipeline; drafts are already saved.
  function release(){clearTimeout(idleTimer);if(visible||!frame)return;frame.remove();shell.remove();frame=shell=null;phase='idle';progress='';update();}
  function scheduleRelease(){clearTimeout(idleTimer);idleTimer=setTimeout(()=>{if(!visible&&!requested)release();},IDLE_RELEASE_MS);}

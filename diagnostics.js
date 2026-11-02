@@ -2,6 +2,8 @@
 (() => {
   const $ = id => document.getElementById(id);
   const LIMIT = 720; // Six hours at 30 seconds; bounded across reloads.
+  // The app version this file was loaded for (diagnostics.js?v=NNN), so samples never carry a stale label.
+  const VERSION = "v" + (new URL(document.currentScript?.src || "x:", "http://x/").searchParams.get("v") || "?");
   let db, log = { enabled:false, samples:[], events:[], sessions:0 }, timer, observer;
   let resources = 0, duration = 0, started = performance.now(), saving = false;
   let resetting = false, sampleDone = Promise.resolve(), finishSample;
@@ -24,7 +26,7 @@
       let app = null;
       try { app = window.mtgDiagnosticProbe?.() || null; } catch { event('probe-error'); }
       log.samples.push({at:Date.now(), elapsedMs:Math.round(performance.now()-started),
-        session:log.sessions, version:'v302',
+        session:log.sessions, version:VERSION,
         view:document.querySelector('main > section:not([hidden])')?.id || null,
         visible:document.visibilityState, online:navigator.onLine,
         heapUsed:memory?.usedJSHeapSize ?? null, heapTotal:memory?.totalJSHeapSize ?? null,

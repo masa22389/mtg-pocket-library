@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v344";
+const APP_VERSION = "v345";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2379,6 +2379,22 @@ function renderBackupSummary() {
     <span><b>${uniqueCards.toLocaleString("ja-JP")}</b><small>種類</small></span>
     <span><b>${decks.toLocaleString("ja-JP")}</b><small>デッキ</small></span>
     <span><b>${esc(formatDateTime(lastExportedAt))}</b><small>最終バックアップ</small></span>`;
+  if (document.querySelector("#settingsView.active")) void renderStorageProtection();
+}
+
+// Whether the browser keeps this site's data when the device runs low on space, and how much the site uses.
+async function renderStorageProtection() {
+  const element = $("#storageProtectionStatus");
+  if (!element || !navigator.storage?.estimate) return;
+  const size = bytes => bytes >= 1e9 ? `${(bytes / 1e9).toFixed(1)}GB` : `${Math.max(1, Math.round(bytes / 1e6)).toLocaleString("ja-JP")}MB`;
+  try {
+    const [persisted, estimate] = await Promise.all([navigator.storage.persisted ? navigator.storage.persisted() : false, navigator.storage.estimate()]);
+    const protection = persisted
+      ? "データ保護：許可されています（空き容量が少なくなっても、ブラウザが自動で消すことはありません）"
+      : "データ保護：許可されていません。空き容量が少なくなると、ブラウザがデータを消すことがあります。こまめにバックアップを保存してください";
+    element.textContent = `${protection}。使用容量 約${size(estimate.usage || 0)}${estimate.quota ? ` / 上限 約${size(estimate.quota)}` : ""}`;
+    element.classList.toggle("warning", !persisted);
+  } catch { element.textContent = ""; }
 }
 
 async function searchCards() {
@@ -7440,6 +7456,8 @@ function renderSetCards() {
 document.querySelectorAll('[data-collection-mode]').forEach(button=>button.addEventListener('click',()=>{
   const sets = button.dataset.collectionMode === 'sets';
   $('#individualCollection').hidden = sets; $('#setCollection').hidden = !sets;
+  // Leaving the set browser while a set is open also leaves its history entry, so the next back is not a no-op.
+  if (!sets && history.state?.overlay === 'set') history.back();
   document.querySelectorAll('[data-collection-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b === button)));
   if (sets) {renderSetCatalog(); if(setBrowser.code && !setBrowser.loading)renderSetCards();}
 }));

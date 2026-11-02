@@ -1,6 +1,11 @@
 "use strict";
 // String-valued storage keeps all existing JSON schemas and raw preferences intact.
-async function createMtgStorage({ name = "mtg-pocket-data-v1", legacy = localStorage, notify = () => {} } = {}) {
+// Reading localStorage throws where site storage is blocked; then there is simply nothing to migrate.
+function legacyStorageOrEmpty() {
+  try { const storage = window.localStorage; storage.length; return storage; }
+  catch { return { length: 0, key: () => null, getItem: () => null, removeItem() {} }; }
+}
+async function createMtgStorage({ name = "mtg-pocket-data-v1", legacy = legacyStorageOrEmpty(), notify = () => {} } = {}) {
   const db = await new Promise((resolve, reject) => {
     const request = indexedDB.open(name, 1);
     request.onupgradeneeded = () => { request.result.createObjectStore("values"); request.result.createObjectStore("meta"); };
