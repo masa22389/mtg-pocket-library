@@ -237,6 +237,14 @@ Excelで確認・修正
 
 ## 10. アプリ側へ反映する
 
+`mtg-jp-card-index.js` または `mtgjson-jp-search-index.js` を更新したら、必ず次を実行します。
+
+```powershell
+node scripts\update-asset-hashes.mjs
+```
+
+この2つの検索DBは、アプリのバージョン番号（`?v=`）ではなく、ファイルの中身から作った番号（`?h=`）で読み込まれます。中身が変わらない限り、アプリを更新してもスマホは取り直しません。実行し忘れると古いDBが使われ続けるため、`tests\asset-hashes.test.cjs` が失敗して知らせます。
+
 CSV取り込みでDBファイルを更新した場合、PCブラウザやAndroid側で古いキャッシュが残ることがあります。
 
 その場合は、Codexに次のように依頼してください。

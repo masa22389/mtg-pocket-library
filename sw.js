@@ -1,15 +1,26 @@
 importScripts('./scanner/card-image-cache.js');
-const CACHE = "mtg-pocket-v340";
-const OFFLINE_PAGE = "./index.html?v=340";
-const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=340","./scanner/data/japanese-images.json","./mobile-inputs.css?v=340","./scanner-host.js?v=340","./diagnostics.js?v=340", OFFLINE_PAGE, "./styles.css?v=340", "./mtg-jp-card-index.js?v=340", "./mtgjson-jp-search-index.js?v=340", "./app.js?v=340", "./storage.js?v=340", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v341";
+const OFFLINE_PAGE = "./index.html?v=341";
+const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=341","./scanner/data/japanese-images.json","./mobile-inputs.css?v=341","./scanner-host.js?v=341","./diagnostics.js?v=341", OFFLINE_PAGE, "./styles.css?v=341", "./app.js?v=341", "./storage.js?v=341", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+// The large search indexes are named by content hash (scripts/update-asset-hashes.mjs) and kept in their own
+// cache across app versions, so an update downloads them only when their contents change.
+const DATA_CACHE = "mtg-pocket-data";
+const DATA = ["./mtg-jp-card-index.js?h=85c593dfed85", "./mtgjson-jp-search-index.js?h=950f31a46ea0"];
 
 self.addEventListener("install", event => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)));
+  event.waitUntil(Promise.all([
+    caches.open(CACHE).then(cache => cache.addAll(SHELL)),
+    caches.open(DATA_CACHE).then(async cache => { for (const url of DATA) if (!(await cache.match(url))) await cache.add(url); }),
+  ]));
   self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("mtg-pocket-v") && key !== CACHE).map(key => caches.delete(key)))));
+  const current = new Set(DATA.map(url => new URL(url, self.location).href));
+  event.waitUntil(Promise.all([
+    caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("mtg-pocket-v") && key !== CACHE).map(key => caches.delete(key)))),
+    caches.open(DATA_CACHE).then(cache => cache.keys().then(requests => Promise.all(requests.filter(request => !current.has(request.url)).map(request => cache.delete(request))))),
+  ]));
   self.clients.claim();
 });
 
