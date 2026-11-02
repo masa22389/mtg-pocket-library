@@ -8,7 +8,9 @@ self.addEventListener('fetch',e=>{
  e.respondWith((async()=>{const n=await name(),cache=n&&await caches.open(n),saved=cache&&await cache.match(e.request,{ignoreSearch:true});
  // Models/catalogues are verified when staged. Reuse them without a network request.
  if(saved&&/\/(data|models|vendor)\//.test(url.pathname))return saved;
- try{const response=await fetch(e.request);if(response.ok)return response;}catch{}
+ // Code files carry no version in their URLs: ask the server whether they changed (a cheap 304 when not),
+ // so an update is used at once instead of an older copy left in the browser cache.
+ try{const response=await fetch(new Request(e.request,{cache:'no-cache'}));if(response.ok)return response;}catch{}
  if(saved)return saved;return new Response('Offline asset missing',{status:503});
  })());
 });

@@ -117,7 +117,11 @@
           });bound.set(image,{attribute,cancel});
         }
       };
-      const observer=new MutationObserver(()=>{scan();});
+      // Rendering a long list fires many mutations at once: scan the page once per frame, not once per mutation.
+      let scanQueued=false;
+      const nextFrame=root.requestAnimationFrame?callback=>root.requestAnimationFrame(callback):callback=>setTimeout(callback,16);
+      const queueScan=()=>{if(scanQueued)return;scanQueued=true;nextFrame(()=>{scanQueued=false;scan();});};
+      const observer=new MutationObserver(queueScan);
       observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['data-japanese-image']});scan();
       return ()=>observer.disconnect();
     }

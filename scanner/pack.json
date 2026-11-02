@@ -34,8 +34,8 @@
     },
     {
       "path": "card-images.js",
-      "bytes": 10974,
-      "sha256": "7c7cec97b7dad6de579da7ebfc166e88145d65a8c7b7839d3bd6422c574e4bbb"
+      "bytes": 11356,
+      "sha256": "fcffa9510eacc1abebfacffcd7e9997545ce2734332cc3166a7111c9ca7317fe"
     },
     {
       "path": "collection-store.js",
@@ -154,8 +154,8 @@
     },
     {
       "path": "live.mjs",
-      "bytes": 46344,
-      "sha256": "1891f719ab18344ab0a71659949d9d570451b78869a4cad96eb4c580a5292d49"
+      "bytes": 47553,
+      "sha256": "6dcb888a36b8e0122c9e0b8fddec4747de3a53d3db549e9203a53add0d6ab176"
     },
     {
       "path": "mobile-inputs.css",
@@ -209,8 +209,8 @@
     },
     {
       "path": "sw.js",
-      "bytes": 3767,
-      "sha256": "ba8888ccc1ee6ed19e09dbb7a2fea7a8f7b98a24204936d106b7be60f7f63a7d"
+      "bytes": 3991,
+      "sha256": "a2aa0f3d5f1741393eacf9724f166eb994ad0ac35c724e72abd5ae4a7294a37f"
     },
     {
       "path": "vendor/ort/LICENSE",
@@ -238,6 +238,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 92757234,
-  "buildId": "ac5adea46622"
+  "totalBytes": 92759049,
+  "buildId": "cfb3903a6dc5"
 }
