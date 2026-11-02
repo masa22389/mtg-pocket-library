@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=348">
-  <link rel="stylesheet" href="mobile-inputs.css?v=348">
+  <link rel="stylesheet" href="styles.css?v=349">
+  <link rel="stylesheet" href="mobile-inputs.css?v=349">
 </head>
 <body>
   <header class="app-header">
@@ -223,11 +223,8 @@ const BACKGROUND_THEME_CHROME = {
           <div class="settings-details-body price-settings-body">
             <section class="price-settings-section" aria-labelledby="priceDisplayHeading">
               <h3 id="priceDisplayHeading">価格の表示設定</h3>
-              <label class="price-setting-field" for="priceSourceMode">取得元の優先順位
-                <select id="priceSourceMode"><option value="manual-wisdom-cardtrader">手動価格 ＞ Wisdom Guild ＞ CardTrader</option><option value="manual-wisdom-scryfall">手動価格 ＞ Wisdom Guild ＞ Scryfall</option><option value="manual-cardtrader-wisdom">手動価格 ＞ CardTrader ＞ Wisdom Guild</option><option value="wisdom-only">Wisdom Guildのみ</option><option value="cardtrader-only">CardTraderのみ</option><option value="manual-only">手動価格のみ</option></select>
-              </label>
-              <label class="price-reference-toggle"><input id="useScryfallPrices" type="checkbox"><span>Scryfallの参考価格を使用する</span></label>
-              <p class="muted price-setting-note">ほかの価格がない場合の参考値です。「Wisdom Guildのみ」「手動価格のみ」では使いません。オフにしてもカード検索・画像表示は利用できます。</p>
+              <p class="price-setting-field">取得元の優先順位（固定）<b>手動価格 ＞ Wisdom Guild ＞ Scryfall ＞ CardTrader</b></p>
+              <p class="muted price-setting-note">上から順に、最初に価格があったものを表示します。Scryfallは米国の相場（日本語版カードは英語版の価格）を円に換算した参考値です。CardTraderは、APIトークンを設定しているときだけ、ほかに価格がないカードについて取得します。</p>
             </section>
             <section class="price-settings-section" aria-labelledby="priceRefreshHeading">
               <h3 id="priceRefreshHeading">価格の更新</h3>
@@ -514,12 +511,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=348" defer></script>
-  <script src="scanner-host.js?v=348" defer></script>
+  <script src="storage.js?v=349" defer></script>
+  <script src="scanner-host.js?v=349" defer></script>
   <script src="mtg-jp-card-index.js?h=85c593dfed85" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=348" defer></script>
-  <script src="scanner/card-images.js?v=348" defer></script>
-  <script src="app.js?v=348" defer></script>
+  <script src="diagnostics.js?v=349" defer></script>
+  <script src="scanner/card-images.js?v=349" defer></script>
+  <script src="app.js?v=349" defer></script>
 </body>
 </html>

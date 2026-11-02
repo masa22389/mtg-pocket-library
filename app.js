@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v348";
+const APP_VERSION = "v349";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -32,7 +32,7 @@ const state = {
   cardVariants: [],
   collectionRenderLimit: COLLECTION_RENDER_LIMIT,
   collectionPageSize: ["50", "100", "all"].includes(appStorage.getItem("mtg-pocket.collectionPageSize")) ? appStorage.getItem("mtg-pocket.collectionPageSize") : "50",
-  useScryfallPrices: appStorage.getItem("mtg-pocket.useScryfallPrices") !== "false",
+  useScryfallPrices: true, // Scryfall is part of the fixed price order (v349); the old on/off setting is ignored.
   cardDialogMode: "collection",
   variantCache: new Map(),
   selectedOwnedId: null,
@@ -602,36 +602,38 @@ function priceCacheUpdatedAtForCard(card, source = "cardtrader") {
   return Number(cached?.updatedAt || 0);
 }
 
+// The order is fixed: the price you typed, the Japanese market (Wisdom Guild), Scryfall's US dollar price
+// (the English printing's for Japanese cards), and CardTrader only while its token is set.
+const PRICE_SOURCE_ORDER_NAME = "manual-wisdom-scryfall-cardtrader";
 function priceSourceMode() {
-  const mode = String(state.priceSourceMode || "manual-wisdom-cardtrader");
-  return ["manual-wisdom-cardtrader", "manual-wisdom-scryfall", "manual-cardtrader-wisdom", "wisdom-only", "cardtrader-only", "manual-only"].includes(mode)
-    ? mode
-    : "manual-wisdom-cardtrader";
+  return PRICE_SOURCE_ORDER_NAME;
 }
 
 function priceSourceOrder() {
-  return ({
-    "manual-wisdom-cardtrader": ["manual", "wisdom-guild", "cardtrader"],
-    "manual-wisdom-scryfall": ["manual", "wisdom-guild", "scryfall"],
-    "manual-cardtrader-wisdom": ["manual", "cardtrader", "wisdom-guild"],
-    "wisdom-only": ["wisdom-guild"],
-    "cardtrader-only": ["cardtrader"],
-    "manual-only": ["manual"],
-  })[priceSourceMode()];
+  return ["manual", "wisdom-guild", "scryfall", ...(cardTraderToken() ? ["cardtrader"] : [])];
 }
 
-// The US dollar reference (Scryfall, or CardTrader's dollar price) is the last resort after the yen sources.
-// "scryfall" in the order means Scryfall only; "cardtrader" also allows CardTrader's own dollar price.
+// Only CardTrader's own dollar price remains as a last resort after the order above.
 function usesUsdFallback() {
-  const order = priceSourceOrder();
-  return order.includes("cardtrader") || order.includes("scryfall");
+  return priceSourceOrder().includes("cardtrader");
 }
 // Foil-only printings are often stored as "normal": price them as foil, like the price cache key does.
 function usdFinishOf(card) {
   return priceCacheFinish(card);
 }
+// Scryfall's dollar price saved on the card (fields CardTrader filled are CardTrader's, not Scryfall's).
+function scryfallUsdOf(card) {
+  const finish = usdFinishOf(card);
+  const source = finish === "foil" ? card.priceUsdFoilSource : finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
+  const value = finish === "foil" ? card.priceUsdFoil : finish === "etched" ? card.priceUsdEtched : card.priceUsd;
+  return source === "cardtrader" || value == null || value === "" ? null : Number(value);
+}
 
 function priceCacheJpyValue(card, source) {
+  if (source === "scryfall") {
+    const usd = scryfallUsdOf(card);
+    return usd != null && state.fx?.usdJpy ? usd * state.fx.usdJpy : null;
+  }
   const cached = priceCacheEntryForCard(card, source);
   if (!cached) return null;
   if (source === "cardtrader" && String(cached.currency || "").toUpperCase() === "JPY" && cached.cents != null && Number.isFinite(Number(cached.cents))) return Number(cached.cents);
@@ -648,9 +650,9 @@ function selectedPriceEntry(card) {
 
 function selectedPriceUpdatedAtForCard(card) {
   const selected = selectedPriceEntry(card);
+  if (selected?.source === "scryfall") return Number(card.englishPriceUpdatedAt || card.priceUpdatedAt || 0);
   if (selected?.cached?.updatedAt) return Number(selected.cached.updatedAt);
   if (priceSourceOrder().includes("cardtrader")) return cardTraderPriceUpdatedAtForCard(card);
-  if (priceSourceOrder().includes("scryfall")) return Number(card.englishPriceUpdatedAt || card.priceUpdatedAt || 0);
   return 0;
 }
 
@@ -690,13 +692,14 @@ function manualPriceUpdatedAtForCard(card) {
   return priceCacheUpdatedAtForCard(card, "manual");
 }
 
+// CardTrader's dollar price, used only while CardTrader is in use and it has no yen price.
 function usdPriceOf(card) {
-  const allowCardTrader = priceSourceOrder().includes("cardtrader");
-  const cached = allowCardTrader ? priceCacheEntryForCard(card, "cardtrader") : null;
+  if (!priceSourceOrder().includes("cardtrader")) return null;
+  const cached = priceCacheEntryForCard(card, "cardtrader");
   if (cached?.valueUsd != null) return Number(cached.valueUsd);
   const finish = usdFinishOf(card);
   const source = finish === "foil" ? card.priceUsdFoilSource : finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
-  if (source === "cardtrader" ? !allowCardTrader : !state.useScryfallPrices) return null;
+  if (source !== "cardtrader") return null;
   const value = finish === "foil" ? card.priceUsdFoil : finish === "etched" ? card.priceUsdEtched : card.priceUsd;
   return value == null || value === "" ? null : Number(value);
 }
@@ -709,13 +712,14 @@ function cardTraderJpyPriceOf(card) {
 function selectedPriceSource(card) {
   const selected = selectedPriceEntry(card);
   if (selected?.source) return selected.source;
-  if (!usesUsdFallback() || usdPriceOf(card) == null) return "";
-  const finish = usdFinishOf(card);
-  return finish === "foil" ? card.priceUsdFoilSource : finish === "etched" ? card.priceUsdEtchedSource : card.priceUsdSource;
+  return usesUsdFallback() && usdPriceOf(card) != null ? "cardtrader" : "";
 }
 function selectedPriceUsesEnglish(card) {
-  const cached = priceSourceOrder().includes("cardtrader") ? priceCacheEntryForCard(card, "cardtrader") : null;
-  if (cached?.source) return cached.usesEnglish === true;
+  const source = selectedPriceSource(card);
+  if (source === "cardtrader") {
+    const cached = priceCacheEntryForCard(card, "cardtrader");
+    if (cached?.source) return cached.usesEnglish === true;
+  } else if (source !== "scryfall") return false;
   const finish = usdFinishOf(card);
   return finish === "foil" ? card.priceUsdFoilFromEnglish === true : finish === "etched" ? card.priceUsdEtchedFromEnglish === true : card.priceUsdFromEnglish === true;
 }
@@ -791,7 +795,7 @@ function cardTraderToken() {
 function cardTraderStatusText() {
   const mode = cardTraderPriceLanguageMode();
   const modeText = mode === "english-reference" ? "英語版を優先" : mode === "strict-card-language" ? "日本語版のみ" : "日本語版を優先";
-  if (!cardTraderToken()) return `CardTrader未設定。Scryfall参考価格：${state.useScryfallPrices ? "有効（取得元設定に従う）" : "無効"}。日本語版カードの価格：${modeText}`;
+  if (!cardTraderToken()) return `CardTrader未設定（価格の取得には使いません）。日本語版カードの価格：${modeText}`;
   const stats = state.cardTrader?.lastStats;
   const statsText = stats
     ? `対象${stats.candidates || 0}件 / 価格更新${stats.priced || 0}件 / 出品なし${stats.noProduct || 0}件 / 紐付けなし${stats.noBlueprint || 0}件${stats.failedGroups ? ` / 失敗${stats.failedGroups}件` : ""}${stats.groupsTotal ? ` / ${stats.groupsDone || 0}/${stats.groupsTotal}処理` : ""}`
@@ -837,7 +841,6 @@ function cardTraderRunResultHtml(stats) {
 }
 
 function updateCardTraderSettingsUi() {
-  if (els.priceSourceMode && document.activeElement !== els.priceSourceMode) els.priceSourceMode.value = priceSourceMode();
   if (els.cardTraderToken && document.activeElement !== els.cardTraderToken) {
     const currentValue = String(els.cardTraderToken.value || "").trim();
     if (cardTraderToken() && (!currentValue || currentValue === "********")) els.cardTraderToken.value = "********";
@@ -4123,9 +4126,8 @@ function ownedCardToApiCard(card) {
 }
 
 function applyCardMetadata(ownedCard, apiCard) {
-  const keepCardTraderNormal = ownedCard.priceUsdSource === "cardtrader" && cardTraderPriceFresh(ownedCard);
-  const keepCardTraderFoil = ownedCard.priceUsdFoilSource === "cardtrader" && cardTraderPriceFresh(ownedCard);
-  const keepCardTraderEtched = ownedCard.priceUsdEtchedSource === "cardtrader" && cardTraderPriceFresh(ownedCard);
+  // Scryfall is ahead of CardTrader in the price order, so its dollar prices always replace CardTrader's in these fields.
+  const keepCardTraderNormal = false, keepCardTraderFoil = false, keepCardTraderEtched = false;
   if (apiCard.legalities) ownedCard.legalities = { ...apiCard.legalities };
   ownedCard.illustrationId = cardIllustrationKey(apiCard);
   ownedCard.illustrationMetadataVersion = 1;
@@ -4187,7 +4189,7 @@ async function hydrateEnglishPriceFallbacks() {
         if (!englishCard) return;
         // Fill (or refresh) only fields the Japanese printing itself has no price for, and never over CardTrader's.
         for (const [field, fromEnglish, source, price] of [["priceUsd", "priceUsdFromEnglish", "priceUsdSource", "usd"], ["priceUsdFoil", "priceUsdFoilFromEnglish", "priceUsdFoilSource", "usd_foil"], ["priceUsdEtched", "priceUsdEtchedFromEnglish", "priceUsdEtchedSource", "usd_etched"]]) {
-          if (!englishCard.prices?.[price] || (card[source] === "cardtrader" && priceSourceOrder().includes("cardtrader")) || (card[field] && card[source] !== "cardtrader" && !card[fromEnglish])) continue;
+          if (!englishCard.prices?.[price] || (card[field] && card[source] !== "cardtrader" && !card[fromEnglish])) continue;
           card[field] = englishCard.prices[price]; card[source] = "scryfall"; card[fromEnglish] = true;
         }
       });
@@ -4510,14 +4512,6 @@ function saveExchangeRate() {
   showToast("円換算レートを保存しました");
 }
 
-function savePriceSourceMode() {
-  state.priceSourceMode = String(els.priceSourceMode?.value || "manual-wisdom-cardtrader");
-  appStorage.setItem(KEYS.priceSourceMode, state.priceSourceMode);
-  renderCollection();
-  updateCardOwnedActions();
-  showToast("価格表示に使う取得元を保存しました", { sticky: true });
-}
-
 function saveCardTraderToken() {
   const typed = String(els.cardTraderToken?.value || "").trim();
   if (!typed || typed === "********") { showToast("CardTrader APIトークンを入力してください"); return; }
@@ -4703,6 +4697,15 @@ async function refreshSelectedCardTraderPrice() {
   }
   let lastMessage = "";
   for (const source of sources) {
+    if (source === "scryfall") {
+      // Scryfall prices arrive with the daily card refresh; when one exists, CardTrader is not needed.
+      if (priceCacheJpyValue(card, "scryfall") != null) {
+        showInlineStatus(els.cardActionStatus, `Wisdom Guildに価格がないため、Scryfallの参考価格を表示しています：${collectionPriceLabel(card)}`, { sticky: true });
+        updateCardOwnedActions();
+        return;
+      }
+      continue;
+    }
     if (source === "wisdom-guild") {
       deletePriceCacheEntry(card, "wisdom-guild");
       state.wisdomGuild.lastError = "";
@@ -7168,7 +7171,6 @@ els.clearCollectionFilters.addEventListener("click", () => {
   $("#collectionFormat").value = ""; $("#collectionSetQuery").value = ""; $("#collectionSetFilter").value = ""; els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
 });
 els.resetCollectionSort.addEventListener("click", resetCollectionSortOrder);
-els.priceSourceMode?.addEventListener("change", savePriceSourceMode);
 els.addCardButton.addEventListener("click", saveSelectedCardQuantity);
 els.addCardToDeckButton.addEventListener("click", addSelectedCardToDeck);
 els.favoriteCardButton?.addEventListener("click", toggleSelectedFavorite);
@@ -7394,13 +7396,6 @@ $("#collectionPageSize").addEventListener("change", event => {
 });
 $("#collectionSortMenu").addEventListener("change", event => { if (event.target.value) applyCollectionSort(event.target.value); event.target.value = ""; });
 $("#deckSortMenu").addEventListener("change", event => { if (event.target.value) sortDeckEntries(event.target.value); event.target.value = ""; });
-$("#useScryfallPrices").checked = state.useScryfallPrices;
-$("#useScryfallPrices").addEventListener("change", event => {
-  state.useScryfallPrices = event.target.checked;
-  appStorage.setItem("mtg-pocket.useScryfallPrices", String(state.useScryfallPrices));
-  renderCollection(); updateCardTraderSettingsUi();
-  if (state.selectedCard) updateCardOwnedActions();
-});
 $("#openCollectionGroupManager").addEventListener("click", openFavoriteGroupManager);
 $("#openSettingsGroupManager").addEventListener("click", openFavoriteGroupManager);
 

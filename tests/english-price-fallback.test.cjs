@@ -31,14 +31,11 @@ c.applyCardMetadata(cards[0],{prices:{usd:null,usd_foil:null},legalities:{}});
 assert.equal(cards[0].priceUsd,'0.19');assert.ok(cards[0].englishPriceUpdatedAt>0,'not reset, so it is not fetched again every day');
 // ...but a real price on the Japanese printing still wins.
 c.applyCardMetadata(cards[0],{prices:{usd:'0.50'}});assert.equal(cards[0].priceUsd,'0.50');assert.equal(cards[0].priceUsdFromEnglish,false);
-// 3) CardTrader's dollar price is kept while CardTrader is in the order, and replaced in the Scryfall mode.
-const ct=()=>[ja('t','ZNR','94',{priceUsd:'0.25',priceUsdSource:'cardtrader'})];
-let ctCards=ct();({c}=context(ctCards,['manual','wisdom-guild','cardtrader'],english));await c.hydrateEnglishPriceFallbacks();
-assert.equal(ctCards[0].priceUsd,'0.25');
-ctCards=ct();({c}=context(ctCards,['manual','wisdom-guild','scryfall'],english));await c.hydrateEnglishPriceFallbacks();
+// 3) Scryfall comes before CardTrader: a dollar price CardTrader wrote into the same fields is replaced.
+const ctCards=[ja('t','ZNR','94',{priceUsd:'0.25',priceUsdSource:'cardtrader'})];({c}=context(ctCards,['manual','wisdom-guild','scryfall','cardtrader'],english));await c.hydrateEnglishPriceFallbacks();
 assert.equal(ctCards[0].priceUsd,'0.19');assert.equal(ctCards[0].priceUsdSource,'scryfall');
 // 4) Within a day nothing is fetched again.
 calls.length=0;({c,calls}=context(cards,['manual','wisdom-guild','cardtrader'],english));await c.hydrateEnglishPriceFallbacks();
 assert.equal(calls.length,0);
-console.log('PASS: English dollar prices in one batch per 75, saved per batch, kept through daily refresh, CardTrader respected per mode.');
+console.log('PASS: English dollar prices in one batch per 75, saved per batch, kept through daily refresh, Scryfall ahead of CardTrader.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
