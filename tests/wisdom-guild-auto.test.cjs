@@ -31,10 +31,17 @@ assert.equal(c.toasts,0);assert.ok(c.saves<=4,'saved in groups of 10, not after 
 asked.length=0;c=context(cards,cache,async card=>{asked.push(card.id);return {price:300};});
 await c.hydrateWisdomGuildPrices({automatic:true,quiet:true});
 assert.ok(!asked.includes('c0'));
+// A recent "no listing" under an old set code goes ahead of the 40 stale prices.
+const coded=Array.from({length:40},(_,i)=>({id:'s'+i})).concat([{id:'old'}]),codedCache={old:{noListing:true,updatedAt:now}};
+coded.slice(0,40).forEach((card,i)=>{codedCache[card.id]={valueJpy:100,updatedAt:now-(8+i)*DAY};});
+asked.length=0;c=context(coded,codedCache,async card=>{asked.push(card.id);return {price:300};});
+c.wisdomGuildNoListingOutdated=(card,cached)=>cached?.noListing===true&&card.id==='old';
+await c.hydrateWisdomGuildPrices({automatic:true,quiet:true});
+assert.equal(asked[0],'old');assert.equal(asked.length,30);
 // Three failures in a row stop the background run.
 const failing=Array.from({length:10},(_,i)=>({id:'f'+i}));let calls=0;
 c=context(failing,{},async()=>{calls++;throw Error('relay down');});
 await c.hydrateWisdomGuildPrices({automatic:true,quiet:true});
 assert.equal(calls,3);
-console.log('PASS: weekly batch of 30 (unpriced, then oldest), no-listing remembered, quiet summary, grouped saves, stop after 3 failures.');
+console.log('PASS: weekly batch of 30 (unpriced, then oldest), no-listing remembered, quiet summary, grouped saves, old set code first, stop after 3 failures.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
