@@ -10,7 +10,7 @@ function context(cards,cache,fetcher){
     priceCacheUpdatedAtForCard:card=>cache[card.id]?.updatedAt||0,priceCacheEntryForCard:card=>cache[card.id]||null,
     setPriceCacheEntry:(card,source,entry)=>{cache[card.id]=entry;},applyWisdomGuildPrice:(card,result)=>{cache[card.id]={valueJpy:result.price,updatedAt:Date.now()};},
     fetchWisdomGuildPriceForCard:fetcher,persist:async()=>{c.saves++;},saves:0,updateWisdomGuildSettingsUi(){},renderCollection(){},showToast(){c.toasts++;},toasts:0,
-    nameOf:()=>'',normalizeCardCondition:()=>'',formatYen:()=>'',wisdomGuildConditionForCard:()=>''};
+    nameOf:()=>'',normalizeCardCondition:()=>'',formatYen:()=>'',wisdomGuildConditionForCard:()=>'',wisdomGuildSetForCard:()=>'',wisdomGuildNoListingOutdated:()=>false};
   vm.createContext(c);vm.runInContext(fn,c);return c;
 }
 // 40 stale cards and 5 never priced: the batch takes 30, never-priced first, then oldest; no listing is remembered with a date.

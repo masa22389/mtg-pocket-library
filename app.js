@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v349";
+const APP_VERSION = "v350";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -880,6 +880,18 @@ function wisdomGuildLanguageForCard(card) {
   return "ENG";
 }
 
+// Wisdom Guild files some printings under other set codes than Scryfall: the Japanese black-border
+// Chronicles (BCHR) is CHR there, and the Japanese black-border Fourth Edition (4BB) is 4ED.
+const WISDOM_GUILD_SET_CODES = { BCHR: "CHR", "4BB": "4ED" };
+function wisdomGuildSetForCard(card) {
+  const set = String(card?.set || "").toUpperCase();
+  return WISDOM_GUILD_SET_CODES[set] || set;
+}
+// A "no listing" found under another set code (before that code was mapped) is looked up again.
+function wisdomGuildNoListingOutdated(card, cached) {
+  return cached?.noListing === true && (cached.wgSet || String(card?.set || "").toUpperCase()) !== wisdomGuildSetForCard(card);
+}
+
 function wisdomGuildConditionForCard(card) {
   return ({ NM: "NM", SP: "EX", MP: "VG", HP: "GD", Poor: "PR" })[normalizeCardCondition(card.condition)] || "NM";
 }
@@ -1252,7 +1264,7 @@ function wisdomGuildSharedPriceParams(card, options = {}) {
   const params = new URLSearchParams();
   const lang = wisdomGuildLanguageForCard(card);
   if (lang) params.append("lang[]", lang);
-  if (card.set) params.append("set[]", String(card.set).toUpperCase());
+  if (card.set) params.append("set[]", wisdomGuildSetForCard(card));
   if (options.stockOnly) params.set("stock_gt", "1");
   params.set("sort", "price");
   params.set("sort_op", "asc");
@@ -1368,7 +1380,7 @@ function chooseWisdomGuildPriceRow(rows, card) {
 function parseWisdomGuildMarkdownRows(text, card) {
   const targetFoil = priceCacheFinish(card) === "foil";
   const targetLang = wisdomGuildLanguageForCard(card);
-  const targetSet = String(card.set || "").toUpperCase();
+  const targetSet = wisdomGuildSetForCard(card);
   const priceCellIndex = cells => cells.findIndex(cell => {
     const text = textFromMarkdownCell(cell);
     return /^[\d,]+\s*円$/.test(text) || /^\*\*[\d,]+\*\*\s*円$/.test(String(cell || "").trim());
@@ -1420,7 +1432,7 @@ function parseWisdomGuildMarkdownRows(text, card) {
 function parseWisdomGuildCompactRows(text, card) {
   const targetFoil = priceCacheFinish(card) === "foil";
   const targetLang = wisdomGuildLanguageForCard(card);
-  const targetSet = String(card.set || "").toUpperCase();
+  const targetSet = wisdomGuildSetForCard(card);
   const normalized = String(text || "").replace(/\r?\n/g, " ").replace(/\s+/g, " ");
   const pattern = /\[([^\]]+)\]\(http:\/\/wonder\.wisdom-guild\.net\/shop\/[^)]*\)\[([^\]]+)\]\(http:\/\/wonder\.wisdom-guild\.net\/price\/([^)/\s?#]+)\/?\)\*\*([\d,]+)\*\* 円\s*(.*?)\[売り場\]/g;
   const detailPattern = /^(?:(\S+)\s+)?(ENG|JPN|FRA|DEU|ITA|SPA|POR|RUS|KOR|CHS|CHT)\s+(なし|\d+\s*枚)\s*(?:!\[[^\]]*\]\([^)]+\)\s*)?([A-Z]{1,3}\+?)?\s*$/;
@@ -1457,7 +1469,7 @@ function parseWisdomGuildPriceRows(html, card) {
   const document = new DOMParser().parseFromString(html, "text/html");
   const targetFoil = priceCacheFinish(card) === "foil";
   const targetLang = wisdomGuildLanguageForCard(card);
-  const targetSet = String(card.set || "").toUpperCase();
+  const targetSet = wisdomGuildSetForCard(card);
   const rows = [...document.querySelectorAll(".wg-wonder-price-table tbody tr")]
     .map(row => {
       const cells = [...row.children].filter(cell => cell.tagName === "TD");
@@ -4397,7 +4409,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
   let candidates = sourceCards.filter(card =>
     wisdomGuildLanguageForCard(card) &&
     priceCacheFinish(card) !== "etched" &&
-    (force || (options.automatic
+    (force || wisdomGuildNoListingOutdated(card, priceCacheEntryForCard(card, "wisdom-guild")) || (options.automatic
       ? Date.now() - priceCacheUpdatedAtForCard(card, "wisdom-guild") > PRICE_AUTO_REFRESH_MS
       : priceCacheEntryNeedsRefresh(priceCacheEntryForCard(card, "wisdom-guild"), "wisdom-guild")))
   );
@@ -4434,7 +4446,7 @@ async function hydrateWisdomGuildPrices(options = {}) {
         if (stats.pricedExamples.length < 8) stats.pricedExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""} ${normalizeCardCondition(card.condition)} ${priceCacheFinish(card)} ${formatYen(result.price)}（${stockText}）`);
       } else {
         // Remember "no listing" with its date (no price), so the weekly refresh does not ask again every session.
-        setPriceCacheEntry(card, "wisdom-guild", { source: "wisdom-guild", cacheVersion: WISDOM_GUILD_PRICE_CACHE_VERSION, noListing: true, valueJpy: null, updatedAt: Date.now() });
+        setPriceCacheEntry(card, "wisdom-guild", { source: "wisdom-guild", cacheVersion: WISDOM_GUILD_PRICE_CACHE_VERSION, noListing: true, wgSet: wisdomGuildSetForCard(card), valueJpy: null, updatedAt: Date.now() });
         stats.noProduct += 1;
         if (stats.noProductExamples.length < 8) stats.noProductExamples.push(`${nameOf(card)} ${(card.set || "").toUpperCase()} #${card.collectorNumber || ""} ${wisdomGuildLanguageForCard(card)} ${wisdomGuildConditionForCard(card)}`);
       }
@@ -4677,7 +4689,7 @@ const openedCardPriceTried = new Set();
 async function refreshOpenedCardPrice(card) {
   if (!card || !navigator.onLine || !priceSourceOrder().includes("wisdom-guild") || !wisdomGuildLanguageForCard(card) || priceCacheFinish(card) === "etched") return;
   if (priceSourceOrder()[0] === "manual" && priceCacheJpyValue(card, "manual") != null) return;
-  if (Date.now() - priceCacheUpdatedAtForCard(card, "wisdom-guild") < PRICE_OPEN_REFRESH_MS) return;
+  if (Date.now() - priceCacheUpdatedAtForCard(card, "wisdom-guild") < PRICE_OPEN_REFRESH_MS && !wisdomGuildNoListingOutdated(card, priceCacheEntryForCard(card, "wisdom-guild"))) return;
   const key = `${card.id}|${card.condition || ""}|${card.finish || ""}`;
   if (openedCardPriceTried.has(key)) return;
   openedCardPriceTried.add(key);
