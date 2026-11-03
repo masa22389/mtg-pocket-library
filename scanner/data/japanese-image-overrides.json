@@ -1262,5 +1262,41 @@
     "imageWidth": 265,
     "imageHeight": 370,
     "sourceImageSha256": "98053eaffa055a214f3a89494763135942d3215cd2f6922f1023c54396ba8ab6"
+  },
+  "sch:49": {
+    "set": "sch",
+    "number": "49",
+    "language": "ja",
+    "oracleId": "e157ad1e-be35-47f3-92db-01799f8fb6a5",
+    "printedName": "超能力蛙",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/Promo/SCH/JP/0049.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/189831?lang=JP",
+    "verifiedAt": "2026-11-04",
+    "correction": "scryfall-no-japanese-print",
+    "validation": "Scryfall has no Japanese printing; manual review of Japanese title, printed P 0049 SCH JP and art against the English printing",
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "45ed437af1265bc6c1c8a75f1f1acf0e33165323f6a07b974e5ba2c3aca6b5bb"
+  },
+  "pnph:74★": {
+    "set": "pnph",
+    "number": "74★",
+    "language": "ja",
+    "oracleId": "3bfa088c-9a47-4123-aee5-4de44e355bef",
+    "printedName": "外科的摘出",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/Special/17.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/30833?lang=JP",
+    "verifiedAt": "2026-11-04",
+    "correction": "scryfall-no-japanese-print",
+    "validation": "Scryfall has no Japanese printing; manual review of Japanese title, Buy-a-Box promo (NPH-P), printed 74/175 and art against the English printing",
+    "imageWidth": 300,
+    "imageHeight": 420,
+    "sourceImageSha256": "7b28746c4f7ae7e16169bfa572bd6bc65c393ea245da33fb6017ed1ca3ce31f8"
   }
 }

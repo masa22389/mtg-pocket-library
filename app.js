@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v353";
+const APP_VERSION = "v354";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2809,7 +2809,8 @@ function applyJpIndexToCard(card) {
   const item = jpIndexForCard(card);
   if (!item) return card;
   const localizeDisplay = shouldLocalizeDisplay(card);
-  const localizeImage = jpIndexImageMatchesCard(item, card);
+  // An entry without a picture (MH3 variants whose gallery image showed the regular card) only gives names.
+  const localizeImage = jpIndexImageMatchesCard(item, card) && Boolean(item.images?.normal || item.image);
   const canUseJpImage = isJapaneseCard(card) || Boolean(card._supplementalJpVariant);
   const localizeTopImage = canUseJpImage && localizeImage;
   const itemNames = displayJaNamesForIndexItem(item);
@@ -2861,6 +2862,28 @@ function supplementalJpVariantForCard(card) {
     _supplementalJpVariant: true,
     _sourceScryfallId: sourceId,
   });
+}
+
+async function reviewedJapanesePrintsFor(card) {
+  const oracleId = card?.oracle_id || card?.oracleId || "";
+  try { return oracleId ? await (window.MtgCardImages?.reviewedJapanesePrints?.(oracleId) || []) : []; } catch { return []; }
+}
+function reviewedPrintMatches(item, card) {
+  return String(card?.set || "").toLowerCase() === item.set && String(card?.collector_number || card?.collectorNumber || "") === item.number;
+}
+// A Japanese printing seen only in a reviewed shop image: the English print's data with the Japanese name and picture.
+function reviewedJpVariantForCard(card, item) {
+  const sourceId = cardScryfallId(card);
+  const base = supplementalJpVariantForCard(card) || {
+    ...card, id: `${sourceId}-jp-name`, lang: "ja", _preferJpDisplay: true, _supplementalJpVariant: true, _sourceScryfallId: sourceId,
+    printed_name: item.printedName || card.printed_name, jpName: item.printedName || "",
+  };
+  return withReviewedJpImage({ ...base, _reviewedJpImage: item.url });
+}
+function withReviewedJpImage(card) {
+  if (!card?._reviewedJpImage) return card;
+  const url = card._reviewedJpImage;
+  return { ...card, image_uris: { ...(card.image_uris || {}), normal: url }, jpImage: url, jpImages: { normal: url }, _jpImageExact: true };
 }
 
 function aliasTargetsForQuery(query, options = {}) {
@@ -3410,13 +3433,17 @@ async function changeCardLanguage(lang) {
     const result = await fetchScryfallSearch(`oracleid:${card.oracle_id} set:${card.set} cn:${JSON.stringify(String(card.collector_number))} lang:${lang}`);
     if (result.ok) peer = result.data.data.find(item => item.lang === lang && sameCardPrint(item, card));
   }
+  if (!peer && lang === "ja") {
+    const reviewed = (await reviewedJapanesePrintsFor(card)).find(item => reviewedPrintMatches(item, card));
+    if (reviewed) peer = reviewedJpVariantForCard(card, reviewed);
+  }
   if (request !== cardLanguageRequestId || dialogRequest !== cardDialogRequestId || !els.cardDialog.open || state.selectedCard !== card) return;
   if (!peer) {
     status.textContent = `${lang === "ja" ? "日本語" : "英語"}版が見つかりませんでした。この収録版の表示言語を維持します。`;
     return;
   }
   const purchaseQuantity = $("#purchaseQuantity").value;
-  selectVariant(applyJpIndexToCards([{ ...peer, _preferJpDisplay: lang === "ja" }])[0]);
+  selectVariant(withReviewedJpImage(applyJpIndexToCards([{ ...peer, _preferJpDisplay: lang === "ja" }])[0]));
   $("#purchaseQuantity").value = purchaseQuantity;
   status.hidden = true;
 }
@@ -3461,10 +3488,19 @@ async function fetchPrintsForLanguage(card, lang) {
         if (localized && !variants.some(item => sameCardPrint(item, localized))) variants.push(localized);
       }
     }
+    // Reviewed shop images add Japanese printings that Scryfall lists in English only (store and box promos).
+    const reviewed = lang === "ja" ? (await reviewedJapanesePrintsFor(card)).filter(item => !variants.some(variant => reviewedPrintMatches(item, variant))) : [];
+    if (reviewed.length) {
+      const english = await fetchAllScryfallSearch(`${query} lang:en`, { order: "released", dir: "desc" });
+      for (const print of english.ok ? english.data.data : []) {
+        const item = reviewed.find(entry => reviewedPrintMatches(entry, print));
+        if (item) variants.push(reviewedJpVariantForCard(print, item));
+      }
+    }
     if (card.lang === lang && !variants.some(item => sameCardPrint(item, card))) variants.unshift(card);
     const unique = new Map();
     for (const item of variants) if (item.lang === lang) unique.set(`${item.set}:${item.collector_number}`, item);
-    return applyJpIndexToCards(sortUnifiedPrints([...unique.values()]).map(item => ({ ...item, _preferJpDisplay: lang === "ja" })));
+    return applyJpIndexToCards(sortUnifiedPrints([...unique.values()]).map(item => ({ ...item, _preferJpDisplay: lang === "ja" }))).map(withReviewedJpImage);
 }
 
 function ownedCardForVariant(card, preferredId = state.selectedOwnedId) {

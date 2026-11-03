@@ -1845,11 +1845,8 @@ window.MTG_JP_CARD_INDEX = [
       "Abstruse Appropriation"
     ],
     "scryfallName": "Abstruse Appropriation",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663509/cardimage.png"
-    },
     "oracleId": "61a23402-3244-4b5e-9134-98e1f82eda65",
-    "scryfallId": "d7149359-bb3f-413c-b21d-e4cd88618e56",
+    "scryfallId": "771d4911-3dc8-4dc7-b2c9-e2158ee394bf",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -1866,11 +1863,8 @@ window.MTG_JP_CARD_INDEX = [
       "Accursed Marauder"
     ],
     "scryfallName": "Accursed Marauder",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663412/cardimage.png"
-    },
     "oracleId": "d8ad23a1-0b43-48ea-9fbe-d89b29194509",
-    "scryfallId": "5da14d86-0780-4821-a799-96f64b377df4",
+    "scryfallId": "44a63029-1fb2-4fdc-bca9-0a530c7b42d9",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -1942,11 +1936,8 @@ window.MTG_JP_CARD_INDEX = [
       "Aether Revolt"
     ],
     "scryfallName": "Aether Revolt",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663445/cardimage.png"
-    },
     "oracleId": "b73661a6-d136-4c65-804c-461e83484f4b",
-    "scryfallId": "b8732e62-cdee-4d32-82a8-8a71a04be7a1",
+    "scryfallId": "6f2f7432-9216-4ef7-ab7b-c5d8e1cae395",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -1963,11 +1954,8 @@ window.MTG_JP_CARD_INDEX = [
       "Aether Spike"
     ],
     "scryfallName": "Aether Spike",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663382/cardimage.png"
-    },
     "oracleId": "e4a85647-0b8c-40b2-a5d5-43c78877ce36",
-    "scryfallId": "012f5195-10ab-4b32-a5de-a79341cd536a",
+    "scryfallId": "cb10f7af-8c6d-4228-8600-5b1de3e3abcb",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2123,11 +2111,8 @@ window.MTG_JP_CARD_INDEX = [
       "Amphibian Downpour"
     ],
     "scryfallName": "Amphibian Downpour",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663383/cardimage.png"
-    },
     "oracleId": "a4280cea-386b-450d-a7e9-29c7aa58ce5a",
-    "scryfallId": "2d8aeca5-622a-45be-8168-07e7c00e3092",
+    "scryfallId": "d2c2d9f8-e5cb-4783-b314-df2b6f75b154",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2243,11 +2228,8 @@ window.MTG_JP_CARD_INDEX = [
       "Archway of Innovation"
     ],
     "scryfallName": "Archway of Innovation",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663546/cardimage.png"
-    },
     "oracleId": "bfa20bc7-4626-4a52-87f4-6e2763cb8ed5",
-    "scryfallId": "6a90f9e6-9251-4203-9599-cc4032a5e6e1",
+    "scryfallId": "472905ac-1eb9-4951-8180-b8c35fbab3d7",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2264,11 +2246,8 @@ window.MTG_JP_CARD_INDEX = [
       "Arena of Glory"
     ],
     "scryfallName": "Arena of Glory",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663547/cardimage.png"
-    },
     "oracleId": "63dfe794-5f56-41ec-9883-5523b41cc3e0",
-    "scryfallId": "dd148edc-9e43-41aa-bb50-f912115d3e72",
+    "scryfallId": "3d7d07bb-b875-4a6d-8b87-4187e823af75",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2285,11 +2264,8 @@ window.MTG_JP_CARD_INDEX = [
       "Argent Dais"
     ],
     "scryfallName": "Argent Dais",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663352/cardimage.png"
-    },
     "oracleId": "3269f589-00fc-4f0b-8693-656f2ab0670d",
-    "scryfallId": "b56ad225-1249-4e94-898c-ca21b132e62d",
+    "scryfallId": "109a3155-7453-4861-8d20-89be442c0e08",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2306,11 +2282,8 @@ window.MTG_JP_CARD_INDEX = [
       "Arna Kennerüd, Skycaptain"
     ],
     "scryfallName": "Arna Kennerüd, Skycaptain",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663510/cardimage.png"
-    },
     "oracleId": "436e7548-f8d5-43af-947d-b382da0d19b3",
-    "scryfallId": "19266b5a-ff78-436c-b0f1-457e80bb647e",
+    "scryfallId": "69b2b01e-68f7-48d5-aad6-31605765a3b1",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2327,11 +2300,8 @@ window.MTG_JP_CARD_INDEX = [
       "Ashling, Flame Dancer"
     ],
     "scryfallName": "Ashling, Flame Dancer",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663447/cardimage.png"
-    },
     "oracleId": "6fe9fd59-9cac-4572-8f94-bc19bea44f94",
-    "scryfallId": "40463be5-89e2-410b-9a4b-770f70d14293",
+    "scryfallId": "2d8e160a-487a-44dd-9075-6cae6f3df3d8",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2488,11 +2458,8 @@ window.MTG_JP_CARD_INDEX = [
       "Birthing Ritual"
     ],
     "scryfallName": "Birthing Ritual",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663478/cardimage.png"
-    },
     "oracleId": "37a5ab64-12e4-4aad-9a09-46a26fe9953b",
-    "scryfallId": "4820d223-4ea1-4850-931c-3d2ab5eb003b",
+    "scryfallId": "004bbc84-b57b-4393-889e-dff95e8f334c",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2533,11 +2500,8 @@ window.MTG_JP_CARD_INDEX = [
       "Bloodstained Mire"
     ],
     "scryfallName": "Bloodstained Mire",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663548/cardimage.png"
-    },
     "oracleId": "fc0707c7-d504-4ccf-a0d2-3eb6e26e7a57",
-    "scryfallId": "579743fe-f71e-4cb2-8629-d6b02ed1591d",
+    "scryfallId": "3de472d0-cca2-4bc3-ab0a-9f79fa6325ce",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2639,11 +2603,8 @@ window.MTG_JP_CARD_INDEX = [
       "Brainsurge"
     ],
     "scryfallName": "Brainsurge",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663385/cardimage.png"
-    },
     "oracleId": "46c727cb-1f47-4775-8af4-0230ef53966b",
-    "scryfallId": "ed48f805-b57c-4d7f-a3c2-d16ae71bce2d",
+    "scryfallId": "95a6997b-a8b1-4655-a9b0-5f9a305ca96e",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2723,11 +2684,8 @@ window.MTG_JP_CARD_INDEX = [
       "Breya, Etherium Shaper"
     ],
     "scryfallName": "Breya, Etherium Shaper",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664278/cardimage.png"
-    },
     "oracleId": "d460a9e2-5a7d-4562-880e-45174be19a9d",
-    "scryfallId": "8bf3929c-957f-4ea2-a27d-7d53979844af",
+    "scryfallId": "61061110-a8f4-41ac-a89e-93359050919d",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2810,11 +2768,8 @@ window.MTG_JP_CARD_INDEX = [
       "Charitable Levy"
     ],
     "scryfallName": "Charitable Levy",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663353/cardimage.png"
-    },
     "oracleId": "8a628875-96c8-4a28-aaff-99fd99ae778e",
-    "scryfallId": "4a5cab75-546c-4760-97b7-4591de9e6662",
+    "scryfallId": "94b1bd25-bab3-408d-bdc5-7fd4d2dd2e83",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2831,11 +2786,8 @@ window.MTG_JP_CARD_INDEX = [
       "Chthonian Nightmare"
     ],
     "scryfallName": "Chthonian Nightmare",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663415/cardimage.png"
-    },
     "oracleId": "c7a360f5-725e-4864-93cc-87f96f95975e",
-    "scryfallId": "ce5dd2c1-b6e0-4914-b5c9-7dd451c29e22",
+    "scryfallId": "59cbd637-30d1-4c3c-95ce-b6c6f9248d15",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -2954,11 +2906,8 @@ window.MTG_JP_CARD_INDEX = [
       "Consuming Corruption"
     ],
     "scryfallName": "Consuming Corruption",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663416/cardimage.png"
-    },
     "oracleId": "3bc0bd36-70be-4180-9fb3-b10ce054107b",
-    "scryfallId": "9068b3a4-9130-42d8-a26b-52010b7daa8b",
+    "scryfallId": "bd2803b9-ad7b-4f0e-b622-2b8e84cdd591",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -3038,11 +2987,8 @@ window.MTG_JP_CARD_INDEX = [
       "Crabomination"
     ],
     "scryfallName": "Crabomination",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663417/cardimage.png"
-    },
     "oracleId": "5c26c30b-bc4a-4d20-8406-ef9022256e0d",
-    "scryfallId": "f328d6e0-d808-4abe-b6a2-cc557b27c329",
+    "scryfallId": "b6ac511f-6c28-45f9-968b-9ac72872641b",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -3363,11 +3309,8 @@ window.MTG_JP_CARD_INDEX = [
       "Detective's Phoenix"
     ],
     "scryfallName": "Detective's Phoenix",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663448/cardimage.png"
-    },
     "oracleId": "52c3fe55-74ee-44cb-b62b-dc6c5dfdc33e",
-    "scryfallId": "e2a01edd-dbc0-4ed4-b827-9b608290e9a1",
+    "scryfallId": "db16e02b-1b7f-4976-b9eb-41350337616c",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -3429,11 +3372,8 @@ window.MTG_JP_CARD_INDEX = [
       "Disruptor Flute"
     ],
     "scryfallName": "Disruptor Flute",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663541/cardimage.png"
-    },
     "oracleId": "d6c46906-1339-4440-8cd0-2bb9890d4975",
-    "scryfallId": "5cad8671-4761-4014-a8a3-af45627e6e79",
+    "scryfallId": "e764e3e9-653c-44d7-b96a-530d51ca5c2f",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -3534,11 +3474,8 @@ window.MTG_JP_CARD_INDEX = [
       "Dreamtide Whale"
     ],
     "scryfallName": "Dreamtide Whale",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663391/cardimage.png"
-    },
     "oracleId": "ee8c0b4c-03c5-4da5-b4f1-028c845384af",
-    "scryfallId": "fd7dc03e-2a61-482a-b7eb-6cdb7f375fd8",
+    "scryfallId": "966e2066-ef45-4882-a420-247115a319b9",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -3621,11 +3558,8 @@ window.MTG_JP_CARD_INDEX = [
       "Echoes of Eternity"
     ],
     "scryfallName": "Echoes of Eternity",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663336/cardimage.png"
-    },
     "oracleId": "23a79523-4be0-4d17-80aa-5ea024cb3463",
-    "scryfallId": "b28b9bee-d726-407b-9e5b-2231384df81e",
+    "scryfallId": "ae70f03f-cf60-418b-98e3-bc868e739656",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -3748,11 +3682,8 @@ window.MTG_JP_CARD_INDEX = [
       "Emerald Medallion"
     ],
     "scryfallName": "Emerald Medallion",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664280/cardimage.png"
-    },
     "oracleId": "d683024d-8fe7-4509-851b-7655fadc1de7",
-    "scryfallId": "5ddf44fe-9e4e-42a6-a6f8-11ada3ce8a94",
+    "scryfallId": "b0d58d50-875c-498e-bdde-ffda391ce839",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -3790,11 +3721,8 @@ window.MTG_JP_CARD_INDEX = [
       "Emperor of Bones"
     ],
     "scryfallName": "Emperor of Bones",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663422/cardimage.png"
-    },
     "oracleId": "cb70a360-898e-443a-b053-38e35ea2baa2",
-    "scryfallId": "df9d9075-2d1e-4848-b661-816d539e05eb",
+    "scryfallId": "edfbba55-38b1-4994-ba6f-de09af4098dc",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -3811,11 +3739,8 @@ window.MTG_JP_CARD_INDEX = [
       "Emrakul, the World Anew"
     ],
     "scryfallName": "Emrakul, the World Anew",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663338/cardimage.png"
-    },
     "oracleId": "33300e69-29f6-41e4-92ab-82d8b018b217",
-    "scryfallId": "b914bfd9-5be3-4459-a68a-9b3ea2747bbc",
+    "scryfallId": "73e4a2ce-96d3-4a76-afe6-ef85146f5e5c",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -3997,11 +3922,8 @@ window.MTG_JP_CARD_INDEX = [
       "Evolution Witness"
     ],
     "scryfallName": "Evolution Witness",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663483/cardimage.png"
-    },
     "oracleId": "0e07f1af-5ff6-4da5-8683-aea4cc390975",
-    "scryfallId": "4d89283e-9783-4006-9294-4ae0473d2ce6",
+    "scryfallId": "4b4ecfa6-5e38-4c0a-91e2-f93cb492f374",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4101,11 +4023,8 @@ window.MTG_JP_CARD_INDEX = [
       "Fanatic of Rhonas"
     ],
     "scryfallName": "Fanatic of Rhonas",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663484/cardimage.png"
-    },
     "oracleId": "7973820b-fdaf-46ec-9e3e-d4c0e77b5067",
-    "scryfallId": "1f9fb33a-3b39-4aff-93b8-aedafe0ea694",
+    "scryfallId": "f82fce56-307a-44bf-8c46-0e1328550e17",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4229,11 +4148,8 @@ window.MTG_JP_CARD_INDEX = [
       "Flare of Cultivation"
     ],
     "scryfallName": "Flare of Cultivation",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663486/cardimage.png"
-    },
     "oracleId": "1766f1f4-0924-4436-8379-94030adcccc5",
-    "scryfallId": "bda2fa87-81c0-41ac-8831-556ce392c058",
+    "scryfallId": "b057c3e0-9d1e-4136-be70-ff34701a2cb7",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4250,11 +4166,8 @@ window.MTG_JP_CARD_INDEX = [
       "Flare of Denial"
     ],
     "scryfallName": "Flare of Denial",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663394/cardimage.png"
-    },
     "oracleId": "437cfd16-94bc-43ba-afd8-e9e9d028a4ca",
-    "scryfallId": "71a98efb-9b0a-496b-ac21-8d70527ea544",
+    "scryfallId": "0149c119-83ea-46f5-9e22-33a674ddddb6",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4271,11 +4184,8 @@ window.MTG_JP_CARD_INDEX = [
       "Flare of Duplication"
     ],
     "scryfallName": "Flare of Duplication",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663451/cardimage.png"
-    },
     "oracleId": "f586ecb8-310c-4f40-a766-6a7ca46a254d",
-    "scryfallId": "497a10c6-131b-464e-95e4-e47708a24d48",
+    "scryfallId": "170483c2-4e50-4cc8-9481-3330057d91bb",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4292,11 +4202,8 @@ window.MTG_JP_CARD_INDEX = [
       "Flare of Fortitude"
     ],
     "scryfallName": "Flare of Fortitude",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663358/cardimage.png"
-    },
     "oracleId": "4ff07b7c-e97a-4b57-bcf1-2f22c37a8bd6",
-    "scryfallId": "37b41b59-0296-443b-8a62-8d5c4641ef66",
+    "scryfallId": "ba9ba97a-9eda-465a-891d-f3be9c2abeb2",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4313,11 +4220,8 @@ window.MTG_JP_CARD_INDEX = [
       "Flare of Malice"
     ],
     "scryfallName": "Flare of Malice",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663427/cardimage.png"
-    },
     "oracleId": "4ce156f8-6b0b-41ce-9e8f-b2735c757406",
-    "scryfallId": "19efb9ce-62eb-4cbf-b01e-979f3fd09ba6",
+    "scryfallId": "5bbb9479-d019-4ffe-a508-1db81a28847f",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4355,11 +4259,8 @@ window.MTG_JP_CARD_INDEX = [
       "Flooded Strand"
     ],
     "scryfallName": "Flooded Strand",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663552/cardimage.png"
-    },
     "oracleId": "f3c7af78-a77d-4134-82a2-a5ce84285a84",
-    "scryfallId": "8f85e12c-196b-4459-b81f-0c9c854e9f57",
+    "scryfallId": "431eca69-ba8c-47c8-a325-22a844f83e80",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4519,11 +4420,8 @@ window.MTG_JP_CARD_INDEX = [
       "Galvanic Discharge"
     ],
     "scryfallName": "Galvanic Discharge",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663454/cardimage.png"
-    },
     "oracleId": "ef0f06f1-3991-4897-bf62-d4cab7ec79a0",
-    "scryfallId": "32aa6e33-221f-414c-9b51-850d97a7e051",
+    "scryfallId": "f7d3315d-2472-4fb5-8aba-611037043cbf",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4540,11 +4438,8 @@ window.MTG_JP_CARD_INDEX = [
       "Genku, Future Shaper"
     ],
     "scryfallName": "Genku, Future Shaper",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663518/cardimage.png"
-    },
     "oracleId": "ca16b735-26c7-4d0b-959b-b031f6cb376e",
-    "scryfallId": "0cbcc962-65c4-496d-8034-75c8d204dba3",
+    "scryfallId": "45c3f892-fffb-46ed-90c0-ade2fb4b9d19",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4749,11 +4644,8 @@ window.MTG_JP_CARD_INDEX = [
       "Grim Servant"
     ],
     "scryfallName": "Grim Servant",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663429/cardimage.png"
-    },
     "oracleId": "1caa7fa2-a881-4a65-a87e-12a974520c83",
-    "scryfallId": "df9c275d-e8cc-40c2-8baf-7a0d154aa7cf",
+    "scryfallId": "77251806-c2b6-448c-a95e-a1943ca0bfd8",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4815,11 +4707,8 @@ window.MTG_JP_CARD_INDEX = [
       "Guide of Souls"
     ],
     "scryfallName": "Guide of Souls",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663361/cardimage.png"
-    },
     "oracleId": "b304ac72-7f40-40de-b8d6-6392909b6029",
-    "scryfallId": "76c3cad2-1e25-4abe-878d-9194de6fcc27",
+    "scryfallId": "298de33f-cb39-47c5-9579-54d91eb34414",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4836,11 +4725,8 @@ window.MTG_JP_CARD_INDEX = [
       "Harbinger of the Seas"
     ],
     "scryfallName": "Harbinger of the Seas",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663395/cardimage.png"
-    },
     "oracleId": "84910453-e5dc-4bff-8554-86a5f4ab2746",
-    "scryfallId": "00212714-a410-4cbc-bf1c-f90d7d77378c",
+    "scryfallId": "ee81433e-a8e4-4bf1-89d8-6b9b040e8eb4",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -4857,11 +4743,8 @@ window.MTG_JP_CARD_INDEX = [
       "Herigast, Erupting Nullkite"
     ],
     "scryfallName": "Herigast, Erupting Nullkite",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663340/cardimage.png"
-    },
     "oracleId": "76243b38-cab1-465f-aa7d-5bc617541753",
-    "scryfallId": "7baf9549-1869-4bd3-a52a-2f0b30ba0b16",
+    "scryfallId": "72a86d7d-a7a4-4a26-b92a-0518af2d9646",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5088,11 +4971,8 @@ window.MTG_JP_CARD_INDEX = [
       "Imskir Iron-Eater"
     ],
     "scryfallName": "Imskir Iron-Eater",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663521/cardimage.png"
-    },
     "oracleId": "2494101a-2c6b-45d8-95fe-e62bf9a25130",
-    "scryfallId": "541209fa-38b6-4d61-a72d-26bfb6ad5ead",
+    "scryfallId": "f9c8f6d5-28e5-46d5-9559-d69ed39e7b87",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5213,11 +5093,8 @@ window.MTG_JP_CARD_INDEX = [
       "Invert Polarity"
     ],
     "scryfallName": "Invert Polarity",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663522/cardimage.png"
-    },
     "oracleId": "69e12b1f-0fd9-43a9-b3db-fe08290442c6",
-    "scryfallId": "dcee6a8a-c3a8-43bc-beb9-be30d03ab952",
+    "scryfallId": "9458db2e-2013-492d-b086-9cf9dc230294",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5275,11 +5152,8 @@ window.MTG_JP_CARD_INDEX = [
       "It That Heralds the End"
     ],
     "scryfallName": "It That Heralds the End",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663341/cardimage.png"
-    },
     "oracleId": "c14ac951-329d-452b-be75-5c72166cd9c7",
-    "scryfallId": "c8c47679-0fac-466f-be3c-794f23576e55",
+    "scryfallId": "ebca489d-a1e3-4a39-8c83-c2836ee0a240",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5317,11 +5191,8 @@ window.MTG_JP_CARD_INDEX = [
       "Jet Medallion"
     ],
     "scryfallName": "Jet Medallion",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664281/cardimage.png"
-    },
     "oracleId": "bccb06f1-8839-4104-9ffa-c79a817f8378",
-    "scryfallId": "d423365c-a32c-4060-b178-3221e3200387",
+    "scryfallId": "29b25772-8512-4270-851b-289cd182d819",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5358,11 +5229,8 @@ window.MTG_JP_CARD_INDEX = [
       "Jolted Awake"
     ],
     "scryfallName": "Jolted Awake",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663365/cardimage.png"
-    },
     "oracleId": "4306a9e5-6845-4fd4-96ad-8888147612aa",
-    "scryfallId": "f773a79f-ad0f-45c9-bcf5-44ba5e992729",
+    "scryfallId": "d51015ef-184c-44bb-b3d2-c74a0549efac",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5421,11 +5289,8 @@ window.MTG_JP_CARD_INDEX = [
       "Kaalia of the Vast"
     ],
     "scryfallName": "Kaalia of the Vast",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664279/cardimage.png"
-    },
     "oracleId": "cb8d80c9-ed58-4f2d-aa8c-c383370c7f1a",
-    "scryfallId": "e71c8c39-3fbb-4a42-9cf6-b3224f5a56fc",
+    "scryfallId": "0e42cd7b-8ce5-46a6-a44b-2b1dc8477d86",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5501,11 +5366,8 @@ window.MTG_JP_CARD_INDEX = [
       "Kozilek, the Broken Reality"
     ],
     "scryfallName": "Kozilek, the Broken Reality",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663342/cardimage.png"
-    },
     "oracleId": "39f4bf0e-47d5-4ae8-a504-71acda849850",
-    "scryfallId": "04066abb-44d2-4730-9cc3-2584bc4c7d8c",
+    "scryfallId": "47ff41a5-3ad9-4d3a-8b03-402459f502c1",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5564,11 +5426,8 @@ window.MTG_JP_CARD_INDEX = [
       "Kudo, King Among Bears"
     ],
     "scryfallName": "Kudo, King Among Bears",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663524/cardimage.png"
-    },
     "oracleId": "070d22cf-2eed-4d04-b932-4b8339ea9b7a",
-    "scryfallId": "585e4e02-4873-4a65-a9ad-30cf0d5b6f79",
+    "scryfallId": "4de61cb1-3baa-4471-b7dc-1a2088a8e6d7",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5671,11 +5530,8 @@ window.MTG_JP_CARD_INDEX = [
       "Lion Umbra"
     ],
     "scryfallName": "Lion Umbra",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663492/cardimage.png"
-    },
     "oracleId": "95e8e6bb-d83b-46fd-bfdf-fc042d8edd4a",
-    "scryfallId": "89d58e9b-b1d9-4174-a30d-426d2e0ace07",
+    "scryfallId": "3726c01c-e314-4ca6-a82d-17178b100b64",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5734,11 +5590,8 @@ window.MTG_JP_CARD_INDEX = [
       "Marionette Apprentice"
     ],
     "scryfallName": "Marionette Apprentice",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663432/cardimage.png"
-    },
     "oracleId": "726d9d2c-736a-4852-9938-a0f50d8fd89f",
-    "scryfallId": "d16f8670-f038-400a-83e7-a53a7f8c47ac",
+    "scryfallId": "22b5a3dd-0b5a-434e-afee-a83b0279fd15",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5755,11 +5608,8 @@ window.MTG_JP_CARD_INDEX = [
       "Meltdown"
     ],
     "scryfallName": "Meltdown",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664271/cardimage.png"
-    },
     "oracleId": "8fd85a54-f0c7-4e9f-a4b4-b9b513b98d95",
-    "scryfallId": "173369d2-dc39-4bfe-a602-b47156570365",
+    "scryfallId": "19eedd92-8386-4ca9-ad72-afa03fa4bb28",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5776,11 +5626,8 @@ window.MTG_JP_CARD_INDEX = [
       "Metastatic Evangel"
     ],
     "scryfallName": "Metastatic Evangel",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663367/cardimage.png"
-    },
     "oracleId": "0a27bd77-ec13-4e8d-acad-9aa9c66b3b73",
-    "scryfallId": "774e115a-c0dc-4901-9a1f-87754304e378",
+    "scryfallId": "9ae7ef64-9223-4c5d-bb2f-8a9f033729ec",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5918,11 +5765,8 @@ window.MTG_JP_CARD_INDEX = [
       "Monstrous Vortex"
     ],
     "scryfallName": "Monstrous Vortex",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663494/cardimage.png"
-    },
     "oracleId": "6e27956e-ba2f-41a9-8e39-ec54424591b6",
-    "scryfallId": "162fcdec-bf3c-43ba-9ada-212f7dec5fbd",
+    "scryfallId": "0970efb6-427f-4d5b-9b66-eda4b91015bd",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -5939,11 +5783,8 @@ window.MTG_JP_CARD_INDEX = [
       "Monumental Henge"
     ],
     "scryfallName": "Monumental Henge",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663554/cardimage.png"
-    },
     "oracleId": "c48df45c-3513-4d56-aed6-30c2f3a759cd",
-    "scryfallId": "62907e7b-e531-4f51-9a69-7e60ae525775",
+    "scryfallId": "85ae1a74-cbff-4d36-bfee-d1b6494114b4",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6023,11 +5864,8 @@ window.MTG_JP_CARD_INDEX = [
       "Nadu, Winged Wisdom"
     ],
     "scryfallName": "Nadu, Winged Wisdom",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663525/cardimage.png"
-    },
     "oracleId": "0ff11a61-6fe3-4c70-aba8-417023a5e54e",
-    "scryfallId": "94b67489-5eb0-4406-9bf3-27e50dc632eb",
+    "scryfallId": "a3a7d66d-c602-46b2-8ec6-7116acbe8e3a",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6044,11 +5882,8 @@ window.MTG_JP_CARD_INDEX = [
       "Necrodominance"
     ],
     "scryfallName": "Necrodominance",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663434/cardimage.png"
-    },
     "oracleId": "a10b3e35-8cc4-450e-9e30-0fce8df0fea4",
-    "scryfallId": "ffc0109c-f939-4424-820e-d6e60cacd794",
+    "scryfallId": "f810a2d7-efbe-4ea1-83d1-d594a8eaf88b",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6086,11 +5921,8 @@ window.MTG_JP_CARD_INDEX = [
       "Nethergoyf"
     ],
     "scryfallName": "Nethergoyf",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663435/cardimage.png"
-    },
     "oracleId": "040cbd8a-a9e5-454b-a5ae-9b66bb66b8e9",
-    "scryfallId": "3ee3945e-5089-4751-b7b3-5961c39d2a33",
+    "scryfallId": "653589ff-8186-49cf-8ff5-baf299501daa",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6128,11 +5960,8 @@ window.MTG_JP_CARD_INDEX = [
       "Null Elemental Blast"
     ],
     "scryfallName": "Null Elemental Blast",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663344/cardimage.png"
-    },
     "oracleId": "ec7699e3-ce56-46e4-9e4d-5ed2bd5fca83",
-    "scryfallId": "8e259868-d29a-4c03-8ec3-49e914f849fb",
+    "scryfallId": "7114c9c8-5370-42e0-8aaf-dc05e2422a76",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6149,11 +5978,8 @@ window.MTG_JP_CARD_INDEX = [
       "Nulldrifter"
     ],
     "scryfallName": "Nulldrifter",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663345/cardimage.png"
-    },
     "oracleId": "ef8d9c3a-5860-45bf-8205-14e2df9a6fc8",
-    "scryfallId": "4d9f1bb8-c91b-40cd-a416-abbff0d65306",
+    "scryfallId": "915d5409-0375-4a77-8019-ddaade86e144",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6233,11 +6059,8 @@ window.MTG_JP_CARD_INDEX = [
       "Ocelot Pride"
     ],
     "scryfallName": "Ocelot Pride",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663370/cardimage.png"
-    },
     "oracleId": "b4ce2c8f-a19c-461e-8a2e-0ec2bd3ebca3",
-    "scryfallId": "89cf6f57-230f-497e-a14e-ad1e8737fd42",
+    "scryfallId": "859d2ff4-8b8c-410b-8636-7e6a539fd291",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6320,11 +6143,8 @@ window.MTG_JP_CARD_INDEX = [
       "Orim's Chant"
     ],
     "scryfallName": "Orim's Chant",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664254/cardimage.png"
-    },
     "oracleId": "26d3a818-7faf-443a-a6bd-9773edaedf17",
-    "scryfallId": "ee241079-1e5a-4224-b9cb-4fd3e0da687c",
+    "scryfallId": "2706178a-8a9a-4e40-b716-6aef4185ca39",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6358,11 +6178,8 @@ window.MTG_JP_CARD_INDEX = [
       "Party Thrasher"
     ],
     "scryfallName": "Party Thrasher",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663461/cardimage.png"
-    },
     "oracleId": "03cd7583-d054-4359-8c94-7776c54198ed",
-    "scryfallId": "b7f8bb8d-c46a-4531-9525-6981a222b468",
+    "scryfallId": "6a0e5378-310b-44b6-8fc8-26c94eaceafc",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6400,11 +6217,8 @@ window.MTG_JP_CARD_INDEX = [
       "Pearl Medallion"
     ],
     "scryfallName": "Pearl Medallion",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664283/cardimage.png"
-    },
     "oracleId": "19015380-1332-4960-8cc6-0732009525a2",
-    "scryfallId": "1225264f-b298-4b56-b208-c5da87bd6867",
+    "scryfallId": "18bce47b-ba52-4a6c-a0ed-f533489a077c",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6484,11 +6298,8 @@ window.MTG_JP_CARD_INDEX = [
       "Phelia, Exuberant Shepherd"
     ],
     "scryfallName": "Phelia, Exuberant Shepherd",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663372/cardimage.png"
-    },
     "oracleId": "5d86a59a-ba1f-45f7-b829-dca6f9f3e624",
-    "scryfallId": "55707746-da6e-46e5-a5ca-7ac843fdc38e",
+    "scryfallId": "644f2e7a-354f-4338-9d4f-5a06a1ad412d",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6505,11 +6316,8 @@ window.MTG_JP_CARD_INDEX = [
       "Phlage, Titan of Fire's Fury"
     ],
     "scryfallName": "Phlage, Titan of Fire's Fury",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663529/cardimage.png"
-    },
     "oracleId": "3407eb6e-b74d-4159-a801-d7163937953c",
-    "scryfallId": "e419cd0b-2449-4cc5-9ead-b9e45e271700",
+    "scryfallId": "480bacad-abb8-41bd-9a33-08b75f4a8817",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6547,11 +6355,8 @@ window.MTG_JP_CARD_INDEX = [
       "Phyrexian Tower"
     ],
     "scryfallName": "Phyrexian Tower",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664292/cardimage.png"
-    },
     "oracleId": "1861e642-21d5-4232-89f3-b5557f2946c1",
-    "scryfallId": "0b47f6d2-9f65-47a4-bfc4-15619befe53d",
+    "scryfallId": "52f22229-95d4-4a84-a581-e23816db2494",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6654,11 +6459,8 @@ window.MTG_JP_CARD_INDEX = [
       "Polluted Delta"
     ],
     "scryfallName": "Polluted Delta",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663556/cardimage.png"
-    },
     "oracleId": "ef86989d-ce80-4e55-aece-7d11710eeffa",
-    "scryfallId": "6e288374-2b71-4ace-b1d2-a19fee6cb4af",
+    "scryfallId": "797b30b0-bc82-43fd-a842-d5879e2441bd",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6675,11 +6477,8 @@ window.MTG_JP_CARD_INDEX = [
       "Powerbalance"
     ],
     "scryfallName": "Powerbalance",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663463/cardimage.png"
-    },
     "oracleId": "8be368dc-6212-4627-989e-077eea78f30d",
-    "scryfallId": "aff7c0bb-1210-4aeb-b5f8-1387eb633b0f",
+    "scryfallId": "8a64a5c4-ebae-472b-8f90-dcdd8ab8bc26",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6696,11 +6495,8 @@ window.MTG_JP_CARD_INDEX = [
       "Priest of Titania"
     ],
     "scryfallName": "Priest of Titania",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664275/cardimage.png"
-    },
     "oracleId": "3a198a16-17b9-481e-b516-5bc945c7e247",
-    "scryfallId": "eb11921b-1b28-483f-a707-4de21a6daa31",
+    "scryfallId": "c777b6f4-38de-4cba-b050-361b0f5bc560",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6717,11 +6513,8 @@ window.MTG_JP_CARD_INDEX = [
       "Primal Prayers"
     ],
     "scryfallName": "Primal Prayers",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663498/cardimage.png"
-    },
     "oracleId": "8d087fe0-d554-4d7c-ba22-32db2cf71887",
-    "scryfallId": "c4eda3db-b47d-4f1e-a93d-e2ea747d935c",
+    "scryfallId": "40017c2c-7631-4db8-8fcc-596108cfc7d3",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6780,11 +6573,8 @@ window.MTG_JP_CARD_INDEX = [
       "Psychic Frog"
     ],
     "scryfallName": "Psychic Frog",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663531/cardimage.png"
-    },
     "oracleId": "e157ad1e-be35-47f3-92db-01799f8fb6a5",
-    "scryfallId": "68924203-c3d9-41ce-8ca8-c6dd491eb3ca",
+    "scryfallId": "495d344f-5659-400e-8b8f-ad293ccf6308",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -6954,11 +6744,8 @@ window.MTG_JP_CARD_INDEX = [
       "Recruiter of the Guard"
     ],
     "scryfallName": "Recruiter of the Guard",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664255/cardimage.png"
-    },
     "oracleId": "d521a329-a53a-4962-810a-2abed80df260",
-    "scryfallId": "8e4c6ba1-1abc-478f-9b7c-97e9e3c92fb0",
+    "scryfallId": "c6920d07-f406-4458-9446-209202c1d9ca",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -7124,11 +6911,8 @@ window.MTG_JP_CARD_INDEX = [
       "Ripples of Undeath"
     ],
     "scryfallName": "Ripples of Undeath",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663439/cardimage.png"
-    },
     "oracleId": "2acf8e34-9215-4a72-a24f-09d3bdd0083a",
-    "scryfallId": "a201d1bc-e3fe-4f59-bd48-3683996ac308",
+    "scryfallId": "0136a022-6b16-4b33-a817-946ded4e9dd5",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -7244,11 +7028,8 @@ window.MTG_JP_CARD_INDEX = [
       "Rosheen, Roaring Prophet"
     ],
     "scryfallName": "Rosheen, Roaring Prophet",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663534/cardimage.png"
-    },
     "oracleId": "3108a4fe-b18a-4d02-9545-b19812454362",
-    "scryfallId": "b5ac88b2-a92e-4a12-9ba3-5a4b8cdb58dc",
+    "scryfallId": "bb64dd7b-c1b8-4fd4-99d6-9a75f64a6296",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -7285,11 +7066,8 @@ window.MTG_JP_CARD_INDEX = [
       "Ruby Medallion"
     ],
     "scryfallName": "Ruby Medallion",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664284/cardimage.png"
-    },
     "oracleId": "0c367958-729e-416d-988b-098e90e7a1fd",
-    "scryfallId": "630febf5-58ff-4dab-a5a8-575ebc5435a6",
+    "scryfallId": "3935034b-611f-4ce7-9bba-14c3b31eb597",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -7388,11 +7166,8 @@ window.MTG_JP_CARD_INDEX = [
       "Sapphire Medallion"
     ],
     "scryfallName": "Sapphire Medallion",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/664285/cardimage.png"
-    },
     "oracleId": "f1ef5698-14bd-42bf-aae5-2870699e4186",
-    "scryfallId": "a77850b2-6478-449e-bdb9-5b92650e3504",
+    "scryfallId": "4ec271e4-1813-4ee7-bfd5-5a0c39d2d25d",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -7572,11 +7347,8 @@ window.MTG_JP_CARD_INDEX = [
       "Shadow of the Second Sun"
     ],
     "scryfallName": "Shadow of the Second Sun",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663402/cardimage.png"
-    },
     "oracleId": "2ee9d018-02c7-43e7-ba2e-95e36d8ac0e8",
-    "scryfallId": "0da72736-574d-4d99-98ba-3a91c374cd10",
+    "scryfallId": "d57b700d-2a28-40b5-a6da-1a967c90a601",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -7635,11 +7407,8 @@ window.MTG_JP_CARD_INDEX = [
       "Shifting Woodland"
     ],
     "scryfallName": "Shifting Woodland",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663560/cardimage.png"
-    },
     "oracleId": "7c2a4fe5-43e8-4e20-bef2-0278d18afc4b",
-    "scryfallId": "059164e1-894d-4586-9800-e60d6fbd6eb6",
+    "scryfallId": "890e97b5-6750-4fae-8481-1244e311da7e",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -7656,11 +7425,8 @@ window.MTG_JP_CARD_INDEX = [
       "Shilgengar, Sire of Famine"
     ],
     "scryfallName": "Shilgengar, Sire of Famine",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663441/cardimage.png"
-    },
     "oracleId": "71ac4d8c-5b58-4ea8-996b-f0289717c4bb",
-    "scryfallId": "9e6aba35-bee5-4058-a2df-d73506d225c2",
+    "scryfallId": "3f0c7ff3-e483-41f3-b49f-7cdc261527c0",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -7764,11 +7530,8 @@ window.MTG_JP_CARD_INDEX = [
       "Six"
     ],
     "scryfallName": "Six",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663501/cardimage.png"
-    },
     "oracleId": "dbcbdf37-c40f-4068-b4a7-a849cab1056c",
-    "scryfallId": "f9246b68-580f-4f53-883d-7900880e4b0d",
+    "scryfallId": "8f3070e7-dce0-4121-bbef-c4357f8265ab",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -7806,11 +7569,8 @@ window.MTG_JP_CARD_INDEX = [
       "Skoa, Embermage"
     ],
     "scryfallName": "Skoa, Embermage",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663470/cardimage.png"
-    },
     "oracleId": "0e49ee63-a293-4b33-98cc-ebdcc2c64e82",
-    "scryfallId": "cf34b0f8-a68a-428f-9f2c-9556229367ec",
+    "scryfallId": "3b61aa8e-bb16-4ed5-b8d3-4e2f0c6d3812",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -7977,11 +7737,8 @@ window.MTG_JP_CARD_INDEX = [
       "Sowing Mycospawn"
     ],
     "scryfallName": "Sowing Mycospawn",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663502/cardimage.png"
-    },
     "oracleId": "63a19c7c-49d7-4b75-aac8-d0ff36c45fb8",
-    "scryfallId": "cdfadb17-76ad-4d4d-9fa7-33c4b88b4c0a",
+    "scryfallId": "f511bfe7-b107-4ec5-b363-f718c19d9579",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -8039,11 +7796,8 @@ window.MTG_JP_CARD_INDEX = [
       "Springheart Nantuko"
     ],
     "scryfallName": "Springheart Nantuko",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663503/cardimage.png"
-    },
     "oracleId": "8a3ad2ef-8bcb-40c0-85de-f03328c2b644",
-    "scryfallId": "54a3ea87-005e-4985-b2a5-21711d0b71c0",
+    "scryfallId": "cf723c91-e3ae-4a71-93b2-65d05bfa9b60",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -8060,11 +7814,8 @@ window.MTG_JP_CARD_INDEX = [
       "Spymaster's Vault"
     ],
     "scryfallName": "Spymaster's Vault",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663562/cardimage.png"
-    },
     "oracleId": "69ddca4b-5cc0-45f3-b2e6-a047c8d601be",
-    "scryfallId": "3d5fbb30-abfc-4e79-8ce5-bbb04a241c9f",
+    "scryfallId": "33535dbf-203b-44c9-be20-67fafa0927ee",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -8127,11 +7878,8 @@ window.MTG_JP_CARD_INDEX = [
       "Strix Serenade"
     ],
     "scryfallName": "Strix Serenade",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663403/cardimage.png"
-    },
     "oracleId": "7ca3aa03-e62d-464a-9111-e754abe17f76",
-    "scryfallId": "42ac5ac7-b2f9-4e6f-af41-7e42ac816374",
+    "scryfallId": "5eccf31d-869d-4003-a92b-71b4f4b479ee",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -8449,11 +8197,8 @@ window.MTG_JP_CARD_INDEX = [
       "The Necrobloom"
     ],
     "scryfallName": "The Necrobloom",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663526/cardimage.png"
-    },
     "oracleId": "b981af39-4ee6-4fbc-9a89-618dcad9dfbf",
-    "scryfallId": "8fcf68cf-0dac-4b29-90d5-c18c685182e6",
+    "scryfallId": "5fe4969b-2b18-4958-af28-88bdf92dac2c",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -8675,11 +8420,8 @@ window.MTG_JP_CARD_INDEX = [
       "Tune the Narrative"
     ],
     "scryfallName": "Tune the Narrative",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663407/cardimage.png"
-    },
     "oracleId": "4262a726-d1da-4bdc-ab14-73212aa83f9c",
-    "scryfallId": "40b13321-98f1-4e8c-802d-65498e43ec24",
+    "scryfallId": "7ad6d5d0-2b45-4d89-8335-f238f6454201",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -8758,11 +8500,8 @@ window.MTG_JP_CARD_INDEX = [
       "Ugin's Binding"
     ],
     "scryfallName": "Ugin's Binding",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663408/cardimage.png"
-    },
     "oracleId": "ed622e71-f348-4e46-8fb9-05aae430983a",
-    "scryfallId": "be13786a-f967-456b-bbc6-f4312467a827",
+    "scryfallId": "e80423f5-98b1-47be-bcc1-bd88848c2fc7",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -8779,11 +8518,8 @@ window.MTG_JP_CARD_INDEX = [
       "Ugin's Labyrinth"
     ],
     "scryfallName": "Ugin's Labyrinth",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663565/cardimage.png"
-    },
     "oracleId": "d565cd3d-68d4-4039-9e45-7e69e31d0ffb",
-    "scryfallId": "020e1348-1a35-4cc8-bad6-9fbddfa79277",
+    "scryfallId": "5d1506f3-5121-4b83-b199-6594b41e7883",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -8800,11 +8536,8 @@ window.MTG_JP_CARD_INDEX = [
       "Ulamog, the Defiler"
     ],
     "scryfallName": "Ulamog, the Defiler",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663347/cardimage.png"
-    },
     "oracleId": "97836c48-8777-4b4e-98fb-e99204f38bdd",
-    "scryfallId": "fd00d56a-86bd-41d8-82b6-975404ef8067",
+    "scryfallId": "a73da8a4-301e-4a80-9430-1d5cae8bb7f9",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -8842,11 +8575,8 @@ window.MTG_JP_CARD_INDEX = [
       "Unstable Amulet"
     ],
     "scryfallName": "Unstable Amulet",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663474/cardimage.png"
-    },
     "oracleId": "f3d4f5ab-0ff4-48e1-8cf0-163b290804a5",
-    "scryfallId": "9d9949f5-8d6c-4ea9-b203-99e8a57a6c60",
+    "scryfallId": "25f01df9-c4fa-4598-84c1-217bde6b1841",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -9006,11 +8736,8 @@ window.MTG_JP_CARD_INDEX = [
       "Volatile Stormdrake"
     ],
     "scryfallName": "Volatile Stormdrake",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663411/cardimage.png"
-    },
     "oracleId": "08d64b16-9221-4532-890c-d5cdbf181e28",
-    "scryfallId": "2e6e3232-8bb8-4504-9597-dfdfc6d634bd",
+    "scryfallId": "ac5fb32c-6348-4d39-8d74-b345452b3875",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -9086,11 +8813,8 @@ window.MTG_JP_CARD_INDEX = [
       "Warren Soultrader"
     ],
     "scryfallName": "Warren Soultrader",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663442/cardimage.png"
-    },
     "oracleId": "ace86e56-efde-4eb7-8815-71456a4c3abe",
-    "scryfallId": "b334e4c6-d316-4141-8889-f95afcc04701",
+    "scryfallId": "17fd4d15-413f-41c5-b3e0-71bbb52851bc",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -9172,11 +8896,8 @@ window.MTG_JP_CARD_INDEX = [
       "Wheel of Potential"
     ],
     "scryfallName": "Wheel of Potential",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663476/cardimage.png"
-    },
     "oracleId": "95a7db5d-26f6-4192-9dc7-4342f7e0e9c5",
-    "scryfallId": "c4eb9a82-91f7-4741-a029-a07a3ff6af78",
+    "scryfallId": "9baaa353-e4ab-48e3-824c-712946ba0229",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -9214,11 +8935,8 @@ window.MTG_JP_CARD_INDEX = [
       "Wight of the Reliquary"
     ],
     "scryfallName": "Wight of the Reliquary",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663539/cardimage.png"
-    },
     "oracleId": "4507df69-6bf7-43d6-a609-c032b61835d5",
-    "scryfallId": "a15570c0-4210-4959-8584-987ec85f8283",
+    "scryfallId": "915715f7-5487-47aa-ada5-de1bce282164",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -9235,11 +8953,8 @@ window.MTG_JP_CARD_INDEX = [
       "Windswept Heath"
     ],
     "scryfallName": "Windswept Heath",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663567/cardimage.png"
-    },
     "oracleId": "29737a60-3ebd-40d9-b935-c4f54b90d45d",
-    "scryfallId": "bd1d13f7-fd38-4f0b-a8e0-1eac78668117",
+    "scryfallId": "3de8387d-a707-4c2b-9661-c586b7d0db50",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -9277,11 +8992,8 @@ window.MTG_JP_CARD_INDEX = [
       "Winter Moon"
     ],
     "scryfallName": "Winter Moon",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663545/cardimage.png"
-    },
     "oracleId": "b922f057-1c91-43eb-b74a-8a933b1be2d2",
-    "scryfallId": "f76bc2da-8f4b-4153-8a7b-c601b19affaf",
+    "scryfallId": "1ea94321-7311-4543-bdc0-23938a8904c3",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -9364,11 +9076,8 @@ window.MTG_JP_CARD_INDEX = [
       "Wooded Foothills"
     ],
     "scryfallName": "Wooded Foothills",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663568/cardimage.png"
-    },
     "oracleId": "6587a463-a108-4854-b6d1-944e89b8c8a4",
-    "scryfallId": "4e11ea8a-f895-438d-a3b7-f070238e4161",
+    "scryfallId": "32af6676-e780-4ebf-b2d3-0bc3436e527c",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },
@@ -9406,11 +9115,8 @@ window.MTG_JP_CARD_INDEX = [
       "Wrath of the Skies"
     ],
     "scryfallName": "Wrath of the Skies",
-    "images": {
-      "normal": "https://mtg-jp.com//img_sys/cardImages/MH3/663381/cardimage.png"
-    },
     "oracleId": "21efa6f2-3e7c-4576-b5a3-0b75b2843442",
-    "scryfallId": "4ef1882e-b422-4f30-8a6c-bd71c2601660",
+    "scryfallId": "7325714a-bd27-4215-9826-3785089ffa23",
     "releasedAt": "2024-06-14",
     "setName": "Modern Horizons 3"
   },

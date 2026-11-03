@@ -126,7 +126,12 @@
       observer.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['data-japanese-image']});scan();
       return ()=>observer.disconnect();
     }
-    return {displayImage,resolve,bind,validCard,observe};
+    // Japanese printings known only from reviewed shop images (Scryfall lists them in English only, e.g. store and box promos).
+    async function reviewedJapanesePrints(oracleId) {
+      if (!oracleId) return [];
+      return Object.values(await index()).filter(r => r?.oracleId === oracleId && r.source === 'verified-print-image' && (!r.language || r.language === 'ja') && trusted(r.images?.normal || '')).map(r => ({set:String(r.set),number:String(r.number),url:r.images.normal,printedName:r.printedName || ''}));
+    }
+    return {displayImage,resolve,bind,validCard,observe,reviewedJapanesePrints};
   }
   root.createMtgCardImages = createCardImages;
   const script = root.document?.currentScript;
