@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v351";
+const APP_VERSION = "v352";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -1286,8 +1286,11 @@ function wisdomGuildSearchUrl(card, cardName, options = {}) {
 
 async function fetchWisdomGuildHtml(url) {
   const readerUrl = `${WISDOM_GUILD_READER_PROXY}${url}`;
+  // On a price page with few listings the reader takes the sidebar for the main text and drops the price table,
+  // so it is asked for the table itself. Search pages keep the reader's own choice.
+  const readerHeaders = url.startsWith(WISDOM_GUILD_PRICE_BASE) ? { "x-target-selector": ".wg-wonder-price-table" } : undefined;
   const urls = [
-    { label: "Reader", url: readerUrl },
+    { label: "Reader", url: readerUrl, headers: readerHeaders },
     { label: "Wisdom Guild", url },
     { label: "AllOrigins", url: `${WISDOM_GUILD_CORS_PROXY}${encodeURIComponent(url)}` },
   ];
@@ -1296,7 +1299,7 @@ async function fetchWisdomGuildHtml(url) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 12000);
     try {
-      const response = await fetch(target.url, { signal: controller.signal });
+      const response = await fetch(target.url, { signal: controller.signal, headers: target.headers });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const text = await response.text();
       if (/MTG Pocket Library/.test(text) && !/Wisdom Guild|wonder\.wisdom-guild|Markdown Content:|wg-wonder-price-table/.test(text)) {
