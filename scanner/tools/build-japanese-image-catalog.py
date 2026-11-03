@@ -111,10 +111,16 @@ for card in cards.values():
             stats['supplementedFromSecondCatalogue']+=1
     # Reviewed full-frame replacements take precedence over cropped suppliers.
     # They still require exact printing/language/Oracle and never add a border.
+    # Reviewed corrections replace a Scryfall Japanese picture that shows another printing
+    # (SPG 109-113 show the foil-only 114-118 art).
     replacement=overrides.get(key)
-    if record and replacement and replacement.get('frame')=='full-card-reviewed' and replacement.get('oracleId')==card.get('oracle_id') and replacement.get('language')=='ja':
-        record=replacement
-        stats['reviewedFullFrameReplacements']+=1
+    if record and replacement and replacement.get('oracleId')==card.get('oracle_id') and replacement.get('language')=='ja':
+        if replacement.get('frame')=='full-card-reviewed':
+            record=replacement
+            stats['reviewedFullFrameReplacements']+=1
+        elif replacement.get('correction')=='scryfall-wrong-print-image':
+            record=replacement
+            stats['reviewedWrongPrintCorrections']+=1
     by_set[set_code]['total'] += 1
     if record:
         buckets[set_code][number] = record

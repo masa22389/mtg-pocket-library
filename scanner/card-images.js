@@ -51,12 +51,13 @@
     async function lookup(request) {
       const {set,number,language,oracleId,face} = request;
       const key = `https://mtg-pocket.invalid/card-image/${encodeURIComponent(set)}/${encodeURIComponent(number)}/${language}/${face}?oracle=${encodeURIComponent(oracleId)}`;
-      const saved = await cached(key); if (saved?.url) return saved;
+      // Japanese pictures check the local image data first, so a corrected record replaces a remembered URL at once.
+      const saved = await cached(key); if (saved?.url && language !== 'ja') return saved;
       if (language === 'ja') {
         const baseline = (await index())[set+':'+number];
         const known = baseline&&baseline.source!=='scryfall-ja'?baseline:(await setIndex(set))[numberKey(number)];
         const url = face ? known?.images?.back : known?.images?.normal;
-        if (url && trusted(url) && known.source !== 'scryfall-ja' && known.set===set && numberKey(known.number)===numberKey(number) && (!known.language||known.language==='ja') && (!oracleId || known.oracleId === oracleId)) return remember(key,{url,language:'ja',source:known.source,fallback:false},7);
+        if (url && trusted(url) && known.source !== 'scryfall-ja' && known.set===set && numberKey(known.number)===numberKey(number) && (!known.language||known.language==='ja') && (!oracleId || known.oracleId === oracleId)) return saved?.url === url ? saved : remember(key,{url,language:'ja',source:known.source,fallback:false},7);
       }
       // A previous negative result must not hide a newly supplied local image.
       if(saved)return saved;

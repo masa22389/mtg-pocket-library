@@ -34,8 +34,8 @@
     },
     {
       "path": "card-images.js",
-      "bytes": 11356,
-      "sha256": "fcffa9510eacc1abebfacffcd7e9997545ce2734332cc3166a7111c9ca7317fe"
+      "bytes": 11525,
+      "sha256": "2f8998e13fb342addf498b146f69761890913c0723ab35b1061cec4dde2bc340"
     },
     {
       "path": "collection-store.js",
@@ -60,7 +60,7 @@
     {
       "path": "data/japanese-image-manifest.json",
       "bytes": 44550,
-      "sha256": "e5ff3baf4febbc4d1ca0f106fcb6decfb4c2da5921f18dff1f3be2b68871f601"
+      "sha256": "54affeefe1e441b937a1bbef512afc30f2bb8a99948dff06b3439a5f679b4423"
     },
     {
       "path": "data/japanese-images.json",
@@ -238,6 +238,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 92759049,
-  "buildId": "cfb3903a6dc5"
+  "totalBytes": 92759218,
+  "buildId": "541b2d0c3839"
 }

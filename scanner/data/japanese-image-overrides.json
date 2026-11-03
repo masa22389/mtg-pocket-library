@@ -1172,5 +1172,95 @@
       "bodySimilarity": 0.7426,
       "blackEdgeMin": 1.0
     }
+  },
+  "spg:109": {
+    "set": "spg",
+    "number": "109",
+    "language": "ja",
+    "oracleId": "c5acf2a5-40f4-433d-a74d-1cb56c521464",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/TDM/jp_b5114f0f3d.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/176598?lang=JP",
+    "verifiedAt": "2026-11-03",
+    "correction": "scryfall-wrong-print-image",
+    "validation": "Scryfall ja image for this number is the foil-only #114 picture; manual review of Japanese title, printed number 0109 and art against the English printing",
+    "previousImage": "https://cards.scryfall.io/normal/front/8/0/80d13c5c-e218-4010-bdf6-868e63724a61.jpg?1792434783",
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "866e838cd54ec90bb5529eba07f3202d96314b2ee60b8f7a7ebfb88dc08bafb2"
+  },
+  "spg:110": {
+    "set": "spg",
+    "number": "110",
+    "language": "ja",
+    "oracleId": "dab520d0-20b4-4273-ba6b-eb07f85ea433",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/TDM/jp_3ccd57d55d.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/176599?lang=JP",
+    "verifiedAt": "2026-11-03",
+    "correction": "scryfall-wrong-print-image",
+    "validation": "Scryfall ja image for this number is the foil-only #115 picture; manual review of Japanese title, printed number 0110 and art against the English printing",
+    "previousImage": "https://cards.scryfall.io/normal/front/1/4/1405156a-fcbd-4055-b859-268bc4ec14e5.jpg?1792434818",
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "67d07f4f4c11ad386d30e70331cad58b0be72a63c1393c45fd108410620759df"
+  },
+  "spg:111": {
+    "set": "spg",
+    "number": "111",
+    "language": "ja",
+    "oracleId": "09dd85aa-47bc-4713-a9b9-8b52ff2285ed",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/TDM/jp_87c959e62b.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/176600?lang=JP",
+    "verifiedAt": "2026-11-03",
+    "correction": "scryfall-wrong-print-image",
+    "validation": "Scryfall ja image for this number is the foil-only #116 picture; manual review of Japanese title, printed number 0111 and art against the English printing",
+    "previousImage": "https://cards.scryfall.io/normal/front/3/e/3e0160be-3200-440a-851b-c54f467a396b.jpg?1792434852",
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "77cac46fc78fe8003c02a3f2304e7d5b2707a92adaf9442353e0a7d842cf303e"
+  },
+  "spg:112": {
+    "set": "spg",
+    "number": "112",
+    "language": "ja",
+    "oracleId": "cb027150-848c-4a66-88ad-e20222304dd8",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/TDM/jp_64759e914e.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/176601?lang=JP",
+    "verifiedAt": "2026-11-03",
+    "correction": "scryfall-wrong-print-image",
+    "validation": "Scryfall ja image for this number is the foil-only #117 picture; manual review of Japanese title, printed number 0112 and art against the English printing",
+    "previousImage": "https://cards.scryfall.io/normal/front/c/6/c6f9a4d6-488d-45c0-8605-a9f36677aec6.jpg?1792434891",
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "a28f377e4dbfed6318e5b72335f871c13e3a205cf1713824b7db7a0108a555a0"
+  },
+  "spg:113": {
+    "set": "spg",
+    "number": "113",
+    "language": "ja",
+    "oracleId": "67d60b24-d429-4ded-90d9-06e49f28c396",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/TDM/jp_4a3c6e7c69.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/176602?lang=JP",
+    "verifiedAt": "2026-11-03",
+    "correction": "scryfall-wrong-print-image",
+    "validation": "Scryfall ja image for this number is the foil-only #118 picture; manual review of Japanese title, printed number 0113 and art against the English printing",
+    "previousImage": "https://cards.scryfall.io/normal/front/d/7/d73bd3d4-16ea-42c6-ba32-dd3ddb60e021.jpg?1792434920",
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "98053eaffa055a214f3a89494763135942d3215cd2f6922f1023c54396ba8ab6"
   }
 }
