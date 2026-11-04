@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=355">
-  <link rel="stylesheet" href="mobile-inputs.css?v=355">
+  <link rel="stylesheet" href="styles.css?v=356">
+  <link rel="stylesheet" href="mobile-inputs.css?v=356">
 </head>
 <body>
   <header class="app-header">
@@ -89,7 +89,7 @@ const BACKGROUND_THEME_CHROME = {
     <section id="collectionView" class="view">
       <div class="hero-card">
         <div><span class="eyebrow">MY COLLECTION</span><h1>持っているカード</h1></div>
-        <div class="stats"><span><b id="totalCards">0</b>枚</span><span><b id="uniqueCards">0</b>種類</span><span class="value-stat"><b id="collectionValue">--</b>参考総額<small id="priceStatus">価格取得中</small></span></div>
+        <div class="stats"><span><b id="totalCards">0</b>枚</span><span><b id="uniqueCards">0</b>種類</span><span class="value-stat"><b id="collectionValue">--</b>参考総額<small id="priceStatus">価格取得中</small><small id="collectionGain" class="collection-gain" hidden></small></span></div>
       </div>
 
       <div class="collection-modes" role="group" aria-label="コレクションの表示方法"><button type="button" data-collection-mode="individual" aria-pressed="true">個別</button><button type="button" data-collection-mode="sets" aria-pressed="false">セット別</button></div>
@@ -155,7 +155,7 @@ const BACKGROUND_THEME_CHROME = {
       </div>
       <section id="setCollection" hidden>
         <label>言語<select id="setCardLanguage"><option value="en">英語</option><option value="ja">日本語</option></select></label>
-        <div id="setCatalog"><label>エキスパンションを検索<input id="setCatalogQuery" type="search" placeholder="日本語名・英語名・セットコード"></label><p id="setCatalogStatus" class="muted"></p><div id="setCatalogList" class="set-catalog"></div></div>
+        <div id="setCatalog"><label>エキスパンションを検索<input id="setCatalogQuery" type="search" placeholder="日本語名・英語名・セットコード"></label><label>並び順<select id="setCatalogSort"><option value="newest">新しい順</option><option value="progress">収集率が高い順</option><option value="value">資産額が高い順</option></select></label><p id="setCatalogStatus" class="muted"></p><div id="setCatalogList" class="set-catalog"></div></div>
         <div id="setContents" hidden>
           <button id="backToSetCatalog" type="button" class="ghost">← エキスパンション一覧</button>
           <h2 id="setContentsTitle"></h2>
@@ -324,6 +324,9 @@ const BACKGROUND_THEME_CHROME = {
         <button id="refreshCardPriceButton" type="button" class="ghost">価格を取得</button>
         <label>手動価格（1枚あたり・円）<input id="manualPriceInput" type="number" min="0" step="1" inputmode="numeric" placeholder="例：1280"></label>
         <div class="manual-price-actions"><button id="saveManualPriceButton" type="button" class="ghost">手動価格を保存</button><button id="clearManualPriceButton" type="button" class="ghost">手動価格を削除</button></div>
+        <label>購入価格（1枚あたり・円）<input id="purchasePriceInput" type="number" min="0" step="1" inputmode="numeric" placeholder="例：1000"></label>
+        <div class="manual-price-actions"><button id="savePurchasePriceButton" type="button" class="ghost">購入価格を保存</button><button id="clearPurchasePriceButton" type="button" class="ghost">購入価格を削除</button></div>
+        <p id="cardPurchaseSummary" class="muted" hidden></p>
       </section>
       <div class="card-owned-actions"><button id="deleteCardButton" type="button" class="danger">削除</button></div>
       <details id="favoriteGroupPanel" class="favorite-group-panel" hidden>
@@ -511,12 +514,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=355" defer></script>
-  <script src="scanner-host.js?v=355" defer></script>
+  <script src="storage.js?v=356" defer></script>
+  <script src="scanner-host.js?v=356" defer></script>
   <script src="mtg-jp-card-index.js?h=42e71c7c93ea" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=355" defer></script>
-  <script src="scanner/card-images.js?v=355" defer></script>
-  <script src="app.js?v=355" defer></script>
+  <script src="diagnostics.js?v=356" defer></script>
+  <script src="scanner/card-images.js?v=356" defer></script>
+  <script src="app.js?v=356" defer></script>
 </body>
 </html>

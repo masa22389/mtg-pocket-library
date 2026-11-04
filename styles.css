@@ -436,3 +436,5 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
  .deck-editor .deck-sort-buttons label{flex:1;min-width:0}
  .deck-editor .deck-sort-buttons select{width:100%;min-height:44px}
 }
+.stats .value-stat small.collection-gain{margin-top:4px;font-size:11px;font-weight:700;line-height:1.35;color:#f1e2c4}.stats .value-stat small.collection-gain[hidden]{display:none}
+.set-catalog-item{height:auto;padding-top:12px;padding-bottom:12px}.set-catalog-name{flex:1}.set-catalog-item .set-catalog-count{text-align:right}.set-catalog-item .set-catalog-count small{margin-top:3px}.set-progress{display:block;height:6px;margin-top:7px;border-radius:999px;background:var(--line);overflow:hidden}.set-progress i{display:block;height:100%;min-width:3px;border-radius:999px;background:#2f6f5e}

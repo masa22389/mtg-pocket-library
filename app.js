@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v355";
+const APP_VERSION = "v356";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -96,7 +96,7 @@ const els = {
   decrementQuantity: $("#decrementQuantity"), incrementQuantity: $("#incrementQuantity"),
   cardCondition: $("#cardCondition"), cardFinish: $("#cardFinish"), cardLanguage: $("#cardLanguage"),
   cardLocation: $("#cardLocation"), addCardButton: $("#addCardButton"), addCardToDeckButton: $("#addCardToDeckButton"),
-  cardActionStatus: $("#cardActionStatus"), manualPricePanel: $("#manualPricePanel"), manualPriceInput: $("#manualPriceInput"), saveManualPriceButton: $("#saveManualPriceButton"), clearManualPriceButton: $("#clearManualPriceButton"), deckDialog: $("#deckDialog"),
+  cardActionStatus: $("#cardActionStatus"), manualPricePanel: $("#manualPricePanel"), manualPriceInput: $("#manualPriceInput"), saveManualPriceButton: $("#saveManualPriceButton"), clearManualPriceButton: $("#clearManualPriceButton"), purchasePriceInput: $("#purchasePriceInput"), savePurchasePriceButton: $("#savePurchasePriceButton"), clearPurchasePriceButton: $("#clearPurchasePriceButton"), cardPurchaseSummary: $("#cardPurchaseSummary"), collectionGain: $("#collectionGain"), deckDialog: $("#deckDialog"),
   favoriteCardButton: $("#favoriteCardButton"), refreshCardPriceButton: $("#refreshCardPriceButton"), deleteCardButton: $("#deleteCardButton"),
   favoriteGroupPanel: $("#favoriteGroupPanel"), favoriteGroupSummary: $("#favoriteGroupSummary"), newFavoriteGroupName: $("#newFavoriteGroupName"),
   createFavoriteGroupButton: $("#createFavoriteGroupButton"), manageFavoriteGroupsButton: $("#manageFavoriteGroupsButton"), favoriteGroupList: $("#favoriteGroupList"),
@@ -731,6 +731,63 @@ function yenValueOf(card) {
   return usd != null && state.fx.usdJpy ? usd * state.fx.usdJpy * Number(card.quantity || 0) : null;
 }
 function unitYenValueOf(card) { const value = yenValueOf(card); const quantity = Number(card.quantity || 0); return value != null && quantity > 0 ? value / quantity : null; }
+// What was paid per card (yen), saved on the lot. A lot without one simply stays out of the totals.
+function purchasePriceOf(card) {
+  const price = card?.purchasePriceYen;
+  return price == null || price === "" || !Number.isFinite(Number(price)) ? null : Number(price);
+}
+// Merging two lots averages by quantity; when only one has a price, that price is kept.
+function mergedPurchasePrice(priceA, quantityA, priceB, quantityB) {
+  const a = priceA == null || priceA === "" ? null : Number(priceA), b = priceB == null || priceB === "" ? null : Number(priceB);
+  if (a == null) return b;
+  if (b == null) return a;
+  const total = Number(quantityA || 0) + Number(quantityB || 0);
+  return total > 0 ? Math.round((a * Number(quantityA || 0) + b * Number(quantityB || 0)) / total) : a;
+}
+// Gain counts only lots with both a purchase price and a current price, so it never compares unlike totals.
+function purchaseTotals(cards, valueOf) {
+  const totals = { paid: 0, quantity: 0, comparedPaid: 0, comparedValue: 0, comparedQuantity: 0 };
+  for (const card of cards) {
+    const price = purchasePriceOf(card), quantity = Number(card.quantity || 0);
+    if (price == null || quantity <= 0) continue;
+    totals.paid += price * quantity;
+    totals.quantity += quantity;
+    const value = valueOf(card);
+    if (value == null) continue;
+    totals.comparedPaid += price * quantity;
+    totals.comparedValue += value;
+    totals.comparedQuantity += quantity;
+  }
+  totals.gain = totals.comparedValue - totals.comparedPaid;
+  return totals;
+}
+function formatSignedYen(value) {
+  const rounded = Math.round(value);
+  return `${rounded > 0 ? "+" : rounded < 0 ? "−" : "±"}${formatYen(Math.abs(rounded))}`;
+}
+// Printings owned and their value per set. Every language, condition and finish of one number counts once.
+function setProgressBySet(cards, valueOf) {
+  const bySet = new Map();
+  for (const card of cards) {
+    if (!(Number(card.quantity || 0) > 0)) continue;
+    const code = String(card.set || "").toLowerCase();
+    if (!bySet.has(code)) bySet.set(code, { numbers: new Set(), value: 0 });
+    const entry = bySet.get(code);
+    entry.numbers.add(String(card.collectorNumber || ""));
+    entry.value += valueOf(card) || 0;
+  }
+  return bySet;
+}
+function setCompletionPercent(owned, total) {
+  return total > 0 ? Math.min(100, owned / total * 100) : null;
+}
+function setCompletionLabel(percent) {
+  if (percent == null) return "";
+  if (percent >= 100) return "100%";
+  if (percent >= 1) return `${Math.floor(percent)}%`;
+  return percent > 0 ? "1%未満" : "0%";
+}
+
 function collectionPriceDisplayValue(card) {
   return state.collectionPriceDisplayMode === "unit" ? unitYenValueOf(card) : yenValueOf(card);
 }
@@ -2001,6 +2058,7 @@ async function hydrateSetOptions() {
       name: set.name,
       released_at: set.released_at,
       set_type: set.set_type,
+      card_count: set.card_count,
     }));
     appStorage.setItem(KEYS.sets, JSON.stringify(state.sets));
     renderSetSelects();
@@ -3580,6 +3638,9 @@ function updateCardOwnedActions() {
     els.manualPriceInput.value = manual?.valueJpy != null ? String(Math.round(Number(manual.valueJpy))) : "";
   }
   if (els.clearManualPriceButton) els.clearManualPriceButton.disabled = hidden || !priceCacheEntryForCard(owned, "manual");
+  if (els.purchasePriceInput && owned && document.activeElement !== els.purchasePriceInput) els.purchasePriceInput.value = purchasePriceOf(owned) ?? "";
+  if (els.clearPurchasePriceButton) els.clearPurchasePriceButton.disabled = hidden || purchasePriceOf(owned) == null;
+  renderCardPurchaseSummary(owned);
   els.deleteCardButton.hidden = hidden;
   if (els.refreshCardPriceButton) {
     els.refreshCardPriceButton.hidden = hidden;
@@ -3933,6 +3994,8 @@ async function saveSelectedCardQuantity() {
         card.location === incoming.location;
       const mergeTarget = state.collection.find(sameLot);
       if (mergeTarget) {
+        const mergedPrice = mergedPurchasePrice(mergeTarget.purchasePriceYen, mergeTarget.quantity, owned?.purchasePriceYen, target);
+        if (mergedPrice != null) mergeTarget.purchasePriceYen = mergedPrice;
         mergeTarget.quantity = Number(mergeTarget.quantity || 0) + target;
         mergeTarget.favorite = mergeTarget.favorite || owned?.favorite || false;
         mergeTarget.favoriteGroupIds = [...new Set([...(mergeTarget.favoriteGroupIds || []), ...(owned?.favoriteGroupIds || [])])];
@@ -4076,6 +4139,7 @@ function renderCollection() {
   els.uniqueCards.textContent = state.collection.length;
   const valuedCards = state.collection.map(yenValueOf).filter(value => value != null);
   els.collectionValue.textContent = state.fx.usdJpy && valuedCards.length ? formatYen(valuedCards.reduce((sum, value) => sum + value, 0)) : "--";
+  renderCollectionGain();
   const priceSourceText = cardTraderToken() ? " · CardTrader優先" : "";
   els.priceStatus.textContent = state.fx.updatedAt ? `USD/JPY ${state.fx.usdJpy.toFixed(2)} · ${state.fx.source === "auto" ? new Date(state.fx.updatedAt).toLocaleDateString("ja-JP") + "更新" : "概算"}${priceSourceText}` : "為替取得中";
   if (document.activeElement !== els.usdJpyRate) els.usdJpyRate.value = state.fx.usdJpy || "";
@@ -4721,6 +4785,56 @@ function saveSelectedManualPrice() {
   renderCollection();
   updateCardOwnedActions();
   showInlineStatus(els.cardActionStatus, `手動価格を保存しました：${cardPriceLabel(card)}`, { sticky: true });
+}
+
+function renderCollectionGain() {
+  const element = els.collectionGain;
+  if (!element) return;
+  const totals = purchaseTotals(state.collection, yenValueOf);
+  element.hidden = !totals.quantity;
+  if (!totals.quantity) { element.textContent = ""; return; }
+  const skipped = totals.quantity - totals.comparedQuantity;
+  element.textContent = totals.comparedQuantity
+    ? `購入額 ${formatYen(totals.comparedPaid)} → 損益 ${formatSignedYen(totals.gain)}（${totals.comparedQuantity}枚分${skipped ? `・価格なし${skipped}枚は除く` : ""}）`
+    : `購入額 ${formatYen(totals.paid)}（${totals.quantity}枚分・現在の価格なし）`;
+}
+
+function renderCardPurchaseSummary(card) {
+  const element = els.cardPurchaseSummary;
+  if (!element) return;
+  const price = purchasePriceOf(card);
+  element.hidden = price == null;
+  if (price == null) { element.textContent = ""; return; }
+  const quantity = Number(card.quantity || 0), value = yenValueOf(card);
+  element.textContent = `購入額 ${formatYen(price * quantity)}（${quantity}枚）${value == null ? " / 現在の価格がないため損益は出せません" : ` / 現在 ${formatYen(value)} / 損益 ${formatSignedYen(value - price * quantity)}`}`;
+}
+
+function saveSelectedPurchasePrice() {
+  const card = selectedOwnedCard();
+  if (!card) return;
+  const raw = String(els.purchasePriceInput?.value || "").trim();
+  const price = raw ? Number(raw) : NaN;
+  if (!Number.isFinite(price) || price < 0) {
+    showInlineStatus(els.cardActionStatus, "購入価格は0円以上の数値で入力してください", { sticky: true });
+    return;
+  }
+  card.purchasePriceYen = Math.round(price);
+  persist(["collection"]);
+  renderCollection();
+  els.purchasePriceInput.value = card.purchasePriceYen;
+  updateCardOwnedActions();
+  showInlineStatus(els.cardActionStatus, `購入価格を保存しました：${formatYen(card.purchasePriceYen)} / 枚`, { sticky: true });
+}
+
+function clearSelectedPurchasePrice() {
+  const card = selectedOwnedCard();
+  if (!card) return;
+  delete card.purchasePriceYen;
+  persist(["collection"]);
+  renderCollection();
+  els.purchasePriceInput.value = "";
+  updateCardOwnedActions();
+  showInlineStatus(els.cardActionStatus, "購入価格を削除しました。", { sticky: true });
 }
 
 function clearSelectedManualPrice() {
@@ -7240,6 +7354,8 @@ els.favoriteCardButton?.addEventListener("click", toggleSelectedFavorite);
 els.refreshCardPriceButton?.addEventListener("click", refreshSelectedCardTraderPrice);
 els.saveManualPriceButton?.addEventListener("click", saveSelectedManualPrice);
 els.clearManualPriceButton?.addEventListener("click", clearSelectedManualPrice);
+els.savePurchasePriceButton?.addEventListener("click", saveSelectedPurchasePrice);
+els.clearPurchasePriceButton?.addEventListener("click", clearSelectedPurchasePrice);
 els.deleteCardButton.addEventListener("click", deleteSelectedOwned);
 els.createFavoriteGroupButton?.addEventListener("click", createFavoriteGroup);
 els.manageFavoriteGroupsButton?.addEventListener("click", openFavoriteGroupManager);
@@ -7525,14 +7641,20 @@ function isPlayableSetCatalogEntry(set) {
 }
 function renderSetCatalog() {
   const query = normalizeCardName($('#setCatalogQuery').value).replace(/[ー・\s-]/g, '');
-  const owned = setOwnedCounts();
-  const bySet = new Map();
-  for (const [key, count] of owned) if (count > 0) { const code = key.split(':')[0]; bySet.set(code, (bySet.get(code) || 0) + 1); }
+  const progress = setProgressBySet(state.collection, yenValueOf);
+  const ownedIn = set => progress.get(set.code)?.numbers.size || 0;
+  const percentIn = set => setCompletionPercent(ownedIn(set), Number(set.card_count || 0));
+  const sort = $('#setCatalogSort').value;
   const knownSets = getAllKnownSets();
   const sets = knownSets.filter(isPlayableSetCatalogEntry).filter(set => normalizeCardName(`${set.name} ${setCatalogLabel(set, knownSets)} ${set.code}`).replace(/[ー・\s-]/g, "").includes(query))
-    .sort((a,b) => b.released_at.localeCompare(a.released_at) || a.name.localeCompare(b.name));
+    .sort((a,b) => (sort === 'progress' ? (percentIn(b) ?? (ownedIn(b) ? 0 : -1)) - (percentIn(a) ?? (ownedIn(a) ? 0 : -1)) : 0)
+      || (sort === 'value' ? (progress.get(b.code)?.value || 0) - (progress.get(a.code)?.value || 0) : 0)
+      || b.released_at.localeCompare(a.released_at) || a.name.localeCompare(b.name));
   $('#setCatalogStatus').textContent = `${sets.length}セット`;
-  $('#setCatalogList').innerHTML = sets.map(set => `<button type="button" class="set-catalog-item" data-set-code="${esc(set.code)}"><span><strong>${esc(setCatalogLabel(set, knownSets))}</strong><small>${esc(set.code.toUpperCase())} · ${esc(set.released_at)}</small></span><span>所持 ${bySet.get(set.code) || 0}種 ›</span></button>`).join('');
+  $('#setCatalogList').innerHTML = sets.map(set => {
+    const owned = ownedIn(set), total = Number(set.card_count || 0), percent = percentIn(set), value = progress.get(set.code)?.value || 0;
+    return `<button type="button" class="set-catalog-item" data-set-code="${esc(set.code)}"><span class="set-catalog-name"><strong>${esc(setCatalogLabel(set, knownSets))}</strong><small>${esc(set.code.toUpperCase())} · ${esc(set.released_at)}</small>${owned && percent != null ? `<span class="set-progress" role="img" aria-label="収集率 ${setCompletionLabel(percent)}"><i style="width:${percent.toFixed(1)}%"></i></span>` : ""}</span><span class="set-catalog-count">所持 ${owned}${total ? ` / ${total}` : ""}種 ›${owned ? `<small>${[setCompletionLabel(percent), value ? formatYen(value) : ""].filter(Boolean).join(" · ")}</small>` : ""}</span></button>`;
+  }).join('');
 }
 async function openSetCollection(code) {
   const request = ++setBrowser.request;
@@ -7575,12 +7697,16 @@ function setCardMatchesFilters(card, filters) {
   return collectionMatchesCardFilters(normalized, filters)
     && (!filters.rarity || card.rarity === filters.rarity);
 }
+function setValueText() {
+  const value = setProgressBySet(state.collection, yenValueOf).get(setBrowser.code)?.value || 0;
+  return value ? ` · 資産額 ${formatYen(value)}` : "";
+}
 function renderSetCards() {
   const owned = setOwnedCounts(), query = normalizeCardName($('#setCardQuery').value), filter = $('#setOwnershipFilter').value;
   const filters = {color: $('#setCardColor').value, mana: $('#setCardMana').value, type: $('#setCardType').value, rarity: $('#setCardRarity').value};
   const cards = setBrowser.cards.filter(card => setCardMatchesFilters(card, filters) && (!query || cardSearchNames(card).some(name=>normalizeCardName(name).includes(query))) && (!filter || (filter === 'owned' ? (owned.get(setPrintKey(card)) || 0)>0 : !(owned.get(setPrintKey(card)) || 0))));
   const collected = setBrowser.cards.filter(card => (owned.get(setPrintKey(card)) || 0)>0).length;
-  $('#setContentsStatus').textContent = setBrowser.cards.length ? `収録 ${setBrowser.cards.length}種 · 所持 ${collected}種 · 該当 ${cards.length}種（所持枚数は全言語・状態・仕様の合計）` : '選択した言語の収録カードが見つかりませんでした。';
+  $('#setContentsStatus').textContent = setBrowser.cards.length ? `収録 ${setBrowser.cards.length}種 · 所持 ${collected}種（${setCompletionLabel(setCompletionPercent(collected, setBrowser.cards.length))}）${setValueText()} · 該当 ${cards.length}種（所持枚数は全言語・状態・仕様の合計）` : '選択した言語の収録カードが見つかりませんでした。';
   setBrowser.visible = cards.slice(0,setBrowser.limit);
   $('#setCardGrid').innerHTML = setBrowser.visible.map((card,index)=>`<button type="button" class="set-card" data-set-card="${index}" aria-label="${esc(nameOf(card))} #${esc(card.collector_number)}"><span class="set-card-image"><img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async"><b>所持 ${owned.get(setPrintKey(card)) || 0}</b></span><span>#${esc(card.collector_number)} ${esc(nameOf(card))}</span></button>`).join('');
   $('#moreSetCards').hidden = cards.length <= setBrowser.limit;
@@ -7595,6 +7721,7 @@ document.querySelectorAll('[data-collection-mode]').forEach(button=>button.addEv
   if (sets) {renderSetCatalog(); if(setBrowser.code && !setBrowser.loading)renderSetCards();}
 }));
 $('#setCatalogQuery').addEventListener('input',renderSetCatalog);
+$('#setCatalogSort').addEventListener('change',renderSetCatalog);
 $('#setCatalogList').addEventListener('click',event=>{const button=event.target.closest('[data-set-code]');if(button){$('#setFilterPanel').open=false;for (const id of ['setCardQuery','setOwnershipFilter','setCardColor','setCardMana','setCardType','setCardRarity']) $('#'+id).value='';openSetCollection(button.dataset.setCode)}});
 function closeSetContents(){++setBrowser.request;setBrowser.loading=false;setBrowser.code='';setBrowser.cards=[];$('#setContents').hidden=true;$('#setCatalog').hidden=false;renderSetCatalog();}
 $('#backToSetCatalog').addEventListener('click',()=>{if(history.state?.overlay==='set')history.back();else closeSetContents();});
