@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=356">
-  <link rel="stylesheet" href="mobile-inputs.css?v=356">
+  <link rel="stylesheet" href="styles.css?v=357">
+  <link rel="stylesheet" href="mobile-inputs.css?v=357">
 </head>
 <body>
   <header class="app-header">
@@ -319,6 +319,10 @@ const BACKGROUND_THEME_CHROME = {
         <button id="addPurchaseButton" type="button" class="ghost">購入候補</button>
         <p class="muted">選択中の収録版・状態・仕様で登録します。同じ候補は枚数を加算します。</p>
       </section>
+      <section id="cardDeckUsage" class="card-deck-usage" hidden>
+        <h3>入っているデッキ</h3><p id="cardDeckUsageSummary" class="muted"></p>
+        <div id="cardDeckUsageList" class="card-deck-usage-list"></div>
+      </section>
       <section id="manualPricePanel" class="manual-price-panel" hidden>
         <h3>価格</h3><p id="cardPriceSummary" class="muted"></p>
         <button id="refreshCardPriceButton" type="button" class="ghost">価格を取得</button>
@@ -514,12 +518,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=356" defer></script>
-  <script src="scanner-host.js?v=356" defer></script>
+  <script src="storage.js?v=357" defer></script>
+  <script src="scanner-host.js?v=357" defer></script>
   <script src="mtg-jp-card-index.js?h=42e71c7c93ea" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=356" defer></script>
-  <script src="scanner/card-images.js?v=356" defer></script>
-  <script src="app.js?v=356" defer></script>
+  <script src="diagnostics.js?v=357" defer></script>
+  <script src="scanner/card-images.js?v=357" defer></script>
+  <script src="app.js?v=357" defer></script>
 </body>
 </html>

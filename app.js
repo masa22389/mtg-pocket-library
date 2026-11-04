@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v356";
+const APP_VERSION = "v357";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -97,6 +97,7 @@ const els = {
   cardCondition: $("#cardCondition"), cardFinish: $("#cardFinish"), cardLanguage: $("#cardLanguage"),
   cardLocation: $("#cardLocation"), addCardButton: $("#addCardButton"), addCardToDeckButton: $("#addCardToDeckButton"),
   cardActionStatus: $("#cardActionStatus"), manualPricePanel: $("#manualPricePanel"), manualPriceInput: $("#manualPriceInput"), saveManualPriceButton: $("#saveManualPriceButton"), clearManualPriceButton: $("#clearManualPriceButton"), purchasePriceInput: $("#purchasePriceInput"), savePurchasePriceButton: $("#savePurchasePriceButton"), clearPurchasePriceButton: $("#clearPurchasePriceButton"), cardPurchaseSummary: $("#cardPurchaseSummary"), collectionGain: $("#collectionGain"), deckDialog: $("#deckDialog"),
+  cardDeckUsage: $("#cardDeckUsage"), cardDeckUsageSummary: $("#cardDeckUsageSummary"), cardDeckUsageList: $("#cardDeckUsageList"),
   favoriteCardButton: $("#favoriteCardButton"), refreshCardPriceButton: $("#refreshCardPriceButton"), deleteCardButton: $("#deleteCardButton"),
   favoriteGroupPanel: $("#favoriteGroupPanel"), favoriteGroupSummary: $("#favoriteGroupSummary"), newFavoriteGroupName: $("#newFavoriteGroupName"),
   createFavoriteGroupButton: $("#createFavoriteGroupButton"), manageFavoriteGroupsButton: $("#manageFavoriteGroupsButton"), favoriteGroupList: $("#favoriteGroupList"),
@@ -3629,6 +3630,7 @@ function clearSameNameCollection(restore = true) {
 function updateCardOwnedActions() {
   const total = $("#sameNameOwnedTotal");
   if (total) total.textContent = `${sameCardNameOwnedTotal(state.selectedCard, state.collection).toLocaleString("ja-JP")}枚`;
+  renderCardDeckUsage();
   const owned = selectedOwnedCard();
   const hidden = state.cardDialogMode === "deck" || !owned;
   if (els.favoriteCardButton) els.favoriteCardButton.hidden = true;
@@ -5461,6 +5463,53 @@ function deckEntryMatchesCard(entry, card) {
   const cardNumber = String(card.collectorNumber || card.collector_number || "");
   if (entrySet && cardSet && entryNumber && cardNumber && entrySet === cardSet && entryNumber === cardNumber) return true;
   return false;
+}
+
+// Which decks use a card, read from each deck's latest version (what opening the deck shows). Matching follows
+// deckEntryMatchesCard, so another printing of the same card counts. Candidates ("maybe") are not counted as used.
+function deckLatestEntries(deck) {
+  const versions = Array.isArray(deck?.versions) ? deck.versions : [];
+  if (!versions.length) return deck?.entries || [];
+  const latest = versions.reduce((a, b) => a.number > b.number ? a : b);
+  if (deck.activeVersion === latest.number) return deck.entries || [];
+  return (latest.draft || latest).entries || [];
+}
+
+function deckUsageForCard(card, decks) {
+  if (!card) return [];
+  const usage = [];
+  (decks || []).forEach(deck => {
+    const counts = { commander: 0, main: 0, side: 0, maybe: 0 };
+    deckLatestEntries(deck).forEach(entry => {
+      if (!deckEntryMatchesCard(entry, card)) return;
+      counts[counts[entry.section] == null ? "main" : entry.section] += Number(entry.quantity || 0);
+    });
+    if (counts.commander + counts.main + counts.side + counts.maybe > 0) usage.push({ deck, counts, used: counts.commander + counts.main + counts.side });
+  });
+  return usage;
+}
+
+function renderCardDeckUsage() {
+  const panel = els.cardDeckUsage;
+  if (!panel) return;
+  const canOpenDeck = !["deck", "scanner"].includes(state.cardDialogMode) && !els.deckDialog.open;
+  const usage = canOpenDeck ? deckUsageForCard(state.selectedCard, state.decks) : [];
+  panel.hidden = !usage.length;
+  els.cardDeckUsageList.replaceChildren(...usage.map(({ deck, counts }) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "ghost";
+    button.dataset.openDeck = deck.id;
+    const name = document.createElement("span");
+    name.textContent = deck.name || "名称未設定";
+    const detail = document.createElement("small");
+    detail.textContent = ["commander", "main", "side", "maybe"].filter(section => counts[section] > 0).map(section => `${sectionLabel(section)} ${counts[section]}`).join("・");
+    button.append(name, detail);
+    return button;
+  }));
+  if (!usage.length) { els.cardDeckUsageSummary.textContent = ""; return; }
+  const used = usage.reduce((sum, item) => sum + item.used, 0);
+  els.cardDeckUsageSummary.textContent = `${usage.length}個のデッキ・使用 ${used}枚（所持 ${sameCardNameOwnedTotal(state.selectedCard, state.collection)}枚）`;
 }
 
 function ownedQuantityForDeckCard(card) {
@@ -7357,6 +7406,12 @@ els.clearManualPriceButton?.addEventListener("click", clearSelectedManualPrice);
 els.savePurchasePriceButton?.addEventListener("click", saveSelectedPurchasePrice);
 els.clearPurchasePriceButton?.addEventListener("click", clearSelectedPurchasePrice);
 els.deleteCardButton.addEventListener("click", deleteSelectedOwned);
+els.cardDeckUsageList.addEventListener("click", event => {
+  const button = event.target.closest("[data-open-deck]");
+  if (!button) return;
+  els.cardDialog.close();
+  openDeck(button.dataset.openDeck);
+});
 els.createFavoriteGroupButton?.addEventListener("click", createFavoriteGroup);
 els.manageFavoriteGroupsButton?.addEventListener("click", openFavoriteGroupManager);
 els.closeFavoriteGroupManager?.addEventListener("click", () => els.favoriteGroupManagerDialog?.close());
