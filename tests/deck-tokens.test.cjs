@@ -24,4 +24,18 @@ assert.equal(list.find(t=>t.name==='Monarch').image,'');
 const ja=c.japaneseTokenImages([{lang:'ja',oracle_id:'a',image_status:'lowres',image_uris:{normal:'low.jpg'}},{lang:'ja',oracle_id:'a',image_status:'highres_scan',image_uris:{normal:'high.jpg'}},{lang:'ja',oracle_id:'a',image_status:'lowres',image_uris:{normal:'later.jpg'}},{lang:'en',oracle_id:'b',image_uris:{normal:'en.jpg'}},{lang:'ja',oracle_id:'c'},{lang:'ja',oracle_id:'d',card_faces:[{image_uris:{normal:'face.jpg'}}]}]);
 assert.equal(ja.get('a').image,'high.jpg');assert.equal(ja.has('b'),false);assert.equal(ja.has('c'),false);assert.equal(ja.get('d').image,'face.jpg');
 assert.equal(list[0].oracleId,'tr');
+// Names: subtypes compose, markers and emblems have their own names, and a proper name or unknown word stays English.
+assert.equal(c.tokenJapaneseName('Treasure','Token Artifact — Treasure'),'宝物');
+assert.equal(c.tokenJapaneseName('Human Knight','Token Creature — Human Knight'),'人間・騎士');
+assert.equal(c.tokenJapaneseName('Orc Army','Token Creature — Orc Army'),'オーク・軍団');
+assert.equal(c.tokenJapaneseName('The Monarch','Card'),'統治者');
+assert.equal(c.tokenJapaneseName('Elspeth, Knight-Errant Emblem','Emblem — Elspeth'),'紋章');
+assert.equal(c.tokenJapaneseName('Marit Lage','Legendary Token Creature — Avatar'),'');
+assert.equal(c.tokenJapaneseName('On an Adventure','Card'),'');
+// Types: every word must be known, or the English line is kept.
+assert.equal(c.tokenJapaneseType('Token Creature — Human Knight'),'トークン・クリーチャー — 人間・騎士');
+assert.equal(c.tokenJapaneseType('Token Artifact — Clue'),'トークン・アーティファクト — 手掛かり');
+assert.equal(c.tokenJapaneseType('Legendary Token Creature — Avatar'),'伝説のトークン・クリーチャー — アバター');
+assert.equal(c.tokenJapaneseType('Token Creature — Nonsense'),'');
+assert.equal(c.tokenJapaneseType('Card'),'');
 console.log('PASS: token parts, lookups and the merged list.');

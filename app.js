@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v359";
+const APP_VERSION = "v360";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5707,6 +5707,28 @@ function buildDeckTokenList(sources, details) {
   return [...tokens.values()].map(token => ({ ...token, sources: [...token.sources] })).sort((a, b) => b.sources.length - a.sources.length || a.name.localeCompare(b.name));
 }
 
+// Japanese token subtypes, taken by lining up English and Japanese type lines and rules text on Scryfall's Japanese cards.
+const TOKEN_JA_WORDS = {Army:"軍団",Aetherborn:"霊基体",Alien:"エイリアン",Ally:"同盟者",Angel:"天使",Ape:"類人猿",Assassin:"暗殺者","Assembly-Worker":"組立作業員",Astartes:"アスタルテス",Aura:"オーラ",Avatar:"アバター",Badger:"アナグマ",Bat:"コウモリ",Bear:"熊",Beast:"ビースト",Berserker:"狂戦士",Bird:"鳥",Blood:"血",Boar:"猪",Cat:"猫",Centaur:"ケンタウルス",Citizen:"市民",Cleric:"クレリック",Clown:"道化師",Clue:"手掛かり",Construct:"構築物",Crab:"カニ",Dalek:"ダーレク",Demon:"デーモン",Detective:"探偵",Devil:"デビル",Dinosaur:"恐竜",Djinn:"ジン",Dog:"犬",Dragon:"ドラゴン",Drake:"ドレイク",Drone:"ドローン",Druid:"ドルイド",Dryad:"ドライアド",Dwarf:"ドワーフ",Egg:"卵",Elder:"エルダー",Eldrazi:"エルドラージ",Elemental:"エレメンタル",Elephant:"象",Elf:"エルフ",Elk:"大鹿",Equipment:"装備品",Faerie:"フェアリー",Fish:"魚",Food:"食物",Fox:"狐",Fractal:"フラクタル",Frog:"カエル",Fungus:"ファンガス",Gargoyle:"ガーゴイル",Germ:"細菌",Giant:"巨人",Glimmer:"光霊",Gnome:"ノーム",Goat:"ヤギ",Goblin:"ゴブリン",God:"神",Gold:"金",Golem:"ゴーレム",Gremlin:"グレムリン",Griffin:"グリフィン",Halfling:"ハーフリング",Hamster:"ハムスター",Harpy:"ハーピー",Hellion:"ヘリオン",Hero:"英雄",Hippo:"カバ",Homunculus:"ホムンクルス",Horror:"ホラー",Horse:"馬",Human:"人間",Hydra:"ハイドラ",Illusion:"イリュージョン",Imp:"インプ",Incubator:"培養器",Inkling:"墨獣",Insect:"昆虫",Jackal:"ジャッカル",Junk:"ジャンク",Kavu:"カヴー",Kithkin:"キスキン",Knight:"騎士",Kobold:"コボルド",Kor:"コー",Kraken:"クラーケン",Leviathan:"リバイアサン",Lhurgoyf:"ルアゴイフ",Lizard:"トカゲ",Manticore:"マンティコア",Map:"地図",Mercenary:"傭兵",Merfolk:"マーフォーク",Minion:"ミニオン",Minotaur:"ミノタウルス",Mite:"ダニ",Monk:"モンク",Monkey:"猿",Moonfolk:"ムーンフォーク",Mouse:"ハツカネズミ",Mutant:"ミュータント",Myr:"マイア",Necron:"ネクロン",Nightmare:"ナイトメア",Ninja:"忍者",Noble:"貴族",Octopus:"タコ",Ogre:"オーガ",Ooze:"ウーズ",Orc:"オーク",Otter:"カワウソ",Ox:"雄牛",Pegasus:"ペガサス",Pest:"邪魔者",Phyrexian:"ファイレクシアン",Pilot:"操縦士",Pirate:"海賊",Plant:"植物",Possum:"フクロネズミ",Powerstone:"パワーストーン",Rabbit:"兎",Raccoon:"アライグマ",Rat:"ネズミ",Rebel:"レベル",Reflection:"反射",Rhino:"サイ",Robot:"ロボット",Rogue:"ならず者",Role:"役割",Salamander:"サラマンダー",Samurai:"侍",Saproling:"苗木",Satyr:"サテュロス",Scarecrow:"カカシ",Scientist:"科学者",Scion:"末裔",Scorpion:"蠍",Scout:"スカウト",Sculpture:"彫像",Serf:"農奴",Serpent:"海蛇",Servo:"霊気装置",Shaman:"シャーマン",Shapeshifter:"多相の戦士",Shard:"破片",Shark:"サメ",Sheep:"羊",Shrine:"祭殿",Skeleton:"スケルトン",Sliver:"スリヴァー",Slug:"ナメクジ",Snail:"カタツムリ",Snake:"蛇",Soldier:"兵士",Spacecraft:"宇宙船",Spawn:"落とし子",Sphinx:"スフィンクス",Spider:"蜘蛛",Spirit:"スピリット",Squid:"イカ",Squirrel:"リス",Survivor:"生存者",Tentacle:"触手",Thopter:"飛行機械",Thrull:"スラル",Toy:"玩具",Treasure:"宝物",Treefolk:"ツリーフォーク",Troll:"トロール",Turtle:"海亀",Tyranid:"ティラニッド",Vampire:"吸血鬼",Varmint:"匪獣",Vehicle:"機体",Vibranium:"ヴィブラニウム",Villain:"悪人",Wall:"壁",Warlock:"邪術師",Warrior:"戦士",Weird:"奇魔",Whale:"鯨",Wizard:"ウィザード",Wolf:"狼",Worm:"蟲",Wraith:"レイス",Wurm:"ワーム",Zombie:"ゾンビ"};
+const TOKEN_JA_NAMES = { "The Monarch": "統治者", "The Initiative": "イニシアチブ", "The Ring": "指輪", "Poison Counter": "毒カウンター", "Energy Reserve": "エネルギー" };
+const TOKEN_JA_TYPES = { Token: "トークン", Creature: "クリーチャー", Artifact: "アーティファクト", Enchantment: "エンチャント", Land: "土地", Legendary: "伝説の", Snow: "氷雪" };
+
+// A name that is only known subtypes is translated; a proper name stays in English.
+function tokenJapaneseName(name, typeLine = "") {
+  if (TOKEN_JA_NAMES[name]) return TOKEN_JA_NAMES[name];
+  if (/^Emblem\b/.test(typeLine)) return "紋章";
+  const words = String(name || "").split(/\s+/).filter(Boolean);
+  return words.length && words.every(word => TOKEN_JA_WORDS[word]) ? words.map(word => TOKEN_JA_WORDS[word]).join("・") : "";
+}
+
+function tokenJapaneseType(typeLine) {
+  const [types, subtypes = ""] = String(typeLine || "").split(" // ")[0].split(/\s+—\s+/);
+  const typeWords = types.split(/\s+/).filter(Boolean), subWords = subtypes.split(/\s+/).filter(Boolean);
+  if (!typeWords.length || !typeWords.every(word => TOKEN_JA_TYPES[word]) || !subWords.every(word => TOKEN_JA_WORDS[word])) return "";
+  const translated = typeWords.map(word => TOKEN_JA_TYPES[word]);
+  const legendary = translated[0] === "伝説の" ? translated.shift() : "";
+  return legendary + translated.join("・") + (subWords.length ? ` — ${subWords.map(word => TOKEN_JA_WORDS[word]).join("・")}` : "");
+}
+
 // Scryfall holds few Japanese tokens, and they carry no Japanese name, so this picks an image per token: sharpest scan first.
 function japaneseTokenImages(cards) {
   const images = new Map();
@@ -5777,8 +5799,9 @@ async function refreshDeckTokens() {
 function renderDeckTokens() {
   const tokens = deckTokenRows;
   const japanese = tokens.filter(token => deckTokenJaImages?.has(token.oracleId)).length;
+  const japaneseNames = tokens.filter(token => tokenJapaneseName(token.name, token.typeLine)).length;
   els.deckTokenCount.textContent = tokens.length ? `${tokens.length}種` : "";
-  els.deckTokenLanguage.hidden = !japanese;
+  els.deckTokenLanguage.hidden = !japanese && !japaneseNames;
   els.deckTokenLanguage.querySelectorAll("button").forEach(button => {
     const active = button.dataset.tokenLanguage === deckTokenLanguage;
     button.classList.toggle("active", active);
@@ -5787,14 +5810,15 @@ function renderDeckTokens() {
   const notes = [
     tokens.length ? "" : "このデッキで使うトークンは見つかりませんでした。",
     deckTokenUnchecked ? `${deckTokenUnchecked}種類のカードは確認できませんでした。` : "",
-    !tokens.length ? "" : !deckTokenJaImages ? "日本語版を確認できなかったため、英語版で表示しています。" : japanese ? `日本語版があるのは${tokens.length}種中${japanese}種です。名前は英語で表示します。` : "このデッキのトークンは英語版のみです。",
+    !tokens.length ? "" : !deckTokenJaImages ? "日本語版を確認できなかったため、英語版で表示しています。" : `日本語版の画像があるのは${tokens.length}種中${japanese}種です。`,
   ].filter(Boolean);
   els.deckTokenStatus.textContent = notes.join("");
   els.deckTokenStatus.hidden = !notes.length;
+  const japaneseOn = deckTokenLanguage === "ja";
   els.deckTokenList.innerHTML = tokens.map(token => {
     const stats = token.power != null ? `${token.power}/${token.toughness}` : "";
     const image = (deckTokenLanguage === "ja" && deckTokenJaImages?.get(token.oracleId)?.image) || token.image;
-    return `<li>${image ? `<img src="${esc(image)}" alt="" loading="lazy">` : ""}<div><b>${esc(token.name)}${stats ? ` <span>${esc(stats)}</span>` : ""}</b><small>${esc(token.typeLine === "Card" ? "補助カード" : token.typeLine)}</small><small>${esc(token.sources.join("、"))}</small></div></li>`;
+    return `<li>${image ? `<img src="${esc(image)}" alt="" loading="lazy">` : ""}<div><b>${esc(japaneseOn && tokenJapaneseName(token.name, token.typeLine) || token.name)}${stats ? ` <span>${esc(stats)}</span>` : ""}</b><small>${esc(token.typeLine === "Card" ? "補助カード" : japaneseOn && /^Emblem\b/.test(token.typeLine) ? token.name.replace(/ Emblem$/, "") : japaneseOn && tokenJapaneseType(token.typeLine) || token.typeLine)}</small><small>${esc(token.sources.join("、"))}</small></div></li>`;
   }).join("");
 }
 
