@@ -20,4 +20,8 @@ assert.equal(list.length,4);assert.equal(list[0].name,'Treasure');assert.deepEqu
 assert.deepEqual(list.filter(t=>t.name==='Soldier').map(t=>t.power).sort(),['1','2']);
 assert.equal(list.find(t=>t.power==='1').image,'s.jpg');
 assert.equal(list.find(t=>t.name==='Monarch').image,'');
+// Japanese images: other languages and imageless cards are skipped, and a sharper scan replaces a low-resolution one.
+const ja=c.japaneseTokenImages([{lang:'ja',oracle_id:'a',image_status:'lowres',image_uris:{normal:'low.jpg'}},{lang:'ja',oracle_id:'a',image_status:'highres_scan',image_uris:{normal:'high.jpg'}},{lang:'ja',oracle_id:'a',image_status:'lowres',image_uris:{normal:'later.jpg'}},{lang:'en',oracle_id:'b',image_uris:{normal:'en.jpg'}},{lang:'ja',oracle_id:'c'},{lang:'ja',oracle_id:'d',card_faces:[{image_uris:{normal:'face.jpg'}}]}]);
+assert.equal(ja.get('a').image,'high.jpg');assert.equal(ja.has('b'),false);assert.equal(ja.has('c'),false);assert.equal(ja.get('d').image,'face.jpg');
+assert.equal(list[0].oracleId,'tr');
 console.log('PASS: token parts, lookups and the merged list.');

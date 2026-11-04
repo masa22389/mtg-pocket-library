@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v358";
+const APP_VERSION = "v359";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -106,7 +106,7 @@ const els = {
   manageFavoriteGroupName: $("#manageFavoriteGroupName"), saveFavoriteGroupName: $("#saveFavoriteGroupName"), manageFavoriteGroupSearch: $("#manageFavoriteGroupSearch"),
   deleteManagedFavoriteGroup: $("#deleteManagedFavoriteGroup"), manageFavoriteGroupStatus: $("#manageFavoriteGroupStatus"), manageFavoriteGroupCards: $("#manageFavoriteGroupCards"),
   deckName: $("#deckName"), deckFormat: $("#deckFormat"), deckCount: $("#deckCount"),
-  deckTokenPanel: $("#deckTokenPanel"), deckTokenCount: $("#deckTokenCount"), deckTokenStatus: $("#deckTokenStatus"), deckTokenList: $("#deckTokenList"),
+  deckTokenPanel: $("#deckTokenPanel"), deckTokenCount: $("#deckTokenCount"), deckTokenLanguage: $("#deckTokenLanguage"), deckTokenStatus: $("#deckTokenStatus"), deckTokenList: $("#deckTokenList"),
   deckMissing: $("#deckMissing"), deckStats: $("#deckStats"), deckMissingList: $("#deckMissingList"), deckDates: $("#deckDates"), deckMemo: $("#deckMemo"), deckCardFilter: $("#deckCardFilter"), deckSection: $("#deckSection"),
   openDeckOwnedAdd: $("#openDeckOwnedAdd"), openDeckSearchAdd: $("#openDeckSearchAdd"),
   deckOwnedAddDialog: $("#deckOwnedAddDialog"), deckSearchAddDialog: $("#deckSearchAddDialog"),
@@ -5701,14 +5701,35 @@ function buildDeckTokenList(sources, details) {
   sources.forEach(({ name, parts }) => parts.forEach(part => {
     const detail = details.get(part.id);
     const key = detail?.oracle_id || `${part.name}|${part.type_line}`;
-    if (!tokens.has(key)) tokens.set(key, { name: detail?.name || part.name, typeLine: detail?.type_line || part.type_line || "", power: detail?.power, toughness: detail?.toughness, image: detail?.image_uris?.normal || detail?.card_faces?.[0]?.image_uris?.normal || "", sources: new Set() });
+    if (!tokens.has(key)) tokens.set(key, { oracleId: detail?.oracle_id || "", name: detail?.name || part.name, typeLine: detail?.type_line || part.type_line || "", power: detail?.power, toughness: detail?.toughness, image: detail?.image_uris?.normal || detail?.card_faces?.[0]?.image_uris?.normal || "", sources: new Set() });
     tokens.get(key).sources.add(name);
   }));
   return [...tokens.values()].map(token => ({ ...token, sources: [...token.sources] })).sort((a, b) => b.sources.length - a.sources.length || a.name.localeCompare(b.name));
 }
 
+// Scryfall holds few Japanese tokens, and they carry no Japanese name, so this picks an image per token: sharpest scan first.
+function japaneseTokenImages(cards) {
+  const images = new Map();
+  (cards || []).forEach(card => {
+    const image = card.image_uris?.normal || card.card_faces?.[0]?.image_uris?.normal;
+    if (card.lang !== "ja" || !image || !card.oracle_id) return;
+    const current = images.get(card.oracle_id);
+    if (!current || (card.image_status === "highres_scan" && !current.highres)) images.set(card.oracle_id, { image, highres: card.image_status === "highres_scan" });
+  });
+  return images;
+}
+
 const deckTokenPartsCache = new Map(), deckTokenDetailCache = new Map();
-let deckTokenRequest = 0, deckTokenTimer = 0;
+const DECK_TOKEN_LANGUAGE_KEY = "mtg-pocket.deckTokenLanguage.v1";
+let deckTokenRequest = 0, deckTokenTimer = 0, deckTokenJaImages = null, deckTokenRows = [], deckTokenUnchecked = 0;
+let deckTokenLanguage = appStorage.getItem(DECK_TOKEN_LANGUAGE_KEY) === "en" ? "en" : "ja";
+
+// One request covers every Japanese token, so it is asked once. A failure leaves English images and asks again next time.
+async function loadJapaneseTokenImages() {
+  if (deckTokenJaImages) return;
+  const result = await fetchAllScryfallSearch("lang:ja include:extras (t:token or t:emblem or t:dungeon or t:card)");
+  if (result.ok) deckTokenJaImages = japaneseTokenImages(result.data.data);
+}
 
 async function fetchDeckTokenChunks(identifiers, onCard) {
   for (let index = 0; index < identifiers.length; index += 75) {
@@ -5741,9 +5762,11 @@ async function refreshDeckTokens() {
     const sources = [...lookups.values()].map(lookup => ({ name: lookup.name, parts: deckTokenPartsCache.get(lookup.key) || [] }));
     const partIds = [...new Set(sources.flatMap(source => source.parts.map(part => part.id)))].filter(id => !deckTokenDetailCache.has(id));
     await fetchDeckTokenChunks(partIds.map(id => ({ id })), card => deckTokenDetailCache.set(card.id, card));
+    await loadJapaneseTokenImages();
     if (request !== deckTokenRequest) return;
-    const unchecked = [...lookups.keys()].filter(key => !deckTokenPartsCache.has(key)).length;
-    renderDeckTokens(buildDeckTokenList(sources, deckTokenDetailCache), unchecked);
+    deckTokenUnchecked = [...lookups.keys()].filter(key => !deckTokenPartsCache.has(key)).length;
+    deckTokenRows = buildDeckTokenList(sources, deckTokenDetailCache);
+    renderDeckTokens();
   } catch {
     if (request !== deckTokenRequest) return;
     els.deckTokenStatus.textContent = navigator.onLine ? "トークンを取得できませんでした。閉じて開き直すと再度確認します。" : "オフラインのためトークンを確認できません。";
@@ -5751,21 +5774,36 @@ async function refreshDeckTokens() {
   }
 }
 
-function renderDeckTokens(tokens, unchecked) {
+function renderDeckTokens() {
+  const tokens = deckTokenRows;
+  const japanese = tokens.filter(token => deckTokenJaImages?.has(token.oracleId)).length;
   els.deckTokenCount.textContent = tokens.length ? `${tokens.length}種` : "";
-  const notes = [tokens.length ? "" : "このデッキで使うトークンは見つかりませんでした。", unchecked ? `${unchecked}種類のカードは確認できませんでした。` : ""].filter(Boolean);
+  els.deckTokenLanguage.hidden = !japanese;
+  els.deckTokenLanguage.querySelectorAll("button").forEach(button => {
+    const active = button.dataset.tokenLanguage === deckTokenLanguage;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active);
+  });
+  const notes = [
+    tokens.length ? "" : "このデッキで使うトークンは見つかりませんでした。",
+    deckTokenUnchecked ? `${deckTokenUnchecked}種類のカードは確認できませんでした。` : "",
+    !tokens.length ? "" : !deckTokenJaImages ? "日本語版を確認できなかったため、英語版で表示しています。" : japanese ? `日本語版があるのは${tokens.length}種中${japanese}種です。名前は英語で表示します。` : "このデッキのトークンは英語版のみです。",
+  ].filter(Boolean);
   els.deckTokenStatus.textContent = notes.join("");
   els.deckTokenStatus.hidden = !notes.length;
   els.deckTokenList.innerHTML = tokens.map(token => {
     const stats = token.power != null ? `${token.power}/${token.toughness}` : "";
-    return `<li>${token.image ? `<img src="${esc(token.image)}" alt="" loading="lazy">` : ""}<div><b>${esc(token.name)}${stats ? ` <span>${esc(stats)}</span>` : ""}</b><small>${esc(token.typeLine === "Card" ? "補助カード" : token.typeLine)}</small><small>${esc(token.sources.join("、"))}</small></div></li>`;
+    const image = (deckTokenLanguage === "ja" && deckTokenJaImages?.get(token.oracleId)?.image) || token.image;
+    return `<li>${image ? `<img src="${esc(image)}" alt="" loading="lazy">` : ""}<div><b>${esc(token.name)}${stats ? ` <span>${esc(stats)}</span>` : ""}</b><small>${esc(token.typeLine === "Card" ? "補助カード" : token.typeLine)}</small><small>${esc(token.sources.join("、"))}</small></div></li>`;
   }).join("");
 }
 
 function resetDeckTokenPanel() {
   ++deckTokenRequest;
   els.deckTokenPanel.open = false;
+  deckTokenRows = [];
   els.deckTokenCount.textContent = "";
+  els.deckTokenLanguage.hidden = true;
   els.deckTokenStatus.hidden = true;
   els.deckTokenList.replaceChildren();
 }
@@ -7504,6 +7542,13 @@ els.savePurchasePriceButton?.addEventListener("click", saveSelectedPurchasePrice
 els.clearPurchasePriceButton?.addEventListener("click", clearSelectedPurchasePrice);
 els.deleteCardButton.addEventListener("click", deleteSelectedOwned);
 els.deckTokenPanel.addEventListener("toggle", () => { if (els.deckTokenPanel.open) refreshDeckTokens(); });
+els.deckTokenLanguage.addEventListener("click", event => {
+  const language = event.target.closest("[data-token-language]")?.dataset.tokenLanguage;
+  if (!language) return;
+  deckTokenLanguage = language;
+  appStorage.setItem(DECK_TOKEN_LANGUAGE_KEY, language);
+  renderDeckTokens();
+});
 els.cardDeckUsageList.addEventListener("click", event => {
   const button = event.target.closest("[data-open-deck]");
   if (!button) return;
