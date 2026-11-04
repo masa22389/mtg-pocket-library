@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v357";
+const APP_VERSION = "v358";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -106,6 +106,7 @@ const els = {
   manageFavoriteGroupName: $("#manageFavoriteGroupName"), saveFavoriteGroupName: $("#saveFavoriteGroupName"), manageFavoriteGroupSearch: $("#manageFavoriteGroupSearch"),
   deleteManagedFavoriteGroup: $("#deleteManagedFavoriteGroup"), manageFavoriteGroupStatus: $("#manageFavoriteGroupStatus"), manageFavoriteGroupCards: $("#manageFavoriteGroupCards"),
   deckName: $("#deckName"), deckFormat: $("#deckFormat"), deckCount: $("#deckCount"),
+  deckTokenPanel: $("#deckTokenPanel"), deckTokenCount: $("#deckTokenCount"), deckTokenStatus: $("#deckTokenStatus"), deckTokenList: $("#deckTokenList"),
   deckMissing: $("#deckMissing"), deckStats: $("#deckStats"), deckMissingList: $("#deckMissingList"), deckDates: $("#deckDates"), deckMemo: $("#deckMemo"), deckCardFilter: $("#deckCardFilter"), deckSection: $("#deckSection"),
   openDeckOwnedAdd: $("#openDeckOwnedAdd"), openDeckSearchAdd: $("#openDeckSearchAdd"),
   deckOwnedAddDialog: $("#deckOwnedAddDialog"), deckSearchAddDialog: $("#deckSearchAddDialog"),
@@ -5401,6 +5402,7 @@ function switchDeckVersion(number) {
 function fillDeckDialog() {
   $("#deckCompareTarget").value = "";
   if (!els.deckDialog.open) {
+    resetDeckTokenPanel();
     $("#deckVersionPanel").open = false;
     $("#deckVersionPanel details").open = false;
   }
@@ -5677,6 +5679,100 @@ function deckReferencePrice(entries) {
     price.total += unit * quantity;
   }
   return price;
+}
+
+// Tokens a deck can make, from Scryfall's related-card links. Emblems, dungeons and markers like The Monarch
+// count as tokens here; "combo_piece" links to ordinary cards do not.
+function tokenPartsOf(card) {
+  return (card?.all_parts || []).filter(part => part.name !== card.name && (part.component === "token" || /^(Emblem|Dungeon)\b/.test(part.type_line || "") || part.type_line === "Card"));
+}
+
+function deckTokenLookup(card) {
+  const oracleId = card?.oracleId || card?.oracle_id;
+  if (oracleId) return { key: `oracle:${oracleId}`, identifier: { oracle_id: oracleId } };
+  const id = card?.scryfallId || "";
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-/i.test(id)) return { key: `id:${id}`, identifier: { id } };
+  return card?.name ? { key: `name:${card.name}`, identifier: { name: card.name } } : null;
+}
+
+// One row per distinct token. Sources are the deck's cards that make it, most-used tokens first.
+function buildDeckTokenList(sources, details) {
+  const tokens = new Map();
+  sources.forEach(({ name, parts }) => parts.forEach(part => {
+    const detail = details.get(part.id);
+    const key = detail?.oracle_id || `${part.name}|${part.type_line}`;
+    if (!tokens.has(key)) tokens.set(key, { name: detail?.name || part.name, typeLine: detail?.type_line || part.type_line || "", power: detail?.power, toughness: detail?.toughness, image: detail?.image_uris?.normal || detail?.card_faces?.[0]?.image_uris?.normal || "", sources: new Set() });
+    tokens.get(key).sources.add(name);
+  }));
+  return [...tokens.values()].map(token => ({ ...token, sources: [...token.sources] })).sort((a, b) => b.sources.length - a.sources.length || a.name.localeCompare(b.name));
+}
+
+const deckTokenPartsCache = new Map(), deckTokenDetailCache = new Map();
+let deckTokenRequest = 0, deckTokenTimer = 0;
+
+async function fetchDeckTokenChunks(identifiers, onCard) {
+  for (let index = 0; index < identifiers.length; index += 75) {
+    if (index) await new Promise(resolve => setTimeout(resolve, 100));
+    const response = await fetchScryfallCollection(identifiers.slice(index, index + 75));
+    if (!response.ok) throw new Error(`Scryfall ${response.status}`);
+    ((await response.json()).data || []).forEach(onCard);
+  }
+}
+
+async function refreshDeckTokens() {
+  const panel = els.deckTokenPanel, deck = state.editingDeck;
+  if (!panel?.open || !deck) return;
+  const request = ++deckTokenRequest;
+  const lookups = new Map();
+  deck.entries.filter(entry => isDeckBuildSection(entry.section)).forEach(entry => {
+    const card = cardForDeckEntry(entry), lookup = deckTokenLookup(card);
+    if (lookup && !lookups.has(lookup.key)) lookups.set(lookup.key, { ...lookup, name: nameOf(card) || card.name });
+  });
+  const missing = [...lookups.values()].filter(lookup => !deckTokenPartsCache.has(lookup.key));
+  try {
+    if (missing.length) {
+      els.deckTokenStatus.textContent = "トークンを確認中…";
+      els.deckTokenStatus.hidden = false;
+      await fetchDeckTokenChunks(missing.map(lookup => lookup.identifier), card => {
+        const parts = tokenPartsOf(card);
+        [`oracle:${card.oracle_id}`, `id:${card.id}`, `name:${card.name}`].forEach(key => deckTokenPartsCache.set(key, parts));
+      });
+    }
+    const sources = [...lookups.values()].map(lookup => ({ name: lookup.name, parts: deckTokenPartsCache.get(lookup.key) || [] }));
+    const partIds = [...new Set(sources.flatMap(source => source.parts.map(part => part.id)))].filter(id => !deckTokenDetailCache.has(id));
+    await fetchDeckTokenChunks(partIds.map(id => ({ id })), card => deckTokenDetailCache.set(card.id, card));
+    if (request !== deckTokenRequest) return;
+    const unchecked = [...lookups.keys()].filter(key => !deckTokenPartsCache.has(key)).length;
+    renderDeckTokens(buildDeckTokenList(sources, deckTokenDetailCache), unchecked);
+  } catch {
+    if (request !== deckTokenRequest) return;
+    els.deckTokenStatus.textContent = navigator.onLine ? "トークンを取得できませんでした。閉じて開き直すと再度確認します。" : "オフラインのためトークンを確認できません。";
+    els.deckTokenStatus.hidden = false;
+  }
+}
+
+function renderDeckTokens(tokens, unchecked) {
+  els.deckTokenCount.textContent = tokens.length ? `${tokens.length}種` : "";
+  const notes = [tokens.length ? "" : "このデッキで使うトークンは見つかりませんでした。", unchecked ? `${unchecked}種類のカードは確認できませんでした。` : ""].filter(Boolean);
+  els.deckTokenStatus.textContent = notes.join("");
+  els.deckTokenStatus.hidden = !notes.length;
+  els.deckTokenList.innerHTML = tokens.map(token => {
+    const stats = token.power != null ? `${token.power}/${token.toughness}` : "";
+    return `<li>${token.image ? `<img src="${esc(token.image)}" alt="" loading="lazy">` : ""}<div><b>${esc(token.name)}${stats ? ` <span>${esc(stats)}</span>` : ""}</b><small>${esc(token.typeLine === "Card" ? "補助カード" : token.typeLine)}</small><small>${esc(token.sources.join("、"))}</small></div></li>`;
+  }).join("");
+}
+
+function resetDeckTokenPanel() {
+  ++deckTokenRequest;
+  els.deckTokenPanel.open = false;
+  els.deckTokenCount.textContent = "";
+  els.deckTokenStatus.hidden = true;
+  els.deckTokenList.replaceChildren();
+}
+
+function scheduleDeckTokenRefresh() {
+  clearTimeout(deckTokenTimer);
+  if (els.deckTokenPanel.open) deckTokenTimer = setTimeout(refreshDeckTokens, 300);
 }
 
 function renderDeckStats() {
@@ -6215,6 +6311,7 @@ function renderDeckEditor() {
   els.deckMissing.style.color = missing ? "#9b332f" : "";
   renderDeckStats();
   renderDeckMissingList();
+  scheduleDeckTokenRefresh();
   renderDeckComparison();
   updateDeckReorderButton();
 
@@ -7406,6 +7503,7 @@ els.clearManualPriceButton?.addEventListener("click", clearSelectedManualPrice);
 els.savePurchasePriceButton?.addEventListener("click", saveSelectedPurchasePrice);
 els.clearPurchasePriceButton?.addEventListener("click", clearSelectedPurchasePrice);
 els.deleteCardButton.addEventListener("click", deleteSelectedOwned);
+els.deckTokenPanel.addEventListener("toggle", () => { if (els.deckTokenPanel.open) refreshDeckTokens(); });
 els.cardDeckUsageList.addEventListener("click", event => {
   const button = event.target.closest("[data-open-deck]");
   if (!button) return;
