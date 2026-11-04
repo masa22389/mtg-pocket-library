@@ -1,11 +1,15 @@
 importScripts('./scanner/card-image-cache.js');
-const CACHE = "mtg-pocket-v354";
-const OFFLINE_PAGE = "./index.html?v=354";
-const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=354","./scanner/data/japanese-images.json","./mobile-inputs.css?v=354","./scanner-host.js?v=354","./diagnostics.js?v=354", OFFLINE_PAGE, "./styles.css?v=354", "./app.js?v=354", "./storage.js?v=354", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v355";
+const OFFLINE_PAGE = "./index.html?v=355";
+const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=355","./scanner/data/japanese-images.json","./mobile-inputs.css?v=355","./scanner-host.js?v=355","./diagnostics.js?v=355", OFFLINE_PAGE, "./styles.css?v=355", "./app.js?v=355", "./storage.js?v=355", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 // The large search indexes are named by content hash (scripts/update-asset-hashes.mjs) and kept in their own
 // cache across app versions, so an update downloads them only when their contents change.
 const DATA_CACHE = "mtg-pocket-data";
 const DATA = ["./mtg-jp-card-index.js?h=42e71c7c93ea", "./mtgjson-jp-search-index.js?h=950f31a46ea0"];
+
+// Only this app's own caches. caches.match() searches every cache on the device, oldest first, so the scanner's
+// staged pack would answer with its older copies of shared files such as the Japanese image index.
+const matchOwnCaches = async request => (await (await caches.open(CACHE)).match(request)) || (await caches.open(DATA_CACHE)).match(request);
 
 self.addEventListener("install", event => {
   event.waitUntil(Promise.all([
@@ -36,7 +40,7 @@ self.addEventListener("fetch", event => {
     event.respondWith(fetch(new Request(event.request, {cache:'no-store'})).then(async response => {
       if (!response.ok) throw new Error('Image manifest unavailable');
       const cache = await caches.open(CACHE); await cache.put(event.request,response.clone()); return response;
-    }).catch(() => caches.match(event.request)));
+    }).catch(() => matchOwnCaches(event.request)));
     return;
   }
   // BEGIN SCANNER TRIAL BYPASS
@@ -70,7 +74,7 @@ self.addEventListener("fetch", event => {
   }
 
   event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+    matchOwnCaches(event.request).then(cached => cached || fetch(event.request).then(response => {
       if (response.ok && (url.origin === self.location.origin || url.hostname === "cards.scryfall.io")) {
         const copy = response.clone();
         caches.open(CACHE).then(cache => cache.put(event.request, copy));

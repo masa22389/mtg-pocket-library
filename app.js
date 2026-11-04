@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v354";
+const APP_VERSION = "v355";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3443,7 +3443,7 @@ async function changeCardLanguage(lang) {
     return;
   }
   const purchaseQuantity = $("#purchaseQuantity").value;
-  selectVariant(withReviewedJpImage(applyJpIndexToCards([{ ...peer, _preferJpDisplay: lang === "ja" }])[0]));
+  selectVariant({ ...withReviewedJpImage(applyJpIndexToCards([{ ...peer, _preferJpDisplay: lang === "ja" }])[0]), _chosenLanguage: lang });
   $("#purchaseQuantity").value = purchaseQuantity;
   status.hidden = true;
 }
@@ -3805,6 +3805,12 @@ function initialCardOwnedQuantity(mode, quantity) {
   return mode === "scanner" ? Math.max(1, quantity) : quantity;
 }
 
+// A language the user just chose wins over the saved lot: reviewed Japanese printings share the English print's
+// Scryfall ID, so both languages find the same lot.
+function cardFormLanguage(card, owned) {
+  return card._chosenLanguage || (card._reviewedJpImage ? "ja" : "") || owned?.language || (card.lang === "ja" ? "ja" : card.lang === "en" ? "en" : "other");
+}
+
 function renderSelectedVariant() {
   const card = state.selectedCard;
   const owned = selectedOwnedCard();
@@ -3813,7 +3819,7 @@ function renderSelectedVariant() {
   els.cardQuantity.value = initialCardOwnedQuantity(state.cardDialogMode, selectedOwnedQuantity());
   els.cardCondition.value = normalizeCardCondition(owned?.condition || "NM");
   els.cardFinish.value = owned?.finish || "normal";
-  els.cardLanguage.value = owned?.language || (card.lang === "ja" ? "ja" : card.lang === "en" ? "en" : "other");
+  els.cardLanguage.value = cardFormLanguage(card, owned);
   els.cardLocation.value = owned?.location || "";
   updateCardOwnedActions();
 }
@@ -3832,7 +3838,7 @@ function renderVariantGallery() {
     </button>`).join("")}${visibleVariants.length < variants.length ? `<button type="button" class="variant-option variant-more" data-variant-more="1"><span>さらに表示<br>${variants.length - visibleVariants.length}版</span></button>` : ""}`;
   els.cardVariants.querySelectorAll("button[data-id]").forEach(button => button.addEventListener("click", () => {
     const card = state.cardVariants.find(item => item.id === button.dataset.id);
-    if (card) { ++cardLanguageRequestId; selectVariant(card); $("#cardLanguageStatus").hidden = true; $("#cardVariantDialog").close(); }
+    if (card) { ++cardLanguageRequestId; selectVariant(["ja", "en"].includes(card.lang) ? { ...card, _chosenLanguage: card.lang } : card); $("#cardLanguageStatus").hidden = true; $("#cardVariantDialog").close(); }
   }));
   els.cardVariants.querySelector("[data-variant-more]")?.addEventListener("click", () => {
     state.variantRenderLimit = Number(state.variantRenderLimit || VARIANT_RENDER_LIMIT) + VARIANT_RENDER_LIMIT;
@@ -4643,6 +4649,10 @@ async function openOwnedCard(ownedCard) {
     } catch {
       showToast("オフライン情報で開きます");
     }
+  }
+  if (ownedCard.language === "ja" && card.lang !== "ja") {
+    const reviewed = (await reviewedJapanesePrintsFor(card)).find(item => reviewedPrintMatches(item, card));
+    if (reviewed) card = withReviewedJpImage(applyJpIndexToCards([{ ...reviewedJpVariantForCard(card, reviewed), _preferJpDisplay: true }])[0]);
   }
   openCardDialog(card, "collection", ownedCard.id);
 }
