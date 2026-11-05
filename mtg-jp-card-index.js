@@ -1,5 +1,6536 @@
 window.MTG_JP_CARD_INDEX = [
   {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545128/",
+    "setCode": "TRK",
+    "collectorNumber": "1",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "母星から７万光年"
+    ],
+    "enNames": [
+      "70,000 Light-Years from Home"
+    ],
+    "scryfallName": "70,000 Light-Years from Home",
+    "oracleId": "9356aee1-3d2b-4d17-8863-663e1ddf56f3",
+    "scryfallId": "02080f42-863a-471b-992b-67e35ef1b7b7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545128/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545086/",
+    "setCode": "TRK",
+    "collectorNumber": "2",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "アンドロメダの自動機械"
+    ],
+    "enNames": [
+      "Andromedan Automatons"
+    ],
+    "scryfallName": "Andromedan Automatons",
+    "oracleId": "2da322e6-a8e2-4d7a-bd34-54a3dfa85940",
+    "scryfallId": "fc386662-0fe3-432f-85a8-9a06e1274245",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545086/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545091/",
+    "setCode": "TRK",
+    "collectorNumber": "3",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "敵勢力の組み込み屋"
+    ],
+    "enNames": [
+      "Antagonist Incorporator"
+    ],
+    "scryfallName": "Antagonist Incorporator",
+    "oracleId": "6f0b814b-94e6-48f2-9ccf-c376ca03bba3",
+    "scryfallId": "63918e59-0c03-4d98-9216-e58ee157b7ea",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545091/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545056/",
+    "setCode": "TRK",
+    "collectorNumber": "4",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "組み立ての専門家"
+    ],
+    "enNames": [
+      "Assembly Specialist"
+    ],
+    "scryfallName": "Assembly Specialist",
+    "oracleId": "deb26a1b-2b83-4da2-a2e5-31c17a57eb1e",
+    "scryfallId": "a4d339a5-198c-49bd-845e-2632476746e0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545056/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545164/",
+    "setCode": "TRK",
+    "collectorNumber": "5",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "熱意ある少尉、ブラッド・ボイムラー"
+    ],
+    "enNames": [
+      "Brad Boimler, Eager Ensign"
+    ],
+    "scryfallName": "Brad Boimler, Eager Ensign",
+    "oracleId": "10af9cd9-1700-48f9-97e1-61e239536fef",
+    "scryfallId": "a6bf1525-2212-46d0-ad4d-1dbaa2e3b3cd",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545164/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548861/",
+    "setCode": "TRK",
+    "collectorNumber": "6",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ベンジャミン・シスコ大佐"
+    ],
+    "enNames": [
+      "Captain Benjamin Sisko"
+    ],
+    "scryfallName": "Captain Benjamin Sisko",
+    "oracleId": "f997ad8a-6903-47b1-83af-837b3b55a3d4",
+    "scryfallId": "51338fb2-13a3-41b8-981f-05fa35e87e2e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548861/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546047/",
+    "setCode": "TRK",
+    "collectorNumber": "7",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ジャン＝リュック・ピカード艦長"
+    ],
+    "enNames": [
+      "Captain Jean-Luc Picard"
+    ],
+    "scryfallName": "Captain Jean-Luc Picard",
+    "oracleId": "04624f75-5981-4607-aa8f-706554f826e1",
+    "scryfallId": "b7114271-eb05-41e2-ad96-a34f53492312",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546047/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545046/",
+    "setCode": "TRK",
+    "collectorNumber": "8",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "司令官の決断"
+    ],
+    "enNames": [
+      "Command Decision"
+    ],
+    "scryfallName": "Command Decision",
+    "oracleId": "1c4afb0d-6d6e-4d21-9fe0-5621cd2fd27c",
+    "scryfallId": "9f1f789b-5c08-4a4d-b3a3-4d51ad9f1a4d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545046/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545064/",
+    "setCode": "TRK",
+    "collectorNumber": "9",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "司令官の副付属員"
+    ],
+    "enNames": [
+      "Command Subadjunct"
+    ],
+    "scryfallName": "Command Subadjunct",
+    "oracleId": "85b67121-340f-4cff-a26d-2160aa923ec3",
+    "scryfallId": "853bf74d-0b61-43df-9018-0b40b624a9d1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545064/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554317/",
+    "setCode": "TRK",
+    "collectorNumber": "10",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "征服任務"
+    ],
+    "enNames": [
+      "Conquest Mission"
+    ],
+    "scryfallName": "Conquest Mission",
+    "oracleId": "35906166-71d1-4089-bbe4-4055edb81fb0",
+    "scryfallId": "f91755d7-6fb9-4caf-b4b4-f21ed5572d52",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554317/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547931/",
+    "setCode": "TRK",
+    "collectorNumber": "11",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "サイキックの相談役、ディアナ・トロイ"
+    ],
+    "enNames": [
+      "Deanna Troi, Psychic Counsel"
+    ],
+    "scryfallName": "Deanna Troi, Psychic Counsel",
+    "oracleId": "cf612cbe-7af8-48fd-875e-a669e05cfb49",
+    "scryfallId": "1a027761-84e7-4cbf-a629-ae9bd3d8467b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547931/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545047/",
+    "setCode": "TRK",
+    "collectorNumber": "12",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "修理部隊、DOT-7"
+    ],
+    "enNames": [
+      "DOT-7 Repair Squad"
+    ],
+    "scryfallName": "DOT-7 Repair Squad",
+    "oracleId": "b860f64c-e830-49ea-a478-5dc87e8a3be1",
+    "scryfallId": "fca1528c-84cc-42d2-99ae-9f10f0e28743",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545047/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547932/",
+    "setCode": "TRK",
+    "collectorNumber": "13",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ビバリー・クラッシャー医師"
+    ],
+    "enNames": [
+      "Dr. Beverly Crusher"
+    ],
+    "scryfallName": "Dr. Beverly Crusher",
+    "oracleId": "5fe6f4ae-3fb1-4df6-8760-88c8666068df",
+    "scryfallId": "ef9c5790-d909-4271-90bd-5fa4816ddd6b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547932/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545050/",
+    "setCode": "TRK",
+    "collectorNumber": "14",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ぶっきらぼうな外科医、マッコイ医師"
+    ],
+    "enNames": [
+      "Dr. McCoy, Surly Surgeon"
+    ],
+    "scryfallName": "Dr. McCoy, Surly Surgeon",
+    "oracleId": "df8a0737-5841-4c17-b567-e9296541c3c9",
+    "scryfallId": "b300d814-cf74-44ba-b253-ec179ec54a20",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545050/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545049/",
+    "setCode": "TRK",
+    "collectorNumber": "15",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "緊急用医療ホログラム"
+    ],
+    "enNames": [
+      "Emergency Medical Hologram"
+    ],
+    "scryfallName": "Emergency Medical Hologram",
+    "oracleId": "8170dcbb-9879-414c-819d-ea2658ff770c",
+    "scryfallId": "dda6f965-cbdf-4dbc-b0b1-00c27e32f5f2",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545049/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545161/",
+    "setCode": "TRK",
+    "collectorNumber": "16",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "エクスカルビアンのゲームマスター"
+    ],
+    "enNames": [
+      "Excalbian Gamemaster"
+    ],
+    "scryfallName": "Excalbian Gamemaster",
+    "oracleId": "f409e869-ea1a-4e08-b19e-949436d01cc1",
+    "scryfallId": "31b5780c-8c5f-4836-8848-1eea1d416a93",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545161/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545048/",
+    "setCode": "TRK",
+    "collectorNumber": "17",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "連邦の衛生兵"
+    ],
+    "enNames": [
+      "Federation Field Medic"
+    ],
+    "scryfallName": "Federation Field Medic",
+    "oracleId": "3759f1de-eda1-4f09-b12b-ea5f5fc731d7",
+    "scryfallId": "b312dacd-b87f-44c1-a804-bee221e70f52",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545048/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547938/",
+    "setCode": "TRK",
+    "collectorNumber": "18",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "連邦による補給"
+    ],
+    "enNames": [
+      "Federation Resupply"
+    ],
+    "scryfallName": "Federation Resupply",
+    "oracleId": "4450d4e0-2825-4536-bb0f-f3a36f1f682c",
+    "scryfallId": "5626c58f-9245-437a-9844-b023320cf709",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547938/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545053/",
+    "setCode": "TRK",
+    "collectorNumber": "19",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ボーグ自由化の革命論者"
+    ],
+    "enNames": [
+      "Free Borg Revolutionaries"
+    ],
+    "scryfallName": "Free Borg Revolutionaries",
+    "oracleId": "28914782-92f4-407f-beb6-5e290a49000c",
+    "scryfallId": "6711e910-e5a8-4602-9559-de5374bffff2",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545053/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543403/",
+    "setCode": "TRK",
+    "collectorNumber": "20",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "イリリアの亡霊"
+    ],
+    "enNames": [
+      "Ghost of Illyria"
+    ],
+    "scryfallName": "Ghost of Illyria",
+    "oracleId": "e705b055-14b3-4de0-b4a7-39626839dea8",
+    "scryfallId": "99830058-c97a-4326-8c2f-8658cf8a1561",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543403/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545085/",
+    "setCode": "TRK",
+    "collectorNumber": "21",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ホログラムのジェインウェイ"
+    ],
+    "enNames": [
+      "Hologram Janeway"
+    ],
+    "scryfallName": "Hologram Janeway",
+    "oracleId": "b572be16-ad13-4f9f-bcf6-085f81e5292c",
+    "scryfallId": "02d29047-a7b8-43fb-8b90-b35ba34da5f9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545085/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545055/",
+    "setCode": "TRK",
+    "collectorNumber": "22",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "不具合を起こすホロデッキ"
+    ],
+    "enNames": [
+      "Malfunctioning Holodeck"
+    ],
+    "scryfallName": "Malfunctioning Holodeck",
+    "oracleId": "3f04c38b-d6bd-405f-b69c-009df87801dd",
+    "scryfallId": "0faeffee-bb07-4b9d-8cdd-e9731bbd2396",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545055/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545066/",
+    "setCode": "TRK",
+    "collectorNumber": "23",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "人間の条件"
+    ],
+    "enNames": [
+      "The Measure of a Man"
+    ],
+    "scryfallName": "The Measure of a Man",
+    "oracleId": "727e98cc-b295-47f9-9d3d-bcf38c9f56d2",
+    "scryfallId": "e9e6b01d-7eb5-4632-9d51-0012b58006da",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545066/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546044/",
+    "setCode": "TRK",
+    "collectorNumber": "24",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "転送機の操作手、マイルズ・オブライエン"
+    ],
+    "enNames": [
+      "Miles O'Brien, Transporter Ops"
+    ],
+    "scryfallName": "Miles O'Brien, Transporter Ops",
+    "oracleId": "31e3f39f-8b18-4316-984f-4d57d2d480ca",
+    "scryfallId": "e4f041b3-e785-45ba-9a7e-33878614d3b0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546044/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543645/",
+    "setCode": "TRK",
+    "collectorNumber": "25",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "多数の要求"
+    ],
+    "enNames": [
+      "The Needs of the Many"
+    ],
+    "scryfallName": "The Needs of the Many",
+    "oracleId": "984e0426-10ba-4c17-b26e-ce21100ec398",
+    "scryfallId": "c779279f-681b-4107-b62c-5202c544d3e8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543645/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545044/",
+    "setCode": "TRK",
+    "collectorNumber": "26",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "オーベルト級宇宙艦"
+    ],
+    "enNames": [
+      "Oberth-Class Starship"
+    ],
+    "scryfallName": "Oberth-Class Starship",
+    "oracleId": "fb5e53cf-e12e-469b-b9ea-9debc967e77e",
+    "scryfallId": "7efe3788-ecf7-4b56-8970-bc324092941c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545044/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548859/",
+    "setCode": "TRK",
+    "collectorNumber": "27",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "我らの時代に平和を"
+    ],
+    "enNames": [
+      "Peace in Our Time"
+    ],
+    "scryfallName": "Peace in Our Time",
+    "oracleId": "b19ce6f2-7778-4779-8173-973eb7ee0b02",
+    "scryfallId": "9dd522dd-a894-496e-9d31-68583dba7ecc",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548859/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545052/",
+    "setCode": "TRK",
+    "collectorNumber": "28",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "セーラットのペット"
+    ],
+    "enNames": [
+      "Pet Sehlat"
+    ],
+    "scryfallName": "Pet Sehlat",
+    "oracleId": "509f255f-c3ee-4836-a583-d018060d0c4d",
+    "scryfallId": "477a6a46-7fda-4666-87d9-a35c953dd94d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545052/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543638/",
+    "setCode": "TRK",
+    "collectorNumber": "29",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "牽引する模範、ピカード"
+    ],
+    "enNames": [
+      "Picard, Leading by Example"
+    ],
+    "scryfallName": "Picard, Leading by Example",
+    "oracleId": "4b36f8e2-ba7d-4bc7-890f-dd6ab73eef17",
+    "scryfallId": "f9fa20c5-f241-4da2-9c99-c9b650095d74",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543638/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548853/",
+    "setCode": "TRK",
+    "collectorNumber": "30",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ユニマトリックス01の付属物"
+    ],
+    "enNames": [
+      "Primary Unimatrix Adjunct"
+    ],
+    "scryfallName": "Primary Unimatrix Adjunct",
+    "oracleId": "be3dd0c8-32c2-4a56-9290-1fc9e366bae2",
+    "scryfallId": "b94a582c-11bb-4463-a826-bd0c79366752",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548853/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543334/",
+    "setCode": "TRK",
+    "collectorNumber": "31",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "純粋エネルギー"
+    ],
+    "enNames": [
+      "Pure Energy"
+    ],
+    "scryfallName": "Pure Energy",
+    "oracleId": "f4831eee-fef6-4fef-a174-400a25d0837d",
+    "scryfallId": "215709a8-044f-4fdb-b3ca-bd5a394b2a0f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543334/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546910/",
+    "setCode": "TRK",
+    "collectorNumber": "32",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "昇進した少尉、ラザフォード"
+    ],
+    "enNames": [
+      "Rutherford, Upgraded Ensign"
+    ],
+    "scryfallName": "Rutherford, Upgraded Ensign",
+    "oracleId": "42258216-fe2b-42d0-a6ce-76ecf8104c10",
+    "scryfallId": "16a4d8ed-a918-4dfe-9976-0b68adb26afa",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546910/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545063/",
+    "setCode": "TRK",
+    "collectorNumber": "33",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "厳粛な学徒、サーヴィック"
+    ],
+    "enNames": [
+      "Saavik, Stoic Student"
+    ],
+    "scryfallName": "Saavik, Stoic Student",
+    "oracleId": "53aaa919-d08f-4b76-8583-bc2d4635f991",
+    "scryfallId": "3783c530-a2da-4dc1-811a-0a9a412c8e78",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545063/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545054/",
+    "setCode": "TRK",
+    "collectorNumber": "34",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "フェイザーを構えて......"
+    ],
+    "enNames": [
+      "Set Phasers to . . ."
+    ],
+    "scryfallName": "Set Phasers to . . .",
+    "oracleId": "4da9b548-898d-431b-8aa5-9cb7bf579219",
+    "scryfallId": "54dbf416-973d-46c8-b9be-e863283d328b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545054/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543326/",
+    "setCode": "TRK",
+    "collectorNumber": "35",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "シールドを張れ！"
+    ],
+    "enNames": [
+      "Shields Up!"
+    ],
+    "scryfallName": "Shields Up!",
+    "oracleId": "0e14940b-87e1-4139-8f30-3629b3ad3a59",
+    "scryfallId": "0b60c9af-8ea9-491d-a4a4-226a2143e7f3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543326/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545060/",
+    "setCode": "TRK",
+    "collectorNumber": "36",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "シャトルのエース"
+    ],
+    "enNames": [
+      "Shuttle Ace"
+    ],
+    "scryfallName": "Shuttle Ace",
+    "oracleId": "4b5b0864-7ddd-497d-a7d6-a31c49bb9c7b",
+    "scryfallId": "559f838a-24ac-4f18-8c40-23cfde6f65cc",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545060/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548852/",
+    "setCode": "TRK",
+    "collectorNumber": "37",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "宇宙豪傑、スールー"
+    ],
+    "enNames": [
+      "Sulu, Space Swashbuckler"
+    ],
+    "scryfallName": "Sulu, Space Swashbuckler",
+    "oracleId": "d090131d-428c-4a98-afc5-595b9bc7adce",
+    "scryfallId": "9b16f967-4bc5-4508-8433-b46323ce2e71",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548852/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545045/",
+    "setCode": "TRK",
+    "collectorNumber": "38",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "戦術士官"
+    ],
+    "enNames": [
+      "Tactical Officer"
+    ],
+    "scryfallName": "Tactical Officer",
+    "oracleId": "1397e7d5-4aa4-4c8d-8957-845579b775f7",
+    "scryfallId": "317704a8-a3c2-400c-bbe0-2cbc6fe10710",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545045/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547546/",
+    "setCode": "TRK",
+    "collectorNumber": "39",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "信念の試練"
+    ],
+    "enNames": [
+      "Test of Conviction"
+    ],
+    "scryfallName": "Test of Conviction",
+    "oracleId": "beffaea5-beeb-4d4e-aca3-82c698caf6f8",
+    "scryfallId": "837d7cec-f3f8-4555-86f2-c5ea1849d7d1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547546/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545043/",
+    "setCode": "TRK",
+    "collectorNumber": "40",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "あの星雲にはコーヒーがある"
+    ],
+    "enNames": [
+      "There's Coffee in that Nebula"
+    ],
+    "scryfallName": "There's Coffee in that Nebula",
+    "oracleId": "887614f9-f12f-47bc-ae56-1438cd7cad10",
+    "scryfallId": "8dd7e0c6-84f6-4570-af93-4c64e78c2868",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545043/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546039/",
+    "setCode": "TRK",
+    "collectorNumber": "41",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "トラブル続きのトリブル"
+    ],
+    "enNames": [
+      "Troubling Tribbles"
+    ],
+    "scryfallName": "Troubling Tribbles",
+    "oracleId": "fc76eddd-8f2a-45e3-95d2-3074d971effb",
+    "scryfallId": "0af3e535-83e6-422b-85c5-39d830cb072c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546039/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548863/",
+    "setCode": "TRK",
+    "collectorNumber": "42",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "副官、ウナ・チン＝ライリー"
+    ],
+    "enNames": [
+      "Una Chin-Riley, Number One"
+    ],
+    "scryfallName": "Una Chin-Riley, Number One",
+    "oracleId": "0529c6fa-a35f-4d33-b274-93446ce68419",
+    "scryfallId": "5585c90d-3fe7-41f4-9728-36b9410ecc53",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548863/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546054/",
+    "setCode": "TRK",
+    "collectorNumber": "43",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "自由の精神、U.S.S. エンタープライズA"
+    ],
+    "enNames": [
+      "U.S.S. Enterprise-A, Free Spirit"
+    ],
+    "scryfallName": "U.S.S. Enterprise-A, Free Spirit",
+    "oracleId": "5e2958fd-ede6-4563-babc-4924d3e95754",
+    "scryfallId": "99429015-6e5d-4ecf-aaf7-eba181bcffc7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546054/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545062/",
+    "setCode": "TRK",
+    "collectorNumber": "44",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "最新鋭、U.S.S. エクセルシオール"
+    ],
+    "enNames": [
+      "U.S.S. Excelsior, Cutting Edge"
+    ],
+    "scryfallName": "U.S.S. Excelsior, Cutting Edge",
+    "oracleId": "9f4ae54b-f77d-43df-87d5-792ac0905058",
+    "scryfallId": "de62b452-3780-4eeb-8163-f44176495615",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545062/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545051/",
+    "setCode": "TRK",
+    "collectorNumber": "45",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "厄介なドローン"
+    ],
+    "enNames": [
+      "Vexing Drone"
+    ],
+    "scryfallName": "Vexing Drone",
+    "oracleId": "8e90e417-65ca-48bc-a32d-b93976519fe9",
+    "scryfallId": "6f4b2476-8f93-4d4e-b664-233e82fcf212",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545051/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545081/",
+    "setCode": "TRK",
+    "collectorNumber": "46",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "文化人類学的任務"
+    ],
+    "enNames": [
+      "Anthropological Mission"
+    ],
+    "scryfallName": "Anthropological Mission",
+    "oracleId": "535c0280-fdb5-4ff8-8608-c2f98b8a7ffc",
+    "scryfallId": "93b458aa-a928-48ef-b685-1306cc65ad06",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545081/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554273/",
+    "setCode": "TRK",
+    "collectorNumber": "47",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "管理者"
+    ],
+    "enNames": [
+      "The Caretaker"
+    ],
+    "scryfallName": "The Caretaker",
+    "oracleId": "f77ea393-4142-4c06-8bb3-589ca74a7338",
+    "scryfallId": "ec6a1967-78fc-4ef4-9816-6d9a9dde61fb",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554273/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545073/",
+    "setCode": "TRK",
+    "collectorNumber": "48",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "セタシアンの手練れ"
+    ],
+    "enNames": [
+      "Cetacean Ops"
+    ],
+    "scryfallName": "Cetacean Ops",
+    "oracleId": "64e39ec9-358a-4aa0-a7e9-164e8aa0b236",
+    "scryfallId": "a8dc7ecd-e6f0-4050-9d5b-8436f60a1395",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545073/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545061/",
+    "setCode": "TRK",
+    "collectorNumber": "49",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "遮蔽とフェイザー"
+    ],
+    "enNames": [
+      "Cloak and Phaser"
+    ],
+    "scryfallName": "Cloak and Phaser",
+    "oracleId": "668a9b6b-731c-4127-9c88-1c6112ffd590",
+    "scryfallId": "2d9fb7e7-582d-41e7-be9e-98372505ea44",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545061/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545077/",
+    "setCode": "TRK",
+    "collectorNumber": "50",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "隠遁するテレパス"
+    ],
+    "enNames": [
+      "Cloistered Telepath"
+    ],
+    "scryfallName": "Cloistered Telepath",
+    "oracleId": "8656291d-8de7-4341-b1ee-0fcd65d629a4",
+    "scryfallId": "959318c1-3f7e-4418-91ce-be529af27972",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545077/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545078/",
+    "setCode": "TRK",
+    "collectorNumber": "51",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "最優先指令だ"
+    ],
+    "enNames": [
+      "Consider the Prime Directive"
+    ],
+    "scryfallName": "Consider the Prime Directive",
+    "oracleId": "9f1d416c-60de-4796-a513-097d1d9a2305",
+    "scryfallId": "4e8f75b8-cca7-4ed3-90db-bcac02e74611",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545078/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547545/",
+    "setCode": "TRK",
+    "collectorNumber": "52",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "新たなる生命体、データ"
+    ],
+    "enNames": [
+      "Data, New Life"
+    ],
+    "scryfallName": "Data, New Life",
+    "oracleId": "010630c6-5d7b-43e0-90a9-3e3cef9a4e6b",
+    "scryfallId": "96b7e757-c64d-48c8-bd9c-caad5f3c78fb",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547545/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545088/",
+    "setCode": "TRK",
+    "collectorNumber": "53",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "深宇宙の走査"
+    ],
+    "enNames": [
+      "Deep Space Scan"
+    ],
+    "scryfallName": "Deep Space Scan",
+    "oracleId": "5dabb7c1-8937-42b0-87c6-1cc7af46aaae",
+    "scryfallId": "15ffeda3-28ac-4adf-9844-d7b051aae227",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545088/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545083/",
+    "setCode": "TRK",
+    "collectorNumber": "54",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ドミニオンの破壊工作員"
+    ],
+    "enNames": [
+      "Dominion Saboteur"
+    ],
+    "scryfallName": "Dominion Saboteur",
+    "oracleId": "af03149b-9307-443c-aefa-69bda52607ba",
+    "scryfallId": "207c4369-220a-4eff-81dc-65872d6fc264",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545083/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545075/",
+    "setCode": "TRK",
+    "collectorNumber": "55",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "緊急ホログラフィッククルー"
+    ],
+    "enNames": [
+      "Emergency Holographic Crew"
+    ],
+    "scryfallName": "Emergency Holographic Crew",
+    "oracleId": "0b74d7de-8b9e-4a75-870e-230536fa8d79",
+    "scryfallId": "53943948-8f24-495a-b6eb-e788fa169fcd",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545075/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554537/",
+    "setCode": "TRK",
+    "collectorNumber": "56",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "物質転送"
+    ],
+    "enNames": [
+      "Energize"
+    ],
+    "scryfallName": "Energize",
+    "oracleId": "275257ea-3c72-4ca9-b2fc-e50efa071bdb",
+    "scryfallId": "24e72db3-a8d9-4553-92fe-ba6e40c4f62e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554537/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554266/",
+    "setCode": "TRK",
+    "collectorNumber": "57",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "パヴェル・チェコフ少尉"
+    ],
+    "enNames": [
+      "Ensign Pavel Chekov"
+    ],
+    "scryfallName": "Ensign Pavel Chekov",
+    "oracleId": "7d7e232f-e4f9-41db-a2d9-cfe88721b7a9",
+    "scryfallId": "a441c12e-1a2f-4b04-83dd-407bf6040efe",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554266/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546057/",
+    "setCode": "TRK",
+    "collectorNumber": "58",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "エンタープライズNX-01"
+    ],
+    "enNames": [
+      "Enterprise NX-01"
+    ],
+    "scryfallName": "Enterprise NX-01",
+    "oracleId": "947729a8-f8b0-4e08-9a87-6602af0e3c0a",
+    "scryfallId": "385638fe-cafb-4541-ba37-19bc57520c48",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546057/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545069/",
+    "setCode": "TRK",
+    "collectorNumber": "59",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "連邦所属無人探査機"
+    ],
+    "enNames": [
+      "Federation Probe"
+    ],
+    "scryfallName": "Federation Probe",
+    "oracleId": "6fc7401f-66fe-4d17-be2f-afcf892be740",
+    "scryfallId": "f988ba84-fc78-41a2-b2f2-eebf78cee591",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545069/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545080/",
+    "setCode": "TRK",
+    "collectorNumber": "60",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "先導の失敗"
+    ],
+    "enNames": [
+      "Guidance Failure"
+    ],
+    "scryfallName": "Guidance Failure",
+    "oracleId": "6c18f853-684b-42f6-8bc6-e86596131ab1",
+    "scryfallId": "86b790e6-3c99-4a95-8327-eb90ed9380f2",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545080/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546908/",
+    "setCode": "TRK",
+    "collectorNumber": "61",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "後継者、グウィンダラ"
+    ],
+    "enNames": [
+      "Gwyndala, the Progeny"
+    ],
+    "scryfallName": "Gwyndala, the Progeny",
+    "oracleId": "852c38fe-8bfa-420b-b961-7b91af9b38d1",
+    "scryfallId": "a82f5db5-787e-4e4a-ab3c-4a488c6f4990",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546908/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543332/",
+    "setCode": "TRK",
+    "collectorNumber": "62",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "非論理的だ"
+    ],
+    "enNames": [
+      "Highly Illogical"
+    ],
+    "scryfallName": "Highly Illogical",
+    "oracleId": "38c43f30-0e01-4dcd-88fc-f1de318a5e29",
+    "scryfallId": "11c94c5f-abf4-429e-8703-c5db9abd79bf",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543332/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543632/",
+    "setCode": "TRK",
+    "collectorNumber": "63",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "思いも寄らぬタイムシップ、H.M.S.バウンティ"
+    ],
+    "enNames": [
+      "H.M.S. Bounty, Unlikely Timeship"
+    ],
+    "scryfallName": "H.M.S. Bounty, Unlikely Timeship",
+    "oracleId": "eaa47a9b-79ad-4f42-a98b-dcf76138207c",
+    "scryfallId": "d75f0991-39a3-474e-8c01-9b3363c41a9f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543632/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546051/",
+    "setCode": "TRK",
+    "collectorNumber": "64",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "宇宙言語学者、ホシ・サトウ"
+    ],
+    "enNames": [
+      "Hoshi Sato, Exolinguist"
+    ],
+    "scryfallName": "Hoshi Sato, Exolinguist",
+    "oracleId": "39426cd1-8c0d-4ec6-8747-f0693080f8f2",
+    "scryfallId": "24589f4d-c530-4f6a-b2d0-450ef70fca71",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546051/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545076/",
+    "setCode": "TRK",
+    "collectorNumber": "65",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ザトウクジラ"
+    ],
+    "enNames": [
+      "Humpback Whales"
+    ],
+    "scryfallName": "Humpback Whales",
+    "oracleId": "a7285536-6cc1-448e-839a-606d585fbd9d",
+    "scryfallId": "605263f0-08b6-4cc7-aba7-eb49850f8832",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545076/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545074/",
+    "setCode": "TRK",
+    "collectorNumber": "66",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "星間の彫像"
+    ],
+    "enNames": [
+      "Interstellar Effigy"
+    ],
+    "scryfallName": "Interstellar Effigy",
+    "oracleId": "76f52fad-8db2-42f0-8e12-f4341e4c8680",
+    "scryfallId": "4b7d505f-2a6b-4525-87c7-19e06d49c9df",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545074/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543624/",
+    "setCode": "TRK",
+    "collectorNumber": "67",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "問題解決者、ジェット・リノ"
+    ],
+    "enNames": [
+      "Jett Reno, Problem Solver"
+    ],
+    "scryfallName": "Jett Reno, Problem Solver",
+    "oracleId": "492ba01e-c0fa-414c-95fd-df5b59212d2a",
+    "scryfallId": "6dc34d44-397a-4dda-a8e3-0c2ff7da110f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543624/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548860/",
+    "setCode": "TRK",
+    "collectorNumber": "68",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "コバヤシマル・シナリオ"
+    ],
+    "enNames": [
+      "Kobayashi Maru Scenario"
+    ],
+    "scryfallName": "Kobayashi Maru Scenario",
+    "oracleId": "2b7ac3e8-0a7d-4b8a-a6a6-4cacc9b4f9de",
+    "scryfallId": "c7fb72cc-1bc6-4774-9798-44824de46c72",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548860/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548862/",
+    "setCode": "TRK",
+    "collectorNumber": "69",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "データ少佐"
+    ],
+    "enNames": [
+      "Lieutenant Commander Data"
+    ],
+    "scryfallName": "Lieutenant Commander Data",
+    "oracleId": "ebe988c1-96e0-4a99-86b5-d948837545de",
+    "scryfallId": "c6d5da51-6c74-4dd5-a532-cf4c2a7b601c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548862/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545166/",
+    "setCode": "TRK",
+    "collectorNumber": "70",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ジョーディ・ラ＝フォージ少佐"
+    ],
+    "enNames": [
+      "Lt. Cmdr. Geordi La Forge"
+    ],
+    "scryfallName": "Lt. Cmdr. Geordi La Forge",
+    "oracleId": "cb3b4cfe-fd8d-4a26-905e-8ccd30f033a3",
+    "scryfallId": "3a558d82-7efd-49b3-9f7b-ace639b44a35",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545166/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546043/",
+    "setCode": "TRK",
+    "collectorNumber": "71",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "そうしたまえ"
+    ],
+    "enNames": [
+      "Make It So"
+    ],
+    "scryfallName": "Make It So",
+    "oracleId": "a9368972-4697-4a10-97e3-324149a26fba",
+    "scryfallId": "7149df19-4833-47ca-8add-b897f55b930c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546043/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543184/",
+    "setCode": "TRK",
+    "collectorNumber": "72",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "置き去られた人々"
+    ],
+    "enNames": [
+      "Marooned"
+    ],
+    "scryfallName": "Marooned",
+    "oracleId": "74e02bdf-a074-4356-9d06-0df01dd2df66",
+    "scryfallId": "0820a78e-e392-423c-9d62-ddfda5cb3f03",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543184/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542322/",
+    "setCode": "TRK",
+    "collectorNumber": "73",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "メルコトの審査官"
+    ],
+    "enNames": [
+      "Melkotian Adjudicator"
+    ],
+    "scryfallName": "Melkotian Adjudicator",
+    "oracleId": "1fdcdb1c-a140-40ee-b711-5ea539eb1084",
+    "scryfallId": "873c9933-7939-4376-873c-6a5b3bbc98d4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542322/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546041/",
+    "setCode": "TRK",
+    "collectorNumber": "74",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "科学技官、ミスター・スポック"
+    ],
+    "enNames": [
+      "Mr. Spock, Science Officer"
+    ],
+    "scryfallName": "Mr. Spock, Science Officer",
+    "oracleId": "869bde03-8813-43a9-9df5-a21c62511b4b",
+    "scryfallId": "d19fc127-669e-4264-935a-e5991e6c0964",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546041/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545084/",
+    "setCode": "TRK",
+    "collectorNumber": "75",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "通信士官、ニヨータ・ウフーラ"
+    ],
+    "enNames": [
+      "Nyota Uhura, Communications"
+    ],
+    "scryfallName": "Nyota Uhura, Communications",
+    "oracleId": "d89f34e4-8628-4faf-89e6-c9c16023ae8b",
+    "scryfallId": "b04066ef-ad43-4b40-b4ae-5d94f154261f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545084/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545126/",
+    "setCode": "TRK",
+    "collectorNumber": "76",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "率直な交流"
+    ],
+    "enNames": [
+      "Open Communications"
+    ],
+    "scryfallName": "Open Communications",
+    "oracleId": "b08c5b86-4f84-46a3-877f-bbf71ec17adb",
+    "scryfallId": "8eeec269-13f0-4923-9f13-e995acd73e00",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545126/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545111/",
+    "setCode": "TRK",
+    "collectorNumber": "77",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ロミュラン・バード・オブ・プレイ"
+    ],
+    "enNames": [
+      "Romulan Bird-of-Prey"
+    ],
+    "scryfallName": "Romulan Bird-of-Prey",
+    "oracleId": "e614f97b-da8e-4569-9bdd-f76371c66836",
+    "scryfallId": "6a461d90-6b7b-4777-958a-8a5d8365ad8c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545111/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545187/",
+    "setCode": "TRK",
+    "collectorNumber": "78",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "金儲けの秘訣"
+    ],
+    "enNames": [
+      "Rules of Acquisition"
+    ],
+    "scryfallName": "Rules of Acquisition",
+    "oracleId": "5068eba6-ccf0-45f2-b0db-40f787ee3308",
+    "scryfallId": "307c36ec-6fa1-4d4b-afcd-c3c83b876ee8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545187/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546045/",
+    "setCode": "TRK",
+    "collectorNumber": "79",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "奇跡を起こす男、スコッティ"
+    ],
+    "enNames": [
+      "Scotty, Miracle Worker"
+    ],
+    "scryfallName": "Scotty, Miracle Worker",
+    "oracleId": "8e5057ae-165c-4fe4-b712-a638b7eea038",
+    "scryfallId": "42f77f9e-5e56-45ac-aa93-36353c92bca9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546045/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548844/",
+    "setCode": "TRK",
+    "collectorNumber": "80",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "同化を免れし者、セブン・オブ・ナイン"
+    ],
+    "enNames": [
+      "Seven of Nine, Unassimilated"
+    ],
+    "scryfallName": "Seven of Nine, Unassimilated",
+    "oracleId": "af9c9b8a-0713-4904-8e86-2b3331ec5495",
+    "scryfallId": "ddc517bd-27e1-4688-8941-a41c312bd782",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548844/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542324/",
+    "setCode": "TRK",
+    "collectorNumber": "81",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "宇宙艦隊のスパナジョッキー"
+    ],
+    "enNames": [
+      "Starfleet Spanner Jockey"
+    ],
+    "scryfallName": "Starfleet Spanner Jockey",
+    "oracleId": "d41ff489-7d74-4b06-b3a1-638f3e3303d1",
+    "scryfallId": "16bc9660-2bef-4926-b0e6-f49b22817bea",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542324/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543189/",
+    "setCode": "TRK",
+    "collectorNumber": "82",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "トゥポル副司令官"
+    ],
+    "enNames": [
+      "Subcommander T'Pol"
+    ],
+    "scryfallName": "Subcommander T'Pol",
+    "oracleId": "e6973668-4ea7-4920-82a5-73abfc1c9fd5",
+    "scryfallId": "7d90016d-c2cb-457b-9d97-c3b9411c46e3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543189/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545072/",
+    "setCode": "TRK",
+    "collectorNumber": "83",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "スロク級科学調査艦"
+    ],
+    "enNames": [
+      "Suurok-Class Science Vessel"
+    ],
+    "scryfallName": "Suurok-Class Science Vessel",
+    "oracleId": "5d2016ed-3ea0-4938-b95e-ee582307e475",
+    "scryfallId": "7608943e-329e-41f9-b098-a0a94b01e6a1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545072/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545090/",
+    "setCode": "TRK",
+    "collectorNumber": "84",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "スース・マナの実践者"
+    ],
+    "enNames": [
+      "Suus Mahna Practitioner"
+    ],
+    "scryfallName": "Suus Mahna Practitioner",
+    "oracleId": "e7d22ef6-a926-4964-bfd6-f7345b20e74e",
+    "scryfallId": "cb204e41-06a9-4ad2-81f2-a4d62f771cfa",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545090/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545089/",
+    "setCode": "TRK",
+    "collectorNumber": "85",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "プライオリティの試練"
+    ],
+    "enNames": [
+      "Test of Priorities"
+    ],
+    "scryfallName": "Test of Priorities",
+    "oracleId": "cd24de4f-ce88-4fbb-9e8d-93ea7c260b4c",
+    "scryfallId": "89e3ec23-e4dc-4d58-aeda-9f73ed4504a5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545089/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545082/",
+    "setCode": "TRK",
+    "collectorNumber": "86",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "大昔のサイエンティスト"
+    ],
+    "enNames": [
+      "Those Old Scientists"
+    ],
+    "scryfallName": "Those Old Scientists",
+    "oracleId": "5ca4e8c4-8358-49be-bafb-85849bf9bd01",
+    "scryfallId": "44280b43-b07e-43a4-9ae3-2eac0baeb918",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545082/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545087/",
+    "setCode": "TRK",
+    "collectorNumber": "87",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "切り込み戦艦、ヴィジャー"
+    ],
+    "enNames": [
+      "V'Ger, the Intruder"
+    ],
+    "scryfallName": "V'Ger, the Intruder",
+    "oracleId": "f50ec16b-13f5-4e20-ae09-9c7dee9d223b",
+    "scryfallId": "b082d454-d331-4960-8120-754f107ffa42",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545087/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545071/",
+    "setCode": "TRK",
+    "collectorNumber": "88",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ヴァルカン精神融合"
+    ],
+    "enNames": [
+      "Vulcan Mind-Meld"
+    ],
+    "scryfallName": "Vulcan Mind-Meld",
+    "oracleId": "a6aa204a-0be9-4a38-b54c-82538adfe7f1",
+    "scryfallId": "dd6c0c12-01b8-4f68-9401-7430a7f94bf7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545071/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/559701/",
+    "setCode": "TRK",
+    "collectorNumber": "89",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "宇宙艦隊の訓練生、ウェスリー・クラッシャー"
+    ],
+    "enNames": [
+      "Wesley Crusher, Starfleet Cadet"
+    ],
+    "scryfallName": "Wesley Crusher, Starfleet Cadet",
+    "oracleId": "5c3cbb08-cbe1-42f5-9ac7-e558b85648bb",
+    "scryfallId": "956eeb71-fd5f-4a26-aff6-77127c0ad4e7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/559701/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545058/",
+    "setCode": "TRK",
+    "collectorNumber": "90",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ワープの発明者、ゼフラム・コクレーン"
+    ],
+    "enNames": [
+      "Zefram Cochrane, Warp Pioneer"
+    ],
+    "scryfallName": "Zefram Cochrane, Warp Pioneer",
+    "oracleId": "fea67446-f413-4a8c-b79a-49172e798fff",
+    "scryfallId": "43ce2e91-9dce-4e86-a4b8-8d21e4e368ea",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545058/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554283/",
+    "setCode": "TRK",
+    "collectorNumber": "91",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "悪意の外皮、アルマス"
+    ],
+    "enNames": [
+      "Armus, Skin of Evil"
+    ],
+    "scryfallName": "Armus, Skin of Evil",
+    "oracleId": "42c77c4d-90bb-45d6-a9e0-36704b5a2b11",
+    "scryfallId": "c3ba1e0d-5e3d-4fa7-9b58-5b90944b43c5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554283/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545113/",
+    "setCode": "TRK",
+    "collectorNumber": "92",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "強襲ドローン"
+    ],
+    "enNames": [
+      "Assault Drone"
+    ],
+    "scryfallName": "Assault Drone",
+    "oracleId": "18832d7a-9a1f-45f1-a0f9-8e768a36af07",
+    "scryfallId": "5ca2da7a-afbf-4b32-8ff6-ae899b9f70ad",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545113/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545093/",
+    "setCode": "TRK",
+    "collectorNumber": "93",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "自動戦闘システム"
+    ],
+    "enNames": [
+      "Automated Warfare System"
+    ],
+    "scryfallName": "Automated Warfare System",
+    "oracleId": "b28b4fe9-1a35-48c1-8818-f6f786b04e3e",
+    "scryfallId": "3deae89b-b207-487b-9e82-1fa7fcd7854b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545093/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545136/",
+    "setCode": "TRK",
+    "collectorNumber": "94",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "バトラフ"
+    ],
+    "enNames": [
+      "Bat'leth"
+    ],
+    "scryfallName": "Bat'leth",
+    "oracleId": "1000d26e-7a29-48df-806f-9eb7d4e1082d",
+    "scryfallId": "888e6e0f-43c3-4516-88ff-8a8d814478d4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545136/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545094/",
+    "setCode": "TRK",
+    "collectorNumber": "95",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "戦傷の生存主義者"
+    ],
+    "enNames": [
+      "Battle-Scarred Survivalist"
+    ],
+    "scryfallName": "Battle-Scarred Survivalist",
+    "oracleId": "0e0e15d9-bd29-495a-9975-d1bd2ebb4bff",
+    "scryfallId": "c567253e-a2ee-45de-b3c6-3aeafbf8237b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545094/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542346/",
+    "setCode": "TRK",
+    "collectorNumber": "96",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ブラストニューロン"
+    ],
+    "enNames": [
+      "Blastoneuron"
+    ],
+    "scryfallName": "Blastoneuron",
+    "oracleId": "87bcc935-e7e7-4e98-a23c-01c5a9b7cfcd",
+    "scryfallId": "c1855a4c-c7d1-407c-b134-4c43968cbdd3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542346/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545106/",
+    "setCode": "TRK",
+    "collectorNumber": "97",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "チャディーシュの捜査官"
+    ],
+    "enNames": [
+      "Cha'DIch Investigator"
+    ],
+    "scryfallName": "Cha'DIch Investigator",
+    "oracleId": "cfdef803-6f7a-4055-8d51-8e8c60953928",
+    "scryfallId": "16281200-4660-4871-afd2-d4720e6a3197",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545106/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546048/",
+    "setCode": "TRK",
+    "collectorNumber": "98",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "照合トライマトリックス"
+    ],
+    "enNames": [
+      "Collation Trimatrix"
+    ],
+    "scryfallName": "Collation Trimatrix",
+    "oracleId": "4042ab14-c579-4d82-a642-576b88508ec7",
+    "scryfallId": "92c19351-0592-4269-90f4-2475d5529400",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546048/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542329/",
+    "setCode": "TRK",
+    "collectorNumber": "99",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "集合体ドローン"
+    ],
+    "enNames": [
+      "Collective Drone"
+    ],
+    "scryfallName": "Collective Drone",
+    "oracleId": "d9806ba7-8af4-4e8e-9238-7bc40c6bee0b",
+    "scryfallId": "65b74daa-4606-4118-9752-b0dcd7a3f486",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542329/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545171/",
+    "setCode": "TRK",
+    "collectorNumber": "100",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ラフィ・ムジカー司令官"
+    ],
+    "enNames": [
+      "Commander Raffi Musiker"
+    ],
+    "scryfallName": "Commander Raffi Musiker",
+    "oracleId": "4f8a70cb-2487-4e6d-9a3f-c6c5313b8e82",
+    "scryfallId": "7e60bd56-3da1-4211-b790-320471eef242",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545171/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545101/",
+    "setCode": "TRK",
+    "collectorNumber": "101",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ドゥゴーの流血人"
+    ],
+    "enNames": [
+      "D'Ghor Bloodletter"
+    ],
+    "scryfallName": "D'Ghor Bloodletter",
+    "oracleId": "ae5ee92a-5915-49ce-aa4c-611ab711b2ef",
+    "scryfallId": "5075645d-ef69-4559-953e-c3140153bd75",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545101/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545110/",
+    "setCode": "TRK",
+    "collectorNumber": "102",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "死など大したことない"
+    ],
+    "enNames": [
+      "Death Is Irrelevant"
+    ],
+    "scryfallName": "Death Is Irrelevant",
+    "oracleId": "aeec05f1-43ea-4012-82d8-cded5494535d",
+    "scryfallId": "408cb5dd-1a79-47a9-98ea-41f3f4502c5e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545110/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545112/",
+    "setCode": "TRK",
+    "collectorNumber": "103",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "プラクシスの破壊"
+    ],
+    "enNames": [
+      "The Destruction of Praxis"
+    ],
+    "scryfallName": "The Destruction of Praxis",
+    "oracleId": "028d6812-55db-40df-9288-89c2e478c76c",
+    "scryfallId": "3d33ac2a-73a9-4804-bf9f-c8cf4eea1c76",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545112/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545070/",
+    "setCode": "TRK",
+    "collectorNumber": "104",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "退化"
+    ],
+    "enNames": [
+      "De-evolve"
+    ],
+    "scryfallName": "De-evolve",
+    "oracleId": "663e120a-a74f-47fb-aa0a-9d1a75db626e",
+    "scryfallId": "81d798f1-07dd-46b1-b0b3-411280a2e257",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545070/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543331/",
+    "setCode": "TRK",
+    "collectorNumber": "105",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ワープ・コア射出"
+    ],
+    "enNames": [
+      "Eject the Warp Core"
+    ],
+    "scryfallName": "Eject the Warp Core",
+    "oracleId": "c06c17c2-203c-4b4a-8564-f29bc41c9eb5",
+    "scryfallId": "04a479be-8093-4775-a5d9-8b0e1683bf12",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543331/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545175/",
+    "setCode": "TRK",
+    "collectorNumber": "106",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "素朴な仕立て屋、エリム・ガラック"
+    ],
+    "enNames": [
+      "Elim Garak, Simple Tailor"
+    ],
+    "scryfallName": "Elim Garak, Simple Tailor",
+    "oracleId": "c83465bd-f95f-4c57-b9ce-925a85b45276",
+    "scryfallId": "113bd51a-dfbb-4106-adf3-e567057fcd06",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545175/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545095/",
+    "setCode": "TRK",
+    "collectorNumber": "107",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "逃亡中の聴き手"
+    ],
+    "enNames": [
+      "Fugitive Listener"
+    ],
+    "scryfallName": "Fugitive Listener",
+    "oracleId": "e6939d1e-6ff8-4559-8526-0e4d0e749e20",
+    "scryfallId": "bd04c738-b4e3-481e-9a68-d257524bf40e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545095/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545105/",
+    "setCode": "TRK",
+    "collectorNumber": "108",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "鏡の脅威、ガブリエル・ロルカ"
+    ],
+    "enNames": [
+      "Gabriel Lorca, Mirror Menace"
+    ],
+    "scryfallName": "Gabriel Lorca, Mirror Menace",
+    "oracleId": "6349eecb-dabd-4dcb-a8fb-c8ee66f61461",
+    "scryfallId": "a98d0f01-8e5e-4ff1-88e5-684b8f4c015c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545105/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554282/",
+    "setCode": "TRK",
+    "collectorNumber": "109",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "冷たい戦士、チャン将軍"
+    ],
+    "enNames": [
+      "General Chang, Cold Warrior"
+    ],
+    "scryfallName": "General Chang, Cold Warrior",
+    "oracleId": "72217c2e-4f6b-41da-8de1-bb6892d3c452",
+    "scryfallId": "c46a0910-215c-4757-8bfe-7eca479157a5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554282/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554269/",
+    "setCode": "TRK",
+    "collectorNumber": "110",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "テランの皇帝、ジョージャウ"
+    ],
+    "enNames": [
+      "Georgiou, Terran Emperor"
+    ],
+    "scryfallName": "Georgiou, Terran Emperor",
+    "oracleId": "31932df4-0be8-45c4-8b22-84119d9c20ba",
+    "scryfallId": "a68361a3-83fa-44b5-92b5-b7905866fc99",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554269/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545102/",
+    "setCode": "TRK",
+    "collectorNumber": "111",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "死ぬのに良き日"
+    ],
+    "enNames": [
+      "A Good Day to Die"
+    ],
+    "scryfallName": "A Good Day to Die",
+    "oracleId": "4c4559a5-a7a4-4a40-8a8f-e7375c741748",
+    "scryfallId": "e2b350b2-0eda-4c2b-b9d6-b58ab4848545",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545102/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548847/",
+    "setCode": "TRK",
+    "collectorNumber": "112",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "グランド・ネーガス・ゼク"
+    ],
+    "enNames": [
+      "Grand Nagus Zek"
+    ],
+    "scryfallName": "Grand Nagus Zek",
+    "oracleId": "654ce8c5-b329-4046-9728-7fa276bc8695",
+    "scryfallId": "47488f1e-512d-4dc6-a82d-1ead24d3276a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548847/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545107/",
+    "setCode": "TRK",
+    "collectorNumber": "113",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "植民地の総督、ガル・デュカット"
+    ],
+    "enNames": [
+      "Gul Dukat, Colonial Prefect"
+    ],
+    "scryfallName": "Gul Dukat, Colonial Prefect",
+    "oracleId": "f41f0290-0f9d-4c51-935e-f69d2120e4a7",
+    "scryfallId": "7adc6373-1196-448f-8aee-cee7a890c724",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545107/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545098/",
+    "setCode": "TRK",
+    "collectorNumber": "114",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "彼は死んだよ"
+    ],
+    "enNames": [
+      "He's Dead, Jim"
+    ],
+    "scryfallName": "He's Dead, Jim",
+    "oracleId": "ee7150d1-8b38-4387-9b9c-a40180430170",
+    "scryfallId": "2c309b0d-94b4-405e-be6c-18b407323e51",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545098/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547930/",
+    "setCode": "TRK",
+    "collectorNumber": "115",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "集合意識のコプロセッサ"
+    ],
+    "enNames": [
+      "Hive Mind Coprocessor"
+    ],
+    "scryfallName": "Hive Mind Coprocessor",
+    "oracleId": "8e6ae6ed-065c-47bd-a3c6-69b2608e7ddc",
+    "scryfallId": "a4734c59-ff41-47ac-bbb4-c8c3bf052fe6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547930/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545104/",
+    "setCode": "TRK",
+    "collectorNumber": "116",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "不可能な選択"
+    ],
+    "enNames": [
+      "Impossible Choice"
+    ],
+    "scryfallName": "Impossible Choice",
+    "oracleId": "e277ed07-2113-4465-a45c-a64490814c1d",
+    "scryfallId": "6c5a87cf-7790-4335-8497-ff793bbdcb05",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545104/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542349/",
+    "setCode": "TRK",
+    "collectorNumber": "117",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "消された偽造作戦"
+    ],
+    "enNames": [
+      "In the Pale Moonlight"
+    ],
+    "scryfallName": "In the Pale Moonlight",
+    "oracleId": "90c78f79-982f-4acd-a8ba-0c6ce115a248",
+    "scryfallId": "47c8262c-e0c6-4c1a-b1c1-3b5fe5252a9c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542349/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554268/",
+    "setCode": "TRK",
+    "collectorNumber": "118",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "信念なき指導者、カイ・ウィン"
+    ],
+    "enNames": [
+      "Kai Winn, Faithless Leader"
+    ],
+    "scryfallName": "Kai Winn, Faithless Leader",
+    "oracleId": "16a5ed42-ee86-4dcb-b8ea-239ac2b13d67",
+    "scryfallId": "973ab6cd-fc23-4816-aa08-f77c93e1b1d6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554268/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547935/",
+    "setCode": "TRK",
+    "collectorNumber": "119",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "復讐心、カーン"
+    ],
+    "enNames": [
+      "Khan, Vengeful Heart"
+    ],
+    "scryfallName": "Khan, Vengeful Heart",
+    "oracleId": "d2a86d0c-a4fe-434c-a45c-812cdec9169f",
+    "scryfallId": "a6f47b34-02fb-41d2-978a-a6d0a47ee8ba",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547935/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542303/",
+    "setCode": "TRK",
+    "collectorNumber": "120",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "オブシディアン・オーダーの工作員"
+    ],
+    "enNames": [
+      "Obsidian Order Operative"
+    ],
+    "scryfallName": "Obsidian Order Operative",
+    "oracleId": "7145e1b7-b991-4651-b21d-0620cb017090",
+    "scryfallId": "17a7b0a8-baaf-4e6a-8536-f511c796a713",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542303/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545108/",
+    "setCode": "TRK",
+    "collectorNumber": "121",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "有機的剥離ユニット"
+    ],
+    "enNames": [
+      "Organic Avulsion Unit"
+    ],
+    "scryfallName": "Organic Avulsion Unit",
+    "oracleId": "f1e28022-b06b-4efb-9f85-c36d8302ef99",
+    "scryfallId": "8cc06121-6ecd-44c3-90f9-34d492b031d4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545108/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/558062/",
+    "setCode": "TRK",
+    "collectorNumber": "122",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "溢れ出づるサブマトリックス"
+    ],
+    "enNames": [
+      "Overflow Submatrix"
+    ],
+    "scryfallName": "Overflow Submatrix",
+    "oracleId": "523c244b-7292-40c7-8b12-27106fffe63f",
+    "scryfallId": "7e5654a7-ce83-4801-8978-7294a39dbef8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/558062/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/555195/",
+    "setCode": "TRK",
+    "collectorNumber": "123",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "パターン・バッファの保存"
+    ],
+    "enNames": [
+      "Pattern Buffer Preservation"
+    ],
+    "scryfallName": "Pattern Buffer Preservation",
+    "oracleId": "690d0d8f-48b9-40a6-b881-6f17ac19bf3b",
+    "scryfallId": "23166580-9676-4025-916b-864568c2e59d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/555195/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545092/",
+    "setCode": "TRK",
+    "collectorNumber": "124",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "無慈悲なドレッドノック"
+    ],
+    "enNames": [
+      "Relentless Drednok"
+    ],
+    "scryfallName": "Relentless Drednok",
+    "oracleId": "98cbac1d-7896-4c63-a265-03bc5d670fa6",
+    "scryfallId": "ce538db8-373d-4554-821e-cd96e795e37a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545092/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/555199/",
+    "setCode": "TRK",
+    "collectorNumber": "125",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "抵抗は無意味だ"
+    ],
+    "enNames": [
+      "Resistance Is Futile"
+    ],
+    "scryfallName": "Resistance Is Futile",
+    "oracleId": "49975689-85f8-4221-bb11-3d3f68a1a7ac",
+    "scryfallId": "81d88257-466d-4729-862f-591885b3d875",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/555199/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545099/",
+    "setCode": "TRK",
+    "collectorNumber": "126",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "逸れものの人工知能"
+    ],
+    "enNames": [
+      "Rogue Artificial Intelligence"
+    ],
+    "scryfallName": "Rogue Artificial Intelligence",
+    "oracleId": "4849f2f8-0c0e-470d-a4f5-76547a9570a0",
+    "scryfallId": "edcce061-88c9-40bf-97f8-d0d3018e24dd",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545099/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/558705/",
+    "setCode": "TRK",
+    "collectorNumber": "127",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "吸塩鬼"
+    ],
+    "enNames": [
+      "Salt Vampire"
+    ],
+    "scryfallName": "Salt Vampire",
+    "oracleId": "31c7453e-33b8-4eb6-abac-28cdb35fb993",
+    "scryfallId": "78faba81-01a3-489f-927e-1adaa8fe4436",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/558705/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545165/",
+    "setCode": "TRK",
+    "collectorNumber": "128",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "タル・シアーのパラドックス、セラ"
+    ],
+    "enNames": [
+      "Sela, Tal Shiar Paradox"
+    ],
+    "scryfallName": "Sela, Tal Shiar Paradox",
+    "oracleId": "0cbf0f7a-7f5e-4819-9a9f-f655f92fd5f1",
+    "scryfallId": "cb680a44-3395-4c96-a73d-af1e0b7b8a9f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545165/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545109/",
+    "setCode": "TRK",
+    "collectorNumber": "129",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "名高き古参兵"
+    ],
+    "enNames": [
+      "Storied Veteran"
+    ],
+    "scryfallName": "Storied Veteran",
+    "oracleId": "b1012ac3-77f8-4384-b947-84c094d6b59e",
+    "scryfallId": "3b80995c-8e9a-4a9c-8854-59439a58166f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545109/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545115/",
+    "setCode": "TRK",
+    "collectorNumber": "130",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "歴史からの逸脱"
+    ],
+    "enNames": [
+      "Stray from History"
+    ],
+    "scryfallName": "Stray from History",
+    "oracleId": "adbbb968-5721-427c-a15a-320d49ab4c3e",
+    "scryfallId": "aac57a7f-a28b-486a-8d85-c620702a9cc0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545115/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545096/",
+    "setCode": "TRK",
+    "collectorNumber": "131",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "タル・シアーの工作員"
+    ],
+    "enNames": [
+      "Tal Shiar Operative"
+    ],
+    "scryfallName": "Tal Shiar Operative",
+    "oracleId": "53641cda-7093-4fed-97f1-380f771e00b0",
+    "scryfallId": "ebe9c7bd-5528-41fd-9c51-2306086c7887",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545096/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545103/",
+    "setCode": "TRK",
+    "collectorNumber": "132",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "言ってごらん"
+    ],
+    "enNames": [
+      "Tell Me What You See"
+    ],
+    "scryfallName": "Tell Me What You See",
+    "oracleId": "abfdfae5-61aa-42d6-9c8e-83fda59de233",
+    "scryfallId": "e339c8fb-26d2-4514-aeb7-014274df0c9c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545103/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545100/",
+    "setCode": "TRK",
+    "collectorNumber": "133",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "執拗なドローン"
+    ],
+    "enNames": [
+      "Tenacious Drone"
+    ],
+    "scryfallName": "Tenacious Drone",
+    "oracleId": "af6351a9-ac01-4fed-9ea9-a352d21a8312",
+    "scryfallId": "206ae042-09af-4fc1-8441-69cecdd087de",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545100/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545097/",
+    "setCode": "TRK",
+    "collectorNumber": "134",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "忠誠の試練"
+    ],
+    "enNames": [
+      "Test of Loyalty"
+    ],
+    "scryfallName": "Test of Loyalty",
+    "oracleId": "6cb1c3fb-033a-4de5-ad07-69d9ad0ca5ae",
+    "scryfallId": "722eeb21-be3c-4ae6-abd2-c3281d53c035",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545097/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546907/",
+    "setCode": "TRK",
+    "collectorNumber": "135",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "地獄の底から、U.S.S. リライアント"
+    ],
+    "enNames": [
+      "U.S.S. Reliant, From Hell's Heart"
+    ],
+    "scryfallName": "U.S.S. Reliant, From Hell's Heart",
+    "oracleId": "edaa05ba-8b15-4156-b725-1e0c418a9ae5",
+    "scryfallId": "a4c6fc55-f585-4529-b549-31d4d838c9af",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546907/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545114/",
+    "setCode": "TRK",
+    "collectorNumber": "136",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "報復任務"
+    ],
+    "enNames": [
+      "Vengeance Mission"
+    ],
+    "scryfallName": "Vengeance Mission",
+    "oracleId": "eae07535-487b-48ac-b99e-b4b62286254c",
+    "scryfallId": "059e3331-43bc-43a8-90e9-86fef37e032a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545114/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545131/",
+    "setCode": "TRK",
+    "collectorNumber": "137",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "アカデミーの指導員"
+    ],
+    "enNames": [
+      "Academy Instructor"
+    ],
+    "scryfallName": "Academy Instructor",
+    "oracleId": "8802b7f0-1ed1-4872-9939-182afb8441ca",
+    "scryfallId": "660ec8bc-dc03-4b42-84f3-091c19e2a853",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545131/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/550507/",
+    "setCode": "TRK",
+    "collectorNumber": "138",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "性急な少尉、ベケット・マリナー"
+    ],
+    "enNames": [
+      "Beckett Mariner, Impetuous Ensign"
+    ],
+    "scryfallName": "Beckett Mariner, Impetuous Ensign",
+    "oracleId": "1033a0cb-1a00-46c4-83d5-68a6eac85feb",
+    "scryfallId": "f2001bbd-63ee-4a6e-8e01-3a91aaf1e3b9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/550507/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545127/",
+    "setCode": "TRK",
+    "collectorNumber": "139",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "移乗攻撃"
+    ],
+    "enNames": [
+      "Boarding Action"
+    ],
+    "scryfallName": "Boarding Action",
+    "oracleId": "f9f70fb6-953e-40e8-a15d-ea3ee62d09e3",
+    "scryfallId": "3a0d33cd-f81c-4950-81ed-9536061eca8a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545127/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554272/",
+    "setCode": "TRK",
+    "collectorNumber": "140",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "何食わぬはったり"
+    ],
+    "enNames": [
+      "Brazen Bluff"
+    ],
+    "scryfallName": "Brazen Bluff",
+    "oracleId": "9ac20f38-adc4-40a9-95c9-bbdc689b928b",
+    "scryfallId": "5b306901-1bba-488b-866e-83aa162dab5a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554272/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543186/",
+    "setCode": "TRK",
+    "collectorNumber": "141",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "喧嘩腰の艦長"
+    ],
+    "enNames": [
+      "Cantankerous Captain"
+    ],
+    "scryfallName": "Cantankerous Captain",
+    "oracleId": "2375e6e4-bea2-4fa2-b0d5-467e3076962c",
+    "scryfallId": "2c053ec5-d1ea-4526-8a0d-e4dfafb8ecdf",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543186/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546040/",
+    "setCode": "TRK",
+    "collectorNumber": "142",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ジェイムズ・T・カーク船長"
+    ],
+    "enNames": [
+      "Captain James T. Kirk"
+    ],
+    "scryfallName": "Captain James T. Kirk",
+    "oracleId": "19edde54-153f-46b8-8a8d-a20fdef0667f",
+    "scryfallId": "40a0466d-20bb-4ed5-858d-947fb9144580",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546040/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545129/",
+    "setCode": "TRK",
+    "collectorNumber": "143",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "マイケル・バーナム艦長"
+    ],
+    "enNames": [
+      "Captain Michael Burnham"
+    ],
+    "scryfallName": "Captain Michael Burnham",
+    "oracleId": "9a71aa6c-2d5f-468d-b588-252fae37ccbb",
+    "scryfallId": "e10d6d71-9360-4ecf-97c8-22afb22aaeb7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545129/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545121/",
+    "setCode": "TRK",
+    "collectorNumber": "144",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "艦長の教育指導"
+    ],
+    "enNames": [
+      "Captain's Tutelage"
+    ],
+    "scryfallName": "Captain's Tutelage",
+    "oracleId": "1d41aacf-e15d-4457-b12a-c71bcdb7b5de",
+    "scryfallId": "0c340eba-645d-416a-9ed4-f2303aa8c919",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545121/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546905/",
+    "setCode": "TRK",
+    "collectorNumber": "145",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "D7級巡洋戦艦"
+    ],
+    "enNames": [
+      "D-7 Battle Cruiser"
+    ],
+    "scryfallName": "D-7 Battle Cruiser",
+    "oracleId": "5e696f9a-425c-470a-870e-10d2ba3bb27d",
+    "scryfallId": "6c22998d-7bd7-433d-95b8-50f2fd8b7b7f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546905/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543185/",
+    "setCode": "TRK",
+    "collectorNumber": "146",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ダハール・マスター"
+    ],
+    "enNames": [
+      "Dahar Master"
+    ],
+    "scryfallName": "Dahar Master",
+    "oracleId": "c9bc1a28-8d3c-4d9f-a67d-b044cfe9d6c1",
+    "scryfallId": "1122fe1c-97f7-409d-ad37-0fed46f9f963",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543185/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546902/",
+    "setCode": "TRK",
+    "collectorNumber": "147",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ドミニオンの侵入"
+    ],
+    "enNames": [
+      "Dominion Infiltration"
+    ],
+    "scryfallName": "Dominion Infiltration",
+    "oracleId": "30597aff-ebb6-4927-b350-fe559fb92c8f",
+    "scryfallId": "38b7cc7c-e6f0-4460-83c0-0bcd1ab5b4cf",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546902/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/558706/",
+    "setCode": "TRK",
+    "collectorNumber": "148",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "未知との遭遇"
+    ],
+    "enNames": [
+      "Encounter the Unknown"
+    ],
+    "scryfallName": "Encounter the Unknown",
+    "oracleId": "78c423ad-1f8b-4262-b64f-a98899da9372",
+    "scryfallId": "9a49f66c-7017-4ddd-8787-21d68fe1bff5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/558706/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/555196/",
+    "setCode": "TRK",
+    "collectorNumber": "149",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "豪胆な操縦士、エリカ・オルテガス"
+    ],
+    "enNames": [
+      "Erica Ortegas, Plucky Pilot"
+    ],
+    "scryfallName": "Erica Ortegas, Plucky Pilot",
+    "oracleId": "8b2514e5-4124-4f6c-b6b7-24c0ab3d3971",
+    "scryfallId": "3667eb41-598e-4543-97ed-6da961f8b567",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/555196/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543348/",
+    "setCode": "TRK",
+    "collectorNumber": "150",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "探査任務"
+    ],
+    "enNames": [
+      "Exploratory Mission"
+    ],
+    "scryfallName": "Exploratory Mission",
+    "oracleId": "3fdba8ee-6dfe-480d-b84a-43922229d9b4",
+    "scryfallId": "61bb2ec5-5f04-4c34-ba72-7fa226922c5c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543348/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545139/",
+    "setCode": "TRK",
+    "collectorNumber": "151",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ジェネシス効果"
+    ],
+    "enNames": [
+      "Genesis Effect"
+    ],
+    "scryfallName": "Genesis Effect",
+    "oracleId": "ec763f36-3504-4bfe-8481-1a7d0bff8d8e",
+    "scryfallId": "f0996bab-c2e4-4483-a76e-1355c81f1577",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545139/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545124/",
+    "setCode": "TRK",
+    "collectorNumber": "152",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ホルタ"
+    ],
+    "enNames": [
+      "Horta"
+    ],
+    "scryfallName": "Horta",
+    "oracleId": "e8ac0742-15f5-4cf0-888f-f1c2c97fc144",
+    "scryfallId": "abf44662-62ad-47fb-9cfe-6bed47133de5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545124/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/558704/",
+    "setCode": "TRK",
+    "collectorNumber": "153",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "無限の多様性"
+    ],
+    "enNames": [
+      "Infinite Diversity"
+    ],
+    "scryfallName": "Infinite Diversity",
+    "oracleId": "c7d8ed66-d66e-42fd-9c3e-8c2d8194e009",
+    "scryfallId": "33ade614-3593-4055-8ecc-2d9e4858ba19",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/558704/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545137/",
+    "setCode": "TRK",
+    "collectorNumber": "154",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "カーーーーーーン！"
+    ],
+    "enNames": [
+      "Khaaaaaaaaaaaannn!"
+    ],
+    "scryfallName": "Khaaaaaaaaaaaannn!",
+    "oracleId": "45b1a19b-6a0c-4534-9106-99c2e5fc30d6",
+    "scryfallId": "22c60c17-74ec-460b-bf7a-e56e42239826",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545137/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545134/",
+    "setCode": "TRK",
+    "collectorNumber": "155",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "作り出された暴君、カーン"
+    ],
+    "enNames": [
+      "Khan, Despot by Design"
+    ],
+    "scryfallName": "Khan, Despot by Design",
+    "oracleId": "b7ea2089-abcd-4e60-8201-93801eae5084",
+    "scryfallId": "fd283ef1-fd8c-4288-8efa-6e81c92b3415",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545134/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545172/",
+    "setCode": "TRK",
+    "collectorNumber": "156",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "保安部員、ラアン・ヌニエン・シン"
+    ],
+    "enNames": [
+      "La'An Noonien-Singh, Security"
+    ],
+    "scryfallName": "La'An Noonien-Singh, Security",
+    "oracleId": "ed3b80eb-8915-4428-89b8-90f4278f2733",
+    "scryfallId": "afe08bef-b184-4b91-8d69-0101e183c3ff",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545172/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/558043/",
+    "setCode": "TRK",
+    "collectorNumber": "157",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "魅惑の客人、ラクサナ・トロイ"
+    ],
+    "enNames": [
+      "Lwaxana Troi, Charming Guest"
+    ],
+    "scryfallName": "Lwaxana Troi, Charming Guest",
+    "oracleId": "e56472ec-6ae8-48b2-a4ce-0ed154161c06",
+    "scryfallId": "19bf2f2f-4be2-4958-bfab-eb46c9ca1995",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/558043/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543190/",
+    "setCode": "TRK",
+    "collectorNumber": "158",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "弾薬の熱狂者"
+    ],
+    "enNames": [
+      "Munitions Enthusiast"
+    ],
+    "scryfallName": "Munitions Enthusiast",
+    "oracleId": "0013f005-2b49-48a4-8a74-9bbdadc88c9f",
+    "scryfallId": "6d73bb1c-39e3-429c-b6bb-96dae2254708",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543190/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545138/",
+    "setCode": "TRK",
+    "collectorNumber": "159",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "魔の宇宙病"
+    ],
+    "enNames": [
+      "The Naked Time"
+    ],
+    "scryfallName": "The Naked Time",
+    "oracleId": "2cf79dd0-c9db-403e-969d-6c09e7aaa575",
+    "scryfallId": "627c2ff6-88be-4c37-a676-0eddf453e8c6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545138/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546055/",
+    "setCode": "TRK",
+    "collectorNumber": "160",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "パー・レイス"
+    ],
+    "enNames": [
+      "Pah-Wraith"
+    ],
+    "scryfallName": "Pah-Wraith",
+    "oracleId": "e47c340d-b20b-4103-955b-3f76424c43f8",
+    "scryfallId": "24c7e179-c016-4db8-ad8b-aa5629152b5c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546055/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545117/",
+    "setCode": "TRK",
+    "collectorNumber": "161",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "過去の危機"
+    ],
+    "enNames": [
+      "Perils of the Past"
+    ],
+    "scryfallName": "Perils of the Past",
+    "oracleId": "f1f77fb4-2c83-4cbf-894e-624abe6cd95f",
+    "scryfallId": "3df10e9a-efb6-4945-9b1b-29200688702a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545117/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545125/",
+    "setCode": "TRK",
+    "collectorNumber": "162",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "惑星爆撃"
+    ],
+    "enNames": [
+      "Planetary Bombardment"
+    ],
+    "scryfallName": "Planetary Bombardment",
+    "oracleId": "2c2fdeff-a0c6-44cb-9603-4a9865f62985",
+    "scryfallId": "4d9c39ce-f598-48d1-afa0-22f9513f1483",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545125/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545120/",
+    "setCode": "TRK",
+    "collectorNumber": "163",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "惑星パトロール"
+    ],
+    "enNames": [
+      "Planetary Patrol"
+    ],
+    "scryfallName": "Planetary Patrol",
+    "oracleId": "fba54c2d-a664-4e4c-b9d4-e24cf2523ab9",
+    "scryfallId": "163f5474-138d-4b47-a6f5-b1a0974e56a4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545120/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545065/",
+    "setCode": "TRK",
+    "collectorNumber": "164",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "プラズマ連鎖"
+    ],
+    "enNames": [
+      "Plasma Cascade"
+    ],
+    "scryfallName": "Plasma Cascade",
+    "oracleId": "46ce40e9-b7fb-4f40-a7ab-f8a2234d1d63",
+    "scryfallId": "3c786a2f-3de4-4b24-a3a0-15b1f2a07324",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545065/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/561778/",
+    "setCode": "TRK",
+    "collectorNumber": "165",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "札を仕込むQ"
+    ],
+    "enNames": [
+      "Q, Stacking the Deck"
+    ],
+    "scryfallName": "Q, Stacking the Deck",
+    "oracleId": "6866f0a4-5fe6-40d9-bbfc-6f116f4e415d",
+    "scryfallId": "dcbe34db-0065-4960-92b8-3ea1d336e803",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/561778/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548855/",
+    "setCode": "TRK",
+    "collectorNumber": "166",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "慎ましき経営者、クワーク"
+    ],
+    "enNames": [
+      "Quark, Humble Proprietor"
+    ],
+    "scryfallName": "Quark, Humble Proprietor",
+    "oracleId": "61703e94-cb57-44d8-b37b-7b14b3cfd86d",
+    "scryfallId": "96104754-57e2-46e9-948d-628aab2aa0ad",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548855/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545118/",
+    "setCode": "TRK",
+    "collectorNumber": "167",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "飽くなき宇宙生物"
+    ],
+    "enNames": [
+      "Ravenous Cosmozoan"
+    ],
+    "scryfallName": "Ravenous Cosmozoan",
+    "oracleId": "5cbe6066-07f8-45de-b3b4-b8590d111b0d",
+    "scryfallId": "8eeb471b-412d-4ea1-bec0-d7dd0a557d76",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545118/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545079/",
+    "setCode": "TRK",
+    "collectorNumber": "168",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "無謀なる衝動"
+    ],
+    "enNames": [
+      "Reckless Impulse"
+    ],
+    "scryfallName": "Reckless Impulse",
+    "oracleId": "584cf0fd-112a-4ca6-9c0e-1f3228a7d325",
+    "scryfallId": "5bca43d8-7c69-47f4-8f82-48dd2b6a7cba",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545079/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546921/",
+    "setCode": "TRK",
+    "collectorNumber": "169",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "非常警報！"
+    ],
+    "enNames": [
+      "Red Alert!"
+    ],
+    "scryfallName": "Red Alert!",
+    "oracleId": "4636afb5-453a-4f27-8916-1cbc32459ba6",
+    "scryfallId": "0f9b10d3-ba76-45ec-a85c-fb7b26da5561",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546921/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545132/",
+    "setCode": "TRK",
+    "collectorNumber": "170",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "死の艦、サルコファガス"
+    ],
+    "enNames": [
+      "Sarcophagus, Ship of the Dead"
+    ],
+    "scryfallName": "Sarcophagus, Ship of the Dead",
+    "oracleId": "22b86863-c992-405b-949a-bdf8859884ef",
+    "scryfallId": "b5ea32b5-aa58-4f87-ac2e-4e3b8dd4a752",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545132/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545123/",
+    "setCode": "TRK",
+    "collectorNumber": "171",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "やり手のぼったくり"
+    ],
+    "enNames": [
+      "Savvy Profiteer"
+    ],
+    "scryfallName": "Savvy Profiteer",
+    "oracleId": "e96a9f9a-9326-4f0b-98ad-23210c97299f",
+    "scryfallId": "8256376f-011f-4cc8-9be4-47f5121ca75e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545123/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545122/",
+    "setCode": "TRK",
+    "collectorNumber": "172",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "珪酸塩の偵察機"
+    ],
+    "enNames": [
+      "Silicate Surveyor"
+    ],
+    "scryfallName": "Silicate Surveyor",
+    "oracleId": "1b248ef5-ec57-481d-b47a-357d3867054f",
+    "scryfallId": "6359ab5d-4151-4a0c-af13-d59c1b381bb0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545122/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545116/",
+    "setCode": "TRK",
+    "collectorNumber": "173",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "宇宙艦隊の保安部員"
+    ],
+    "enNames": [
+      "Starfleet Security"
+    ],
+    "scryfallName": "Starfleet Security",
+    "oracleId": "896077f9-b26e-4964-9279-03ee284a3e89",
+    "scryfallId": "62acde0e-791d-4259-83bc-3690e498f3b0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545116/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545119/",
+    "setCode": "TRK",
+    "collectorNumber": "174",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "タル・シアーの分析官"
+    ],
+    "enNames": [
+      "Tal Shiar Analyst"
+    ],
+    "scryfallName": "Tal Shiar Analyst",
+    "oracleId": "bca4d45d-cae4-46f3-b5ac-22fbac59fe56",
+    "scryfallId": "66daae4f-8024-4d87-b42f-e5271d29e646",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545119/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/577960/",
+    "setCode": "TRK",
+    "collectorNumber": "175",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ターグの世話係"
+    ],
+    "enNames": [
+      "Targ Wrangler"
+    ],
+    "scryfallName": "Targ Wrangler",
+    "oracleId": "a066eeb1-61fc-448b-bbab-650d672652ad",
+    "scryfallId": "eabc4252-cf58-48c3-9483-7862450e03d0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/577960/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/555200/",
+    "setCode": "TRK",
+    "collectorNumber": "176",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "時間の外、ターシャ・ヤー"
+    ],
+    "enNames": [
+      "Tasha Yar, Out of Time"
+    ],
+    "scryfallName": "Tasha Yar, Out of Time",
+    "oracleId": "1a9607a2-58cb-4bb8-b454-4813528221f8",
+    "scryfallId": "5f6cbe6c-5cd8-4eec-82b7-25d5bf5641c0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/555200/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543187/",
+    "setCode": "TRK",
+    "collectorNumber": "177",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "アイデンティティの試練"
+    ],
+    "enNames": [
+      "Test of Identity"
+    ],
+    "scryfallName": "Test of Identity",
+    "oracleId": "8cb700bb-daa5-4a26-bb84-e22bc11bdaff",
+    "scryfallId": "7e1c0423-bf58-47a1-a838-c15bbf40eaba",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543187/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545135/",
+    "setCode": "TRK",
+    "collectorNumber": "178",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "転送機の不具合"
+    ],
+    "enNames": [
+      "Transporter Malfunction"
+    ],
+    "scryfallName": "Transporter Malfunction",
+    "oracleId": "6eb9865e-513c-43c6-81e1-6ad000e9c48e",
+    "scryfallId": "85b108c3-00b5-4dfb-90de-57fa483c4926",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545135/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546050/",
+    "setCode": "TRK",
+    "collectorNumber": "179",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "一番乗り、ウィル・ライカー"
+    ],
+    "enNames": [
+      "Will Riker, First in the Field"
+    ],
+    "scryfallName": "Will Riker, First in the Field",
+    "oracleId": "7c1fd7c6-2f3d-496f-9f09-660a13ef923f",
+    "scryfallId": "9422d025-9460-44b6-8071-d896f20b87ea",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546050/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546052/",
+    "setCode": "TRK",
+    "collectorNumber": "180",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "聡明なる請負人、ウォーフ"
+    ],
+    "enNames": [
+      "Worf, Intelligence Contractor"
+    ],
+    "scryfallName": "Worf, Intelligence Contractor",
+    "oracleId": "dfff6f8f-b038-4619-8190-7a6918afab1e",
+    "scryfallId": "7df6c8c1-1f85-4c5d-a4f6-9ffcdad1b12e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546052/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547933/",
+    "setCode": "TRK",
+    "collectorNumber": "181",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "カーンの逆襲"
+    ],
+    "enNames": [
+      "The Wrath of Khan"
+    ],
+    "scryfallName": "The Wrath of Khan",
+    "oracleId": "22249955-0741-470e-bc2b-f32d4510849b",
+    "scryfallId": "426d627e-bb88-4879-8d9f-db1babf22b15",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547933/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542342/",
+    "setCode": "TRK",
+    "collectorNumber": "182",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "仇敵アルゴリズム"
+    ],
+    "enNames": [
+      "Adversary by Algorithm"
+    ],
+    "scryfallName": "Adversary by Algorithm",
+    "oracleId": "37f3eda9-3242-4d62-846f-935543d8f4fd",
+    "scryfallId": "41644f06-d08f-406c-a56a-47e1b5273982",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542342/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545163/",
+    "setCode": "TRK",
+    "collectorNumber": "183",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ヴァルカン星人の秘密"
+    ],
+    "enNames": [
+      "Amok Time"
+    ],
+    "scryfallName": "Amok Time",
+    "oracleId": "98a752ff-f041-4032-9f3f-c6c4007f10f1",
+    "scryfallId": "d31447b6-484f-4dda-b6af-ab068a84f896",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545163/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545145/",
+    "setCode": "TRK",
+    "collectorNumber": "184",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "抜け目ないテラフォーマー"
+    ],
+    "enNames": [
+      "Astute Terraformer"
+    ],
+    "scryfallName": "Astute Terraformer",
+    "oracleId": "c5a7a82e-3c13-4fa1-8bf5-bb85b2890f75",
+    "scryfallId": "2ef7c30c-3ee6-413d-bd24-476322f36cb8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545145/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545059/",
+    "setCode": "TRK",
+    "collectorNumber": "185",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "枝分かれする時間軸"
+    ],
+    "enNames": [
+      "Branching Timeline"
+    ],
+    "scryfallName": "Branching Timeline",
+    "oracleId": "6e13c619-706d-4c77-bc7d-187df0fd054a",
+    "scryfallId": "4a2231ff-677d-4041-9413-b8d683846920",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545059/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545148/",
+    "setCode": "TRK",
+    "collectorNumber": "186",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ジョナサン・アーチャー船長"
+    ],
+    "enNames": [
+      "Captain Jonathan Archer"
+    ],
+    "scryfallName": "Captain Jonathan Archer",
+    "oracleId": "85df3564-5134-4dc2-9021-40ec84ee6d08",
+    "scryfallId": "a4518ea3-5f56-4f1d-9024-2bf06ac98786",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545148/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547939/",
+    "setCode": "TRK",
+    "collectorNumber": "187",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "キャスリン・ジェインウェイ艦長"
+    ],
+    "enNames": [
+      "Captain Kathryn Janeway"
+    ],
+    "scryfallName": "Captain Kathryn Janeway",
+    "oracleId": "d77d1895-ce02-4302-87c9-649e852fd0ea",
+    "scryfallId": "d17ea45c-7f9c-411f-b7d3-ca7100ffe53b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547939/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/558702/",
+    "setCode": "TRK",
+    "collectorNumber": "188",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "人生を全うせしパイク船長"
+    ],
+    "enNames": [
+      "Captain Pike, Fullness of Time"
+    ],
+    "scryfallName": "Captain Pike, Fullness of Time",
+    "oracleId": "745633e6-8635-4d99-8a4e-edc5d500bb3d",
+    "scryfallId": "743be4c4-5c91-42bb-9942-115e903041a9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/558702/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545155/",
+    "setCode": "TRK",
+    "collectorNumber": "189",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "冷血のクルー"
+    ],
+    "enNames": [
+      "Cold-Blooded Crew"
+    ],
+    "scryfallName": "Cold-Blooded Crew",
+    "oracleId": "d5e9b04f-4a97-4da1-bf86-3715fc75ab23",
+    "scryfallId": "4f2d1830-baea-4735-b029-cb8c0b538d83",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545155/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545150/",
+    "setCode": "TRK",
+    "collectorNumber": "190",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "共通目標"
+    ],
+    "enNames": [
+      "Common Goal"
+    ],
+    "scryfallName": "Common Goal",
+    "oracleId": "d4030d30-4c24-458c-87a9-c2f80bb68d27",
+    "scryfallId": "4fddc950-fbc5-4cf7-b694-dcd54ffccb31",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545150/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554277/",
+    "setCode": "TRK",
+    "collectorNumber": "191",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "不運な二人、カルバーとスタメッツ"
+    ],
+    "enNames": [
+      "Culber and Stamets, Star-Crossed"
+    ],
+    "scryfallName": "Culber and Stamets, Star-Crossed",
+    "oracleId": "5b8e8ef2-2f04-4485-ae12-08f52dac81a2",
+    "scryfallId": "962752f7-5c94-41e4-ab7d-3e8741c7a502",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554277/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545151/",
+    "setCode": "TRK",
+    "collectorNumber": "192",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ダソンとピカード、エル・アドレルにて"
+    ],
+    "enNames": [
+      "Dathon and Picard at El-Adrel"
+    ],
+    "scryfallName": "Dathon and Picard at El-Adrel",
+    "oracleId": "76b7e1ee-43f0-4b56-822a-71b064c9201b",
+    "scryfallId": "94e9d400-f2bb-46e7-8d41-6038ebdc6c8b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545151/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545184/",
+    "setCode": "TRK",
+    "collectorNumber": "193",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "創造者、デビッドとキャロル・マーカス"
+    ],
+    "enNames": [
+      "David and Carol Marcus, Creators"
+    ],
+    "scryfallName": "David and Carol Marcus, Creators",
+    "oracleId": "15885e58-76a9-49fa-ae67-a0482aacd81c",
+    "scryfallId": "55d21155-647e-4892-b349-86b8d4e6d9b9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545184/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545142/",
+    "setCode": "TRK",
+    "collectorNumber": "194",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ドミニオンの強襲部隊"
+    ],
+    "enNames": [
+      "Dominion Assault Force"
+    ],
+    "scryfallName": "Dominion Assault Force",
+    "oracleId": "b093916c-cc0a-4b3b-9de6-8a2db53cdfe0",
+    "scryfallId": "28a55f63-1cbd-4362-a192-e42a06f44686",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545142/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545144/",
+    "setCode": "TRK",
+    "collectorNumber": "195",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ドミニオンの監督者"
+    ],
+    "enNames": [
+      "Dominion Supervisor"
+    ],
+    "scryfallName": "Dominion Supervisor",
+    "oracleId": "d151c8ed-58bf-4b82-a993-1d81f789aa0e",
+    "scryfallId": "5fa76320-24c0-4294-8ae4-fb39e171fbe6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545144/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545181/",
+    "setCode": "TRK",
+    "collectorNumber": "196",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ジョセフ・ムベンガ医師"
+    ],
+    "enNames": [
+      "Dr. Joseph M'Benga"
+    ],
+    "scryfallName": "Dr. Joseph M'Benga",
+    "oracleId": "046c4052-4c3c-4207-b44e-e9a98a8c017f",
+    "scryfallId": "c27e6865-40ba-406c-9dce-d8a7a9b8035b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545181/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546042/",
+    "setCode": "TRK",
+    "collectorNumber": "197",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "レナード・ボーンズ・マッコイ医師"
+    ],
+    "enNames": [
+      "Dr. Leonard \"Bones\" McCoy"
+    ],
+    "scryfallName": "Dr. Leonard \"Bones\" McCoy",
+    "oracleId": "0157faee-f307-43c0-b308-bbf36ce02e32",
+    "scryfallId": "d8593bf7-5248-4f4a-bf8b-9816d2f76c6b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546042/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545152/",
+    "setCode": "TRK",
+    "collectorNumber": "198",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "新たなる未知へ"
+    ],
+    "enNames": [
+      "Final Frontier"
+    ],
+    "scryfallName": "Final Frontier",
+    "oracleId": "26f7e903-2a00-4878-b8b7-d5abe35c9526",
+    "scryfallId": "34ea6df3-36e3-42c5-a4ed-a4cd18ec6dd0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545152/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545143/",
+    "setCode": "TRK",
+    "collectorNumber": "199",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ファースト・コンタクト"
+    ],
+    "enNames": [
+      "First Contact"
+    ],
+    "scryfallName": "First Contact",
+    "oracleId": "81229e0a-8413-40cf-8087-9d580cbb21c3",
+    "scryfallId": "5407e8f4-0c8e-4e66-9d2f-f22277aa38f4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545143/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543634/",
+    "setCode": "TRK",
+    "collectorNumber": "200",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ジェネシス装置"
+    ],
+    "enNames": [
+      "Genesis Device"
+    ],
+    "scryfallName": "Genesis Device",
+    "oracleId": "bb86849c-fdec-4ca5-a8c0-ed682d921759",
+    "scryfallId": "6a5b94ba-ac1f-478e-981f-7dfc31ad02f9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543634/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554276/",
+    "setCode": "TRK",
+    "collectorNumber": "201",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ホロ・エンジニア"
+    ],
+    "enNames": [
+      "Holo-Engineer"
+    ],
+    "scryfallName": "Holo-Engineer",
+    "oracleId": "0d830d0c-3339-49cc-8527-4f4edf787925",
+    "scryfallId": "acfaf5f3-a4f5-418a-a29a-211b33bf18ee",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554276/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548851/",
+    "setCode": "TRK",
+    "collectorNumber": "202",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ホログラムの追跡者"
+    ],
+    "enNames": [
+      "Hologram Stalker"
+    ],
+    "scryfallName": "Hologram Stalker",
+    "oracleId": "8f91e7aa-a2d4-42ed-a959-3acd621679a5",
+    "scryfallId": "6bd8a87b-ca7a-4a15-b96f-1a673ee44f3e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548851/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543329/",
+    "setCode": "TRK",
+    "collectorNumber": "203",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "いや、私は医者であって......"
+    ],
+    "enNames": [
+      "I'm a Doctor, Not a . . ."
+    ],
+    "scryfallName": "I'm a Doctor, Not a . . .",
+    "oracleId": "ad1d8eca-e3bf-479f-a442-bcd8c31bfe7f",
+    "scryfallId": "c07979d4-8a58-4cfb-bffa-74e8bd97c7ff",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543329/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546906/",
+    "setCode": "TRK",
+    "collectorNumber": "204",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "生ける遺産、ジャッジア・ダックス"
+    ],
+    "enNames": [
+      "Jadzia Dax, Living Legacy"
+    ],
+    "scryfallName": "Jadzia Dax, Living Legacy",
+    "oracleId": "67601646-f906-4824-9269-3cf89766d25f",
+    "scryfallId": "bd342f8b-9072-487d-8a33-b1bb149f1502",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546906/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/558703/",
+    "setCode": "TRK",
+    "collectorNumber": "205",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "従軍記者、ジェイク・シスコ"
+    ],
+    "enNames": [
+      "Jake Sisko, War Correspondent"
+    ],
+    "scryfallName": "Jake Sisko, War Correspondent",
+    "oracleId": "f0c1c97f-b8e1-49ec-b369-3d2694c33f29",
+    "scryfallId": "9e47c6b6-f99b-46be-98a1-92c98416aefe",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/558703/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546053/",
+    "setCode": "TRK",
+    "collectorNumber": "206",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "MACO攻撃隊"
+    ],
+    "enNames": [
+      "MACO Strike Team"
+    ],
+    "scryfallName": "MACO Strike Team",
+    "oracleId": "0d60cfb1-dd77-4013-b862-41e95fdb53ae",
+    "scryfallId": "98a38e3f-e5ff-402f-9bcd-a03edc264688",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546053/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545140/",
+    "setCode": "TRK",
+    "collectorNumber": "207",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "モプシー"
+    ],
+    "enNames": [
+      "Moopsy"
+    ],
+    "scryfallName": "Moopsy",
+    "oracleId": "89b9efc8-d1cd-4b2a-acf3-4f0dd1629167",
+    "scryfallId": "dfbaf597-6be2-4aa0-88ae-cc4c94878add",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545140/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545162/",
+    "setCode": "TRK",
+    "collectorNumber": "208",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ムガート"
+    ],
+    "enNames": [
+      "Mugato"
+    ],
+    "scryfallName": "Mugato",
+    "oracleId": "eb9a3b52-62ad-467f-b62a-0273ceee48e5",
+    "scryfallId": "f3c68b20-f202-4d55-bef1-398d96e55c57",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545162/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545157/",
+    "setCode": "TRK",
+    "collectorNumber": "209",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "精神的支柱、ニーリックス"
+    ],
+    "enNames": [
+      "Neelix, Moral Support"
+    ],
+    "scryfallName": "Neelix, Moral Support",
+    "oracleId": "7fba522b-a292-4d1f-9999-f787ba2d5fd1",
+    "scryfallId": "09c0daa9-9eca-4817-a427-868d1efcfa20",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545157/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545149/",
+    "setCode": "TRK",
+    "collectorNumber": "210",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "光合成する内科医"
+    ],
+    "enNames": [
+      "Photosynthetic Physician"
+    ],
+    "scryfallName": "Photosynthetic Physician",
+    "oracleId": "08787942-456f-4c71-a821-1c90b5639ca1",
+    "scryfallId": "88b87ddb-fbf8-4e6e-9895-1b30ae5ad63a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545149/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545183/",
+    "setCode": "TRK",
+    "collectorNumber": "211",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "新進気鋭の科学者、ロク＝ターク"
+    ],
+    "enNames": [
+      "Rok-Tahk, Budding Scientist"
+    ],
+    "scryfallName": "Rok-Tahk, Budding Scientist",
+    "oracleId": "ef919269-043f-45ab-a5da-403cdaa4da23",
+    "scryfallId": "787bd19b-586e-4451-850b-60e0857bada0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545183/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543644/",
+    "setCode": "TRK",
+    "collectorNumber": "212",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "恐れ知らずのサルー"
+    ],
+    "enNames": [
+      "Saru, Unthreatened"
+    ],
+    "scryfallName": "Saru, Unthreatened",
+    "oracleId": "b6a21e53-6f62-4874-b9cc-84ae177a0da6",
+    "scryfallId": "445de44d-8af9-4ea3-b165-9e8eb8939820",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543644/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545146/",
+    "setCode": "TRK",
+    "collectorNumber": "213",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "サウリアの探索者"
+    ],
+    "enNames": [
+      "Saurian Explorer"
+    ],
+    "scryfallName": "Saurian Explorer",
+    "oracleId": "00f4cab8-b135-4118-8e3a-92097178abb6",
+    "scryfallId": "197abe5e-cde2-4b29-a10f-d6b789776bfa",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545146/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545160/",
+    "setCode": "TRK",
+    "collectorNumber": "214",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "生命体8472"
+    ],
+    "enNames": [
+      "Species 8472"
+    ],
+    "scryfallName": "Species 8472",
+    "oracleId": "645a5619-d0b2-4153-aae0-ca2adc6f5e3d",
+    "scryfallId": "b3d74723-4c9e-4fe7-8276-05d5f1b7ba0c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545160/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547547/",
+    "setCode": "TRK",
+    "collectorNumber": "215",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "安定したワームホール"
+    ],
+    "enNames": [
+      "Stable Wormhole"
+    ],
+    "scryfallName": "Stable Wormhole",
+    "oracleId": "dba55309-cb21-42db-8968-8da07227a1be",
+    "scryfallId": "c6fc3447-55de-4f5d-8d06-8d9e2ff4d5d0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547547/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547934/",
+    "setCode": "TRK",
+    "collectorNumber": "216",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "支援任務"
+    ],
+    "enNames": [
+      "Support Mission"
+    ],
+    "scryfallName": "Support Mission",
+    "oracleId": "59a4c4cf-07b4-4009-bbea-7da7b31f09a1",
+    "scryfallId": "9e8b404c-6e2a-4966-ac4b-c9981c1c6fee",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547934/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/555194/",
+    "setCode": "TRK",
+    "collectorNumber": "217",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "発見の喜び、シルヴィア・ティリー"
+    ],
+    "enNames": [
+      "Sylvia Tilly, Joy of Discovery"
+    ],
+    "scryfallName": "Sylvia Tilly, Joy of Discovery",
+    "oracleId": "d4c1dbc8-23d8-49e0-bc2d-d005e9215172",
+    "scryfallId": "fe6e03b5-cd96-430b-9c74-96eca0212a81",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/555194/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545156/",
+    "setCode": "TRK",
+    "collectorNumber": "218",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "シンジケートの清算人"
+    ],
+    "enNames": [
+      "Syndicate Liquidators"
+    ],
+    "scryfallName": "Syndicate Liquidators",
+    "oracleId": "2f32de5c-4d85-42bc-b1bf-f762a46e5efc",
+    "scryfallId": "18bb2edd-8dee-4714-a707-6542b6ebbd53",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545156/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545153/",
+    "setCode": "TRK",
+    "collectorNumber": "219",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "時間の征服者"
+    ],
+    "enNames": [
+      "Temporal Conqueror"
+    ],
+    "scryfallName": "Temporal Conqueror",
+    "oracleId": "306002e6-d68d-47ad-879b-e6060efebeff",
+    "scryfallId": "b0bb51a7-1ae2-45d0-8be9-5454a3c8f751",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545153/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/555198/",
+    "setCode": "TRK",
+    "collectorNumber": "220",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "度胸の試練"
+    ],
+    "enNames": [
+      "Test of Courage"
+    ],
+    "scryfallName": "Test of Courage",
+    "oracleId": "101b2387-58a1-4ef9-8395-0024713e217b",
+    "scryfallId": "291b9b6b-54bf-4e71-98f1-cb9301ea0727",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/555198/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/555197/",
+    "setCode": "TRK",
+    "collectorNumber": "221",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ブラック警報下のU.S.S. ディスカバリー"
+    ],
+    "enNames": [
+      "U.S.S. Discovery, at Black Alert"
+    ],
+    "scryfallName": "U.S.S. Discovery, at Black Alert",
+    "oracleId": "13dbfe3f-1e04-4c4f-953c-7c949dba9d33",
+    "scryfallId": "69b1f87f-ff02-4945-9f07-18dab5035e2d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/555197/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545067/",
+    "setCode": "TRK",
+    "collectorNumber": "222",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ローン・ワンダラー、U.S.S. ボイジャー"
+    ],
+    "enNames": [
+      "U.S.S. Voyager, Lone Wanderer"
+    ],
+    "scryfallName": "U.S.S. Voyager, Lone Wanderer",
+    "oracleId": "33e8904a-9285-4031-900c-0a5c8f0bf6c0",
+    "scryfallId": "aaf8a0b2-c6cb-41cb-913d-7ae1d75e555d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545067/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543404/",
+    "setCode": "TRK",
+    "collectorNumber": "223",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ワープ・スピード"
+    ],
+    "enNames": [
+      "Warp Speed"
+    ],
+    "scryfallName": "Warp Speed",
+    "oracleId": "5a824931-2b65-42b1-8653-d4313a6693d2",
+    "scryfallId": "fdb5b940-9f62-47ad-8e80-5996daad0c9b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543404/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545141/",
+    "setCode": "TRK",
+    "collectorNumber": "224",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "異星植物学者"
+    ],
+    "enNames": [
+      "Xenobotanist"
+    ],
+    "scryfallName": "Xenobotanist",
+    "oracleId": "a9df60bf-f327-4d50-ab4d-99324fc2dcfe",
+    "scryfallId": "20a97cda-42b2-44f1-8e77-f64dd1c98f6f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545141/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545147/",
+    "setCode": "TRK",
+    "collectorNumber": "225",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ズィンディ人の偵察者"
+    ],
+    "enNames": [
+      "Xindi Surveyors"
+    ],
+    "scryfallName": "Xindi Surveyors",
+    "oracleId": "5fdff691-686d-4ce0-bd12-eea676a648b4",
+    "scryfallId": "803608aa-ae69-45d2-ae48-f1688d2a6a0d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545147/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547936/",
+    "setCode": "TRK",
+    "collectorNumber": "226",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "楽しいこともいつかは終わる"
+    ],
+    "enNames": [
+      "All Good Things..."
+    ],
+    "scryfallName": "All Good Things...",
+    "oracleId": "61dc9770-1e29-49fa-a31b-b63b5f0496fb",
+    "scryfallId": "fe5dda31-159c-49c7-962e-a04b771256ea",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547936/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546056/",
+    "setCode": "TRK",
+    "collectorNumber": "227",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ボーグ・キューブ"
+    ],
+    "enNames": [
+      "Borg Cube"
+    ],
+    "scryfallName": "Borg Cube",
+    "oracleId": "a59b854c-0e04-4581-b9d3-1516263d7ace",
+    "scryfallId": "e58f7310-3fd5-48d5-b6b7-a5d3e1808bbc",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546056/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548857/",
+    "setCode": "TRK",
+    "collectorNumber": "228",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "危険な過去への旅"
+    ],
+    "enNames": [
+      "The City on the Edge of Forever"
+    ],
+    "scryfallName": "The City on the Edge of Forever",
+    "oracleId": "47c9ef8c-7ba7-4702-bd8c-5fedc59c8166",
+    "scryfallId": "aac6f64d-d39a-4994-bc70-6b477b2640f8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548857/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545158/",
+    "setCode": "TRK",
+    "collectorNumber": "229",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "エンパス、クリーブランド・ブッカー"
+    ],
+    "enNames": [
+      "Cleveland Booker, Empath"
+    ],
+    "scryfallName": "Cleveland Booker, Empath",
+    "oracleId": "b80879d3-5abd-47e5-8b8c-61db120854e4",
+    "scryfallId": "6b2e52e2-5cb9-4360-92d6-5c0d9e435d09",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545158/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548846/",
+    "setCode": "TRK",
+    "collectorNumber": "230",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "オドー保安主任"
+    ],
+    "enNames": [
+      "Constable Odo"
+    ],
+    "scryfallName": "Constable Odo",
+    "oracleId": "74b58f31-7634-4b51-a900-6fbfccfb3cd2",
+    "scryfallId": "3df582e4-3bfb-4413-9b39-898f33a5c1fd",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548846/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545133/",
+    "setCode": "TRK",
+    "collectorNumber": "231",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "優生人類の孤児、ダル・レル"
+    ],
+    "enNames": [
+      "Dal R'El, Augment Orphan"
+    ],
+    "scryfallName": "Dal R'El, Augment Orphan",
+    "oracleId": "7cecf129-3df9-4ebf-b194-28d1b34faaab",
+    "scryfallId": "0da52d3a-dd83-4662-8e6d-3f4d4d389c3d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545133/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545174/",
+    "setCode": "TRK",
+    "collectorNumber": "232",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "時間の諜報員、ダニエルス"
+    ],
+    "enNames": [
+      "Daniels, Temporal Agent"
+    ],
+    "scryfallName": "Daniels, Temporal Agent",
+    "oracleId": "2e44a02f-af94-4696-b979-cdf68285c87a",
+    "scryfallId": "b64dd792-7dc7-4d22-9776-9b9e25e1173d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545174/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548849/",
+    "setCode": "TRK",
+    "collectorNumber": "233",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "心を開きしダソン"
+    ],
+    "enNames": [
+      "Dathon, His Heart Open"
+    ],
+    "scryfallName": "Dathon, His Heart Open",
+    "oracleId": "8de259a9-99d0-4f07-8dbc-f065e3af352b",
+    "scryfallId": "f2fe4663-eaaf-42c3-90f9-07e68129352c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548849/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545182/",
+    "setCode": "TRK",
+    "collectorNumber": "234",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "緊急用医療ホログラム、ザ・ドクター"
+    ],
+    "enNames": [
+      "The Doctor, EMH"
+    ],
+    "scryfallName": "The Doctor, EMH",
+    "oracleId": "3b04f5b9-40d9-49aa-a38d-0f946401263c",
+    "scryfallId": "8fbad0dd-5f74-40c0-9e3e-c06be8eabb14",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545182/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545170/",
+    "setCode": "TRK",
+    "collectorNumber": "235",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "デュラス姉妹"
+    ],
+    "enNames": [
+      "The Duras Sisters"
+    ],
+    "scryfallName": "The Duras Sisters",
+    "oracleId": "03973bad-1b3c-4488-a23e-232b192c95cc",
+    "scryfallId": "7eb112eb-2abf-4ba3-b9bd-b45ffa80f7eb",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545170/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547549/",
+    "setCode": "TRK",
+    "collectorNumber": "236",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "楽観的な少尉、ドヴァナ・テンディ"
+    ],
+    "enNames": [
+      "D'Vana Tendi, Optimistic Ensign"
+    ],
+    "scryfallName": "D'Vana Tendi, Optimistic Ensign",
+    "oracleId": "6bb42689-b169-43cb-b787-f0e348063cd6",
+    "scryfallId": "206239ca-341a-4f07-8149-a24ccf20ee45",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547549/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548848/",
+    "setCode": "TRK",
+    "collectorNumber": "237",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "戦に飢えしガウロン"
+    ],
+    "enNames": [
+      "Gowron, Eager for Battle"
+    ],
+    "scryfallName": "Gowron, Eager for Battle",
+    "oracleId": "40616029-e1a8-4e7c-bc7b-e381779c57cc",
+    "scryfallId": "d60613c2-5655-4051-babd-fc0f3a73fc77",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548848/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545178/",
+    "setCode": "TRK",
+    "collectorNumber": "238",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "永遠に繋がりし二人、グレイとアディラ"
+    ],
+    "enNames": [
+      "Gray and Adira, Forever Joined"
+    ],
+    "scryfallName": "Gray and Adira, Forever Joined",
+    "oracleId": "34a39862-c18b-4c1b-8920-207627c40934",
+    "scryfallId": "eede6822-c8bc-4344-81a9-bc608245d5b6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545178/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545057/",
+    "setCode": "TRK",
+    "collectorNumber": "239",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "壊れたものを修理する、ヘンマー"
+    ],
+    "enNames": [
+      "Hemmer, Fixing What Is Broken"
+    ],
+    "scryfallName": "Hemmer, Fixing What Is Broken",
+    "oracleId": "83d8e98d-ab97-40b1-820a-2d193a5ed261",
+    "scryfallId": "f3e730d7-3fd1-4bd2-a35b-6fb85bfd3c65",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545057/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543180/",
+    "setCode": "TRK",
+    "collectorNumber": "240",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "行こう！"
+    ],
+    "enNames": [
+      "Hit It!"
+    ],
+    "scryfallName": "Hit It!",
+    "oracleId": "62361438-3da4-4ce9-95b8-fc361b824f58",
+    "scryfallId": "6266506f-fabf-4b53-8f93-6e2115a3e5a4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543180/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554259/",
+    "setCode": "TRK",
+    "collectorNumber": "241",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "超時空惑星カターン"
+    ],
+    "enNames": [
+      "The Inner Light"
+    ],
+    "scryfallName": "The Inner Light",
+    "oracleId": "0de3aad2-5f4c-4437-b0b3-4b867309528d",
+    "scryfallId": "af92a773-b237-4cd8-b50d-4f7c3b9290ed",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554259/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545168/",
+    "setCode": "TRK",
+    "collectorNumber": "242",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "煽動家、キラ・ネリス"
+    ],
+    "enNames": [
+      "Kira Nerys, Firebrand"
+    ],
+    "scryfallName": "Kira Nerys, Firebrand",
+    "oracleId": "ff9f5bbb-43c4-481e-9bd7-db9f246355ae",
+    "scryfallId": "81ad6427-e730-47c9-8310-6d3ca4b10c82",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545168/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545180/",
+    "setCode": "TRK",
+    "collectorNumber": "243",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "司令官、カーク"
+    ],
+    "enNames": [
+      "Kirk, Commanding Officer"
+    ],
+    "scryfallName": "Kirk, Commanding Officer",
+    "oracleId": "e85ad29a-ebd6-4f81-af99-556deaedbfe0",
+    "scryfallId": "245d0430-0967-44f1-8c59-985104a8db30",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545180/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548856/",
+    "setCode": "TRK",
+    "collectorNumber": "244",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "長寿と繁栄を"
+    ],
+    "enNames": [
+      "Live Long and Prosper"
+    ],
+    "scryfallName": "Live Long and Prosper",
+    "oracleId": "ff6bc9f5-5a83-42d9-b1a4-f0979aed28ad",
+    "scryfallId": "0fc50ffc-3b4d-4fb3-898f-c308a63eb6e9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548856/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545167/",
+    "setCode": "TRK",
+    "collectorNumber": "245",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "口を開く者、ロキュータス"
+    ],
+    "enNames": [
+      "Locutus, the One Who Speaks"
+    ],
+    "scryfallName": "Locutus, the One Who Speaks",
+    "oracleId": "46ba09a7-42e4-42cd-911c-71d0ade01180",
+    "scryfallId": "296f1127-14a0-42c4-9e4a-c0d929720748",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545167/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554270/",
+    "setCode": "TRK",
+    "collectorNumber": "246",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "陽電子工作員、ローア"
+    ],
+    "enNames": [
+      "Lore, Positronic Provocateur"
+    ],
+    "scryfallName": "Lore, Positronic Provocateur",
+    "oracleId": "ee712451-01de-4486-9048-fafb5aa5a584",
+    "scryfallId": "62afa55d-d4ba-48d5-9991-0f8408f9c92c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554270/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545130/",
+    "setCode": "TRK",
+    "collectorNumber": "247",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "凶暴な夢想家、ルレル"
+    ],
+    "enNames": [
+      "L'Rell, Fierce Visionary"
+    ],
+    "scryfallName": "L'Rell, Fierce Visionary",
+    "oracleId": "ea684e78-483c-4b89-b184-b2aeede83cc7",
+    "scryfallId": "7b06bbb9-7c6d-4889-b55a-1de77c27fd18",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545130/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543197/",
+    "setCode": "TRK",
+    "collectorNumber": "248",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "鏡像宇宙への介入"
+    ],
+    "enNames": [
+      "Mirror Universe Intrusion"
+    ],
+    "scryfallName": "Mirror Universe Intrusion",
+    "oracleId": "007d08e8-4db2-47d1-ba39-8bb8efa491a1",
+    "scryfallId": "3507f99b-15fb-4f66-9484-8e8115e7f5de",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543197/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/547548/",
+    "setCode": "TRK",
+    "collectorNumber": "249",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "野心的な訓練生、ノーグ"
+    ],
+    "enNames": [
+      "Nog, Ambitious Cadet"
+    ],
+    "scryfallName": "Nog, Ambitious Cadet",
+    "oracleId": "5a8ae1c0-1935-4d03-aa94-9e9088650821",
+    "scryfallId": "b513dd60-8573-467b-9c6a-855a0ba86fca",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/547548/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542331/",
+    "setCode": "TRK",
+    "collectorNumber": "250",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "型破りな医師、フロックス"
+    ],
+    "enNames": [
+      "Phlox, Unorthodox Doctor"
+    ],
+    "scryfallName": "Phlox, Unorthodox Doctor",
+    "oracleId": "b04cb333-ca7a-464f-a084-03cf8f468baf",
+    "scryfallId": "2695e76e-c27d-49fc-9ef2-d9eaff449f3d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542331/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554275/",
+    "setCode": "TRK",
+    "collectorNumber": "251",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "連邦大使、サレク"
+    ],
+    "enNames": [
+      "Sarek, Federation Ambassador"
+    ],
+    "scryfallName": "Sarek, Federation Ambassador",
+    "oracleId": "72c51539-5f15-4636-8cb8-b688cf53f431",
+    "scryfallId": "94ad9063-9663-49d8-b7ba-05be865bd20a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554275/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545176/",
+    "setCode": "TRK",
+    "collectorNumber": "252",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "セブン・オブ・ナイン"
+    ],
+    "enNames": [
+      "Seven of Nine"
+    ],
+    "scryfallName": "Seven of Nine",
+    "oracleId": "3c037865-d38c-48da-aee9-308975e12638",
+    "scryfallId": "6204cfdb-6fb4-4030-96b6-9306c8266bcf",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545176/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545177/",
+    "setCode": "TRK",
+    "collectorNumber": "253",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "永遠の友人、スポック"
+    ],
+    "enNames": [
+      "Spock, Always Your Friend"
+    ],
+    "scryfallName": "Spock, Always Your Friend",
+    "oracleId": "bdfe5809-17d4-4239-a9ee-6accdef99035",
+    "scryfallId": "1be731d5-8b21-4883-91c0-dd9070b1eadd",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545177/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545159/",
+    "setCode": "TRK",
+    "collectorNumber": "254",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "トラベラー"
+    ],
+    "enNames": [
+      "The Traveler"
+    ],
+    "scryfallName": "The Traveler",
+    "oracleId": "b61718eb-dc6a-4199-b7c7-42eccf4158e8",
+    "scryfallId": "171932ba-26da-48e9-b8a2-c71aafe5c6a6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545159/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545173/",
+    "setCode": "TRK",
+    "collectorNumber": "255",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "無所属の考古学者、ヴァッシュ"
+    ],
+    "enNames": [
+      "Vash, Freelance Archaeologist"
+    ],
+    "scryfallName": "Vash, Freelance Archaeologist",
+    "oracleId": "ec5a9dde-b89d-4c54-8563-4a7170f5cefd",
+    "scryfallId": "d1f51765-f336-4ca2-a0f5-e42dc352c0fa",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545173/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545169/",
+    "setCode": "TRK",
+    "collectorNumber": "256",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "名誉に縛られし戦士、ウォーフ"
+    ],
+    "enNames": [
+      "Worf, Honor-Bound Warrior"
+    ],
+    "scryfallName": "Worf, Honor-Bound Warrior",
+    "oracleId": "2ecda53d-ac24-4b28-aed8-2a5fb1449f85",
+    "scryfallId": "b2d1955f-e834-4157-a139-9b6ec94bcd2a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545169/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/548858/",
+    "setCode": "TRK",
+    "collectorNumber": "257",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "時空侵略戦争"
+    ],
+    "enNames": [
+      "Year of Hell"
+    ],
+    "scryfallName": "Year of Hell",
+    "oracleId": "83f426db-3b25-4407-afd0-0465e3900c24",
+    "scryfallId": "4ab931e9-fb07-4da2-a0d9-acfec2ac9e19",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/548858/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546909/",
+    "setCode": "TRK",
+    "collectorNumber": "258",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "実体なき念動主、ゼロ"
+    ],
+    "enNames": [
+      "Zero, Incorporeal Sensate"
+    ],
+    "scryfallName": "Zero, Incorporeal Sensate",
+    "oracleId": "746e494e-fdc4-415e-8a82-d35e11ebeccb",
+    "scryfallId": "93f616fe-6906-4e5d-b9fe-b432cccdb0ec",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546909/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542302/",
+    "setCode": "TRK",
+    "collectorNumber": "259",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "クラスF・シャトルクラフト"
+    ],
+    "enNames": [
+      "Class-F Shuttlecraft"
+    ],
+    "scryfallName": "Class-F Shuttlecraft",
+    "oracleId": "4ccc91f2-4d6e-4d64-b438-3d8b4361040a",
+    "scryfallId": "55e0a183-4145-472f-8bed-a1f247febe06",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542302/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542377/",
+    "setCode": "TRK",
+    "collectorNumber": "260",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "通信バッジ"
+    ],
+    "enNames": [
+      "Combadge"
+    ],
+    "scryfallName": "Combadge",
+    "oracleId": "ccd0e613-17c1-4a97-b519-de0376d596f0",
+    "scryfallId": "8bcf6bb5-f689-4d61-8f69-3290eeab539d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542377/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554281/",
+    "setCode": "TRK",
+    "collectorNumber": "261",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "結晶構造の実存体"
+    ],
+    "enNames": [
+      "Crystalline Entity"
+    ],
+    "scryfallName": "Crystalline Entity",
+    "oracleId": "ca6f43d8-1498-4a13-b1cc-2d135b24a8b6",
+    "scryfallId": "cbc4ac70-0a4c-4973-a366-dd67d8901e21",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554281/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543324/",
+    "setCode": "TRK",
+    "collectorNumber": "262",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "サイバネティクスの専門家"
+    ],
+    "enNames": [
+      "Cybernetic Specialist"
+    ],
+    "scryfallName": "Cybernetic Specialist",
+    "oracleId": "9fc49a69-f80c-478f-b237-66f155c0c09a",
+    "scryfallId": "b147f16e-a2d6-4d43-9213-9a2723b0d3ef",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543324/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546058/",
+    "setCode": "TRK",
+    "collectorNumber": "263",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ディープ・スペース・ナイン"
+    ],
+    "enNames": [
+      "Deep Space 9"
+    ],
+    "scryfallName": "Deep Space 9",
+    "oracleId": "14442f5b-0bad-4c58-b268-d775787571d8",
+    "scryfallId": "76b039c5-e0a1-410a-954b-52f304e31f7f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546058/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554280/",
+    "setCode": "TRK",
+    "collectorNumber": "264",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "仕組まれた爆薬"
+    ],
+    "enNames": [
+      "Engineered Explosives"
+    ],
+    "scryfallName": "Engineered Explosives",
+    "oracleId": "95fd897e-9086-42c4-8e0d-61bb02333c5f",
+    "scryfallId": "ef2d8db7-3f86-4d87-97ca-368444dc7f16",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554280/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543325/",
+    "setCode": "TRK",
+    "collectorNumber": "265",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ホロデッキ"
+    ],
+    "enNames": [
+      "The Holodeck"
+    ],
+    "scryfallName": "The Holodeck",
+    "oracleId": "ecf28b5d-a719-47d4-8ad9-d24b6297ebde",
+    "scryfallId": "57e830f5-564d-4899-87c0-74192c561fc8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543325/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545068/",
+    "setCode": "TRK",
+    "collectorNumber": "266",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "アイソリニア・プロセッサ"
+    ],
+    "enNames": [
+      "Isolinear Processor"
+    ],
+    "scryfallName": "Isolinear Processor",
+    "oracleId": "ef5d7b38-b782-4fb0-b6cd-3da36995ab39",
+    "scryfallId": "8c1a2c13-5e36-4707-9d90-18c2e58a2b26",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545068/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545189/",
+    "setCode": "TRK",
+    "collectorNumber": "267",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "レプリケーター"
+    ],
+    "enNames": [
+      "Replicator"
+    ],
+    "scryfallName": "Replicator",
+    "oracleId": "a91b8eb4-d4f7-4e24-ae49-1f51e610c7ca",
+    "scryfallId": "ae846f45-d87b-47d4-87f6-2d9aa19c3c40",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545189/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546903/",
+    "setCode": "TRK",
+    "collectorNumber": "268",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "医務室"
+    ],
+    "enNames": [
+      "Sickbay"
+    ],
+    "scryfallName": "Sickbay",
+    "oracleId": "1d4163d9-ca02-4f25-9f53-01f6d7cc4b70",
+    "scryfallId": "05735357-3cca-42be-a3ae-5b4fc1fd5f47",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546903/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545190/",
+    "setCode": "TRK",
+    "collectorNumber": "269",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "アールグレイのホット"
+    ],
+    "enNames": [
+      "Tea, Earl Grey, Hot"
+    ],
+    "scryfallName": "Tea, Earl Grey, Hot",
+    "oracleId": "6f2e8083-29af-4cdb-a2cb-216b2f3f5616",
+    "scryfallId": "289e8ebe-ab0f-466b-a4e6-d5cf8411e724",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545190/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/542374/",
+    "setCode": "TRK",
+    "collectorNumber": "270",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "トライコーダー"
+    ],
+    "enNames": [
+      "Tricorder"
+    ],
+    "scryfallName": "Tricorder",
+    "oracleId": "1385679f-bdcd-4d7e-8266-1df0e36cc2da",
+    "scryfallId": "3c872f02-80ac-49e3-a777-3526d35ad7cc",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/542374/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545186/",
+    "setCode": "TRK",
+    "collectorNumber": "271",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "タイプ2・フェイザー"
+    ],
+    "enNames": [
+      "Type-2 Phaser"
+    ],
+    "scryfallName": "Type-2 Phaser",
+    "oracleId": "9d4d3682-e904-412d-b8ae-734962865dfb",
+    "scryfallId": "c704af22-7c42-45c7-b3a4-b414c4dd8e05",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545186/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546904/",
+    "setCode": "TRK",
+    "collectorNumber": "272",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "支援艦、　U.S.S. セリトス"
+    ],
+    "enNames": [
+      "U.S.S. Cerritos, Following Up"
+    ],
+    "scryfallName": "U.S.S. Cerritos, Following Up",
+    "oracleId": "472eac8f-2b82-4fa9-a40c-af11ec40f19e",
+    "scryfallId": "76bf7521-5024-4fdc-9ea1-5e10f2647efb",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546904/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543317/",
+    "setCode": "TRK",
+    "collectorNumber": "273",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ギャラクシー級、U.S.S. エンタープライズD"
+    ],
+    "enNames": [
+      "U.S.S. Enterprise-D, Galaxy-Class"
+    ],
+    "scryfallName": "U.S.S. Enterprise-D, Galaxy-Class",
+    "oracleId": "d95af032-3efd-40c7-8229-ade9d974934f",
+    "scryfallId": "057a4413-6a17-491e-bfd7-6cd427b1a442",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543317/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545185/",
+    "setCode": "TRK",
+    "collectorNumber": "274",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ワープ・コア"
+    ],
+    "enNames": [
+      "Warp Core"
+    ],
+    "scryfallName": "Warp Core",
+    "oracleId": "6a2df97a-341d-4bc4-9f5c-661b6ca78fd0",
+    "scryfallId": "de8e2bde-b368-4d10-8409-86f5da6997f6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545185/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546917/",
+    "setCode": "TRK",
+    "collectorNumber": "275",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "アンドリア"
+    ],
+    "enNames": [
+      "Andoria"
+    ],
+    "scryfallName": "Andoria",
+    "oracleId": "79134f5e-94db-4a40-ba75-2569b839cf35",
+    "scryfallId": "0e9e72ef-3e34-4d19-aec0-b5e1ba84d244",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546917/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543337/",
+    "setCode": "TRK",
+    "collectorNumber": "276",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "人為的異常現象"
+    ],
+    "enNames": [
+      "Artificial Anomaly"
+    ],
+    "scryfallName": "Artificial Anomaly",
+    "oracleId": "7e550295-eaf4-4962-bc52-261d7c2d71ae",
+    "scryfallId": "7dfead74-0625-4f6a-b66b-6d5d363a387c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543337/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546919/",
+    "setCode": "TRK",
+    "collectorNumber": "277",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ベイジョー"
+    ],
+    "enNames": [
+      "Bajor"
+    ],
+    "scryfallName": "Bajor",
+    "oracleId": "93d7f6e7-b6b0-48f3-891a-73970826af3b",
+    "scryfallId": "ff5254a6-4961-4604-b65b-2eb0ce9b1c82",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546919/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/567454/",
+    "setCode": "TRK",
+    "collectorNumber": "278",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "血の墓所"
+    ],
+    "enNames": [
+      "Blood Crypt"
+    ],
+    "scryfallName": "Blood Crypt",
+    "oracleId": "43985bbc-a0f6-4812-984e-392bc8562633",
+    "scryfallId": "1b7eb998-3ec0-4cbc-a416-5a1e3e5a7316",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/567454/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/567458/",
+    "setCode": "TRK",
+    "collectorNumber": "279",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "繁殖池"
+    ],
+    "enNames": [
+      "Breeding Pool"
+    ],
+    "scryfallName": "Breeding Pool",
+    "oracleId": "20283c4a-f1f0-42f0-bc08-6da87474426b",
+    "scryfallId": "63e4dc07-c742-41bd-8301-861637908fd1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/567458/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546916/",
+    "setCode": "TRK",
+    "collectorNumber": "280",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "カーデシア・プライム"
+    ],
+    "enNames": [
+      "Cardassia Prime"
+    ],
+    "scryfallName": "Cardassia Prime",
+    "oracleId": "aff720b4-b8ef-46ea-9a3d-e101999e6526",
+    "scryfallId": "d634424f-9148-46a5-95e3-4965a9226bb4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546916/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546920/",
+    "setCode": "TRK",
+    "collectorNumber": "281",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "セクター001、地球"
+    ],
+    "enNames": [
+      "Earth, Sector 001"
+    ],
+    "scryfallName": "Earth, Sector 001",
+    "oracleId": "c75d87b0-7de9-4c50-b781-9749d67c1e07",
+    "scryfallId": "5278d354-97c4-4c21-a902-2f9252b151eb",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546920/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546049/",
+    "setCode": "TRK",
+    "collectorNumber": "282",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "連邦駐屯地"
+    ],
+    "enNames": [
+      "Federation Outpost"
+    ],
+    "scryfallName": "Federation Outpost",
+    "oracleId": "a8bcc930-3efe-4595-b164-f5985e1dc289",
+    "scryfallId": "02e368bd-ece8-4201-8d1a-4c5287d5cfee",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546049/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546918/",
+    "setCode": "TRK",
+    "collectorNumber": "283",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "フェレンギナー"
+    ],
+    "enNames": [
+      "Ferenginar"
+    ],
+    "scryfallName": "Ferenginar",
+    "oracleId": "2e0753ad-7f76-4d26-8e87-6f201378f333",
+    "scryfallId": "17fab75f-7ff9-4c50-a6f7-03a85cd275bf",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546918/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543311/",
+    "setCode": "TRK",
+    "collectorNumber": "284",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ガス状異常現象"
+    ],
+    "enNames": [
+      "Gaseous Anomaly"
+    ],
+    "scryfallName": "Gaseous Anomaly",
+    "oracleId": "1fb736bf-c9bd-45ab-86ce-7f138f1724b2",
+    "scryfallId": "e6974579-7e88-4d7f-9b05-93d08167cb17",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543311/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/567459/",
+    "setCode": "TRK",
+    "collectorNumber": "285",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "神無き祭殿"
+    ],
+    "enNames": [
+      "Godless Shrine"
+    ],
+    "scryfallName": "Godless Shrine",
+    "oracleId": "73864fcc-1bde-4bc0-831e-2b93e546e417",
+    "scryfallId": "8fbd1ae0-3d4c-492a-a1ea-85a95fa3d7b6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/567459/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/567452/",
+    "setCode": "TRK",
+    "collectorNumber": "286",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "神聖なる泉"
+    ],
+    "enNames": [
+      "Hallowed Fountain"
+    ],
+    "scryfallName": "Hallowed Fountain",
+    "oracleId": "f1750962-a87c-49f6-b731-02ae971ac6ea",
+    "scryfallId": "b7285986-7e08-4969-86ef-452dc5bfdd9f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/567452/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554271/",
+    "setCode": "TRK",
+    "collectorNumber": "287",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ニバー科学アカデミー"
+    ],
+    "enNames": [
+      "Ni'Var Science Academy"
+    ],
+    "scryfallName": "Ni'Var Science Academy",
+    "oracleId": "45bf09bb-4141-4166-bdae-6dac39e7f316",
+    "scryfallId": "a785dcd0-2df5-4d31-a01a-61fa7a1f1806",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554271/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546914/",
+    "setCode": "TRK",
+    "collectorNumber": "288",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "オリオン"
+    ],
+    "enNames": [
+      "Orion"
+    ],
+    "scryfallName": "Orion",
+    "oracleId": "47e3aa22-8806-408f-b93e-0d0b800866f6",
+    "scryfallId": "dec37ff4-d6e9-4b87-865b-125b17162465",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546914/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/556556/",
+    "setCode": "TRK",
+    "collectorNumber": "289",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "草むした墓"
+    ],
+    "enNames": [
+      "Overgrown Tomb"
+    ],
+    "scryfallName": "Overgrown Tomb",
+    "oracleId": "975ec9a3-6f20-4177-8211-82526e092538",
+    "scryfallId": "ad7e18e2-c033-4b6c-86e8-d0e5cc824cfd",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/556556/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554279/",
+    "setCode": "TRK",
+    "collectorNumber": "290",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "Q連続体"
+    ],
+    "enNames": [
+      "Q Continuum"
+    ],
+    "scryfallName": "Q Continuum",
+    "oracleId": "457cf958-8129-4bf6-b4d5-211eb8c58763",
+    "scryfallId": "cd424080-e8ad-4a56-a820-20d8534fba31",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554279/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546913/",
+    "setCode": "TRK",
+    "collectorNumber": "291",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "クロノス"
+    ],
+    "enNames": [
+      "Qo'noS"
+    ],
+    "scryfallName": "Qo'noS",
+    "oracleId": "cab718af-8e6f-4766-856e-3a61ba98f94d",
+    "scryfallId": "f1558d93-8a8a-45e0-bcdc-e6cd42f716dc",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546913/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554274/",
+    "setCode": "TRK",
+    "collectorNumber": "292",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "クワークのバー"
+    ],
+    "enNames": [
+      "Quark's Bar"
+    ],
+    "scryfallName": "Quark's Bar",
+    "oracleId": "800d0f33-31c9-43da-a649-8860646eca1f",
+    "scryfallId": "8422ee4a-9845-429d-bda8-74852168dcba",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554274/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546915/",
+    "setCode": "TRK",
+    "collectorNumber": "293",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ライサ"
+    ],
+    "enNames": [
+      "Risa"
+    ],
+    "scryfallName": "Risa",
+    "oracleId": "365a4644-74f4-4af9-81ab-0d328ca5edce",
+    "scryfallId": "c89e7680-9868-4fea-9aaf-6af03bfa0692",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546915/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546912/",
+    "setCode": "TRK",
+    "collectorNumber": "294",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ロミュラス"
+    ],
+    "enNames": [
+      "Romulus"
+    ],
+    "scryfallName": "Romulus",
+    "oracleId": "14c4ad24-7f38-409b-8ef0-341f233982da",
+    "scryfallId": "1bce111b-b07c-4589-9b6d-f0b5f320808c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546912/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/567456/",
+    "setCode": "TRK",
+    "collectorNumber": "295",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "聖なる鋳造所"
+    ],
+    "enNames": [
+      "Sacred Foundry"
+    ],
+    "scryfallName": "Sacred Foundry",
+    "oracleId": "45181cb8-2090-4471-ba90-e5a8f04d525f",
+    "scryfallId": "a7758cc6-4e18-48a5-8720-5f42b5cd9d31",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/567456/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543314/",
+    "setCode": "TRK",
+    "collectorNumber": "296",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "宇宙内異常現象"
+    ],
+    "enNames": [
+      "Spatial Anomaly"
+    ],
+    "scryfallName": "Spatial Anomaly",
+    "oracleId": "a4f31512-a91c-42e0-9929-5069386c3c71",
+    "scryfallId": "2f683f37-4291-410d-b179-ed6139c06877",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543314/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554278/",
+    "setCode": "TRK",
+    "collectorNumber": "297",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "宇宙艦隊アカデミー"
+    ],
+    "enNames": [
+      "Starfleet Academy"
+    ],
+    "scryfallName": "Starfleet Academy",
+    "oracleId": "de8ebef9-fa0e-42df-a1bc-5c4b86d1bdd1",
+    "scryfallId": "2da8d3bf-4397-4844-90d6-dd888becc804",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554278/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/567457/",
+    "setCode": "TRK",
+    "collectorNumber": "298",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "蒸気孔"
+    ],
+    "enNames": [
+      "Steam Vents"
+    ],
+    "scryfallName": "Steam Vents",
+    "oracleId": "17039058-822d-409f-938c-b727a366ba63",
+    "scryfallId": "a83903c7-fd51-4526-aed2-359e946fea36",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/567457/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/556559/",
+    "setCode": "TRK",
+    "collectorNumber": "299",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "踏み鳴らされる地"
+    ],
+    "enNames": [
+      "Stomping Ground"
+    ],
+    "scryfallName": "Stomping Ground",
+    "oracleId": "16052b52-ade1-406f-a06b-ce7ea607fb63",
+    "scryfallId": "1ee8255a-44f6-4faa-9843-15432bf751ea",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/556559/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/543312/",
+    "setCode": "TRK",
+    "collectorNumber": "300",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "亜空間内異常現象"
+    ],
+    "enNames": [
+      "Subspace Anomaly"
+    ],
+    "scryfallName": "Subspace Anomaly",
+    "oracleId": "1a28a83a-de27-4aaa-b35f-1e7075fc1e43",
+    "scryfallId": "ed62600f-84ae-421e-970a-fd0682c8f280",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/543312/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/567455/",
+    "setCode": "TRK",
+    "collectorNumber": "301",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "寺院の庭"
+    ],
+    "enNames": [
+      "Temple Garden"
+    ],
+    "scryfallName": "Temple Garden",
+    "oracleId": "f413a83d-a40d-434c-b20a-4c707c0527fa",
+    "scryfallId": "b9b0589d-f327-46a7-8bac-06b7654c547a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/567455/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545191/",
+    "setCode": "TRK",
+    "collectorNumber": "302",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "時間内異常現象"
+    ],
+    "enNames": [
+      "Temporal Anomaly"
+    ],
+    "scryfallName": "Temporal Anomaly",
+    "oracleId": "cf0d1859-699e-47d4-bc91-7c5ff61fabe9",
+    "scryfallId": "d2000219-0a57-48e6-ab0f-d5ad0fb7bcf6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545191/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/545188/",
+    "setCode": "TRK",
+    "collectorNumber": "303",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "未踏領域"
+    ],
+    "enNames": [
+      "Unexplored Territory"
+    ],
+    "scryfallName": "Unexplored Territory",
+    "oracleId": "6e5d4bbd-4999-4acd-8775-25e02d901035",
+    "scryfallId": "ca1e60f1-11a9-4bb8-9f6e-5b652b49c517",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/545188/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/554267/",
+    "setCode": "TRK",
+    "collectorNumber": "304",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ユニコンプレックス"
+    ],
+    "enNames": [
+      "The Unicomplex"
+    ],
+    "scryfallName": "The Unicomplex",
+    "oracleId": "b38fcf9a-464a-432a-b13c-9a206d52dcd9",
+    "scryfallId": "4c881efb-d55b-45fe-9e5a-8a61aec6fbbb",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/554267/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/546911/",
+    "setCode": "TRK",
+    "collectorNumber": "305",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "ヴァルカン"
+    ],
+    "enNames": [
+      "Vulcan"
+    ],
+    "scryfallName": "Vulcan",
+    "oracleId": "c7b6bc1f-9161-415e-a097-d9c8cd81d4ae",
+    "scryfallId": "fc3fe0da-8d93-4f1c-9aad-c2fdc9fe34fc",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/546911/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/567453/",
+    "setCode": "TRK",
+    "collectorNumber": "306",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "湿った墓"
+    ],
+    "enNames": [
+      "Watery Grave"
+    ],
+    "scryfallName": "Watery Grave",
+    "oracleId": "fc9ec820-4245-4a96-b009-5308a818ca58",
+    "scryfallId": "5525d6a6-e532-4047-9da4-bfae7927fecc",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/567453/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/575883/",
+    "setCode": "TRK",
+    "collectorNumber": "307",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "平地"
+    ],
+    "enNames": [
+      "Plains"
+    ],
+    "scryfallName": "Plains",
+    "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+    "scryfallId": "6b2fba64-b85f-42bc-991e-4bb6201b78fb",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/575883/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/575884/",
+    "setCode": "TRK",
+    "collectorNumber": "308",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "島"
+    ],
+    "enNames": [
+      "Island"
+    ],
+    "scryfallName": "Island",
+    "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+    "scryfallId": "1c5b534a-128f-4235-8f69-646a55ae4d67",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/575884/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/575885/",
+    "setCode": "TRK",
+    "collectorNumber": "309",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "沼"
+    ],
+    "enNames": [
+      "Swamp"
+    ],
+    "scryfallName": "Swamp",
+    "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+    "scryfallId": "b4e1965a-dbab-4edb-ada9-43898c57c5fe",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/575885/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/575887/",
+    "setCode": "TRK",
+    "collectorNumber": "310",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "山"
+    ],
+    "enNames": [
+      "Mountain"
+    ],
+    "scryfallName": "Mountain",
+    "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+    "scryfallId": "87908c55-4ac4-4b57-a8ee-a28640a18f0f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/575887/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000312/575886/",
+    "setCode": "TRK",
+    "collectorNumber": "311",
+    "setNameJa": "スター・トレック",
+    "jaNames": [
+      "森"
+    ],
+    "enNames": [
+      "Forest"
+    ],
+    "scryfallName": "Forest",
+    "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+    "scryfallId": "f026379b-f00f-4897-b03f-dd164d69b925",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRK/575886/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek"
+  },
+  {
     "source": "mtg-jp-card-gallery-name",
     "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000291/693485/",
     "setCode": "TDM",

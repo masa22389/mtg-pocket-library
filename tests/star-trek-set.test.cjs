@@ -14,4 +14,12 @@ assert.deepEqual(codes('TRK'),['trk']);
 assert.deepEqual(codes('ホビット'),['hob','hoc']);assert.deepEqual(codes('スパイダーマン'),['spm','mar','spe']);
 // The picker and search still know these sets when the Scryfall set list can't be fetched.
 for(const set of ['trk','trc','sds'])assert.ok(code.includes('{ code: "'+set+'", name:'),set);
+// The official gallery's main set: one exact print per number, with the Japanese name and official image.
+const w={};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../mtg-jp-card-index.js'),'utf8'),{window:w});
+const trk=w.MTG_JP_CARD_INDEX.filter(x=>x.setCode==='TRK');
+assert.equal(trk.length,311);assert.equal(new Set(trk.map(x=>x.collectorNumber)).size,311);assert.equal(new Set(trk.map(x=>x.oracleId)).size,311);
+for(const x of trk){assert.ok(x.jaNames[0]&&x.enNames[0]&&x.scryfallId&&x.oracleId,x.collectorNumber);assert.match(x.images.normal,/^https:\/\/mtg-jp\.com\/\/img_sys\/cardImages\/TRK\/\d+\/cardimage\.png$/);}
+const byNumber=n=>trk.find(x=>x.collectorNumber===n);
+assert.equal(byNumber('7').enNames[0],'Captain Jean-Luc Picard');assert.equal(byNumber('7').jaNames[0],'ジャン＝リュック・ピカード艦長');
+assert.equal(byNumber('311').jaNames[0],'森');
 console.log('PASS star trek set');
