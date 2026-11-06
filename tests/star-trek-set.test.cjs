@@ -30,4 +30,15 @@ const trcNamed=name=>trc.find(x=>x.enNames[0]===name);
 assert.equal(trcNamed('Starship Enterprise').jaNames[0],'宇宙艦エンタープライズ');
 assert.equal(trcNamed('Talisman of Conviction').jaNames[0],'確信のタリスマン');
 assert.equal(trcNamed('Talisman of Progress').jaNames[0],'発展のタリスマン');
+// A set-name search asks for each set in full and merges without repeating a print.
+const s={};vm.createContext(s);
+for(const name of ['normalizeSetCode','setAliasSearchFilters','mergeSetAliasCards']){const a=code.indexOf('function '+name+'(');vm.runInContext(code.slice(a,code.indexOf('\n}',a)+2),s);}
+assert.equal(s.setAliasSearchFilters('TRC',''),'set:trc');
+assert.equal(s.setAliasSearchFilters('trc','lang:ja'),'set:trc lang:ja');
+const merged=s.mergeSetAliasCards([{cards:[{id:'a',set:'trk',oracle_id:'1'},{id:'b',set:'trk',oracle_id:'2'},{id:'b2',set:'trk',oracle_id:'2'}]},{cards:[{id:'c',set:'trc',oracle_id:'2'},{}]},{}]);
+assert.deepEqual(Array.from(merged).map(x=>x.id),['a','b','c']);
+const official=s.mergeSetAliasCards([{cards:[{id:'en',set:'trc',oracle_id:'1',lang:'en'},{id:'en-jp-name',set:'trc',oracle_id:'1',lang:'en',_supplementalJpVariant:true},{id:'later',set:'trc',oracle_id:'1',lang:'en'}]}]);
+assert.deepEqual(Array.from(official).map(x=>x.id),['en-jp-name']);
+// The set-name route runs before the general search, which caps merged results at 24.
+assert.ok(code.indexOf('const setAliasCodes = exactMatch || /\\bset:/i.test(filters)')<code.indexOf('const searchResult = await fetchSearchCandidates(query, filters, sourceLang'));
 console.log('PASS star trek set');

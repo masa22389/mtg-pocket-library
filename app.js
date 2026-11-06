@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v364";
+const APP_VERSION = "v365";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2571,6 +2571,23 @@ async function searchCards() {
       els.searchStatus.textContent = `${uniqueCount}種類を表示${indexedText}`;
       return;
     }
+    // A set name lists the whole set, the same way as choosing it in the expansion picker.
+    const setAliasCodes = exactMatch || /\bset:/i.test(filters) ? [] : setAliasCodesForQuery(query);
+    if (setAliasCodes.length) {
+      els.searchStatus.textContent = "セットの全カードを取得中…";
+      const setResults = [];
+      for (const code of setAliasCodes) setResults.push(await fetchCompleteSetCandidates(code, setAliasSearchFilters(code, filters)));
+      if (requestId !== searchRequestId) return;
+      const setCards = applySubtypeFilter(mergeSetAliasCards(setResults));
+      if (setCards.length) {
+        state.searchResults = applyJpIndexToCards(setCards.map(card => (
+          sourceLang === "ja" ? { ...card, _preferJpDisplay: true } : card
+        ))).map(card => ({ ...card, _setScopedResult: true }));
+        renderSearchResults();
+        els.searchStatus.textContent = `${state.searchGroups.length}種類を表示`;
+        return;
+      }
+    }
     const searchResult = await fetchSearchCandidates(query, filters, sourceLang, exactMatch, maxCandidates, {
       exhaustive: exhaustiveAdvancedSearch,
       localizedSubtype: clientSubtype,
@@ -2734,6 +2751,24 @@ function setAliasCodesForQuery(query) {
   if (!key) return [];
   const match = SET_SEARCH_ALIASES.find(alias => alias.terms.some(term => normalizeAliasKey(term) === key));
   return match ? match.codes : [];
+}
+
+function setAliasSearchFilters(code, filters) {
+  return [`set:${normalizeSetCode(code)}`, filters].filter(Boolean).join(" ");
+}
+
+// A complete set can hold several prints of one card (indexed print, search result, official Japanese variant).
+// The first stays in place unless a later one is Japanese and it isn't.
+function mergeSetAliasCards(results) {
+  const merged = new Map();
+  for (const card of results.flatMap(result => result.cards || [])) {
+    if (!card?.id) continue;
+    const key = `${String(card.set || "").toLowerCase()}:${card.oracle_id || card.id}`;
+    const current = merged.get(key);
+    const isJapanesePrint = entry => entry.lang === "ja" || Boolean(entry._supplementalJpVariant);
+    if (!current || (isJapanesePrint(card) && !isJapanesePrint(current))) merged.set(key, card);
+  }
+  return [...merged.values()];
 }
 
 function buildSetAliasSearchQuery(codes, filters) {
