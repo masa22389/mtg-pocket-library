@@ -3,6 +3,7 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 const code=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8');
 const take=(from,to)=>code.slice(code.indexOf(from),code.indexOf(to,code.indexOf(from)));
 const fn=[
+  take('function cardColorsFromApi(','\n// Double-faced cards saved before'),
   take('function applyCardMetadata(','\nasync function hydrateEnglishPriceFallbacks'),
   take('async function hydrateEnglishPriceFallbacks(','\n// Startup and every return online'),
 ].join('\n');

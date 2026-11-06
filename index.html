@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=362">
-  <link rel="stylesheet" href="mobile-inputs.css?v=362">
+  <link rel="stylesheet" href="styles.css?v=363">
+  <link rel="stylesheet" href="mobile-inputs.css?v=363">
 </head>
 <body>
   <header class="app-header">
@@ -107,14 +107,17 @@ const BACKGROUND_THEME_CHROME = {
           <button id="openCollectionAdvanced" class="compact ghost" type="button">詳細設定</button>
         </div>
       </section>
-      <details id="individualFilterPanel" class="set-filter-panel"><summary>フィルター設定</summary>
-      <section class="collection-filters collection-quick-filters" aria-label="所持カードの絞り込み">
-        <label>色（カードの色）<select id="collectionColor"><option value="">すべて</option><option value="W">白</option><option value="U">青</option><option value="B">黒</option><option value="R">赤</option><option value="G">緑</option><option value="C">無色</option><option value="M">多色</option></select></label>
-        <label>マナ総量<select id="collectionMana"><option value="">すべて</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7+">7以上</option></select></label>
-        <label>カードタイプ<select id="collectionType"><option value="">すべて</option><option value="Creature">クリーチャー</option><option value="Instant">インスタント</option><option value="Sorcery">ソーサリー</option><option value="Artifact">アーティファクト</option><option value="Enchantment">エンチャント</option><option value="Planeswalker">プレインズウォーカー</option><option value="Land">土地</option><option value="Battle">バトル</option><option value="Kindred">同族</option></select></label>
+      <p id="collectionFilterSummary" class="advanced-search-summary collection-filter-summary">詳細条件：指定なし</p>
+      <dialog id="collectionFilterDialog" class="advanced-search-dialog">
+        <form method="dialog" class="dialog-card collection-filter-dialog">
+          <button id="closeCollectionAdvanced" class="dialog-close" type="button" aria-label="閉じる">×</button>
+          <h2>コレクション詳細設定</h2>
+      <section class="collection-filters" aria-label="コレクションの詳細フィルター">
+        <fieldset id="collectionColor" class="filter-chip-group "><legend>色</legend><div class="filter-chips"><button type="button" class="filter-chip" data-value="W" aria-pressed="false">白</button><button type="button" class="filter-chip" data-value="U" aria-pressed="false">青</button><button type="button" class="filter-chip" data-value="B" aria-pressed="false">黒</button><button type="button" class="filter-chip" data-value="R" aria-pressed="false">赤</button><button type="button" class="filter-chip" data-value="G" aria-pressed="false">緑</button><button type="button" class="filter-chip" data-value="C" aria-pressed="false">無色</button></div></fieldset>
+        <fieldset id="collectionColorRange" class="filter-chip-group filter-chip-single"><legend>色の範囲</legend><div class="filter-chips"><button type="button" class="filter-chip" data-value="any" aria-pressed="true">多色を含む</button><button type="button" class="filter-chip" data-value="mono" aria-pressed="false">単色のみ</button><button type="button" class="filter-chip" data-value="multi" aria-pressed="false">多色のみ</button></div></fieldset>
+        <fieldset id="collectionMana" class="filter-chip-group "><legend>マナ総量</legend><div class="filter-chips"><button type="button" class="filter-chip" data-value="0" aria-pressed="false">0</button><button type="button" class="filter-chip" data-value="1" aria-pressed="false">1</button><button type="button" class="filter-chip" data-value="2" aria-pressed="false">2</button><button type="button" class="filter-chip" data-value="3" aria-pressed="false">3</button><button type="button" class="filter-chip" data-value="4" aria-pressed="false">4</button><button type="button" class="filter-chip" data-value="5" aria-pressed="false">5</button><button type="button" class="filter-chip" data-value="6" aria-pressed="false">6</button><button type="button" class="filter-chip" data-value="7+" aria-pressed="false">7以上</button></div></fieldset>
+        <fieldset id="collectionType" class="filter-chip-group "><legend>カードタイプ</legend><div class="filter-chips"><button type="button" class="filter-chip" data-value="Creature" aria-pressed="false">クリーチャー</button><button type="button" class="filter-chip" data-value="Instant" aria-pressed="false">インスタント</button><button type="button" class="filter-chip" data-value="Sorcery" aria-pressed="false">ソーサリー</button><button type="button" class="filter-chip" data-value="Artifact" aria-pressed="false">アーティファクト</button><button type="button" class="filter-chip" data-value="Enchantment" aria-pressed="false">エンチャント</button><button type="button" class="filter-chip" data-value="Planeswalker" aria-pressed="false">プレインズウォーカー</button><button type="button" class="filter-chip" data-value="Land" aria-pressed="false">土地</button><button type="button" class="filter-chip" data-value="Battle" aria-pressed="false">バトル</button><button type="button" class="filter-chip" data-value="Kindred" aria-pressed="false">同族</button></div></fieldset>
         <label hidden>収録エキスパンション<select id="collectionSetFilter"><option value="">すべて</option></select></label>
-        <label>フォーマット<select id="collectionFormat"><option value="">すべて</option><option value="standard">スタン</option><option value="pioneer">パイオニア</option><option value="modern">モダン</option><option value="legacy">レガシー</option></select></label>
-        <label>まとめ方<select id="collectionGrouping"><option value="">一覧</option><option value="set">エキスパンション別（新しい順）</option><option value="set-oldest">エキスパンション別（古い順）</option></select></label>
         <details id="collectionSetPicker" class="set-picker-accordion collection-set-picker">
           <summary><span>収録エキスパンション</span><strong id="collectionSetSelected">指定なし</strong></summary>
           <div class="set-picker-body">
@@ -122,24 +125,18 @@ const BACKGROUND_THEME_CHROME = {
             <div id="collectionSetOptions" class="set-picker-list"></div>
           </div>
         </details>
+        <label>フォーマット<select id="collectionFormat"><option value="">すべて</option><option value="standard">スタン</option><option value="pioneer">パイオニア</option><option value="modern">モダン</option><option value="legacy">レガシー</option></select></label>
+        <label>まとめ方<select id="collectionGrouping"><option value="">一覧</option><option value="set">エキスパンション別（新しい順）</option><option value="set-oldest">エキスパンション別（古い順）</option></select></label>
         <label class="favorite-filter"><input id="collectionUnderFour" type="checkbox"><span>所持枚数4枚未満</span></label>
-        <button id="clearCollectionQuickFilters" class="filter-reset" type="button">絞り込みをクリア</button>
-      </section>
-      <p class="muted">選んだ条件すべてに合う所持カードを表示します。マナはマナ総量で指定します。</p>
-      <p id="collectionFormatStatus" class="muted" role="status" hidden></p>
-      </details>
-      <p id="collectionFilterSummary" class="advanced-search-summary collection-filter-summary">詳細条件：指定なし</p>
-      <dialog id="collectionFilterDialog" class="advanced-search-dialog">
-        <form method="dialog" class="dialog-card collection-filter-dialog">
-          <button id="closeCollectionAdvanced" class="dialog-close" type="button" aria-label="閉じる">×</button>
-          <h2>コレクション詳細設定</h2>
-      <section class="collection-filters" aria-label="コレクションの詳細フィルター">
         <label>価格<select id="collectionPriceFilter"><option value="">すべて</option><option value="priced">価格あり</option><option value="missing">価格なし</option><option value="english">英語版参考</option><option value="over10000">1万円以上</option><option value="over50000">5万円以上</option></select></label>
         <label class="favorite-filter"><input id="collectionFavoritesOnly" type="checkbox"><span>★ お気に入りのみ</span></label>
         <label>お気に入りグループ<select id="collectionFavoriteGroup"><option value="">すべて</option></select></label>
         <button id="openCollectionGroupManager" class="ghost" type="button">グループ管理</button>
         <button id="clearCollectionFilters" class="filter-reset" type="button">条件をクリア</button>
       </section>
+      <p id="collectionFormatStatus" class="muted" role="status" hidden></p>
+      <p class="muted collection-filter-note">同じ項目の中はどれかに合うカード、違う項目はすべてに合うカードを表示します。マナはマナ総量で指定します。</p>
+      <button id="applyCollectionFilters" class="collection-filter-apply" type="button">閉じて結果を見る</button>
         </form>
       </dialog>
       <section class="collection-sort-panel" aria-label="コレクションの並び替え">
@@ -523,12 +520,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=362" defer></script>
-  <script src="scanner-host.js?v=362" defer></script>
+  <script src="storage.js?v=363" defer></script>
+  <script src="scanner-host.js?v=363" defer></script>
   <script src="mtg-jp-card-index.js?h=9b2fca19f9a2" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=362" defer></script>
-  <script src="scanner/card-images.js?v=362" defer></script>
-  <script src="app.js?v=362" defer></script>
+  <script src="diagnostics.js?v=363" defer></script>
+  <script src="scanner/card-images.js?v=363" defer></script>
+  <script src="app.js?v=363" defer></script>
 </body>
 </html>

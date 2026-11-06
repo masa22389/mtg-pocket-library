@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v362";
+const APP_VERSION = "v363";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2255,12 +2255,36 @@ function selectedOptionText(select) {
   return select.options[select.selectedIndex]?.textContent?.trim() || select.value;
 }
 
+function filterChipValues(group) {
+  return [...group.querySelectorAll('[aria-pressed="true"]')].map(button => button.dataset.value);
+}
+
+function filterChipLabels(group) {
+  return [...group.querySelectorAll('[aria-pressed="true"]')].map(button => button.textContent.trim());
+}
+
+function setFilterChipValues(group, values) {
+  group.querySelectorAll("[data-value]").forEach(button => button.setAttribute("aria-pressed", String(values.includes(button.dataset.value))));
+}
+
+function collectionColorSummary() {
+  const colors = filterChipLabels(els.collectionColor).join("・");
+  const range = filterChipValues($("#collectionColorRange"))[0];
+  const rangeLabel = range === "any" ? "" : filterChipLabels($("#collectionColorRange"))[0];
+  return colors && rangeLabel ? `${colors}（${rangeLabel}）` : colors || rangeLabel || "";
+}
+
+function resetCollectionChipFilters() {
+  [els.collectionColor, els.collectionMana, els.collectionType].forEach(group => setFilterChipValues(group, []));
+  setFilterChipValues($("#collectionColorRange"), ["any"]);
+}
+
 function updateCollectionFilterSummary() {
   if (!els.collectionFilterSummary) return;
   const chips = [];
-  const color = selectedOptionText(els.collectionColor);
-  const mana = selectedOptionText(els.collectionMana);
-  const type = selectedOptionText(els.collectionType);
+  const color = collectionColorSummary();
+  const mana = filterChipLabels(els.collectionMana).join("・");
+  const type = filterChipLabels(els.collectionType).join("・");
   const price = selectedOptionText(els.collectionPriceFilter);
   const favoriteGroup = selectedOptionText(els.collectionFavoriteGroup);
   const setLabel = selectedOptionText($("#collectionSetFilter"));
@@ -3609,15 +3633,19 @@ function sameCardNameOwnedTotal(card, collection) {
   }, 0);
 }
 
+const COLLECTION_CHIP_GROUPS = ["collectionColor", "collectionColorRange", "collectionMana", "collectionType"];
+
 function showSameNameCollection() {
   if (!state.selectedCard) return;
-  const ids = ["collectionFilter", "collectionColor", "collectionMana", "collectionType", "collectionSetFilter", "collectionFormat", "collectionPriceFilter", "collectionFavoriteGroup", "collectionSetQuery"];
+  const ids = ["collectionFilter", "collectionSetFilter", "collectionFormat", "collectionPriceFilter", "collectionFavoriteGroup", "collectionSetQuery"];
   if (!state.sameNamePreviousFilters) state.sameNamePreviousFilters = {
     values: Object.fromEntries(ids.map(id => [id, $("#" + id).value])),
+    chips: Object.fromEntries(COLLECTION_CHIP_GROUPS.map(id => [id, filterChipValues($("#" + id))])),
     favorites: els.collectionFavoritesOnly.checked
   };
   state.sameNameCollectionCard = { name: state.selectedCard.name, oracleId: state.selectedCard.oracle_id || state.selectedCard.oracleId || "", label: nameOf(state.selectedCard) };
   ids.forEach(id => { $("#" + id).value = ""; });
+  resetCollectionChipFilters();
   els.collectionFavoritesOnly.checked = false;
   els.cardDialog.close();
   $("#individualCollection").hidden = false; $("#setCollection").hidden = true;
@@ -3630,6 +3658,7 @@ function showSameNameCollection() {
 function clearSameNameCollection(restore = true) {
   if (restore && state.sameNamePreviousFilters) {
     Object.entries(state.sameNamePreviousFilters.values).forEach(([id, value]) => { $("#" + id).value = value; });
+    Object.entries(state.sameNamePreviousFilters.chips).forEach(([id, values]) => setFilterChipValues($("#" + id), values));
     els.collectionFavoritesOnly.checked = state.sameNamePreviousFilters.favorites;
   }
   state.sameNameCollectionCard = null;
@@ -3964,7 +3993,7 @@ function compactCard(card) {
     typeLine: card.type_line || "", printedTypeLine: card.printed_type_line || "", image: imageOf(card),
     manaCost: card.mana_cost || card.card_faces?.map(face => face.mana_cost).filter(Boolean).join(" // ") || "",
     legalities: card.legalities || null,
-    manaValue: Number(card.cmc || 0), colors: card.colors || [], colorIdentity: card.color_identity || [], metadataVersion: 1,
+    manaValue: Number(card.cmc || 0), colors: cardColorsFromApi(card), colorIdentity: card.color_identity || [], metadataVersion: 1,
     finishes: Array.isArray(card.finishes) ? card.finishes : [], foil: card.foil === true, nonfoil: card.nonfoil === true,
     priceUsd: card.prices?.usd || null, priceUsdFoil: card.prices?.usd_foil || null, priceUsdEtched: card.prices?.usd_etched || null,
     priceUsdSource: card.prices?.usd ? "scryfall" : "", priceUsdFoilSource: card.prices?.usd_foil ? "scryfall" : "", priceUsdEtchedSource: card.prices?.usd_etched ? "scryfall" : "",
@@ -4060,12 +4089,34 @@ function collectionCardMatchesText(card, query) {
   return normalizeCardName(names.filter(Boolean).join(' ')).includes(normalizedQuery);
 }
 
-function collectionMatchesCardFilters(card, { color = "", mana = "", type = "", set = "", format = "" } = {}) {
+// Scryfall leaves colors off double-faced cards, on the card itself, and keeps them on each face.
+function cardColorsFromApi(card) {
+  if (Array.isArray(card?.colors)) return card.colors;
+  return [...new Set((card?.card_faces || []).flatMap(face => face.colors || []))];
+}
+
+// Double-faced cards saved before v363 hold no colors, so their color identity stands in until the next refresh.
+function collectionCardColors(card) {
   const colors = Array.isArray(card.colors) ? card.colors : [];
-  const colorMatch = !color || (color === "C" ? colors.length === 0 : color === "M" ? colors.length > 1 : colors.includes(color));
+  if (colors.length || !String(card.typeLine || "").includes(" // ")) return colors;
+  return Array.isArray(card.colorIdentity) ? card.colorIdentity : [];
+}
+
+function collectionMatchesColors(card, selected, range) {
+  const colors = collectionCardColors(card);
+  const inSelection = !selected.length || colors.some(color => selected.includes(color)) || (colors.length === 0 && selected.includes("C"));
+  if (range === "mono") return inSelection && (colors.length === 1 || (colors.length === 0 && selected.includes("C")));
+  if (range === "multi") return inSelection && colors.length > 1;
+  return inSelection;
+}
+
+// The set view passes one color, mana and type; the collection passes lists.
+function collectionMatchesCardFilters(card, { color = "", mana = "", type = "", colors = color && color !== "M" ? [color] : [], colorRange = color === "M" ? "multi" : "any", manas = mana ? [mana] : [], types = type ? [type] : [], set = "", format = "" } = {}) {
   const manaValue = Number(card.manaValue || 0);
-  return colorMatch && (!mana || (mana === "7+" ? manaValue >= 7 : manaValue === Number(mana)))
-    && (!type || String(card.typeLine || "").toLowerCase().includes(type.toLowerCase()))
+  const typeLine = String(card.typeLine || "").toLowerCase();
+  return collectionMatchesColors(card, colors, colorRange)
+    && (!manas.length || manas.some(mana => mana === "7+" ? manaValue >= 7 : manaValue === Number(mana)))
+    && (!types.length || types.some(type => typeLine.includes(type.toLowerCase())))
     && (!set || normalizeSetCode(card.set) === set)
     && (!format || card.legalities?.[format] === "legal");
 }
@@ -4111,9 +4162,10 @@ function renderCollection() {
   $("#sameNameCollectionBanner").hidden = !state.sameNameCollectionCard;
   $("#sameNameCollectionLabel").textContent = state.sameNameCollectionCard ? `${state.sameNameCollectionCard.label} の所持カード（同名合計 ${sameCardNameOwnedTotal(state.sameNameCollectionCard, state.collection)}枚）` : "";
   const query = els.collectionFilter.value.trim().toLowerCase();
-  const color = els.collectionColor.value;
-  const mana = els.collectionMana.value;
-  const type = els.collectionType.value;
+  const colors = filterChipValues(els.collectionColor);
+  const colorRange = filterChipValues($("#collectionColorRange"))[0] || "any";
+  const manas = filterChipValues(els.collectionMana);
+  const types = filterChipValues(els.collectionType);
   const priceFilter = els.collectionPriceFilter.value;
   const favoritesOnly = els.collectionFavoritesOnly.checked;
   const favoriteGroupId = els.collectionFavoriteGroup?.value || "";
@@ -4121,7 +4173,7 @@ function renderCollection() {
   const artworkTotals = underFour ? ownedArtworkTotals(state.collection) : new Map();
   let cards = state.collection.filter(card => {
     const textMatch = collectionCardMatchesText(card, query);
-    const cardMatch = collectionMatchesCardFilters(card, { color, mana, type, set: setFilter, format });
+    const cardMatch = collectionMatchesCardFilters(card, { colors, colorRange, manas, types, set: setFilter, format });
     const yenValue = yenValueOf(card);
     const priceMatch = !priceFilter
       || (priceFilter === "priced" && yenValue != null)
@@ -4268,7 +4320,7 @@ function applyCardMetadata(ownedCard, apiCard) {
   ownedCard.printedTypeLine = apiCard.printed_type_line || ownedCard.printedTypeLine || "";
   ownedCard.manaCost = apiCard.mana_cost || apiCard.card_faces?.map(face => face.mana_cost).filter(Boolean).join(" // ") || "";
   ownedCard.manaValue = Number(apiCard.cmc || 0);
-  ownedCard.colors = apiCard.colors || [];
+  ownedCard.colors = cardColorsFromApi(apiCard);
   ownedCard.colorIdentity = apiCard.color_identity || [];
   ownedCard.finishes = Array.isArray(apiCard.finishes) ? apiCard.finishes : ownedCard.finishes || [];
   ownedCard.foil = apiCard.foil === true;
@@ -7502,6 +7554,20 @@ els.openCollectionAdvanced?.addEventListener("click", () => {
   els.collectionFilterDialog?.showModal();
 });
 els.closeCollectionAdvanced?.addEventListener("click", () => els.collectionFilterDialog?.close());
+$("#applyCollectionFilters").addEventListener("click", () => els.collectionFilterDialog?.close());
+$("#collectionSetQuery").addEventListener("keydown", event => { if (event.key === "Enter") event.preventDefault(); });
+[els.collectionColor, els.collectionMana, els.collectionType].forEach(group => group.addEventListener("click", event => {
+  const chip = event.target.closest("[data-value]");
+  if (!chip) return;
+  chip.setAttribute("aria-pressed", String(chip.getAttribute("aria-pressed") !== "true"));
+  showFilteredCollection();
+}));
+$("#collectionColorRange").addEventListener("click", event => {
+  const chip = event.target.closest("[data-value]");
+  if (!chip) return;
+  setFilterChipValues($("#collectionColorRange"), [chip.dataset.value]);
+  showFilteredCollection();
+});
 els.collectionViewMode.value = state.collectionViewMode;
 els.collectionViewMode.addEventListener("change", () => {
   state.collectionViewMode = els.collectionViewMode.value;
@@ -7533,7 +7599,7 @@ function showFilteredCollection() {
   }
   resetCollectionRenderLimit(); renderCollection();
 }
-[els.collectionColor, els.collectionMana, els.collectionType, $("#collectionSetFilter"), $("#collectionGrouping"), $("#collectionFormat")].forEach(select => select.addEventListener("change", showFilteredCollection));
+[$("#collectionSetFilter"), $("#collectionGrouping"), $("#collectionFormat")].forEach(select => select.addEventListener("change", showFilteredCollection));
 $("#collectionSetQuery").addEventListener("input", () => updateCollectionSetFilter(getAllKnownSets()));
 $("#collectionSetOptions").addEventListener("click", event => {
   const button = event.target.closest("[data-collection-set]");
@@ -7548,20 +7614,12 @@ $("#clearCollectionSet").addEventListener("click", () => {
 });
 $("#showSameNameCollection").addEventListener("click", showSameNameCollection);
 $("#clearSameNameCollection").addEventListener("click", () => { clearSameNameCollection(); showFilteredCollection(); });
-$("#clearCollectionQuickFilters").addEventListener("click", () => {
-  $("#collectionUnderFour").checked = false;
-  clearSameNameCollection(false);
-  els.collectionFilter.value = "";
-  $("#collectionFormat").value = ""; $("#collectionSetQuery").value = "";
-  els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; $("#collectionSetFilter").value = "";
-  showFilteredCollection();
-});
 $("#collectionUnderFour").addEventListener("change", showFilteredCollection);
 els.collectionFavoritesOnly.addEventListener("change", () => { resetCollectionRenderLimit(); renderCollection(); });
 els.clearCollectionFilters.addEventListener("click", () => {
   $("#collectionUnderFour").checked = false;
   clearSameNameCollection(false);
-  $("#collectionFormat").value = ""; $("#collectionSetQuery").value = ""; $("#collectionSetFilter").value = ""; els.collectionColor.value = ""; els.collectionMana.value = ""; els.collectionType.value = ""; els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
+  $("#collectionFormat").value = ""; $("#collectionSetQuery").value = ""; $("#collectionSetFilter").value = ""; resetCollectionChipFilters(); els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
 });
 els.resetCollectionSort.addEventListener("click", resetCollectionSortOrder);
 els.addCardButton.addEventListener("click", saveSelectedCardQuantity);
