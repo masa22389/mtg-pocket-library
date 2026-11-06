@@ -64,8 +64,8 @@
     },
     {
       "path": "data/japanese-images.json",
-      "bytes": 357310,
-      "sha256": "15fe975f6ecc68b18ded35511816e502b17d12689f649d01abd26f9beef4c109"
+      "bytes": 418292,
+      "sha256": "4c0d62e76929ba7bffc3ae276f1f0fce3cae415580c2794daff196bdeffc24d9"
     },
     {
       "path": "data/milo-cards.json",
@@ -238,6 +238,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 92808049,
-  "buildId": "cbd87a6c2c51"
+  "totalBytes": 92869031,
+  "buildId": "4c4b6587c7ea"
 }

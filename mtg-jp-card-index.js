@@ -6531,6 +6531,6243 @@ window.MTG_JP_CARD_INDEX = [
     "setName": "Star Trek"
   },
   {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548443/",
+    "setCode": "TRC",
+    "collectorNumber": "1",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ボーグ・クイーン"
+    ],
+    "enNames": [
+      "The Borg Queen"
+    ],
+    "scryfallName": "The Borg Queen",
+    "oracleId": "b03d6bc2-d9f1-4d03-b1b3-77993bec6547",
+    "scryfallId": "8ed939ba-bf8d-4a68-ae9f-f8ca4eb301ab",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548443/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548442/",
+    "setCode": "TRC",
+    "collectorNumber": "2",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "スポック司令官"
+    ],
+    "enNames": [
+      "Commander Spock"
+    ],
+    "scryfallName": "Commander Spock",
+    "oracleId": "60644afe-9645-45a1-9eac-70f327daa6a7",
+    "scryfallId": "cf114392-a38d-4117-aa41-911d6dc1051b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548442/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/570185/",
+    "setCode": "TRC",
+    "collectorNumber": "3",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "名艦長、ジャン＝リュック・ピカード"
+    ],
+    "enNames": [
+      "Jean-Luc Picard, Luminary"
+    ],
+    "scryfallName": "Jean-Luc Picard, Luminary",
+    "oracleId": "b95a6001-2773-43c1-a5ad-a37ef7c9f054",
+    "scryfallId": "901eaed9-dbea-4a31-87b0-e17e9bcabfed",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/570185/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548445/",
+    "setCode": "TRC",
+    "collectorNumber": "4",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "不服従の司令官、ウォーフ"
+    ],
+    "enNames": [
+      "Worf, Defiant Commander"
+    ],
+    "scryfallName": "Worf, Defiant Commander",
+    "oracleId": "a7fcdbab-491f-40d9-be40-409af0d6c3f5",
+    "scryfallId": "da030114-a4ee-46d7-a6fd-6c0d8e779bcf",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548445/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/561475/",
+    "setCode": "TRC",
+    "collectorNumber": "9",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ケーラー大使"
+    ],
+    "enNames": [
+      "Ambassador K'Ehleyr"
+    ],
+    "scryfallName": "Ambassador K'Ehleyr",
+    "oracleId": "ce60a1a4-1e53-4985-a54f-3627dd35c5f2",
+    "scryfallId": "5241fa80-1af1-4f9b-b2a2-cd94262e6f3d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/561475/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558123/",
+    "setCode": "TRC",
+    "collectorNumber": "10",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "宇宙基地SOS"
+    ],
+    "enNames": [
+      "Balance of Terror"
+    ],
+    "scryfallName": "Balance of Terror",
+    "oracleId": "0b035f3c-ba21-4a73-b4df-11a7e8c19056",
+    "scryfallId": "2fc3e03e-29bd-4d69-b1c1-438183f39eb5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558123/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558446/",
+    "setCode": "TRC",
+    "collectorNumber": "11",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "船医、ビバリー・クラッシャー"
+    ],
+    "enNames": [
+      "Beverly Crusher, Ship's Doctor"
+    ],
+    "scryfallName": "Beverly Crusher, Ship's Doctor",
+    "oracleId": "7a33edc3-e938-463f-8568-7d7a458427c8",
+    "scryfallId": "35a289b9-18da-437a-ad0a-450accb99100",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558446/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/561480/",
+    "setCode": "TRC",
+    "collectorNumber": "12",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ボーグの侵犯"
+    ],
+    "enNames": [
+      "Borg Incursion"
+    ],
+    "scryfallName": "Borg Incursion",
+    "oracleId": "f00dfc16-c253-4483-94fb-3c2beabd5820",
+    "scryfallId": "2b7eed2d-8baa-4be2-a392-e218baaedd50",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/561480/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559112/",
+    "setCode": "TRC",
+    "collectorNumber": "13",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "冷笑的な臨床医、プラスキー博士"
+    ],
+    "enNames": [
+      "Dr. Pulaski, Cynical Clinician"
+    ],
+    "scryfallName": "Dr. Pulaski, Cynical Clinician",
+    "oracleId": "686d8449-e132-4478-b4f5-f5cadc8971c8",
+    "scryfallId": "a6d26af7-43c8-49d7-8fb8-ed72b9cd643e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559112/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558649/",
+    "setCode": "TRC",
+    "collectorNumber": "14",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "緊急再生"
+    ],
+    "enNames": [
+      "Emergency Regeneration"
+    ],
+    "scryfallName": "Emergency Regeneration",
+    "oracleId": "58e9f5db-c369-42c6-a26d-fc31e25d5f83",
+    "scryfallId": "d46d512e-b4c1-42df-9945-c5ba4e2d339f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558649/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559052/",
+    "setCode": "TRC",
+    "collectorNumber": "15",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "作戦行動、ハリー・キム少尉"
+    ],
+    "enNames": [
+      "Ensign Harry Kim, Operations"
+    ],
+    "scryfallName": "Ensign Harry Kim, Operations",
+    "oracleId": "d9bc0f83-c522-44c9-baa6-fffdeb02a0f5",
+    "scryfallId": "1ccd6aeb-e6f4-4673-b4f5-a4b66b869992",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559052/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558044/",
+    "setCode": "TRC",
+    "collectorNumber": "16",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "新加入、エズリ・ダックス"
+    ],
+    "enNames": [
+      "Ezri Dax, Newly Joined"
+    ],
+    "scryfallName": "Ezri Dax, Newly Joined",
+    "oracleId": "d4fb650a-94fd-4361-9648-45d6ad64b7a2",
+    "scryfallId": "f46512c2-0d03-406d-a37c-5e4cb8d5a465",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558044/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548449/",
+    "setCode": "TRC",
+    "collectorNumber": "17",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "古の助言者、ガイナン"
+    ],
+    "enNames": [
+      "Guinan, Ancient Advisor"
+    ],
+    "scryfallName": "Guinan, Ancient Advisor",
+    "oracleId": "b93915ac-744b-4b59-8f16-ae68d6d898c6",
+    "scryfallId": "06fa6050-0f9d-46a2-9635-8d05899dbc49",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548449/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558652/",
+    "setCode": "TRC",
+    "collectorNumber": "18",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "帝国流船体破り"
+    ],
+    "enNames": [
+      "Imperial Hullbreachers"
+    ],
+    "scryfallName": "Imperial Hullbreachers",
+    "oracleId": "14c52244-4d09-49b9-b7c2-17ef1ffa2561",
+    "scryfallId": "90b3d401-5585-4a55-9388-fe5153e290e1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558652/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/562765/",
+    "setCode": "TRC",
+    "collectorNumber": "19",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "野卑な癒し手"
+    ],
+    "enNames": [
+      "Indelicate Healer"
+    ],
+    "scryfallName": "Indelicate Healer",
+    "oracleId": "9d18253d-a38e-48a4-80bf-aa8fe5283584",
+    "scryfallId": "39da1e17-d5d1-4252-bdd7-42e6541e6ab6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/562765/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558054/",
+    "setCode": "TRC",
+    "collectorNumber": "20",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "集合体への合流"
+    ],
+    "enNames": [
+      "Join the Collective"
+    ],
+    "scryfallName": "Join the Collective",
+    "oracleId": "b1a6d794-0e48-4bbe-b3a3-d9957ed1bfbf",
+    "scryfallId": "382e4d2f-7cc9-4229-9147-2d3e4af9063f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558054/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/545154/",
+    "setCode": "TRC",
+    "collectorNumber": "21",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "フロンティアの医師、ジュリアン・ベシア"
+    ],
+    "enNames": [
+      "Julian Bashir, Frontier Doctor"
+    ],
+    "scryfallName": "Julian Bashir, Frontier Doctor",
+    "oracleId": "bbc8c2b4-9949-416f-a722-b1645eff64d7",
+    "scryfallId": "0301c7fe-2acf-4f7b-9941-fd7e44a81e15",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/545154/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/561477/",
+    "setCode": "TRC",
+    "collectorNumber": "22",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "解放されし憤怒、コロク"
+    ],
+    "enNames": [
+      "Korok, Liberated Rage"
+    ],
+    "scryfallName": "Korok, Liberated Rage",
+    "oracleId": "2f0bad22-a3f5-4b2b-96bf-ff1473e2262d",
+    "scryfallId": "eb2c613d-2159-4c41-b6f7-0e102fc1a5c5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/561477/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558653/",
+    "setCode": "TRC",
+    "collectorNumber": "23",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "帝国の英雄、マートク"
+    ],
+    "enNames": [
+      "Martok, Hero of the Empire"
+    ],
+    "scryfallName": "Martok, Hero of the Empire",
+    "oracleId": "d17c3079-372d-4e4f-8214-12a9893088ff",
+    "scryfallId": "a82df31f-aa4a-4356-ad20-d9642a76e7c0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558653/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558053/",
+    "setCode": "TRC",
+    "collectorNumber": "24",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "熟成室"
+    ],
+    "enNames": [
+      "Maturation Chamber"
+    ],
+    "scryfallName": "Maturation Chamber",
+    "oracleId": "585511e1-4cca-4e70-963d-56f98ae49c29",
+    "scryfallId": "541f6458-1d63-49c7-91a5-b4b3dcf80da3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558053/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/561474/",
+    "setCode": "TRC",
+    "collectorNumber": "25",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "情け深い委任統治"
+    ],
+    "enNames": [
+      "Merciful Mandate"
+    ],
+    "scryfallName": "Merciful Mandate",
+    "oracleId": "201269a1-8f11-485a-a9be-6447b189b4df",
+    "scryfallId": "30bfd653-fd11-415e-906d-b005edd3b811",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/561474/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558066/",
+    "setCode": "TRC",
+    "collectorNumber": "26",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "クルーの調整役、エムレス"
+    ],
+    "enNames": [
+      "M'Ress, Crew Coordinator"
+    ],
+    "scryfallName": "M'Ress, Crew Coordinator",
+    "oracleId": "a33f6ec8-5992-43a1-a16c-d8e83c4017fa",
+    "scryfallId": "870e5f5c-502e-42d8-92cb-827ea09a83f4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558066/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558442/",
+    "setCode": "TRC",
+    "collectorNumber": "27",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "復讐権"
+    ],
+    "enNames": [
+      "Right of Vengeance"
+    ],
+    "scryfallName": "Right of Vengeance",
+    "oracleId": "7e019f06-7e87-419e-b51d-e2cb86a6c7f1",
+    "scryfallId": "695c6c58-0301-4c79-a1a2-75b130ad7527",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558442/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558128/",
+    "setCode": "TRC",
+    "collectorNumber": "28",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "シャトルクラフト「ガリレオ」"
+    ],
+    "enNames": [
+      "Shuttlecraft Galileo"
+    ],
+    "scryfallName": "Shuttlecraft Galileo",
+    "oracleId": "12e4e6b6-e684-49df-9373-d1e057664272",
+    "scryfallId": "a4242f45-75c1-4b23-9174-bd0fe70fa039",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558128/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559696/",
+    "setCode": "TRC",
+    "collectorNumber": "29",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "イエネコ、スポット"
+    ],
+    "enNames": [
+      "Spot, Felis catus"
+    ],
+    "scryfallName": "Spot, Felis catus",
+    "oracleId": "25fe4df1-abf7-4f17-9e0d-57e414697400",
+    "scryfallId": "ccdc8c1a-68ba-4498-a336-13676d8de107",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559696/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559056/",
+    "setCode": "TRC",
+    "collectorNumber": "30",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "軍略の競合相手"
+    ],
+    "enNames": [
+      "Stratagem Emulator"
+    ],
+    "scryfallName": "Stratagem Emulator",
+    "oracleId": "726cd303-f034-4dbe-8139-550feb59f8f3",
+    "scryfallId": "981128b4-acc5-408c-b21b-7133b6c60cc6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559056/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558059/",
+    "setCode": "TRC",
+    "collectorNumber": "31",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "補充ノード"
+    ],
+    "enNames": [
+      "Supplementation Node"
+    ],
+    "scryfallName": "Supplementation Node",
+    "oracleId": "24296042-2963-405b-88d7-28808280ac00",
+    "scryfallId": "6bef9fb1-444a-42f4-940a-d49899c56c27",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558059/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558048/",
+    "setCode": "TRC",
+    "collectorNumber": "32",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "トリブルの塊"
+    ],
+    "enNames": [
+      "Tribble Cluster"
+    ],
+    "scryfallName": "Tribble Cluster",
+    "oracleId": "1c1caf0f-9ee8-4eaa-b8e7-309ba9be9282",
+    "scryfallId": "f00ed9b5-a8dc-4774-af85-ea6be45ac9f3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558048/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558435/",
+    "setCode": "TRC",
+    "collectorNumber": "33",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "タイプ03・ボーグ船"
+    ],
+    "enNames": [
+      "Type-03 Borg Vessel"
+    ],
+    "scryfallName": "Type-03 Borg Vessel",
+    "oracleId": "ff2ab17e-185b-4782-a4e2-e8ace40ef1bb",
+    "scryfallId": "c91ec9e3-abd5-4c23-b342-0c6a12cc970a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558435/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548440/",
+    "setCode": "TRC",
+    "collectorNumber": "34",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ソヴェリン級、U.S.S. エンタープライズE"
+    ],
+    "enNames": [
+      "U.S.S. Enterprise-E, Sovereign"
+    ],
+    "scryfallName": "U.S.S. Enterprise-E, Sovereign",
+    "oracleId": "fa667031-25cf-45c4-97ff-19a73cb30018",
+    "scryfallId": "15e74da6-477c-4ab3-8b91-40f4b2d22f94",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548440/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/562721/",
+    "setCode": "TRC",
+    "collectorNumber": "35",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "歩行型反応炉"
+    ],
+    "enNames": [
+      "Ambulatory Reactor"
+    ],
+    "scryfallName": "Ambulatory Reactor",
+    "oracleId": "fea853c7-7dc8-45c7-829b-d857c65b6ee8",
+    "scryfallId": "9a81140d-9279-4ca5-be68-ec990cf541a6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/562721/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558055/",
+    "setCode": "TRC",
+    "collectorNumber": "36",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ボーグの偵察スフィア"
+    ],
+    "enNames": [
+      "Borg Scout Sphere"
+    ],
+    "scryfallName": "Borg Scout Sphere",
+    "oracleId": "4cfb6f06-137c-4b41-97ef-6710e899473b",
+    "scryfallId": "0813b13e-06a3-403b-ac00-6d6edd74935d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558055/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558645/",
+    "setCode": "TRC",
+    "collectorNumber": "37",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "マイルズ・オブライエン主任"
+    ],
+    "enNames": [
+      "Chief Miles O'Brien"
+    ],
+    "scryfallName": "Chief Miles O'Brien",
+    "oracleId": "c98d476a-2646-4171-bab7-4a4624fce917",
+    "scryfallId": "f8d20229-bae2-4130-8a93-302d2ad5eef0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558645/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558127/",
+    "setCode": "TRC",
+    "collectorNumber": "38",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "巨大クローンマスター"
+    ],
+    "enNames": [
+      "Colossal Clone Master"
+    ],
+    "scryfallName": "Colossal Clone Master",
+    "oracleId": "94fee2cf-7604-48fa-9d3c-03ca4af0edfd",
+    "scryfallId": "1eadfff4-1e89-4ff2-a91c-d45389b80d69",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558127/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558056/",
+    "setCode": "TRC",
+    "collectorNumber": "39",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "抱き込まれた副官"
+    ],
+    "enNames": [
+      "Co-Option Adjutant"
+    ],
+    "scryfallName": "Co-Option Adjutant",
+    "oracleId": "caafecc0-adfa-478c-8a9d-234d4069300b",
+    "scryfallId": "cdb88301-f421-4411-be3a-bdfc83906c17",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558056/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558641/",
+    "setCode": "TRC",
+    "collectorNumber": "40",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "人間性の希求、データ"
+    ],
+    "enNames": [
+      "Data, Exploring Humanity"
+    ],
+    "scryfallName": "Data, Exploring Humanity",
+    "oracleId": "93bfb762-e69e-4d8e-a5b7-e13dd12cd42a",
+    "scryfallId": "2c769fc2-b234-4bb2-aac0-1373e6ad07d3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558641/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558126/",
+    "setCode": "TRC",
+    "collectorNumber": "41",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "クリストファー・パイク艦長"
+    ],
+    "enNames": [
+      "Fleet Captain Christopher Pike"
+    ],
+    "scryfallName": "Fleet Captain Christopher Pike",
+    "oracleId": "e0a9a7a2-c996-4e3e-817d-9283be690c39",
+    "scryfallId": "5991e424-e91f-4b6d-b6bb-17dbc1cec67e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558126/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558642/",
+    "setCode": "TRC",
+    "collectorNumber": "42",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "改革者、ジョーディ・ラ＝フォージ"
+    ],
+    "enNames": [
+      "Geordi La Forge, Innovator"
+    ],
+    "scryfallName": "Geordi La Forge, Innovator",
+    "oracleId": "adbef171-3640-4f77-8c92-b50c109ca303",
+    "scryfallId": "b45ddbca-b89d-4552-b870-839aa281e113",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558642/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558124/",
+    "setCode": "TRC",
+    "collectorNumber": "43",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "巨大宇宙アメーバ"
+    ],
+    "enNames": [
+      "Giant Space Amoeba"
+    ],
+    "scryfallName": "Giant Space Amoeba",
+    "oracleId": "ff9f3d23-a12f-428b-8001-90dafac0c6d7",
+    "scryfallId": "92791a77-c508-4411-8d5d-abc5c9f881a2",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558124/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558052/",
+    "setCode": "TRC",
+    "collectorNumber": "44",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "完全の贈り物"
+    ],
+    "enNames": [
+      "Gift of Perfection"
+    ],
+    "scryfallName": "Gift of Perfection",
+    "oracleId": "b44026ae-eaf1-4daf-99c6-2663db674ff7",
+    "scryfallId": "7589eda0-0a0b-4372-9cee-ea379d6a6f61",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558052/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559113/",
+    "setCode": "TRC",
+    "collectorNumber": "45",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "進化するテレパス、ケス"
+    ],
+    "enNames": [
+      "Kes, Evolving Telepath"
+    ],
+    "scryfallName": "Kes, Evolving Telepath",
+    "oracleId": "714dcaf0-442b-4849-917a-7e6af2ea0210",
+    "scryfallId": "282b02ed-9bfb-4490-947f-f0cc10d50b7f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559113/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558040/",
+    "setCode": "TRC",
+    "collectorNumber": "46",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ニヨータ・ウフーラ大尉"
+    ],
+    "enNames": [
+      "Lieutenant Nyota Uhura"
+    ],
+    "scryfallName": "Lieutenant Nyota Uhura",
+    "oracleId": "d55f0074-2772-48b1-8d60-ca2da52d4c9d",
+    "scryfallId": "4f932b20-3f3e-4f59-ab82-46733e3f54b9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558040/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/547937/",
+    "setCode": "TRC",
+    "collectorNumber": "47",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "巨人の肩に乗って"
+    ],
+    "enNames": [
+      "On the Shoulders of Giants"
+    ],
+    "scryfallName": "On the Shoulders of Giants",
+    "oracleId": "8abb1be2-d02b-4a78-9fcb-d2c9102a840b",
+    "scryfallId": "71807912-94e7-4ebd-91ca-d0b00dceae9c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/547937/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559698/",
+    "setCode": "TRC",
+    "collectorNumber": "48",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "最適化付属物"
+    ],
+    "enNames": [
+      "Optimization Annex"
+    ],
+    "scryfallName": "Optimization Annex",
+    "oracleId": "9f38914f-7870-44bf-887e-ee893e98989c",
+    "scryfallId": "68024cc0-7728-470f-86d3-3440724717f3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559698/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558131/",
+    "setCode": "TRC",
+    "collectorNumber": "49",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "異星人類学者、サム・カーク"
+    ],
+    "enNames": [
+      "Sam Kirk, Xenoanthropologist"
+    ],
+    "scryfallName": "Sam Kirk, Xenoanthropologist",
+    "oracleId": "eec55307-8525-4dae-a030-d210f3895138",
+    "scryfallId": "b2ffe160-1860-41ba-86a5-487211889804",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558131/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/561476/",
+    "setCode": "TRC",
+    "collectorNumber": "50",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "第3付属員、セブン・オブ・ナイン"
+    ],
+    "enNames": [
+      "Seven of Nine, Tertiary Adjunct"
+    ],
+    "scryfallName": "Seven of Nine, Tertiary Adjunct",
+    "oracleId": "22c3b484-0f96-4051-807c-fc0fcb7cd1a8",
+    "scryfallId": "aa3e71b7-c8f1-4fc2-ab75-36f120763f4a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/561476/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/561473/",
+    "setCode": "TRC",
+    "collectorNumber": "51",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "時間の辛苦"
+    ],
+    "enNames": [
+      "Temporal Tribulation"
+    ],
+    "scryfallName": "Temporal Tribulation",
+    "oracleId": "912d6e44-b479-4e07-88a8-9ab5132163f4",
+    "scryfallId": "fb698205-d546-4c69-8594-d9a096b4f92b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/561473/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558434/",
+    "setCode": "TRC",
+    "collectorNumber": "52",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "トランスワープ・ハブ"
+    ],
+    "enNames": [
+      "Transwarp Hub"
+    ],
+    "scryfallName": "Transwarp Hub",
+    "oracleId": "4325d4d2-5892-4c20-a994-7396b715e94f",
+    "scryfallId": "60bcc801-7c0a-449f-a06d-d8b96c1cb42f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558434/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559053/",
+    "setCode": "TRC",
+    "collectorNumber": "53",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "戦術主任、トゥヴォック"
+    ],
+    "enNames": [
+      "Tuvok, Chief Tactical Officer"
+    ],
+    "scryfallName": "Tuvok, Chief Tactical Officer",
+    "oracleId": "05c5f17e-40f9-4259-9b03-03683e1c5ba6",
+    "scryfallId": "9af25808-e7a9-42d6-be70-f985dfadc3c3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559053/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/545179/",
+    "setCode": "TRC",
+    "collectorNumber": "54",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "集合体の子、ウォクス"
+    ],
+    "enNames": [
+      "Võx, Child of the Collective"
+    ],
+    "scryfallName": "Võx, Child of the Collective",
+    "oracleId": "7e58ea13-4041-4ef4-bc09-1e4bf79a842a",
+    "scryfallId": "46f7a693-8b99-49e9-866e-01ddb5b54f3e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/545179/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558051/",
+    "setCode": "TRC",
+    "collectorNumber": "55",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "負傷者への同化"
+    ],
+    "enNames": [
+      "Assimilate the Wounded"
+    ],
+    "scryfallName": "Assimilate the Wounded",
+    "oracleId": "2147101f-d24a-45bb-a141-b69ef7841f53",
+    "scryfallId": "16cb0526-7623-4d02-97d4-b87021d5efc4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558051/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/561479/",
+    "setCode": "TRC",
+    "collectorNumber": "56",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "同化の査定人"
+    ],
+    "enNames": [
+      "Assimilation Assessor"
+    ],
+    "scryfallName": "Assimilation Assessor",
+    "oracleId": "48848570-00c4-4a89-a84c-e3df47a8b0d2",
+    "scryfallId": "0d1f1428-a912-4c42-a0bc-4e4cb5bdd1b1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/561479/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559699/",
+    "setCode": "TRC",
+    "collectorNumber": "57",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ウルフ359の戦い"
+    ],
+    "enNames": [
+      "Battle of Wolf 359"
+    ],
+    "scryfallName": "Battle of Wolf 359",
+    "oracleId": "bb203cf5-1545-43c7-8278-3720616c22f4",
+    "scryfallId": "ffbf8948-e427-466d-8216-18025fb2bb6a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559699/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559109/",
+    "setCode": "TRC",
+    "collectorNumber": "58",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ブラッドスポーツの覇者"
+    ],
+    "enNames": [
+      "Blood-Sport Champion"
+    ],
+    "scryfallName": "Blood-Sport Champion",
+    "oracleId": "9d08cc9b-2b26-49de-80aa-962a358bfc1a",
+    "scryfallId": "660cee6d-a942-4595-b6cc-7c2053108944",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559109/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558058/",
+    "setCode": "TRC",
+    "collectorNumber": "59",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "抽出要員"
+    ],
+    "enNames": [
+      "Extraction Integrant"
+    ],
+    "scryfallName": "Extraction Integrant",
+    "oracleId": "24964ce8-1eec-49b3-9db1-b895bc686ec5",
+    "scryfallId": "cc2d2abf-6f6b-48ee-842c-dfeda8b44b6d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558058/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559061/",
+    "setCode": "TRC",
+    "collectorNumber": "60",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "モーグの子息、カーン"
+    ],
+    "enNames": [
+      "Kurn, Son of Mogh"
+    ],
+    "scryfallName": "Kurn, Son of Mogh",
+    "oracleId": "2a078705-4afe-4887-94cc-f12f4690fb01",
+    "scryfallId": "03fcc84d-45cc-4894-ab35-6d5a799b21ef",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559061/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/562730/",
+    "setCode": "TRC",
+    "collectorNumber": "61",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "カーレスの誓い"
+    ],
+    "enNames": [
+      "The Promise of Kahless"
+    ],
+    "scryfallName": "The Promise of Kahless",
+    "oracleId": "a5866d5e-ee03-4bca-9964-0d391eae9011",
+    "scryfallId": "a88d16b6-c241-48a4-b35a-c219b4bfd750",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/562730/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559055/",
+    "setCode": "TRC",
+    "collectorNumber": "62",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "再利用の専門家"
+    ],
+    "enNames": [
+      "Reclamation Specialist"
+    ],
+    "scryfallName": "Reclamation Specialist",
+    "oracleId": "7c348d24-af26-4171-bfa7-44ce9bd36f06",
+    "scryfallId": "7a7a48bb-5a47-4210-bb98-ef9208942303",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559055/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558046/",
+    "setCode": "TRC",
+    "collectorNumber": "63",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "点火儀式者、ヴォク"
+    ],
+    "enNames": [
+      "Voq, Torchbearer"
+    ],
+    "scryfallName": "Voq, Torchbearer",
+    "oracleId": "1b8be000-e2fd-4157-ace2-7b8603c03fba",
+    "scryfallId": "0b4d2344-d615-4982-b656-44419565121a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558046/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558050/",
+    "setCode": "TRC",
+    "collectorNumber": "64",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "カーレスのビーコン"
+    ],
+    "enNames": [
+      "The Beacon of Kahless"
+    ],
+    "scryfallName": "The Beacon of Kahless",
+    "oracleId": "66fc3c1e-acea-46eb-8af8-b0740f006add",
+    "scryfallId": "9d356fdd-3bbc-418a-8b6d-5410bf7a1138",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558050/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559049/",
+    "setCode": "TRC",
+    "collectorNumber": "65",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "獰猛な入植者"
+    ],
+    "enNames": [
+      "Ferocious Colonist"
+    ],
+    "scryfallName": "Ferocious Colonist",
+    "oracleId": "fd549938-8919-45ac-bf52-92492d9d1d49",
+    "scryfallId": "3cb42c08-b167-40ac-a9be-00630ba31b83",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559049/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559047/",
+    "setCode": "TRC",
+    "collectorNumber": "66",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ガーグの鍋振り"
+    ],
+    "enNames": [
+      "Gagh Slinger"
+    ],
+    "scryfallName": "Gagh Slinger",
+    "oracleId": "b5697e53-eb2f-482b-8b4a-1dad165ac16f",
+    "scryfallId": "fadaa56c-5d59-4c4c-bece-9c407cedd05b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559047/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559110/",
+    "setCode": "TRC",
+    "collectorNumber": "67",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "叱咤激励のテノール"
+    ],
+    "enNames": [
+      "Galvanizing Tenor"
+    ],
+    "scryfallName": "Galvanizing Tenor",
+    "oracleId": "d974fee0-7d20-465c-a7e3-bc361e241cd4",
+    "scryfallId": "6727d111-d99b-4027-ad5d-81568e366b6e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559110/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/562729/",
+    "setCode": "TRC",
+    "collectorNumber": "68",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "帝国万歳！"
+    ],
+    "enNames": [
+      "Glory to the Empire!"
+    ],
+    "scryfallName": "Glory to the Empire!",
+    "oracleId": "22c53662-51b9-4a8c-8ec7-e8b456a268b7",
+    "scryfallId": "3c8cdde8-c05c-41ce-b858-28ba5028738d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/562729/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558655/",
+    "setCode": "TRC",
+    "collectorNumber": "69",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "唸り立てるターグ"
+    ],
+    "enNames": [
+      "Gnarling Targ"
+    ],
+    "scryfallName": "Gnarling Targ",
+    "oracleId": "1fc59e37-0dc0-4e24-af71-6bab4a2b56ca",
+    "scryfallId": "88d3aa36-0eb2-4b53-8384-9d8f309c4911",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558655/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548452/",
+    "setCode": "TRC",
+    "collectorNumber": "70",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "寡婦の戦士、グリルカ"
+    ],
+    "enNames": [
+      "Grilka, Widowed Warrior"
+    ],
+    "scryfallName": "Grilka, Widowed Warrior",
+    "oracleId": "d8366080-dd0c-40cf-84e9-f628dfe8f45c",
+    "scryfallId": "63d3add3-be3f-4ced-85c5-a7d4891b11f5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548452/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558438/",
+    "setCode": "TRC",
+    "collectorNumber": "71",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "怪しげな艦長、カーン"
+    ],
+    "enNames": [
+      "Kang, Suspicious Captain"
+    ],
+    "scryfallName": "Kang, Suspicious Captain",
+    "oracleId": "1ce8bc83-3cda-4ac5-ad9a-2a2a327c5193",
+    "scryfallId": "b1a411f8-f6c2-4a46-861b-a616a9edfb92",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558438/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558439/",
+    "setCode": "TRC",
+    "collectorNumber": "72",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "トリブルハンター、コロト"
+    ],
+    "enNames": [
+      "Koloth, Tribble Hunter"
+    ],
+    "scryfallName": "Koloth, Tribble Hunter",
+    "oracleId": "01b7ced9-5dcb-45ce-bcda-ffdc1afefb2a",
+    "scryfallId": "33bfbd68-fc0f-41ce-b033-975fe9ba960a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558439/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558654/",
+    "setCode": "TRC",
+    "collectorNumber": "73",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "時を制する"
+    ],
+    "enNames": [
+      "Own the Day"
+    ],
+    "scryfallName": "Own the Day",
+    "oracleId": "4a9bfeb2-b4b3-4c69-9739-a878c2704f46",
+    "scryfallId": "558edfb8-eaf1-4d8e-927c-85a43d2a01d7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558654/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558650/",
+    "setCode": "TRC",
+    "collectorNumber": "74",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "クロノスの操舵手"
+    ],
+    "enNames": [
+      "Qo'noS Quartermaster"
+    ],
+    "scryfallName": "Qo'noS Quartermaster",
+    "oracleId": "b7115ed6-526c-491d-828f-f60b18437361",
+    "scryfallId": "ba1b5338-f73c-4f59-88bc-4f1ea6331171",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558650/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559694/",
+    "setCode": "TRC",
+    "collectorNumber": "75",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "二重スパイ、ロー・ラレン"
+    ],
+    "enNames": [
+      "Ro Laren, Double Agent"
+    ],
+    "scryfallName": "Ro Laren, Double Agent",
+    "oracleId": "6f10f6bf-f889-4c3d-a6cf-04cf74f1b4bd",
+    "scryfallId": "e3f8d2fa-397f-4a3f-b273-dcc322015743",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559694/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558045/",
+    "setCode": "TRC",
+    "collectorNumber": "76",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ありえないペア、ロムとリータ"
+    ],
+    "enNames": [
+      "Rom and Leeta, Unlikely Pair"
+    ],
+    "scryfallName": "Rom and Leeta, Unlikely Pair",
+    "oracleId": "b98ab107-3908-4425-89d3-634043bb4d4b",
+    "scryfallId": "2bba1d93-0904-464b-9797-a0f0f4b05df8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558045/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548450/",
+    "setCode": "TRC",
+    "collectorNumber": "77",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "論理の結合、アマンダ・グレイソン"
+    ],
+    "enNames": [
+      "Amanda Grayson, Logic's Link"
+    ],
+    "scryfallName": "Amanda Grayson, Logic's Link",
+    "oracleId": "13d4a70f-c48c-4739-8f3e-5f0302c5484c",
+    "scryfallId": "a07593d8-957d-4a85-9672-f3fabf576fd5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548450/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558064/",
+    "setCode": "TRC",
+    "collectorNumber": "78",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "戦闘衛生兵、クリスティン・チャペル"
+    ],
+    "enNames": [
+      "Christine Chapel, Combat Medic"
+    ],
+    "scryfallName": "Christine Chapel, Combat Medic",
+    "oracleId": "330e8a18-d224-4416-b59d-02b749c3a674",
+    "scryfallId": "f2efcab5-3aad-4edd-87d1-289978e8855e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558064/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558065/",
+    "setCode": "TRC",
+    "collectorNumber": "79",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "替えの利かない側近、ジャニス・ランド"
+    ],
+    "enNames": [
+      "Janice Rand, Essential Aide"
+    ],
+    "scryfallName": "Janice Rand, Essential Aide",
+    "oracleId": "2130193c-3518-4a7d-9cb3-ea65aec845b4",
+    "scryfallId": "92925156-ffd3-4f8a-8592-ccbd935ab894",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558065/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558042/",
+    "setCode": "TRC",
+    "collectorNumber": "80",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ヒカル・スールー大尉"
+    ],
+    "enNames": [
+      "Lieutenant Hikaru Sulu"
+    ],
+    "scryfallName": "Lieutenant Hikaru Sulu",
+    "oracleId": "565cfa73-8c6b-4296-bcb8-388de8c960ff",
+    "scryfallId": "5c404561-b2e4-4f27-b1a9-486c05ed5870",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558042/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558047/",
+    "setCode": "TRC",
+    "collectorNumber": "81",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "艦内の愚か者、アレキサンダー"
+    ],
+    "enNames": [
+      "Alexander, Ship's Fool"
+    ],
+    "scryfallName": "Alexander, Ship's Fool",
+    "oracleId": "d629311f-a7fc-4af5-91ce-5bf506a3cdb3",
+    "scryfallId": "7c7d8bbd-7ee3-4e02-9978-403a84c29fe5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558047/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559050/",
+    "setCode": "TRC",
+    "collectorNumber": "82",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "スクラップ屋、ベラナ・トレス"
+    ],
+    "enNames": [
+      "B'Elanna Torres, Scrapper"
+    ],
+    "scryfallName": "B'Elanna Torres, Scrapper",
+    "oracleId": "c905227d-b5fe-42e6-a11d-5008b7a7922f",
+    "scryfallId": "cc2287da-495a-4b48-9e4f-43792d3bccbb",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559050/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559060/",
+    "setCode": "TRC",
+    "collectorNumber": "83",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "浮遊機械都市ボーグ"
+    ],
+    "enNames": [
+      "The Best of Both Worlds"
+    ],
+    "scryfallName": "The Best of Both Worlds",
+    "oracleId": "a53d9c36-a033-450b-a095-7645876c9ef3",
+    "scryfallId": "3fb0d788-8e6a-4109-bd0a-d245866a6dcb",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559060/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548447/",
+    "setCode": "TRC",
+    "collectorNumber": "84",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "道は星雲の彼方へ、ジェインウェイ艦長"
+    ],
+    "enNames": [
+      "Captain Janeway, Endgame"
+    ],
+    "scryfallName": "Captain Janeway, Endgame",
+    "oracleId": "488ff0d9-a74c-4ba9-9c10-3aa88230c2bd",
+    "scryfallId": "1fc05320-c8f8-4acd-8bac-86c4156352d2",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548447/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548441/",
+    "setCode": "TRC",
+    "collectorNumber": "85",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "勇敢に航海せよ、カーク船長"
+    ],
+    "enNames": [
+      "Captain Kirk, Boldly Going"
+    ],
+    "scryfallName": "Captain Kirk, Boldly Going",
+    "oracleId": "5228fffe-6347-4177-bccb-b15621c7159c",
+    "scryfallId": "6b5d9bd2-cc78-4c30-b6ee-65b76c60a588",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548441/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559702/",
+    "setCode": "TRC",
+    "collectorNumber": "86",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ゴルコン総裁"
+    ],
+    "enNames": [
+      "Chancellor Gorkon"
+    ],
+    "scryfallName": "Chancellor Gorkon",
+    "oracleId": "24d194d3-f83a-496b-921a-77c09c68b0e1",
+    "scryfallId": "7a021b9d-9500-48a0-8d38-92f175340eb6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559702/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558068/",
+    "setCode": "TRC",
+    "collectorNumber": "87",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "転送機の技術者、カイル主任"
+    ],
+    "enNames": [
+      "Chief Kyle, Transporter Tech"
+    ],
+    "scryfallName": "Chief Kyle, Transporter Tech",
+    "oracleId": "02583549-b618-4d41-9f46-209a99e30cd7",
+    "scryfallId": "7a310a62-836b-4ed9-99b1-a09c9079ab43",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558068/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558063/",
+    "setCode": "TRC",
+    "collectorNumber": "88",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "モンゴメリー・スコット主任"
+    ],
+    "enNames": [
+      "Chief Montgomery Scott"
+    ],
+    "scryfallName": "Chief Montgomery Scott",
+    "oracleId": "07f9c121-8a12-4f28-ae89-ec71f073b9ba",
+    "scryfallId": "9e26096a-88a1-4086-9fa7-7be932b2885c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558063/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558445/",
+    "setCode": "TRC",
+    "collectorNumber": "89",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "外交的なエンパス、トロイ司令官"
+    ],
+    "enNames": [
+      "Cmdr. Troi, Outgoing Empath"
+    ],
+    "scryfallName": "Cmdr. Troi, Outgoing Empath",
+    "oracleId": "9a52cb6b-b0d8-4649-b65a-5f9a9d2a7eb2",
+    "scryfallId": "7cc079c8-9c00-439f-9e5d-08e7c8e2c5ed",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558445/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559700/",
+    "setCode": "TRC",
+    "collectorNumber": "90",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "集合体による拒否"
+    ],
+    "enNames": [
+      "Collective Override"
+    ],
+    "scryfallName": "Collective Override",
+    "oracleId": "75af4154-d873-45d0-9ff2-c977169012a3",
+    "scryfallId": "a16b9be3-5c17-4f63-9355-8fec2ce803e1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559700/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558444/",
+    "setCode": "TRC",
+    "collectorNumber": "91",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ウィリアム・ライカー司令官"
+    ],
+    "enNames": [
+      "Commander William Riker"
+    ],
+    "scryfallName": "Commander William Riker",
+    "oracleId": "cef73cb5-88c2-43cd-8648-1baca085b8a4",
+    "scryfallId": "2b78058a-8434-4b0a-9c69-56c9bcdda65a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558444/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558049/",
+    "setCode": "TRC",
+    "collectorNumber": "92",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "血に縛られし者、クルゾン・ダックス"
+    ],
+    "enNames": [
+      "Curzon Dax, Bound by Blood"
+    ],
+    "scryfallName": "Curzon Dax, Bound by Blood",
+    "oracleId": "035bee4c-6f79-4123-9b6c-feba190052e8",
+    "scryfallId": "cb369f4f-e20a-479d-8e35-8466b05375f7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558049/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558057/",
+    "setCode": "TRC",
+    "collectorNumber": "93",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "混沌からの引き渡し"
+    ],
+    "enNames": [
+      "Deliver from Chaos"
+    ],
+    "scryfallName": "Deliver from Chaos",
+    "oracleId": "edea104c-b563-4fae-9e74-82164a8e090b",
+    "scryfallId": "be626968-2f2d-4126-b686-f1567f1ca0dc",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558057/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559697/",
+    "setCode": "TRC",
+    "collectorNumber": "94",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "数多の者の先駆け、ヒュー"
+    ],
+    "enNames": [
+      "Hugh, First of Many"
+    ],
+    "scryfallName": "Hugh, First of Many",
+    "oracleId": "9964f2fe-b7f4-40f5-8e71-948756d27f0a",
+    "scryfallId": "7430065e-eebe-42fa-a2c9-639e4bc1b48d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559697/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559058/",
+    "setCode": "TRC",
+    "collectorNumber": "95",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "友好の女王、ジュラティ"
+    ],
+    "enNames": [
+      "Jurati, Cordial Queen"
+    ],
+    "scryfallName": "Jurati, Cordial Queen",
+    "oracleId": "4dc4c8a3-17d6-4c2d-bcbf-9cebf261eda6",
+    "scryfallId": "8983cc30-d377-4c02-bc53-74e84b41513c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559058/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548446/",
+    "setCode": "TRC",
+    "collectorNumber": "96",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "復讐の元凶、コール"
+    ],
+    "enNames": [
+      "Kor, Cause of Vengeance"
+    ],
+    "scryfallName": "Kor, Cause of Vengeance",
+    "oracleId": "fc8d8c51-428c-4b2f-965d-c43ec94997c3",
+    "scryfallId": "9e4364a4-6dac-4eea-be75-9f8ce1b3e334",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548446/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548444/",
+    "setCode": "TRC",
+    "collectorNumber": "97",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ボーグのロキュータス"
+    ],
+    "enNames": [
+      "Locutus of Borg"
+    ],
+    "scryfallName": "Locutus of Borg",
+    "oracleId": "d0cff43a-2a22-4e05-9f71-983cb297989f",
+    "scryfallId": "1b2e5971-d31c-4f6d-9bee-4b13a402e798",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548444/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558067/",
+    "setCode": "TRC",
+    "collectorNumber": "98",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "万事適応、アレックス少佐"
+    ],
+    "enNames": [
+      "Lt. Arex, Ever-Adapting"
+    ],
+    "scryfallName": "Lt. Arex, Ever-Adapting",
+    "oracleId": "51a2671b-677e-434c-9f1a-d768fe1190c9",
+    "scryfallId": "16787d1c-3a1c-4c72-a986-9cea0371fd75",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558067/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548436/",
+    "setCode": "TRC",
+    "collectorNumber": "99",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "石屋ではない、マッコイ"
+    ],
+    "enNames": [
+      "McCoy, Not a Bricklayer"
+    ],
+    "scryfallName": "McCoy, Not a Bricklayer",
+    "oracleId": "c71c7e0c-64d8-486a-9e66-1b343868eb0a",
+    "scryfallId": "b19d93bc-dfa9-466c-9ebb-44e28ac3d8ff",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548436/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548451/",
+    "setCode": "TRC",
+    "collectorNumber": "100",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "進化したボーグ、ワン"
+    ],
+    "enNames": [
+      "One, Borg Evolved"
+    ],
+    "scryfallName": "One, Borg Evolved",
+    "oracleId": "eecdf18b-7a85-4b29-9a8a-26ee40da9e7a",
+    "scryfallId": "85b7aef6-33fd-45ff-bbe7-1e943e43bb19",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548451/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558041/",
+    "setCode": "TRC",
+    "collectorNumber": "101",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "初任務、パヴェル・チェコフ"
+    ],
+    "enNames": [
+      "Pavel Chekov, First Posting"
+    ],
+    "scryfallName": "Pavel Chekov, First Posting",
+    "oracleId": "473aba5a-5c87-4294-a556-f8aca0e5fe39",
+    "scryfallId": "4015cb79-b698-4f3b-85b7-083cc4ab1e3c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558041/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558643/",
+    "setCode": "TRC",
+    "collectorNumber": "102",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "落ち着きのない空想家、レグ・バークレー"
+    ],
+    "enNames": [
+      "Reg Barclay, Fidgety Fantasist"
+    ],
+    "scryfallName": "Reg Barclay, Fidgety Fantasist",
+    "oracleId": "adcf571f-c465-44c6-8941-48313810e732",
+    "scryfallId": "663a6877-6963-4fa0-9d28-da6ecb4fd550",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558643/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559048/",
+    "setCode": "TRC",
+    "collectorNumber": "103",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "成長の儀式"
+    ],
+    "enNames": [
+      "Rite of Ascension"
+    ],
+    "scryfallName": "Rite of Ascension",
+    "oracleId": "08c6ca45-09ff-4fe4-bc9b-45876e94f430",
+    "scryfallId": "03932c24-ffdc-4593-b223-342d68a1533c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559048/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559111/",
+    "setCode": "TRC",
+    "collectorNumber": "104",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "クリンゴン戦士として"
+    ],
+    "enNames": [
+      "Sins of the Father"
+    ],
+    "scryfallName": "Sins of the Father",
+    "oracleId": "bce974a2-d9ad-4ef5-bc2e-7aa2833a39f5",
+    "scryfallId": "ebd459db-bde4-4410-b0f4-4ef6bffd956b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559111/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559051/",
+    "setCode": "TRC",
+    "collectorNumber": "105",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "危険を顧みぬ者、トム・パリス"
+    ],
+    "enNames": [
+      "Tom Paris, Risk-Taker"
+    ],
+    "scryfallName": "Tom Paris, Risk-Taker",
+    "oracleId": "327458f1-d3c4-4e66-8abd-a6533bef63f7",
+    "scryfallId": "04ea9781-885c-479b-9b96-c08ba56a6438",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559051/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558069/",
+    "setCode": "TRC",
+    "collectorNumber": "106",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "離れ得ぬ存在、トゥプリング"
+    ],
+    "enNames": [
+      "T'Pring, Never Parted"
+    ],
+    "scryfallName": "T'Pring, Never Parted",
+    "oracleId": "29775eb6-f658-4839-a434-2fa063069f1c",
+    "scryfallId": "c80275f8-eac0-4541-a62c-1bd77f3591dd",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558069/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548438/",
+    "setCode": "TRC",
+    "collectorNumber": "107",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "真の統一"
+    ],
+    "enNames": [
+      "Unification"
+    ],
+    "scryfallName": "Unification",
+    "oracleId": "b0efb6fb-f2d1-4027-90b5-44fb3f5dd538",
+    "scryfallId": "1c2378fb-fb29-499e-97c2-f10f97babf7b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548438/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559693/",
+    "setCode": "TRC",
+    "collectorNumber": "108",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "一夜限り、ヴィック・フォンテーン"
+    ],
+    "enNames": [
+      "Vic Fontaine, One Night Only"
+    ],
+    "scryfallName": "Vic Fontaine, One Night Only",
+    "oracleId": "1d6f4573-d2f6-4771-a748-291846ef14b9",
+    "scryfallId": "41887da1-5ff0-4785-a3ab-95fff12ca79e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559693/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558447/",
+    "setCode": "TRC",
+    "collectorNumber": "109",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "モーグの子息、ウォーフ"
+    ],
+    "enNames": [
+      "Worf, Son of Mogh"
+    ],
+    "scryfallName": "Worf, Son of Mogh",
+    "oracleId": "a2249af3-2e3e-484b-a31a-26432edd13ae",
+    "scryfallId": "d74900c9-aedc-4fcd-a074-43ff0ff61805",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558447/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558433/",
+    "setCode": "TRC",
+    "collectorNumber": "110",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "クラス4・タクティカル・キューブ"
+    ],
+    "enNames": [
+      "Class-4 Tactical Cube"
+    ],
+    "scryfallName": "Class-4 Tactical Cube",
+    "oracleId": "9c14e21b-a733-4882-8e09-6dbfc85ac3aa",
+    "scryfallId": "363d63ce-a9a8-46bf-b5e4-837aa10efca8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558433/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/562727/",
+    "setCode": "TRC",
+    "collectorNumber": "111",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "司令席"
+    ],
+    "enNames": [
+      "Command Chair"
+    ],
+    "scryfallName": "Command Chair",
+    "oracleId": "7132b0ad-7bab-4379-ad82-a9af289f835e",
+    "scryfallId": "e46c4bbc-d4b3-44ae-bf91-cad01a66f302",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/562727/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558133/",
+    "setCode": "TRC",
+    "collectorNumber": "112",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "永遠の管理者"
+    ],
+    "enNames": [
+      "The Guardian of Forever"
+    ],
+    "scryfallName": "The Guardian of Forever",
+    "oracleId": "5144361a-0308-49b8-96e6-c948d4beae09",
+    "scryfallId": "b682a918-4f3a-41ce-90d9-f7acca9acfde",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558133/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558441/",
+    "setCode": "TRC",
+    "collectorNumber": "113",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "帝国の旗艦、I.K.S. ネグヴァー"
+    ],
+    "enNames": [
+      "I.K.S. Negh'Var, Imperial Flagship"
+    ],
+    "scryfallName": "I.K.S. Negh'Var, Imperial Flagship",
+    "oracleId": "373e2b58-ccf0-444b-aeb2-0b6e8d4e80e7",
+    "scryfallId": "1a9b48d4-3954-4073-a629-a4e31b9bc962",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558441/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/562728/",
+    "setCode": "TRC",
+    "collectorNumber": "114",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ジェフリー・チューブ"
+    ],
+    "enNames": [
+      "Jefferies Tube"
+    ],
+    "scryfallName": "Jefferies Tube",
+    "oracleId": "2ca270f1-a8a2-438f-9321-2c653165f3e4",
+    "scryfallId": "6b81db51-ae7e-4f4b-9071-afabc72f61c0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/562728/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558440/",
+    "setCode": "TRC",
+    "collectorNumber": "115",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "クティンガ級巡洋戦艦"
+    ],
+    "enNames": [
+      "K't'inga-Class Battle Cruiser"
+    ],
+    "scryfallName": "K't'inga-Class Battle Cruiser",
+    "oracleId": "8ea8ee52-30e1-415c-af52-66b209f05f0a",
+    "scryfallId": "c7a6064b-a29a-4cf1-a8b7-a0d56b8a737c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558440/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548454/",
+    "setCode": "TRC",
+    "collectorNumber": "116",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "クヴォート級レイダー"
+    ],
+    "enNames": [
+      "K'Vort-Class Raider"
+    ],
+    "scryfallName": "K'Vort-Class Raider",
+    "oracleId": "a52d7ab2-a750-4c3a-9f0c-999121aa81af",
+    "scryfallId": "9e2ad655-5206-4832-a350-ebfffdc180ff",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548454/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/561472/",
+    "setCode": "TRC",
+    "collectorNumber": "117",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "惑星の殺し屋"
+    ],
+    "enNames": [
+      "Planet Killer"
+    ],
+    "scryfallName": "Planet Killer",
+    "oracleId": "4c2c8cc6-bb90-468a-867b-db56f4eb7e59",
+    "scryfallId": "3e488b00-6488-4342-b71e-edd9137b8a01",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/561472/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558436/",
+    "setCode": "TRC",
+    "collectorNumber": "118",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "女王のダイアモンド"
+    ],
+    "enNames": [
+      "Queen's Diamond"
+    ],
+    "scryfallName": "Queen's Diamond",
+    "oracleId": "44837c9b-971a-44b6-8e55-301cebc3a361",
+    "scryfallId": "5f936935-4f47-4d33-871b-0159cb6fb4da",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558436/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558060/",
+    "setCode": "TRC",
+    "collectorNumber": "119",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "偵察子機"
+    ],
+    "enNames": [
+      "Reconnaissance Partition"
+    ],
+    "scryfallName": "Reconnaissance Partition",
+    "oracleId": "c52e4704-6edb-477f-b80c-ea8146d4385f",
+    "scryfallId": "0d62b5d1-b22c-4919-8b3e-19aa3b42e521",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558060/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558130/",
+    "setCode": "TRC",
+    "collectorNumber": "120",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "S.S. ボタニーベイ"
+    ],
+    "enNames": [
+      "S.S. Botany Bay"
+    ],
+    "scryfallName": "S.S. Botany Bay",
+    "oracleId": "8284c6ae-d86e-4f72-81da-7d3f9861fd12",
+    "scryfallId": "67ab2c2a-0bc7-4672-bf50-53c96e126859",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558130/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558132/",
+    "setCode": "TRC",
+    "collectorNumber": "121",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "宇宙艦隊の通信機"
+    ],
+    "enNames": [
+      "Starfleet Communicator"
+    ],
+    "scryfallName": "Starfleet Communicator",
+    "oracleId": "d5560aaa-7459-498f-b3c5-e096d8c75b51",
+    "scryfallId": "ac87fcef-019e-45d4-bc8a-0ccb3adaa3b5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558132/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548439/",
+    "setCode": "TRC",
+    "collectorNumber": "122",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "宇宙艦エンタープライズ"
+    ],
+    "enNames": [
+      "Starship Enterprise"
+    ],
+    "scryfallName": "Starship Enterprise",
+    "oracleId": "9b627fa4-af4c-482b-b1cf-2ad15938602c",
+    "scryfallId": "66fa6995-4857-466d-8068-508f2904805b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548439/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558443/",
+    "setCode": "TRC",
+    "collectorNumber": "123",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "カーレスの剣"
+    ],
+    "enNames": [
+      "The Sword of Kahless"
+    ],
+    "scryfallName": "The Sword of Kahless",
+    "oracleId": "3e301803-49ab-4fce-82ae-945a39c458b5",
+    "scryfallId": "dcc0ee8a-3400-4cf8-888e-96c847ebc71b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558443/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548455/",
+    "setCode": "TRC",
+    "collectorNumber": "124",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "鏡を渡るもの、U.S.S. ディファイアント"
+    ],
+    "enNames": [
+      "U.S.S. Defiant, Mirror Migrant"
+    ],
+    "scryfallName": "U.S.S. Defiant, Mirror Migrant",
+    "oracleId": "c7c529c4-08eb-480b-a699-0d783215419b",
+    "scryfallId": "6c347d57-4a92-42eb-b703-d4bec298e94b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548455/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559695/",
+    "setCode": "TRC",
+    "collectorNumber": "125",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "頑丈な小型艦、U.S.S. ディファイアント"
+    ],
+    "enNames": [
+      "U.S.S. Defiant, Tough Little Ship"
+    ],
+    "scryfallName": "U.S.S. Defiant, Tough Little Ship",
+    "oracleId": "87b8fef3-f40e-44a9-afd5-31d3917b1d59",
+    "scryfallId": "e92acccf-d5a6-4559-8acd-d24492b0649e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559695/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/558644/",
+    "setCode": "TRC",
+    "collectorNumber": "126",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "時間混濁、U.S.S. エンタープライズC"
+    ],
+    "enNames": [
+      "U.S.S. Enterprise-C, Time-Tossed"
+    ],
+    "scryfallName": "U.S.S. Enterprise-C, Time-Tossed",
+    "oracleId": "f2768bab-a6a4-490a-a676-fbfbfefdd8b8",
+    "scryfallId": "20a62007-baf3-4e1b-80e1-71b7a7efd13f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/558644/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/548453/",
+    "setCode": "TRC",
+    "collectorNumber": "127",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "恐れ知らずのエクスプローラー、U.S.S. ファラガット"
+    ],
+    "enNames": [
+      "U.S.S. Farragut, Bold Explorer"
+    ],
+    "scryfallName": "U.S.S. Farragut, Bold Explorer",
+    "oracleId": "3b2e3deb-1f21-4311-b8a9-4153089ac5ff",
+    "scryfallId": "bfbef056-cf8b-46f8-892e-30742fd78707",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/548453/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/560938/",
+    "setCode": "TRC",
+    "collectorNumber": "128",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "プロトタイプ、U.S.S. プロメテウス"
+    ],
+    "enNames": [
+      "U.S.S. Prometheus, Prototype"
+    ],
+    "scryfallName": "U.S.S. Prometheus, Prototype",
+    "oracleId": "d19ebe9f-c24d-405c-b8e8-a602274076c3",
+    "scryfallId": "69ed6b4e-f4de-4c68-9db9-9692dc247897",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/560938/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/559054/",
+    "setCode": "TRC",
+    "collectorNumber": "129",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "遍在するもの、U.S.S. スターゲイザー"
+    ],
+    "enNames": [
+      "U.S.S. Stargazer, Here and There"
+    ],
+    "scryfallName": "U.S.S. Stargazer, Here and There",
+    "oracleId": "a5b72c5d-4c73-49cd-9fc5-855856807ff2",
+    "scryfallId": "b63286ae-127b-4eb0-870f-f105decf575a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/559054/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/561478/",
+    "setCode": "TRC",
+    "collectorNumber": "130",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "遊園惑星"
+    ],
+    "enNames": [
+      "Shore Leave Planet"
+    ],
+    "scryfallName": "Shore Leave Planet",
+    "oracleId": "b5f50ad0-a9b3-4bfc-aaf4-55199e489265",
+    "scryfallId": "54cbe3ca-9a18-4297-aff4-9d13670fefb0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/561478/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572061/",
+    "setCode": "TRC",
+    "collectorNumber": "180",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "有言実行の男、カーク"
+    ],
+    "enNames": [
+      "Kirk, Man of Action"
+    ],
+    "scryfallName": "Kirk, Man of Action",
+    "oracleId": "254177f2-5a03-4a29-8b98-248f6a41a351",
+    "scryfallId": "f0944425-2caa-4fde-82be-2f1f5c7d8e13",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572061/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572062/",
+    "setCode": "TRC",
+    "collectorNumber": "181",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "道理の声、スポック"
+    ],
+    "enNames": [
+      "Spock, Voice of Reason"
+    ],
+    "scryfallName": "Spock, Voice of Reason",
+    "oracleId": "4d338db9-e968-49ec-8959-141480b17b8f",
+    "scryfallId": "9e4610a4-42ea-4de8-b46a-555d28ee519d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572062/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572063/",
+    "setCode": "TRC",
+    "collectorNumber": "182",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "異星言語学者、ウフーラ"
+    ],
+    "enNames": [
+      "Uhura, Xenolinguist"
+    ],
+    "scryfallName": "Uhura, Xenolinguist",
+    "oracleId": "5d5c4a17-fa04-4889-819e-408fc2ff112e",
+    "scryfallId": "5e89c267-84af-415c-b255-7ef16102ea35",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572063/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572064/",
+    "setCode": "TRC",
+    "collectorNumber": "183",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "チェコフとマッコイ"
+    ],
+    "enNames": [
+      "Chekov and McCoy"
+    ],
+    "scryfallName": "Chekov and McCoy",
+    "oracleId": "058a5b8b-08bc-4021-8a8b-8e149941e775",
+    "scryfallId": "eb40c889-15e0-4a01-bec1-2148b17ad382",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572064/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572065/",
+    "setCode": "TRC",
+    "collectorNumber": "184",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "機関主任、スコッティ"
+    ],
+    "enNames": [
+      "Scotty, Chief Engineer"
+    ],
+    "scryfallName": "Scotty, Chief Engineer",
+    "oracleId": "3bd553db-2c7d-42cd-8ded-ab2c955b8f4e",
+    "scryfallId": "a09834eb-948d-41cf-b79d-f857df6fb853",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572065/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572066/",
+    "setCode": "TRC",
+    "collectorNumber": "185",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "勇敢な操舵手、スールー"
+    ],
+    "enNames": [
+      "Sulu, Heroic Helmsman"
+    ],
+    "scryfallName": "Sulu, Heroic Helmsman",
+    "oracleId": "9565feaf-252d-43c2-a28e-4291c9ff5872",
+    "scryfallId": "250f9c29-560a-448f-92c9-4f2b6f1b2b50",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572066/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572069/",
+    "setCode": "TRC",
+    "collectorNumber": "186",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "まだ陽気な仲間ではない、ウォーフ"
+    ],
+    "enNames": [
+      "Worf, Still Not Merry"
+    ],
+    "scryfallName": "Worf, Still Not Merry",
+    "oracleId": "8153cd58-cb8b-461c-a2c9-aaa9e2ea1b31",
+    "scryfallId": "b4902c9d-0608-4a77-bfee-48703bc25c70",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572069/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572070/",
+    "setCode": "TRC",
+    "collectorNumber": "187",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "あなたの素晴らしいホスト、Q"
+    ],
+    "enNames": [
+      "Q, Your Illustrious Host"
+    ],
+    "scryfallName": "Q, Your Illustrious Host",
+    "oracleId": "e4e96682-1130-49cc-b1e5-04a774024f7a",
+    "scryfallId": "4c879981-f3a9-4da4-bf49-fb6ccea739b8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572070/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572071/",
+    "setCode": "TRC",
+    "collectorNumber": "188",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "これまで通り思慮深い、ラ＝フォージ"
+    ],
+    "enNames": [
+      "La Forge, Thoughtful as Ever"
+    ],
+    "scryfallName": "La Forge, Thoughtful as Ever",
+    "oracleId": "d5e2ca35-053e-4155-97e7-73f75ae87d52",
+    "scryfallId": "09ee57fa-c301-4278-9db6-8d6ebab7ce38",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572071/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572072/",
+    "setCode": "TRC",
+    "collectorNumber": "189",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "人文科学の教授、データ"
+    ],
+    "enNames": [
+      "Data, Professor of Humanities"
+    ],
+    "scryfallName": "Data, Professor of Humanities",
+    "oracleId": "25ecd09e-d8bf-4929-96e2-e5132ea4f718",
+    "scryfallId": "59eedf7b-0738-4a42-88d0-4ba7c7b73480",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572072/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572067/",
+    "setCode": "TRC",
+    "collectorNumber": "190",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "我らが艦長、ジャン＝リュック"
+    ],
+    "enNames": [
+      "Jean-Luc, Mon Capitaine"
+    ],
+    "scryfallName": "Jean-Luc, Mon Capitaine",
+    "oracleId": "3855cb66-2e29-4d4b-a752-214843b647ff",
+    "scryfallId": "f8ce0f9a-a6d9-497d-bdca-2cf57f08a84c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572067/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/572068/",
+    "setCode": "TRC",
+    "collectorNumber": "191",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "即興でなんとかする、トロイ"
+    ],
+    "enNames": [
+      "Troi, Winging It"
+    ],
+    "scryfallName": "Troi, Winging It",
+    "oracleId": "38561191-ecd1-4028-a0fd-4bca6a7eab58",
+    "scryfallId": "bc44fff5-a58d-4da9-88cf-d23414885791",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/572068/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579133/",
+    "setCode": "TRC",
+    "collectorNumber": "213",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "質素な命令"
+    ],
+    "enNames": [
+      "Austere Command"
+    ],
+    "scryfallName": "Austere Command",
+    "oracleId": "09cc8709-fe10-472a-b05c-e89f3523018d",
+    "scryfallId": "0df80d6b-fbd7-4d5b-b991-c2b6f8da2511",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579133/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579174/",
+    "setCode": "TRC",
+    "collectorNumber": "216",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "一枚岩の努力"
+    ],
+    "enNames": [
+      "Concerted Effort"
+    ],
+    "scryfallName": "Concerted Effort",
+    "oracleId": "fd4236e5-6a2c-45ec-afb3-cd4fc516fbf1",
+    "scryfallId": "f210e4b2-a263-4696-a1ae-3f68bcd55872",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579174/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579163/",
+    "setCode": "TRC",
+    "collectorNumber": "222",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "盛大なるクレッシェンド"
+    ],
+    "enNames": [
+      "Grand Crescendo"
+    ],
+    "scryfallName": "Grand Crescendo",
+    "oracleId": "dc600c06-8239-409e-b53d-20f813a3f5e7",
+    "scryfallId": "b41a1ff1-8e72-4269-825c-aaa12b3a4dca",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579163/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579183/",
+    "setCode": "TRC",
+    "collectorNumber": "229",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "第三の道のロラン"
+    ],
+    "enNames": [
+      "Loran of the Third Path"
+    ],
+    "scryfallName": "Loran of the Third Path",
+    "oracleId": "b3d81980-76f2-44e2-b1c9-01e30c726312",
+    "scryfallId": "a39a24a4-cc0a-412e-8b1c-97ceff7539e7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579183/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579135/",
+    "setCode": "TRC",
+    "collectorNumber": "234",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "忠誠の確約"
+    ],
+    "enNames": [
+      "Promise of Loyalty"
+    ],
+    "scryfallName": "Promise of Loyalty",
+    "oracleId": "e1d294e8-67b1-4a4a-86b8-f98f28a327d9",
+    "scryfallId": "f5375ed2-eb40-4906-afe3-bb8cc4e7c8c3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579135/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579189/",
+    "setCode": "TRC",
+    "collectorNumber": "239",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "太陽のタイタン"
+    ],
+    "enNames": [
+      "Sun Titan"
+    ],
+    "scryfallName": "Sun Titan",
+    "oracleId": "b2e950fb-cb7e-40a0-a311-5bbdd0477b29",
+    "scryfallId": "56c00d49-b9a1-4e9a-8966-33efaad64bca",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579189/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579132/",
+    "setCode": "TRC",
+    "collectorNumber": "241",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "鍛えられた鋼"
+    ],
+    "enNames": [
+      "Tempered Steel"
+    ],
+    "scryfallName": "Tempered Steel",
+    "oracleId": "e220138c-5fc6-487d-9fa9-f21b2fb1f12c",
+    "scryfallId": "d8d10be8-31b0-4cf3-a43e-ecffc8825dd9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579132/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579131/",
+    "setCode": "TRC",
+    "collectorNumber": "245",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "大群退治"
+    ],
+    "enNames": [
+      "Vanquish the Horde"
+    ],
+    "scryfallName": "Vanquish the Horde",
+    "oracleId": "a332e80a-dc51-4dc6-bc85-e114a1c6fdb8",
+    "scryfallId": "a790569a-f762-41dd-a1a7-287f86e50c1c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579131/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579142/",
+    "setCode": "TRC",
+    "collectorNumber": "246",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "神の怒り"
+    ],
+    "enNames": [
+      "Wrath of God"
+    ],
+    "scryfallName": "Wrath of God",
+    "oracleId": "34515b16-c9a4-4f98-8c77-416a7a523407",
+    "scryfallId": "64738acc-b627-4693-852b-566d1ffd4b48",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579142/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579162/",
+    "setCode": "TRC",
+    "collectorNumber": "252",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "謎めいた命令"
+    ],
+    "enNames": [
+      "Cryptic Command"
+    ],
+    "scryfallName": "Cryptic Command",
+    "oracleId": "a3e51a35-09df-4189-b131-08a21e6a557d",
+    "scryfallId": "7ecb0e63-d2cc-4657-a85b-ca6c95e3234c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579162/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579166/",
+    "setCode": "TRC",
+    "collectorNumber": "253",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "不許可"
+    ],
+    "enNames": [
+      "Disallow"
+    ],
+    "scryfallName": "Disallow",
+    "oracleId": "88b51e15-6630-4e14-a6b8-db0aa12e34ef",
+    "scryfallId": "9c54e2d0-eec6-4d85-9e44-0bd0500e79b4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579166/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579195/",
+    "setCode": "TRC",
+    "collectorNumber": "254",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "永劫のこだま"
+    ],
+    "enNames": [
+      "Echo of Eons"
+    ],
+    "scryfallName": "Echo of Eons",
+    "oracleId": "23d3e5fe-3f82-44cf-91a1-6646a12a0255",
+    "scryfallId": "941ec587-127e-47b3-a5cd-3294bc036398",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579195/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579149/",
+    "setCode": "TRC",
+    "collectorNumber": "274",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "苦い真理"
+    ],
+    "enNames": [
+      "Painful Truths"
+    ],
+    "scryfallName": "Painful Truths",
+    "oracleId": "58a2d15f-1b4b-4303-b524-8cc0d1b3e7d2",
+    "scryfallId": "2b17147e-bc59-4669-b494-352cfda1ccd1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579149/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579168/",
+    "setCode": "TRC",
+    "collectorNumber": "277",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "毒の濁流"
+    ],
+    "enNames": [
+      "Toxic Deluge"
+    ],
+    "scryfallName": "Toxic Deluge",
+    "oracleId": "afaef788-34d1-460b-b884-9d7ae6ddeb18",
+    "scryfallId": "6a984138-613a-4d0e-a281-2827d3ef382f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579168/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579165/",
+    "setCode": "TRC",
+    "collectorNumber": "280",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "連鎖反応"
+    ],
+    "enNames": [
+      "Chain Reaction"
+    ],
+    "scryfallName": "Chain Reaction",
+    "oracleId": "086b2564-9114-4ba2-94fd-b490f98f38a7",
+    "scryfallId": "b3e872a7-55ec-4023-84a7-aa80261b9ac7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579165/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579190/",
+    "setCode": "TRC",
+    "collectorNumber": "281",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "戦闘の祝賀者"
+    ],
+    "enNames": [
+      "Combat Celebrant"
+    ],
+    "scryfallName": "Combat Celebrant",
+    "oracleId": "5e15ff93-99a0-4000-918e-4bd2c257188d",
+    "scryfallId": "69ed09de-5be2-4b2a-9fb5-46e6acc7f522",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579190/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579143/",
+    "setCode": "TRC",
+    "collectorNumber": "282",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "礼儀妨害"
+    ],
+    "enNames": [
+      "Disrupt Decorum"
+    ],
+    "scryfallName": "Disrupt Decorum",
+    "oracleId": "9b084cd4-cc21-4f3a-9ac5-1e1160a31aa6",
+    "scryfallId": "649bf80f-ee5c-4ad0-8819-b9139de6b125",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579143/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579167/",
+    "setCode": "TRC",
+    "collectorNumber": "291",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "顔壊しのプロ"
+    ],
+    "enNames": [
+      "Professional Face-Breaker"
+    ],
+    "scryfallName": "Professional Face-Breaker",
+    "oracleId": "04152e7a-969c-4858-841b-0a569a9fc1bf",
+    "scryfallId": "0680ebe0-5878-4d54-b1e0-de5a5f4c23a8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579167/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579105/",
+    "setCode": "TRC",
+    "collectorNumber": "295",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "分かち合う憎 しみ"
+    ],
+    "enNames": [
+      "Shared Animosity"
+    ],
+    "scryfallName": "Shared Animosity",
+    "oracleId": "a27445db-33f2-4571-98b5-83206b797484",
+    "scryfallId": "73c35e49-96f5-4935-ba59-0d403cf2a875",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579105/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579160/",
+    "setCode": "TRC",
+    "collectorNumber": "296",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "世界大戦"
+    ],
+    "enNames": [
+      "World at War"
+    ],
+    "scryfallName": "World at War",
+    "oracleId": "02a8a5cc-62ce-4ae5-aa7d-760124af7d7b",
+    "scryfallId": "bfc4e5b4-5111-411f-b293-b263cd125d2c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579160/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579191/",
+    "setCode": "TRC",
+    "collectorNumber": "298",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "古の緑守り"
+    ],
+    "enNames": [
+      "Ancient Greenwarden"
+    ],
+    "scryfallName": "Ancient Greenwarden",
+    "oracleId": "3bcf090c-e890-4a9f-a8aa-6079e4ec9947",
+    "scryfallId": "9221e524-9d35-44d9-aad0-1059c4337c60",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579191/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579173/",
+    "setCode": "TRC",
+    "collectorNumber": "299",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "秋の占い師"
+    ],
+    "enNames": [
+      "Augur of Autumn"
+    ],
+    "scryfallName": "Augur of Autumn",
+    "oracleId": "9e774188-caa1-4b62-b9cc-547f8e444b7f",
+    "scryfallId": "78a89ab9-cf09-49b6-8606-40137cee1c1c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579173/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579124/",
+    "setCode": "TRC",
+    "collectorNumber": "301",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "踏査"
+    ],
+    "enNames": [
+      "Exploration"
+    ],
+    "scryfallName": "Exploration",
+    "oracleId": "0c2841bb-038c-4fbf-8360-bc0a1522b58d",
+    "scryfallId": "efa0384e-c906-4b43-8fdd-c4529d50b8f8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579124/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579176/",
+    "setCode": "TRC",
+    "collectorNumber": "302",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "守護者計 画"
+    ],
+    "enNames": [
+      "Guardian Project"
+    ],
+    "scryfallName": "Guardian Project",
+    "oracleId": "4f9e07ae-6341-4b46-9f77-f17ab659d266",
+    "scryfallId": "b992383d-b2d7-4977-a5a1-5e7a229fdf54",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579176/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579144/",
+    "setCode": "TRC",
+    "collectorNumber": "303",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "英雄的介入"
+    ],
+    "enNames": [
+      "Heroic Intervention"
+    ],
+    "scryfallName": "Heroic Intervention",
+    "oracleId": "24882fa2-3fe9-4c1b-aa3d-0e6488b9db27",
+    "scryfallId": "d85aeeeb-ca27-45c2-9a38-4b95a0ec19ae",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579144/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579164/",
+    "setCode": "TRC",
+    "collectorNumber": "306",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "水蓮のコブラ"
+    ],
+    "enNames": [
+      "Lotus Cobra"
+    ],
+    "scryfallName": "Lotus Cobra",
+    "oracleId": "8ad91f64-ccab-4edc-bd54-b2ee9267d614",
+    "scryfallId": "b1b30129-70d9-40f2-94c1-536bf7b8012c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579164/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579172/",
+    "setCode": "TRC",
+    "collectorNumber": "307",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "硬鎧の大群"
+    ],
+    "enNames": [
+      "Scute Swarm"
+    ],
+    "scryfallName": "Scute Swarm",
+    "oracleId": "aa854d50-444c-49d9-bfb1-5476b33c1c0b",
+    "scryfallId": "2632074d-51aa-47fd-9de0-4aeef8838dc0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579172/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579114/",
+    "setCode": "TRC",
+    "collectorNumber": "308",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "不屈の追跡者"
+    ],
+    "enNames": [
+      "Tireless Tracker"
+    ],
+    "scryfallName": "Tireless Tracker",
+    "oracleId": "e6555cca-e608-4c87-b835-9cd47fd1f543",
+    "scryfallId": "e7f622c5-b7e3-4f18-a3a9-b6c855237cdc",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579114/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579140/",
+    "setCode": "TRC",
+    "collectorNumber": "310",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "苦渋の破棄"
+    ],
+    "enNames": [
+      "Anguished Unmaking"
+    ],
+    "scryfallName": "Anguished Unmaking",
+    "oracleId": "ad09b3c3-c8e7-481c-8c45-e7f234935117",
+    "scryfallId": "02b70ca0-a20f-467e-8db5-98e948d9759f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579140/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579180/",
+    "setCode": "TRC",
+    "collectorNumber": "319",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "熱病の幻視"
+    ],
+    "enNames": [
+      "Fevered Visions"
+    ],
+    "scryfallName": "Fevered Visions",
+    "oracleId": "70763549-4b4e-4cb8-8c02-0639ba18bb1a",
+    "scryfallId": "d30d9306-9603-4004-ab56-dbba1701df5c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579180/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579148/",
+    "setCode": "TRC",
+    "collectorNumber": "320",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "自我破摧"
+    ],
+    "enNames": [
+      "Fractured Identity"
+    ],
+    "scryfallName": "Fractured Identity",
+    "oracleId": "1515b0c2-1b55-4cd4-ad81-fb6b1f3e8188",
+    "scryfallId": "00b538c7-c771-4d63-8290-1d2b6597501e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579148/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579197/",
+    "setCode": "TRC",
+    "collectorNumber": "326",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "害獣駆除"
+    ],
+    "enNames": [
+      "Pest Control"
+    ],
+    "scryfallName": "Pest Control",
+    "oracleId": "072db429-3838-42ba-89b6-e26cbce22af9",
+    "scryfallId": "ee29e8d0-149f-4404-9899-a7709a19053b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579197/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579121/",
+    "setCode": "TRC",
+    "collectorNumber": "329",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "破滅の根本原理"
+    ],
+    "enNames": [
+      "Ruinous Ultimatum"
+    ],
+    "scryfallName": "Ruinous Ultimatum",
+    "oracleId": "a6f38908-aa4f-4f99-a28e-85d11dab52e4",
+    "scryfallId": "1f825c21-d0a9-447d-8312-5b51e9ea5c61",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579121/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579139/",
+    "setCode": "TRC",
+    "collectorNumber": "330",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "至高の評決"
+    ],
+    "enNames": [
+      "Supreme Verdict"
+    ],
+    "scryfallName": "Supreme Verdict",
+    "oracleId": "0230de18-8d15-4cfa-9d42-7ccddd9f9570",
+    "scryfallId": "343cbe07-d557-4ead-89c7-2b15605a40a8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579139/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579118/",
+    "setCode": "TRC",
+    "collectorNumber": "334",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "名誉回復"
+    ],
+    "enNames": [
+      "Vindicate"
+    ],
+    "scryfallName": "Vindicate",
+    "oracleId": "63c1ac21-e3d8-40c2-8c09-3f31c52992ef",
+    "scryfallId": "d45bec56-596d-4b31-957b-b5c48ae10b7a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579118/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579182/",
+    "setCode": "TRC",
+    "collectorNumber": "335",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "戦導者の号令"
+    ],
+    "enNames": [
+      "Warleader's Call"
+    ],
+    "scryfallName": "Warleader's Call",
+    "oracleId": "a751c07b-fc21-4854-96e7-f71abf4e86c9",
+    "scryfallId": "a37428e0-e750-4cb6-b30a-0edada4fb390",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579182/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579194/",
+    "setCode": "TRC",
+    "collectorNumber": "337",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "アルハマレットの書庫"
+    ],
+    "enNames": [
+      "Alhammarret's Archive"
+    ],
+    "scryfallName": "Alhammarret's Archive",
+    "oracleId": "d5c4d36c-54b3-4149-906b-a57a670260fc",
+    "scryfallId": "6f995764-3fd8-40f6-8102-fb9e4679b04f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579194/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579110/",
+    "setCode": "TRC",
+    "collectorNumber": "338",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "霊体のヤギ角"
+    ],
+    "enNames": [
+      "Astral Cornucopia"
+    ],
+    "scryfallName": "Astral Cornucopia",
+    "oracleId": "1bc42024-52da-4d93-8b47-544f0a4a72a1",
+    "scryfallId": "3d975e1e-fd93-4fd7-8083-4f54d9d39df9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579110/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579181/",
+    "setCode": "TRC",
+    "collectorNumber": "341",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ダークスティールの板金鎧"
+    ],
+    "enNames": [
+      "Darksteel Plate"
+    ],
+    "scryfallName": "Darksteel Plate",
+    "oracleId": "b5b4cf54-ed5e-42d0-9d98-5fec76b0b0b8",
+    "scryfallId": "5898f563-13d8-431d-aac7-19889ed89d89",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579181/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579161/",
+    "setCode": "TRC",
+    "collectorNumber": "342",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "運命の扉"
+    ],
+    "enNames": [
+      "Door of Destinies"
+    ],
+    "scryfallName": "Door of Destinies",
+    "oracleId": "9b6d3dcf-aa5a-4516-bd48-a0723e86bfd1",
+    "scryfallId": "7c3c0f33-2157-44e0-a88a-59cb9a4342cb",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579161/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579196/",
+    "setCode": "TRC",
+    "collectorNumber": "343",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "見捨てられた碑"
+    ],
+    "enNames": [
+      "Forsaken Monument"
+    ],
+    "scryfallName": "Forsaken Monument",
+    "oracleId": "7777fab1-df3f-467f-b9e2-46dd2bd2166e",
+    "scryfallId": "6724fce5-f744-4c08-8d43-248cd4c2f167",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579196/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579169/",
+    "setCode": "TRC",
+    "collectorNumber": "345",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "吠えたける鉱山"
+    ],
+    "enNames": [
+      "Howling Mine"
+    ],
+    "scryfallName": "Howling Mine",
+    "oracleId": "d26b27db-a567-4631-b4b6-7294222fbdd1",
+    "scryfallId": "e658c071-8501-4559-aa1e-776284c5fe4a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579169/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579192/",
+    "setCode": "TRC",
+    "collectorNumber": "347",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "不滅の太陽"
+    ],
+    "enNames": [
+      "The Immortal Sun"
+    ],
+    "scryfallName": "The Immortal Sun",
+    "oracleId": "52232aad-e4ca-4551-8c8d-c69a3b6b49c7",
+    "scryfallId": "f168ec6a-55a4-496e-b180-34e813a5bb2f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579192/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579112/",
+    "setCode": "TRC",
+    "collectorNumber": "354",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "頭蓋骨絞め"
+    ],
+    "enNames": [
+      "Skullclamp"
+    ],
+    "scryfallName": "Skullclamp",
+    "oracleId": "65986c1b-8e51-4604-b685-d82fa7d1263a",
+    "scryfallId": "250156b6-9db5-4e2e-b544-21598da948a1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579112/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579193/",
+    "setCode": "TRC",
+    "collectorNumber": "358",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "光と影の剣"
+    ],
+    "enNames": [
+      "Sword of Light and Shadow"
+    ],
+    "scryfallName": "Sword of Light and Shadow",
+    "oracleId": "01c8a554-45a6-46ca-b40a-af0fd4529e40",
+    "scryfallId": "c129ca9f-f9e1-4a6f-9601-8beab332d033",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579193/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579159/",
+    "setCode": "TRC",
+    "collectorNumber": "359",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "巻き戻しの時計"
+    ],
+    "enNames": [
+      "Unwinding Clock"
+    ],
+    "scryfallName": "Unwinding Clock",
+    "oracleId": "153fac93-5d2b-4348-a468-a5eef6a12da3",
+    "scryfallId": "7f6c7e1e-c16f-408c-8361-a0f676286401",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579159/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579134/",
+    "setCode": "TRC",
+    "collectorNumber": "366",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "アカデミーの廃墟"
+    ],
+    "enNames": [
+      "Academy Ruins"
+    ],
+    "scryfallName": "Academy Ruins",
+    "oracleId": "a3da7d5b-2c2b-45fe-b9c5-413b8c8fc0a2",
+    "scryfallId": "1d437f63-34c9-48c0-b097-24d53842b257",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579134/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579145/",
+    "setCode": "TRC",
+    "collectorNumber": "367",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "戦場の鍛冶場"
+    ],
+    "enNames": [
+      "Battlefield Forge"
+    ],
+    "scryfallName": "Battlefield Forge",
+    "oracleId": "6b75b94e-83b7-457e-ac41-7ca90b5a59aa",
+    "scryfallId": "16f45f28-fbbf-4f91-b552-ee2cf5b86613",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579145/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579111/",
+    "setCode": "TRC",
+    "collectorNumber": "368",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "梢の眺望"
+    ],
+    "enNames": [
+      "Canopy Vista"
+    ],
+    "scryfallName": "Canopy Vista",
+    "oracleId": "dcb7e046-f01b-497c-88e5-57794eb30ce5",
+    "scryfallId": "ce91ba62-09ed-483c-a62f-689d59352e2a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579111/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579116/",
+    "setCode": "TRC",
+    "collectorNumber": "369",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "泥濘の峡谷"
+    ],
+    "enNames": [
+      "Canyon Slough"
+    ],
+    "scryfallName": "Canyon Slough",
+    "oracleId": "2031b17c-0536-446f-a9aa-b46fe79b7ea7",
+    "scryfallId": "7493ed94-ec2a-485f-8b00-47654dc9af3a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579116/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579109/",
+    "setCode": "TRC",
+    "collectorNumber": "370",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "詰まった河口"
+    ],
+    "enNames": [
+      "Choked Estuary"
+    ],
+    "scryfallName": "Choked Estuary",
+    "oracleId": "d473b507-8c33-4118-bc10-b0a268776074",
+    "scryfallId": "6edf11be-3c4d-402d-9c36-9012860f5255",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579109/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/578991/",
+    "setCode": "TRC",
+    "collectorNumber": "371",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "断崖の避難所"
+    ],
+    "enNames": [
+      "Clifftop Retreat"
+    ],
+    "scryfallName": "Clifftop Retreat",
+    "oracleId": "d7faa3c8-46cf-46b2-bfa4-89000307cf18",
+    "scryfallId": "02850e4d-ab73-487d-8bac-01318d46a0d7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/578991/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579157/",
+    "setCode": "TRC",
+    "collectorNumber": "372",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "沿岸の頂"
+    ],
+    "enNames": [
+      "Coastal Peak"
+    ],
+    "scryfallName": "Coastal Peak",
+    "oracleId": "0e25faa2-efb0-4ca5-b280-18c38faa860c",
+    "scryfallId": "575290f8-c861-4ef5-8cfb-fe89de12d8e1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579157/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579122/",
+    "setCode": "TRC",
+    "collectorNumber": "373",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "統率の灯台"
+    ],
+    "enNames": [
+      "Command Beacon"
+    ],
+    "scryfallName": "Command Beacon",
+    "oracleId": "7e8c2a18-e404-40ff-a9e0-ec3eeb6d576e",
+    "scryfallId": "e1f9b1df-5dc5-4e2c-a341-c67ea9562041",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579122/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579177/",
+    "setCode": "TRC",
+    "collectorNumber": "374",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "僻地の灯台"
+    ],
+    "enNames": [
+      "Desolate Lighthouse"
+    ],
+    "scryfallName": "Desolate Lighthouse",
+    "oracleId": "aa6dbdf2-2379-4ff5-8a6c-70258784dc35",
+    "scryfallId": "602ae667-563f-43ce-8370-ca79652d84a7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579177/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/578995/",
+    "setCode": "TRC",
+    "collectorNumber": "375",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "竜髑髏の山頂"
+    ],
+    "enNames": [
+      "Dragonskull Summit"
+    ],
+    "scryfallName": "Dragonskull Summit",
+    "oracleId": "63398c02-6fb1-481d-9d9f-81063532fbc0",
+    "scryfallId": "01679825-5138-472c-86f6-c2c2041fe73a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/578995/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/578996/",
+    "setCode": "TRC",
+    "collectorNumber": "376",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "水没した地下墓地"
+    ],
+    "enNames": [
+      "Drowned Catacomb"
+    ],
+    "scryfallName": "Drowned Catacomb",
+    "oracleId": "819fc966-434e-470f-91e9-a38df974ad17",
+    "scryfallId": "3d87a052-581d-4bff-be26-0927f945cd59",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/578996/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579154/",
+    "setCode": "TRC",
+    "collectorNumber": "377",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "日食の草原"
+    ],
+    "enNames": [
+      "Eclipsed Steppe"
+    ],
+    "scryfallName": "Eclipsed Steppe",
+    "oracleId": "6216635f-8e6e-40a3-9659-ef6352ab92ce",
+    "scryfallId": "f7e02a91-9459-4de3-88a7-af6f607c5cc6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579154/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579123/",
+    "setCode": "TRC",
+    "collectorNumber": "378",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "風変わりな果樹園"
+    ],
+    "enNames": [
+      "Exotic Orchard"
+    ],
+    "scryfallName": "Exotic Orchard",
+    "oracleId": "27b047e3-0d41-45e2-98e9-9391d7923a1e",
+    "scryfallId": "e0027bc8-49ed-4978-b6c0-62e25c9a6106",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579123/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579147/",
+    "setCode": "TRC",
+    "collectorNumber": "379",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "寓話の小道"
+    ],
+    "enNames": [
+      "Fabled Passage"
+    ],
+    "scryfallName": "Fabled Passage",
+    "oracleId": "0c85b8f7-0bd0-4680-9ec5-d4b110460a54",
+    "scryfallId": "871b5ec1-a78c-4c7c-af65-fe438021511a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579147/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579107/",
+    "setCode": "TRC",
+    "collectorNumber": "380",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "異臭の池"
+    ],
+    "enNames": [
+      "Fetid Pools"
+    ],
+    "scryfallName": "Fetid Pools",
+    "oracleId": "32b03b48-06da-4a74-a7ac-e5ae39a4f428",
+    "scryfallId": "7ba15ee7-5a67-445f-892d-385137df8126",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579107/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579141/",
+    "setCode": "TRC",
+    "collectorNumber": "381",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "凶兆の廃墟"
+    ],
+    "enNames": [
+      "Foreboding Ruins"
+    ],
+    "scryfallName": "Foreboding Ruins",
+    "oracleId": "5c87e2fa-77f1-4978-b25f-f14d227301d1",
+    "scryfallId": "4f20de6a-4535-4064-bcef-f476603a8098",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579141/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579103/",
+    "setCode": "TRC",
+    "collectorNumber": "382",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "要塞化した村"
+    ],
+    "enNames": [
+      "Fortified Village"
+    ],
+    "scryfallName": "Fortified Village",
+    "oracleId": "56f1a16a-9f41-41fb-b580-c200bca27cd6",
+    "scryfallId": "bd8760e9-ac25-472c-8245-c09d978abd21",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579103/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579128/",
+    "setCode": "TRC",
+    "collectorNumber": "383",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "凍沸の交錯"
+    ],
+    "enNames": [
+      "Frostboil Snarl"
+    ],
+    "scryfallName": "Frostboil Snarl",
+    "oracleId": "7137aae6-260d-41de-8b4e-42a8cf752697",
+    "scryfallId": "6771b26f-3b2c-4007-b2a9-e111278e538f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579128/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579129/",
+    "setCode": "TRC",
+    "collectorNumber": "384",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "怒静の交錯"
+    ],
+    "enNames": [
+      "Furycalm Snarl"
+    ],
+    "scryfallName": "Furycalm Snarl",
+    "oracleId": "651dea9c-2375-4e44-8e65-ba8e40f0c0ef",
+    "scryfallId": "7ea812d3-af71-4667-ab70-4814a54246f7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579129/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/578997/",
+    "setCode": "TRC",
+    "collectorNumber": "385",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "氷河の城砦"
+    ],
+    "enNames": [
+      "Glacial Fortress"
+    ],
+    "scryfallName": "Glacial Fortress",
+    "oracleId": "027dd013-baa7-4111-b3c9-f4d1414e9c45",
+    "scryfallId": "d03dd6b2-6ba6-4f4d-91d2-d3934e5fa6c3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/578997/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579153/",
+    "setCode": "TRC",
+    "collectorNumber": "386",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "きらめく地溝"
+    ],
+    "enNames": [
+      "Glittering Massif"
+    ],
+    "scryfallName": "Glittering Massif",
+    "oracleId": "23732d20-aba6-46cc-89d0-0542629bc6b5",
+    "scryfallId": "7cd53946-ce88-4620-9648-b9170375485b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579153/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/578993/",
+    "setCode": "TRC",
+    "collectorNumber": "387",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "内陸の湾港"
+    ],
+    "enNames": [
+      "Hinterland Harbor"
+    ],
+    "scryfallName": "Hinterland Harbor",
+    "oracleId": "fb5a3403-7f0b-406c-8c4f-d693be010ca6",
+    "scryfallId": "f7b305f6-fa7a-43a8-b251-932a9ae40f8e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/578993/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579108/",
+    "setCode": "TRC",
+    "collectorNumber": "388",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "灌漑農地"
+    ],
+    "enNames": [
+      "Irrigated Farmland"
+    ],
+    "scryfallName": "Irrigated Farmland",
+    "oracleId": "406eabe2-df62-49e2-bb39-c0227509d875",
+    "scryfallId": "07adaa76-936e-4a52-91d4-d14b583b5e50",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579108/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/578992/",
+    "setCode": "TRC",
+    "collectorNumber": "389",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "孤立した礼拝堂"
+    ],
+    "enNames": [
+      "Isolated Chapel"
+    ],
+    "scryfallName": "Isolated Chapel",
+    "oracleId": "7e5d9efe-48a9-434b-bb09-056e0e09cc9a",
+    "scryfallId": "ec187479-9ce6-41c3-93a6-01cfb09ac854",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/578992/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579138/",
+    "setCode": "TRC",
+    "collectorNumber": "390",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "変遷の泉"
+    ],
+    "enNames": [
+      "Morphic Pool"
+    ],
+    "scryfallName": "Morphic Pool",
+    "oracleId": "bd004c9d-771e-4e63-a97d-a2259c096af8",
+    "scryfallId": "6c2034ce-fddd-4daf-8123-9962a8179fe9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579138/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579171/",
+    "setCode": "TRC",
+    "collectorNumber": "391",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "苔汁の橋"
+    ],
+    "enNames": [
+      "Mosswort Bridge"
+    ],
+    "scryfallName": "Mosswort Bridge",
+    "oracleId": "7cb9e29f-835f-4155-a2a5-4b778866c773",
+    "scryfallId": "5ee9598f-0355-441d-b5a7-e9bc6c16fdc9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579171/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579170/",
+    "setCode": "TRC",
+    "collectorNumber": "392",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "変わり谷"
+    ],
+    "enNames": [
+      "Mutavault"
+    ],
+    "scryfallName": "Mutavault",
+    "oracleId": "6b3cc59a-7ea5-4eb5-9bf9-5a9c07f80e2b",
+    "scryfallId": "d5542b3c-0a23-45a2-ad5d-8719c36a9a3f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579170/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579104/",
+    "setCode": "TRC",
+    "collectorNumber": "393",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "港町"
+    ],
+    "enNames": [
+      "Port Town"
+    ],
+    "scryfallName": "Port Town",
+    "oracleId": "458d2b12-f578-4392-98d3-c3bc83f316c4",
+    "scryfallId": "98e92802-0390-49f9-a62a-accee8369b21",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579104/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579125/",
+    "setCode": "TRC",
+    "collectorNumber": "394",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "大草原の川"
+    ],
+    "enNames": [
+      "Prairie Stream"
+    ],
+    "scryfallName": "Prairie Stream",
+    "oracleId": "5330e24a-8568-446e-840a-594cd08bd1bc",
+    "scryfallId": "3ee14460-77fe-42fb-a19c-d35178fb1e23",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579125/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579152/",
+    "setCode": "TRC",
+    "collectorNumber": "395",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "光輝の山頂"
+    ],
+    "enNames": [
+      "Radiant Summit"
+    ],
+    "scryfallName": "Radiant Summit",
+    "oracleId": "5dd0cc44-4647-4857-ad3b-22494099d08a",
+    "scryfallId": "459d313b-0c1a-41b7-8b7e-3a7d12b28ab9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579152/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579151/",
+    "setCode": "TRC",
+    "collectorNumber": "396",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "雨濡れの低木林"
+    ],
+    "enNames": [
+      "Rain-Slicked Copse"
+    ],
+    "scryfallName": "Rain-Slicked Copse",
+    "oracleId": "633a41f0-3889-49a0-b2fc-9baf59f4ddc2",
+    "scryfallId": "75b1e34f-a47a-45e9-bed5-0c6955065bd2",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579151/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579117/",
+    "setCode": "TRC",
+    "collectorNumber": "397",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "まばらな木立ち"
+    ],
+    "enNames": [
+      "Scattered Groves"
+    ],
+    "scryfallName": "Scattered Groves",
+    "oracleId": "3c87ea85-ca29-45a7-b5b2-758c62898b0a",
+    "scryfallId": "1376ab5b-e9ad-42c8-a420-e33666bc6138",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579117/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579156/",
+    "setCode": "TRC",
+    "collectorNumber": "398",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "焼け焦げた間欠泉"
+    ],
+    "enNames": [
+      "Scorched Geyser"
+    ],
+    "scryfallName": "Scorched Geyser",
+    "oracleId": "f808b510-907a-4c3c-aea1-efb825c8e13e",
+    "scryfallId": "57f51bab-9cd4-4cfe-8fde-36a2c9ecf230",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579156/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579137/",
+    "setCode": "TRC",
+    "collectorNumber": "399",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "雲海"
+    ],
+    "enNames": [
+      "Sea of Clouds"
+    ],
+    "scryfallName": "Sea of Clouds",
+    "oracleId": "672e190d-8ea0-4a2e-b74f-5d35304631e4",
+    "scryfallId": "bcc6d8a6-91dd-46cd-bf40-245f65088e9b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579137/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579127/",
+    "setCode": "TRC",
+    "collectorNumber": "400",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "光影の交錯"
+    ],
+    "enNames": [
+      "Shineshadow Snarl"
+    ],
+    "scryfallName": "Shineshadow Snarl",
+    "oracleId": "c9fc13d6-bd10-47bc-b2b6-7f67a1f3371e",
+    "scryfallId": "c964a14a-06b6-45c4-be43-364f29b3f5aa",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579127/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579136/",
+    "setCode": "TRC",
+    "collectorNumber": "402",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "広漠なるスカイクラウド"
+    ],
+    "enNames": [
+      "Skycloud Expanse"
+    ],
+    "scryfallName": "Skycloud Expanse",
+    "oracleId": "76f335d0-7f71-4b1a-b60d-73de954cbe2c",
+    "scryfallId": "b85d9ed5-3bb3-4cfd-9a96-31e68d150168",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579136/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579113/",
+    "setCode": "TRC",
+    "collectorNumber": "403",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "燻る湿地"
+    ],
+    "enNames": [
+      "Smoldering Marsh"
+    ],
+    "scryfallName": "Smoldering Marsh",
+    "oracleId": "390f1b56-264e-4336-83be-dc1fe79bfdcf",
+    "scryfallId": "dc0e2f2a-9db0-4e04-827f-60cff8791377",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579113/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579150/",
+    "setCode": "TRC",
+    "collectorNumber": "404",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "水浸しの新緑"
+    ],
+    "enNames": [
+      "Sodden Verdure"
+    ],
+    "scryfallName": "Sodden Verdure",
+    "oracleId": "0070db93-142b-4d04-afd3-836792dc134b",
+    "scryfallId": "8279dc65-b7bf-48f3-ad09-fdbec5eb0945",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579150/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579106/",
+    "setCode": "TRC",
+    "collectorNumber": "405",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "産業の塔"
+    ],
+    "enNames": [
+      "Spire of Industry"
+    ],
+    "scryfallName": "Spire of Industry",
+    "oracleId": "55a519b4-61cb-448a-875b-4d6dbe00580f",
+    "scryfallId": "9a9c0fdc-bb8d-4f4e-ba21-2af28d08873d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579106/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/578990/",
+    "setCode": "TRC",
+    "collectorNumber": "406",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "硫黄の滝"
+    ],
+    "enNames": [
+      "Sulfur Falls"
+    ],
+    "scryfallName": "Sulfur Falls",
+    "oracleId": "6a6c5e17-6465-4a1f-9d63-8a3ce2edc522",
+    "scryfallId": "0bb456f1-1353-49bc-b105-e568beb429d1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/578990/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579126/",
+    "setCode": "TRC",
+    "collectorNumber": "407",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "窪み渓谷"
+    ],
+    "enNames": [
+      "Sunken Hollow"
+    ],
+    "scryfallName": "Sunken Hollow",
+    "oracleId": "cd2c90ac-2b04-461c-92f3-939871b6b6a3",
+    "scryfallId": "a6059203-633c-4a2e-b192-5078c293adc9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579126/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/578994/",
+    "setCode": "TRC",
+    "collectorNumber": "408",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "陽花弁の木立ち"
+    ],
+    "enNames": [
+      "Sunpetal Grove"
+    ],
+    "scryfallName": "Sunpetal Grove",
+    "oracleId": "402ec768-76fb-474e-ae74-babc90d833c4",
+    "scryfallId": "4c6fa31e-ea56-422b-b480-bd256ed6fc5d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/578994/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579178/",
+    "setCode": "TRC",
+    "collectorNumber": "409",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "啓蒙の神殿"
+    ],
+    "enNames": [
+      "Temple of Enlightenment"
+    ],
+    "scryfallName": "Temple of Enlightenment",
+    "oracleId": "89f43e27-790b-4ca1-8ba7-0882b31e0783",
+    "scryfallId": "724a8336-68d1-4bde-bea8-a7ff3cad435f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579178/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579119/",
+    "setCode": "TRC",
+    "collectorNumber": "410",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "悪意の神殿"
+    ],
+    "enNames": [
+      "Temple of Malice"
+    ],
+    "scryfallName": "Temple of Malice",
+    "oracleId": "7c439c18-31dc-41fe-b03d-3fca06e6fc0b",
+    "scryfallId": "0b0104f1-0073-40c9-b8b7-f869c6b7bf7e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579119/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579175/",
+    "setCode": "TRC",
+    "collectorNumber": "411",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "神秘の神殿"
+    ],
+    "enNames": [
+      "Temple of Mystery"
+    ],
+    "scryfallName": "Temple of Mystery",
+    "oracleId": "7e26f0b7-20e6-46d5-8130-d98c14d6aa29",
+    "scryfallId": "f9b1fcda-71b0-4d1f-a230-5e4eb3c4fb52",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579175/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579179/",
+    "setCode": "TRC",
+    "collectorNumber": "412",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "豊潤の神殿"
+    ],
+    "enNames": [
+      "Temple of Plenty"
+    ],
+    "scryfallName": "Temple of Plenty",
+    "oracleId": "e521322b-0e83-458c-8936-7021a80ee279",
+    "scryfallId": "779dddae-434f-48b5-a0bf-88b8c4e2ace2",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579179/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579120/",
+    "setCode": "TRC",
+    "collectorNumber": "413",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "訓練施設"
+    ],
+    "enNames": [
+      "Training Center"
+    ],
+    "scryfallName": "Training Center",
+    "oracleId": "e3570ac7-c593-40e3-bbd6-ec3da6d8158d",
+    "scryfallId": "f9453b9d-3c2f-4cdb-9e4f-e4b6f9871ce9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579120/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579155/",
+    "setCode": "TRC",
+    "collectorNumber": "414",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "陰影の広漠"
+    ],
+    "enNames": [
+      "Umbral Expanse"
+    ],
+    "scryfallName": "Umbral Expanse",
+    "oracleId": "5a1dfc60-645d-4bc0-8883-e06ed9c80706",
+    "scryfallId": "da1e31a7-1947-4a9e-893e-4e8e532a8831",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579155/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579146/",
+    "setCode": "TRC",
+    "collectorNumber": "415",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "地底の大河"
+    ],
+    "enNames": [
+      "Underground River"
+    ],
+    "scryfallName": "Underground River",
+    "oracleId": "857febd9-cdd7-4f8e-a852-d88084b0cfbc",
+    "scryfallId": "7ade2c4c-c427-4092-a5ee-1a6f34cc9836",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579146/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579158/",
+    "setCode": "TRC",
+    "collectorNumber": "416",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "勝者の大霊堂"
+    ],
+    "enNames": [
+      "Vault of Champions"
+    ],
+    "scryfallName": "Vault of Champions",
+    "oracleId": "ebc5ac83-08d4-4d6b-b840-0c4ba71a38ab",
+    "scryfallId": "e50512d2-7da7-4d01-b497-c34dbfcdd37e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579158/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/579130/",
+    "setCode": "TRC",
+    "collectorNumber": "417",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "蔦明の交錯"
+    ],
+    "enNames": [
+      "Vineglimmer Snarl"
+    ],
+    "scryfallName": "Vineglimmer Snarl",
+    "oracleId": "33f52df8-4b44-4422-8b0a-37fead9c894b",
+    "scryfallId": "977326b6-c9b5-4b78-9bb9-cc25563a1d42",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/579130/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/564614/",
+    "setCode": "TRC",
+    "collectorNumber": "419",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "卜占の逃走"
+    ],
+    "enNames": [
+      "Chronomantic Escape"
+    ],
+    "scryfallName": "Chronomantic Escape",
+    "oracleId": "629133e2-af20-4107-bc82-11ba32d5e2a6",
+    "scryfallId": "9d993122-be10-4345-b6bc-ff0d097576fc",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/564614/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563648/",
+    "setCode": "TRC",
+    "collectorNumber": "421",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "急送"
+    ],
+    "enNames": [
+      "Dispatch"
+    ],
+    "scryfallName": "Dispatch",
+    "oracleId": "133c99c0-3652-410f-8100-68015a47af9f",
+    "scryfallId": "4dfbe9c3-db44-4f3e-8e8d-82c81c67bc77",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563648/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563713/",
+    "setCode": "TRC",
+    "collectorNumber": "425",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "流刑への道"
+    ],
+    "enNames": [
+      "Path to Exile"
+    ],
+    "scryfallName": "Path to Exile",
+    "oracleId": "d683d985-9888-4d21-8b5f-69e69ce4a03b",
+    "scryfallId": "cba7cf86-a9e7-4022-bb46-d9b0f136f3ca",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563713/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563714/",
+    "setCode": "TRC",
+    "collectorNumber": "427",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "塵への帰結"
+    ],
+    "enNames": [
+      "Return to Dust"
+    ],
+    "scryfallName": "Return to Dust",
+    "oracleId": "3029df1d-d02a-4fed-8ab4-000a2096f823",
+    "scryfallId": "3e8e99f7-749f-4270-8732-2bc27f27f339",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563714/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563654/",
+    "setCode": "TRC",
+    "collectorNumber": "429",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "剣を鍬に"
+    ],
+    "enNames": [
+      "Swords to Plowshares"
+    ],
+    "scryfallName": "Swords to Plowshares",
+    "oracleId": "b1544f21-7e98-461b-aed5-e748b0168c52",
+    "scryfallId": "4645eebf-c9fc-4ee7-b646-61dc1205b4b0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563654/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563739/",
+    "setCode": "TRC",
+    "collectorNumber": "431",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "勇敢な姿勢"
+    ],
+    "enNames": [
+      "Valorous Stance"
+    ],
+    "scryfallName": "Valorous Stance",
+    "oracleId": "1f938353-9081-4dc1-b8e7-d18ece038bd4",
+    "scryfallId": "2565ab55-e89c-49bb-b03d-1e0cd3a0561e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563739/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563789/",
+    "setCode": "TRC",
+    "collectorNumber": "434",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "渦まく知識"
+    ],
+    "enNames": [
+      "Brainstorm"
+    ],
+    "scryfallName": "Brainstorm",
+    "oracleId": "36cd2364-d113-47d1-b2c4-b088d9eb88dd",
+    "scryfallId": "1ede3080-8c47-48a0-b757-92c3fa91fac0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563789/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/566381/",
+    "setCode": "TRC",
+    "collectorNumber": "438",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "大あわての捜索"
+    ],
+    "enNames": [
+      "Frantic Search"
+    ],
+    "scryfallName": "Frantic Search",
+    "oracleId": "16e015b2-f8a3-4b1a-80be-58a8f5fb5e8c",
+    "scryfallId": "4547db5f-f031-4dc1-8a61-532c9be4533a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/566381/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563635/",
+    "setCode": "TRC",
+    "collectorNumber": "439",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "否認"
+    ],
+    "enNames": [
+      "Negate"
+    ],
+    "scryfallName": "Negate",
+    "oracleId": "3407fe41-fdd3-4119-8f70-4bc4590a379f",
+    "scryfallId": "c57ee875-5ce7-4c47-841c-9639d622fe00",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563635/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563661/",
+    "setCode": "TRC",
+    "collectorNumber": "440",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "思案"
+    ],
+    "enNames": [
+      "Ponder"
+    ],
+    "scryfallName": "Ponder",
+    "oracleId": "02090581-61aa-4348-ad57-451be8ee91c2",
+    "scryfallId": "0cb673af-dae0-478c-a5d3-b697338f6c0e",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563661/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563630/",
+    "setCode": "TRC",
+    "collectorNumber": "441",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "猿術"
+    ],
+    "enNames": [
+      "Pongify"
+    ],
+    "scryfallName": "Pongify",
+    "oracleId": "05849bd6-8f38-4031-be2b-e2aa03beb8cc",
+    "scryfallId": "299aa687-97a4-4fdd-8e73-2069e20fae43",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563630/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563710/",
+    "setCode": "TRC",
+    "collectorNumber": "442",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "現実変容"
+    ],
+    "enNames": [
+      "Reality Shift"
+    ],
+    "scryfallName": "Reality Shift",
+    "oracleId": "70dc830e-d05b-4fc7-88dd-879e140b3fbf",
+    "scryfallId": "fd88231c-f193-4f11-8f1f-ff8d66ed9d8a",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563710/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563733/",
+    "setCode": "TRC",
+    "collectorNumber": "443",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "知識の渇望"
+    ],
+    "enNames": [
+      "Thirst for Knowledge"
+    ],
+    "scryfallName": "Thirst for Knowledge",
+    "oracleId": "939e6f71-185e-41f2-9d54-72cce06f1dce",
+    "scryfallId": "34577b57-06d6-4182-b29f-12c00bf22de1",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563733/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563637/",
+    "setCode": "TRC",
+    "collectorNumber": "444",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "物読み"
+    ],
+    "enNames": [
+      "Thoughtcast"
+    ],
+    "scryfallName": "Thoughtcast",
+    "oracleId": "cce9bbff-82dc-4b2f-addd-d6715588de20",
+    "scryfallId": "cdc3f611-5aaf-4e12-8751-adb815aa23f8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563637/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563709/",
+    "setCode": "TRC",
+    "collectorNumber": "445",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "苦々しい勝利"
+    ],
+    "enNames": [
+      "Bitter Triumph"
+    ],
+    "scryfallName": "Bitter Triumph",
+    "oracleId": "776341cb-d2ec-423f-9250-92dc8bd8d503",
+    "scryfallId": "cfe118f0-f727-41a6-aaaf-9638fe1dad49",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563709/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563650/",
+    "setCode": "TRC",
+    "collectorNumber": "446",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "夜の囁き"
+    ],
+    "enNames": [
+      "Night's Whisper"
+    ],
+    "scryfallName": "Night's Whisper",
+    "oracleId": "7ffae8f8-3006-4969-a339-6d30678f87ea",
+    "scryfallId": "8c8f954b-0da2-412c-ad7a-86225bb330ea",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563650/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563734/",
+    "setCode": "TRC",
+    "collectorNumber": "449",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "削剥"
+    ],
+    "enNames": [
+      "Abrade"
+    ],
+    "scryfallName": "Abrade",
+    "oracleId": "f9db72dc-9a5b-48a4-a86e-7464d9a2166a",
+    "scryfallId": "847b4081-25c9-4a9a-a2f3-d5fdadbfe81b",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563734/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/566382/",
+    "setCode": "TRC",
+    "collectorNumber": "455",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "胸躍る可能性"
+    ],
+    "enNames": [
+      "Thrill of Possibility"
+    ],
+    "scryfallName": "Thrill of Possibility",
+    "oracleId": "1cb0610b-a731-42c2-b93f-0a29f63cebf4",
+    "scryfallId": "ddb01913-ad41-4a20-bef0-cf8412cce39c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/566382/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563676/",
+    "setCode": "TRC",
+    "collectorNumber": "459",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "内にいる獣"
+    ],
+    "enNames": [
+      "Beast Within"
+    ],
+    "scryfallName": "Beast Within",
+    "oracleId": "7735eeba-693b-47e2-bd51-414379cf1016",
+    "scryfallId": "1929cf4b-0d18-4f7d-a631-621a378ff015",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563676/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563683/",
+    "setCode": "TRC",
+    "collectorNumber": "460",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "耕作"
+    ],
+    "enNames": [
+      "Cultivate"
+    ],
+    "scryfallName": "Cultivate",
+    "oracleId": "8b755881-a72d-4e21-a369-d2924eb4585a",
+    "scryfallId": "a78f5d3f-74d6-4ec1-89c4-e24639d3f4ba",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563683/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563679/",
+    "setCode": "TRC",
+    "collectorNumber": "462",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "遥か見"
+    ],
+    "enNames": [
+      "Farseek"
+    ],
+    "scryfallName": "Farseek",
+    "oracleId": "495e52e6-4c2b-4574-9474-eadbdcc8b4ac",
+    "scryfallId": "dde15e36-ad2d-4438-9b51-78a04bc80779",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563679/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563695/",
+    "setCode": "TRC",
+    "collectorNumber": "464",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "調和"
+    ],
+    "enNames": [
+      "Harmonize"
+    ],
+    "scryfallName": "Harmonize",
+    "oracleId": "7eff84f1-f772-497a-b350-bbc93d0230f7",
+    "scryfallId": "4e9c9e24-7f41-402c-b346-e553cee90c58",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563695/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563721/",
+    "setCode": "TRC",
+    "collectorNumber": "467",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "自然の知識"
+    ],
+    "enNames": [
+      "Nature's Lore"
+    ],
+    "scryfallName": "Nature's Lore",
+    "oracleId": "78826359-fe63-44ad-adc4-a17ffcd710e4",
+    "scryfallId": "6a55cafa-cb5c-482c-b3c9-1b1f4f0c698d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563721/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563707/",
+    "setCode": "TRC",
+    "collectorNumber": "468",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "不屈の自然"
+    ],
+    "enNames": [
+      "Rampant Growth"
+    ],
+    "scryfallName": "Rampant Growth",
+    "oracleId": "8539f295-5d58-4436-a73a-b9277c4c7795",
+    "scryfallId": "099c081d-06ae-4ca5-ab3b-f70d01509258",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563707/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/567623/",
+    "setCode": "TRC",
+    "collectorNumber": "469",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "サテュロスの道探し"
+    ],
+    "enNames": [
+      "Satyr Wayfinder"
+    ],
+    "scryfallName": "Satyr Wayfinder",
+    "oracleId": "ead4c01a-e2ae-49c9-95d9-651d81005907",
+    "scryfallId": "e64c5e9b-e73d-4721-8816-eca02eb6b828",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/567623/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/567621/",
+    "setCode": "TRC",
+    "collectorNumber": "473",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "信仰の繕い"
+    ],
+    "enNames": [
+      "Faithful Mending"
+    ],
+    "scryfallName": "Faithful Mending",
+    "oracleId": "b997a982-09e1-4ae1-a972-3c2e5f101e8c",
+    "scryfallId": "4092077b-15d1-4b8d-9742-fbefe1ba206f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/567621/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/567620/",
+    "setCode": "TRC",
+    "collectorNumber": "476",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "成長のらせん"
+    ],
+    "enNames": [
+      "Growth Spiral"
+    ],
+    "scryfallName": "Growth Spiral",
+    "oracleId": "34bcc217-dd91-45a0-90d7-a94d02f1f317",
+    "scryfallId": "4e518ba7-371d-4996-bebb-9f618e02db63",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/567620/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/568896/",
+    "setCode": "TRC",
+    "collectorNumber": "478",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "忘却の儀式"
+    ],
+    "enNames": [
+      "Rite of Oblivion"
+    ],
+    "scryfallName": "Rite of Oblivion",
+    "oracleId": "99957aa7-b654-41b5-9b96-7bce47545d25",
+    "scryfallId": "a3f5ef77-84c2-46c9-a457-27d2e04bda28",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/568896/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563638/",
+    "setCode": "TRC",
+    "collectorNumber": "481",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "終止"
+    ],
+    "enNames": [
+      "Terminate"
+    ],
+    "scryfallName": "Terminate",
+    "oracleId": "6257c2fd-005f-41e3-8a72-af76df1eb134",
+    "scryfallId": "a3666439-e859-417b-b39e-5f14dbef81d8",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563638/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563717/",
+    "setCode": "TRC",
+    "collectorNumber": "485",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "秘儀の印鑑"
+    ],
+    "enNames": [
+      "Arcane Signet"
+    ],
+    "scryfallName": "Arcane Signet",
+    "oracleId": "0bc7f093-bef0-4f1a-852c-4b75ebf54838",
+    "scryfallId": "795df2ee-fbfc-4961-852c-e3ec50cc52da",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563717/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563629/",
+    "setCode": "TRC",
+    "collectorNumber": "487",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "統率者の宝球"
+    ],
+    "enNames": [
+      "Commander's Sphere"
+    ],
+    "scryfallName": "Commander's Sphere",
+    "oracleId": "0b67c4e2-f88b-4e01-85a1-9d5f5b8db13b",
+    "scryfallId": "a145fe99-1cca-45c6-aa7e-ec5d8a7bcd13",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563629/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563691/",
+    "setCode": "TRC",
+    "collectorNumber": "490",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "永遠溢れの杯"
+    ],
+    "enNames": [
+      "Everflowing Chalice"
+    ],
+    "scryfallName": "Everflowing Chalice",
+    "oracleId": "0a79237e-0811-4a8a-bd4d-db3ca91bff22",
+    "scryfallId": "fa293bcc-39aa-4642-8e34-6e4fbb30f962",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563691/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/566379/",
+    "setCode": "TRC",
+    "collectorNumber": "492",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "面晶体の記録庫"
+    ],
+    "enNames": [
+      "Hedron Archive"
+    ],
+    "scryfallName": "Hedron Archive",
+    "oracleId": "32263baa-d3f0-463f-92b3-4e9938476add",
+    "scryfallId": "713ceecc-a3b0-4734-87a8-c235923a8d92",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/566379/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/566041/",
+    "setCode": "TRC",
+    "collectorNumber": "493",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "通報の角笛"
+    ],
+    "enNames": [
+      "Herald's Horn"
+    ],
+    "scryfallName": "Herald's Horn",
+    "oracleId": "c02c5547-b9c9-4b2d-9d12-e87bfba8f2d2",
+    "scryfallId": "e8fcf84c-0c2e-42c4-b860-622227e3cde3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/566041/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563719/",
+    "setCode": "TRC",
+    "collectorNumber": "496",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "稲妻のすね当て"
+    ],
+    "enNames": [
+      "Lightning Greaves"
+    ],
+    "scryfallName": "Lightning Greaves",
+    "oracleId": "ca204b66-8d0c-431a-8d34-282f7c2d17da",
+    "scryfallId": "659ef698-96ea-4fa9-b63c-0da93a2d1e78",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563719/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/566380/",
+    "setCode": "TRC",
+    "collectorNumber": "497",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "精神石"
+    ],
+    "enNames": [
+      "Mind Stone"
+    ],
+    "scryfallName": "Mind Stone",
+    "oracleId": "c97361b5-af16-4a7b-af85-a429dbaf4ad2",
+    "scryfallId": "091600ae-6578-4353-8e0f-d170f555bcd0",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/566380/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563718/",
+    "setCode": "TRC",
+    "collectorNumber": "499",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "太陽の指輪"
+    ],
+    "enNames": [
+      "Sol Ring"
+    ],
+    "scryfallName": "Sol Ring",
+    "oracleId": "6ad8011d-3471-4369-9d68-b264cc027487",
+    "scryfallId": "fc817e07-c1f3-469f-9cf7-0945dea7400f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563718/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/568898/",
+    "setCode": "TRC",
+    "collectorNumber": "500",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ストーンスピーカー・クリスタル"
+    ],
+    "enNames": [
+      "Stonespeaker Crystal"
+    ],
+    "scryfallName": "Stonespeaker Crystal",
+    "oracleId": "a494fcee-6885-434c-aad5-6f83640c4472",
+    "scryfallId": "08ef1dac-87ba-46bd-b5d5-beb6969becaf",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/568898/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563736/",
+    "setCode": "TRC",
+    "collectorNumber": "501",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "速足のブーツ"
+    ],
+    "enNames": [
+      "Swiftfoot Boots"
+    ],
+    "scryfallName": "Swiftfoot Boots",
+    "oracleId": "c8b143ad-43ec-4e0d-a440-e348daa31391",
+    "scryfallId": "3b69b12e-ef29-455c-8939-eacf44c6c3f6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563736/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563670/",
+    "setCode": "TRC",
+    "collectorNumber": "503",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "確信のタリスマン"
+    ],
+    "enNames": [
+      "Talisman of Conviction"
+    ],
+    "scryfallName": "Talisman of Conviction",
+    "oracleId": "6c326439-5620-4ec6-a56a-fe9c3d5d2a46",
+    "scryfallId": "cf6b1079-0e1e-4060-89d0-b089dc315791",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563670/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563669/",
+    "setCode": "TRC",
+    "collectorNumber": "504",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "独創のタリスマン"
+    ],
+    "enNames": [
+      "Talisman of Creativity"
+    ],
+    "scryfallName": "Talisman of Creativity",
+    "oracleId": "14d2979d-5728-42d7-a027-0eb1f754655d",
+    "scryfallId": "201a1c88-4faa-4fb2-86e8-706c2745b942",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563669/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563660/",
+    "setCode": "TRC",
+    "collectorNumber": "505",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "威圧のタリスマン"
+    ],
+    "enNames": [
+      "Talisman of Dominance"
+    ],
+    "scryfallName": "Talisman of Dominance",
+    "oracleId": "4c0a0448-b9d6-43a0-8549-64066dac63f0",
+    "scryfallId": "4cfcaacc-216d-4872-8a7a-27eace8039ed",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563660/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563668/",
+    "setCode": "TRC",
+    "collectorNumber": "506",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "聖列のタリスマン"
+    ],
+    "enNames": [
+      "Talisman of Hierarchy"
+    ],
+    "scryfallName": "Talisman of Hierarchy",
+    "oracleId": "b693c3de-2eaf-4850-b405-e79d00adefda",
+    "scryfallId": "66490fc8-3378-4283-a107-f631787133ea",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563668/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563641/",
+    "setCode": "TRC",
+    "collectorNumber": "507",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "耽溺のタリスマン"
+    ],
+    "enNames": [
+      "Talisman of Indulgence"
+    ],
+    "scryfallName": "Talisman of Indulgence",
+    "oracleId": "1d9aeaaa-66f6-41cb-9bac-162d6fd8662c",
+    "scryfallId": "7e8c867f-172f-4c17-9ca6-6b4aa853f525",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563641/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563646/",
+    "setCode": "TRC",
+    "collectorNumber": "508",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "発展のタリスマン"
+    ],
+    "enNames": [
+      "Talisman of Progress"
+    ],
+    "scryfallName": "Talisman of Progress",
+    "oracleId": "00e35322-1a9a-41e3-9ce1-359c8eaa3bc7",
+    "scryfallId": "5fd601c4-44a9-45d0-a2a4-03a2eca700c7",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563646/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563715/",
+    "setCode": "TRC",
+    "collectorNumber": "509",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "思考の器"
+    ],
+    "enNames": [
+      "Thought Vessel"
+    ],
+    "scryfallName": "Thought Vessel",
+    "oracleId": "9965d9c5-2ebf-4a6c-930e-55c5890979be",
+    "scryfallId": "df44b703-e025-480d-9c7b-55873407bdf4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563715/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563700/",
+    "setCode": "TRC",
+    "collectorNumber": "511",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "旅人のガラクタ"
+    ],
+    "enNames": [
+      "Wayfarer's Bauble"
+    ],
+    "scryfallName": "Wayfarer's Bauble",
+    "oracleId": "31f15274-301b-47c5-ba19-0ced04520878",
+    "scryfallId": "7ccf086d-6ea2-4222-a7c1-325c22587ed6",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563700/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563657/",
+    "setCode": "TRC",
+    "collectorNumber": "513",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "秘儀の聖域"
+    ],
+    "enNames": [
+      "Arcane Sanctum"
+    ],
+    "scryfallName": "Arcane Sanctum",
+    "oracleId": "7d7cf15c-06b9-4062-a1eb-32614c458a3b",
+    "scryfallId": "23d77f67-11a3-49b1-9594-68461cd08b04",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563657/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563712/",
+    "setCode": "TRC",
+    "collectorNumber": "521",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "統率の塔"
+    ],
+    "enNames": [
+      "Command Tower"
+    ],
+    "scryfallName": "Command Tower",
+    "oracleId": "0895c9b7-ae7d-4bb3-af17-3b75deb50a25",
+    "scryfallId": "a73297d2-580c-4174-a427-265f6916d09f",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563712/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/565728/",
+    "setCode": "TRC",
+    "collectorNumber": "522",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "汚染地帯"
+    ],
+    "enNames": [
+      "Contaminated Landscape"
+    ],
+    "scryfallName": "Contaminated Landscape",
+    "oracleId": "28196fd9-00c9-4cd0-b603-0eec8511ec79",
+    "scryfallId": "a91fa6ef-3ee8-4de0-ae90-97c3eb2cea6d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/565728/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563727/",
+    "setCode": "TRC",
+    "collectorNumber": "527",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "進化する未開地"
+    ],
+    "enNames": [
+      "Evolving Wilds"
+    ],
+    "scryfallName": "Evolving Wilds",
+    "oracleId": "a75445d3-1303-4bb5-89ad-26ea93fecd48",
+    "scryfallId": "6e01ec28-d815-47a8-ab0f-d383a4736ebe",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563727/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563728/",
+    "setCode": "TRC",
+    "collectorNumber": "543",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "神秘の僧院"
+    ],
+    "enNames": [
+      "Mystic Monastery"
+    ],
+    "scryfallName": "Mystic Monastery",
+    "oracleId": "834b8f71-9a45-42ae-9e99-e749fa6fb45e",
+    "scryfallId": "df73f8dd-5b01-4602-83f2-d336f75871d4",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563728/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563729/",
+    "setCode": "TRC",
+    "collectorNumber": "544",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "遊牧民の前哨地"
+    ],
+    "enNames": [
+      "Nomad Outpost"
+    ],
+    "scryfallName": "Nomad Outpost",
+    "oracleId": "4619de7e-3d6e-4c6b-8e6e-e24db324839d",
+    "scryfallId": "69cb108d-0ab0-46a4-b4f2-a86988b820d3",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563729/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563711/",
+    "setCode": "TRC",
+    "collectorNumber": "545",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "祖先の道"
+    ],
+    "enNames": [
+      "Path of Ancestry"
+    ],
+    "scryfallName": "Path of Ancestry",
+    "oracleId": "b473e293-59e3-4e04-acf2-622604aeb25f",
+    "scryfallId": "4ac05a29-0722-4d8b-80e9-a46c38491c14",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563711/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/565725/",
+    "setCode": "TRC",
+    "collectorNumber": "546",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "危険地帯"
+    ],
+    "enNames": [
+      "Perilous Landscape"
+    ],
+    "scryfallName": "Perilous Landscape",
+    "oracleId": "e2b472dd-047d-47eb-9ebb-df6aa4b52dd4",
+    "scryfallId": "1ddc9c1e-55c7-4032-88f4-b573ec789455",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/565725/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563716/",
+    "setCode": "TRC",
+    "collectorNumber": "551",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "聖遺の塔"
+    ],
+    "enNames": [
+      "Reliquary Tower"
+    ],
+    "scryfallName": "Reliquary Tower",
+    "oracleId": "c23e5b80-08d2-4e24-9908-fe2aa4f30f6f",
+    "scryfallId": "13caa07e-3b72-4ee2-92c6-f119d02341f9",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563716/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563735/",
+    "setCode": "TRC",
+    "collectorNumber": "552",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "ならず者の道"
+    ],
+    "enNames": [
+      "Rogue's Passage"
+    ],
+    "scryfallName": "Rogue's Passage",
+    "oracleId": "f29dc596-2121-4421-8463-15f6c2e8b9b3",
+    "scryfallId": "c84f49bb-3780-4f92-8db2-b27605ceefed",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563735/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563652/",
+    "setCode": "TRC",
+    "collectorNumber": "556",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "海辺の城塞"
+    ],
+    "enNames": [
+      "Seaside Citadel"
+    ],
+    "scryfallName": "Seaside Citadel",
+    "oracleId": "2ae77795-6a80-498b-bf69-6fd612f601e4",
+    "scryfallId": "3a2bb545-87c2-4c09-b56d-8f2a2bf9f9e5",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563652/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/565726/",
+    "setCode": "TRC",
+    "collectorNumber": "557",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "被災地帯"
+    ],
+    "enNames": [
+      "Shattered Landscape"
+    ],
+    "scryfallName": "Shattered Landscape",
+    "oracleId": "7fbad3f2-66f6-4e3a-b9e0-1ddbcd94d42a",
+    "scryfallId": "21144c3b-b2da-4b18-9bf5-4d30b137bd49",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/565726/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563682/",
+    "setCode": "TRC",
+    "collectorNumber": "570",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "邪神の寺院"
+    ],
+    "enNames": [
+      "Temple of the False God"
+    ],
+    "scryfallName": "Temple of the False God",
+    "oracleId": "cfdd5dc6-593e-495a-8cfe-3a56b3c4c7df",
+    "scryfallId": "cd5e9799-00e1-41a9-b5b9-5d5164c71561",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563682/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/563732/",
+    "setCode": "TRC",
+    "collectorNumber": "571",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "広漠なる変幻地"
+    ],
+    "enNames": [
+      "Terramorphic Expanse"
+    ],
+    "scryfallName": "Terramorphic Expanse",
+    "oracleId": "1bd3e453-aa21-4ee6-95c2-d6d920ee8e7a",
+    "scryfallId": "58ebd718-982d-4370-b4af-ef49b978d97d",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/563732/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
+    "source": "mtg-jp-card-gallery",
+    "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000326/565727/",
+    "setCode": "TRC",
+    "collectorNumber": "573",
+    "setNameJa": "スター・トレック コマンダー",
+    "jaNames": [
+      "安息地帯"
+    ],
+    "enNames": [
+      "Tranquil Landscape"
+    ],
+    "scryfallName": "Tranquil Landscape",
+    "oracleId": "d4eb65d5-99fd-4daf-b7d3-8ebf99ee9c61",
+    "scryfallId": "228a8488-f2f2-4a60-b9ec-60cb5649c15c",
+    "images": {
+      "normal": "https://mtg-jp.com//img_sys/cardImages/TRC/565727/cardimage.png"
+    },
+    "releasedAt": "2026-11-13",
+    "setName": "Star Trek Commander"
+  },
+  {
     "source": "mtg-jp-card-gallery-name",
     "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000291/693485/",
     "setCode": "TDM",

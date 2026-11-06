@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v363";
+const APP_VERSION = "v364";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -1696,7 +1696,7 @@ const SET_JA_NAMES = {
   spm: "マーベル スパイダーマン",
   mar: "マーベル・マテリアル",
   spe: "マーベル スパイダーマン ウェルカム・デッキ",
-  trk: "スター・トレック", trc: "スター・トレック 統率者", sds: "宇宙暦",
+  trk: "スター・トレック", trc: "スター・トレック コマンダー", sds: "宇宙暦",
   hob: "ホビット", hoc: "ホビット 統率者",
   msh: "マジック：ザ・ギャザリング | マーベル スーパー・ヒーローズ", msc: "マーベル スーパー・ヒーローズ 統率者",
   sos: "ストリクスヘイヴンの秘密", soa: "ストリクスヘイヴンの秘密 ミスティカルアーカイブ", soc: "ストリクスヘイヴンの秘密 統率者",
@@ -1787,7 +1787,7 @@ const SET_SEARCH_ALIASES = [
   { codes: ["spm", "mar", "spe"], terms: ["スパイダーマン", "Marvel's Spider-Man", "Spider-Man"] },
   { codes: ["hoc"], terms: ["ホビット統率者", "ホビット 統率者", "The Hobbit Commander", "Hobbit Commander", "HOC"] },
   { codes: ["hob", "hoc"], terms: ["ホビット", "The Hobbit", "Hobbit"] },
-  { codes: ["trc"], terms: ["スター・トレック統率者", "スター・トレック 統率者", "スタートレック統率者", "スタートレック 統率者", "Star Trek Commander", "TRC"] },
+  { codes: ["trc"], terms: ["スター・トレック コマンダー", "スタートレック コマンダー", "スター・トレック統率者", "スター・トレック 統率者", "スタートレック統率者", "スタートレック 統率者", "Star Trek Commander", "TRC"] },
   { codes: ["sds"], terms: ["宇宙暦", "Stardates", "SDS"] },
   { codes: ["trk"], terms: ["TRK"] },
   { codes: ["trk", "trc", "sds"], terms: ["スター・トレック", "スタートレック", "Star Trek"] },
