@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v365";
+const APP_VERSION = "v366";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3435,6 +3435,8 @@ async function fetchCounterparts(cards, targetLang, extraFilters = "") {
   return counterparts;
 }
 
+// Each card is followed by its other-language print when one was fetched. Every card is kept;
+// the result list shows 50 at a time.
 function mergeLanguageResults(primaryCards, counterpartCards) {
   const peers = new Map(counterpartCards.map(card => [card.oracle_id || card.name, card]));
   const merged = [];
@@ -3449,7 +3451,6 @@ function mergeLanguageResults(primaryCards, counterpartCards) {
     push(card);
     const key = card.oracle_id || card.name;
     if (peers.has(key)) { push(peers.get(key)); peers.delete(key); }
-    if (merged.length >= 24) break;
   }
   peers.forEach(push);
   return merged;
