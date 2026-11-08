@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=367">
-  <link rel="stylesheet" href="mobile-inputs.css?v=367">
+  <link rel="stylesheet" href="styles.css?v=368">
+  <link rel="stylesheet" href="mobile-inputs.css?v=368">
 </head>
 <body>
   <header class="app-header">
@@ -397,6 +397,13 @@ const BACKGROUND_THEME_CHROME = {
       </details>
       <button id="undoDeckMerge" type="button" class="ghost" hidden>直前の統合を元に戻す</button>
       </details>
+      <details id="deckExportPanel" class="deck-memo-panel deck-export-panel"><summary>エクスポート</summary>
+        <label>形式<select id="deckExportFormat"><option value="arena">アリーナ用テキスト</option><option value="arena-ja">アリーナ用テキスト（日本語）</option><option value="mtgo">MO用テキスト</option></select></label>
+        <label>出力方法<select id="deckExportMethod"><option value="copy">クリップボードにコピー</option><option value="download">テキストファイルをダウンロード</option></select></label>
+        <label>プレビュー<textarea id="deckExportPreview" rows="10" readonly spellcheck="false"></textarea></label>
+        <p id="deckExportStatus" class="muted" role="status" aria-live="polite"></p>
+        <button id="deckExportButton" type="button">コピー</button>
+      </details>
       <details class="deck-memo-panel"><summary>メモ</summary><label>メモ<textarea id="deckMemo" rows="3" maxlength="2000" placeholder="採用理由、調整メモ、次に試したいカードなど"></textarea></label></details>
       <label hidden>カード追加先<select id="deckSection"><option value="main">メイン</option><option value="side">サイド</option><option value="commander">統率者</option><option value="maybe">候補</option></select></label>
       <section class="deck-add-menu" aria-label="カード追加方法">
@@ -520,12 +527,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=367" defer></script>
-  <script src="scanner-host.js?v=367" defer></script>
+  <script src="storage.js?v=368" defer></script>
+  <script src="scanner-host.js?v=368" defer></script>
   <script src="mtg-jp-card-index.js?h=dcce21bec6d0" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=367" defer></script>
-  <script src="scanner/card-images.js?v=367" defer></script>
-  <script src="app.js?v=367" defer></script>
+  <script src="diagnostics.js?v=368" defer></script>
+  <script src="scanner/card-images.js?v=368" defer></script>
+  <script src="app.js?v=368" defer></script>
 </body>
 </html>

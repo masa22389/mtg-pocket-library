@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v367";
+const APP_VERSION = "v368";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -107,6 +107,7 @@ const els = {
   deleteManagedFavoriteGroup: $("#deleteManagedFavoriteGroup"), manageFavoriteGroupStatus: $("#manageFavoriteGroupStatus"), manageFavoriteGroupCards: $("#manageFavoriteGroupCards"),
   deckName: $("#deckName"), deckFormat: $("#deckFormat"), deckCount: $("#deckCount"),
   deckTokenPanel: $("#deckTokenPanel"), deckTokenCount: $("#deckTokenCount"), deckTokenLanguage: $("#deckTokenLanguage"), deckTokenStatus: $("#deckTokenStatus"), deckTokenList: $("#deckTokenList"),
+  deckExportPanel: $("#deckExportPanel"), deckExportFormat: $("#deckExportFormat"), deckExportMethod: $("#deckExportMethod"), deckExportPreview: $("#deckExportPreview"), deckExportButton: $("#deckExportButton"), deckExportStatus: $("#deckExportStatus"),
   deckMissing: $("#deckMissing"), deckStats: $("#deckStats"), deckMissingList: $("#deckMissingList"), deckDates: $("#deckDates"), deckMemo: $("#deckMemo"), deckCardFilter: $("#deckCardFilter"), deckSection: $("#deckSection"),
   openDeckOwnedAdd: $("#openDeckOwnedAdd"), openDeckSearchAdd: $("#openDeckSearchAdd"),
   deckOwnedAddDialog: $("#deckOwnedAddDialog"), deckSearchAddDialog: $("#deckSearchAddDialog"),
@@ -5219,8 +5220,16 @@ function parseDeckImportText(text) {
       if (sawCards) section = "side";
       return;
     }
-    if (/^(sideboard|side board|サイド|サイドボード)$/i.test(line)) {
+    if (/^(sideboard|side board|サイド|サイドボード|companion|相棒)$/i.test(line)) {
       section = "side";
+      return;
+    }
+    if (/^(deck|main|maindeck|main deck|デッキ|メイン|メインデッキ)$/i.test(line)) {
+      section = "main";
+      return;
+    }
+    if (/^(commander|統率者)$/i.test(line)) {
+      section = "commander";
       return;
     }
     const match = line.match(/^(\d+)\s*x?\s+(.+)$/i);
@@ -5319,7 +5328,7 @@ async function importDeckFromTextFile(file) {
   const deck = {
     id: uid(),
     name: file.name.replace(/\.[^.]+$/, "") || "インポートデッキ",
-    format: state.deckFormatFilter || "カジュアル",
+    format: rows.some(row => row.section === "commander") ? "統率者戦" : (state.deckFormatFilter || "カジュアル"),
     memo: "",
     entries: [],
     createdAt: now,
@@ -5547,7 +5556,118 @@ function deckCardSnapshot(card) {
     language: card.language || card.lang || "",
     image: imageOf(card), typeLine: card.typeLine || card.type_line || "",
     manaValue: Number(card.manaValue ?? card.cmc ?? 0), colorIdentity: card.colorIdentity || card.color_identity || card.colors || [],
+    layout: card.layout || "",
   };
+}
+
+// Deck export: Arena, Arena in Japanese and Magic Online text.
+// Split cards (and rooms) keep both halves; other two-faced cards use the front face, as both clients do.
+function deckExportUsesFullName(card, layout = card?.layout) {
+  if (layout) return layout === "split" || layout === "aftermath";
+  const faces = String(card?.typeLine || card?.type_line || "").split(/\s*\/\/\s*/).map(face => face.trim());
+  if (faces.length < 2) return false;
+  if (faces.every(face => /\bRoom\b/.test(face))) return true;
+  return faces.every(face => /^((Tribal|Kindred) )?(Instant|Sorcery)\b/.test(face));
+}
+
+function deckExportJapaneseName(card) {
+  const names = [preferredIndexedJapaneseName(card), card?.jpName, card?.printedName, card?.printed_name]
+    .map(normalizeDisplayName).filter(name => name && isJapanese(name));
+  return names[0] ? localizeJapaneseFaceNames(names[0]) : "";
+}
+
+function deckExportName(card, format, layout = card?.layout) {
+  const full = deckExportUsesFullName(card, layout);
+  if (format === "arena-ja") {
+    const japanese = deckExportJapaneseName(card);
+    if (japanese) return full ? japanese : japanese.split(/\s*\/\/\s*/)[0];
+  }
+  const parts = String(card?.name || "").split(/\s*\/\/\s*/).map(part => part.trim()).filter(Boolean);
+  if (!parts.length) return "";
+  if (!full || parts.length < 2) return parts[0];
+  return format === "mtgo" ? parts.join("/") : parts.join(" // ");
+}
+
+// One line per card in deck order; different prints of a card are counted together.
+function deckExportLines(entries, section, format) {
+  const rows = new Map();
+  for (const entry of entries || []) {
+    if (entry.section !== section) continue;
+    const card = cardForDeckEntry(entry);
+    const quantity = Number(entry.quantity || 0);
+    if (!card || quantity <= 0) continue;
+    const layout = card.layout || entry.card?.layout;
+    const name = deckExportName(card, format, layout);
+    if (!name) continue;
+    const key = card.oracleId || card.oracle_id || deckExportName(card, "arena", layout);
+    const row = rows.get(key) || { name, quantity: 0 };
+    row.quantity += quantity;
+    rows.set(key, row);
+  }
+  return [...rows.values()].map(row => `${row.quantity} ${row.name}`);
+}
+
+function buildDeckExportText(deck, format) {
+  const entries = deck?.entries || [];
+  const commander = deck?.format === "統率者戦" ? deckExportLines(entries, "commander", format) : [];
+  const main = deckExportLines(entries, "main", format);
+  const side = deckExportLines(entries, "side", format);
+  // Magic Online has no main-deck heading and keeps a commander in the sideboard.
+  if (format === "mtgo") {
+    const sideboard = [...commander, ...side];
+    return [...main, ...(sideboard.length ? ["", "Sideboard", ...sideboard] : [])].join("\n");
+  }
+  const ja = format === "arena-ja";
+  return [
+    [ja ? "統率者" : "Commander", commander],
+    [ja ? "デッキ" : "Deck", main],
+    [ja ? "サイドボード" : "Sideboard", side],
+  ].filter(([, lines]) => lines.length).map(([title, lines]) => [title, ...lines].join("\n")).join("\n\n");
+}
+
+function deckExportFileName(deck) {
+  const name = String(deck?.name || "").replace(/[\\/:*?"<>|\u0000-\u001f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 80);
+  return `${name || "deck"}.txt`;
+}
+
+function renderDeckExportPreview() {
+  if (!els.deckExportPanel?.open || !state.editingDeck) return;
+  const text = buildDeckExportText(state.editingDeck, els.deckExportFormat.value);
+  els.deckExportPreview.value = text;
+  els.deckExportButton.textContent = els.deckExportMethod.value === "download" ? "ダウンロード" : "コピー";
+  els.deckExportButton.disabled = !text;
+  els.deckExportStatus.textContent = text ? "" : "メインまたはサイドにカードを追加すると書き出せます";
+}
+
+async function runDeckExport() {
+  const text = buildDeckExportText(state.editingDeck, els.deckExportFormat.value);
+  if (!text) return;
+  const label = els.deckExportFormat.selectedOptions[0]?.textContent || "テキスト";
+  if (els.deckExportMethod.value === "download") {
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([`${text}\n`], { type: "text/plain;charset=utf-8" }));
+    link.download = deckExportFileName(state.editingDeck);
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    els.deckExportStatus.textContent = `${label}を「${link.download}」としてダウンロードしました`;
+    showToast("ダウンロードしました");
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    // Older browsers: copy from the preview instead.
+    els.deckExportPreview.focus();
+    els.deckExportPreview.select();
+    if (!document.execCommand("copy")) {
+      els.deckExportStatus.textContent = "コピーできませんでした。プレビューを長押しして選択・コピーしてください";
+      return;
+    }
+  }
+  els.deckExportStatus.textContent = `${label}をコピーしました`;
+  showToast("コピーしました");
 }
 
 function cardForDeckEntry(entry) {
@@ -6475,6 +6595,7 @@ function renderDeckComparison() {
 
 function renderDeckEditor() {
   const deck = state.editingDeck;
+  queueMicrotask(renderDeckExportPreview);
   deck.format = els.deckFormat.value;
   normalizeDeckSectionsForFormat();
   syncCommanderOptions();
@@ -7741,6 +7862,10 @@ $("#openCardVariants").addEventListener("click", openCardVariantPicker);
 els.cardLanguage.addEventListener("change", () => changeCardLanguage(els.cardLanguage.value));
 $("#cardVariantDialog").addEventListener("close", () => { ++variantPickerRequestId; els.cardVariants.replaceChildren(); });
 $("#newDeckButton").addEventListener("click", newDeck);
+els.deckExportPanel?.addEventListener("toggle", renderDeckExportPreview);
+els.deckExportFormat?.addEventListener("change", renderDeckExportPreview);
+els.deckExportMethod?.addEventListener("change", renderDeckExportPreview);
+els.deckExportButton?.addEventListener("click", runDeckExport);
 els.deckImportInput?.addEventListener("change", async event => {
   const file = event.target.files?.[0];
   try {

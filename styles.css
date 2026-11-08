@@ -428,6 +428,9 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .deck-editor .deck-memo-panel summary{min-height:44px;display:list-item;align-content:center;cursor:pointer;font-size:14px;font-weight:700;color:var(--green)}
 .deck-editor .deck-memo-panel label{padding-bottom:10px}
 .deck-editor .deck-memo-panel textarea{font-size:16px}
+.deck-editor .deck-export-panel textarea{font-family:ui-monospace,Consolas,monospace;background:#f7f7f2}
+.deck-editor .deck-export-panel #deckExportButton{width:100%;margin-bottom:10px}
+.deck-editor .deck-export-panel .muted:empty{display:none}
 .deck-editor .deck-comparison{padding:10px;gap:8px}
 @media(max-width:520px){
  .card-detail-dialog,.deck-editor{padding:12px;gap:9px}
