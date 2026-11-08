@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v366";
+const APP_VERSION = "v367";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2591,6 +2591,12 @@ async function searchCards() {
     const searchResult = await fetchSearchCandidates(query, filters, sourceLang, exactMatch, maxCandidates, {
       exhaustive: exhaustiveAdvancedSearch,
       localizedSubtype: clientSubtype,
+      onProgress: cards => {
+        if (requestId !== searchRequestId) return;
+        state.searchResults = applySubtypeFilter(applyJpIndexToCards(cards));
+        renderSearchResults();
+        els.searchStatus.textContent = `${state.searchGroups.length}種類を表示・続きを検索中…`;
+      },
     });
     if (requestId !== searchRequestId) return;
     primaryCards = searchResult.cards;
@@ -2607,7 +2613,7 @@ async function searchCards() {
       const unifiedCards = sortUnifiedPrints(unifiedPrints).map(card => sourceLang === "ja" ? { ...card, _preferJpDisplay: true } : card);
       state.searchResults = applySubtypeFilter(applyJpIndexToCards(unifiedCards));
     } else {
-      els.searchStatus.textContent = "反対言語のカードも検索中…";
+      els.searchStatus.textContent = `${state.searchGroups.length}種類を表示・反対言語のカードも検索中…`;
       const counterpartCards = await fetchCounterparts(primaryCards, targetLang, filters);
       if (requestId !== searchRequestId) return;
       const mergedCards = searchResult.source === "local" || exhaustiveAdvancedSearch
@@ -2618,7 +2624,8 @@ async function searchCards() {
     }
     renderSearchResults();
     const displayedCards = state.searchGroups.map(group => group.card).filter(Boolean);
-    const jaCount = displayedCards.filter(prefersJapaneseDisplay).length;
+    // Count by the name actually shown, not by the print's language: an English print can show its Japanese name.
+    const jaCount = displayedCards.filter(card => isJapanese(nameOf(card))).length;
     const enCount = displayedCards.length - jaCount;
     els.searchStatus.textContent = `${displayedCards.length}種類を表示（日本語 ${jaCount}件・英語 ${enCount}件）`;
   } catch (err) {
@@ -3117,15 +3124,24 @@ function buildLocalIndexScryfallQuery(items, filters) {
   return "";
 }
 
+// Scryfall rejects a query of about 1,000 characters or more (it cuts it and reports unclosed
+// parentheses), so names are packed up to 800 characters (and 30 names) instead of a fixed count.
 function buildLocalIndexScryfallQueryChunks(items, filters, options = {}) {
-  const nameChunkSize = Number(options.nameChunkSize || 8);
+  const maxLength = Number(options.maxLength || 800);
+  const maxNames = Number(options.nameChunkSize || 30);
   const oracleChunkSize = Number(options.oracleChunkSize || 16);
   const names = [...new Set(items.flatMap(jpIndexCardTitles).filter(Boolean))];
   const queries = [];
-  for (let i = 0; i < names.length; i += nameChunkSize) {
-    const chunk = names.slice(i, i + nameChunkSize);
-    if (chunk.length) queries.push(`(${chunk.map(scryfallNameQuery).join(" or ")}) ${filters}`.trim());
+  const build = chunk => `(${chunk.map(scryfallNameQuery).join(" or ")}) ${filters}`.trim();
+  let chunk = [];
+  for (const name of names) {
+    if (chunk.length && (chunk.length >= maxNames || build([...chunk, name]).length > maxLength)) {
+      queries.push(build(chunk));
+      chunk = [];
+    }
+    chunk.push(name);
   }
+  if (chunk.length) queries.push(build(chunk));
   if (queries.length) return queries;
   const oracleIds = [...new Set(items.map(item => item.oracleId).filter(Boolean))];
   for (let i = 0; i < oracleIds.length; i += oracleChunkSize) {
@@ -3135,7 +3151,7 @@ function buildLocalIndexScryfallQueryChunks(items, filters, options = {}) {
   return queries;
 }
 
-async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards = 30) {
+async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards = 30, onProgress = null) {
   const queryKey = normalizeAliasKey(query);
   const isShortJapaneseQuery = /^[\u3041-\u3093\u30a1-\u30f6\u30fc]{1,3}$/.test(queryKey);
   const localLimit = Number.isFinite(maxCards) ? (exactMatch ? 20 : Math.max(maxCards, isShortJapaneseQuery ? 80 : 48)) : Number.POSITIVE_INFINITY;
@@ -3152,7 +3168,17 @@ async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards =
   const cards = [];
   const seen = new Set();
   let lastError = null;
-  for (const scryfallQuery of queries) {
+  const preferJpDisplay = isJapanese(query);
+  const orderedCards = () => cards
+    .map(card => ({
+      card,
+      item: localByOracle.get(card.oracle_id) || cardSearchNames(card).map(normalizeCardName).map(name => localByName.get(name)).find(Boolean) || null,
+    }))
+    .filter(entry => !exactMatch || cardNameMatchesExactly(applyJpIndexToCard(entry.card), query))
+    .sort((a, b) => (localOrder.get(a.item) ?? 9999) - (localOrder.get(b.item) ?? 9999))
+    .map(entry => (preferJpDisplay && entry.item ? { ...entry.card, _preferJpDisplay: true } : entry.card))
+    .slice(0, maxCards);
+  for (const [queryIndex, scryfallQuery] of queries.entries()) {
     const result = await (exactMatch ? fetchScryfallSearch : fetchAllScryfallSearch)(scryfallQuery, exactMatch
       ? { unique: "prints", order: "released", dir: "desc" }
       : { unique: "cards", order: "name" });
@@ -3167,22 +3193,12 @@ async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards =
       cards.push(card);
     }
     if (!exactMatch && cards.length >= maxCards) break;
+    // Show what has arrived while the remaining name groups are still being fetched.
+    if (onProgress && cards.length && queryIndex < queries.length - 1) onProgress(orderedCards());
     await new Promise(resolve => setTimeout(resolve, 80));
   }
   if (!cards.length && lastError) return { cards: [], items: localItems, error: lastError };
-  const ordered = cards
-    .map(card => ({
-      card,
-      item: localByOracle.get(card.oracle_id) || cardSearchNames(card).map(normalizeCardName).map(name => localByName.get(name)).find(Boolean) || null,
-    }))
-    .filter(entry => !exactMatch || cardNameMatchesExactly(applyJpIndexToCard(entry.card), query))
-    .sort((a, b) => (localOrder.get(a.item) ?? 9999) - (localOrder.get(b.item) ?? 9999));
-  const preferJpDisplay = isJapanese(query);
-  return {
-    cards: ordered.map(entry => (preferJpDisplay && entry.item ? { ...entry.card, _preferJpDisplay: true } : entry.card)).slice(0, maxCards),
-    items: localItems,
-    error: null,
-  };
+  return { cards: orderedCards(), items: localItems, error: null };
 }
 
 function buildSearchCandidates(query, filters, preferredLang = "", exactMatch = false) {
@@ -3324,7 +3340,7 @@ async function fetchSearchCandidates(query, filters, preferredLang, exactMatch, 
   }
   let localFallbackCards = [];
   if (String(query || "").trim()) {
-    const localResult = await fetchLocalSearchCandidates(query, filters, exactMatch, localMaxCards);
+    const localResult = await fetchLocalSearchCandidates(query, filters, exactMatch, localMaxCards, exactMatch ? null : options.onProgress);
     if (localResult.cards.length) {
       const matches = applyClientFilters(localResult.cards);
       if (!exhaustive && (exactMatch || preferredLang === "ja")) {
