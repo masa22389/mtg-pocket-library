@@ -5,7 +5,7 @@ const source = fs.readFileSync('app.js', 'utf8');
 const fn = source.slice(source.indexOf('async function openCardDialog('), source.indexOf('\nfunction sameCardPrint('));
 async function check({cardLang='en', preference='ja', explicit='', mode='collection', owned=null, expected}) {
   const calls=[];
-  const element = {value:'', hidden:false, replaceChildren(){}, showModal(){}};
+  const element = {value:'', hidden:false, textContent:'', classList:{toggle(){}}, querySelector:()=>element, replaceChildren(){}, showModal(){}};
   const context={cardDialogRequestId:0, cardLanguageRequestId:0, state:{defaultCardLanguage:preference}, VARIANT_RENDER_LIMIT:20,
     $:id=>id==='#searchLanguage'||id==='#deckSearchLanguage'?{value:explicit}:element,
     els:{cardActionStatus:element,addCardToDeckButton:element,cardVariants:element,cardDialog:element},
@@ -21,7 +21,9 @@ async function check({cardLang='en', preference='ja', explicit='', mode='collect
  await check({explicit:'en',expected:[]});
  await check({mode:'deck',expected:['ja']});
  await check({mode:'deck',explicit:'en',expected:[]});
+ // The purchase tab has no language picker: it follows the default language even if the search tab says otherwise.
+ await check({mode:'purchase',explicit:'en',expected:['ja']});
  for(const mode of ['set','scanner']) await check({mode,expected:[]});
  await check({owned:'owned-1',expected:[]});
- console.log('PASS: default Japanese/English, explicit override, deck, owned/set/scanner preservation');
+ console.log('PASS: default Japanese/English, explicit override, deck, purchase, owned/set/scanner preservation');
 })().catch(e=>{console.error(e);process.exitCode=1});

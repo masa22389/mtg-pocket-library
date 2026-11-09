@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=368">
-  <link rel="stylesheet" href="mobile-inputs.css?v=368">
+  <link rel="stylesheet" href="styles.css?v=369">
+  <link rel="stylesheet" href="mobile-inputs.css?v=369">
 </head>
 <body>
   <header class="app-header">
@@ -176,7 +176,13 @@ const BACKGROUND_THEME_CHROME = {
 
     <section id="purchasesView" class="view">
       <div class="hero-card"><div><span class="eyebrow">WISHLIST</span><h1>購入予定</h1></div><p id="purchaseSummary">まだ登録されていません</p></div>
-      <p class="muted">カード検索でカードを開き、購入予定枚数を指定して「購入候補」を押すと登録できます。</p>
+      <section class="card search-card purchase-search">
+        <label for="purchaseSearchInput">カード名で検索して購入予定に追加</label>
+        <div class="search-row"><input id="purchaseSearchInput" type="search" enterkeyhint="search" autocomplete="off" placeholder="例：稲妻 / Lightning Bolt"><button id="purchaseSearchButton" type="button">検索</button></div>
+        <p id="purchaseSearchStatus" class="muted" role="status" aria-live="polite">カードを選ぶと、版・言語・状態・枚数を決めて追加できます</p>
+        <div id="purchaseSearchResults" class="search-results"></div>
+        <button id="morePurchaseSearchResults" type="button" class="ghost compact" hidden>さらに50件表示</button>
+      </section>
       <div class="purchase-reorder-help"><p class="muted">画像を長押し → 別の画像を選ぶと順番を入れ替えます。</p><button id="cancelPurchaseReorder" type="button" class="ghost compact" hidden>並び替えを終了</button></div>
       <div id="purchaseList" class="purchase-list"></div>
     </section>
@@ -527,12 +533,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=368" defer></script>
-  <script src="scanner-host.js?v=368" defer></script>
+  <script src="storage.js?v=369" defer></script>
+  <script src="scanner-host.js?v=369" defer></script>
   <script src="mtg-jp-card-index.js?h=dcce21bec6d0" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=368" defer></script>
-  <script src="scanner/card-images.js?v=368" defer></script>
-  <script src="app.js?v=368" defer></script>
+  <script src="diagnostics.js?v=369" defer></script>
+  <script src="scanner/card-images.js?v=369" defer></script>
+  <script src="app.js?v=369" defer></script>
 </body>
 </html>

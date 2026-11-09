@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v368";
+const APP_VERSION = "v369";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3532,6 +3532,9 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   ++cardLanguageRequestId;
   state.selectedCard = card;
   state.cardDialogMode = mode;
+  els.cardDialog.querySelector("form")?.classList.toggle("card-purchase-mode", mode === "purchase");
+  $("#addPurchaseButton").textContent = mode === "purchase" ? "購入予定に追加" : "購入候補";
+  $("#addPurchaseButton").classList.toggle("ghost", mode !== "purchase");
   $("#purchaseQuantity").value = 1;
   state.selectedOwnedId = ownedId;
   state.cardVariants = [];
@@ -3546,7 +3549,7 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   void refreshOpenedCardPrice(selectedOwnedCard());
   // Opening a card never fetches or renders its complete print gallery.
   if (!ownedId && !["set", "scanner"].includes(mode)) {
-    const preferredLanguage = $(mode === "deck" ? "#deckSearchLanguage" : "#searchLanguage")?.value || state.defaultCardLanguage;
+    const preferredLanguage = (mode === "purchase" ? "" : $(mode === "deck" ? "#deckSearchLanguage" : "#searchLanguage")?.value) || state.defaultCardLanguage;
     if (card.lang !== preferredLanguage) await changeCardLanguage(preferredLanguage);
   }
 }
@@ -7440,6 +7443,68 @@ async function addSelectedPurchase() {
   if (await savePurchases(items)) showInlineStatus(els.cardActionStatus, `購入予定に${quantity}枚追加しました（合計${existing ? existing.quantity + quantity : quantity}枚）`, { sticky: true });
 }
 
+// Purchase tab search: card names only, one result per card; a result opens the purchase-only dialog.
+let purchaseSearchRequestId = 0;
+let purchaseSearchRenderLimit = 50;
+let purchaseSearchCards = [];
+
+function purchaseSearchGroups(cards, displayLanguage) {
+  const groups = new Map();
+  for (const card of cards || []) {
+    const key = card.oracle_id || card.name;
+    if (!key) continue;
+    const current = groups.get(key);
+    if (!current || (card.lang === displayLanguage && current.lang !== displayLanguage)) groups.set(key, card);
+  }
+  return [...groups.values()];
+}
+
+function renderPurchaseSearchResults() {
+  const visible = purchaseSearchCards.slice(0, purchaseSearchRenderLimit);
+  $("#purchaseSearchResults").innerHTML = visible.map((card, index) => `
+    <button type="button" class="search-result" data-index="${index}">
+      <img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async">
+      <span><strong>${esc(nameOf(card))}</strong><small>${altNameOf(card) ? `${esc(altNameOf(card))} · ` : ""}タップして版を選び、購入予定に追加</small></span>
+    </button>`).join("");
+  const more = $("#morePurchaseSearchResults");
+  more.hidden = visible.length >= purchaseSearchCards.length;
+  more.textContent = `さらに50件表示（${visible.length} / ${purchaseSearchCards.length}件）`;
+}
+
+async function searchPurchaseCards() {
+  const query = $("#purchaseSearchInput").value.trim();
+  const status = $("#purchaseSearchStatus");
+  if (!query) { status.textContent = "カード名を入力してください"; return; }
+  if (!navigator.onLine) { status.textContent = "オフラインのため検索できません"; return; }
+  const requestId = ++purchaseSearchRequestId;
+  const displayLanguage = state.defaultCardLanguage;
+  const show = cards => {
+    purchaseSearchCards = purchaseSearchGroups(applyJpIndexToCards(cards.map(card => ({ ...card, _preferJpDisplay: displayLanguage === "ja" || isJapanese(query) }))), displayLanguage);
+    renderPurchaseSearchResults();
+  };
+  purchaseSearchRenderLimit = 50;
+  purchaseSearchCards = [];
+  renderPurchaseSearchResults();
+  $("#purchaseSearchButton").disabled = true;
+  status.textContent = "検索中…";
+  try {
+    const result = await fetchSearchCandidates(query, "", isJapanese(query) ? "ja" : displayLanguage, false, Number.POSITIVE_INFINITY, {
+      onProgress: cards => {
+        if (requestId !== purchaseSearchRequestId) return;
+        show(cards);
+        status.textContent = `${purchaseSearchCards.length}種類を表示・続きを検索中…`;
+      },
+    });
+    if (requestId !== purchaseSearchRequestId) return;
+    show(result.cards);
+    status.textContent = purchaseSearchCards.length ? `${purchaseSearchCards.length}種類を表示` : (result.error?.details || "カードが見つかりませんでした");
+  } catch {
+    if (requestId === purchaseSearchRequestId) status.textContent = "検索に失敗しました。通信状態を確認してください";
+  } finally {
+    if (requestId === purchaseSearchRequestId) $("#purchaseSearchButton").disabled = false;
+  }
+}
+
 let purchasePress = null;
 let purchaseSelection = null;
 let suppressPurchaseClick = false;
@@ -7460,6 +7525,16 @@ function renderPurchases() {
 }
 
 $("#addPurchaseButton").addEventListener("click", addSelectedPurchase);
+$("#purchaseSearchButton").addEventListener("click", searchPurchaseCards);
+$("#purchaseSearchInput").addEventListener("keydown", event => { if (event.key === "Enter") { event.preventDefault(); searchPurchaseCards(); } });
+$("#purchaseSearchResults").addEventListener("click", event => {
+  const card = purchaseSearchCards[Number(event.target.closest(".search-result")?.dataset.index)];
+  if (card) openCardDialog(card, "purchase");
+});
+$("#morePurchaseSearchResults").addEventListener("click", () => {
+  purchaseSearchRenderLimit += 50;
+  renderPurchaseSearchResults();
+});
 $("#purchaseList").addEventListener("click", async event => {
   const button = event.target.closest("[data-purchase-action]");
   if (!button) return;
