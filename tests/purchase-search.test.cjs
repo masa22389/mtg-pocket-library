@@ -20,7 +20,7 @@ assert.deepEqual(groups, ['a-ja', 'b-en', 'c']);
 
 // The search sits at the top of the purchase tab, before the list.
 const view = html.slice(html.indexOf('id="purchasesView"'), html.indexOf('id="purchaseList"'));
-for (const id of ['purchaseSearchInput', 'purchaseSearchButton', 'purchaseSearchStatus', 'purchaseSearchResults', 'morePurchaseSearchResults']) assert(view.includes(`id="${id}"`), id);
+for (const id of ['closePurchaseSearchResults', 'purchaseSearchInput', 'purchaseSearchButton', 'purchaseSearchStatus', 'purchaseSearchResults', 'morePurchaseSearchResults']) assert(view.includes(`id="${id}"`), id);
 assert(!view.includes('searchLanguage') && !view.includes('advanced'), 'no advanced search in the purchase tab');
 
 // A result opens the card dialog in purchase mode, which hides everything except the print, language,
@@ -30,4 +30,8 @@ assert(code.includes('classList.toggle("card-purchase-mode", mode === "purchase"
 const rule = css.slice(css.indexOf('.card-purchase-mode :is('));
 for (const part of ['.owned-control', '.same-name-owned-summary', '.card-action-row', '#cardDeckUsage', '#manualPricePanel', '.card-owned-actions', '#favoriteGroupPanel', 'label:has(#cardLocation)']) assert(rule.slice(0, rule.indexOf('{')).includes(part), part);
 assert(!rule.slice(0, rule.indexOf('{')).includes('purchase-add-panel'));
+// Long results scroll inside their box, and can be closed so the purchase list comes back up.
+assert(view.includes('id="closePurchaseSearchResults"'));
+assert(/.purchase-search .search-results{max-height:[^}]*overflow:auto/.test(css));
+assert(code.includes('$("#closePurchaseSearchResults").hidden = !purchaseSearchCards.length;'));
 console.log('PASS purchase search');

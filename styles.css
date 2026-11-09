@@ -433,6 +433,10 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .deck-editor .deck-export-panel .muted:empty{display:none}
 .purchase-search{margin-bottom:14px}
 .purchase-search .search-results:empty{display:none}
+.purchase-search .search-results{max-height:min(50vh,420px);overflow:auto;overscroll-behavior:contain}
+.purchase-search-status{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.purchase-search-status .muted{margin:8px 0 0}
+.purchase-search-status button{flex-shrink:0;min-height:44px;margin-top:8px;color:var(--green);border:1px solid var(--line)}
 .card-purchase-mode :is(.owned-control,.same-name-owned-summary,.card-deck-targets,.card-action-row,#cardDeckUsage,#manualPricePanel,.card-owned-actions,#favoriteGroupPanel),.card-purchase-mode .form-grid label:has(#cardLocation){display:none!important}
 .card-purchase-mode .purchase-add-panel #addPurchaseButton{min-height:46px}
 .deck-editor .deck-comparison{padding:10px;gap:8px}

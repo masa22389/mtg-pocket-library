@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v369";
+const APP_VERSION = "v370";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -7466,6 +7466,7 @@ function renderPurchaseSearchResults() {
       <img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async">
       <span><strong>${esc(nameOf(card))}</strong><small>${altNameOf(card) ? `${esc(altNameOf(card))} · ` : ""}タップして版を選び、購入予定に追加</small></span>
     </button>`).join("");
+  $("#closePurchaseSearchResults").hidden = !purchaseSearchCards.length;
   const more = $("#morePurchaseSearchResults");
   more.hidden = visible.length >= purchaseSearchCards.length;
   more.textContent = `さらに50件表示（${visible.length} / ${purchaseSearchCards.length}件）`;
@@ -7530,6 +7531,14 @@ $("#purchaseSearchInput").addEventListener("keydown", event => { if (event.key =
 $("#purchaseSearchResults").addEventListener("click", event => {
   const card = purchaseSearchCards[Number(event.target.closest(".search-result")?.dataset.index)];
   if (card) openCardDialog(card, "purchase");
+});
+// Closing the results brings the purchase list back up; the search word stays for another try.
+$("#closePurchaseSearchResults").addEventListener("click", () => {
+  ++purchaseSearchRequestId;
+  purchaseSearchCards = [];
+  renderPurchaseSearchResults();
+  $("#purchaseSearchButton").disabled = false;
+  $("#purchaseSearchStatus").textContent = "カードを選ぶと、版・言語・状態・枚数を決めて追加できます";
 });
 $("#morePurchaseSearchResults").addEventListener("click", () => {
   purchaseSearchRenderLimit += 50;
