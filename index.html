@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=377">
-  <link rel="stylesheet" href="mobile-inputs.css?v=377">
+  <link rel="stylesheet" href="styles.css?v=378">
+  <link rel="stylesheet" href="mobile-inputs.css?v=378">
 </head>
 <body>
   <header class="app-header">
@@ -292,7 +292,7 @@ const BACKGROUND_THEME_CHROME = {
 
   <dialog id="cardDialog">
     <form method="dialog" class="dialog-card card-detail-dialog">
-      <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+      <div class="dialog-nav"><button id="cardBackToVariants" class="dialog-back" type="button" aria-label="収録版の選択に戻る" hidden>←</button><button class="dialog-close" value="cancel" aria-label="閉じる">×</button></div>
       <div id="cardPreview"></div>
       <button id="openCardVariants" type="button" class="ghost">別イラスト・収録版を選ぶ</button>
       <p id="cardLanguageStatus" class="muted" role="status" hidden></p>
@@ -541,12 +541,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=377" defer></script>
-  <script src="scanner-host.js?v=377" defer></script>
+  <script src="storage.js?v=378" defer></script>
+  <script src="scanner-host.js?v=378" defer></script>
   <script src="mtg-jp-card-index.js?h=dcce21bec6d0" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=377" defer></script>
-  <script src="scanner/card-images.js?v=377" defer></script>
-  <script src="app.js?v=377" defer></script>
+  <script src="diagnostics.js?v=378" defer></script>
+  <script src="scanner/card-images.js?v=378" defer></script>
+  <script src="app.js?v=378" defer></script>
 </body>
 </html>
