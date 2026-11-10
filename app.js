@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v378";
+const APP_VERSION = "v379";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -8017,7 +8017,11 @@ $("#openCardVariants").addEventListener("click", openCardVariantPicker);
 els.cardLanguage.addEventListener("change", () => changeCardLanguage(els.cardLanguage.value));
 // A late close event must not empty the picker after it was reopened from the card dialog.
 $("#cardVariantDialog").addEventListener("close", () => { if ($("#cardVariantDialog").open) return; ++variantPickerRequestId; els.cardVariants.replaceChildren(); });
-// × closes the card; ← (shown only after picking a print) goes back to the print picker.
+// In the card dialog, ← goes back one step and × closes the whole dialog:
+// the picker's ← returns to the card, its × closes the picker and the card.
+$("#variantBackToCard").addEventListener("click", () => $("#cardVariantDialog").close());
+$("#closeVariantAndCard").addEventListener("click", () => { $("#cardVariantDialog").close(); els.cardDialog.close(); });
+// The card's × closes it; its ← (shown only after picking a print) goes back to the print picker.
 $("#cardBackToVariants").addEventListener("click", () => { if (returnToVariantPicker) reopenCardVariantPicker(); });
 els.cardDialog.addEventListener("cancel", event => {
   if (!returnToVariantPicker || $("#cardVariantDialog").open) return;

@@ -7,7 +7,11 @@ const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 // After picking a print in "別イラスト・収録版を選ぶ", a ← button (top left) goes back to the picker
 // (same list, same scroll position); × always closes the card.
 assert(html.includes('<div class="dialog-nav"><button id="cardBackToVariants" class="dialog-back" type="button" aria-label="収録版の選択に戻る" hidden>←</button><button class="dialog-close" value="cancel" aria-label="閉じる">×</button></div>'));
-assert(css.includes('.card-detail-dialog .dialog-back{width:44px;min-height:44px;'), '← is a 44px tap target');
+assert(css.includes('#cardDialog .dialog-back,#cardVariantDialog .dialog-back{width:44px;min-height:44px;'), '← is a 44px tap target');
+// The print picker always has ← (back to the card) and × (closes the picker and the card).
+assert(html.includes('<div class="dialog-nav"><button id="variantBackToCard" class="dialog-back" type="button" aria-label="カードに戻る">←</button><button id="closeVariantAndCard" class="dialog-close" type="button" aria-label="閉じる">×</button></div>'));
+assert(code.includes('$("#variantBackToCard").addEventListener("click", () => $("#cardVariantDialog").close());'));
+assert(code.includes('$("#closeVariantAndCard").addEventListener("click", () => { $("#cardVariantDialog").close(); els.cardDialog.close(); });'));
 assert(css.includes('.dialog-nav .dialog-close{position:static;margin-left:auto;width:44px;min-height:44px}'), '× stays top right');
 assert(code.includes('let returnToVariantPicker = null;\nfunction setVariantPickerReturn(value) {\n  returnToVariantPicker = value;\n  const back = $("#cardBackToVariants");\n  if (back) back.hidden = !value;\n}'));
 assert(code.includes('setVariantPickerReturn({ dialogScroll: picker.scrollTop, formScroll: picker.querySelector(".dialog-card")?.scrollTop || 0 });'));
