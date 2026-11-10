@@ -17,7 +17,7 @@ assert(code.includes('let returnToVariantPicker = null;\nfunction setVariantPick
 assert(code.includes('setVariantPickerReturn({ dialogScroll: picker.scrollTop, formScroll: picker.querySelector(".dialog-card")?.scrollTop || 0 });'));
 assert(!/(?<!let )returnToVariantPicker = (?!value)/.test(code), 'the ← button is shown and hidden together with the return state');
 const reopen = code.slice(code.indexOf('function reopenCardVariantPicker()'), code.indexOf('async function loadCardVariantLanguage()'));
-assert(reopen.includes('dialog.showModal();'));
+assert(reopen.includes('const dialog = showCardVariantPicker();'));
 assert(reopen.includes('renderVariantGallery();'), 'reuses the loaded prints');
 assert(reopen.includes('if (!state.cardVariants.length) { loadCardVariantLanguage(); return; }'));
 assert(reopen.includes('form.scrollTop = saved.formScroll || 0;'));
@@ -33,4 +33,11 @@ assert(open.includes('setVariantPickerReturn(null);'));
 assert(code.includes('els.cardDialog.addEventListener("close", () => { setVariantPickerReturn(null); });'));
 // A late close event does not empty the reopened picker.
 assert(code.includes('$("#cardVariantDialog").addEventListener("close", () => { if ($("#cardVariantDialog").open) return; ++variantPickerRequestId; els.cardVariants.replaceChildren(); });'));
+// Opening either dialog focuses the dialog itself, not its first button (no focus ring on ← or ×).
+assert(html.includes('<dialog id="cardDialog" autofocus>'));
+assert(html.includes('<dialog id="cardVariantDialog" autofocus>'));
+assert(css.includes('#cardDialog:focus,#cardVariantDialog:focus,#cardVariantDialog .dialog-card:focus{outline:none}'));
+assert(html.includes('<form method="dialog" class="dialog-card" tabindex="-1">'));
+assert(code.includes('dialog.showModal();\n  dialog.querySelector(".dialog-card")?.focus({ preventScroll: true });'));
+assert((code.match(/showCardVariantPicker\(\)/g) || []).length === 3, 'both ways of opening the picker use it');
 console.log('card variant return ok');
