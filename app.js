@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v370";
+const APP_VERSION = "v371";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -973,6 +973,29 @@ function cardTraderConditionForCard(card) {
     HP: "Heavily Played",
     Poor: "Poor",
   })[normalizeCardCondition(card.condition)] || "";
+}
+
+// Foil / Etched marker for card images. A print that only exists in foil counts as foil, as prices do.
+function cardFinishKind(card) {
+  if (!card) return "";
+  if (card.finish === "etched") return "etched";
+  if (card.finish === "foil") return "foil";
+  return (!card.finish || card.finish === "normal") && cardIsFoilOnly(card) ? "foil" : "";
+}
+
+function cardFinishBadge(card) {
+  const kind = cardFinishKind(card);
+  return kind ? `<span class="finish-badge finish-${kind}">${kind === "foil" ? "Foil" : "Etched"}</span>` : "";
+}
+
+function cardFinishClass(card) {
+  const kind = cardFinishKind(card);
+  return kind ? `finish-card finish-card-${kind}` : "";
+}
+
+function cardFinishText(card) {
+  const kind = cardFinishKind(card);
+  return kind ? `<b class="finish-text finish-${kind}">${kind === "foil" ? "Foil" : "Etched"}</b>` : "通常";
 }
 
 function cardIsFoilOnly(card) {
@@ -4286,9 +4309,9 @@ function renderCollection() {
     : "";
   if (imageMode) {
     els.collectionList.innerHTML = visibleCards.map(card => `${groupHeading(card)}
-      <button type="button" class="collection-image-card" data-id="${card.id}" aria-label="${esc(nameOf(card))}の詳細を開く">
+      <button type="button" class="collection-image-card ${cardFinishClass(card)}" data-id="${card.id}" aria-label="${esc(nameOf(card))}${cardFinishKind(card) ? `（${cardFinishKind(card) === "foil" ? "Foil" : "Etched"}）` : ""}の詳細を開く">
         <img ${localizedImageAttrs(card)} src="${esc(card.image)}" alt="" loading="lazy">
-        <span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>
+        <span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>${cardFinishBadge(card)}
         ${collectionPriceDisplayValue(card) != null ? `<span class="collection-price-badge">${esc(collectionPriceLabel(card, true))}</span>` : ""}
       </button>`).join("") + loadMoreButton + collapseButton;
   els.collectionList.querySelectorAll(".collection-image-card").forEach(button => {
@@ -4305,8 +4328,8 @@ function renderCollection() {
     return `
     ${groupHeading(card)}<article class="list-item" data-id="${card.id}">
       <button class="collection-card-open" type="button" aria-label="${esc(nameOf(card))}の詳細を開く">
-        <span class="collection-thumb-wrap"><img class="thumb" ${localizedImageAttrs(card)} src="${esc(card.image)}" alt="" loading="lazy"><span class="collection-qty-badge">×${Number(card.quantity || 0)}</span></span>
-        <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(normalizeCardCondition(card.condition))} · ${card.finish === "normal" ? "通常" : esc(card.finish)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${favoriteGroupNames(card).map(name => `<span class="chip">★ ${esc(name)}</span>`).join("")}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
+        <span class="collection-thumb-wrap ${cardFinishClass(card)}"><img class="thumb" ${localizedImageAttrs(card)} src="${esc(card.image)}" alt="" loading="lazy"><span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>${cardFinishBadge(card)}</span>
+        <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(normalizeCardCondition(card.condition))} · ${cardFinishText(card)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${favoriteGroupNames(card).map(name => `<span class="chip">★ ${esc(name)}</span>`).join("")}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
       </button>
       <div class="item-actions"><button class="tiny move-owned-up" aria-label="${esc(nameOf(card))}を前へ移動" ${groupBySet || index === 0 ? "disabled" : ""}>↑</button><button class="tiny move-owned-down" aria-label="${esc(nameOf(card))}を後へ移動" ${groupBySet || index === cards.length - 1 ? "disabled" : ""}>↓</button><button class="tiny minus" aria-label="1枚減らす">−</button><span class="qty-pill">×${card.quantity}</span><button class="tiny plus" aria-label="1枚増やす">＋</button><button class="tiny favorite-owned ${card.favorite ? "active" : ""}" aria-label="${esc(nameOf(card))}を${card.favorite ? "お気に入りから外す" : "お気に入りに追加"}" aria-pressed="${card.favorite ? "true" : "false"}">${card.favorite ? "★" : "☆"}</button><button class="tiny delete-owned" aria-label="${esc(nameOf(card))}をコレクションから削除">削除</button></div>
     </article>`;
@@ -6188,7 +6211,8 @@ function deckCountBadgesForCard(card) {
 }
 
 function deckOwnedChoiceButton(card) {
-  const meta = `${esc(card.set || "")} #${esc(card.collectorNumber || "")}${card.typeLine ? ` · ${esc(card.typeLine)}` : ""}`;
+  // Lots of one print differ only by finish here, so Foil / Etched is spelled out.
+  const meta = `${esc(card.set || "")} #${esc(card.collectorNumber || "")}${cardFinishKind(card) ? ` · ${cardFinishText(card)}` : ""}${card.typeLine ? ` · ${esc(card.typeLine)}` : ""}`;
   const sections = deckDisplaySections();
   const buttons = sections.map(section => `<button type="button" data-owned-add-section="${section}" data-id="${esc(card.id)}">${sectionLabel(section)}＋</button>`).join("");
   return `<div class="deck-owned-choice" data-id="${esc(card.id)}">
@@ -6309,9 +6333,9 @@ function renderDeckSection(section, entries, emptyText = "") {
         const missing = section === "maybe" ? 0 : missingQuantityForEntry(entry);
         const dragging = deckDragState?.dragging && deckDragState.cardId === entry.cardId && deckDragState.section === entry.section;
         const selected = deckReorderSelection?.cardId === entry.cardId && deckReorderSelection?.section === entry.section;
-        const classes = ["deck-content-card", missing ? "missing-card" : "", dragging ? "deck-dragging-card" : "", deckReorderMode ? "deck-reorder-mode-card" : "", selected ? "deck-reorder-selected" : ""].filter(Boolean).join(" ");
+        const classes = ["deck-content-card", cardFinishClass(card), missing ? "missing-card" : "", dragging ? "deck-dragging-card" : "", deckReorderMode ? "deck-reorder-mode-card" : "", selected ? "deck-reorder-selected" : ""].filter(Boolean).join(" ");
         const cardName = card ? nameOf(card) : "削除済みカード";
-        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img ${card ? localizedImageAttrs(card) : ""} src="${esc(card?.image || "")}" alt="" loading="lazy" draggable="false"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
+        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName}${cardFinishKind(card) ? `（${cardFinishKind(card) === "foil" ? "Foil" : "Etched"}）` : ""} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img ${card ? localizedImageAttrs(card) : ""} src="${esc(card?.image || "")}" alt="" loading="lazy" draggable="false"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${cardFinishBadge(card)}${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
       }).join("")}
     </div>` : `<div class="deck-section-empty">${esc(emptyText || `${label}にカードがありません`)}</div>`;
   return `<section class="deck-section deck-section-${esc(section)}"><div class="deck-section-title"><span>${esc(label)}</span><b>${count}枚</b></div>${content}</section>`;

@@ -439,6 +439,15 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .purchase-search-status button{flex-shrink:0;min-height:44px;margin-top:8px;color:var(--green);border:1px solid var(--line)}
 .card-purchase-mode :is(.owned-control,.same-name-owned-summary,.card-deck-targets,.card-action-row,#cardDeckUsage,#manualPricePanel,.card-owned-actions,#favoriteGroupPanel),.card-purchase-mode .form-grid label:has(#cardLocation){display:none!important}
 .card-purchase-mode .purchase-add-panel #addPurchaseButton{min-height:46px}
+/* Foil / Etched: a rainbow sheen over the image and a badge in the free top-right corner. */
+.finish-card::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;mix-blend-mode:screen;background:linear-gradient(125deg,transparent 12%,rgba(255,64,160,.26) 28%,rgba(255,214,64,.26) 40%,rgba(64,255,170,.24) 52%,rgba(64,180,255,.28) 64%,rgba(176,96,255,.24) 76%,transparent 90%)}
+.finish-card-etched::before{background:linear-gradient(125deg,transparent 20%,rgba(255,226,160,.3) 45%,rgba(255,255,255,.22) 55%,transparent 80%)}
+.collection-thumb-wrap.finish-card::before{border-radius:6px}
+.finish-badge{position:absolute;top:5px;right:5px;z-index:3;padding:3px 7px;border-radius:999px;border:1px solid #fff;font-size:11px;font-weight:900;line-height:1;letter-spacing:.02em;color:#3d2a00;background:linear-gradient(120deg,#ffe27a,#ffc4ec 45%,#a9ecff);box-shadow:0 2px 6px #0006;pointer-events:none}
+.finish-badge.finish-etched{color:#fff;background:linear-gradient(120deg,#6b5530,#b99a5c)}
+.collection-thumb-wrap .finish-badge{top:auto;right:-6px;bottom:-4px;padding:2px 4px;font-size:9px}
+.finish-text{padding:0 5px;border-radius:999px;color:#3d2a00;background:linear-gradient(120deg,#ffe27a,#ffc4ec 45%,#a9ecff)}
+.finish-text.finish-etched{color:#fff;background:linear-gradient(120deg,#6b5530,#b99a5c)}
 .deck-editor .deck-comparison{padding:10px;gap:8px}
 @media(max-width:520px){
  .card-detail-dialog,.deck-editor{padding:12px;gap:9px}
