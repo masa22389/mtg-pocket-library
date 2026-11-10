@@ -39,3 +39,13 @@ assert(code.includes('${cardFinishKind(card) ? ` · ${cardFinishText(card)}` : "
 assert(/\.finish-card::before\{[^}]*pointer-events:none/.test(css));
 assert(/\.finish-badge\{[^}]*top:5px;right:5px/.test(css));
 console.log('PASS finish marker');
+
+// The collection filter has "Foil only", which uses the same check as the marker and is cleared with the others.
+const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+const dialog = html.slice(html.indexOf('id="collectionFilterDialog"'), html.indexOf('</dialog>', html.indexOf('id="collectionFilterDialog"')));
+assert(dialog.includes('<input id="collectionFoilOnly" type="checkbox"><span>Foilのみ</span>'));
+assert(code.includes('return (!foilOnly || cardFinishKind(card)) && (!underFour'));
+assert(code.includes('if ($("#collectionFoilOnly").checked) chips.push("Foilのみ");'));
+assert(code.includes('$("#collectionFoilOnly").addEventListener("change", showFilteredCollection);'));
+assert(code.includes('$("#collectionFoilOnly").checked = false;'));
+console.log('PASS foil-only filter');

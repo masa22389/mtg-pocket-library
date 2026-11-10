@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v371";
+const APP_VERSION = "v372";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2316,6 +2316,7 @@ function updateCollectionFilterSummary() {
   const formatLabel = selectedOptionText($("#collectionFormat"));
   if (formatLabel) chips.push(`フォーマット:${formatLabel}`);
   if ($("#collectionUnderFour").checked) chips.push("所持枚数4枚未満");
+  if ($("#collectionFoilOnly").checked) chips.push("Foilのみ");
   if (color) chips.push(`色:${color}`);
   if (mana) chips.push(`マナ:${mana}`);
   if (type) chips.push(`タイプ:${type}`);
@@ -4249,6 +4250,8 @@ function renderCollection() {
   const favoritesOnly = els.collectionFavoritesOnly.checked;
   const favoriteGroupId = els.collectionFavoriteGroup?.value || "";
   const underFour = $("#collectionUnderFour").checked;
+  // Foil only: the same check as the Foil / Etched marker, so Etched and foil-only prints count too.
+  const foilOnly = $("#collectionFoilOnly").checked;
   const artworkTotals = underFour ? ownedArtworkTotals(state.collection) : new Map();
   let cards = state.collection.filter(card => {
     const textMatch = collectionCardMatchesText(card, query);
@@ -4262,7 +4265,7 @@ function renderCollection() {
       || (priceFilter === "over50000" && yenValue != null && yenValue >= 50000);
     const favoriteMatch = (!favoritesOnly || card.favorite === true) && favoriteGroupMatch(card, favoriteGroupId);
     const artworkQuantity = artworkTotals.get(ownedArtworkKey(card)) || 0;
-    return (!underFour || (artworkQuantity >= 1 && artworkQuantity < 4 && Number(card.quantity) > 0)) && (!state.sameNameCollectionCard || isSameOwnedCardName(state.sameNameCollectionCard, card)) && textMatch && cardMatch && priceMatch && favoriteMatch;
+    return (!foilOnly || cardFinishKind(card)) && (!underFour || (artworkQuantity >= 1 && artworkQuantity < 4 && Number(card.quantity) > 0)) && (!state.sameNameCollectionCard || isSameOwnedCardName(state.sameNameCollectionCard, card)) && textMatch && cardMatch && priceMatch && favoriteMatch;
   });
   cards = sortedCollectionCards(cards);
   const expansionGroups = groupBySet ? collectionExpansionGroups(cards, knownSets, grouping === "set-oldest") : [];
@@ -7896,9 +7899,11 @@ $("#clearCollectionSet").addEventListener("click", () => {
 $("#showSameNameCollection").addEventListener("click", showSameNameCollection);
 $("#clearSameNameCollection").addEventListener("click", () => { clearSameNameCollection(); showFilteredCollection(); });
 $("#collectionUnderFour").addEventListener("change", showFilteredCollection);
+$("#collectionFoilOnly").addEventListener("change", showFilteredCollection);
 els.collectionFavoritesOnly.addEventListener("change", () => { resetCollectionRenderLimit(); renderCollection(); });
 els.clearCollectionFilters.addEventListener("click", () => {
   $("#collectionUnderFour").checked = false;
+  $("#collectionFoilOnly").checked = false;
   clearSameNameCollection(false);
   $("#collectionFormat").value = ""; $("#collectionSetQuery").value = ""; $("#collectionSetFilter").value = ""; resetCollectionChipFilters(); els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
 });
