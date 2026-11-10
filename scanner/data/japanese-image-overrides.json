@@ -1316,5 +1316,275 @@
     "imageWidth": 265,
     "imageHeight": 370,
     "sourceImageSha256": "0a61fcc1d708bc83119f7d0d33510b5dfeacf00af09ee8549f9b1fc920720039"
+  },
+  "cst:120": {
+    "set": "cst",
+    "number": "120",
+    "language": "ja",
+    "oracleId": "53f7c868-b03e-4fc2-8dcf-a75bbfa3272b",
+    "printedName": "暗黒の儀式",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Dark_Ritual.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70292?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's only Japanese CSP Theme Deck product of this card, art checked by eye against the English CST #120",
+    "imageWidth": 264,
+    "imageHeight": 370,
+    "sourceImageSha256": "6f8dd64f73e2b81df0c8cef4979f1e94ff943d49fdbd5e701fd113304b4faa70"
+  },
+  "cst:369": {
+    "set": "cst",
+    "number": "369",
+    "language": "ja",
+    "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+    "printedName": "平地",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Plains_369.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70267?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (369) is numbered, and its art was checked by eye against the English CST #369",
+    "imageWidth": 265,
+    "imageHeight": 369,
+    "sourceImageSha256": "37af551a1358f821042e89d2130b4dcda4aaf2b136c739f63204d02c8e5c9058"
+  },
+  "cst:370": {
+    "set": "cst",
+    "number": "370",
+    "language": "ja",
+    "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+    "printedName": "平地",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Plains_370.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70322?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (370) is numbered, and its art was checked by eye against the English CST #370",
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "9797ab17f26cfbf3408a0916d10f090c88e15d2aa30289b5939125b1050b2387"
+  },
+  "cst:371": {
+    "set": "cst",
+    "number": "371",
+    "language": "ja",
+    "oracleId": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
+    "printedName": "平地",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Plains_371.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70323?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (371) is numbered, and its art was checked by eye against the English CST #371",
+    "imageWidth": 265,
+    "imageHeight": 368,
+    "sourceImageSha256": "9809ee3f85dfadfec3c84975970b5ceda51a40a492d6488165ae1e1cfefdf1bb"
+  },
+  "cst:372": {
+    "set": "cst",
+    "number": "372",
+    "language": "ja",
+    "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+    "printedName": "島",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Island_372.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70265?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (372) is numbered, and its art was checked by eye against the English CST #372",
+    "imageWidth": 264,
+    "imageHeight": 370,
+    "sourceImageSha256": "d0105aa91727662145d2969642ba030144870266d6fca406e4a5977ebaf633a7"
+  },
+  "cst:373": {
+    "set": "cst",
+    "number": "373",
+    "language": "ja",
+    "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+    "printedName": "島",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Island_373.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70318?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (373) is numbered, and its art was checked by eye against the English CST #373",
+    "imageWidth": 264,
+    "imageHeight": 370,
+    "sourceImageSha256": "0d6acaca7c3479c3732c4bb0517815711305f47d7fbf528c1b1155251f677172"
+  },
+  "cst:374": {
+    "set": "cst",
+    "number": "374",
+    "language": "ja",
+    "oracleId": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
+    "printedName": "島",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Island_374.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70319?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (374) is numbered, and its art was checked by eye against the English CST #374",
+    "imageWidth": 264,
+    "imageHeight": 370,
+    "sourceImageSha256": "6c513cf29c4dcc7c0ac4812808e794b4b0df79fb9cec02818b23b1e437a89597"
+  },
+  "cst:376": {
+    "set": "cst",
+    "number": "376",
+    "language": "ja",
+    "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+    "printedName": "沼",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Swamp_376.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70324?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (376) is numbered, and its art was checked by eye against the English CST #376",
+    "imageWidth": 264,
+    "imageHeight": 370,
+    "sourceImageSha256": "332d6ec00a05e856ecc1f6596fba905c370893eebf3da431b93e6906b39ddbd9"
+  },
+  "cst:377": {
+    "set": "cst",
+    "number": "377",
+    "language": "ja",
+    "oracleId": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
+    "printedName": "沼",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Swamp_377.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70325?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (377) is numbered, and its art was checked by eye against the English CST #377",
+    "imageWidth": 264,
+    "imageHeight": 370,
+    "sourceImageSha256": "bbcb88d4e809a76162c797a326246d63b46f45b8ed36e912d972eee8c8e6e9f5"
+  },
+  "cst:378": {
+    "set": "cst",
+    "number": "378",
+    "language": "ja",
+    "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+    "printedName": "山",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Mountain_378.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70266?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (378) is numbered, and its art was checked by eye against the English CST #378",
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "2468445e350af6c72f9b468cfe28bd337ebe0a58a65f535a3c43aeaec352b5e8"
+  },
+  "cst:379": {
+    "set": "cst",
+    "number": "379",
+    "language": "ja",
+    "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+    "printedName": "山",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Mountain_379.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70320?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (379) is numbered, and its art was checked by eye against the English CST #379",
+    "imageWidth": 264,
+    "imageHeight": 370,
+    "sourceImageSha256": "f7dd6c30b7adbcad273000b00cf1c57b695856f66cce882c98a2d4bd250b7114"
+  },
+  "cst:380": {
+    "set": "cst",
+    "number": "380",
+    "language": "ja",
+    "oracleId": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
+    "printedName": "山",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Mountain_380.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70321?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (380) is numbered, and its art was checked by eye against the English CST #380",
+    "imageWidth": 265,
+    "imageHeight": 369,
+    "sourceImageSha256": "109f9064b29861555febb6bda0c0ff5aaf7eff031d142b52619f8e1b71709f76"
+  },
+  "cst:382": {
+    "set": "cst",
+    "number": "382",
+    "language": "ja",
+    "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+    "printedName": "森",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Forest_382.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70316?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (382) is numbered, and its art was checked by eye against the English CST #382",
+    "imageWidth": 264,
+    "imageHeight": 370,
+    "sourceImageSha256": "6cbbb28a642f599f0a68b6b1386d14c32685907f8d4e854f676ddae9b686e8ca"
+  },
+  "cst:383": {
+    "set": "cst",
+    "number": "383",
+    "language": "ja",
+    "oracleId": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
+    "printedName": "森",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Forest_383.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70317?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's Japanese product (383) is numbered, and its art was checked by eye against the English CST #383",
+    "imageWidth": 264,
+    "imageHeight": 370,
+    "sourceImageSha256": "b464389af964cb16b4d879fb057b49fd819c4c5fb43c24e904aceb5c58c8de7a"
+  },
+  "cst:12b": {
+    "set": "cst",
+    "number": "12b",
+    "language": "ja",
+    "oracleId": "ff27ff96-afd2-45df-b799-3046179e27c6",
+    "printedName": "増援",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/CSPTHEME/JP/Reinforcements.webp"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/70273?lang=JP",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-placeholder-japanese-image",
+    "validation": "Scryfall's Japanese image is a placeholder; Hareruya's only Japanese CSP Theme Deck product of this card, art checked by eye against the English CST #12b",
+    "imageWidth": 263,
+    "imageHeight": 370,
+    "sourceImageSha256": "4eb205dd51fe0bfe9b5c155ef76205169de6ff8fa80208bcb97722d475e94397"
   }
 }
