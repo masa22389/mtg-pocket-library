@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v376";
+const APP_VERSION = "v377";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3550,10 +3550,13 @@ function clearSearchResults() {
 }
 
 let variantPickerRequestId = 0;
+// Set when a print was picked in the print picker: the card dialog's × then goes back to the picker (where it was scrolled to).
+let returnToVariantPicker = null;
 let cardLanguageRequestId = 0;
 async function openCardDialog(card, mode = "collection", ownedId = null) {
   ++cardDialogRequestId;
   ++cardLanguageRequestId;
+  returnToVariantPicker = null;
   state.selectedCard = card;
   state.cardDialogMode = mode;
   if (els.cardDeckUsage) els.cardDeckUsage.open = false;
@@ -3626,6 +3629,18 @@ async function openCardVariantPicker() {
   els.variantFilter.value = state.selectedCard.lang === "ja" ? "ja" : "en";
   $("#cardVariantDialog").showModal();
   await loadCardVariantLanguage();
+}
+
+function reopenCardVariantPicker() {
+  const saved = returnToVariantPicker || {};
+  returnToVariantPicker = null;
+  const dialog = $("#cardVariantDialog");
+  dialog.showModal();
+  if (!state.cardVariants.length) { loadCardVariantLanguage(); return; }
+  renderVariantGallery();
+  dialog.scrollTop = saved.dialogScroll || 0;
+  const form = dialog.querySelector(".dialog-card");
+  if (form) form.scrollTop = saved.formScroll || 0;
 }
 
 async function loadCardVariantLanguage() {
@@ -3999,7 +4014,7 @@ function renderSelectedVariant() {
   const card = state.selectedCard;
   const owned = selectedOwnedCard();
   const backImage = backImageOf(card);
-  els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images"><img class="card-detail-image" ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" ${localizedImageAttrs(card, 1)} src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
+  els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images${backImage ? " two-faces" : ""}"><img class="card-detail-image" ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" ${localizedImageAttrs(card, 1)} src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
   els.cardQuantity.value = initialCardOwnedQuantity(state.cardDialogMode, selectedOwnedQuantity());
   els.cardCondition.value = normalizeCardCondition(owned?.condition || "NM");
   els.cardFinish.value = owned?.finish || "normal";
@@ -4022,7 +4037,7 @@ function renderVariantGallery() {
     </button>`).join("")}${visibleVariants.length < variants.length ? `<button type="button" class="variant-option variant-more" data-variant-more="1"><span>さらに表示<br>${variants.length - visibleVariants.length}版</span></button>` : ""}`;
   els.cardVariants.querySelectorAll("button[data-id]").forEach(button => button.addEventListener("click", () => {
     const card = state.cardVariants.find(item => item.id === button.dataset.id);
-    if (card) { ++cardLanguageRequestId; selectVariant(["ja", "en"].includes(card.lang) ? { ...card, _chosenLanguage: card.lang } : card); $("#cardLanguageStatus").hidden = true; $("#cardVariantDialog").close(); }
+    if (card) { const picker = $("#cardVariantDialog"); returnToVariantPicker = { dialogScroll: picker.scrollTop, formScroll: picker.querySelector(".dialog-card")?.scrollTop || 0 }; ++cardLanguageRequestId; selectVariant(["ja", "en"].includes(card.lang) ? { ...card, _chosenLanguage: card.lang } : card); $("#cardLanguageStatus").hidden = true; $("#cardVariantDialog").close(); }
   }));
   els.cardVariants.querySelector("[data-variant-more]")?.addEventListener("click", () => {
     state.variantRenderLimit = Number(state.variantRenderLimit || VARIANT_RENDER_LIMIT) + VARIANT_RENDER_LIMIT;
@@ -7995,7 +8010,19 @@ els.incrementQuantity.addEventListener("click", event => { if (event.detail === 
 els.variantFilter.addEventListener("change", loadCardVariantLanguage);
 $("#openCardVariants").addEventListener("click", openCardVariantPicker);
 els.cardLanguage.addEventListener("change", () => changeCardLanguage(els.cardLanguage.value));
-$("#cardVariantDialog").addEventListener("close", () => { ++variantPickerRequestId; els.cardVariants.replaceChildren(); });
+// A late close event must not empty the picker after it was reopened from the card dialog.
+$("#cardVariantDialog").addEventListener("close", () => { if ($("#cardVariantDialog").open) return; ++variantPickerRequestId; els.cardVariants.replaceChildren(); });
+els.cardDialog.querySelector(".dialog-close")?.addEventListener("click", event => {
+  if (!returnToVariantPicker) return;
+  event.preventDefault();
+  reopenCardVariantPicker();
+});
+els.cardDialog.addEventListener("cancel", event => {
+  if (!returnToVariantPicker || $("#cardVariantDialog").open) return;
+  event.preventDefault();
+  reopenCardVariantPicker();
+});
+els.cardDialog.addEventListener("close", () => { returnToVariantPicker = null; });
 $("#newDeckButton").addEventListener("click", newDeck);
 els.deckExportPanel?.addEventListener("toggle", renderDeckExportPreview);
 els.deckExportFormat?.addEventListener("change", renderDeckExportPreview);
