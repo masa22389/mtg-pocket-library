@@ -1298,5 +1298,23 @@
     "imageWidth": 300,
     "imageHeight": 420,
     "sourceImageSha256": "7b28746c4f7ae7e16169bfa572bd6bc65c393ea245da33fb6017ed1ca3ce31f8"
+  },
+  "prna:189": {
+    "set": "prna",
+    "number": "189",
+    "language": "ja",
+    "oracleId": "81ba3a33-0e04-4f68-9a42-1dd717733b57",
+    "printedName": "アゾリウスの造反者、ラヴィニア",
+    "images": {
+      "normal": "https://files.hareruyamtg.com/img/goods/L/WEEKEND/rna_jpn.jpg"
+    },
+    "source": "verified-print-image",
+    "sourcePage": "https://www.hareruyamtg.com/ja/products/detail/31152",
+    "verifiedAt": "2026-11-10",
+    "correction": "scryfall-no-japanese-print",
+    "validation": "Scryfall has no Japanese printing; manual review of Japanese title, Store Championship promo (RNA-P), printed 189/259 P RNA JP and art against the English printing",
+    "imageWidth": 265,
+    "imageHeight": 370,
+    "sourceImageSha256": "0a61fcc1d708bc83119f7d0d33510b5dfeacf00af09ee8549f9b1fc920720039"
   }
 }
