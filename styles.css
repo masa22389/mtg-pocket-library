@@ -459,6 +459,17 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .stats .value-stat small.collection-gain{margin-top:4px;font-size:11px;font-weight:700;line-height:1.35;color:#f1e2c4}.stats .value-stat small.collection-gain[hidden]{display:none}
 .set-catalog-item{height:auto;padding-top:12px;padding-bottom:12px}.set-catalog-name{flex:1}.set-catalog-item .set-catalog-count{text-align:right}.set-catalog-item .set-catalog-count small{margin-top:3px}.set-progress{display:block;height:6px;margin-top:7px;border-radius:999px;background:var(--line);overflow:hidden}.set-progress i{display:block;height:100%;min-width:3px;border-radius:999px;background:#2f6f5e}
 .card-deck-usage{display:grid;gap:8px;padding:10px;border:1px solid var(--line);border-radius:12px}.card-deck-usage[hidden]{display:none}.card-deck-usage h3,.card-deck-usage p{margin:0}
+/* Card dialog accordions (decks, price): closed by default; the header keeps a one-line summary. */
+.card-accordion summary{display:flex;align-items:center;gap:10px;min-height:44px;cursor:pointer;color:var(--green);font-weight:900;list-style:none}
+.card-accordion summary::-webkit-details-marker{display:none}
+.card-accordion summary span{flex:none}
+.card-accordion summary span::before{content:"▸";display:inline-block;margin-right:7px;color:var(--gold);transition:.16s}
+.card-accordion[open] summary span::before{transform:rotate(90deg)}
+.card-accordion summary small{margin-left:auto;min-width:0;padding:3px 8px;border-radius:999px;background:#fff;color:var(--muted);font-size:12px;font-weight:800;text-align:right;overflow-wrap:anywhere}
+.card-accordion summary small:empty{display:none}
+.card-accordion-body{display:grid;gap:8px}
+.card-accordion[open] summary{margin-bottom:6px}
+.card-deck-usage.card-accordion,.manual-price-panel.card-accordion{display:block}
 .card-deck-usage-list{display:grid;gap:6px}.card-deck-usage-list button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;height:auto;padding:8px 12px;text-align:left}
 .card-deck-usage-list button span{min-width:0;overflow-wrap:anywhere;font-size:16px}.card-deck-usage-list button small{flex:none;font-size:13px;font-weight:600;color:var(--muted,#667)}
 .deck-token-panel summary{list-style:none}.deck-token-panel summary::-webkit-details-marker{display:none}.deck-token-panel summary em::before{content:"▼"}.deck-token-panel[open] summary em::before{content:"▲"}.deck-token-panel small:empty{display:none}.deck-token-panel p{margin:8px 0}.deck-token-panel .collection-price-toggle{margin-top:8px;width:max-content}.deck-token-panel .collection-price-toggle[hidden]{display:none}

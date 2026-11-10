@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v373";
+const APP_VERSION = "v374";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3556,6 +3556,8 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   ++cardLanguageRequestId;
   state.selectedCard = card;
   state.cardDialogMode = mode;
+  if (els.cardDeckUsage) els.cardDeckUsage.open = false;
+  if (els.manualPricePanel) els.manualPricePanel.open = false;
   els.cardDialog.querySelector("form")?.classList.toggle("card-purchase-mode", mode === "purchase");
   $("#addPurchaseButton").textContent = mode === "purchase" ? "購入予定に追加" : "購入候補";
   $("#addPurchaseButton").classList.toggle("ghost", mode !== "purchase");
@@ -3770,6 +3772,7 @@ function updateCardOwnedActions() {
   }
   if (!owned) { renderFavoriteGroupPanel(); return; }
   const priceDate = selectedPriceUpdatedAtForCard(owned);
+  $("#cardPriceShort").textContent = yenValueOf(owned) != null ? `${formatYen(yenValueOf(owned))} / 枚` : "価格なし";
   $("#cardPriceSummary").textContent = `${cardPriceLabel(owned)} / ${priceSourceDetailLabel(owned)}${priceDate ? ` / 更新：${new Date(priceDate).toLocaleString("ja-JP")}` : ""}`;
   if (els.favoriteCardButton) {
     els.favoriteCardButton.classList.toggle("active", owned.favorite === true);
@@ -5772,7 +5775,7 @@ function renderCardDeckUsage() {
   }));
   if (!usage.length) { els.cardDeckUsageSummary.textContent = ""; return; }
   const used = usage.reduce((sum, item) => sum + item.used, 0);
-  els.cardDeckUsageSummary.textContent = `${usage.length}個のデッキ・使用 ${used}枚（所持 ${sameCardNameOwnedTotal(state.selectedCard, state.collection)}枚）`;
+  els.cardDeckUsageSummary.textContent = `${usage.length}デッキ・使用${used}枚`;
 }
 
 function ownedQuantityForDeckCard(card) {

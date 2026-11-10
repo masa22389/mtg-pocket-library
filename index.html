@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=373">
-  <link rel="stylesheet" href="mobile-inputs.css?v=373">
+  <link rel="stylesheet" href="styles.css?v=374">
+  <link rel="stylesheet" href="mobile-inputs.css?v=374">
 </head>
 <body>
   <header class="app-header">
@@ -323,19 +323,22 @@ const BACKGROUND_THEME_CHROME = {
         <button id="addPurchaseButton" type="button" class="ghost">購入候補</button>
         <p class="muted">選択中の収録版・状態・仕様で登録します。同じ候補は枚数を加算します。</p>
       </section>
-      <section id="cardDeckUsage" class="card-deck-usage" hidden>
-        <h3>入っているデッキ</h3><p id="cardDeckUsageSummary" class="muted"></p>
-        <div id="cardDeckUsageList" class="card-deck-usage-list"></div>
-      </section>
-      <section id="manualPricePanel" class="manual-price-panel" hidden>
-        <h3>価格</h3><p id="cardPriceSummary" class="muted"></p>
+      <details id="cardDeckUsage" class="card-deck-usage card-accordion" hidden>
+        <summary><span>入っているデッキ</span><small id="cardDeckUsageSummary"></small></summary>
+        <div id="cardDeckUsageList" class="card-deck-usage-list card-accordion-body"></div>
+      </details>
+      <details id="manualPricePanel" class="manual-price-panel card-accordion" hidden>
+        <summary><span>価格</span><small id="cardPriceShort"></small></summary>
+        <div class="card-accordion-body">
+        <p id="cardPriceSummary" class="muted"></p>
         <button id="refreshCardPriceButton" type="button" class="ghost">価格を取得</button>
         <label>手動価格（1枚あたり・円）<input id="manualPriceInput" type="number" min="0" step="1" inputmode="numeric" placeholder="例：1280"></label>
         <div class="manual-price-actions"><button id="saveManualPriceButton" type="button" class="ghost">手動価格を保存</button><button id="clearManualPriceButton" type="button" class="ghost">手動価格を削除</button></div>
         <label>購入価格（1枚あたり・円）<input id="purchasePriceInput" type="number" min="0" step="1" inputmode="numeric" placeholder="例：1000"></label>
         <div class="manual-price-actions"><button id="savePurchasePriceButton" type="button" class="ghost">購入価格を保存</button><button id="clearPurchasePriceButton" type="button" class="ghost">購入価格を削除</button></div>
         <p id="cardPurchaseSummary" class="muted" hidden></p>
-      </section>
+        </div>
+      </details>
       <div class="card-owned-actions"><button id="deleteCardButton" type="button" class="danger">削除</button></div>
       <details id="favoriteGroupPanel" class="favorite-group-panel" hidden>
         <summary><span>お気に入りグループ</span><small id="favoriteGroupSummary">未作成</small></summary>
@@ -534,12 +537,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=373" defer></script>
-  <script src="scanner-host.js?v=373" defer></script>
+  <script src="storage.js?v=374" defer></script>
+  <script src="scanner-host.js?v=374" defer></script>
   <script src="mtg-jp-card-index.js?h=dcce21bec6d0" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=373" defer></script>
-  <script src="scanner/card-images.js?v=373" defer></script>
-  <script src="app.js?v=373" defer></script>
+  <script src="diagnostics.js?v=374" defer></script>
+  <script src="scanner/card-images.js?v=374" defer></script>
+  <script src="app.js?v=374" defer></script>
 </body>
 </html>
