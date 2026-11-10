@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v374";
+const APP_VERSION = "v375";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -6964,11 +6964,10 @@ function renderDeckEntryVariantGallery() {
   });
 }
 
-function replaceDeckEntryVariant(card) {
+function replaceDeckEntryVariant(card, newCardId = `scryfall-${card?.id}`) {
   const active = state.editingDeckEntry;
   if (!active || !card) return;
   const oldCardId = active.cardId;
-  const newCardId = `scryfall-${card.id}`;
   const snapshot = deckCardSnapshot(card);
   state.editingDeck.entries.forEach(entry => {
     if (entry.cardId === oldCardId) {
@@ -7027,6 +7026,26 @@ function renderDeckEntryEditor() {
   const sectionIndex = entry ? sectionEntries.findIndex(item => item === entry) : -1;
   els.moveDeckEntryUp.disabled = sectionIndex <= 0;
   els.moveDeckEntryDown.disabled = sectionIndex < 0 || sectionIndex >= sectionEntries.length - 1;
+  renderDeckEntryOwnedVariants(entry, card);
+}
+
+// Other owned lots of the same card (any language, art or finish) that this deck entry can switch to.
+function deckEntryOwnedAlternatives(entry, card, collection) {
+  if (!entry || !card) return [];
+  return collection.filter(item => item.id !== entry.cardId && Number(item.quantity || 0) > 0 && isSameOwnedCardName(card, item));
+}
+
+function renderDeckEntryOwnedVariants(entry, card) {
+  const panel = $("#deckEntryOwnedVariants");
+  const lots = deckEntryOwnedAlternatives(entry, card, state.collection);
+  panel.hidden = !lots.length;
+  $("#deckEntryOwnedVariantList").innerHTML = lots.map(lot => {
+    const finish = cardFinishKind(lot) ? (cardFinishKind(lot) === "foil" ? " · Foil" : " · Etched") : "";
+    const language = lot.language === "ja" ? "日" : lot.language === "en" ? "英" : "他";
+    return `<button type="button" class="variant-option" data-owned-variant="${esc(lot.id)}" aria-label="${esc(`${nameOf(lot)} ${lot.set || ""} ${lot.collectorNumber || ""}${finish} 所持${Number(lot.quantity || 0)}枚に変更`)}">
+      <img ${localizedImageAttrs(lot)} src="${esc(lot.image || "")}" alt="" loading="lazy" decoding="async"><span>${language} · ${esc(lot.set || "")} #${esc(lot.collectorNumber || "")}${finish}<br>所持${Number(lot.quantity || 0)}枚</span>
+    </button>`;
+  }).join("");
 }
 
 function collectionLanguageForDeckCard(card) {
@@ -8065,6 +8084,10 @@ els.deckEntrySection.addEventListener("change", () => moveDeckEntrySection(els.d
 els.openDeckEntryVariants?.addEventListener("click", openDeckEntryVariantDialog);
 els.deckEntryVariantFilter?.addEventListener("change", loadDeckEntryVariants);
 els.deckEntryVariantDialog.addEventListener("close", () => { ++deckVariantRequestId; els.deckEntryVariants.replaceChildren(); });
+$("#deckEntryOwnedVariantList").addEventListener("click", event => {
+  const lot = state.collection.find(item => item.id === event.target.closest("[data-owned-variant]")?.dataset.ownedVariant);
+  if (lot) replaceDeckEntryVariant(lot, lot.id);
+});
 els.addDeckEntryToCollection?.addEventListener("click", addCurrentDeckEntryToCollection);
 els.removeDeckEntry.addEventListener("click", removeCurrentDeckEntry);
 els.deckEntryDialog.querySelector(".dialog-close")?.addEventListener("click", event => {

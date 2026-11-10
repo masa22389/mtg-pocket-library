@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=374">
-  <link rel="stylesheet" href="mobile-inputs.css?v=374">
+  <link rel="stylesheet" href="styles.css?v=375">
+  <link rel="stylesheet" href="mobile-inputs.css?v=375">
 </head>
 <body>
   <header class="app-header">
@@ -489,6 +489,10 @@ const BACKGROUND_THEME_CHROME = {
       <div class="deck-entry-preview"><button id="openDeckEntryVariants" type="button" class="deck-entry-image-button" aria-label="イラストを変更"><img id="deckEntryImage" alt=""><span>イラスト変更</span></button><div><span id="deckEntrySet" class="eyebrow"></span><h2 id="deckEntryName"></h2><p id="deckEntryOwned" class="muted"></p><button id="addDeckEntryToCollection" type="button" class="ghost deck-entry-owned-add">所持カードに1枚追加</button></div></div>
       <div class="deck-cover-actions"><button id="openCopyDeckCard" type="button" class="ghost">別デッキに追加</button><button id="setDeckCover" type="button" class="ghost">デッキの代表画像に設定</button><button id="clearDeckCover" type="button" class="ghost" hidden>代表画像を解除</button></div>
       <p id="deckEntryCollectionStatus" class="deck-add-status" aria-live="polite"></p>
+      <section id="deckEntryOwnedVariants" class="deck-entry-owned-variants" hidden>
+        <h3>所持している別イラストに変更</h3>
+        <div id="deckEntryOwnedVariantList" class="variant-list"></div>
+      </section>
       <label hidden>追加先<select id="deckEntrySection"><option value="main">メイン</option><option value="side">サイド</option><option value="commander">統率者</option><option value="maybe">候補</option></select></label>
       <div class="deck-order-actions"><button id="moveDeckEntryUp" type="button" class="ghost">↑ 前へ</button><button id="moveDeckEntryDown" type="button" class="ghost">↓ 後へ</button></div>
       <div class="deck-section-quantities" aria-label="メインとサイドの枚数">
@@ -537,12 +541,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=374" defer></script>
-  <script src="scanner-host.js?v=374" defer></script>
+  <script src="storage.js?v=375" defer></script>
+  <script src="scanner-host.js?v=375" defer></script>
   <script src="mtg-jp-card-index.js?h=dcce21bec6d0" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=374" defer></script>
-  <script src="scanner/card-images.js?v=374" defer></script>
-  <script src="app.js?v=374" defer></script>
+  <script src="diagnostics.js?v=375" defer></script>
+  <script src="scanner/card-images.js?v=375" defer></script>
+  <script src="app.js?v=375" defer></script>
 </body>
 </html>

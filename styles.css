@@ -470,7 +470,10 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .card-accordion-body{display:grid;gap:8px}
 .card-accordion[open] summary{margin-bottom:6px}
 .card-deck-usage.card-accordion,.manual-price-panel.card-accordion{display:block}
-.card-deck-usage-list{display:grid;gap:6px}.card-deck-usage-list button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;height:auto;padding:8px 12px;text-align:left}
+.card-deck-usage-list{display:grid;gap:6px}
+.deck-entry-owned-variants{display:grid;gap:6px;margin:4px 0 10px;padding:10px;border:1px solid var(--line);border-radius:12px}.deck-entry-owned-variants[hidden]{display:none}
+.deck-entry-owned-variants h3{margin:0;font-size:15px;color:var(--green)}
+.deck-entry-owned-variants .variant-option span{font-size:11px;line-height:1.35}.card-deck-usage-list button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;height:auto;padding:8px 12px;text-align:left}
 .card-deck-usage-list button span{min-width:0;overflow-wrap:anywhere;font-size:16px}.card-deck-usage-list button small{flex:none;font-size:13px;font-weight:600;color:var(--muted,#667)}
 .deck-token-panel summary{list-style:none}.deck-token-panel summary::-webkit-details-marker{display:none}.deck-token-panel summary em::before{content:"▼"}.deck-token-panel[open] summary em::before{content:"▲"}.deck-token-panel small:empty{display:none}.deck-token-panel p{margin:8px 0}.deck-token-panel .collection-price-toggle{margin-top:8px;width:max-content}.deck-token-panel .collection-price-toggle[hidden]{display:none}
 .deck-token-list{display:grid;gap:10px;margin:8px 0 0;padding:0;list-style:none}.deck-token-list li{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:start}.deck-token-list img{width:72px;height:auto;border-radius:5px}.deck-token-list div{display:grid;gap:2px;min-width:0;grid-column:2}.deck-token-list b{font-size:16px;overflow-wrap:anywhere}.deck-token-list b span{color:var(--muted);font-weight:600}.deck-token-list small{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
