@@ -1,7 +1,7 @@
 importScripts('./scanner/card-image-cache.js');
-const CACHE = "mtg-pocket-v381";
-const OFFLINE_PAGE = "./index.html?v=381";
-const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=381","./scanner/data/japanese-images.json","./mobile-inputs.css?v=381","./scanner-host.js?v=381","./diagnostics.js?v=381", OFFLINE_PAGE, "./styles.css?v=381", "./app.js?v=381", "./storage.js?v=381", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+const CACHE = "mtg-pocket-v382";
+const OFFLINE_PAGE = "./index.html?v=382";
+const SHELL = ["./scanner/data/japanese-image-manifest.json","./scanner/card-image-cache.js","./scanner/card-images.js?v=382","./scanner/data/japanese-images.json","./mobile-inputs.css?v=382","./scanner-host.js?v=382","./diagnostics.js?v=382", OFFLINE_PAGE, "./styles.css?v=382", "./app.js?v=382", "./storage.js?v=382", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 // The large search indexes are named by content hash (scripts/update-asset-hashes.mjs) and kept in their own
 // cache across app versions, so an update downloads them only when their contents change.
 const DATA_CACHE = "mtg-pocket-data";
@@ -46,7 +46,7 @@ self.addEventListener("fetch", event => {
   }
   // BEGIN SCANNER TRIAL BYPASS
   // Never cache the trial page as the main app's offline shell, or retain its assets.
-  if ((url.pathname.includes('/scanner/') && !/\/scanner\/(card-images\.js|data\/japanese-images\.json|data\/japanese-image-manifest\.json)$/.test(url.pathname)) || url.pathname.includes('/scanner-trial/') || url.hostname === 'hanclinto.github.io') return;
+  if ((url.pathname.includes('/scanner/') && !/\/scanner\/(card-images\.js|data\/japanese-images\.json|data\/japanese-image-manifest\.json)$/.test(url.pathname)) || url.hostname === 'hanclinto.github.io') return;
   // END SCANNER TRIAL BYPASS
   if (["api.scryfall.com", "wonder.wisdom-guild.net", "r.jina.ai", "api.allorigins.win"].includes(url.hostname)) return;
 

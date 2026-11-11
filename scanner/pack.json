@@ -149,8 +149,8 @@
     },
     {
       "path": "live.html",
-      "bytes": 8589,
-      "sha256": "8af9cc437a1fc813616dd35a1cdba8d4291d69f11a946287f547cf0fb506eb33"
+      "bytes": 8521,
+      "sha256": "f0dade9cd05831b12e41009c33888b531b58e484fca5f09d7f5428eca49693f0"
     },
     {
       "path": "live.mjs",
@@ -238,6 +238,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 92880142,
-  "buildId": "a9549fb26a62"
+  "totalBytes": 92880074,
+  "buildId": "c27d1b8e663a"
 }

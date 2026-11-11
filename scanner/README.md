@@ -8,7 +8,7 @@
 
 保存：本体と同じIndexedDB mtg-pocket-data-v1 / values。スキャナー専用キー mtg-pocket.scannerHybrid.v1。確認済みの消費と所持カードへの加算は単一トランザクション。失敗時は両方ロールバック。別タブの変更を検知した場合は古いリストによる上書きを拒否する。
 
-旧scanner-trialと独立Labのリストは自動移行しない。別オリジン・別ポートの所持データは共有されない。本体と同じURLから利用すること。試験用ローカルURL http://localhost:4174/ と公開サイトは別データ。
+独立Labのリストは自動移行しない。別オリジン・別ポートの所持データは共有されない。本体と同じURLから利用すること。試験用ローカルURL http://localhost:4174/ と公開サイトは別データ。
 
 再生成：python scanner/tools/refresh-pack.py。モデル・カタログの出典とライセンスはSOURCE.md。公開・Git pushはこの組み込み作業では行っていない。
 
