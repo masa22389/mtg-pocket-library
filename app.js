@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v383";
+const APP_VERSION = "v384";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -7023,6 +7023,24 @@ function replaceDeckEntryVariant(card, newCardId = `scryfall-${card?.id}`) {
   showToast("デッキ内カードのイラストを変更しました");
 }
 
+// The Japanese image swap runs only when data-japanese-image changes, so the picture is reset only when the card
+// itself changes; resetting src on every redraw (count change, reopening the same card) left the English placeholder.
+function setDeckEntryImage(card) {
+  let request = "";
+  if (card && prefersJapaneseDisplay(card)) {
+    const holder = document.createElement("div");
+    holder.innerHTML = `<img ${localizedImageAttrs(card)}>`;
+    request = holder.firstElementChild.getAttribute("data-japanese-image") || "";
+  }
+  const key = `${card?.image || ""}\n${request}`;
+  if (els.deckEntryImage.dataset.imageKey === key) return;
+  els.deckEntryImage.dataset.imageKey = key;
+  els.deckEntryImage.removeAttribute("data-japanese-image");
+  els.deckEntryImage.style.visibility = "";
+  els.deckEntryImage.src = card?.image || "";
+  if (request) els.deckEntryImage.setAttribute("data-japanese-image", request);
+}
+
 function renderDeckEntryEditor() {
   const entry = currentDeckEntry() || deckEntriesForCurrentCard()[0];
   const template = currentDeckCardTemplate();
@@ -7031,12 +7049,7 @@ function renderDeckEntryEditor() {
   const card = entry ? cardForDeckEntry(entry) : template.card;
   const owned = entry ? ownedQuantityForEntry(entry) : ownedQuantityForDeckCard(card);
   const deckTotalForCard = deckEntriesForCurrentCard().filter(item => isDeckBuildSection(item.section)).reduce((sum, item) => sum + Number(item.quantity || 0), 0);
-  els.deckEntryImage.src = card?.image || "";
-  if (card && prefersJapaneseDisplay(card)) {
-    const attributes=localizedImageAttrs(card);
-    const holder=document.createElement('div');holder.innerHTML=`<img ${attributes}>`;
-    els.deckEntryImage.setAttribute('data-japanese-image',holder.firstElementChild.getAttribute('data-japanese-image'));
-  } else els.deckEntryImage.removeAttribute('data-japanese-image');
+  setDeckEntryImage(card);
   $("#setDeckCover").disabled = !card?.image;
   $("#clearDeckCover").hidden = !state.editingDeck?.coverImage;
   els.deckEntryImage.alt = card ? nameOf(card) : "削除済みカード";
