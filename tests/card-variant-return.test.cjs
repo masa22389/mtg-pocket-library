@@ -36,7 +36,7 @@ assert(code.includes('$("#cardVariantDialog").addEventListener("close", () => { 
 // Opening either dialog focuses the dialog itself, not its first button (no focus ring on ← or ×).
 assert(html.includes('<dialog id="cardDialog" autofocus>'));
 assert(html.includes('<dialog id="cardVariantDialog" autofocus>'));
-assert(css.includes('#cardDialog:focus,#cardVariantDialog:focus,#cardVariantDialog .dialog-card:focus,#deckEntryVariantDialog:focus'));
+assert(css.includes('#cardDialog:focus,#cardDialog .dialog-card:focus,#cardVariantDialog:focus,#cardVariantDialog .dialog-card:focus,#deckEntryVariantDialog:focus'), 'no focus line on the card screen or the picker');
 assert(html.includes('<form method="dialog" class="dialog-card" tabindex="-1">'));
 assert(code.includes('dialog.showModal();\n  dialog.querySelector(".dialog-card")?.focus({ preventScroll: true });'));
 assert((code.match(/showCardVariantPicker\(\)/g) || []).length === 3, 'both ways of opening the picker use it');
