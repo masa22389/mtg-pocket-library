@@ -85,19 +85,28 @@
       const result = await pending.get(key);
       return result.url ? result : {...result,url:fallbackUrl,fallback:true};
     }
+    // A Japanese request keeps the English placeholder out of sight until the Japanese picture has loaded.
+    // If that takes longer than JAPANESE_WAIT_MS after the image comes into view, the placeholder shows (never a long blank).
+    const JAPANESE_WAIT_MS = 1500;
+    // Scryfall adds a ?timestamp to the same picture; it is already showing, so it is not loaded again.
+    const samePicture = (a,b) => {try {const x = new URL(a),y = new URL(b);return x.origin === y.origin && x.pathname === y.pathname;} catch {return a === b;}};
     function bind(image,request,onResult) {
-      let canceled = false,observer;
+      let canceled = false,observer,waiting = false,timer;
+      const reveal = () => {clearTimeout(timer);waiting = false;if (!canceled) image.style.visibility = 'visible';};
+      if (request.language === 'ja') {waiting = true;image.style.visibility = 'hidden';}
       const run = async () => {
         observer?.disconnect();
+        if (waiting) timer = setTimeout(reveal,JAPANESE_WAIT_MS);
         const result = await resolve(request);
         if (canceled || !image.isConnected) return;
         const fallback = request.fallbackUrl || '';
-        image.onerror = () => {if (canceled) return; image.onerror = null; if (fallback && image.src !== fallback) {image.src = fallback; onResult?.({...result,fallback:true,reason:'image-load-failed'});} else {image.style.visibility='hidden'; onResult?.({...result,fallback:true,reason:'image-load-failed'});}};
-        if (result.url) {image.hidden=false;image.src = result.url; image.style.visibility='visible';}
+        image.onerror = () => {if (canceled) return; image.onerror = null; if (fallback && image.src !== fallback) {image.src = fallback; reveal(); onResult?.({...result,fallback:true,reason:'image-load-failed'});} else {clearTimeout(timer); waiting = false; image.style.visibility='hidden'; onResult?.({...result,fallback:true,reason:'image-load-failed'});}};
+        if (result.url && !samePicture(image.src,result.url)) {image.hidden=false;image.addEventListener('load',reveal,{once:true});image.src = result.url;}
+        else {if (result.url) image.hidden=false; reveal();}
         onResult?.(result);
       };
       if (typeof IntersectionObserver === 'function') {observer = new IntersectionObserver(entries => {if (entries.some(e => e.isIntersecting)) run();}); observer.observe(image);} else run();
-      return () => {canceled=true;observer?.disconnect();};
+      return () => {canceled=true;observer?.disconnect();clearTimeout(timer);if (waiting) {waiting = false;image.style.visibility = '';}};
     }
     function observe(document) {
       const bound=new Map();
