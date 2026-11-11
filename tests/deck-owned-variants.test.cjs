@@ -26,8 +26,15 @@ assert.deepEqual(Array.from(c.deckEntryOwnedAlternatives({ cardId: 'scryfall-x' 
 assert.deepEqual(Array.from(c.deckEntryOwnedAlternatives(null, card, collection)), []);
 
 // The dialog shows the list, and a tap links the entry to the chosen lot itself.
-assert(html.includes('<section id="deckEntryOwnedVariants" class="deck-entry-owned-variants" hidden>'));
-assert(html.includes('<h3>所持している別イラストに変更</h3>'));
+// It is a closed accordion below メイン/サイド/候補, so the dialog does not get long.
+assert(html.includes('<details id="deckEntryOwnedVariants" class="deck-entry-owned-variants card-accordion" hidden>'));
+assert(html.includes('<div id="deckEntryOwnedVariantList" class="variant-list"></div>'), 'a sideways row, as before');
+assert(html.includes('<summary><span>所持している別イラストに変更</span><small id="deckEntryOwnedVariantCount"></small></summary>'));
+assert(!/<details id="deckEntryOwnedVariants"[^>]*\sopen/.test(html), 'closed by default');
+assert(html.indexOf('id="deckEntryOwnedVariants"') > html.indexOf('data-section-row="maybe"'), 'below the quantities');
+assert(html.indexOf('id="deckEntryOwnedVariants"') < html.indexOf('id="removeDeckEntry"'), 'above デッキから削除');
+assert(code.split('$("#deckEntryOwnedVariants").open = false;\n  renderDeckEntryEditor();').length - 1 === 2, 'closed again whenever an entry is opened');
+assert(code.includes('$("#deckEntryOwnedVariantCount").textContent = lots.length ? `${lots.length}種` : "";'));
 assert(code.includes('if (lot) replaceDeckEntryVariant(lot, lot.id);'));
 assert(code.includes('function replaceDeckEntryVariant(card, newCardId = `scryfall-${card?.id}`) {'));
 assert(code.includes('  renderDeckEntryOwnedVariants(entry, card);\n}'));
