@@ -56,8 +56,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=382">
-  <link rel="stylesheet" href="mobile-inputs.css?v=382">
+  <link rel="stylesheet" href="styles.css?v=383">
+  <link rel="stylesheet" href="mobile-inputs.css?v=383">
 </head>
 <body>
   <header class="app-header">
@@ -508,9 +508,9 @@ const BACKGROUND_THEME_CHROME = {
     </form>
   </dialog>
 
-  <dialog id="deckEntryVariantDialog">
-    <form method="dialog" class="dialog-card deck-entry-variant-dialog">
-      <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+  <dialog id="deckEntryVariantDialog" autofocus>
+    <form method="dialog" class="dialog-card deck-entry-variant-dialog" tabindex="-1">
+      <div class="dialog-nav"><button id="deckVariantBackToEntry" class="dialog-back" type="button" aria-label="カードに戻る">←</button><button id="closeDeckVariantAndEntry" class="dialog-close" type="button" aria-label="閉じる">×</button></div>
       <h2>別イラスト・収録版を選ぶ</h2>
       <div class="variant-head"><span id="deckEntryVariantCount" class="variant-count"></span><label>言語<select id="deckEntryVariantFilter"><option value="en">英語</option><option value="ja">日本語</option></select></label></div>
       <div id="deckEntryVariants" class="variant-list deck-entry-variant-list"><span class="muted">収録版を読み込み中…</span></div>
@@ -541,12 +541,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=382" defer></script>
-  <script src="scanner-host.js?v=382" defer></script>
+  <script src="storage.js?v=383" defer></script>
+  <script src="scanner-host.js?v=383" defer></script>
   <script src="mtg-jp-card-index.js?h=dcce21bec6d0" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=382" defer></script>
-  <script src="scanner/card-images.js?v=382" defer></script>
-  <script src="app.js?v=382" defer></script>
+  <script src="diagnostics.js?v=383" defer></script>
+  <script src="scanner/card-images.js?v=383" defer></script>
+  <script src="app.js?v=383" defer></script>
 </body>
 </html>

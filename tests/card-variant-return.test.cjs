@@ -7,7 +7,7 @@ const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 // After picking a print in "別イラスト・収録版を選ぶ", a ← button (top left) goes back to the picker
 // (same list, same scroll position); × always closes the card.
 assert(html.includes('<div class="dialog-nav"><button id="cardBackToVariants" class="dialog-back" type="button" aria-label="収録版の選択に戻る" hidden>←</button><button class="dialog-close" value="cancel" aria-label="閉じる">×</button></div>'));
-assert(css.includes('#cardDialog .dialog-back,#cardVariantDialog .dialog-back{width:44px;min-height:44px;'), '← is a 44px tap target');
+assert(css.includes('#cardDialog .dialog-back,#cardVariantDialog .dialog-back,#deckEntryVariantDialog .dialog-back{width:44px;min-height:44px;'), '← is a 44px tap target');
 // The print picker always has ← (back to the card) and × (closes the picker and the card).
 assert(html.includes('<div class="dialog-nav"><button id="variantBackToCard" class="dialog-back" type="button" aria-label="カードに戻る">←</button><button id="closeVariantAndCard" class="dialog-close" type="button" aria-label="閉じる">×</button></div>'));
 assert(code.includes('$("#variantBackToCard").addEventListener("click", () => $("#cardVariantDialog").close());'));
@@ -36,7 +36,7 @@ assert(code.includes('$("#cardVariantDialog").addEventListener("close", () => { 
 // Opening either dialog focuses the dialog itself, not its first button (no focus ring on ← or ×).
 assert(html.includes('<dialog id="cardDialog" autofocus>'));
 assert(html.includes('<dialog id="cardVariantDialog" autofocus>'));
-assert(css.includes('#cardDialog:focus,#cardVariantDialog:focus,#cardVariantDialog .dialog-card:focus{outline:none}'));
+assert(css.includes('#cardDialog:focus,#cardVariantDialog:focus,#cardVariantDialog .dialog-card:focus,#deckEntryVariantDialog:focus'));
 assert(html.includes('<form method="dialog" class="dialog-card" tabindex="-1">'));
 assert(code.includes('dialog.showModal();\n  dialog.querySelector(".dialog-card")?.focus({ preventScroll: true });'));
 assert((code.match(/showCardVariantPicker\(\)/g) || []).length === 3, 'both ways of opening the picker use it');

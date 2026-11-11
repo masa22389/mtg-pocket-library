@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v382";
+const APP_VERSION = "v383";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -6948,6 +6948,7 @@ async function openDeckEntryVariantDialog() {
   if (!state.editingDeckEntry || !card) return;
   const request = ++deckVariantRequestId;
   els.deckEntryVariantDialog.showModal();
+  els.deckEntryVariantDialog.querySelector(".dialog-card")?.focus({ preventScroll: true });
   state.deckEntryVariants = [];
   els.deckEntryVariants.textContent = "カードの言語を確認中…";
   els.deckEntryVariantCount.textContent = "";
@@ -8126,7 +8127,9 @@ els.deckEntryQuantity.addEventListener("change", () => setDeckEntryQuantity(els.
 els.deckEntrySection.addEventListener("change", () => moveDeckEntrySection(els.deckEntrySection.value));
 els.openDeckEntryVariants?.addEventListener("click", openDeckEntryVariantDialog);
 els.deckEntryVariantFilter?.addEventListener("change", loadDeckEntryVariants);
-els.deckEntryVariantDialog.addEventListener("close", () => { ++deckVariantRequestId; els.deckEntryVariants.replaceChildren(); });
+els.deckEntryVariantDialog.addEventListener("close", () => { if (els.deckEntryVariantDialog.open) return; ++deckVariantRequestId; els.deckEntryVariants.replaceChildren(); });
+$("#deckVariantBackToEntry").addEventListener("click", () => els.deckEntryVariantDialog.close());
+$("#closeDeckVariantAndEntry").addEventListener("click", () => { els.deckEntryVariantDialog.close(); els.deckEntryDialog.close(); });
 $("#deckEntryOwnedVariantList").addEventListener("click", event => {
   const lot = state.collection.find(item => item.id === event.target.closest("[data-owned-variant]")?.dataset.ownedVariant);
   if (lot) replaceDeckEntryVariant(lot, lot.id);
