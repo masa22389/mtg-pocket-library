@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=388">
-  <link rel="stylesheet" href="mobile-inputs.css?v=388">
+  <link rel="stylesheet" href="styles.css?v=389">
+  <link rel="stylesheet" href="mobile-inputs.css?v=389">
 </head>
 <body>
   <header class="app-header">
@@ -175,6 +175,7 @@ const BACKGROUND_THEME_CHROME = {
       </div>
       <section class="card deck-list-filter">
         <label>表示フォーマット<select id="deckFormatFilter"><option value="">すべて</option></select></label>
+        <label class="favorite-filter deck-in-use-filter"><input id="deckInUseOnly" type="checkbox"><span>使用中のみ</span></label>
       </section>
       <div id="deckList" class="deck-grid"></div>
     </section>
@@ -395,6 +396,7 @@ const BACKGROUND_THEME_CHROME = {
       <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
       <label>デッキ名<input id="deckName" maxlength="60" placeholder="新しいデッキ"></label>
       <label>フォーマット<select id="deckFormat"><option>統率者戦</option><option>スタンダード</option><option>パイオニア</option><option>モダン</option><option>レガシー</option><option>パウパー</option><option>カジュアル</option></select></label>
+      <label class="favorite-filter deck-in-use-toggle"><input id="deckInUse" type="checkbox"><span>使用中（今組んでいるデッキ）</span></label>
       <div class="deck-summary"><b id="deckCount">0枚</b><span id="deckMissing">不足なし</span></div>
       <section id="deckStats" class="deck-stats" hidden></section>
       <section id="deckMissingList" class="deck-missing-list" hidden></section>
@@ -548,12 +550,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=388" defer></script>
-  <script src="scanner-host.js?v=388" defer></script>
+  <script src="storage.js?v=389" defer></script>
+  <script src="scanner-host.js?v=389" defer></script>
   <script src="mtg-jp-card-index.js?h=dcce21bec6d0" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=388" defer></script>
-  <script src="scanner/card-images.js?v=388" defer></script>
-  <script src="app.js?v=388" defer></script>
+  <script src="diagnostics.js?v=389" defer></script>
+  <script src="scanner/card-images.js?v=389" defer></script>
+  <script src="app.js?v=389" defer></script>
 </body>
 </html>

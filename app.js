@@ -9,8 +9,8 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v388";
-const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
+const APP_VERSION = "v389";
+const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
 const COLLECTION_RENDER_LIMIT = 50;
@@ -43,6 +43,7 @@ const state = {
   priceSourceMode: appStorage.getItem(KEYS.priceSourceMode) || "manual-wisdom-cardtrader",
   collectionSortStack: read(KEYS.collectionSortStack, []),
   deckFormatFilter: appStorage.getItem(KEYS.deckFormatFilter) || "",
+  deckInUseOnly: appStorage.getItem(KEYS.deckInUseOnly) === "1",
   defaultCardLanguage: appStorage.getItem(KEYS.defaultCardLanguage) === "ja" ? "ja" : "en",
   // "split": the deck screen shows Foil / non-Foil and each language as separate tiles. "merged": one tile per card.
   deckDisplayMode: appStorage.getItem(KEYS.deckDisplayMode) === "merged" ? "merged" : "split",
@@ -5252,6 +5253,11 @@ function deckCoverArtUrl(image) {
   return image || "";
 }
 
+// A deck marked 使用中 is one the user has built right now; old decks that were taken apart stay unmarked.
+function visibleDeckList(decks, format, inUseOnly) {
+  return decks.filter(deck => (!format || deck.format === format) && (!inUseOnly || deck.inUse === true));
+}
+
 function renderDecks() {
   renderDeckFormatFilter();
   if (!state.decks.length) {
@@ -5260,10 +5266,10 @@ function renderDecks() {
     return;
   }
   let migrated = false;
-  const visibleDecks = state.deckFormatFilter ? state.decks.filter(deck => deck.format === state.deckFormatFilter) : state.decks;
+  const visibleDecks = visibleDeckList(state.decks, state.deckFormatFilter, state.deckInUseOnly);
   if (!visibleDecks.length) {
     finishDeckListReorderMode();
-    els.deckList.innerHTML = `<div class="empty">${esc(state.deckFormatFilter)}のデッキはまだありません</div>`;
+    els.deckList.innerHTML = `<div class="empty">${esc(state.deckFormatFilter)}${state.deckInUseOnly ? "の使用中" : ""}のデッキはまだありません</div>`;
     return;
   }
   if (deckListReorderSelection && !visibleDecks.some(deck => deck.id === deckListReorderSelection)) {
@@ -5274,7 +5280,7 @@ function renderDecks() {
     const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + entry.quantity, 0);
     const missing = missingCount(deck);
     const selected = deckListReorderMode && deckListReorderSelection === deck.id;
-    return `<button type="button" class="deck-tile${deck.coverImage ? " has-cover" : ""}${selected ? " deck-list-reorder-selected" : ""}" data-id="${deck.id}">${deck.coverImage ? `<span class="deck-cover-art"><img class="deck-cover-image${deckCoverArtUrl(deck.coverImage) === deck.coverImage && !deck.coverImage.includes("/art_crop/") ? " deck-cover-cropped" : ""}" src="${esc(deckCoverArtUrl(deck.coverImage))}" alt="" loading="lazy" decoding="async"></span>` : ""}<div class="deck-tile-info"><span class="eyebrow">${esc(deck.format)}</span><h2>${esc(deck.name)}</h2><span class="deck-total">${total}</span> 枚<p>${deck.entries.length}種類${missing ? ` · <b>${missing}枚不足</b>` : " · 所持内で構築可能"}</p><small class="deck-date-line">作成 ${formatDeckDate(deck.createdAt)} · 更新 ${formatDeckDate(deck.updatedAt)}</small></div></button>`;
+    return `<button type="button" class="deck-tile${deck.coverImage ? " has-cover" : ""}${selected ? " deck-list-reorder-selected" : ""}" data-id="${deck.id}">${deck.coverImage ? `<span class="deck-cover-art"><img class="deck-cover-image${deckCoverArtUrl(deck.coverImage) === deck.coverImage && !deck.coverImage.includes("/art_crop/") ? " deck-cover-cropped" : ""}" src="${esc(deckCoverArtUrl(deck.coverImage))}" alt="" loading="lazy" decoding="async"></span>` : ""}<div class="deck-tile-info"><span class="eyebrow">${esc(deck.format)}</span>${deck.inUse === true ? '<span class="deck-in-use-badge">使用中</span>' : ""}<h2>${esc(deck.name)}</h2><span class="deck-total">${total}</span> 枚<p>${deck.entries.length}種類${missing ? ` · <b>${missing}枚不足</b>` : " · 所持内で構築可能"}</p><small class="deck-date-line">作成 ${formatDeckDate(deck.createdAt)} · 更新 ${formatDeckDate(deck.updatedAt)}</small></div></button>`;
   }).join("");
   if (migrated) persist();
   els.deckList.querySelectorAll(".deck-tile").forEach(button => {
@@ -5614,6 +5620,7 @@ function fillDeckDialog() {
   ensureDeckDates(state.editingDeck);
   els.deckName.value = state.editingDeck.name;
   els.deckFormat.value = state.editingDeck.format;
+  $("#deckInUse").checked = state.editingDeck.inUse === true;
   els.deckDates.textContent = `作成日 ${formatDeckDate(state.editingDeck.createdAt)}・更新日 ${formatDeckDate(state.editingDeck.updatedAt)}`;
   els.deckMemo.value = state.editingDeck.memo || "";
   els.deckCardFilter.value = "";
@@ -7491,6 +7498,7 @@ async function duplicateDeck() {
   delete copy.activeVersion;
   copy.id = uid();
   copy.name = `${source.name} コピー`;
+  copy.inUse = false;
   copy.createdAt = now;
   copy.updatedAt = now;
   state.decks.unshift(copy);
@@ -8158,6 +8166,22 @@ els.deckImportInput?.addEventListener("change", async event => {
   } finally {
     event.target.value = "";
   }
+});
+$("#deckInUseOnly").checked = state.deckInUseOnly;
+$("#deckInUseOnly").addEventListener("change", event => {
+  state.deckInUseOnly = event.target.checked;
+  appStorage.setItem(KEYS.deckInUseOnly, state.deckInUseOnly ? "1" : "");
+  renderDecks();
+});
+// Marking a deck 使用中 is not an edit of its cards, so the deck's 更新日 stays as it was.
+$("#deckInUse").addEventListener("change", event => {
+  if (!state.editingDeck) return;
+  state.editingDeck.inUse = event.target.checked;
+  const saved = state.decks.find(deck => deck.id === state.editingDeck.id);
+  if (!saved) return;
+  saved.inUse = state.editingDeck.inUse;
+  persist(["decks"]);
+  renderDecks();
 });
 els.deckFormatFilter.addEventListener("change", () => {
   state.deckFormatFilter = els.deckFormatFilter.value;
