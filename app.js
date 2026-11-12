@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v386";
+const APP_VERSION = "v387";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -36,6 +36,8 @@ const state = {
   cardDialogMode: "collection",
   variantCache: new Map(),
   selectedOwnedId: null,
+  // True when the card form's 仕様/状態/言語/保管場所 point at a lot that is not owned yet.
+  selectedOwnedFormEmpty: false,
   collectionViewMode: appStorage.getItem(KEYS.collectionViewMode) || "hidden",
   collectionPriceDisplayMode: appStorage.getItem(KEYS.collectionPriceDisplayMode) || "total",
   priceSourceMode: appStorage.getItem(KEYS.priceSourceMode) || "manual-wisdom-cardtrader",
@@ -3571,6 +3573,7 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   $("#addPurchaseButton").classList.toggle("ghost", mode !== "purchase");
   $("#purchaseQuantity").value = 1;
   state.selectedOwnedId = ownedId;
+  state.selectedOwnedFormEmpty = false;
   state.cardVariants = [];
   state.variantRenderLimit = VARIANT_RENDER_LIMIT;
   hideInlineStatus(els.cardActionStatus);
@@ -3625,8 +3628,13 @@ async function changeCardLanguage(lang) {
     return;
   }
   const purchaseQuantity = $("#purchaseQuantity").value;
+  const kept = { condition: els.cardCondition.value, finish: els.cardFinish.value, location: els.cardLocation.value };
   selectVariant({ ...withReviewedJpImage(applyJpIndexToCards([{ ...peer, _preferJpDisplay: lang === "ja" }])[0]), _chosenLanguage: lang });
   $("#purchaseQuantity").value = purchaseQuantity;
+  els.cardCondition.value = kept.condition;
+  els.cardFinish.value = kept.finish;
+  els.cardLocation.value = kept.location;
+  followFormOwnedLot();
   status.hidden = true;
 }
 
@@ -3720,7 +3728,7 @@ function selectedOwnedQuantity() {
 
 function selectedOwnedCard() {
   const selectedId = cardScryfallId(state.selectedCard);
-  if (!selectedId) return null;
+  if (!selectedId || state.selectedOwnedFormEmpty) return null;
   const owned = ownedCardForVariant(state.selectedCard);
   if (owned && state.selectedOwnedId !== owned.id) state.selectedOwnedId = owned.id;
   return owned;
@@ -4032,6 +4040,8 @@ function renderSelectedVariant() {
   els.cardFinish.value = owned?.finish || "normal";
   els.cardLanguage.value = cardFormLanguage(card, owned);
   els.cardLocation.value = owned?.location || "";
+  // A language chosen in the picker can differ from the remembered lot: show the lot the form names.
+  if (owned && !ownedLotMatchesForm(owned)) { followFormOwnedLot(); return; }
   updateCardOwnedActions();
 }
 
@@ -4064,8 +4074,31 @@ function updateVariantSelectionUi() {
   });
 }
 
+// Each owned lot is one print with one 仕様/状態/言語/保管場所. The card form edits only the lot
+// those fields name, so changing Foil (or any of them) never rewrites a different lot.
+function ownedLotMatchesForm(item) {
+  return normalizeCardCondition(item.condition) === normalizeCardCondition(els.cardCondition.value) &&
+    (item.finish || "normal") === (els.cardFinish.value || "normal") &&
+    (item.language || els.cardLanguage.value) === els.cardLanguage.value &&
+    String(item.location || "").trim() === els.cardLocation.value.trim();
+}
+function formOwnedLot() {
+  const selectedId = cardScryfallId(state.selectedCard);
+  if (!selectedId) return null;
+  const lots = state.collection.filter(item => item.scryfallId === selectedId && ownedLotMatchesForm(item));
+  return lots.find(item => item.id === state.selectedOwnedId) || lots[0] || null;
+}
+function followFormOwnedLot() {
+  const lot = formOwnedLot();
+  state.selectedOwnedId = lot?.id || null;
+  state.selectedOwnedFormEmpty = !lot;
+  els.cardQuantity.value = initialCardOwnedQuantity(state.cardDialogMode, Number(lot?.quantity || 0));
+  updateCardOwnedActions();
+}
+
 function selectVariant(card) {
   state.selectedCard = card;
+  state.selectedOwnedFormEmpty = false;
   const owned = ownedCardForVariant(card);
   state.selectedOwnedId = owned?.id || null;
   renderSelectedVariant();
@@ -4115,8 +4148,7 @@ function compactCard(card) {
 
 async function saveSelectedCardQuantity() {
   const target = Number(els.cardQuantity.value || 0);
-  const selectedId = cardScryfallId(state.selectedCard);
-  const owned = selectedOwnedCard();
+  const owned = formOwnedLot();
   if (!Number.isFinite(target) || !Number.isInteger(target) || target < 0) {
     showInlineStatus(els.cardActionStatus, "所持枚数は0以上の整数で入力してください", { sticky: true });
     return;
@@ -4128,30 +4160,16 @@ async function saveSelectedCardQuantity() {
   }
   const previousCollection = structuredClone(state.collection);
   const previousOwnedId = state.selectedOwnedId;
+  const previousFormEmpty = state.selectedOwnedFormEmpty;
   try {
     if (target <= 0) {
       if (owned) state.collection = state.collection.filter(card => card.id !== owned.id);
       state.selectedOwnedId = null;
+      state.selectedOwnedFormEmpty = true;
     } else {
       const incoming = compactCard(state.selectedCard);
       incoming.quantity = target;
-      const sameLot = card =>
-        card.id !== owned?.id &&
-        card.scryfallId === selectedId &&
-        normalizeCardCondition(card.condition) === incoming.condition &&
-        card.finish === incoming.finish &&
-        card.language === incoming.language &&
-        card.location === incoming.location;
-      const mergeTarget = state.collection.find(sameLot);
-      if (mergeTarget) {
-        const mergedPrice = mergedPurchasePrice(mergeTarget.purchasePriceYen, mergeTarget.quantity, owned?.purchasePriceYen, target);
-        if (mergedPrice != null) mergeTarget.purchasePriceYen = mergedPrice;
-        mergeTarget.quantity = Number(mergeTarget.quantity || 0) + target;
-        mergeTarget.favorite = mergeTarget.favorite || owned?.favorite || false;
-        mergeTarget.favoriteGroupIds = [...new Set([...(mergeTarget.favoriteGroupIds || []), ...(owned?.favoriteGroupIds || [])])];
-        if (owned) state.collection = state.collection.filter(card => card.id !== owned.id);
-        state.selectedOwnedId = mergeTarget.id;
-      } else if (owned) {
+      if (owned) {
         Object.assign(owned, incoming, {
           id: owned.id,
           quantity: target,
@@ -4160,15 +4178,18 @@ async function saveSelectedCardQuantity() {
           addedAt: owned.addedAt || incoming.addedAt,
         });
         state.selectedOwnedId = owned.id;
+        state.selectedOwnedFormEmpty = false;
       } else {
         state.collection.unshift(incoming);
         state.selectedOwnedId = incoming.id;
+        state.selectedOwnedFormEmpty = false;
       }
     }
     await persist(["collection"]);
   } catch (error) {
     state.collection = previousCollection;
     state.selectedOwnedId = previousOwnedId;
+    state.selectedOwnedFormEmpty = previousFormEmpty;
     const reason = error?.name === "QuotaExceededError" ? "端末の保存領域が不足しています" : `保存処理でエラーが発生しました（${error?.name || "不明"}）`;
     showInlineStatus(els.cardActionStatus, `保存できませんでした：${reason}。入力した枚数は変更せず、再度お試しください。`, { sticky: true });
     showToast(`保存できませんでした：${reason}`, { sticky: true });
@@ -8039,6 +8060,7 @@ els.incrementQuantity.addEventListener("click", event => { if (event.detail === 
 els.variantFilter.addEventListener("change", loadCardVariantLanguage);
 $("#openCardVariants").addEventListener("click", openCardVariantPicker);
 els.cardLanguage.addEventListener("change", () => changeCardLanguage(els.cardLanguage.value));
+[els.cardFinish, els.cardCondition, els.cardLocation].forEach(field => field.addEventListener("change", followFormOwnedLot));
 // A late close event must not empty the picker after it was reopened from the card dialog.
 $("#cardVariantDialog").addEventListener("close", () => { if ($("#cardVariantDialog").open) return; ++variantPickerRequestId; els.cardVariants.replaceChildren(); });
 // In the card dialog, ← goes back one step and × closes the whole dialog:
