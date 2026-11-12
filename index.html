@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=387">
-  <link rel="stylesheet" href="mobile-inputs.css?v=387">
+  <link rel="stylesheet" href="styles.css?v=388">
+  <link rel="stylesheet" href="mobile-inputs.css?v=388">
 </head>
 <body>
   <header class="app-header">
@@ -209,6 +209,9 @@ const BACKGROUND_THEME_CHROME = {
           <label>言語表示<select id="defaultCardLanguage"><option value="ja">日本語</option><option value="en">英語</option></select></label>
           <p class="muted">カード検索の初期言語です。変更は自動保存され、次回起動時も維持されます。検索ごとに詳細検索で変更できます。</p>
           <p id="defaultCardLanguageStatus" class="muted" role="status"></p>
+          <label>デッキ画面の表示<select id="deckDisplayMode"><option value="split">Foil・言語ごとに分けて表示</option><option value="merged">同じカードはまとめて表示</option></select></label>
+          <p class="muted">分けて表示：デッキの枚数を所持カードに割り当て、FoilとFoilでないもの、日本語版と英語版を別々に表示します。まとめて表示：1種類につき1枚で表示し、Foilでないものを持っていればそちらの見た目にします。</p>
+          <p id="deckDisplayModeStatus" class="muted" role="status"></p>
         </details>
         <hr>
         <div class="background-setting-heading"><h3 id="backgroundColorHeading">背景色</h3><span id="backgroundColorStatus" class="muted" aria-live="polite">現在の背景色：標準</span></div>
@@ -545,12 +548,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=387" defer></script>
-  <script src="scanner-host.js?v=387" defer></script>
+  <script src="storage.js?v=388" defer></script>
+  <script src="scanner-host.js?v=388" defer></script>
   <script src="mtg-jp-card-index.js?h=dcce21bec6d0" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=387" defer></script>
-  <script src="scanner/card-images.js?v=387" defer></script>
-  <script src="app.js?v=387" defer></script>
+  <script src="diagnostics.js?v=388" defer></script>
+  <script src="scanner/card-images.js?v=388" defer></script>
+  <script src="app.js?v=388" defer></script>
 </body>
 </html>

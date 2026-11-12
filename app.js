@@ -9,8 +9,8 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v387";
-const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
+const APP_VERSION = "v388";
+const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
 const COLLECTION_RENDER_LIMIT = 50;
@@ -44,6 +44,8 @@ const state = {
   collectionSortStack: read(KEYS.collectionSortStack, []),
   deckFormatFilter: appStorage.getItem(KEYS.deckFormatFilter) || "",
   defaultCardLanguage: appStorage.getItem(KEYS.defaultCardLanguage) === "ja" ? "ja" : "en",
+  // "split": the deck screen shows Foil / non-Foil and each language as separate tiles. "merged": one tile per card.
+  deckDisplayMode: appStorage.getItem(KEYS.deckDisplayMode) === "merged" ? "merged" : "split",
   backgroundTheme: appStorage.getItem(KEYS.backgroundTheme) || "default",
   editingDeck: null,
   editingDeckEntry: null,
@@ -6377,19 +6379,65 @@ function syncCommanderOptions() {
   });
 }
 
-function renderDeckSection(section, entries, emptyText = "") {
+// How each deck card is drawn. "split" deals the deck's copies out of the owned lots of that print, in deck order
+// (commander, main, side), starting with the lot the deck card points to, then non-Foil, then the rest; lots that
+// look the same (finish and language) share one tile, and copies nobody owns stay on the first tile as missing.
+// So 4 copies with Foil 1 + normal 4 owned show as Foil 1 + normal 3. "merged" draws one tile per deck card, in the
+// non-Foil look when a non-Foil copy is owned. Candidates (maybe) never take owned copies.
+function deckEntryDisplayParts(entries, mode = state.deckDisplayMode) {
+  const order = { commander: 0, main: 1, side: 2, maybe: 3 };
+  const pools = new Map();
+  const result = new Map();
+  for (const entry of [...entries].sort((a, b) => (order[a.section] ?? 1) - (order[b.section] ?? 1))) {
+    const card = cardForDeckEntry(entry);
+    const quantity = Number(entry.quantity || 0);
+    const id = card?.scryfallId || "";
+    const lots = id ? state.collection.filter(item => item.scryfallId === id && Number(item.quantity || 0) > 0) : [];
+    const key = `${entry.section}\n${entry.cardId}`;
+    if (!lots.length) { result.set(key, [{ card, quantity, missing: null }]); continue; }
+    if (mode === "merged" || entry.section === "maybe") {
+      const plain = lots.find(lot => !cardFinishKind(lot) && lot.language === card.language) || lots.find(lot => !cardFinishKind(lot));
+      const look = mode === "merged" && cardFinishKind(card) && plain ? plain : card;
+      result.set(key, [{ card: look, quantity, missing: null }]);
+      continue;
+    }
+    if (!pools.has(id)) pools.set(id, new Map(lots.map(lot => [lot.id, Number(lot.quantity || 0)])));
+    const pool = pools.get(id);
+    const ordered = [...lots].sort((a, b) => (b.id === entry.cardId) - (a.id === entry.cardId) ||
+      Boolean(cardFinishKind(a)) - Boolean(cardFinishKind(b)) || (b.language === card.language) - (a.language === card.language));
+    const parts = [];
+    let left = quantity;
+    for (const lot of ordered) {
+      const take = Math.min(left, pool.get(lot.id) || 0);
+      if (!take) continue;
+      pool.set(lot.id, pool.get(lot.id) - take);
+      left -= take;
+      const look = `${cardFinishKind(lot)}|${lot.language || ""}`;
+      const same = parts.find(part => part.look === look);
+      if (same) same.quantity += take; else parts.push({ card: lot, look, quantity: take, missing: 0 });
+    }
+    if (left > 0) {
+      if (parts.length) { parts[0].quantity += left; parts[0].missing = left; }
+      else parts.push({ card, quantity: left, missing: left });
+    }
+    result.set(key, parts);
+  }
+  return result;
+}
+
+function renderDeckSection(section, entries, emptyText = "", displayParts = null) {
   const label = sectionLabel(section);
   const count = entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
   const content = entries.length ? `
     <div class="deck-content-grid">
-      ${entries.map(entry => {
-        const card = cardForDeckEntry(entry);
-        const missing = section === "maybe" ? 0 : missingQuantityForEntry(entry);
+      ${entries.flatMap(entry => (displayParts?.get(`${entry.section}\n${entry.cardId}`) || [{ card: cardForDeckEntry(entry), quantity: Number(entry.quantity || 0), missing: null }]).map(part => ({ entry, part }))).map(({ entry, part }) => {
+        const card = part.card;
+        const missing = section === "maybe" ? 0 : part.missing ?? missingQuantityForEntry(entry);
         const dragging = deckDragState?.dragging && deckDragState.cardId === entry.cardId && deckDragState.section === entry.section;
         const selected = deckReorderSelection?.cardId === entry.cardId && deckReorderSelection?.section === entry.section;
         const classes = ["deck-content-card", cardFinishClass(card), missing ? "missing-card" : "", dragging ? "deck-dragging-card" : "", deckReorderMode ? "deck-reorder-mode-card" : "", selected ? "deck-reorder-selected" : ""].filter(Boolean).join(" ");
         const cardName = card ? nameOf(card) : "削除済みカード";
-        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName}${cardFinishKind(card) ? `（${cardFinishKind(card) === "foil" ? "Foil" : "Etched"}）` : ""} ${label} ${entry.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img ${card ? localizedImageAttrs(card) : ""} src="${esc(card?.image || "")}" alt="" loading="lazy" draggable="false"><span class="deck-card-quantity" aria-hidden="true">${entry.quantity}</span>${cardFinishBadge(card)}${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
+        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName}${cardFinishKind(card) ? `（${cardFinishKind(card) === "foil" ? "Foil" : "Etched"}）` : ""} ${label} ${part.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img ${card ? localizedImageAttrs(card) : ""} src="${esc(card?.image || "")}" alt="" loading="lazy" draggable="false"><span class="deck-card-quantity" aria-hidden="true">${part.quantity}</span>${cardFinishBadge(card)}${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
       }).join("")}
     </div>` : `<div class="deck-section-empty">${esc(emptyText || `${label}にカードがありません`)}</div>`;
   return `<section class="deck-section deck-section-${esc(section)}"><div class="deck-section-title"><span>${esc(label)}</span><b>${count}枚</b></div>${content}</section>`;
@@ -6700,11 +6748,12 @@ function renderDeckEditor() {
   const maybeEntries = deck.entries.filter(entry => entry.section === "maybe");
   const hasEntries = deck.entries.length > 0;
   els.deckCards.className = "deck-section-list";
+  const displayParts = deckEntryDisplayParts([...(isCommanderDeck() ? commanderEntries : []), ...mainEntries, ...sideEntries, ...maybeEntries]);
   els.deckCards.innerHTML = hasEntries ? [
-    isCommanderDeck() ? renderDeckSection("commander", commanderEntries, "統率者をここに追加できます") : "",
-    renderDeckSection("main", mainEntries),
-    renderDeckSection("side", sideEntries),
-    renderDeckSection("maybe", maybeEntries, "採用を悩んでいるカードをここに置けます"),
+    isCommanderDeck() ? renderDeckSection("commander", commanderEntries, "統率者をここに追加できます", displayParts) : "",
+    renderDeckSection("main", mainEntries, "", displayParts),
+    renderDeckSection("side", sideEntries, "", displayParts),
+    renderDeckSection("maybe", maybeEntries, "採用を悩んでいるカードをここに置けます", displayParts),
   ].join("") : '<div class="empty">「所持カードから追加」または「全カードから検索」から追加できます</div>';
   els.deckCards.querySelectorAll(".deck-content-card").forEach(button => {
     attachDeckContentCardHandlers(button);
@@ -7757,7 +7806,7 @@ function backupPayload() {
     fx: state.fx,
     favoriteGroups: state.favoriteGroups,
     scannerDrafts,
-    settings: { defaultCardLanguage: state.defaultCardLanguage, backgroundTheme: state.backgroundTheme, priceSourceMode: priceSourceMode() },
+    settings: { defaultCardLanguage: state.defaultCardLanguage, deckDisplayMode: state.deckDisplayMode, backgroundTheme: state.backgroundTheme, priceSourceMode: priceSourceMode() },
   };
 }
 
@@ -7842,6 +7891,11 @@ async function importBackup(file) {
     state.defaultCardLanguage = data.settings.defaultCardLanguage;
     applyDefaultCardLanguage();
   }
+  if (["split", "merged"].includes(data.settings?.deckDisplayMode)) {
+    await appStorage.setItem(KEYS.deckDisplayMode, data.settings.deckDisplayMode);
+    state.deckDisplayMode = data.settings.deckDisplayMode;
+    $("#deckDisplayMode").value = state.deckDisplayMode;
+  }
   if (data.settings?.backgroundTheme && BACKGROUND_THEMES[data.settings.backgroundTheme]) {
     applyBackgroundTheme(data.settings.backgroundTheme, { persist: true });
   }
@@ -7883,6 +7937,20 @@ function applyDefaultCardLanguage() {
   updateDeckAdvancedSearchSummary();
 }
 applyDefaultCardLanguage();
+$("#deckDisplayMode").value = state.deckDisplayMode;
+$("#deckDisplayMode").addEventListener("change", async event => {
+  const value = event.target.value === "merged" ? "merged" : "split";
+  const status = $("#deckDisplayModeStatus");
+  try {
+    await appStorage.setItem(KEYS.deckDisplayMode, value);
+    state.deckDisplayMode = value;
+    if (state.editingDeck && els.deckDialog.open) renderDeckEditor();
+    status.textContent = "保存しました";
+  } catch {
+    event.target.value = state.deckDisplayMode;
+    status.textContent = "保存できませんでした。端末の保存状態を確認してください。";
+  }
+});
 $("#defaultCardLanguage").addEventListener("change", async event => {
   const value = event.target.value === "ja" ? "ja" : "en";
   const status = $("#defaultCardLanguageStatus");
