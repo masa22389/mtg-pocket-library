@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v389";
+const APP_VERSION = "v390";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5258,7 +5258,65 @@ function visibleDeckList(decks, format, inUseOnly) {
   return decks.filter(deck => (!format || deck.format === format) && (!inUseOnly || deck.inUse === true));
 }
 
+// 使用中カード: the cards of every deck marked 使用中, read from each deck's latest version (what opening it shows),
+// grouped by card name. Commander, main and side count; candidates (maybe) do not. Owned is every printing of the name.
+function inUseCardGroups(decks, collection) {
+  const groups = new Map();
+  for (const deck of decks.filter(item => item.inUse === true)) {
+    for (const entry of deckLatestEntries(deck)) {
+      const section = ["commander", "main", "side", "maybe"].includes(entry.section) ? entry.section : "main";
+      const quantity = Number(entry.quantity || 0);
+      const card = cardForDeckEntry(entry);
+      if (section === "maybe" || !card || !(quantity > 0)) continue;
+      const key = card.oracleId || card.oracle_id || normalizeCardName(card.name || nameOf(card));
+      if (!groups.has(key)) groups.set(key, { key, card, used: 0, decks: new Map() });
+      const group = groups.get(key);
+      group.used += quantity;
+      if (!group.decks.has(deck.id)) group.decks.set(deck.id, { deck, counts: { commander: 0, main: 0, side: 0 } });
+      group.decks.get(deck.id).counts[section] += quantity;
+    }
+  }
+  return [...groups.values()]
+    .map(group => ({ ...group, owned: sameCardNameOwnedTotal(group.card, collection), decks: [...group.decks.values()] }))
+    .sort((a, b) => nameOf(a.card).localeCompare(nameOf(b.card), "ja"));
+}
+
+let deckTab = "list";
+function setDeckTab(tab) {
+  deckTab = tab === "inUse" ? "inUse" : "list";
+  document.querySelectorAll("[data-deck-tab]").forEach(button => {
+    const active = button.dataset.deckTab === deckTab;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", active ? "true" : "false");
+  });
+  document.querySelector("#decksView .deck-list-filter").hidden = deckTab !== "list";
+  els.deckList.hidden = deckTab !== "list";
+  $("#inUseCardsPanel").hidden = deckTab !== "inUse";
+  if (deckTab === "inUse") renderInUseCards();
+}
+
+function renderInUseCards() {
+  const list = $("#inUseCardList");
+  const summary = $("#inUseCardSummary");
+  const deckCount = state.decks.filter(deck => deck.inUse === true).length;
+  if (!deckCount) {
+    summary.textContent = "";
+    list.innerHTML = '<div class="empty">使用中のデッキがありません。デッキ画面で「使用中」にチェックを入れると、そのデッキで使っているカードがここに表示されます。</div>';
+    return;
+  }
+  const query = $("#inUseCardSearch").value.trim();
+  const groups = inUseCardGroups(state.decks, state.collection);
+  const shown = query ? groups.filter(group => collectionCardMatchesText(group.card, query)) : groups;
+  summary.textContent = `使用中デッキ ${deckCount}個・カード ${groups.length}種類${query ? `（${shown.length}件が該当）` : ""}`;
+  list.innerHTML = shown.length ? shown.map(group => {
+    const short = Math.max(0, group.used - group.owned);
+    const decks = group.decks.map(({ deck, counts }) => `<button type="button" class="ghost" data-open-deck="${esc(deck.id)}"><span>${esc(deck.name || "名称未設定")}</span><small>${["commander", "main", "side"].filter(section => counts[section] > 0).map(section => `${sectionLabel(section)} ${counts[section]}`).join("・")}</small></button>`).join("");
+    return `<details class="in-use-card${short ? " short" : ""}"><summary><img class="thumb" ${localizedImageAttrs(group.card)} src="${esc(group.card.image || imageOf(group.card) || "")}" alt="" loading="lazy" decoding="async"><span class="in-use-card-main"><strong>${esc(nameOf(group.card))}</strong><small>使用 ${group.used}枚・所持 ${group.owned}枚${short ? `・<b>${short}枚不足</b>` : ""}・${group.decks.length}デッキ</small></span></summary><div class="card-deck-usage-list in-use-card-decks">${decks}</div></details>`;
+  }).join("") : '<div class="empty">該当するカードがありません</div>';
+}
+
 function renderDecks() {
+  if (deckTab === "inUse") renderInUseCards();
   renderDeckFormatFilter();
   if (!state.decks.length) {
     finishDeckListReorderMode();
@@ -8166,6 +8224,12 @@ els.deckImportInput?.addEventListener("change", async event => {
   } finally {
     event.target.value = "";
   }
+});
+document.querySelectorAll("[data-deck-tab]").forEach(button => button.addEventListener("click", () => setDeckTab(button.dataset.deckTab)));
+$("#inUseCardSearch").addEventListener("input", renderInUseCards);
+$("#inUseCardList").addEventListener("click", event => {
+  const button = event.target.closest("[data-open-deck]");
+  if (button) openDeck(button.dataset.openDeck);
 });
 $("#deckInUseOnly").checked = state.deckInUseOnly;
 $("#deckInUseOnly").addEventListener("change", event => {
