@@ -495,3 +495,4 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .in-use-card.short b{color:#a8433a}
 .in-use-card-decks{padding:0 10px 10px}
 .in-use-deck-name{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;min-width:0}.in-use-deck-format{padding:1px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px;font-weight:600}
+.in-use-card-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}@media (max-width:560px){.in-use-card-controls{grid-template-columns:1fr}}.in-use-card-main .in-use-card-print{color:var(--green);font-weight:600}.in-use-card-main .in-use-card-print.foil{color:#8a6a12}

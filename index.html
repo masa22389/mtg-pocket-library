@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=391">
-  <link rel="stylesheet" href="mobile-inputs.css?v=391">
+  <link rel="stylesheet" href="styles.css?v=392">
+  <link rel="stylesheet" href="mobile-inputs.css?v=392">
 </head>
 <body>
   <header class="app-header">
@@ -183,7 +183,10 @@ const BACKGROUND_THEME_CHROME = {
       </section>
       <div id="deckList" class="deck-grid"></div>
       <section id="inUseCardsPanel" class="card in-use-cards" hidden>
-        <label>カード名で検索<input id="inUseCardSearch" type="search" placeholder="日本語名・英語名" autocomplete="off"></label>
+        <div class="in-use-card-controls">
+          <label>カード名で検索<input id="inUseCardSearch" type="search" placeholder="日本語名・英語名" autocomplete="off"></label>
+          <label>まとめ方<select id="inUseCardGrouping"><option value="print">収録版・Foil・言語ごと</option><option value="name">カード名でまとめる</option></select></label>
+        </div>
         <p id="inUseCardSummary" class="muted" role="status"></p>
         <div id="inUseCardList" class="in-use-card-list"></div>
       </section>
@@ -559,12 +562,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=391" defer></script>
-  <script src="scanner-host.js?v=391" defer></script>
+  <script src="storage.js?v=392" defer></script>
+  <script src="scanner-host.js?v=392" defer></script>
   <script src="mtg-jp-card-index.js?h=dcce21bec6d0" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=391" defer></script>
-  <script src="scanner/card-images.js?v=391" defer></script>
-  <script src="app.js?v=391" defer></script>
+  <script src="diagnostics.js?v=392" defer></script>
+  <script src="scanner/card-images.js?v=392" defer></script>
+  <script src="app.js?v=392" defer></script>
 </body>
 </html>

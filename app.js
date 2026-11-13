@@ -9,8 +9,8 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v391";
-const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
+const APP_VERSION = "v392";
+const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
 const COLLECTION_RENDER_LIMIT = 50;
@@ -44,6 +44,8 @@ const state = {
   collectionSortStack: read(KEYS.collectionSortStack, []),
   deckFormatFilter: appStorage.getItem(KEYS.deckFormatFilter) || "",
   deckInUseOnly: appStorage.getItem(KEYS.deckInUseOnly) === "1",
+  // 使用中カード: "print" splits rows by print, Foil and language; "name" groups every printing of a card name.
+  inUseCardGrouping: appStorage.getItem(KEYS.inUseCardGrouping) === "name" ? "name" : "print",
   defaultCardLanguage: appStorage.getItem(KEYS.defaultCardLanguage) === "ja" ? "ja" : "en",
   // "split": the deck screen shows Foil / non-Foil and each language as separate tiles. "merged": one tile per card.
   deckDisplayMode: appStorage.getItem(KEYS.deckDisplayMode) === "merged" ? "merged" : "split",
@@ -5260,6 +5262,44 @@ function visibleDeckList(decks, format, inUseOnly) {
 
 // 使用中カード: the cards of every deck marked 使用中, read from each deck's latest version (what opening it shows),
 // grouped by card name. Commander, main and side count; candidates (maybe) do not. Owned is every printing of the name.
+// "print": each deck's copies are dealt out of the owned lots exactly as the deck screen's split view does
+// (deckEntryDisplayParts), and rows are print + Foil + language. Owned then counts only that print, Foil and language.
+function inUseCardPrintGroups(decks, collection) {
+  const groups = new Map();
+  const lookOf = card => ({ id: card.scryfallId || cardScryfallId(card), finish: cardFinishKind(card), language: card.language || card.lang || "" });
+  for (const deck of decks.filter(item => item.inUse === true)) {
+    const entries = deckLatestEntries(deck)
+      .map(entry => ({ ...entry, section: ["commander", "main", "side", "maybe"].includes(entry.section) ? entry.section : "main" }))
+      .filter(entry => entry.section !== "maybe" && Number(entry.quantity || 0) > 0 && cardForDeckEntry(entry));
+    const parts = deckEntryDisplayParts(entries, "split");
+    for (const entry of entries) {
+      for (const part of parts.get(`${entry.section}\n${entry.cardId}`) || []) {
+        if (!part.card || !(part.quantity > 0)) continue;
+        const look = lookOf(part.card);
+        const key = `${look.id}|${look.finish}|${look.language}`;
+        if (!groups.has(key)) groups.set(key, { key, look, card: part.card, used: 0, decks: new Map() });
+        const group = groups.get(key);
+        group.used += part.quantity;
+        if (!group.decks.has(deck.id)) group.decks.set(deck.id, { deck, counts: { commander: 0, main: 0, side: 0 } });
+        group.decks.get(deck.id).counts[entry.section] += part.quantity;
+      }
+    }
+  }
+  return [...groups.values()].map(group => ({
+    ...group,
+    owned: collection.filter(lot => lot.scryfallId === group.look.id && cardFinishKind(lot) === group.look.finish && (lot.language || "") === group.look.language)
+      .reduce((sum, lot) => sum + Math.max(0, Number(lot.quantity || 0)), 0),
+    decks: [...group.decks.values()],
+  })).sort((a, b) => nameOf(a.card).localeCompare(nameOf(b.card), "ja") ||
+    String(a.card.set || "").localeCompare(String(b.card.set || "")) || String(a.card.collectorNumber || a.card.collector_number || "").localeCompare(String(b.card.collectorNumber || b.card.collector_number || ""), "ja", { numeric: true }) ||
+    a.look.finish.localeCompare(b.look.finish) || a.look.language.localeCompare(b.look.language));
+}
+function inUsePrintLabel(group) {
+  const card = group.card;
+  const language = group.look.language === "ja" ? "日本語" : group.look.language === "en" ? "英語" : group.look.language ? "その他の言語" : "";
+  return [`${String(card.set || "").toUpperCase()} #${card.collectorNumber || card.collector_number || ""}`, group.look.finish === "foil" ? "Foil" : group.look.finish === "etched" ? "Etched" : "", language].filter(Boolean).join("・");
+}
+
 function inUseCardGroups(decks, collection) {
   const groups = new Map();
   for (const deck of decks.filter(item => item.inUse === true)) {
@@ -5305,13 +5345,14 @@ function renderInUseCards() {
     return;
   }
   const query = $("#inUseCardSearch").value.trim();
-  const groups = inUseCardGroups(state.decks, state.collection);
+  const byPrint = state.inUseCardGrouping === "print";
+  const groups = byPrint ? inUseCardPrintGroups(state.decks, state.collection) : inUseCardGroups(state.decks, state.collection);
   const shown = query ? groups.filter(group => collectionCardMatchesText(group.card, query)) : groups;
-  summary.textContent = `使用中デッキ ${deckCount}個・カード ${groups.length}種類${query ? `（${shown.length}件が該当）` : ""}`;
+  summary.textContent = `使用中デッキ ${deckCount}個・${byPrint ? "" : "カード "}${groups.length}${byPrint ? "行" : "種類"}${query ? `（${shown.length}件が該当）` : ""}`;
   list.innerHTML = shown.length ? shown.map(group => {
     const short = Math.max(0, group.used - group.owned);
     const decks = group.decks.map(({ deck, counts }) => `<button type="button" class="ghost" data-open-deck="${esc(deck.id)}"><span class="in-use-deck-name">${esc(deck.name || "名称未設定")}${deck.format ? `<span class="in-use-deck-format">${esc(deck.format)}</span>` : ""}</span><small>${["commander", "main", "side"].filter(section => counts[section] > 0).map(section => `${sectionLabel(section)} ${counts[section]}`).join("・")}</small></button>`).join("");
-    return `<details class="in-use-card${short ? " short" : ""}"><summary><img class="thumb" ${localizedImageAttrs(group.card)} src="${esc(group.card.image || imageOf(group.card) || "")}" alt="" loading="lazy" decoding="async"><span class="in-use-card-main"><strong>${esc(nameOf(group.card))}</strong><small>使用 ${group.used}枚・所持 ${group.owned}枚${short ? `・<b>${short}枚不足</b>` : ""}・${group.decks.length}デッキ</small></span></summary><div class="card-deck-usage-list in-use-card-decks">${decks}</div></details>`;
+    return `<details class="in-use-card${short ? " short" : ""}"><summary><img class="thumb" ${localizedImageAttrs(group.card)} src="${esc(group.card.image || imageOf(group.card) || "")}" alt="" loading="lazy" decoding="async"><span class="in-use-card-main"><strong>${esc(nameOf(group.card))}</strong>${byPrint ? `<small class="in-use-card-print${group.look.finish ? " foil" : ""}">${esc(inUsePrintLabel(group))}</small>` : ""}<small>使用 ${group.used}枚・所持 ${group.owned}枚${short ? `・<b>${short}枚不足</b>` : ""}・${group.decks.length}デッキ</small></span></summary><div class="card-deck-usage-list in-use-card-decks">${decks}</div></details>`;
   }).join("") : '<div class="empty">該当するカードがありません</div>';
 }
 
@@ -8227,6 +8268,12 @@ els.deckImportInput?.addEventListener("change", async event => {
 });
 document.querySelectorAll("[data-deck-tab]").forEach(button => button.addEventListener("click", () => setDeckTab(button.dataset.deckTab)));
 $("#inUseCardSearch").addEventListener("input", renderInUseCards);
+$("#inUseCardGrouping").value = state.inUseCardGrouping;
+$("#inUseCardGrouping").addEventListener("change", event => {
+  state.inUseCardGrouping = event.target.value === "name" ? "name" : "print";
+  appStorage.setItem(KEYS.inUseCardGrouping, state.inUseCardGrouping);
+  renderInUseCards();
+});
 $("#inUseCardList").addEventListener("click", event => {
   const button = event.target.closest("[data-open-deck]");
   if (button) openDeck(button.dataset.openDeck);
