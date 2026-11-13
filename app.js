@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v390";
+const APP_VERSION = "v391";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5310,7 +5310,7 @@ function renderInUseCards() {
   summary.textContent = `使用中デッキ ${deckCount}個・カード ${groups.length}種類${query ? `（${shown.length}件が該当）` : ""}`;
   list.innerHTML = shown.length ? shown.map(group => {
     const short = Math.max(0, group.used - group.owned);
-    const decks = group.decks.map(({ deck, counts }) => `<button type="button" class="ghost" data-open-deck="${esc(deck.id)}"><span>${esc(deck.name || "名称未設定")}</span><small>${["commander", "main", "side"].filter(section => counts[section] > 0).map(section => `${sectionLabel(section)} ${counts[section]}`).join("・")}</small></button>`).join("");
+    const decks = group.decks.map(({ deck, counts }) => `<button type="button" class="ghost" data-open-deck="${esc(deck.id)}"><span class="in-use-deck-name">${esc(deck.name || "名称未設定")}${deck.format ? `<span class="in-use-deck-format">${esc(deck.format)}</span>` : ""}</span><small>${["commander", "main", "side"].filter(section => counts[section] > 0).map(section => `${sectionLabel(section)} ${counts[section]}`).join("・")}</small></button>`).join("");
     return `<details class="in-use-card${short ? " short" : ""}"><summary><img class="thumb" ${localizedImageAttrs(group.card)} src="${esc(group.card.image || imageOf(group.card) || "")}" alt="" loading="lazy" decoding="async"><span class="in-use-card-main"><strong>${esc(nameOf(group.card))}</strong><small>使用 ${group.used}枚・所持 ${group.owned}枚${short ? `・<b>${short}枚不足</b>` : ""}・${group.decks.length}デッキ</small></span></summary><div class="card-deck-usage-list in-use-card-decks">${decks}</div></details>`;
   }).join("") : '<div class="empty">該当するカードがありません</div>';
 }

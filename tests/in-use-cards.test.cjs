@@ -24,4 +24,5 @@ assert.deepEqual([...view],[
   '鏡割りの寓話 使用6 所持5 ボロス(main3,side1) 赤単(main2)',
 ],'grouped by name across prints; 候補 and decks not in use are left out; no section counts as main');
 assert.match(html,/data-deck-tab="inUse"/);assert.match(html,/<input id="inUseCardSearch" type="search"/);
+assert(code.includes('<span class="in-use-deck-format">${esc(deck.format)}</span>'),'each deck row names its format');
 console.log('PASS: the 使用中カード list groups in-use decks by card name, skips candidates, and compares with owned copies.');

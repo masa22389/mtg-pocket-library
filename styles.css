@@ -494,3 +494,4 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .in-use-card.short{border-color:#d79a94}
 .in-use-card.short b{color:#a8433a}
 .in-use-card-decks{padding:0 10px 10px}
+.in-use-deck-name{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;min-width:0}.in-use-deck-format{padding:1px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px;font-weight:600}
