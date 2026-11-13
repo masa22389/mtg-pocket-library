@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v392";
+const APP_VERSION = "v393";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -987,7 +987,15 @@ function cardFinishKind(card) {
   if (!card) return "";
   if (card.finish === "etched") return "etched";
   if (card.finish === "foil") return "foil";
-  return (!card.finish || card.finish === "normal") && cardIsFoilOnly(card) ? "foil" : "";
+  // An owned lot shows the 仕様 it was saved with, even on a print Scryfall lists as Foil-only (its data can be wrong,
+  // e.g. the Japanese PW23 #8). Only a card with no 仕様 at all (a search result) falls back to the print's finishes.
+  return !card.finish && cardIsFoilOnly(card) ? "foil" : "";
+}
+// The 仕様 a new lot of this print starts with: Foil for a Foil-only print, Etched for an Etched-only one.
+function defaultCardFinish(card) {
+  const finishes = Array.isArray(card?.finishes) ? card.finishes.map(value => String(value).toLowerCase()) : [];
+  if (finishes.length === 1 && finishes[0] === "etched") return "etched";
+  return card && cardIsFoilOnly(card) ? "foil" : "normal";
 }
 
 function cardFinishBadge(card) {
@@ -4042,7 +4050,7 @@ function renderSelectedVariant() {
   els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images${backImage ? " two-faces" : ""}"><img class="card-detail-image" ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" ${localizedImageAttrs(card, 1)} src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
   els.cardQuantity.value = initialCardOwnedQuantity(state.cardDialogMode, selectedOwnedQuantity());
   els.cardCondition.value = normalizeCardCondition(owned?.condition || "NM");
-  els.cardFinish.value = owned?.finish || "normal";
+  els.cardFinish.value = owned?.finish || defaultCardFinish(card);
   els.cardLanguage.value = cardFormLanguage(card, owned);
   els.cardLocation.value = owned?.location || "";
   // A language chosen in the picker can differ from the remembered lot: show the lot the form names.
@@ -7309,7 +7317,7 @@ function collectionCardFromDeckCard(card) {
     priceUpdatedAt: card.priceUpdatedAt || Date.now(),
     quantity: 1,
     condition: "NM",
-    finish: "normal",
+    finish: defaultCardFinish(card),
     language,
     location: "",
     favorite: false,

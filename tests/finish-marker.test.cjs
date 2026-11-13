@@ -4,7 +4,7 @@ const code = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 const c = {};
 vm.createContext(c);
-for (const name of ['cardIsFoilOnly', 'cardFinishKind', 'cardFinishBadge', 'cardFinishClass', 'cardFinishText']) {
+for (const name of ['cardIsFoilOnly', 'cardFinishKind', 'defaultCardFinish', 'cardFinishBadge', 'cardFinishClass', 'cardFinishText']) {
   const start = code.indexOf(`function ${name}(`);
   assert(start >= 0, name);
   vm.runInContext(code.slice(start, code.indexOf('\n}', start) + 2), c);
@@ -16,9 +16,21 @@ assert.equal(c.cardFinishKind({ finish: 'etched' }), 'etched');
 assert.equal(c.cardFinishKind({ finish: 'normal', finishes: ['nonfoil', 'foil'] }), '');
 assert.equal(c.cardFinishKind({ name: 'Added from search' }), '');
 assert.equal(c.cardFinishKind(null), '');
-// A print that only exists in foil is foil, the same as for prices.
-assert.equal(c.cardFinishKind({ finish: 'normal', finishes: ['foil'] }), 'foil');
+// A saved lot shows its own 仕様, even on a print Scryfall lists as Foil-only (the Japanese PW23 #8 紅蓮破 is
+// listed as Foil-only but the owned copy is normal). Only a card with no 仕様 falls back to the print's finishes.
+assert.equal(c.cardFinishKind({ finish: 'normal', finishes: ['foil'] }), '');
+assert.equal(c.cardFinishKind({ finish: 'normal', foil: true, nonfoil: false }), '');
+assert.equal(c.cardFinishKind({ finishes: ['foil'] }), 'foil');
 assert.equal(c.cardFinishKind({ foil: true, nonfoil: false }), 'foil');
+// A new lot of a Foil-only print starts as Foil in the card screen (and when added from a deck); others start normal.
+assert.equal(c.defaultCardFinish({ finishes: ['foil'] }), 'foil');
+assert.equal(c.defaultCardFinish({ foil: true, nonfoil: false }), 'foil');
+assert.equal(c.defaultCardFinish({ finishes: ['etched'] }), 'etched');
+assert.equal(c.defaultCardFinish({ finishes: ['nonfoil', 'foil'] }), 'normal');
+assert.equal(c.defaultCardFinish({ finishes: ['nonfoil'] }), 'normal');
+assert.equal(c.defaultCardFinish(null), 'normal');
+assert(code.includes('els.cardFinish.value = owned?.finish || defaultCardFinish(card);'));
+assert(code.includes('    finish: defaultCardFinish(card),'));
 
 assert.equal(c.cardFinishBadge({ finish: 'foil' }), '<span class="finish-badge finish-foil">Foil</span>');
 assert.equal(c.cardFinishBadge({ finish: 'etched' }), '<span class="finish-badge finish-etched">Etched</span>');
