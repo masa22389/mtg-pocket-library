@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v393";
+const APP_VERSION = "v394";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2251,10 +2251,18 @@ function stripLanguageFilter(filters) {
     .trim();
 }
 
+// Scryfall matches Japanese card text only in a lang:ja search, so Japanese words in カードテキスト検索 search the
+// Japanese prints whatever 言語 is set to; English words keep the chosen language.
+function effectiveSearchLanguage(prefix = "search") {
+  const oracleText = $("#" + prefix + "OracleText")?.value.trim() || "";
+  if (isJapanese(oracleText)) return "ja";
+  return $("#" + prefix + "Language")?.value || "";
+}
+
 function buildCardSearchFilters(options = {}) {
   const prefix = options.prefix || "search";
   const terms = [buildScryfallFilters("", $("#" + prefix + "Mana").value, $("#" + prefix + "Type").value, $("#" + prefix + "Set").value)];
-  const language = $("#" + prefix + "Language")?.value || "";
+  const language = effectiveSearchLanguage(prefix);
   const oracleText = $("#" + prefix + "OracleText")?.value.trim() || "";
   const format = $("#" + prefix + "Format")?.value || "";
   const subtype = options.omitSubtype ? "" : normalizeScryfallSubtype($("#" + prefix + "Subtype")?.value);
@@ -2388,7 +2396,7 @@ function initAdvancedSearchUi() {
     <label>言語<select id="searchLanguage">
       <option value="">指定なし</option><option value="ja">日本語</option><option value="en">英語</option><option value="zhs">中国語・簡体字</option><option value="zht">中国語・繁体字</option><option value="ko">韓国語</option><option value="fr">フランス語</option><option value="de">ドイツ語</option><option value="it">イタリア語</option><option value="es">スペイン語</option><option value="pt">ポルトガル語</option><option value="ru">ロシア語</option>
     </select></label>
-    <label>カードテキスト検索<input id="searchOracleText" type="search" placeholder="例：draw a card"></label>
+    <label>カードテキスト検索<input id="searchOracleText" type="search" placeholder="例：打ち消す / 速攻 / draw a card"></label>
     <label>フォーマット<select id="searchFormat">
       <option value="">指定なし</option><option value="standard">スタンダード</option><option value="pioneer">パイオニア</option><option value="modern">モダン</option><option value="legacy">レガシー</option><option value="vintage">ヴィンテージ</option><option value="commander">統率者</option><option value="pauper">パウパー</option><option value="brawl">ブロール</option>
     </select></label>
@@ -2585,7 +2593,7 @@ async function searchCards() {
     updateClearSearchResultsButton();
     if (!navigator.onLine) { els.searchButton.disabled = false; updateClearSearchResultsButton(); return; }
 
-  const selectedLanguage = $("#searchLanguage")?.value || "";
+  const selectedLanguage = effectiveSearchLanguage("search");
   const oracleText = $("#searchOracleText")?.value.trim() || "";
   const sourceLang = selectedLanguage || ([query, rawSubtype, oracleText].some(isJapanese) ? "ja" : "en");
   const targetLang = sourceLang === "ja" ? "en" : "ja";
@@ -7526,7 +7534,7 @@ async function searchDeckCards() {
   state.deckSearchResults = [];
   renderDeckEditor();
   try {
-    let cards = (await fetchSearchCandidates(query, filters, $("#deckSearchLanguage")?.value || (isJapanese(query) ? "ja" : "en"), exactMatch, exactMatch ? 40 : Number.POSITIVE_INFINITY, {localizedSubtype:subtype, exhaustive:Boolean(stripLanguageFilter(filters) || subtype)})).cards;
+    let cards = (await fetchSearchCandidates(query, filters, effectiveSearchLanguage("deckSearch") || (isJapanese(query) ? "ja" : "en"), exactMatch, exactMatch ? 40 : Number.POSITIVE_INFINITY, {localizedSubtype:subtype, exhaustive:Boolean(stripLanguageFilter(filters) || subtype)})).cards;
     const needle = normalizeCardName(query);
     const aliasNeedles = aliasTargetsForQuery(query, { exactOnly: exactMatch }).map(normalizeCardName);
     cards.sort((a, b) => {
