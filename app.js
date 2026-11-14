@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v394";
+const APP_VERSION = "v395";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2645,6 +2645,10 @@ async function searchCards() {
         renderSearchResults();
         els.searchStatus.textContent = `${state.searchGroups.length}種類を表示・続きを検索中…`;
       },
+      onLoading: loaded => {
+        if (requestId !== searchRequestId) return;
+        els.searchStatus.textContent = `${state.searchGroups.length}種類を表示・続きを検索中…（${loaded}件読み込み済み）`;
+      },
     });
     if (requestId !== searchRequestId) return;
     primaryCards = searchResult.cards;
@@ -2755,12 +2759,16 @@ async function fetchAllScryfallSearch(q, options = {}) {
   if (!first.ok) return first;
   const cards = [...first.data.data];
   let nextPage = first.data.has_more ? first.data.next_page : null;
+  if (nextPage) options.onPage?.(cards);
   while (nextPage) {
     if (!cachedSearchPage(nextPage)) await new Promise(resolve => setTimeout(resolve, 80));
-    const response = await fetchSearchPage(nextPage);
+    let response;
+    try { response = await fetchSearchPage(nextPage); }
+    catch { return { ok: false, error: { details: "Scryfallへの通信に失敗しました。時間をおいて再検索してください。" } }; }
     if (!response.ok) return { ok: false, error: response.data };
     const page = response.data;
     cards.push(...page.data);
+    if (page.has_more) options.onPage?.(cards);
     nextPage = page.has_more ? page.next_page : null;
   }
   return { ok: true, data: { ...first.data, data: cards, has_more: false, next_page: null } };
@@ -3250,6 +3258,12 @@ async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards =
 }
 
 function buildSearchCandidates(query, filters, preferredLang = "", exactMatch = false) {
+  // Without a card name the name and alias variants add nothing: they return the same cards again, and an advanced
+  // search fetches every page of each (27 requests for カードテキスト「速攻」, enough to hit Scryfall's rate limit).
+  const filterTerms = String(filters || "").trim();
+  if (!String(query || "").trim() && filterTerms) {
+    return /\blang:/.test(filterTerms) ? [filterTerms] : [...new Set([preferredLang ? `lang:${preferredLang} ${filterTerms}` : "", filterTerms].filter(Boolean))];
+  }
   const searchTerms = [query, filters].filter(Boolean).join(" ");
   const shouldUseAliases = preferredLang === "ja" || exactMatch;
   const aliases = shouldUseAliases ? aliasTargetsForQuery(query, { exactOnly: exactMatch, limit: exactMatch ? 20 : 8 }) : [];
@@ -3404,7 +3418,16 @@ async function fetchSearchCandidates(query, filters, preferredLang, exactMatch, 
   const seen = new Set();
   let lastError = null;
   for (const q of candidates) {
-    const result = await runSearch(q, { unique: "cards" });
+    // An advanced search reads every page. The first page is drawn at once; redrawing the growing list after every
+    // later page made a 3,520-card search take 33 s, so later pages only update the loaded count until the end.
+    let pagesSeen = 0;
+    const onPage = exhaustive && options.onProgress
+      ? pageCards => {
+        if (pagesSeen++ === 0) options.onProgress(applyClientFilters([...cards, ...pageCards.filter(card => !seen.has(card.id))]));
+        else options.onLoading?.(cards.length + pageCards.length);
+      }
+      : undefined;
+    const result = await runSearch(q, { unique: "cards", onPage });
     if (result.ok) {
       const nameMatches = exactMatch ? result.data.data.filter(card => cardNameMatchesExactly(card, query)) : result.data.data;
       const matches = applyClientFilters(nameMatches);
@@ -3489,6 +3512,8 @@ async function fetchCounterparts(cards, targetLang, extraFilters = "") {
 
   const counterparts = [];
   const neutralFilters = stripLanguageFilter(extraFilters);
+  // Japanese card text exists only on Japanese prints, so an English lookup with it can never match.
+  if (targetLang !== "ja" && /o:"[^"]*[぀-ヿ㐀-鿿]/.test(neutralFilters)) return counterparts;
   for (const card of uniqueCards) {
     const exactName = String(card.name || "").replaceAll('"', '\\"');
     if (!exactName) continue;
