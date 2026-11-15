@@ -2,14 +2,14 @@
 
 // The large search indexes are referenced by a content hash (?h=...) instead of the app version (?v=...),
 // so an app update downloads them again only when their contents change.
-// Run after updating mtg-jp-card-index.js or mtgjson-jp-search-index.js. --check only verifies.
+// Run after updating mtg-jp-card-index.js, mtgjson-jp-search-index.js or reserved-list.js. --check only verifies.
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const PROJECT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const HASHED_ASSETS = ["mtg-jp-card-index.js", "mtgjson-jp-search-index.js"];
+export const HASHED_ASSETS = ["mtg-jp-card-index.js", "mtgjson-jp-search-index.js", "reserved-list.js"];
 const REFERENCING_FILES = ["index.html", "sw.js"];
 
 export async function assetHash(name) {

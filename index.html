@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=399">
-  <link rel="stylesheet" href="mobile-inputs.css?v=399">
+  <link rel="stylesheet" href="styles.css?v=400">
+  <link rel="stylesheet" href="mobile-inputs.css?v=400">
 </head>
 <body>
   <header class="app-header">
@@ -133,6 +133,7 @@ const BACKGROUND_THEME_CHROME = {
         <label>まとめ方<select id="collectionGrouping"><option value="">一覧</option><option value="set">エキスパンション別（新しい順）</option><option value="set-oldest">エキスパンション別（古い順）</option></select></label>
         <label class="favorite-filter"><input id="collectionUnderFour" type="checkbox"><span>所持枚数4枚未満</span></label>
         <label class="favorite-filter"><input id="collectionFoilOnly" type="checkbox"><span>Foilのみ</span></label>
+        <label class="favorite-filter"><input id="collectionReservedOnly" type="checkbox"><span>再録禁止のみ</span></label>
         <label>価格<select id="collectionPriceFilter"><option value="">すべて</option><option value="priced">価格あり</option><option value="missing">価格なし</option><option value="english">英語版参考</option><option value="over10000">1万円以上</option><option value="over50000">5万円以上</option></select></label>
         <label class="favorite-filter"><input id="collectionFavoritesOnly" type="checkbox"><span>★ お気に入りのみ</span></label>
         <label>お気に入りグループ<select id="collectionFavoriteGroup"><option value="">すべて</option></select></label>
@@ -562,12 +563,13 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=399" defer></script>
-  <script src="scanner-host.js?v=399" defer></script>
+  <script src="storage.js?v=400" defer></script>
+  <script src="scanner-host.js?v=400" defer></script>
   <script src="mtg-jp-card-index.js?h=9b352f851b04" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
-  <script src="diagnostics.js?v=399" defer></script>
-  <script src="scanner/card-images.js?v=399" defer></script>
-  <script src="app.js?v=399" defer></script>
+  <script src="reserved-list.js?h=f25d12c86b70" defer></script>
+  <script src="diagnostics.js?v=400" defer></script>
+  <script src="scanner/card-images.js?v=400" defer></script>
+  <script src="app.js?v=400" defer></script>
 </body>
 </html>

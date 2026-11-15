@@ -56,7 +56,7 @@ console.log('PASS finish marker');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const dialog = html.slice(html.indexOf('id="collectionFilterDialog"'), html.indexOf('</dialog>', html.indexOf('id="collectionFilterDialog"')));
 assert(dialog.includes('<input id="collectionFoilOnly" type="checkbox"><span>Foilのみ</span>'));
-assert(code.includes('return (!foilOnly || cardFinishKind(card)) && (!underFour'));
+assert(code.includes('return (!foilOnly || cardFinishKind(card)) && (!reservedOnly || isReservedCard(card)) && (!underFour'));
 assert(code.includes('if ($("#collectionFoilOnly").checked) chips.push("Foilのみ");'));
 assert(code.includes('$("#collectionFoilOnly").addEventListener("change", showFilteredCollection);'));
 assert(code.includes('$("#collectionFoilOnly").checked = false;'));

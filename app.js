@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v399";
+const APP_VERSION = "v400";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -1004,6 +1004,22 @@ function defaultCardFinish(card) {
 function cardFinishBadge(card) {
   const kind = cardFinishKind(card);
   return kind ? `<span class="finish-badge finish-${kind}">${kind === "foil" ? "Foil" : "Etched"}</span>` : "";
+}
+
+// Reserved List cards (reserved-list.js, built from Scryfall is:reserved). Saved lots never stored the flag, so the
+// app's own list decides by oracle ID, then English name for old lots without one.
+const RESERVED_LIST = Array.isArray(window.MTG_RESERVED_LIST) ? window.MTG_RESERVED_LIST : [];
+const RESERVED_ORACLE_IDS = new Set(RESERVED_LIST.map(row => row[0]));
+const RESERVED_NAMES = new Set(RESERVED_LIST.map(row => String(row[1]).toLowerCase()));
+function isReservedCard(card) {
+  if (!card) return false;
+  if (card.reserved === true) return true;
+  const oracleId = card.oracleId || card.oracle_id || "";
+  if (oracleId) return RESERVED_ORACLE_IDS.has(oracleId);
+  return RESERVED_NAMES.has(String(card.name || "").toLowerCase());
+}
+function reservedBadge(card) {
+  return isReservedCard(card) ? '<span class="reserved-badge">再録禁止</span>' : "";
 }
 
 function cardFinishClass(card) {
@@ -2343,6 +2359,7 @@ function updateCollectionFilterSummary() {
   if (formatLabel) chips.push(`フォーマット:${formatLabel}`);
   if ($("#collectionUnderFour").checked) chips.push("所持枚数4枚未満");
   if ($("#collectionFoilOnly").checked) chips.push("Foilのみ");
+  if ($("#collectionReservedOnly").checked) chips.push("再録禁止のみ");
   if (color) chips.push(`色:${color}`);
   if (mana) chips.push(`マナ:${mana}`);
   if (type) chips.push(`タイプ:${type}`);
@@ -4109,7 +4126,7 @@ function renderSelectedVariant() {
   const card = state.selectedCard;
   const owned = selectedOwnedCard();
   const backImage = backImageOf(card);
-  els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images${backImage ? " two-faces" : ""}"><img class="card-detail-image" ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" ${localizedImageAttrs(card, 1)} src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span><h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
+  els.cardPreview.innerHTML = `<div class="card-detail-preview"><div class="card-detail-images${backImage ? " two-faces" : ""}"><img class="card-detail-image" ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="${esc(nameOf(card))}">${backImage ? `<img class="card-detail-image card-detail-back" ${localizedImageAttrs(card, 1)} src="${esc(backImage)}" alt="${esc(altNameOf(card) || nameOf(card))} 裏面">` : ""}</div><div><span class="eyebrow">${esc((card.set || "").toUpperCase())} #${esc(card.collector_number)} · ${displayLanguageLabel(card)}</span>${reservedBadge(card)}<h2>${esc(nameOf(card))}</h2><p class="muted">${altNameOf(card) ? `${esc(altNameOf(card))}<br>` : ""}${esc(typeOf(card))}</p></div></div>`;
   els.cardQuantity.value = initialCardOwnedQuantity(state.cardDialogMode, selectedOwnedQuantity());
   els.cardCondition.value = normalizeCardCondition(owned?.condition || "NM");
   els.cardFinish.value = owned?.finish || defaultCardFinish(card);
@@ -4378,6 +4395,7 @@ function renderCollection() {
   const underFour = $("#collectionUnderFour").checked;
   // Foil only: the same check as the Foil / Etched marker, so Etched and foil-only prints count too.
   const foilOnly = $("#collectionFoilOnly").checked;
+  const reservedOnly = $("#collectionReservedOnly").checked;
   const artworkTotals = underFour ? ownedArtworkTotals(state.collection) : new Map();
   let cards = state.collection.filter(card => {
     const textMatch = collectionCardMatchesText(card, query);
@@ -4391,7 +4409,7 @@ function renderCollection() {
       || (priceFilter === "over50000" && yenValue != null && yenValue >= 50000);
     const favoriteMatch = (!favoritesOnly || card.favorite === true) && favoriteGroupMatch(card, favoriteGroupId);
     const artworkQuantity = artworkTotals.get(ownedArtworkKey(card)) || 0;
-    return (!foilOnly || cardFinishKind(card)) && (!underFour || (artworkQuantity >= 1 && artworkQuantity < 4 && Number(card.quantity) > 0)) && (!state.sameNameCollectionCard || isSameOwnedCardName(state.sameNameCollectionCard, card)) && textMatch && cardMatch && priceMatch && favoriteMatch;
+    return (!foilOnly || cardFinishKind(card)) && (!reservedOnly || isReservedCard(card)) && (!underFour || (artworkQuantity >= 1 && artworkQuantity < 4 && Number(card.quantity) > 0)) && (!state.sameNameCollectionCard || isSameOwnedCardName(state.sameNameCollectionCard, card)) && textMatch && cardMatch && priceMatch && favoriteMatch;
   });
   cards = sortedCollectionCards(cards);
   const expansionGroups = groupBySet ? collectionExpansionGroups(cards, knownSets, grouping === "set-oldest") : [];
@@ -4440,7 +4458,7 @@ function renderCollection() {
     els.collectionList.innerHTML = visibleCards.map(card => `${groupHeading(card)}
       <button type="button" class="collection-image-card ${cardFinishClass(card)}" data-id="${card.id}" aria-label="${esc(nameOf(card))}${cardFinishKind(card) ? `（${cardFinishKind(card) === "foil" ? "Foil" : "Etched"}）` : ""}の詳細を開く">
         <img ${localizedImageAttrs(card)} src="${esc(card.image)}" alt="" loading="lazy">
-        <span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>${cardFinishBadge(card)}
+        <span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>${cardFinishBadge(card)}${reservedBadge(card)}
         ${collectionPriceDisplayValue(card) != null ? `<span class="collection-price-badge">${esc(collectionPriceLabel(card, true))}</span>` : ""}
       </button>`).join("") + loadMoreButton + collapseButton;
   els.collectionList.querySelectorAll(".collection-image-card").forEach(button => {
@@ -4458,7 +4476,7 @@ function renderCollection() {
     ${groupHeading(card)}<article class="list-item" data-id="${card.id}">
       <button class="collection-card-open" type="button" aria-label="${esc(nameOf(card))}の詳細を開く">
         <span class="collection-thumb-wrap ${cardFinishClass(card)}"><img class="thumb" ${localizedImageAttrs(card)} src="${esc(card.image)}" alt="" loading="lazy"><span class="collection-qty-badge">×${Number(card.quantity || 0)}</span>${cardFinishBadge(card)}</span>
-        <span class="item-main"><strong>${esc(nameOf(card))}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(normalizeCardCondition(card.condition))} · ${cardFinishText(card)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${favoriteGroupNames(card).map(name => `<span class="chip">★ ${esc(name)}</span>`).join("")}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
+        <span class="item-main"><strong>${esc(nameOf(card))}${reservedBadge(card)}</strong><small>${esc(card.set)} #${esc(card.collectorNumber)} · ${esc(normalizeCardCondition(card.condition))} · ${cardFinishText(card)}${card.metadataVersion ? ` · MV ${esc(card.manaValue)}` : ""}</small><span class="asset-value">${esc(collectionPriceLabel(card))}</span>${favoriteGroupNames(card).map(name => `<span class="chip">★ ${esc(name)}</span>`).join("")}${card.location ? `<span class="chip">${esc(card.location)}</span>` : ""}</span>
       </button>
       <div class="item-actions"><button class="tiny move-owned-up" aria-label="${esc(nameOf(card))}を前へ移動" ${groupBySet || index === 0 ? "disabled" : ""}>↑</button><button class="tiny move-owned-down" aria-label="${esc(nameOf(card))}を後へ移動" ${groupBySet || index === cards.length - 1 ? "disabled" : ""}>↓</button><button class="tiny minus" aria-label="1枚減らす">−</button><span class="qty-pill">×${card.quantity}</span><button class="tiny plus" aria-label="1枚増やす">＋</button><button class="tiny favorite-owned ${card.favorite ? "active" : ""}" aria-label="${esc(nameOf(card))}を${card.favorite ? "お気に入りから外す" : "お気に入りに追加"}" aria-pressed="${card.favorite ? "true" : "false"}">${card.favorite ? "★" : "☆"}</button><button class="tiny delete-owned" aria-label="${esc(nameOf(card))}をコレクションから削除">削除</button></div>
     </article>`;
@@ -8232,10 +8250,12 @@ $("#showSameNameCollection").addEventListener("click", showSameNameCollection);
 $("#clearSameNameCollection").addEventListener("click", () => { clearSameNameCollection(); showFilteredCollection(); });
 $("#collectionUnderFour").addEventListener("change", showFilteredCollection);
 $("#collectionFoilOnly").addEventListener("change", showFilteredCollection);
+$("#collectionReservedOnly").addEventListener("change", showFilteredCollection);
 els.collectionFavoritesOnly.addEventListener("change", () => { resetCollectionRenderLimit(); renderCollection(); });
 els.clearCollectionFilters.addEventListener("click", () => {
   $("#collectionUnderFour").checked = false;
   $("#collectionFoilOnly").checked = false;
+  $("#collectionReservedOnly").checked = false;
   clearSameNameCollection(false);
   $("#collectionFormat").value = ""; $("#collectionSetQuery").value = ""; $("#collectionSetFilter").value = ""; resetCollectionChipFilters(); els.collectionPriceFilter.value = ""; if (els.collectionFavoriteGroup) els.collectionFavoriteGroup.value = ""; els.collectionFavoritesOnly.checked = false; resetCollectionRenderLimit(); renderCollection();
 });
