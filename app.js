@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v396";
+const APP_VERSION = "v397";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3258,6 +3258,25 @@ async function fetchLocalSearchCandidates(query, filters, exactMatch, maxCards =
     // Show what has arrived while the remaining name groups are still being fetched.
     if (onProgress && cards.length && queryIndex < queries.length - 1) onProgress(orderedCards());
     await new Promise(resolve => setTimeout(resolve, 80));
+  }
+  // A lang:ja search finds nothing for a print Scryfall lists in English only (BRO #163 ファイレクシアのドラゴン・エンジン),
+  // so look up the English print with the other conditions and show it as the index's Japanese print.
+  const missingJapanese = /\blang:ja\b/i.test(filters)
+    ? localItems.filter(item => item.noScryfallJapanese && item.oracleId && !seen.has(exactMatch ? item.scryfallId : item.oracleId))
+    : [];
+  if (missingJapanese.length) {
+    const englishFilters = `(${missingJapanese.map(item => `oracleid:${item.oracleId}`).join(" or ")}) ${stripLanguageFilter(filters)} lang:en`.replace(/\s+/g, " ").trim();
+    const result = await fetchScryfallSearch(englishFilters, { unique: "prints" });
+    if (result.ok) {
+      for (const print of result.data.data || []) {
+        const item = missingJapanese.find(entry => entry.scryfallId === print.id);
+        const localized = item && supplementalJpVariantForCard(print);
+        const key = exactMatch ? print.id : print.oracle_id;
+        if (!localized || seen.has(key)) continue;
+        seen.add(key);
+        cards.push(localized);
+      }
+    } else lastError = result.error;
   }
   if (!cards.length && lastError) return { cards: [], items: localItems, error: lastError };
   return { cards: orderedCards(), items: localItems, error: null };
