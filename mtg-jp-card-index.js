@@ -14524,7 +14524,7 @@ window.MTG_JP_CARD_INDEX = [
   },
   {
     "source": "manual補完",
-    "sourceUrl": "https://mtg.cardsrealm.com/ja-jp/card/phyrexian-dragon-engine",
+    "sourceUrl": "https://www.hareruyamtg.com/ja/products/detail/121621?lang=JP",
     "setCode": "BRO",
     "collectorNumber": "163",
     "scryfallId": "e2b826be-4256-4fd6-ad4d-6c80933ee940",
@@ -14538,12 +14538,11 @@ window.MTG_JP_CARD_INDEX = [
     ],
     "scryfallName": "Phyrexian Dragon Engine",
     "images": {
-      "normal": "https://cards.scryfall.io/normal/front/e/2/e2b826be-4256-4fd6-ad4d-6c80933ee940.jpg?1783920055"
+      "normal": "https://files.hareruyamtg.com/img/goods/L/BRO/jp/phyrexian_dragon_engine_jp_zik20tfev9.jpg"
     },
     "releasedAt": "2022-11-18",
     "setName": "The Brothers' War",
-    "noScryfallJapanese": true,
-    "imageIsEnglish": true
+    "noScryfallJapanese": true
   },
   {
     "source": "mtg-jp-card-gallery",

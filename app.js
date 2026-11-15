@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v398";
+const APP_VERSION = "v399";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -533,6 +533,9 @@ function imageOf(card) {
 }
 function localizedImageAttrs(card, face = 0) {
   if (!prefersJapaneseDisplay(card)) return '';
+  // An index-only Japanese print already carries its Japanese picture (BRO #163 from Hareruya). Scryfall has no
+  // Japanese record to look up, so the check would only add 「日本語画像は未取得です」 under the right picture.
+  if (!face && card._supplementalJpVariant && card._jpImageExact && card.jpImage) return '';
   const request={set:card.set || card.setCode,number:card.collector_number || card.collectorNumber,oracleId:card.oracle_id || card.oracleId || jpIndexForCard(card)?.oracleId || '',illustrationId:card.illustration_id || card.illustrationId || '',language:'ja',face,fallbackUrl:face?backImageOf(card):imageOf(card)};
   return `data-japanese-image="${esc(JSON.stringify(request))}"`;
 }
@@ -3006,8 +3009,7 @@ function applyJpIndexToCard(card) {
   if (!item) return card;
   const localizeDisplay = shouldLocalizeDisplay(card);
   // An entry without a picture (MH3 variants whose gallery image showed the regular card) only gives names.
-  // An entry whose picture is the English print's (imageIsEnglish, BRO #163) gives the name but keeps 英語版画像.
-  const localizeImage = jpIndexImageMatchesCard(item, card) && Boolean(item.images?.normal || item.image) && !item.imageIsEnglish;
+  const localizeImage = jpIndexImageMatchesCard(item, card) && Boolean(item.images?.normal || item.image);
   const canUseJpImage = isJapaneseCard(card) || Boolean(card._supplementalJpVariant);
   const localizeTopImage = canUseJpImage && localizeImage;
   const itemNames = displayJaNamesForIndexItem(item);

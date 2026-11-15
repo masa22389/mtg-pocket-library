@@ -10,8 +10,9 @@ assert.deepEqual(engine.jaNames,['ファイレクシアのドラゴン・エン�
 assert.equal(engine.scryfallId,'e2b826be-4256-4fd6-ad4d-6c80933ee940');
 assert.equal(engine.oracleId,'022b42a6-ee0f-4080-b973-c1b68938c3be');
 assert.equal(engine.noScryfallJapanese,true);
-assert.equal(engine.imageIsEnglish,true,'its picture is the English print, so the label says 英語版画像');
-assert(code.includes('&& !item.imageIsEnglish;'));
+// Its picture is the Japanese print from Hareruya's product page (163/287 BRO・JP), not the English one.
+assert.equal(engine.images.normal,'https://files.hareruyamtg.com/img/goods/L/BRO/jp/phyrexian_dragon_engine_jp_zik20tfev9.jpg');
+assert.equal(engine.imageIsEnglish,undefined);
 const c={};vm.createContext(c);
 vm.runInContext(code.slice(code.indexOf('function jpIndexAddsJapanesePrint('),code.indexOf('// Prepared Ancestral Recall')),c);
 // It stands in for a Japanese print like an official gallery record; other manual entries only add names and pictures.
@@ -43,3 +44,13 @@ assert(!code.includes('source === "mtg-jp-card-gallery" && indexed.images'));
   console.log('PASS: with 言語=日本語 the name search still finds BRO #163.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
 console.log('PASS: BRO #163 ファイレクシアのドラゴン・エンジン can be picked in Japanese though Scryfall lists it in English only.');
+// Its Japanese picture is shown as is, without the Scryfall check that would note 「日本語画像は未取得です」 under it.
+{
+  const c2={prefersJapaneseDisplay:()=>true,jpIndexForCard:()=>null,esc:x=>x,imageOf:card=>card.image_uris.normal,backImageOf:()=>''};
+  vm.createContext(c2);vm.runInContext(code.slice(code.indexOf('function localizedImageAttrs('),code.indexOf('function backImageOf(')),c2);
+  const jp={set:'bro',collector_number:'163',image_uris:{normal:engine.images.normal},jpImage:engine.images.normal,_jpImageExact:true,_supplementalJpVariant:true};
+  assert.equal(c2.localizedImageAttrs(jp),'');
+  assert.match(c2.localizedImageAttrs({...jp,_supplementalJpVariant:false}),/data-japanese-image/,'other Japanese cards still check');
+  assert.match(c2.localizedImageAttrs({...jp,_jpImageExact:false}),/data-japanese-image/,'a name-only entry still looks for a picture');
+  console.log('PASS: BRO #163 shows its Japanese picture without a 未取得 note.');
+}
