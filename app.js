@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v401";
+const APP_VERSION = "v402";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -1027,7 +1027,8 @@ function reservedBadge(card) {
 // Saved for a week under its own key, which backups do not include.
 const RESERVED_LIST_CACHE_KEY = "mtg-pocket.reservedListCache.v1";
 const RESERVED_LIST_CACHE_MS = 7 * 24 * 60 * 60 * 1000;
-const reservedListView = { rows: null, fetchedAt: 0, loading: false };
+// Expansions start folded; openSets keeps the ones opened while the dialog is redrawn (a name search opens all hits).
+const reservedListView = { rows: null, fetchedAt: 0, loading: false, openSets: new Set() };
 function reservedCardUsd(card) {
   const usd = Number(card?.prices?.usd || card?.prices?.usd_foil || card?.prices?.usd_etched || 0);
   return usd > 0 ? usd : null;
@@ -1092,11 +1093,15 @@ function renderReservedList() {
   const groups = reservedListGroups(matches);
   const ownedKinds = rows.filter(row => owned.get(row.oracleId)).length;
   if (rows.length) $("#reservedListStatus").textContent = `${rows.length}種・所持 ${ownedKinds}種${query ? `・該当 ${matches.length}種` : ""}${state.fx?.usdJpy ? `・USD/JPY ${state.fx.usdJpy}` : "・為替未設定のためドル表示"}`;
-  $("#reservedListSets").innerHTML = groups.map(group => `<section class="reserved-list-set"><h3>${esc(setDisplayName({ code: group.set, name: group.setName }))}<small>${group.rows.length}種</small></h3><div class="set-card-grid reserved-list-grid">${group.rows.map(row => {
+  $("#reservedListSets").innerHTML = groups.map(group => {
+    const ownedInSet = group.rows.filter(row => owned.get(row.oracleId)).length;
+    const open = Boolean(query) || reservedListView.openSets.has(group.set);
+    return `<details class="reserved-list-set" data-set="${esc(group.set)}"${open ? " open" : ""}><summary><span>${esc(setDisplayName({ code: group.set, name: group.setName }))}</span><small>${group.rows.length}種${ownedInSet ? `・所持 ${ownedInSet}種` : ""}</small></summary><div class="set-card-grid reserved-list-grid">${group.rows.map(row => {
     const count = owned.get(row.oracleId) || 0;
     const name = row.jaName || row.name;
     return `<button type="button" class="set-card reserved-list-card" data-reserved-id="${esc(row.jaId || row.id)}" aria-label="${esc(name)}の詳細を開く"><span class="set-card-image"><img ${row.jaId && !row.jaImage ? `data-japanese-image="${esc(JSON.stringify({ set: row.set, number: row.number, oracleId: row.oracleId, language: "ja", face: 0, fallbackUrl: row.image }))}"` : ""} src="${esc(row.jaImage || row.image)}" alt="${esc(name)}" loading="lazy" decoding="async">${count ? `<b>所持 ${count}</b>` : ""}</span><span class="reserved-list-name">${esc(name)}</span><span class="reserved-list-price">${esc(reservedListPrice(row))}</span></button>`;
-  }).join("")}</div></section>`).join("") || (rows.length ? '<p class="muted">該当するカードはありません。</p>' : "");
+  }).join("")}</div></details>`;
+  }).join("") || (rows.length ? '<p class="muted">該当するカードはありません。</p>' : "");
 }
 async function loadReservedList(force = false) {
   if (reservedListView.loading) return;
@@ -8381,7 +8386,24 @@ $("#clearSameNameCollection").addEventListener("click", () => { clearSameNameCol
 $("#collectionUnderFour").addEventListener("change", showFilteredCollection);
 $("#collectionFoilOnly").addEventListener("change", showFilteredCollection);
 $("#collectionReservedOnly").addEventListener("change", showFilteredCollection);
-$("#openReservedList").addEventListener("click", () => { $("#reservedListDialog").showModal(); loadReservedList(); });
+// The dialog keeps its scroll position when closed, so it is put back at the top each time it opens.
+$("#openReservedList").addEventListener("click", () => {
+  const scroller = $("#reservedListDialog .dialog-card");
+  $("#reservedListDialog").showModal();
+  scroller.scrollTop = 0;
+  $("#reservedListTop").hidden = true;
+  loadReservedList();
+});
+$("#reservedListDialog .dialog-card").addEventListener("scroll", event => { $("#reservedListTop").hidden = event.currentTarget.scrollTop < 400; }, { passive: true });
+$("#reservedListTop").addEventListener("click", () => {
+  $("#reservedListDialog .dialog-card").scrollTop = 0;
+  $("#reservedListTop").hidden = true;
+});
+$("#reservedListSets").addEventListener("toggle", event => {
+  const set = event.target.closest?.("details[data-set]")?.dataset.set;
+  if (!set || $("#reservedListQuery").value.trim()) return;
+  if (event.target.open) reservedListView.openSets.add(set); else reservedListView.openSets.delete(set);
+}, true);
 $("#closeReservedList").addEventListener("click", () => $("#reservedListDialog").close());
 $("#retryReservedList").addEventListener("click", () => loadReservedList(true));
 $("#reservedListQuery").addEventListener("input", renderReservedList);

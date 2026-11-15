@@ -48,7 +48,7 @@ assert(/\.reserved-list-open\{min-height:44px/.test(css));
 assert(/\.reserved-list-search input\{font-size:16px;min-height:44px\}/.test(css));
 assert(code.includes('fetchAllScryfallSearch("is:reserved is:firstprint lang:en"'));
 assert(code.includes('fetchAllScryfallSearch("is:reserved is:firstprint lang:ja"'));
-assert(code.includes('$("#openReservedList").addEventListener("click", () => { $("#reservedListDialog").showModal(); loadReservedList(); });'));
+assert(code.includes('$("#openReservedList").addEventListener("click", () => {')&&code.includes('  $("#reservedListDialog").showModal();\n  scroller.scrollTop = 0;'));
 // Saved under its own key for a week; backups list their fields and do not include it.
 assert(code.includes('const RESERVED_LIST_CACHE_KEY = "mtg-pocket.reservedListCache.v1";'));
 assert(!code.slice(code.indexOf('function backupPayload('),code.indexOf('async function exportBackup(')).includes('reservedList'));
@@ -57,4 +57,11 @@ assert(!code.slice(code.indexOf('function backupPayload('),code.indexOf('async f
   const open=code.slice(code.indexOf('async function openReservedListCard('),code.indexOf('function cardFinishClass('));
   assert(open.includes('openCardDialog(card, "set", ownedCardForVariant(card)?.id || null);'));
 }
+// Each expansion folds (closed unless opened, or matched by a name search); the dialog opens at the top and has 上に戻る.
+assert(code.includes('const open = Boolean(query) || reservedListView.openSets.has(group.set);'));
+assert(code.includes('<details class="reserved-list-set" data-set="${esc(group.set)}"${open ? " open" : ""}><summary>'));
+assert(code.includes('  scroller.scrollTop = 0;\n'));
+assert(html.includes('<button id="reservedListTop" class="reserved-list-top" type="button" hidden>↑ 上に戻る</button>'));
+assert(/\.reserved-list-top\{position:sticky;[^}]*min-height:44px/.test(css));
+assert(/\.reserved-list-set>summary\{[^}]*min-height:48px/.test(css));
 console.log('PASS: the 再録禁止一覧 dialog lists first printings by expansion with Japanese pictures, reference prices and owned counts.');

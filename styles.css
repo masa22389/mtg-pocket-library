@@ -507,8 +507,14 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .reserved-list-note{font-size:12px;margin:4px 0 10px}
 .reserved-list-search{display:block;margin-bottom:8px}
 .reserved-list-search input{font-size:16px;min-height:44px}
-.reserved-list-set h3{display:flex;align-items:baseline;gap:8px;margin:18px 0 0;font-size:15px}
-.reserved-list-set h3 small{font-size:12px;color:var(--muted);font-weight:700}
 .reserved-list-grid{margin-top:8px}
 .reserved-list-card .reserved-list-name{display:block;font-size:11px;margin-top:6px;overflow-wrap:anywhere}
 .set-card.reserved-list-card>span.reserved-list-price{display:block;margin-top:2px;font-size:12px;font-weight:900;color:var(--green)}
+/* 再録禁止一覧: one folding section per expansion and a 上に戻る button that stays at the bottom of the dialog. */
+.reserved-list-sets{display:grid;gap:8px}
+.reserved-list-set{border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.reserved-list-set>summary{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;padding:6px 12px;font-size:15px;font-weight:900;cursor:pointer}
+.reserved-list-set>summary small{font-size:12px;color:var(--muted);font-weight:700;white-space:nowrap}
+.reserved-list-set[open]>summary{border-bottom:1px solid var(--line)}
+.reserved-list-set .reserved-list-grid{margin:10px}
+.reserved-list-top{position:sticky;bottom:4px;justify-self:end;z-index:3;min-height:44px;padding:0 14px;border-radius:22px;font-size:12px;box-shadow:0 3px 12px #0003}

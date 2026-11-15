@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=401">
-  <link rel="stylesheet" href="mobile-inputs.css?v=401">
+  <link rel="stylesheet" href="styles.css?v=402">
+  <link rel="stylesheet" href="mobile-inputs.css?v=402">
 </head>
 <body>
   <header class="app-header">
@@ -381,6 +381,7 @@ const BACKGROUND_THEME_CHROME = {
       <label class="reserved-list-search">カード名<input id="reservedListQuery" type="search" placeholder="例：Black Lotus / 裏切り者の都"></label>
       <p id="reservedListStatus" class="muted" role="status"></p><button id="retryReservedList" type="button" class="ghost" hidden>再取得</button>
       <div id="reservedListSets" class="reserved-list-sets"></div>
+      <button id="reservedListTop" class="reserved-list-top" type="button" hidden>↑ 上に戻る</button>
     </form>
   </dialog>
   <dialog id="cardVariantDialog" autofocus>
@@ -573,13 +574,13 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=401" defer></script>
-  <script src="scanner-host.js?v=401" defer></script>
+  <script src="storage.js?v=402" defer></script>
+  <script src="scanner-host.js?v=402" defer></script>
   <script src="mtg-jp-card-index.js?h=9b352f851b04" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
   <script src="reserved-list.js?h=f25d12c86b70" defer></script>
-  <script src="diagnostics.js?v=401" defer></script>
-  <script src="scanner/card-images.js?v=401" defer></script>
-  <script src="app.js?v=401" defer></script>
+  <script src="diagnostics.js?v=402" defer></script>
+  <script src="scanner/card-images.js?v=402" defer></script>
+  <script src="app.js?v=402" defer></script>
 </body>
 </html>
