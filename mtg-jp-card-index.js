@@ -14523,6 +14523,28 @@ window.MTG_JP_CARD_INDEX = [
     "setName": "Innistrad: Midnight Hunt"
   },
   {
+    "source": "manual補完",
+    "sourceUrl": "https://mtg.cardsrealm.com/ja-jp/card/phyrexian-dragon-engine",
+    "setCode": "BRO",
+    "collectorNumber": "163",
+    "scryfallId": "e2b826be-4256-4fd6-ad4d-6c80933ee940",
+    "oracleId": "022b42a6-ee0f-4080-b973-c1b68938c3be",
+    "setNameJa": "兄弟戦争",
+    "jaNames": [
+      "ファイレクシアのドラゴン・エンジン"
+    ],
+    "enNames": [
+      "Phyrexian Dragon Engine"
+    ],
+    "scryfallName": "Phyrexian Dragon Engine",
+    "images": {
+      "normal": "https://cards.scryfall.io/normal/front/e/2/e2b826be-4256-4fd6-ad4d-6c80933ee940.jpg?1783920055"
+    },
+    "releasedAt": "2022-11-18",
+    "setName": "The Brothers' War",
+    "noScryfallJapanese": true
+  },
+  {
     "source": "mtg-jp-card-gallery",
     "sourceUrl": "https://mtg-jp.com/products/card-gallery/0000297/533634/",
     "setCode": "TLA",

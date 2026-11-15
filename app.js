@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v395";
+const APP_VERSION = "v396";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -2936,6 +2936,12 @@ function jpIndexForCard(card) {
   return MTG_JP_CARD_INDEX.find(item => jpIndexMatchesCard(item, card)) || null;
 }
 
+// An index entry that stands in for a Japanese print Scryfall lacks: an official gallery record, or a reviewed manual
+// entry marked noScryfallJapanese (BRO #163 ファイレクシアのドラゴン・エンジン, a meld half Scryfall has in English only).
+function jpIndexAddsJapanesePrint(item) {
+  return item?.source === "mtg-jp-card-gallery" || item?.noScryfallJapanese === true;
+}
+
 function jpIndexImageMatchesCard(item, card) {
   if (!item || !card) return false;
   const cardScryfallId = card.id || card.scryfallId || "";
@@ -3333,7 +3339,7 @@ async function fetchCompleteSetCandidates(setCode, filters) {
   // Official Japanese prints may be available before Scryfall's Japanese records.
   // Keep every other search condition and only localize exact, verified prints.
   const officialPrints = new Map(localItems
-    .filter(item => item.source === "mtg-jp-card-gallery" && item.images?.normal && item.jaNames?.length)
+    .filter(item => jpIndexAddsJapanesePrint(item) && item.images?.normal && item.jaNames?.length)
     .map(item => [String(item.collectorNumber), item]));
   const needsOfficialJapanese = /\blang:ja\b/i.test(normalizedFilters) && officialPrints.size > 0;
   const officialFallback = needsOfficialJapanese
@@ -3658,7 +3664,7 @@ async function changeCardLanguage(lang) {
   let peer = state.cardVariants.find(item => item.lang === lang && sameCardPrint(item, card));
   if (!peer && lang === "ja") {
     const indexed = jpIndexForCard(card);
-    if (indexed?.source === "mtg-jp-card-gallery" && indexed.images?.normal && jpIndexImageMatchesCard(indexed, card)) peer = supplementalJpVariantForCard(card);
+    if (jpIndexAddsJapanesePrint(indexed) && indexed.images?.normal && jpIndexImageMatchesCard(indexed, card)) peer = supplementalJpVariantForCard(card);
   }
   if (!peer && card.oracle_id) {
     const result = await fetchScryfallSearch(`oracleid:${card.oracle_id} set:${card.set} cn:${JSON.stringify(String(card.collector_number))} lang:${lang}`);
@@ -3734,11 +3740,11 @@ async function fetchPrintsForLanguage(card, lang) {
     if (!result.ok && result.error?.status !== 404) throw new Error("収録版を取得できませんでした。言語を選び直すか、もう一度開いてください。");
     let variants = result.ok ? result.data.data : [];
     // Official Japanese gallery records can precede Scryfall's Japanese prints.
-    if (lang === "ja" && MTG_JP_CARD_INDEX.some(row => row.oracleId === card.oracle_id && row.source === "mtg-jp-card-gallery")) {
+    if (lang === "ja" && MTG_JP_CARD_INDEX.some(row => row.oracleId === card.oracle_id && jpIndexAddsJapanesePrint(row))) {
       const english = await fetchAllScryfallSearch(`${query} lang:en`, { order: "released", dir: "desc" });
       for (const print of english.ok ? english.data.data : []) {
         const indexed = jpIndexForCard(print);
-        if (indexed?.source !== "mtg-jp-card-gallery" || !indexed.images?.normal || !jpIndexImageMatchesCard(indexed, print)) continue;
+        if (!jpIndexAddsJapanesePrint(indexed) || !indexed.images?.normal || !jpIndexImageMatchesCard(indexed, print)) continue;
         const localized = supplementalJpVariantForCard(print);
         if (localized && !variants.some(item => sameCardPrint(item, localized))) variants.push(localized);
       }
