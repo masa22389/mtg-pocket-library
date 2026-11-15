@@ -5,6 +5,7 @@ const c={};vm.createContext(c);vm.runInContext(code.slice(code.indexOf('function
 assert.equal(c.cardFormLanguage({lang:'ja',_chosenLanguage:'ja'},{language:'en'}),'ja');
 assert.equal(c.cardFormLanguage({lang:'en',_chosenLanguage:'en'},{language:'ja'}),'en');
 assert.equal(c.cardFormLanguage({lang:'ja',_reviewedJpImage:'u'},{language:'en'}),'ja');
+assert.equal(c.cardFormLanguage({lang:'ja',_supplementalJpVariant:true},{language:'en'}),'ja','the Japanese result of an English-only print (BRO #163) opens in Japanese even with an English copy saved');
 // Without a choice the saved lot decides, and a lot saved as Japanese on an English print stays Japanese.
 assert.equal(c.cardFormLanguage({lang:'en'},{language:'ja'}),'ja');
 assert.equal(c.cardFormLanguage({lang:'ja'},null),'ja');

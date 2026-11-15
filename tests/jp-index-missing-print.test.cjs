@@ -10,6 +10,8 @@ assert.deepEqual(engine.jaNames,['ファイレクシアのドラゴン・エン�
 assert.equal(engine.scryfallId,'e2b826be-4256-4fd6-ad4d-6c80933ee940');
 assert.equal(engine.oracleId,'022b42a6-ee0f-4080-b973-c1b68938c3be');
 assert.equal(engine.noScryfallJapanese,true);
+assert.equal(engine.imageIsEnglish,true,'its picture is the English print, so the label says 英語版画像');
+assert(code.includes('&& !item.imageIsEnglish;'));
 const c={};vm.createContext(c);
 vm.runInContext(code.slice(code.indexOf('function jpIndexAddsJapanesePrint('),code.indexOf('// Prepared Ancestral Recall')),c);
 // It stands in for a Japanese print like an official gallery record; other manual entries only add names and pictures.

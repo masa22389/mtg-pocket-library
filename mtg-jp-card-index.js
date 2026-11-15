@@ -14542,7 +14542,8 @@ window.MTG_JP_CARD_INDEX = [
     },
     "releasedAt": "2022-11-18",
     "setName": "The Brothers' War",
-    "noScryfallJapanese": true
+    "noScryfallJapanese": true,
+    "imageIsEnglish": true
   },
   {
     "source": "mtg-jp-card-gallery",

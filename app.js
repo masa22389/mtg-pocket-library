@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v397";
+const APP_VERSION = "v398";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -3006,7 +3006,8 @@ function applyJpIndexToCard(card) {
   if (!item) return card;
   const localizeDisplay = shouldLocalizeDisplay(card);
   // An entry without a picture (MH3 variants whose gallery image showed the regular card) only gives names.
-  const localizeImage = jpIndexImageMatchesCard(item, card) && Boolean(item.images?.normal || item.image);
+  // An entry whose picture is the English print's (imageIsEnglish, BRO #163) gives the name but keeps 英語版画像.
+  const localizeImage = jpIndexImageMatchesCard(item, card) && Boolean(item.images?.normal || item.image) && !item.imageIsEnglish;
   const canUseJpImage = isJapaneseCard(card) || Boolean(card._supplementalJpVariant);
   const localizeTopImage = canUseJpImage && localizeImage;
   const itemNames = displayJaNamesForIndexItem(item);
@@ -4095,10 +4096,11 @@ function initialCardOwnedQuantity(mode, quantity) {
   return mode === "scanner" ? Math.max(1, quantity) : quantity;
 }
 
-// A language the user just chose wins over the saved lot: reviewed Japanese printings share the English print's
-// Scryfall ID, so both languages find the same lot.
+// A language the user just chose wins over the saved lot: reviewed and index-only Japanese printings share the English
+// print's Scryfall ID, so both languages find the same lot. Tapping the Japanese result (BRO #163) must open in
+// Japanese even when an English copy is saved.
 function cardFormLanguage(card, owned) {
-  return card._chosenLanguage || (card._reviewedJpImage ? "ja" : "") || owned?.language || (card.lang === "ja" ? "ja" : card.lang === "en" ? "en" : "other");
+  return card._chosenLanguage || (card._reviewedJpImage || card._supplementalJpVariant ? "ja" : "") || owned?.language || (card.lang === "ja" ? "ja" : card.lang === "en" ? "en" : "other");
 }
 
 function renderSelectedVariant() {
