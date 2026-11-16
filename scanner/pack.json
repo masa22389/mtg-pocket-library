@@ -1,11 +1,11 @@
 {
   "ready": true,
   "version": "full-0.1",
-  "rows": 58676,
-  "identityCount": 38091,
-  "printCount": 109991,
+  "rows": 59185,
+  "identityCount": 38343,
+  "printCount": 110763,
   "sourceDate": "2026-10-23",
-  "scope": "Scryfall default/unique_artwork snapshots 2026-10-23; paper cards and available faces/artwork. Language-independent identity matching, English-first printing metadata; not a claim of perfect recognition.",
+  "scope": "Scryfall default/unique_artwork snapshots 2026-10-23, plus whole-set supplements listed in coverage.json; paper cards and available faces/artwork. Language-independent identity matching, English-first printing metadata; not a claim of perfect recognition.",
   "assets": [
     {
       "path": "align-client.mjs",
@@ -44,23 +44,23 @@
     },
     {
       "path": "data/cards.json",
-      "bytes": 5654509,
-      "sha256": "3039ce650ffb55610f126078c6044787ccf9eaf5f152dccd9c7213228af1beff"
+      "bytes": 5703373,
+      "sha256": "6e5943318b72c1cbc62d039f5f2469d3f05203109456acaf6d3a4f2eb229174a"
     },
     {
       "path": "data/full-features.f16.bin",
-      "bytes": 29156352,
-      "sha256": "48d72304363ff95feb72c45452f04fa5d60ffc73104b2b9946bd0f9de6270220"
+      "bytes": 29353984,
+      "sha256": "3b2cfb48708da68c8cc6466c4293343e4547145fae211370831ddf855d6367ea"
     },
     {
       "path": "data/identities.json",
-      "bytes": 5120444,
-      "sha256": "8f7dbb7ca2385645debda5c869da76210e365738871894fb1010f4becf78490b"
+      "bytes": 5164095,
+      "sha256": "c9aa6fc4010272339475fdb44726ae7ead6806b34fe9e816dff6be0e4a5a5722"
     },
     {
       "path": "data/japanese-image-manifest.json",
-      "bytes": 44550,
-      "sha256": "54affeefe1e441b937a1bbef512afc30f2bb8a99948dff06b3439a5f679b4423"
+      "bytes": 45018,
+      "sha256": "1d10fc77ce496f9720fdb8f4db1d430d40d1dbbef9827422f98bb5ca7eccfe4f"
     },
     {
       "path": "data/japanese-images.json",
@@ -69,33 +69,33 @@
     },
     {
       "path": "data/milo-cards.json",
-      "bytes": 10958197,
-      "sha256": "d1207e71c2ebc3d15917d4946f8065de731b2beb9bc9c2d3e7039f93c5224cd1"
+      "bytes": 11032309,
+      "sha256": "fc9f4e1bbbbd23bfae89b20aba23620d3f9fe9ec28810d09a02b95e3ad81e81c"
     },
     {
       "path": "data/milo-source.json",
-      "bytes": 426,
-      "sha256": "5f1e36382fcce672301a02f78e466c4e6703e2703f0d22b62c18b87b519eef54"
+      "bytes": 749,
+      "sha256": "7ec71ba0ca3e54480c153a1c1f235f47280faed10f8302ff57a5eb34d0a76e1a"
     },
     {
       "path": "data/phash-meta.json",
-      "bytes": 352,
-      "sha256": "61738b3aa7b414f01075c6b572c9b035f23dbfbf808fd908fea38115f04ff765"
+      "bytes": 558,
+      "sha256": "400d1c49f17297cfb987a6f5c79a5f89ea949163de9aa6ca953b60885731bbcb"
     },
     {
       "path": "data/phash.bin",
-      "bytes": 1877632,
-      "sha256": "4602cef1a10292ce2e42796af7d01a94c0c202ca3a2f3de51509128b02d617ef"
+      "bytes": 1893920,
+      "sha256": "cd8556cb64b4cb51d0a606bc81f6f72cc7d4a9ba51f1f9ac34eb45a7e5adbc2c"
     },
     {
       "path": "data/print-display.json",
-      "bytes": 864763,
-      "sha256": "8a2b2a80758ba41d4d930789f25dca8619200df0599a53c6d54436392ebc7092"
+      "bytes": 870680,
+      "sha256": "88f58ae3f229d42cba6c141b19121960c5ad1954e6562560c7972b4b76970337"
     },
     {
       "path": "data/prints.json",
-      "bytes": 17744517,
-      "sha256": "01ed5d721641df0b1d9581bd05754b5436353f919cbacd09acc5e7c2c5a683bb"
+      "bytes": 17862522,
+      "sha256": "953d496d757ba89e95e95defd715783863b4975d4e87854296ff1d34cf4fbdea"
     },
     {
       "path": "draft-press.mjs",
@@ -238,6 +238,6 @@
       "sha256": "5159376db6143e4523b084a6359508aac29238338f79be7f9eec81c49eee0405"
     }
   ],
-  "totalBytes": 92881155,
-  "buildId": "149ffb52a6dd"
+  "totalBytes": 93386621,
+  "buildId": "9d635d8e29cf"
 }

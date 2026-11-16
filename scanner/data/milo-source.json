@@ -2,12 +2,26 @@
   "source": "CollectorVision Catalog v2 scryfall/mtg",
   "version": 64,
   "updatedAt": "2026-10-23T09:05:40.788Z",
-  "rows": 113892,
+  "rows": 114664,
   "embedding": {
     "model": "collectorvision@9d45a37ebfe40f22ece70507015645de134dc3ec:milo-1.0.0@sha256:bd13d8d60383c69da04dce261f32e93fdaeaa8fd618fbc991e7385f71b3d45df",
     "dimensions": 128,
     "dtype": "float16",
     "byte_order": "little",
     "layout": "row-major"
-  }
+  },
+  "supplements": [
+    {
+      "sets": [
+        "trk",
+        "trc",
+        "sds",
+        "ttrk",
+        "ttrc"
+      ],
+      "imageSource": "Scryfall normal, fetched 2026-11-16",
+      "rows": 1213,
+      "preprocessing": "448x448 bilinear, ImageNet mean/std, L2 normalised (scripts/build-set-scanner-embeddings.py)"
+    }
+  ]
 }

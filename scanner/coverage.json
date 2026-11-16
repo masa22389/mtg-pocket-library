@@ -1,10 +1,23 @@
 {
   "sourceDate": "2026-10-23",
-  "paperPrintingIds": 109991,
-  "printingFaceRecords": 110074,
-  "identityCount": 38091,
-  "referenceCount": 58676,
+  "paperPrintingIds": 110763,
+  "printingFaceRecords": 110846,
+  "identityCount": 38343,
+  "referenceCount": 59185,
   "missingIdentityReferences": 0,
   "failedImages": 0,
-  "statement": "カタログ被覆率であり、実写正解率ではない。"
+  "statement": "カタログ被覆率であり、実写正解率ではない。",
+  "supplements": [
+    {
+      "sets": [
+        "trk",
+        "trc",
+        "sds",
+        "ttrk",
+        "ttrc"
+      ],
+      "fetchedAt": "2026-11-16",
+      "prints": 1213
+    }
+  ]
 }
