@@ -519,17 +519,32 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .reserved-list-set .reserved-list-grid{margin:10px}
 .reserved-list-top{position:sticky;bottom:4px;justify-self:end;z-index:3;min-height:44px;padding:0 14px;border-radius:22px;font-size:12px;box-shadow:0 3px 12px #0003}
 
-/* Owned copies under each planned purchase (v404). */
-.purchase-info .purchase-owned { margin: 2px 0 0; font-size: 12px; font-weight: 700; color: var(--green); }
-.purchase-info .purchase-owned.none { font-weight: 400; color: var(--muted); }
-
-/* Purchase tab: reference price, other owned artworks and a Wisdom Guild link (v405). */
+/* Purchase cards (v406): chips for owned copies and unit price, one stepper, one main button, the rest in a menu. */
 #purchaseSummary{white-space:pre-line;text-align:right;line-height:1.5}
-.purchase-info .purchase-price{margin:2px 0 0;font-size:12px;color:var(--ink)}
-.purchase-links{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
-.purchase-links>*{flex:1 1 130px;min-height:44px;padding:0 10px;font-size:12px}
-.purchase-links .ghost{border:1px solid var(--line)}
-.purchase-wg{display:inline-flex;align-items:center;justify-content:center;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--green);font-weight:800;text-decoration:none}
+.purchase-item{grid-template-columns:64px minmax(0,1fr);gap:8px 10px;align-items:start}
+.purchase-image{grid-row:1/3;width:64px}
+.purchase-info{align-self:start}
+.purchase-title{display:flex;align-items:flex-start;justify-content:space-between;gap:4px}
+.purchase-title h2{margin:0;padding-top:4px}
+.purchase-info p.muted{margin:2px 0 0}
+.purchase-chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0}
+.purchase-chips span{font-size:12px;line-height:1;padding:5px 8px;border-radius:8px}
+.purchase-chips .purchase-owned{background:var(--surface-accent);color:var(--green);font-weight:700}
+.purchase-chips .purchase-owned.none{background:var(--surface);color:var(--muted);font-weight:400}
+.purchase-chips .purchase-price{background:var(--surface);color:var(--ink)}
+.purchase-controls{grid-column:2;display:flex;align-items:center;gap:8px;align-self:end}
+.purchase-stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:12px;background:#fff}
+.purchase-stepper button{min-width:44px;min-height:44px;padding:0;background:transparent;color:var(--green);font-size:18px}
+.purchase-stepper b{min-width:28px;text-align:center;font-size:15px}
+.purchase-controls .purchase-receive{grid-column:auto;flex:1;width:auto;margin:0;min-height:44px;font-size:13px}
+.purchase-menu{position:relative;flex:none}
+.purchase-menu summary{list-style:none;width:44px;height:44px;display:grid;place-items:center;border-radius:12px;color:var(--muted);font-size:20px;font-weight:900;cursor:pointer;margin:-8px -6px 0 0}
+.purchase-menu summary::-webkit-details-marker{display:none}
+.purchase-menu[open] summary{background:var(--surface)}
+.purchase-menu-panel{position:absolute;right:0;top:40px;z-index:5;min-width:230px;display:grid;padding:6px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.purchase-menu-panel>*{display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:8px;background:transparent;color:var(--ink);font-weight:700;font-size:14px;text-decoration:none;justify-content:flex-start}
+.purchase-menu-panel>*:hover{background:var(--surface)}
+.purchase-menu-panel .purchase-menu-delete{color:var(--danger)}
 .purchase-artworks-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:10px}
 .purchase-artwork{display:grid;gap:6px;min-height:44px;padding:6px;background:#fff;color:var(--ink);border:1px solid var(--line);font-size:11px;font-weight:700;align-content:start;text-align:center}
 .purchase-artwork img{width:100%;aspect-ratio:488/680;object-fit:contain;border-radius:6px}

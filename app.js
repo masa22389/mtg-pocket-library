@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v405";
+const APP_VERSION = "v406";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -8017,14 +8017,14 @@ function purchaseOwnedCounts(card, collection) {
 
 function purchaseOwnedLabel(card) {
   const { samePrint, sameName } = purchaseOwnedCounts(card, state.collection);
-  return sameName ? `所持：この版 ${samePrint}枚・同名合計 ${sameName}枚` : "所持：なし";
+  if (!sameName) return "未所持";
+  return samePrint === sameName ? `所持 ${samePrint}枚` : `所持 ${samePrint}枚（同名${sameName}）`;
 }
 
 // Reference price of a planned purchase, from the same price order as the collection (mostly Scryfall's).
 function purchasePriceLine(card) {
-  const total = yenValueOf(card);
-  if (total == null) return "参考価格なし";
-  return `${cardPriceLabel(card)}${Number(card.quantity) > 1 ? `・${card.quantity}枚で ${formatYen(total)}` : ""}`;
+  const unit = unitYenValueOf(card);
+  return unit == null ? "価格なし" : `参考 ${formatYen(unit)}`;
 }
 function purchasePriceSummary(items) {
   let total = 0, unpriced = 0;
@@ -8106,14 +8106,28 @@ function renderPurchases() {
   const total = state.purchases.reduce((sum, card) => sum + card.quantity, 0);
   const priceSummary = state.purchasePriceDisplay === "shown" ? purchasePriceSummary(state.purchases) : "";
   $("#purchaseSummary").textContent = `${state.purchases.length}種類・${total.toLocaleString("ja-JP")}枚${priceSummary ? `\n${priceSummary}` : ""}`;
-  $("#purchaseList").innerHTML = state.purchases.length ? state.purchases.map(card => `
+  $("#purchaseList").innerHTML = state.purchases.length ? state.purchases.map(card => {
+    const owned = purchaseOwnedCounts(card, state.collection).sameName > 0, artworks = purchaseOtherArtworks(card, state.collection).length;
+    const finish = card.finish === "foil" ? " · Foil" : card.finish === "etched" ? " · Etched" : "";
+    return `
     <article class="purchase-item card" data-purchase-id="${esc(card.id)}">
-      <button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))}：長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img ${localizedImageAttrs(card)} src="${esc(card.image || "")}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async" draggable="false"><span class="purchase-quantity" aria-label="購入予定 ${card.quantity}枚">${card.quantity}</span></button>
-      <div class="purchase-info"><h2>${esc(nameOf(card))}</h2><p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${card.language === "ja" ? "日本語" : card.language === "en" ? "英語" : "その他"} · ${esc(card.condition)} · ${card.finish === "foil" ? "Foil" : card.finish === "etched" ? "Etched" : "通常"}</p><p class="purchase-owned${purchaseOwnedCounts(card, state.collection).sameName ? "" : " none"}">${esc(purchaseOwnedLabel(card))}</p>${state.purchasePriceDisplay === "shown" ? `<p class="purchase-price">${esc(purchasePriceLine(card))}</p>` : ""}</div>
-      <div class="purchase-controls"><button type="button" data-purchase-action="minus" aria-label="購入予定枚数を1枚減らす" ${card.quantity <= 1 ? "disabled" : ""}>−</button><button type="button" data-purchase-action="plus" aria-label="購入予定枚数を1枚増やす" ${card.quantity >= 9999 ? "disabled" : ""}>＋</button><button type="button" class="ghost" data-purchase-action="delete">削除</button></div>
-      <button type="button" class="purchase-receive" data-purchase-action="receive">購入済み・所持に追加</button>
-      <div class="purchase-links">${(() => { const count = purchaseOtherArtworks(card, state.collection).length; return count ? `<button type="button" class="ghost" data-purchase-action="artworks">別イラスト所持 ${count}種</button>` : ""; })()}<a class="purchase-wg" href="${esc(purchaseWisdomGuildUrl(card))}" target="_blank" rel="noopener noreferrer">Wisdom Guildで相場を見る</a></div>
-    </article>`).join("") : '<div class="empty">購入予定のカードはまだありません。</div>';
+      <button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))}：長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img ${localizedImageAttrs(card)} src="${esc(card.image || "")}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async" draggable="false"></button>
+      <div class="purchase-info">
+        <div class="purchase-title"><h2>${esc(nameOf(card))}</h2>
+          <details class="purchase-menu"><summary aria-label="${esc(nameOf(card))}のその他の操作">…</summary><div class="purchase-menu-panel">
+            <a href="${esc(purchaseWisdomGuildUrl(card))}" target="_blank" rel="noopener noreferrer">Wisdom Guildで相場を見る</a>
+            ${artworks ? `<button type="button" data-purchase-action="artworks">所持している別イラスト（${artworks}種）</button>` : ""}
+            <button type="button" class="purchase-menu-delete" data-purchase-action="delete">削除</button>
+          </div></details></div>
+        <p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${card.language === "ja" ? "日本語" : card.language === "en" ? "英語" : "その他"} · ${esc(card.condition)}${finish}</p>
+        <p class="purchase-chips"><span class="purchase-owned${owned ? "" : " none"}">${esc(purchaseOwnedLabel(card))}</span>${state.purchasePriceDisplay === "shown" ? `<span class="purchase-price" title="${esc(cardPriceLabel(card))}">${esc(purchasePriceLine(card))}</span>` : ""}</p>
+      </div>
+      <div class="purchase-controls">
+        <span class="purchase-stepper"><button type="button" data-purchase-action="minus" aria-label="購入予定枚数を1枚減らす" ${card.quantity <= 1 ? "disabled" : ""}>−</button><b aria-label="購入予定 ${card.quantity}枚">${card.quantity}</b><button type="button" data-purchase-action="plus" aria-label="購入予定枚数を1枚増やす" ${card.quantity >= 9999 ? "disabled" : ""}>＋</button></span>
+        <button type="button" class="purchase-receive" data-purchase-action="receive" aria-label="購入済み・所持に追加">購入済み</button>
+      </div>
+    </article>`;
+  }).join("") : '<div class="empty">購入予定のカードはまだありません。</div>';
 }
 
 $("#addPurchaseButton").addEventListener("click", addSelectedPurchase);
@@ -8141,6 +8155,7 @@ $("#purchaseList").addEventListener("click", async event => {
   const card = state.purchases.find(item => item.id === button.closest("[data-purchase-id]").dataset.purchaseId);
   if (!card) return;
   const action = button.dataset.purchaseAction;
+  button.closest(".purchase-menu")?.removeAttribute("open");
   if (action === "receive") { openPurchaseTransfer(card); return; }
   if (action === "artworks") { openPurchaseArtworks(card); return; }
   if (action === "delete") {
@@ -8149,6 +8164,14 @@ $("#purchaseList").addEventListener("click", async event => {
     const quantity = card.quantity + (action === "plus" ? 1 : -1);
     if (quantity >= 1 && quantity <= 9999) savePurchases(state.purchases.map(item => item.id === card.id ? { ...item, quantity } : item));
   }
+});
+
+$("#purchaseList").addEventListener("toggle", event => {
+  if (!event.target.matches?.(".purchase-menu") || !event.target.open) return;
+  document.querySelectorAll(".purchase-menu[open]").forEach(menu => { if (menu !== event.target) menu.removeAttribute("open"); });
+}, true);
+document.addEventListener("click", event => {
+  if (!event.target.closest?.(".purchase-menu")) document.querySelectorAll(".purchase-menu[open]").forEach(menu => menu.removeAttribute("open"));
 });
 
 function endPurchasePress() {
