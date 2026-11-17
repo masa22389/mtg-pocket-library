@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=406">
-  <link rel="stylesheet" href="mobile-inputs.css?v=406">
+  <link rel="stylesheet" href="styles.css?v=407">
+  <link rel="stylesheet" href="mobile-inputs.css?v=407">
 </head>
 <body>
   <header class="app-header">
@@ -202,7 +202,8 @@ const BACKGROUND_THEME_CHROME = {
         <div id="purchaseSearchResults" class="search-results"></div>
         <button id="morePurchaseSearchResults" type="button" class="ghost compact" hidden>さらに50件表示</button>
       </section>
-      <div class="purchase-reorder-help"><p class="muted">画像を長押し → 別の画像を選ぶと順番を入れ替えます。</p><button id="cancelPurchaseReorder" type="button" class="ghost compact" hidden>並び替えを終了</button></div>
+      <div class="purchase-view-toggle" role="group" aria-label="購入予定の表示"><button type="button" data-purchase-view="images" aria-pressed="false">画像</button><button type="button" data-purchase-view="detail" aria-pressed="true">詳細</button></div>
+      <div class="purchase-reorder-help"><p id="purchaseReorderHelp" class="muted">画像を長押し → 別の画像を選ぶと順番を入れ替えます。</p><button id="cancelPurchaseReorder" type="button" class="ghost compact" hidden>並び替えを終了</button></div>
       <div id="purchaseList" class="purchase-list"></div>
     </section>
 
@@ -386,6 +387,12 @@ const BACKGROUND_THEME_CHROME = {
       <div id="reservedListSets" class="reserved-list-sets"></div>
       <button id="reservedListTop" class="reserved-list-top" type="button" hidden>↑ 上に戻る</button>
     </form>
+  </dialog>
+  <dialog id="purchaseSheet" class="purchase-sheet" aria-label="購入予定カードの操作">
+    <div class="purchase-sheet-card">
+      <button id="closePurchaseSheet" class="dialog-close" type="button" aria-label="閉じる">×</button>
+      <div id="purchaseSheetBody"></div>
+    </div>
   </dialog>
   <dialog id="purchaseArtworksDialog" class="purchase-artworks-dialog">
     <form method="dialog" class="dialog-card">
@@ -585,13 +592,13 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=406" defer></script>
-  <script src="scanner-host.js?v=406" defer></script>
+  <script src="storage.js?v=407" defer></script>
+  <script src="scanner-host.js?v=407" defer></script>
   <script src="mtg-jp-card-index.js?h=9b352f851b04" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
   <script src="reserved-list.js?h=f25d12c86b70" defer></script>
-  <script src="diagnostics.js?v=406" defer></script>
-  <script src="scanner/card-images.js?v=406" defer></script>
-  <script src="app.js?v=406" defer></script>
+  <script src="diagnostics.js?v=407" defer></script>
+  <script src="scanner/card-images.js?v=407" defer></script>
+  <script src="app.js?v=407" defer></script>
 </body>
 </html>

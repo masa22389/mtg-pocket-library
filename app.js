@@ -9,8 +9,8 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v406";
-const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
+const APP_VERSION = "v407";
+const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", purchaseViewMode: "mtg-pocket.purchaseViewMode.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
 const COLLECTION_RENDER_LIMIT = 50;
@@ -51,6 +51,8 @@ const state = {
   deckDisplayMode: appStorage.getItem(KEYS.deckDisplayMode) === "merged" ? "merged" : "split",
   // Reference prices on the purchase tab: shown unless turned off in settings.
   purchasePriceDisplay: appStorage.getItem(KEYS.purchasePriceDisplay) === "hidden" ? "hidden" : "shown",
+  // Purchase tab layout: "detail" cards (default) or "images" only, where a tap opens the card's actions.
+  purchaseViewMode: appStorage.getItem(KEYS.purchaseViewMode) === "images" ? "images" : "detail",
   backgroundTheme: appStorage.getItem(KEYS.backgroundTheme) || "default",
   editingDeck: null,
   editingDeckEntry: null,
@@ -8106,12 +8108,25 @@ function renderPurchases() {
   const total = state.purchases.reduce((sum, card) => sum + card.quantity, 0);
   const priceSummary = state.purchasePriceDisplay === "shown" ? purchasePriceSummary(state.purchases) : "";
   $("#purchaseSummary").textContent = `${state.purchases.length}種類・${total.toLocaleString("ja-JP")}枚${priceSummary ? `\n${priceSummary}` : ""}`;
-  $("#purchaseList").innerHTML = state.purchases.length ? state.purchases.map(card => {
+  const images = state.purchaseViewMode === "images";
+  document.querySelectorAll("[data-purchase-view]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.purchaseView === state.purchaseViewMode)));
+  $("#purchaseList").classList.toggle("purchase-grid", images);
+  $("#purchaseReorderHelp").textContent = images ? "画像をタップ → 操作。長押し → 別の画像を選ぶと順番を入れ替えます。" : "画像を長押し → 別の画像を選ぶと順番を入れ替えます。";
+  $("#purchaseList").innerHTML = !state.purchases.length ? '<div class="empty">購入予定のカードはまだありません。</div>' : images
+    ? state.purchases.map(card => `
+    <article class="purchase-tile" data-purchase-id="${esc(card.id)}">
+      <button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))} 購入予定${card.quantity}枚：タップで操作、長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img ${localizedImageAttrs(card)} src="${esc(card.image || "")}" alt="" loading="lazy" decoding="async" draggable="false"><span class="purchase-quantity" aria-hidden="true">${card.quantity}</span></button>
+    </article>`).join("")
+    : state.purchases.map(card => purchaseDetailHtml(card)).join("");
+  renderPurchaseSheet();
+}
+
+function purchaseDetailHtml(card, inSheet = false) {
     const owned = purchaseOwnedCounts(card, state.collection).sameName > 0, artworks = purchaseOtherArtworks(card, state.collection).length;
     const finish = card.finish === "foil" ? " · Foil" : card.finish === "etched" ? " · Etched" : "";
     return `
     <article class="purchase-item card" data-purchase-id="${esc(card.id)}">
-      <button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))}：長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img ${localizedImageAttrs(card)} src="${esc(card.image || "")}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async" draggable="false"></button>
+      ${inSheet ? `<div class="purchase-image"><img ${localizedImageAttrs(card)} src="${esc(card.image || "")}" alt="" decoding="async"></div>` : `<button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))}：長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img ${localizedImageAttrs(card)} src="${esc(card.image || "")}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async" draggable="false"></button>`}
       <div class="purchase-info">
         <div class="purchase-title"><h2>${esc(nameOf(card))}</h2>
           <details class="purchase-menu"><summary aria-label="${esc(nameOf(card))}のその他の操作">…</summary><div class="purchase-menu-panel">
@@ -8127,7 +8142,24 @@ function renderPurchases() {
         <button type="button" class="purchase-receive" data-purchase-action="receive" aria-label="購入済み・所持に追加">購入済み</button>
       </div>
     </article>`;
-  }).join("") : '<div class="empty">購入予定のカードはまだありません。</div>';
+}
+
+// Image view: the tapped card's actions in a sheet. It follows every re-render and closes when the card is gone.
+let purchaseSheetId = null;
+function openPurchaseSheet(id) {
+  purchaseSheetId = id;
+  renderPurchaseSheet();
+  if (purchaseSheetId && !$("#purchaseSheet").open) $("#purchaseSheet").showModal();
+}
+function closePurchaseSheet() {
+  purchaseSheetId = null;
+  if ($("#purchaseSheet").open) $("#purchaseSheet").close();
+}
+function renderPurchaseSheet() {
+  if (!purchaseSheetId) return;
+  const card = state.purchases.find(item => item.id === purchaseSheetId);
+  if (!card || state.purchaseViewMode !== "images") { closePurchaseSheet(); return; }
+  $("#purchaseSheetBody").innerHTML = purchaseDetailHtml(card, true);
 }
 
 $("#addPurchaseButton").addEventListener("click", addSelectedPurchase);
@@ -8149,27 +8181,42 @@ $("#morePurchaseSearchResults").addEventListener("click", () => {
   purchaseSearchRenderLimit += 50;
   renderPurchaseSearchResults();
 });
-$("#purchaseList").addEventListener("click", async event => {
+async function handlePurchaseAction(event) {
   const button = event.target.closest("[data-purchase-action]");
   if (!button) return;
   const card = state.purchases.find(item => item.id === button.closest("[data-purchase-id]").dataset.purchaseId);
   if (!card) return;
   const action = button.dataset.purchaseAction;
   button.closest(".purchase-menu")?.removeAttribute("open");
-  if (action === "receive") { openPurchaseTransfer(card); return; }
-  if (action === "artworks") { openPurchaseArtworks(card); return; }
+  if (action === "receive") { closePurchaseSheet(); openPurchaseTransfer(card); return; }
+  if (action === "artworks") { closePurchaseSheet(); openPurchaseArtworks(card); return; }
   if (action === "delete") {
     if (confirm(`${nameOf(card)}を購入予定から削除しますか？`)) savePurchases(state.purchases.filter(item => item.id !== card.id));
   } else {
     const quantity = card.quantity + (action === "plus" ? 1 : -1);
     if (quantity >= 1 && quantity <= 9999) savePurchases(state.purchases.map(item => item.id === card.id ? { ...item, quantity } : item));
   }
-});
-
-$("#purchaseList").addEventListener("toggle", event => {
+}
+function closeOtherPurchaseMenus(event) {
   if (!event.target.matches?.(".purchase-menu") || !event.target.open) return;
   document.querySelectorAll(".purchase-menu[open]").forEach(menu => { if (menu !== event.target) menu.removeAttribute("open"); });
-}, true);
+}
+for (const container of [$("#purchaseList"), $("#purchaseSheetBody")]) {
+  container.addEventListener("click", handlePurchaseAction);
+  container.addEventListener("toggle", closeOtherPurchaseMenus, true);
+}
+$("#closePurchaseSheet").addEventListener("click", closePurchaseSheet);
+// A tap on the dimmed area outside the sheet closes it.
+$("#purchaseSheet").addEventListener("click", event => { if (event.target === $("#purchaseSheet")) closePurchaseSheet(); });
+$("#purchaseSheet").addEventListener("close", () => { purchaseSheetId = null; });
+document.querySelectorAll("[data-purchase-view]").forEach(button => button.addEventListener("click", async () => {
+  const mode = button.dataset.purchaseView === "images" ? "images" : "detail";
+  if (mode === state.purchaseViewMode) return;
+  cancelPurchaseReorder();
+  state.purchaseViewMode = mode;
+  renderPurchases();
+  try { await appStorage.setItem(KEYS.purchaseViewMode, mode); } catch { showToast("表示の切り替えを保存できませんでした"); }
+}));
 document.addEventListener("click", event => {
   if (!event.target.closest?.(".purchase-menu")) document.querySelectorAll(".purchase-menu[open]").forEach(menu => menu.removeAttribute("open"));
 });
@@ -8214,6 +8261,7 @@ $("#purchaseList").addEventListener("click", async event => {
     if (targetId === purchaseSelection) return;
   }
   if (!purchaseSelection) {
+    if (state.purchaseViewMode === "images") { openPurchaseSheet(targetId); return; }
     if (event.detail === 0) {
       purchaseSelection = targetId; renderPurchases();
       showToast("入れ替えるカード画像を選んでください");
