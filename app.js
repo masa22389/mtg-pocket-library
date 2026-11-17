@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v407";
+const APP_VERSION = "v408";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", purchaseViewMode: "mtg-pocket.purchaseViewMode.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -1029,7 +1029,8 @@ function reservedBadge(card) {
 // 再録禁止一覧 (search tab): every Reserved List card in its first printing, grouped by expansion. The Japanese
 // first printing (Mirage onward) gives the picture and name; the price is the English first printing's Scryfall USD.
 // Saved for a week under its own key, which backups do not include.
-const RESERVED_LIST_CACHE_KEY = "mtg-pocket.reservedListCache.v1";
+// v2 (v408): the rows gained the separate Alpha, Beta, Unlimited and Revised groups.
+const RESERVED_LIST_CACHE_KEY = "mtg-pocket.reservedListCache.v2";
 const RESERVED_LIST_CACHE_MS = 7 * 24 * 60 * 60 * 1000;
 // Expansions start folded; openSets keeps the ones opened while the dialog is redrawn (a name search opens all hits).
 const reservedListView = { rows: null, fetchedAt: 0, loading: false, openSets: new Set() };
@@ -1037,9 +1038,12 @@ function reservedCardUsd(card) {
   const usd = Number(card?.prices?.usd || card?.prices?.usd_foil || card?.prices?.usd_etched || 0);
   return usd > 0 ? usd : null;
 }
-// Cards whose first printing has no Scryfall price (43, mostly Alpha: Black Lotus, the dual lands) take the cheapest
-// priced English printing instead, shown with its set code.
-function reservedListRows(english, japanese, otherPrints = []) {
+// Alpha, Beta, Unlimited and Revised each get their own group (v408): every Reserved List card printed there, with
+// that printing's picture, price and owned copies. Other expansions keep one row per card, in its first printing.
+const RESERVED_EARLY_SETS = new Set(["lea", "leb", "2ed", "3ed"]);
+// Other cards whose first printing has no Scryfall price take the cheapest priced English printing instead, shown
+// with its set code.
+function reservedListRows(english, japanese, otherPrints = [], early = []) {
   const japaneseByOracle = new Map((japanese || []).filter(card => card.lang === "ja").map(card => [card.oracle_id, card]));
   const cheapest = new Map();
   for (const card of otherPrints || []) {
@@ -1049,10 +1053,17 @@ function reservedListRows(english, japanese, otherPrints = []) {
     const usd = reservedCardUsd(card);
     if (usd != null && (!cheapest.has(card.oracle_id) || usd < cheapest.get(card.oracle_id).usd)) cheapest.set(card.oracle_id, { usd, set: String(card.set || "").toUpperCase() });
   }
-  const seen = new Set();
-  return (english || []).filter(card => card.oracle_id && !seen.has(card.oracle_id) && seen.add(card.oracle_id)).map(card => {
-    const ja = japaneseByOracle.get(card.oracle_id);
-    const own = reservedCardUsd(card), other = own == null ? cheapest.get(card.oracle_id) : null;
+  const seen = new Set(), seenEarly = new Set();
+  const isEarly = card => RESERVED_EARLY_SETS.has(String(card.set || "").toLowerCase());
+  const firsts = (english || []).filter(card => card.oracle_id && !isEarly(card) && !seen.has(card.oracle_id) && seen.add(card.oracle_id));
+  const earlyRows = (early || []).filter(card => {
+    const key = `${String(card.set || "").toLowerCase()}|${card.oracle_id}`;
+    return card.oracle_id && isEarly(card) && !seenEarly.has(key) && seenEarly.add(key);
+  });
+  return [...firsts, ...earlyRows].map(card => {
+    const perSet = isEarly(card);
+    const ja = perSet ? null : japaneseByOracle.get(card.oracle_id);
+    const own = reservedCardUsd(card), other = own == null && !perSet ? cheapest.get(card.oracle_id) : null;
     return {
       oracleId: card.oracle_id, name: card.name, jaName: ja?.printed_name || "", set: String(card.set || "").toLowerCase(), setName: card.set_name || "",
       releasedAt: card.released_at || "", number: String(card.collector_number || ""), id: card.id, jaId: ja?.id || "",
@@ -1060,7 +1071,7 @@ function reservedListRows(english, japanese, otherPrints = []) {
       // app's Japanese picture lookup instead (English picture until it finds one).
       image: card.image_uris?.normal || card.card_faces?.[0]?.image_uris?.normal || "",
       jaImage: ja && !["placeholder", "missing"].includes(ja.image_status) ? (ja.image_uris?.normal || ja.card_faces?.[0]?.image_uris?.normal || "") : "",
-      usd: own ?? other?.usd ?? null, priceSet: other?.set || "",
+      usd: own ?? other?.usd ?? null, priceSet: other?.set || "", perSet,
     };
   });
 }
@@ -1074,13 +1085,17 @@ function reservedListGroups(rows) {
     .sort((a, b) => a.releasedAt.localeCompare(b.releasedAt) || a.set.localeCompare(b.set))
     .map(group => ({ ...group, rows: group.rows.sort((a, b) => a.number.localeCompare(b.number, undefined, { numeric: true })) }));
 }
-// Owned copies of each Reserved List card, in any printing, language or finish.
+// Owned copies of each Reserved List card, in any printing, language or finish, under its oracle ID; and under
+// "oracleId|set" for the copies of one expansion (the Alpha to Revised groups show those).
 function reservedOwnedCounts(collection) {
   const idByName = new Map(RESERVED_LIST.map(row => [String(row[1]).toLowerCase(), row[0]]));
   const counts = new Map();
   for (const lot of collection || []) {
     const id = lot.oracleId || idByName.get(String(lot.name || "").toLowerCase());
-    if (id && RESERVED_ORACLE_IDS.has(id)) counts.set(id, (counts.get(id) || 0) + Number(lot.quantity || 0));
+    if (!id || !RESERVED_ORACLE_IDS.has(id)) continue;
+    const quantity = Number(lot.quantity || 0), setKey = `${id}|${String(lot.set || "").toLowerCase()}`;
+    counts.set(id, (counts.get(id) || 0) + quantity);
+    counts.set(setKey, (counts.get(setKey) || 0) + quantity);
   }
   return counts;
 }
@@ -1089,19 +1104,22 @@ function reservedListPrice(row) {
   const price = state.fx?.usdJpy ? formatYen(Math.round(row.usd * Number(state.fx.usdJpy))) : `$${row.usd.toFixed(2)}`;
   return row.priceSet ? `${price}（${row.priceSet}版）` : price;
 }
+function reservedRowOwned(row, owned) {
+  return owned.get(row.perSet ? `${row.oracleId}|${row.set}` : row.oracleId) || 0;
+}
 function renderReservedList() {
   const rows = reservedListView.rows || [];
   const query = normalizeCardName($("#reservedListQuery").value || "");
   const owned = reservedOwnedCounts(state.collection);
   const matches = query ? rows.filter(row => [row.name, row.jaName].some(name => name && normalizeCardName(name).includes(query))) : rows;
   const groups = reservedListGroups(matches);
-  const ownedKinds = rows.filter(row => owned.get(row.oracleId)).length;
-  if (rows.length) $("#reservedListStatus").textContent = `${rows.length}種・所持 ${ownedKinds}種${query ? `・該当 ${matches.length}種` : ""}${state.fx?.usdJpy ? `・USD/JPY ${state.fx.usdJpy}` : "・為替未設定のためドル表示"}`;
+  const kinds = new Set(rows.map(row => row.oracleId)), ownedKinds = [...kinds].filter(id => owned.get(id)).length;
+  if (rows.length) $("#reservedListStatus").textContent = `${kinds.size}種・所持 ${ownedKinds}種${query ? `・該当 ${new Set(matches.map(row => row.oracleId)).size}種` : ""}${state.fx?.usdJpy ? `・USD/JPY ${state.fx.usdJpy}` : "・為替未設定のためドル表示"}`;
   $("#reservedListSets").innerHTML = groups.map(group => {
-    const ownedInSet = group.rows.filter(row => owned.get(row.oracleId)).length;
+    const ownedInSet = group.rows.filter(row => reservedRowOwned(row, owned)).length;
     const open = Boolean(query) || reservedListView.openSets.has(group.set);
     return `<details class="reserved-list-set" data-set="${esc(group.set)}"${open ? " open" : ""}><summary><span>${esc(setDisplayName({ code: group.set, name: group.setName }))}</span><small>${group.rows.length}種${ownedInSet ? `・所持 ${ownedInSet}種` : ""}</small></summary><div class="set-card-grid reserved-list-grid">${group.rows.map(row => {
-    const count = owned.get(row.oracleId) || 0;
+    const count = reservedRowOwned(row, owned);
     const name = row.jaName || row.name;
     return `<button type="button" class="set-card reserved-list-card" data-reserved-id="${esc(row.jaId || row.id)}" aria-label="${esc(name)}の詳細を開く"><span class="set-card-image"><img ${row.jaId && !row.jaImage ? `data-japanese-image="${esc(JSON.stringify({ set: row.set, number: row.number, oracleId: row.oracleId, language: "ja", face: 0, fallbackUrl: row.image }))}"` : ""} src="${esc(row.jaImage || row.image)}" alt="${esc(name)}" loading="lazy" decoding="async">${count ? `<b>所持 ${count}</b>` : ""}</span><span class="reserved-list-name">${esc(name)}</span><span class="reserved-list-price">${esc(reservedListPrice(row))}</span></button>`;
   }).join("")}</div></details>`;
@@ -1122,13 +1140,14 @@ async function loadReservedList(force = false) {
   reservedListView.loading = true;
   if (!reservedListView.rows) $("#reservedListStatus").textContent = "Scryfallから再録禁止カードを取得中…";
   try {
-    // The English and Japanese lists load side by side; then only the cards without a first-printing price fetch
-    // their other printings (three requests rather than all 1,450 Reserved List printings).
-    const [english, japanese] = await Promise.all([
+    // The English and Japanese first printings and the Alpha to Revised printings load side by side; then only the
+    // other cards without a first-printing price fetch their other printings.
+    const [english, japanese, early] = await Promise.all([
       fetchAllScryfallSearch("is:reserved is:firstprint lang:en", { order: "released", dir: "asc" }),
       fetchAllScryfallSearch("is:reserved is:firstprint lang:ja", { order: "released", dir: "asc" }),
+      fetchAllScryfallSearch("is:reserved (set:lea or set:leb or set:2ed or set:3ed) lang:en", { order: "released", dir: "asc" }),
     ]);
-    const unpriced = english.ok ? english.data.data.filter(card => reservedCardUsd(card) == null).map(card => card.oracle_id) : [];
+    const unpriced = english.ok ? english.data.data.filter(card => !RESERVED_EARLY_SETS.has(String(card.set || "").toLowerCase()) && reservedCardUsd(card) == null).map(card => card.oracle_id) : [];
     // Scryfall cuts a long query short (43 oracle IDs in one query reads as "unclosed parentheses"), so 15 per query.
     const otherPrints = [];
     for (let index = 0; index < unpriced.length; index += 15) {
@@ -1136,12 +1155,12 @@ async function loadReservedList(force = false) {
       const result = await fetchAllScryfallSearch(`(${chunk.map(id => `oracleid:${id}`).join(" or ")}) lang:en`, { order: "released" });
       if (result.ok) otherPrints.push(...result.data.data);
     }
-    if (!english.ok) {
+    if (!english.ok || !early.ok) {
       $("#reservedListStatus").textContent = reservedListView.rows ? "最新の一覧を取得できなかったため、保存済みの一覧を表示しています。" : (english.error?.details || "再録禁止一覧を取得できませんでした。");
       $("#retryReservedList").hidden = false;
       return;
     }
-    const rows = reservedListRows(english.data.data, japanese?.ok ? japanese.data.data : [], otherPrints);
+    const rows = reservedListRows(english.data.data, japanese?.ok ? japanese.data.data : [], otherPrints, early.data.data);
     Object.assign(reservedListView, { rows, fetchedAt: Date.now() });
     appStorage.setItem(RESERVED_LIST_CACHE_KEY, JSON.stringify({ fetchedAt: reservedListView.fetchedAt, rows }));
     if ($("#reservedListDialog").open) renderReservedList();
@@ -8590,9 +8609,18 @@ $("#reservedListTop").addEventListener("click", () => {
   $("#reservedListTop").hidden = true;
 });
 $("#reservedListSets").addEventListener("toggle", event => {
-  const set = event.target.closest?.("details[data-set]")?.dataset.set;
+  const details = event.target.closest?.("details[data-set]"), set = details?.dataset.set;
   if (!set || $("#reservedListQuery").value.trim()) return;
-  if (event.target.open) reservedListView.openSets.add(set); else reservedListView.openSets.delete(set);
+  if (!details.open) { reservedListView.openSets.delete(set); return; }
+  reservedListView.openSets = new Set([set]);
+  let closedAbove = false;
+  document.querySelectorAll("#reservedListSets details[data-set][open]").forEach(other => {
+    if (other === details) return;
+    if (other.compareDocumentPosition(details) & Node.DOCUMENT_POSITION_FOLLOWING) closedAbove = true;
+    other.open = false;
+  });
+  // A group closing above moves the opened one up; keep its heading in view.
+  if (closedAbove) details.querySelector("summary").scrollIntoView({ block: "nearest" });
 }, true);
 $("#closeReservedList").addEventListener("click", () => $("#reservedListDialog").close());
 $("#closePurchaseArtworks").addEventListener("click", () => $("#purchaseArtworksDialog").close());
