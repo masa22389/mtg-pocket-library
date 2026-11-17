@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v403";
+const APP_VERSION = "v404";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -8003,6 +8003,21 @@ let purchasePress = null;
 let purchaseSelection = null;
 let suppressPurchaseClick = false;
 
+// Owned copies of a planned purchase: the same printing (any language or finish) and every printing of the card.
+function purchaseOwnedCounts(card, collection) {
+  const set = String(card.set || "").toUpperCase(), number = String(card.collectorNumber || "");
+  const samePrint = collection.reduce((sum, item) => {
+    const quantity = Number(item.quantity || 0);
+    return sum + (set && number && String(item.set || "").toUpperCase() === set && String(item.collectorNumber || "") === number && isSameOwnedCardName(card, item) && Number.isFinite(quantity) ? Math.max(0, quantity) : 0);
+  }, 0);
+  return { samePrint, sameName: sameCardNameOwnedTotal(card, collection) };
+}
+
+function purchaseOwnedLabel(card) {
+  const { samePrint, sameName } = purchaseOwnedCounts(card, state.collection);
+  return sameName ? `所持：この版 ${samePrint}枚・同名合計 ${sameName}枚` : "所持：なし";
+}
+
 function renderPurchases() {
   endPurchasePress();
   if (!state.purchases.some(card => card.id === purchaseSelection)) purchaseSelection = null;
@@ -8012,7 +8027,7 @@ function renderPurchases() {
   $("#purchaseList").innerHTML = state.purchases.length ? state.purchases.map(card => `
     <article class="purchase-item card" data-purchase-id="${esc(card.id)}">
       <button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))}：長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img ${localizedImageAttrs(card)} src="${esc(card.image || "")}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async" draggable="false"><span class="purchase-quantity" aria-label="購入予定 ${card.quantity}枚">${card.quantity}</span></button>
-      <div class="purchase-info"><h2>${esc(nameOf(card))}</h2><p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${card.language === "ja" ? "日本語" : card.language === "en" ? "英語" : "その他"} · ${esc(card.condition)} · ${card.finish === "foil" ? "Foil" : card.finish === "etched" ? "Etched" : "通常"}</p></div>
+      <div class="purchase-info"><h2>${esc(nameOf(card))}</h2><p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${card.language === "ja" ? "日本語" : card.language === "en" ? "英語" : "その他"} · ${esc(card.condition)} · ${card.finish === "foil" ? "Foil" : card.finish === "etched" ? "Etched" : "通常"}</p><p class="purchase-owned${purchaseOwnedCounts(card, state.collection).sameName ? "" : " none"}">${esc(purchaseOwnedLabel(card))}</p></div>
       <div class="purchase-controls"><button type="button" data-purchase-action="minus" aria-label="購入予定枚数を1枚減らす" ${card.quantity <= 1 ? "disabled" : ""}>−</button><button type="button" data-purchase-action="plus" aria-label="購入予定枚数を1枚増やす" ${card.quantity >= 9999 ? "disabled" : ""}>＋</button><button type="button" class="ghost" data-purchase-action="delete">削除</button></div>
       <button type="button" class="purchase-receive" data-purchase-action="receive">購入済み・所持に追加</button>
     </article>`).join("") : '<div class="empty">購入予定のカードはまだありません。</div>';

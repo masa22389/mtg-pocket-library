@@ -518,3 +518,7 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .reserved-list-set[open]>summary{border-bottom:1px solid var(--line)}
 .reserved-list-set .reserved-list-grid{margin:10px}
 .reserved-list-top{position:sticky;bottom:4px;justify-self:end;z-index:3;min-height:44px;padding:0 14px;border-radius:22px;font-size:12px;box-shadow:0 3px 12px #0003}
+
+/* Owned copies under each planned purchase (v404). */
+.purchase-info .purchase-owned { margin: 2px 0 0; font-size: 12px; font-weight: 700; color: var(--green); }
+.purchase-info .purchase-owned.none { font-weight: 400; color: var(--muted); }
