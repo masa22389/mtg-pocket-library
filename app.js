@@ -9,8 +9,8 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v404";
-const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
+const APP_VERSION = "v405";
+const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
 const COLLECTION_RENDER_LIMIT = 50;
@@ -49,6 +49,8 @@ const state = {
   defaultCardLanguage: appStorage.getItem(KEYS.defaultCardLanguage) === "ja" ? "ja" : "en",
   // "split": the deck screen shows Foil / non-Foil and each language as separate tiles. "merged": one tile per card.
   deckDisplayMode: appStorage.getItem(KEYS.deckDisplayMode) === "merged" ? "merged" : "split",
+  // Reference prices on the purchase tab: shown unless turned off in settings.
+  purchasePriceDisplay: appStorage.getItem(KEYS.purchasePriceDisplay) === "hidden" ? "hidden" : "shown",
   backgroundTheme: appStorage.getItem(KEYS.backgroundTheme) || "default",
   editingDeck: null,
   editingDeckEntry: null,
@@ -2693,7 +2695,7 @@ function showView(name, { fromHistory = false } = {}) {
   document.querySelectorAll(".view").forEach(view => view.classList.toggle("active", view.id === `${name}View`));
   document.querySelectorAll(".bottom-nav button").forEach(button => button.classList.toggle("active", button.dataset.view === name));
   if (name === "decks") renderDecks();
-  if (name === "purchases") renderPurchases();
+  if (name === "purchases") { renderPurchases(); refreshPurchasePrices(); }
   if (name === "settings") { renderBackupSummary(); updateWisdomGuildSettingsUi(); updateCardTraderSettingsUi(); }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -8018,18 +8020,99 @@ function purchaseOwnedLabel(card) {
   return sameName ? `所持：この版 ${samePrint}枚・同名合計 ${sameName}枚` : "所持：なし";
 }
 
+// Reference price of a planned purchase, from the same price order as the collection (mostly Scryfall's).
+function purchasePriceLine(card) {
+  const total = yenValueOf(card);
+  if (total == null) return "参考価格なし";
+  return `${cardPriceLabel(card)}${Number(card.quantity) > 1 ? `・${card.quantity}枚で ${formatYen(total)}` : ""}`;
+}
+function purchasePriceSummary(items) {
+  let total = 0, unpriced = 0;
+  for (const card of items) { const value = yenValueOf(card); if (value == null) unpriced++; else total += value; }
+  return items.length ? `参考合計 ${formatYen(total)}${unpriced ? `（価格なし${unpriced}種を除く）` : ""}` : "";
+}
+
+// Scryfall prices of planned purchases, refreshed once a day while prices are shown. Set and number find the
+// English printing, whose price also stands in for a Japanese card (as in the collection).
+let purchasePriceRun = null;
+function refreshPurchasePrices() {
+  if (!purchasePriceRun) purchasePriceRun = runPurchasePriceRefresh().catch(() => {}).finally(() => { purchasePriceRun = null; });
+  return purchasePriceRun;
+}
+async function runPurchasePriceRefresh() {
+  if (state.purchasePriceDisplay !== "shown" || !navigator.onLine || !state.useScryfallPrices) return;
+  const key = card => `${String(card.set).toLowerCase()}:${String(card.collectorNumber).toLowerCase()}`;
+  const stale = state.purchases.filter(card => card.set && card.collectorNumber && Date.now() - Number(card.purchasePriceCheckedAt || 0) > DAY_MS);
+  const printings = [...new Map(stale.map(card => [key(card), card])).values()];
+  if (!printings.length) return;
+  const found = new Map();
+  for (let index = 0; index < printings.length; index += 75) {
+    if (index) await new Promise(resolve => setTimeout(resolve, 100));
+    const response = await fetchScryfallCollection(printings.slice(index, index + 75).map(card => ({ set: String(card.set).toLowerCase(), collector_number: String(card.collectorNumber) })));
+    if (!response.ok) return;
+    for (const card of (await response.json()).data || []) found.set(`${card.set}:${String(card.collector_number).toLowerCase()}`, card);
+  }
+  const checked = new Set(printings.map(key)), now = Date.now();
+  const items = state.purchases.map(item => {
+    if (!checked.has(key(item))) return item;
+    const next = { ...item, purchasePriceCheckedAt: now }, english = found.get(key(item));
+    if (!english) return next;
+    for (const [field, source, fromEnglish, price] of [["priceUsd", "priceUsdSource", "priceUsdFromEnglish", "usd"], ["priceUsdFoil", "priceUsdFoilSource", "priceUsdFoilFromEnglish", "usd_foil"], ["priceUsdEtched", "priceUsdEtchedSource", "priceUsdEtchedFromEnglish", "usd_etched"]]) {
+      const value = english.prices?.[price] || null;
+      next[field] = value; next[source] = value ? "scryfall" : ""; next[fromEnglish] = Boolean(value) && english.lang !== item.language;
+    }
+    next.priceUpdatedAt = now;
+    return next;
+  });
+  await savePurchases(items);
+}
+
+// Owned copies of the card in another artwork than the planned one, one group per artwork.
+function purchaseOtherArtworks(card, collection) {
+  const art = cardIllustrationKey(card), groups = new Map();
+  for (const lot of collection) {
+    if (!(Number(lot.quantity) > 0) || !isSameOwnedCardName(card, lot)) continue;
+    const lotArt = cardIllustrationKey(lot);
+    const samePrint = String(lot.set || "").toUpperCase() === String(card.set || "").toUpperCase() && String(lot.collectorNumber || "") === String(card.collectorNumber || "");
+    if (art && lotArt ? art === lotArt : samePrint) continue;
+    const groupKey = lotArt || `${String(lot.set || "").toUpperCase()}#${lot.collectorNumber || ""}`;
+    if (!groups.has(groupKey)) groups.set(groupKey, []);
+    groups.get(groupKey).push(lot);
+  }
+  return [...groups.values()];
+}
+let purchaseArtworkLots = [];
+function openPurchaseArtworks(card) {
+  const groups = purchaseOtherArtworks(card, state.collection);
+  purchaseArtworkLots = groups.flat();
+  $("#purchaseArtworksTitle").textContent = `${nameOf(card)} の所持している別イラスト（${groups.length}種）`;
+  $("#purchaseArtworksList").innerHTML = purchaseArtworkLots.map((lot, index) => `
+    <button type="button" class="purchase-artwork" data-index="${index}">
+      <img ${localizedImageAttrs(lot)} src="${esc(lot.image || "")}" alt="" loading="lazy" decoding="async">
+      <span>${esc(lot.set || "")} #${esc(lot.collectorNumber || "")}<br>${lot.language === "ja" ? "日本語" : lot.language === "en" ? "英語" : "その他"}${lot.finish === "foil" ? "・Foil" : lot.finish === "etched" ? "・Etched" : ""}・${Number(lot.quantity || 0)}枚</span>
+    </button>`).join("");
+  $("#purchaseArtworksDialog").showModal();
+}
+
+// Opens the card's Wisdom Guild price page, narrowed to this set and language like the price lookup.
+function purchaseWisdomGuildUrl(card) {
+  return wisdomGuildPriceUrl(card, wisdomGuildPriceNames(card)[0] || card.name || "");
+}
+
 function renderPurchases() {
   endPurchasePress();
   if (!state.purchases.some(card => card.id === purchaseSelection)) purchaseSelection = null;
   $("#cancelPurchaseReorder").hidden = !purchaseSelection;
   const total = state.purchases.reduce((sum, card) => sum + card.quantity, 0);
-  $("#purchaseSummary").textContent = `${state.purchases.length}種類・${total.toLocaleString("ja-JP")}枚`;
+  const priceSummary = state.purchasePriceDisplay === "shown" ? purchasePriceSummary(state.purchases) : "";
+  $("#purchaseSummary").textContent = `${state.purchases.length}種類・${total.toLocaleString("ja-JP")}枚${priceSummary ? `\n${priceSummary}` : ""}`;
   $("#purchaseList").innerHTML = state.purchases.length ? state.purchases.map(card => `
     <article class="purchase-item card" data-purchase-id="${esc(card.id)}">
       <button type="button" class="purchase-image${purchaseSelection === card.id ? " purchase-selected" : ""}" aria-label="${esc(nameOf(card))}：長押しで並び替え" aria-pressed="${purchaseSelection === card.id}"><img ${localizedImageAttrs(card)} src="${esc(card.image || "")}" alt="${esc(nameOf(card))}" loading="lazy" decoding="async" draggable="false"><span class="purchase-quantity" aria-label="購入予定 ${card.quantity}枚">${card.quantity}</span></button>
-      <div class="purchase-info"><h2>${esc(nameOf(card))}</h2><p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${card.language === "ja" ? "日本語" : card.language === "en" ? "英語" : "その他"} · ${esc(card.condition)} · ${card.finish === "foil" ? "Foil" : card.finish === "etched" ? "Etched" : "通常"}</p><p class="purchase-owned${purchaseOwnedCounts(card, state.collection).sameName ? "" : " none"}">${esc(purchaseOwnedLabel(card))}</p></div>
+      <div class="purchase-info"><h2>${esc(nameOf(card))}</h2><p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${card.language === "ja" ? "日本語" : card.language === "en" ? "英語" : "その他"} · ${esc(card.condition)} · ${card.finish === "foil" ? "Foil" : card.finish === "etched" ? "Etched" : "通常"}</p><p class="purchase-owned${purchaseOwnedCounts(card, state.collection).sameName ? "" : " none"}">${esc(purchaseOwnedLabel(card))}</p>${state.purchasePriceDisplay === "shown" ? `<p class="purchase-price">${esc(purchasePriceLine(card))}</p>` : ""}</div>
       <div class="purchase-controls"><button type="button" data-purchase-action="minus" aria-label="購入予定枚数を1枚減らす" ${card.quantity <= 1 ? "disabled" : ""}>−</button><button type="button" data-purchase-action="plus" aria-label="購入予定枚数を1枚増やす" ${card.quantity >= 9999 ? "disabled" : ""}>＋</button><button type="button" class="ghost" data-purchase-action="delete">削除</button></div>
       <button type="button" class="purchase-receive" data-purchase-action="receive">購入済み・所持に追加</button>
+      <div class="purchase-links">${(() => { const count = purchaseOtherArtworks(card, state.collection).length; return count ? `<button type="button" class="ghost" data-purchase-action="artworks">別イラスト所持 ${count}種</button>` : ""; })()}<a class="purchase-wg" href="${esc(purchaseWisdomGuildUrl(card))}" target="_blank" rel="noopener noreferrer">Wisdom Guildで相場を見る</a></div>
     </article>`).join("") : '<div class="empty">購入予定のカードはまだありません。</div>';
 }
 
@@ -8059,6 +8142,7 @@ $("#purchaseList").addEventListener("click", async event => {
   if (!card) return;
   const action = button.dataset.purchaseAction;
   if (action === "receive") { openPurchaseTransfer(card); return; }
+  if (action === "artworks") { openPurchaseArtworks(card); return; }
   if (action === "delete") {
     if (confirm(`${nameOf(card)}を購入予定から削除しますか？`)) savePurchases(state.purchases.filter(item => item.id !== card.id));
   } else {
@@ -8151,7 +8235,7 @@ function backupPayload() {
     fx: state.fx,
     favoriteGroups: state.favoriteGroups,
     scannerDrafts,
-    settings: { defaultCardLanguage: state.defaultCardLanguage, deckDisplayMode: state.deckDisplayMode, backgroundTheme: state.backgroundTheme, priceSourceMode: priceSourceMode() },
+    settings: { defaultCardLanguage: state.defaultCardLanguage, deckDisplayMode: state.deckDisplayMode, purchasePriceDisplay: state.purchasePriceDisplay, backgroundTheme: state.backgroundTheme, priceSourceMode: priceSourceMode() },
   };
 }
 
@@ -8241,6 +8325,11 @@ async function importBackup(file) {
     state.deckDisplayMode = data.settings.deckDisplayMode;
     $("#deckDisplayMode").value = state.deckDisplayMode;
   }
+  if (["shown", "hidden"].includes(data.settings?.purchasePriceDisplay)) {
+    await appStorage.setItem(KEYS.purchasePriceDisplay, data.settings.purchasePriceDisplay);
+    state.purchasePriceDisplay = data.settings.purchasePriceDisplay;
+    $("#purchasePriceDisplay").value = state.purchasePriceDisplay;
+  }
   if (data.settings?.backgroundTheme && BACKGROUND_THEMES[data.settings.backgroundTheme]) {
     applyBackgroundTheme(data.settings.backgroundTheme, { persist: true });
   }
@@ -8293,6 +8382,21 @@ $("#deckDisplayMode").addEventListener("change", async event => {
     status.textContent = "保存しました";
   } catch {
     event.target.value = state.deckDisplayMode;
+    status.textContent = "保存できませんでした。端末の保存状態を確認してください。";
+  }
+});
+$("#purchasePriceDisplay").value = state.purchasePriceDisplay;
+$("#purchasePriceDisplay").addEventListener("change", async event => {
+  const value = event.target.value === "hidden" ? "hidden" : "shown";
+  const status = $("#purchasePriceDisplayStatus");
+  try {
+    await appStorage.setItem(KEYS.purchasePriceDisplay, value);
+    state.purchasePriceDisplay = value;
+    renderPurchases();
+    if (value === "shown") refreshPurchasePrices();
+    status.textContent = "保存しました";
+  } catch {
+    event.target.value = state.purchasePriceDisplay;
     status.textContent = "保存できませんでした。端末の保存状態を確認してください。";
   }
 });
@@ -8420,6 +8524,13 @@ $("#reservedListSets").addEventListener("toggle", event => {
   if (event.target.open) reservedListView.openSets.add(set); else reservedListView.openSets.delete(set);
 }, true);
 $("#closeReservedList").addEventListener("click", () => $("#reservedListDialog").close());
+$("#closePurchaseArtworks").addEventListener("click", () => $("#purchaseArtworksDialog").close());
+$("#purchaseArtworksList").addEventListener("click", event => {
+  const lot = purchaseArtworkLots[Number(event.target.closest(".purchase-artwork")?.dataset.index)];
+  if (!lot) return;
+  $("#purchaseArtworksDialog").close();
+  openOwnedCard(lot);
+});
 $("#retryReservedList").addEventListener("click", () => loadReservedList(true));
 $("#reservedListQuery").addEventListener("input", renderReservedList);
 $("#reservedListSets").addEventListener("click", event => {

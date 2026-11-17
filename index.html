@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=404">
-  <link rel="stylesheet" href="mobile-inputs.css?v=404">
+  <link rel="stylesheet" href="styles.css?v=405">
+  <link rel="stylesheet" href="mobile-inputs.css?v=405">
 </head>
 <body>
   <header class="app-header">
@@ -226,6 +226,9 @@ const BACKGROUND_THEME_CHROME = {
           <label>デッキ画面の表示<select id="deckDisplayMode"><option value="split">Foil・言語ごとに分けて表示</option><option value="merged">同じカードはまとめて表示</option></select></label>
           <p class="muted">分けて表示：デッキの枚数を所持カードに割り当て、FoilとFoilでないもの、日本語版と英語版を別々に表示します。まとめて表示：1種類につき1枚で表示し、Foilでないものを持っていればそちらの見た目にします。</p>
           <p id="deckDisplayModeStatus" class="muted" role="status"></p>
+          <label>購入予定の参考価格<select id="purchasePriceDisplay"><option value="shown">表示する</option><option value="hidden">表示しない</option></select></label>
+          <p class="muted">購入予定タブの各カードに1枚あたりの参考価格と、予定枚数分の合計を表示します。取得元の優先順位は「価格取得設定」と同じです（多くはScryfallの米国相場を円にした参考値。日本語版は英語版の価格）。表示中は1日1回Scryfallの価格を更新します。</p>
+          <p id="purchasePriceDisplayStatus" class="muted" role="status"></p>
         </details>
         <hr>
         <div class="background-setting-heading"><h3 id="backgroundColorHeading">背景色</h3><span id="backgroundColorStatus" class="muted" aria-live="polite">現在の背景色：標準</span></div>
@@ -382,6 +385,14 @@ const BACKGROUND_THEME_CHROME = {
       <p id="reservedListStatus" class="muted" role="status"></p><button id="retryReservedList" type="button" class="ghost" hidden>再取得</button>
       <div id="reservedListSets" class="reserved-list-sets"></div>
       <button id="reservedListTop" class="reserved-list-top" type="button" hidden>↑ 上に戻る</button>
+    </form>
+  </dialog>
+  <dialog id="purchaseArtworksDialog" class="purchase-artworks-dialog">
+    <form method="dialog" class="dialog-card">
+      <button id="closePurchaseArtworks" class="dialog-close" type="button" aria-label="閉じる">×</button>
+      <h2 id="purchaseArtworksTitle">所持している別イラスト</h2>
+      <p class="muted">タップするとそのカードを開きます。</p>
+      <div id="purchaseArtworksList" class="purchase-artworks-list"></div>
     </form>
   </dialog>
   <dialog id="cardVariantDialog" autofocus>
@@ -574,13 +585,13 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=404" defer></script>
-  <script src="scanner-host.js?v=404" defer></script>
+  <script src="storage.js?v=405" defer></script>
+  <script src="scanner-host.js?v=405" defer></script>
   <script src="mtg-jp-card-index.js?h=9b352f851b04" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
   <script src="reserved-list.js?h=f25d12c86b70" defer></script>
-  <script src="diagnostics.js?v=404" defer></script>
-  <script src="scanner/card-images.js?v=404" defer></script>
-  <script src="app.js?v=404" defer></script>
+  <script src="diagnostics.js?v=405" defer></script>
+  <script src="scanner/card-images.js?v=405" defer></script>
+  <script src="app.js?v=405" defer></script>
 </body>
 </html>
