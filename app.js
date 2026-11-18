@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v416";
+const APP_VERSION = "v417";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", purchaseViewMode: "mtg-pocket.purchaseViewMode.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -581,7 +581,7 @@ function setCardLanguageSelect(value) {
 }
 function displayLanguageLabel(card) {
   // A language chosen without its own printing on Scryfall is registered with the image of the printing shown.
-  if (card?._chosenLanguage && card._chosenLanguage !== "ja" && card.lang && card._chosenLanguage !== card.lang) return `${cardLanguageLabel(card._chosenLanguage)}（画像は${cardLanguageLabel(card.lang)}版）`;
+  if (card?._chosenLanguage && !card._supplementalJpVariant && !card._reviewedJpImage && card.lang && card._chosenLanguage !== card.lang) return `${cardLanguageLabel(card._chosenLanguage)}（画像は${cardLanguageLabel(card.lang)}版）`;
   if (card?._supplementalJpVariant) return card?._jpImageExact ? "日本語名 / 日本語画像" : "日本語名 / 英語版画像";
   if (isJapaneseCard(card)) return "日本語";
   if (prefersJapaneseDisplay(card) && card?._jpImageExact) return "日本語名 / 日本語画像";
@@ -3880,7 +3880,7 @@ async function openCardDialog(card, mode = "collection", ownedId = null) {
   // Opening a card never fetches or renders its complete print gallery.
   if (!ownedId && !["set", "scanner"].includes(mode)) {
     const preferredLanguage = (mode === "purchase" ? "" : $(mode === "deck" ? "#deckSearchLanguage" : "#searchLanguage")?.value) || state.defaultCardLanguage;
-    if (card.lang !== preferredLanguage) await changeCardLanguage(preferredLanguage);
+    if (card.lang !== preferredLanguage) await changeCardLanguage(preferredLanguage, { automatic: true });
   }
 }
 
@@ -3888,7 +3888,7 @@ function sameCardPrint(a, b) {
   return a.oracle_id === b.oracle_id && a.set === b.set && String(a.collector_number) === String(b.collector_number);
 }
 
-async function changeCardLanguage(lang) {
+async function changeCardLanguage(lang, { automatic = false } = {}) {
   const card = state.selectedCard;
   const request = ++cardLanguageRequestId;
   if (card && card.lang === lang && card._chosenLanguage && card._chosenLanguage !== lang) {
@@ -3922,13 +3922,14 @@ async function changeCardLanguage(lang) {
     if (reviewed) peer = reviewedJpVariantForCard(card, reviewed);
   }
   if (request !== cardLanguageRequestId || dialogRequest !== cardDialogRequestId || !els.cardDialog.open || state.selectedCard !== card) return;
-  if (!peer && lang === "ja") {
+  if (!peer && lang === "ja" && automatic) {
     status.textContent = "日本語版が見つかりませんでした。この収録版の表示言語を維持します。";
     return;
   }
   if (!peer) {
     // Scryfall has no image of this printing in that language: the copy is registered in it with the current image.
-    selectCardKeepingForm({ ...card, _chosenLanguage: lang });
+    // Registered as 日本語, the copy takes its Japanese name from the app's Japanese card index when it has one.
+    selectCardKeepingForm({ ...(lang === "ja" ? applyJpIndexToCards([{ ...card, _preferJpDisplay: true }])[0] : card), _chosenLanguage: lang });
     status.hidden = false;
     status.textContent = `${cardLanguageLabel(lang)}版の画像が見つからないため、今の画像のまま${cardLanguageLabel(lang)}として登録します。`;
     return;
@@ -4019,7 +4020,13 @@ async function fetchPrintsForLanguage(card, lang) {
     if (card.lang === lang && !variants.some(item => sameCardPrint(item, card))) variants.unshift(card);
     const unique = new Map();
     for (const item of variants) if (item.lang === lang) unique.set(`${item.set}:${item.collector_number}`, item);
-    return applyJpIndexToCards(sortUnifiedPrints([...unique.values()]).map(item => ({ ...item, _preferJpDisplay: lang === "ja" }))).map(withReviewedJpImage);
+    const localized = applyJpIndexToCards(sortUnifiedPrints([...unique.values()]).map(item => ({ ...item, _preferJpDisplay: lang === "ja" }))).map(withReviewedJpImage);
+    if (lang !== "ja") return localized;
+    // Printings without a Japanese record (Dragon's Maze split cards, English-only Secret Lairs) follow with their
+    // English pictures, so every printing can be picked here; 言語 can then be set to 日本語 by hand.
+    const english = await fetchAllScryfallSearch(`${query} lang:en`, { order: "released", dir: "desc" });
+    const others = (english.ok ? english.data.data : []).filter(print => !unique.has(`${print.set}:${print.collector_number}`));
+    return [...localized, ...sortUnifiedPrints(others).map(print => ({ ...print, _noLanguagePrint: lang }))];
 }
 
 function ownedCardForVariant(card, preferredId = state.selectedOwnedId) {
@@ -4358,15 +4365,16 @@ function renderSelectedVariant() {
 
 function renderVariantGallery() {
   const lang = els.variantFilter.value;
-  const variants = state.cardVariants.filter(card => !lang || card.lang === lang);
+  const variants = state.cardVariants.filter(card => !lang || card.lang === lang || card._noLanguagePrint === lang);
+  const missing = variants.filter(card => card._noLanguagePrint).length;
   const visibleVariants = variants.slice(0, state.variantRenderLimit || VARIANT_RENDER_LIMIT);
   const jaCount = state.cardVariants.filter(card => card.lang === "ja").length;
   const enCount = state.cardVariants.filter(card => card.lang === "en").length;
-  els.variantCount.textContent = lang ? `${variants.length}版` : `${state.cardVariants.length}版（日${jaCount}・英${enCount}）`;
+  els.variantCount.textContent = lang ? `${variants.length}版${missing ? `（うち日本語版の画像なし ${missing}版）` : ""}` : `${state.cardVariants.length}版（日${jaCount}・英${enCount}）`;
   if (!variants.length) { els.cardVariants.innerHTML = '<span class="muted">該当する収録版がありません</span>'; return; }
   els.cardVariants.innerHTML = `${visibleVariants.map(card => `
     <button type="button" class="variant-option ${card.id === state.selectedCard.id ? "selected" : ""}" data-id="${card.id}" aria-label="${esc(nameOf(card))} ${(card.set || "").toUpperCase()} ${card.collector_number || ""} ${displayLanguageLabel(card)}">
-      <img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async"><span>${actualLanguageLabel(card)} · ${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")}</span>
+      <img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async"><span>${actualLanguageLabel(card)} · ${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")}${card._noLanguagePrint ? "<small>日本語版の画像なし</small>" : ""}</span>
     </button>`).join("")}${visibleVariants.length < variants.length ? `<button type="button" class="variant-option variant-more" data-variant-more="1"><span>さらに表示<br>${variants.length - visibleVariants.length}版</span></button>` : ""}`;
   els.cardVariants.querySelectorAll("button[data-id]").forEach(button => button.addEventListener("click", () => {
     const card = state.cardVariants.find(item => item.id === button.dataset.id);

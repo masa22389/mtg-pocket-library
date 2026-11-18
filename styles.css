@@ -514,6 +514,7 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .reserved-list-open{min-height:44px;margin-right:auto}
 .reserved-list-dialog .dialog-card{max-width:960px}
 .reserved-list-note{font-size:12px;margin:4px 0 10px}
+.variant-option small{display:block;font-size:11px;color:var(--muted);font-weight:600}
 .reserved-list-note summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--muted);font-size:14px}
 .reserved-list-note summary::-webkit-details-marker{display:none}
 .reserved-list-note summary::before{content:"▸";margin-right:6px}
