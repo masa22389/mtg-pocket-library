@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=410">
-  <link rel="stylesheet" href="mobile-inputs.css?v=410">
+  <link rel="stylesheet" href="styles.css?v=411">
+  <link rel="stylesheet" href="mobile-inputs.css?v=411">
 </head>
 <body>
   <header class="app-header">
@@ -216,10 +216,8 @@ const BACKGROUND_THEME_CHROME = {
         <p id="storageProtectionStatus" class="muted storage-status" role="status"></p>
         <div class="backup-actions">
           <button id="exportButton">バックアップを保存</button>
-          <label class="file-button">復元<input id="importInput" type="file" accept="application/json,.json,text/plain,.txt"></label>
-          <button id="shareBackupButton" type="button" class="backup-share" hidden>別のスマホに送る</button>
+          <label class="file-button">復元<input id="importInput" type="file" accept="application/json,.json"></label>
         </div>
-        <p id="shareBackupNote" class="muted" hidden>「別のスマホに送る」でスマホの共有メニューが開きます。Quick Share や LINE で送り、受け取ったスマホではこの画面の「復元」でそのファイルを選んでください。受け取った側のデータは送った内容に置き換わります。</p>
         <details class="settings-details settings-danger"><summary>データの削除</summary><div class="settings-details-body"><button id="clearButton" class="danger">すべてのデータを削除</button></div></details>
         <p class="version-note">現在のバージョン：<b id="currentAppVersion">読み込み中</b></p>
         <details id="initialSettings" class="settings-details"><summary>初期設定</summary>
@@ -237,14 +235,6 @@ const BACKGROUND_THEME_CHROME = {
         <div class="background-setting-heading"><h3 id="backgroundColorHeading">背景色</h3><span id="backgroundColorStatus" class="muted" aria-live="polite">現在の背景色：標準</span></div>
 <details id="backgroundColorChoices" class="background-dropdown"><summary aria-labelledby="backgroundColorHeading backgroundSelectedLabel"><span id="backgroundSelectedSwatch" class="background-swatch swatch-default" aria-hidden="true"></span><span id="backgroundSelectedLabel">標準</span><span class="background-dropdown-arrow" aria-hidden="true">▾</span></summary><div class="background-dropdown-options"><button type="button" data-background-theme="default" aria-pressed="false"><span class="background-swatch swatch-default" aria-hidden="true"></span>標準</button><button type="button" data-background-theme="red" aria-pressed="false"><span class="background-swatch swatch-red" aria-hidden="true"></span>赤</button><button type="button" data-background-theme="orange" aria-pressed="false"><span class="background-swatch swatch-orange" aria-hidden="true"></span>橙</button><button type="button" data-background-theme="yellow" aria-pressed="false"><span class="background-swatch swatch-yellow" aria-hidden="true"></span>黄</button><button type="button" data-background-theme="green" aria-pressed="false"><span class="background-swatch swatch-green" aria-hidden="true"></span>緑</button><button type="button" data-background-theme="blue" aria-pressed="false"><span class="background-swatch swatch-blue" aria-hidden="true"></span>青</button><button type="button" data-background-theme="indigo" aria-pressed="false"><span class="background-swatch swatch-indigo" aria-hidden="true"></span>藍</button><button type="button" data-background-theme="violet" aria-pressed="false"><span class="background-swatch swatch-violet" aria-hidden="true"></span>紫</button></div></details>
         <hr>
-        <details class="settings-details"><summary>長時間動作の診断（試用）</summary>
-          <p class="muted">通常は停止しています。開始後は再読み込み後も記録を続けます。クラッシュ後は再度開いて「診断を停止」、続いて書き出してください。最新720件を保存します。カード名・APIトークン・通信内容は記録しません。</p>
-          <button id="diagnosticStart" type="button" class="compact">診断を開始</button>
-          <button id="diagnosticReset" type="button" class="compact ghost">リセットして診断開始</button>
-          <button id="diagnosticStop" type="button" class="compact ghost">診断を停止</button>
-          <button id="diagnosticExport" type="button" class="compact ghost">診断記録を書き出す</button>
-          <p id="diagnosticStatus" class="muted" role="status">診断記録を確認中…</p>
-        </details>
         <h3>お気に入りグループ</h3>
         <button id="openSettingsGroupManager" type="button" class="ghost">グループ管理を開く</button>
 
@@ -595,13 +585,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=410" defer></script>
-  <script src="scanner-host.js?v=410" defer></script>
+  <script src="storage.js?v=411" defer></script>
+  <script src="scanner-host.js?v=411" defer></script>
   <script src="mtg-jp-card-index.js?h=9b352f851b04" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
   <script src="reserved-list.js?h=f25d12c86b70" defer></script>
-  <script src="diagnostics.js?v=410" defer></script>
-  <script src="scanner/card-images.js?v=410" defer></script>
-  <script src="app.js?v=410" defer></script>
+  <script src="scanner/card-images.js?v=411" defer></script>
+  <script src="app.js?v=411" defer></script>
 </body>
 </html>

@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v410";
+const APP_VERSION = "v411";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", purchaseViewMode: "mtg-pocket.purchaseViewMode.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -8352,31 +8352,6 @@ async function exportBackup() {
   showToast("バックアップを保存しました");
 }
 
-// Android's share sheet takes text files but not JSON, so the same backup goes as a .txt file.
-function backupShareFile() {
-  return new File([JSON.stringify(backupPayload())], `mtg-pocket-${backupFileStamp()}.txt`, { type: "text/plain" });
-}
-
-function setupBackupShare() {
-  let supported = false;
-  try { supported = typeof navigator.share === "function" && navigator.canShare?.({ files: [new File(["{}"], "test.txt", { type: "text/plain" })] }) === true; } catch {}
-  $("#shareBackupButton").hidden = !supported;
-  $("#shareBackupNote").hidden = !supported;
-}
-
-async function shareBackup() {
-  await appStorage.refreshItem(SCANNER_DRAFTS_KEY).catch(() => {});
-  const file = backupShareFile();
-  try {
-    await navigator.share({ files: [file], title: "MTG Pocket Library のデータ" });
-  } catch (error) {
-    if (error?.name !== "AbortError") showToast("共有メニューを開けませんでした。「バックアップを保存」でファイルを作って送ってください");
-    return;
-  }
-  saveBackupMeta();
-  showToast("データを送りました。受け取ったスマホで「復元」してください");
-}
-
 async function importBackup(file) {
   let data, purchases;
   try {
@@ -8898,8 +8873,6 @@ $("#deckVersionSelect").addEventListener("change", event => switchDeckVersion(Nu
 els.duplicateDeckButton.addEventListener("click", duplicateDeck);
 els.deleteDeckButton.addEventListener("click", deleteDeck);
 $("#exportButton").addEventListener("click", exportBackup);
-$("#shareBackupButton").addEventListener("click", shareBackup);
-setupBackupShare();
 els.saveFxButton.addEventListener("click", saveExchangeRate);
 els.refreshWisdomGuildPrices?.addEventListener("click", refreshWisdomGuildPrices);
 els.saveCardTraderToken?.addEventListener("click", saveCardTraderToken);
@@ -8951,15 +8924,8 @@ if ("serviceWorker" in navigator) {
   else registerAppServiceWorker();
 }
 if (normalizeCollectionConditions()) persist();
-window.mtgDiagnosticProbe = () => ({
-  marketplaceSets: cardTraderMarketplaceCache.size,
-  marketplaceProducts: [...cardTraderMarketplaceCache.values()].reduce((total, data) => total + Object.values(data).reduce((n, products) => n + (Array.isArray(products) ? products.length : 0), 0), 0),
-  searchCachePages: searchPageCache.size, pendingSearchPages: searchPagePending.size,
-  variantCacheEntries: state.variantCache.size,
-  priceGroupsDone: state.cardTrader.lastStats?.groupsDone ?? null,
-  priceGroupsTotal: state.cardTrader.lastStats?.groupsTotal ?? null,
-  priceInProgress: state.cardTrader.lastStats?.inProgress ?? false
-});
+// The long-running diagnostics were removed in v411; drop the log they may have left on the device.
+try { indexedDB.deleteDatabase("mtg-pocket-diagnostics-v1"); } catch {}
 resetCollectionRenderLimit(); renderSetSelects(); renderCollection(); renderDecks(); renderBackupSummary(); updateWisdomGuildSettingsUi(); updateCardTraderSettingsUi(); refreshExchangeRate(); hydrateCollectionMetadata(); hydrateSetOptions();
 
 $("#collectionPageSize").value = state.collectionPageSize;
