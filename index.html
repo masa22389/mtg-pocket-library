@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=408">
-  <link rel="stylesheet" href="mobile-inputs.css?v=408">
+  <link rel="stylesheet" href="styles.css?v=409">
+  <link rel="stylesheet" href="mobile-inputs.css?v=409">
 </head>
 <body>
   <header class="app-header">
@@ -346,6 +346,7 @@ const BACKGROUND_THEME_CHROME = {
       <section class="purchase-add-panel">
         <label for="purchaseQuantity">購入予定枚数<input id="purchaseQuantity" type="number" min="1" max="9999" step="1" value="1" inputmode="numeric"></label>
         <button id="addPurchaseButton" type="button" class="ghost">購入候補</button>
+        <a id="cardWisdomGuildLink" class="card-wisdom-guild-link" href="https://wonder.wisdom-guild.net/" target="_blank" rel="noopener noreferrer">Wisdom Guildで相場を見る</a>
         <p class="muted">選択中の収録版・状態・仕様で登録します。同じ候補は枚数を加算します。</p>
       </section>
       <details id="cardDeckUsage" class="card-deck-usage card-accordion" hidden>
@@ -592,13 +593,13 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=408" defer></script>
-  <script src="scanner-host.js?v=408" defer></script>
+  <script src="storage.js?v=409" defer></script>
+  <script src="scanner-host.js?v=409" defer></script>
   <script src="mtg-jp-card-index.js?h=9b352f851b04" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
   <script src="reserved-list.js?h=f25d12c86b70" defer></script>
-  <script src="diagnostics.js?v=408" defer></script>
-  <script src="scanner/card-images.js?v=408" defer></script>
-  <script src="app.js?v=408" defer></script>
+  <script src="diagnostics.js?v=409" defer></script>
+  <script src="scanner/card-images.js?v=409" defer></script>
+  <script src="app.js?v=409" defer></script>
 </body>
 </html>

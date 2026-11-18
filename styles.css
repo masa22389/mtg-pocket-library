@@ -296,7 +296,8 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 .purchase-controls button:disabled{opacity:.4;cursor:default}
 .purchase-reorder-help{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
 .purchase-add-panel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end;padding:12px;border:1px solid var(--line);border-radius:12px}
-.purchase-add-panel p{grid-column:1/-1;margin:0}.purchase-add-panel input{min-width:0}
+.purchase-add-panel p{grid-column:1/-1;margin:0}
+.card-wisdom-guild-link{grid-column:1/-1;display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--line);border-radius:10px;color:var(--green2);font-weight:700;font-size:14px;text-decoration:none}.purchase-add-panel input{min-width:0}
 @media(max-width:759px){.bottom-nav{padding-left:4px;padding-right:4px}.bottom-nav button{min-width:0;flex:1;padding-left:4px;padding-right:4px}}
 #purchasesView .hero-card{padding:12px 14px;margin-bottom:8px;flex-direction:row;align-items:center;gap:10px;border-radius:14px}
 #purchasesView .hero-card .eyebrow{display:none}
