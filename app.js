@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v415";
+const APP_VERSION = "v416";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", purchaseViewMode: "mtg-pocket.purchaseViewMode.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4606,7 +4606,8 @@ function renderCollection() {
   if (!$("#setCollection").hidden) { renderSetCatalog(); if (setBrowser.code && !setBrowser.loading) renderSetCards(); }
   const knownSets = getAllKnownSets();
   updateCollectionSetFilter(knownSets);
-  const grouping = $("#collectionGrouping").value;
+  // 表示 holds both the look (詳細 / イラスト) and the grouping: "detail-set", "images-set-oldest" and so on.
+  const grouping = collectionViewGrouping(state.collectionViewMode);
   const groupBySet = grouping === "set" || grouping === "set-oldest";
   const format = $("#collectionFormat").value;
   const setFilter = $("#collectionSetFilter").value;
@@ -4666,7 +4667,7 @@ function renderCollection() {
   els.fxHelp.textContent = state.fx.usdJpy ? `現在の換算レート：1 USD = ${state.fx.usdJpy.toFixed(2)}円（${state.fx.source === "auto" ? "自動取得" : "手動・概算"}）` : "為替を取得できない場合に手動で変更できます。";
   updateCardTraderSettingsUi();
   const hiddenMode = state.collectionViewMode === "hidden";
-  const imageMode = state.collectionViewMode === "images";
+  const imageMode = String(state.collectionViewMode).startsWith("image");
   if (els.collectionPriceDisplayMode) els.collectionPriceDisplayMode.value = state.collectionPriceDisplayMode;
   updateCollectionPriceModeUi();
   els.collectionList.className = imageMode ? "collection-image-grid" : "item-list";
@@ -4738,6 +4739,10 @@ els.collectionList.addEventListener("click", event => {
   const heading = event.target.closest("[data-open-set]");
   if (heading) openCollectionExpansionInSets(heading.dataset.openSet);
 });
+
+function collectionViewGrouping(mode) {
+  return String(mode).endsWith("-set-oldest") ? "set-oldest" : String(mode).endsWith("-set") ? "set" : "";
+}
 
 function collectionPageSize() { return state.collectionPageSize === "all" ? Infinity : Number(state.collectionPageSize) || 50; }
 
@@ -8742,7 +8747,7 @@ function showFilteredCollection() {
   }
   resetCollectionRenderLimit(); renderCollection();
 }
-[$("#collectionSetFilter"), $("#collectionGrouping"), $("#collectionFormat")].forEach(select => select.addEventListener("change", showFilteredCollection));
+[$("#collectionSetFilter"), $("#collectionFormat")].forEach(select => select.addEventListener("change", showFilteredCollection));
 $("#collectionSetQuery").addEventListener("input", () => updateCollectionSetFilter(getAllKnownSets()));
 $("#collectionSetOptions").addEventListener("click", event => {
   const button = event.target.closest("[data-collection-set]");

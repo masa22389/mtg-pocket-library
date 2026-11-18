@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=415">
-  <link rel="stylesheet" href="mobile-inputs.css?v=415">
+  <link rel="stylesheet" href="styles.css?v=416">
+  <link rel="stylesheet" href="mobile-inputs.css?v=416">
 </head>
 <body>
   <header class="app-header">
@@ -102,7 +102,7 @@ const BACKGROUND_THEME_CHROME = {
         <div><span class="eyebrow">OWNED</span><h2>コレクション</h2></div>
         <div class="collection-toolbar">
           <label>表示件数<select id="collectionPageSize"><option value="50">50件</option><option value="100">100件</option><option value="all">全件</option></select></label>
-          <label>表示<select id="collectionViewMode"><option value="hidden">非表示</option><option value="detail">詳細表示</option><option value="images">イラスト表示</option></select></label>
+          <label>表示<select id="collectionViewMode"><option value="hidden">非表示</option><option value="detail">詳細表示</option><option value="detail-set">詳細・新しいセット順</option><option value="detail-set-oldest">詳細・古いセット順</option><option value="images">イラスト表示</option><option value="images-set">イラスト・新しいセット順</option><option value="images-set-oldest">イラスト・古いセット順</option></select></label>
           <div class="collection-price-toggle" role="group" aria-label="価格表示">
             <button type="button" data-collection-price-mode="total">合計</button>
             <button type="button" data-collection-price-mode="unit">単価</button>
@@ -130,7 +130,6 @@ const BACKGROUND_THEME_CHROME = {
           </div>
         </details>
         <label>フォーマット<select id="collectionFormat"><option value="">すべて</option><option value="standard">スタン</option><option value="pioneer">パイオニア</option><option value="modern">モダン</option><option value="legacy">レガシー</option></select></label>
-        <label>まとめ方<select id="collectionGrouping"><option value="">一覧</option><option value="set">エキスパンション別（新しい順）</option><option value="set-oldest">エキスパンション別（古い順）</option></select></label>
         <label class="favorite-filter"><input id="collectionUnderFour" type="checkbox"><span>所持枚数4枚未満</span></label>
         <label class="favorite-filter"><input id="collectionFoilOnly" type="checkbox"><span>Foilのみ</span></label>
         <label class="favorite-filter"><input id="collectionReservedOnly" type="checkbox"><span>再録禁止のみ</span></label>
@@ -588,12 +587,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=415" defer></script>
-  <script src="scanner-host.js?v=415" defer></script>
+  <script src="storage.js?v=416" defer></script>
+  <script src="scanner-host.js?v=416" defer></script>
   <script src="mtg-jp-card-index.js?h=9b352f851b04" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
   <script src="reserved-list.js?h=f25d12c86b70" defer></script>
-  <script src="scanner/card-images.js?v=415" defer></script>
-  <script src="app.js?v=415" defer></script>
+  <script src="scanner/card-images.js?v=416" defer></script>
+  <script src="app.js?v=416" defer></script>
 </body>
 </html>
