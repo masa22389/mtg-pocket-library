@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=413">
-  <link rel="stylesheet" href="mobile-inputs.css?v=413">
+  <link rel="stylesheet" href="styles.css?v=414">
+  <link rel="stylesheet" href="mobile-inputs.css?v=414">
 </head>
 <body>
   <header class="app-header">
@@ -374,9 +374,9 @@ const BACKGROUND_THEME_CHROME = {
     <form method="dialog" class="dialog-card">
       <button id="closeReservedList" class="dialog-close" type="button" aria-label="閉じる">×</button>
       <h2>再録禁止一覧</h2>
-      <p class="muted reserved-list-note">エキスパンション別に初出の版で表示します。アルファ・ベータ・アンリミテッド・リバイズドは版ごとに分け、その版の画像・価格・所持枚数を表示します。日本語版がある版（ミラージュ以降）は日本語の画像です。価格はScryfallの英語版（初出の版）の参考価格です。初出の版に価格がないカードは、ほかの版で一番安い価格を「（3ED版）」のように表示します。</p>
+      <details class="reserved-list-note"><summary>この一覧について</summary><p class="muted">エキスパンション別に初出の版で表示します。アルファ・ベータ・アンリミテッド・リバイズドは版ごとに分け、その版の画像・価格・所持枚数を表示します。日本語版がある版（ミラージュ以降）は日本語の画像です。価格はScryfallの英語版（初出の版）の参考価格です。初出の版に価格がないカードは、ほかの版で一番安い価格を「（3ED版）」のように表示します。所持カードの資産額は、コレクションに登録した各カードの参考価格（言語・状態・仕様ごと）の合計です。</p></details>
       <label class="reserved-list-search">カード名<input id="reservedListQuery" type="search" placeholder="例：Black Lotus / 裏切り者の都"></label>
-      <p id="reservedListStatus" class="muted" role="status"></p><button id="retryReservedList" type="button" class="ghost" hidden>再取得</button>
+      <p id="reservedListStatus" class="muted" role="status"></p><p id="reservedListValue" class="reserved-list-value" hidden></p><button id="retryReservedList" type="button" class="ghost" hidden>再取得</button>
       <div id="reservedListSets" class="reserved-list-sets"></div>
       <button id="reservedListTop" class="reserved-list-top" type="button" hidden>↑ 上に戻る</button>
     </form>
@@ -588,12 +588,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=413" defer></script>
-  <script src="scanner-host.js?v=413" defer></script>
+  <script src="storage.js?v=414" defer></script>
+  <script src="scanner-host.js?v=414" defer></script>
   <script src="mtg-jp-card-index.js?h=9b352f851b04" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
   <script src="reserved-list.js?h=f25d12c86b70" defer></script>
-  <script src="scanner/card-images.js?v=413" defer></script>
-  <script src="app.js?v=413" defer></script>
+  <script src="scanner/card-images.js?v=414" defer></script>
+  <script src="app.js?v=414" defer></script>
 </body>
 </html>

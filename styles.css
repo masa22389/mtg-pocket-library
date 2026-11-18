@@ -510,6 +510,12 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 .reserved-list-open{min-height:44px;margin-right:auto}
 .reserved-list-dialog .dialog-card{max-width:960px}
 .reserved-list-note{font-size:12px;margin:4px 0 10px}
+.reserved-list-note summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--muted);font-size:14px}
+.reserved-list-note summary::-webkit-details-marker{display:none}
+.reserved-list-note summary::before{content:"▸";margin-right:6px}
+.reserved-list-note[open] summary::before{content:"▾"}
+.reserved-list-note p{margin:0 0 4px}
+.reserved-list-value{margin:2px 0 8px;font-weight:700;font-size:14px}
 .reserved-list-search{display:block;margin-bottom:8px}
 .reserved-list-search input{font-size:16px;min-height:44px}
 .reserved-list-grid{margin-top:8px}
