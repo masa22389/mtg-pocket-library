@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v414";
+const APP_VERSION = "v415";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", purchaseViewMode: "mtg-pocket.purchaseViewMode.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -4581,6 +4581,15 @@ function collectionExpansionGroups(cards, knownSets, oldestFirst = false) {
   });
 }
 
+// Inside one expansion, cards go by collector number ("12" before "100", "12a" right after "12"); copies with the
+// same number keep the order they came in. Used only while no 並び替え is chosen.
+function compareCollectorNumbers(a, b) {
+  return String(a?.collectorNumber || "").localeCompare(String(b?.collectorNumber || ""), "en", { numeric: true });
+}
+function sortExpansionGroupsByNumber(groups) {
+  return groups.map(group => ({ ...group, cards: group.cards.map((card, index) => ({ card, index })).sort((a, b) => compareCollectorNumbers(a.card, b.card) || a.index - b.index).map(item => item.card) }));
+}
+
 function updateCollectionSetFilter(knownSets) {
   const select = $("#collectionSetFilter");
   const selected = select.value;
@@ -4631,14 +4640,17 @@ function renderCollection() {
     return (!foilOnly || cardFinishKind(card)) && (!reservedOnly || isReservedCard(card)) && (!underFour || (artworkQuantity >= 1 && artworkQuantity < 4 && Number(card.quantity) > 0)) && (!state.sameNameCollectionCard || isSameOwnedCardName(state.sameNameCollectionCard, card)) && textMatch && cardMatch && priceMatch && favoriteMatch;
   });
   cards = sortedCollectionCards(cards);
-  const expansionGroups = groupBySet ? collectionExpansionGroups(cards, knownSets, grouping === "set-oldest") : [];
+  let expansionGroups = groupBySet ? collectionExpansionGroups(cards, knownSets, grouping === "set-oldest") : [];
+  if (groupBySet && !state.collectionSortStack?.length) expansionGroups = sortExpansionGroupsByNumber(expansionGroups);
   if (groupBySet) cards = expansionGroups.flatMap(group => group.cards);
   const groupStarts = new Map(expansionGroups.map(group => [group.cards[0].id, group]));
   const groupHeading = card => {
     const group = groupStarts.get(card.id);
-    return group ? `<h3 class="collection-expansion-heading">${esc(setCatalogLabel(group.set, knownSets))}<small>${esc(group.code.toUpperCase())} · ${esc(group.set.released_at || "発売日不明")} · ${group.cards.length}件 / ${group.cards.reduce((sum, item) => sum + Number(item.quantity || 0), 0)}枚</small></h3>` : "";
+    // The heading opens the expansion in セット別.
+    return group ? `<h3 class="collection-expansion-heading"><button type="button" class="collection-expansion-open" data-open-set="${esc(group.set.code || group.code)}" aria-label="${esc(setCatalogLabel(group.set, knownSets))}をセット別で開く"><span>${esc(setCatalogLabel(group.set, knownSets))}<small>${esc(group.code.toUpperCase())} · ${esc(group.set.released_at || "発売日不明")} · ${group.cards.length}件 / ${group.cards.reduce((sum, item) => sum + Number(item.quantity || 0), 0)}枚</small></span><b aria-hidden="true">›</b></button></h3>` : "";
   };
   updateCollectionSortUi();
+  if (groupBySet && !state.collectionSortStack?.length) els.collectionSortStatus.textContent = "ソートなし（エキスパンション内はカードNo順）";
   updateCollectionFilterSummary();
   const unknownFormat = format ? state.collection.filter(card => !card.legalities?.[format]).length : 0;
   $("#collectionFormatStatus").hidden = !unknownFormat;
@@ -4712,6 +4724,20 @@ function renderCollection() {
   });
   attachCollectionLoadMoreHandler();
 }
+
+// Opens an expansion heading's set in セット別, as the set catalog does.
+function openCollectionExpansionInSets(code) {
+  if (!code) return;
+  document.querySelector('[data-collection-mode="sets"]').click();
+  $("#setFilterPanel").open = false;
+  for (const id of ["setCardQuery", "setOwnershipFilter", "setCardColor", "setCardMana", "setCardType", "setCardRarity"]) $("#" + id).value = "";
+  window.scrollTo({ top: 0 });
+  openSetCollection(code);
+}
+els.collectionList.addEventListener("click", event => {
+  const heading = event.target.closest("[data-open-set]");
+  if (heading) openCollectionExpansionInSets(heading.dataset.openSet);
+});
 
 function collectionPageSize() { return state.collectionPageSize === "all" ? Infinity : Number(state.collectionPageSize) || 50; }
 

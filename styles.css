@@ -338,6 +338,10 @@ dialog,dialog .dialog-card{overscroll-behavior-y:contain}
 .collection-quick-filters { margin: 16px 0 8px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
 .collection-expansion-heading { grid-column: 1 / -1; margin: 20px 0 4px; padding: 12px 14px; background: var(--surface, #eef5fa); border-bottom: 2px solid #b7cbdc; overflow-wrap: anywhere; }
 .collection-expansion-heading small { display: block; font-size: .8rem; font-weight: normal; margin-top: 6px; }
+.collection-expansion-heading { padding: 0; }
+.collection-expansion-open { width: 100%; min-height: 56px; padding: 12px 14px; justify-content: space-between; gap: 10px; text-align: left; background: transparent; color: var(--ink); border-radius: 0; font-size: inherit; }
+.collection-expansion-open > span { min-width: 0; overflow-wrap: anywhere; }
+.collection-expansion-open > b { font-size: 1.4rem; color: var(--muted); flex: none; }
 
 .collection-set-picker { grid-column: 1 / -1; }
 
