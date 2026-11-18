@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=409">
-  <link rel="stylesheet" href="mobile-inputs.css?v=409">
+  <link rel="stylesheet" href="styles.css?v=410">
+  <link rel="stylesheet" href="mobile-inputs.css?v=410">
 </head>
 <body>
   <header class="app-header">
@@ -216,8 +216,10 @@ const BACKGROUND_THEME_CHROME = {
         <p id="storageProtectionStatus" class="muted storage-status" role="status"></p>
         <div class="backup-actions">
           <button id="exportButton">バックアップを保存</button>
-          <label class="file-button">復元<input id="importInput" type="file" accept="application/json,.json"></label>
+          <label class="file-button">復元<input id="importInput" type="file" accept="application/json,.json,text/plain,.txt"></label>
+          <button id="shareBackupButton" type="button" class="backup-share" hidden>別のスマホに送る</button>
         </div>
+        <p id="shareBackupNote" class="muted" hidden>「別のスマホに送る」でスマホの共有メニューが開きます。Quick Share や LINE で送り、受け取ったスマホではこの画面の「復元」でそのファイルを選んでください。受け取った側のデータは送った内容に置き換わります。</p>
         <details class="settings-details settings-danger"><summary>データの削除</summary><div class="settings-details-body"><button id="clearButton" class="danger">すべてのデータを削除</button></div></details>
         <p class="version-note">現在のバージョン：<b id="currentAppVersion">読み込み中</b></p>
         <details id="initialSettings" class="settings-details"><summary>初期設定</summary>
@@ -593,13 +595,13 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=409" defer></script>
-  <script src="scanner-host.js?v=409" defer></script>
+  <script src="storage.js?v=410" defer></script>
+  <script src="scanner-host.js?v=410" defer></script>
   <script src="mtg-jp-card-index.js?h=9b352f851b04" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
   <script src="reserved-list.js?h=f25d12c86b70" defer></script>
-  <script src="diagnostics.js?v=409" defer></script>
-  <script src="scanner/card-images.js?v=409" defer></script>
-  <script src="app.js?v=409" defer></script>
+  <script src="diagnostics.js?v=410" defer></script>
+  <script src="scanner/card-images.js?v=410" defer></script>
+  <script src="app.js?v=410" defer></script>
 </body>
 </html>

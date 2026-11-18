@@ -400,6 +400,7 @@ body.scannerHostOpen #scannerHostShell{height:calc(100dvh - 66px - env(safe-area
 #settingsView .data-summary span:last-child{grid-column:1/-1;display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:center;gap:8px;padding:4px 2px;background:transparent;text-align:left}
 #settingsView .data-summary span:last-child b{font-size:12px;font-weight:600}
 #settingsView .backup-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#settingsView .backup-actions .backup-share{grid-column:1/-1}
 #settingsView .backup-actions>*{min-width:0;min-height:44px;font-size:13px;padding:6px 8px;text-align:center}
 #settingsView .settings-details summary{min-height:44px;padding-top:7px;padding-bottom:7px;font-size:14px}
 #settingsView .version-note{padding:7px 10px;font-size:12px}
