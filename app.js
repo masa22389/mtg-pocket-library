@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v412";
+const APP_VERSION = "v413";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", purchaseViewMode: "mtg-pocket.purchaseViewMode.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -562,17 +562,36 @@ function altNameOf(card) {
   const englishName = normalizeDisplayName(card.name);
   return printed && englishName && printed !== englishName ? englishName : "";
 }
+// The languages MTG cards are printed in, by Scryfall's codes, with the one-letter mark used in tight spaces.
+// "other" (その他) is no longer offered; lots saved with it before v413 keep it, since their real language is unknown.
+const CARD_LANGUAGES = [["ja", "日本語", "日"], ["en", "英語", "英"], ["de", "ドイツ語", "独"], ["fr", "フランス語", "仏"], ["it", "イタリア語", "伊"], ["es", "スペイン語", "西"], ["pt", "ポルトガル語", "葡"], ["ru", "ロシア語", "露"], ["ko", "韓国語", "韓"], ["zhs", "中国語（簡体字）", "簡"], ["zht", "中国語（繁体字）", "繁"], ["ph", "ファイレクシア語", "ファ"]];
+const CARD_LANGUAGE_LABELS = new Map(CARD_LANGUAGES.map(([code, label]) => [code, label]));
+const CARD_LANGUAGE_MARKS = new Map(CARD_LANGUAGES.map(([code, , mark]) => [code, mark]));
+function cardLanguageLabel(code) {
+  return CARD_LANGUAGE_LABELS.get(code) || "その他";
+}
+function cardLanguageMark(code) {
+  return CARD_LANGUAGE_MARKS.get(code) || "他";
+}
+// Sets the card form's language, adding a その他 choice only while a lot saved with an unknown language is shown.
+function setCardLanguageSelect(value) {
+  els.cardLanguage.querySelectorAll("option[data-unknown-language]").forEach(option => option.remove());
+  if (value && !CARD_LANGUAGE_LABELS.has(value)) els.cardLanguage.insertAdjacentHTML("beforeend", `<option value="${esc(value)}" data-unknown-language>その他</option>`);
+  els.cardLanguage.value = value || "en";
+}
 function displayLanguageLabel(card) {
+  // A language chosen without its own printing on Scryfall is registered with the image of the printing shown.
+  if (card?._chosenLanguage && card._chosenLanguage !== "ja" && card.lang && card._chosenLanguage !== card.lang) return `${cardLanguageLabel(card._chosenLanguage)}（画像は${cardLanguageLabel(card.lang)}版）`;
   if (card?._supplementalJpVariant) return card?._jpImageExact ? "日本語名 / 日本語画像" : "日本語名 / 英語版画像";
   if (isJapaneseCard(card)) return "日本語";
   if (prefersJapaneseDisplay(card) && card?._jpImageExact) return "日本語名 / 日本語画像";
   if (prefersJapaneseDisplay(card) && card?.jpName) return card?.lang === "en" ? "日本語名 / 英語版" : "日本語名";
-  return card?.lang === "en" ? "英語" : "その他";
+  return cardLanguageLabel(card?.lang);
 }
 function actualLanguageLabel(card) {
   if (card?._supplementalJpVariant) return "日名";
   if (isJapaneseCard(card)) return "日";
-  return card?.lang === "en" ? "英" : "他";
+  return cardLanguageMark(card?.lang);
 }
 function isJapanese(text) { return /[\u3040-\u30ff\u3400-\u9fff]/.test(text); }
 function formatYen(value) { return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 }).format(value); }
@@ -946,10 +965,13 @@ function cardTraderPriceLanguagesForCard(card) {
   return mode === "english-reference" ? ["en", "jp"] : ["jp", "en"];
 }
 
+// Wisdom Guild's own language codes (its price page's 言語 choices). Phyrexian has none there, so it looks up English.
+const WISDOM_GUILD_LANGUAGES = { it: "ITA", fr: "FRA", de: "GER", zht: "CHI", zhs: "ZHO", ko: "KOR", es: "SPA", pt: "POR", ru: "RUS" };
 function wisdomGuildLanguageForCard(card) {
   const language = String(card?.language || card?.lang || "").toLowerCase();
   if (["ja", "jp", "jpn", "japanese", "日本語", "日"].includes(language)) return "JPN";
   if (["en", "eng", "english", "英語", "英"].includes(language)) return "ENG";
+  if (WISDOM_GUILD_LANGUAGES[language]) return WISDOM_GUILD_LANGUAGES[language];
   if (isJapanese(card?.printedName || card?.jpName || "")) return "JPN";
   return "ENG";
 }
@@ -3847,8 +3869,14 @@ function sameCardPrint(a, b) {
 async function changeCardLanguage(lang) {
   const card = state.selectedCard;
   const request = ++cardLanguageRequestId;
-  if (!card || !["en", "ja"].includes(lang) || card.lang === lang) {
-    els.cardLanguage.value = card?.lang || "other";
+  if (card && card.lang === lang && card._chosenLanguage && card._chosenLanguage !== lang) {
+    // Back to the language of the printing shown, after another language was chosen without its own printing.
+    selectCardKeepingForm({ ...card, _chosenLanguage: lang });
+    $("#cardLanguageStatus").hidden = true;
+    return;
+  }
+  if (!card || !CARD_LANGUAGE_LABELS.has(lang) || card.lang === lang) {
+    setCardLanguageSelect(card ? cardFormLanguage(card, null) : "en");
     $("#cardLanguageStatus").hidden = true;
     return;
   }
@@ -3857,7 +3885,7 @@ async function changeCardLanguage(lang) {
   status.hidden = false;
   status.textContent = "選択した言語の画像を確認中…";
   // Keep the form's language consistent with its actual card while loading.
-  els.cardLanguage.value = card.lang;
+  setCardLanguageSelect(cardFormLanguage(card, null));
   let peer = state.cardVariants.find(item => item.lang === lang && sameCardPrint(item, card));
   if (!peer && lang === "ja") {
     const indexed = jpIndexForCard(card);
@@ -3872,19 +3900,30 @@ async function changeCardLanguage(lang) {
     if (reviewed) peer = reviewedJpVariantForCard(card, reviewed);
   }
   if (request !== cardLanguageRequestId || dialogRequest !== cardDialogRequestId || !els.cardDialog.open || state.selectedCard !== card) return;
-  if (!peer) {
-    status.textContent = `${lang === "ja" ? "日本語" : "英語"}版が見つかりませんでした。この収録版の表示言語を維持します。`;
+  if (!peer && lang === "ja") {
+    status.textContent = "日本語版が見つかりませんでした。この収録版の表示言語を維持します。";
     return;
   }
+  if (!peer) {
+    // Scryfall has no image of this printing in that language: the copy is registered in it with the current image.
+    selectCardKeepingForm({ ...card, _chosenLanguage: lang });
+    status.hidden = false;
+    status.textContent = `${cardLanguageLabel(lang)}版の画像が見つからないため、今の画像のまま${cardLanguageLabel(lang)}として登録します。`;
+    return;
+  }
+  selectCardKeepingForm({ ...withReviewedJpImage(applyJpIndexToCards([{ ...peer, _preferJpDisplay: lang === "ja" }])[0]), _chosenLanguage: lang });
+  status.hidden = true;
+}
+
+function selectCardKeepingForm(card) {
   const purchaseQuantity = $("#purchaseQuantity").value;
   const kept = { condition: els.cardCondition.value, finish: els.cardFinish.value, location: els.cardLocation.value };
-  selectVariant({ ...withReviewedJpImage(applyJpIndexToCards([{ ...peer, _preferJpDisplay: lang === "ja" }])[0]), _chosenLanguage: lang });
+  selectVariant(card);
   $("#purchaseQuantity").value = purchaseQuantity;
   els.cardCondition.value = kept.condition;
   els.cardFinish.value = kept.finish;
   els.cardLocation.value = kept.location;
   followFormOwnedLot();
-  status.hidden = true;
 }
 
 // Opening the picker puts focus on the picker itself, so ← does not start with a focus ring.
@@ -4277,7 +4316,7 @@ function initialCardOwnedQuantity(mode, quantity) {
 // print's Scryfall ID, so both languages find the same lot. Tapping the Japanese result (BRO #163) must open in
 // Japanese even when an English copy is saved.
 function cardFormLanguage(card, owned) {
-  return card._chosenLanguage || (card._reviewedJpImage || card._supplementalJpVariant ? "ja" : "") || owned?.language || (card.lang === "ja" ? "ja" : card.lang === "en" ? "en" : "other");
+  return card._chosenLanguage || (card._reviewedJpImage || card._supplementalJpVariant ? "ja" : "") || owned?.language || (CARD_LANGUAGE_LABELS.has(card.lang) ? card.lang : "other");
 }
 
 function renderSelectedVariant() {
@@ -4288,7 +4327,7 @@ function renderSelectedVariant() {
   els.cardQuantity.value = initialCardOwnedQuantity(state.cardDialogMode, selectedOwnedQuantity());
   els.cardCondition.value = normalizeCardCondition(owned?.condition || "NM");
   els.cardFinish.value = owned?.finish || defaultCardFinish(card);
-  els.cardLanguage.value = cardFormLanguage(card, owned);
+  setCardLanguageSelect(cardFormLanguage(card, owned));
   els.cardLocation.value = owned?.location || "";
   // A language chosen in the picker can differ from the remembered lot: show the lot the form names.
   if (owned && !ownedLotMatchesForm(owned)) { followFormOwnedLot(); return; }
@@ -4738,7 +4777,7 @@ async function hydrateEnglishPriceFallbacks() {
   if (!navigator.onLine || !state.useScryfallPrices) return;
   const printingKey = card => `${String(card.set).toLowerCase()}:${String(card.collectorNumber).toLowerCase()}`;
   const candidates = state.collection.filter(card =>
-    card.language === "ja" && card.set && card.collectorNumber &&
+    card.language && card.language !== "en" && card.set && card.collectorNumber &&
     (!card.englishPriceUpdatedAt || Date.now() - card.englishPriceUpdatedAt > DAY_MS));
   const printings = [...new Map(candidates.map(card => [printingKey(card), card])).values()];
   let changed = false;
@@ -4751,11 +4790,11 @@ async function hydrateEnglishPriceFallbacks() {
       if (!response.ok) continue;
       const english = new Map(((await response.json()).data || []).map(card => [`${card.set}:${String(card.collector_number).toLowerCase()}`, card]));
       const keys = new Set(batch.map(printingKey));
-      state.collection.filter(card => card.language === "ja" && keys.has(printingKey(card))).forEach(card => {
+      state.collection.filter(card => card.language && card.language !== "en" && keys.has(printingKey(card))).forEach(card => {
         card.englishPriceUpdatedAt = Date.now();
         const englishCard = english.get(printingKey(card));
         if (!englishCard) return;
-        // Fill (or refresh) only fields the Japanese printing itself has no price for, and never over CardTrader's.
+        // Fill (or refresh) only fields the non-English printing itself has no price for, and never over CardTrader's.
         for (const [field, fromEnglish, source, price] of [["priceUsd", "priceUsdFromEnglish", "priceUsdSource", "usd"], ["priceUsdFoil", "priceUsdFoilFromEnglish", "priceUsdFoilSource", "usd_foil"], ["priceUsdEtched", "priceUsdEtchedFromEnglish", "priceUsdEtchedSource", "usd_etched"]]) {
           if (!englishCard.prices?.[price] || (card[field] && card[source] !== "cardtrader" && !card[fromEnglish])) continue;
           card[field] = englishCard.prices[price]; card[source] = "scryfall"; card[fromEnglish] = true;
@@ -5565,7 +5604,7 @@ function inUseCardPrintGroups(decks, collection) {
 }
 function inUsePrintLabel(group) {
   const card = group.card;
-  const language = group.look.language === "ja" ? "日本語" : group.look.language === "en" ? "英語" : group.look.language ? "その他の言語" : "";
+  const language = group.look.language ? CARD_LANGUAGE_LABELS.get(group.look.language) || "その他の言語" : "";
   return [`${String(card.set || "").toUpperCase()} #${card.collectorNumber || card.collector_number || ""}`, group.look.finish === "foil" ? "Foil" : group.look.finish === "etched" ? "Etched" : "", language].filter(Boolean).join("・");
 }
 
@@ -7444,7 +7483,7 @@ function renderDeckEntryVariantGallery() {
   }
   els.deckEntryVariants.innerHTML = visible.map(card => `
     <button type="button" class="variant-option ${card.id === currentId ? "selected" : ""}" data-id="${esc(card.id)}" aria-label="${esc(nameOf(card))} ${(card.set || "").toUpperCase()} ${card.collector_number || ""}">
-      <img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async"><span>${card.lang === "ja" ? "日" : "英"} · ${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")}</span>
+      <img ${localizedImageAttrs(card)} src="${esc(imageOf(card))}" alt="" loading="lazy" decoding="async"><span>${cardLanguageMark(card.lang)} · ${esc((card.set || "").toUpperCase())} #${esc(card.collector_number || "")}</span>
     </button>`).join("") + (visible.length < variants.length ? '<button type="button" class="variant-option" data-more>さらに表示</button>' : "");
   els.deckEntryVariants.querySelectorAll("button[data-id]").forEach(button => button.addEventListener("click", () => {
     const card = state.deckEntryVariants.find(item => item.id === button.dataset.id);
@@ -7578,7 +7617,7 @@ function renderDeckEntryOwnedVariants(entry, card) {
   $("#deckEntryOwnedVariantCount").textContent = lots.length ? `${lots.length}種` : "";
   $("#deckEntryOwnedVariantList").innerHTML = lots.map(lot => {
     const finish = cardFinishKind(lot) ? (cardFinishKind(lot) === "foil" ? " · Foil" : " · Etched") : "";
-    const language = lot.language === "ja" ? "日" : lot.language === "en" ? "英" : "他";
+    const language = cardLanguageMark(lot.language);
     return `<button type="button" class="variant-option" data-owned-variant="${esc(lot.id)}" aria-label="${esc(`${nameOf(lot)} ${lot.set || ""} ${lot.collectorNumber || ""}${finish} 所持${Number(lot.quantity || 0)}枚に変更`)}">
       <img ${localizedImageAttrs(lot)} src="${esc(lot.image || "")}" alt="" loading="lazy" decoding="async"><span>${language} · ${esc(lot.set || "")} #${esc(lot.collectorNumber || "")}${finish}<br>所持${Number(lot.quantity || 0)}枚</span>
     </button>`;
@@ -8188,7 +8227,7 @@ function openPurchaseArtworks(card) {
   $("#purchaseArtworksList").innerHTML = purchaseArtworkLots.map((lot, index) => `
     <button type="button" class="purchase-artwork" data-index="${index}">
       <img ${localizedImageAttrs(lot)} src="${esc(lot.image || "")}" alt="" loading="lazy" decoding="async">
-      <span>${esc(lot.set || "")} #${esc(lot.collectorNumber || "")}<br>${lot.language === "ja" ? "日本語" : lot.language === "en" ? "英語" : "その他"}${lot.finish === "foil" ? "・Foil" : lot.finish === "etched" ? "・Etched" : ""}・${Number(lot.quantity || 0)}枚</span>
+      <span>${esc(lot.set || "")} #${esc(lot.collectorNumber || "")}<br>${cardLanguageLabel(lot.language)}${lot.finish === "foil" ? "・Foil" : lot.finish === "etched" ? "・Etched" : ""}・${Number(lot.quantity || 0)}枚</span>
     </button>`).join("");
   $("#purchaseArtworksDialog").showModal();
 }
@@ -8231,7 +8270,7 @@ function purchaseDetailHtml(card, inSheet = false) {
             ${artworks ? `<button type="button" data-purchase-action="artworks">所持している別イラスト（${artworks}種）</button>` : ""}
             <button type="button" class="purchase-menu-delete" data-purchase-action="delete">削除</button>
           </div></details></div>
-        <p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${card.language === "ja" ? "日本語" : card.language === "en" ? "英語" : "その他"} · ${esc(card.condition)}${finish}</p>
+        <p class="muted">${esc(card.set)} #${esc(card.collectorNumber)} · ${cardLanguageLabel(card.language)} · ${esc(card.condition)}${finish}</p>
         <p class="purchase-chips"><span class="purchase-owned${owned ? "" : " none"}">${esc(purchaseOwnedLabel(card))}</span>${state.purchasePriceDisplay === "shown" ? `<span class="purchase-price" title="${esc(cardPriceLabel(card))}">${esc(purchasePriceLine(card))}</span>` : ""}</p>
       </div>
       <div class="purchase-controls">
