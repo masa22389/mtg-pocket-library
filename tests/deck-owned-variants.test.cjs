@@ -37,5 +37,5 @@ assert(code.split('$("#deckEntryOwnedVariants").open = false;\n  renderDeckEntry
 assert(code.includes('$("#deckEntryOwnedVariantCount").textContent = lots.length ? `${lots.length}種` : "";'));
 assert(code.includes('if (lot) replaceDeckEntryVariant(lot, lot.id);'));
 assert(code.includes('function replaceDeckEntryVariant(card, newCardId = `scryfall-${card?.id}`) {'));
-assert(code.includes('  renderDeckEntryOwnedVariants(entry, card);\n}'));
+assert(code.includes('  renderDeckEntryOwnedVariants(entry, card);\n  renderDeckEntryLentRows();\n}'));
 console.log('PASS deck owned variants');

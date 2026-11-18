@@ -6,7 +6,7 @@ const c={state:{collection:[]},nameOf:card=>card.printedName||card.name,cardIsFo
 vm.createContext(c);
 vm.runInContext(pick('function cardFinishKind(','function cardFinishBadge(')+pick('function cardForDeckEntry(','function ownedQuantityForEntry(')+
   pick('function deckLatestEntries(','function deckUsageForCard(')+pick('function deckEntryDisplayParts(','function renderDeckSection(')+
-  pick('function inUseCardPrintGroups(','function inUseCardGroups('),c);
+  pick('const DECK_LEND_SECTIONS','// A deck marked 使用中')+pick('function inUseCardPrintGroups(','function inUseCardGroups('),c);
 const fable={oracleId:'fable',name:'Fable of the Mirror-Breaker',printedName:'鏡割りの寓話',set:'NEO',collectorNumber:'141'};
 const lot=(id,finish,quantity,language='ja',scryfallId='neo141')=>({id,...fable,scryfallId,finish,quantity,language});
 c.state.collection=[lot('f','foil',1),lot('n','normal',4),lot('en','normal',2,'en')];

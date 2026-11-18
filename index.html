@@ -60,8 +60,8 @@ const BACKGROUND_THEME_CHROME = {
  }catch{}
 })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=411">
-  <link rel="stylesheet" href="mobile-inputs.css?v=411">
+  <link rel="stylesheet" href="styles.css?v=412">
+  <link rel="stylesheet" href="mobile-inputs.css?v=412">
 </head>
 <body>
   <header class="app-header">
@@ -430,8 +430,10 @@ const BACKGROUND_THEME_CHROME = {
     <form method="dialog" class="dialog-card deck-editor">
       <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
       <label>デッキ名<input id="deckName" maxlength="60" placeholder="新しいデッキ"></label>
-      <label>フォーマット<select id="deckFormat"><option>統率者戦</option><option>スタンダード</option><option>パイオニア</option><option>モダン</option><option>レガシー</option><option>パウパー</option><option>カジュアル</option></select></label>
+      <label>フォーマット<select id="deckFormat"><option>統率者戦</option><option>スタンダード</option><option>パイオニア</option><option>モダン</option><option>レガシー</option><option>プレモダン</option><option>ミドルスクール</option><option>パウパー</option><option>カジュアル</option></select></label>
       <label class="favorite-filter deck-in-use-toggle"><input id="deckInUse" type="checkbox"><span>使用中（今組んでいるデッキ）</span></label>
+      <label class="favorite-filter deck-in-use-toggle"><input id="deckBroken" type="checkbox"><span>型崩れ（一部のカードを他のデッキで使用中）</span></label>
+      <p id="deckBrokenNote" class="muted deck-broken-note" hidden>カードをタップして「抜いている枚数」を＋−で入れると、その枚数を一時的に減らして表示します。デッキの中身は変わりません。抜いた分は「使用中カード」に数えません。</p>
       <div class="deck-summary"><b id="deckCount">0枚</b><span id="deckMissing">不足なし</span></div>
       <section id="deckStats" class="deck-stats" hidden></section>
       <section id="deckMissingList" class="deck-missing-list" hidden></section>
@@ -541,6 +543,7 @@ const BACKGROUND_THEME_CHROME = {
         <div class="deck-section-quantity-row" data-section-row="commander"><b>統率者</b><button id="decrementCommanderDeckEntry" type="button">−</button><input id="commanderDeckEntryQuantity" type="number" min="0" value="0" inputmode="numeric"><button id="incrementCommanderDeckEntry" type="button">＋</button></div>
         <div class="deck-section-quantity-row" data-section-row="maybe"><b>候補</b><button id="decrementMaybeDeckEntry" type="button">−</button><input id="maybeDeckEntryQuantity" type="number" min="0" value="0" inputmode="numeric"><button id="incrementMaybeDeckEntry" type="button">＋</button></div>
       </div>
+      <div id="deckEntryLentRows" class="deck-section-quantities deck-lent-quantities" aria-label="一時的に抜いている枚数" hidden></div>
       <details id="deckEntryOwnedVariants" class="deck-entry-owned-variants card-accordion" hidden>
         <summary><span>所持している別イラストに変更</span><small id="deckEntryOwnedVariantCount"></small></summary>
         <div id="deckEntryOwnedVariantList" class="variant-list"></div>
@@ -585,12 +588,12 @@ const BACKGROUND_THEME_CHROME = {
   </dialog>
   <button id="backToTop" class="back-to-top" type="button" aria-label="ページの上に戻る" hidden>↑ 上に戻る</button>
   <div id="toast" class="toast" role="status"></div>
-  <script src="storage.js?v=411" defer></script>
-  <script src="scanner-host.js?v=411" defer></script>
+  <script src="storage.js?v=412" defer></script>
+  <script src="scanner-host.js?v=412" defer></script>
   <script src="mtg-jp-card-index.js?h=9b352f851b04" defer></script>
   <script src="mtgjson-jp-search-index.js?h=950f31a46ea0" defer></script>
   <script src="reserved-list.js?h=f25d12c86b70" defer></script>
-  <script src="scanner/card-images.js?v=411" defer></script>
-  <script src="app.js?v=411" defer></script>
+  <script src="scanner/card-images.js?v=412" defer></script>
+  <script src="app.js?v=412" defer></script>
 </body>
 </html>

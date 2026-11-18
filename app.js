@@ -9,7 +9,7 @@ window.addEventListener('pageshow', event => {
 });
 async function startMtgApp() {
 const appStorage = await window.mtgStorage.ready;
-const APP_VERSION = "v411";
+const APP_VERSION = "v412";
 const KEYS = { defaultCardLanguage: "mtg-pocket.defaultCardLanguage.v1", deckDisplayMode: "mtg-pocket.deckDisplayMode.v1", deckInUseOnly: "mtg-pocket.deckInUseOnly.v1", inUseCardGrouping: "mtg-pocket.inUseCardGrouping.v1", purchases: "mtg-pocket.purchases.v1", purchasePriceDisplay: "mtg-pocket.purchasePriceDisplay.v1", purchaseViewMode: "mtg-pocket.purchaseViewMode.v1", collection: "mtg-pocket.collection.v1", decks: "mtg-pocket.decks.v1", fx: "mtg-pocket.fx.v1", priceCache: "mtg-pocket.priceCache.v1", favoriteGroups: "mtg-pocket.favoriteGroups.v1", collectionViewMode: "mtg-pocket.collectionViewMode.v2", collectionPriceDisplayMode: "mtg-pocket.collectionPriceDisplayMode.v1", priceSourceMode: "mtg-pocket.priceSourceMode.v1", collectionSortStack: "mtg-pocket.collectionSortStack.v1", deckFormatFilter: "mtg-pocket.deckFormatFilter.v1", backgroundTheme: "mtg-pocket.backgroundTheme.v1", sets: "mtg-pocket.sets.v1", backupMeta: "mtg-pocket.backupMeta.v1", cardTrader: "mtg-pocket.cardTrader.v1", wisdomGuild: "mtg-pocket.wisdomGuild.v1" };
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VARIANT_RENDER_LIMIT = 80;
@@ -5501,6 +5501,29 @@ function deckCoverArtUrl(image) {
   return image || "";
 }
 
+// A 型崩れ deck has some copies lent to other decks for now. They stay in the deck's list (and its versions and
+// exports) but are shown as taken out, and 使用中カード does not count them so a lent card is not counted twice.
+// deck.lent maps "section\ncardId" to the number taken out; it only applies while deck.broken is on.
+const DECK_LEND_SECTIONS = ["commander", "main", "side"];
+function deckLentKey(section, cardId) {
+  return `${section}\n${cardId}`;
+}
+function deckLentQuantity(deck, entry) {
+  if (deck?.broken !== true || !entry || !DECK_LEND_SECTIONS.includes(entry.section)) return 0;
+  const lent = Math.floor(Number(deck.lent?.[deckLentKey(entry.section, entry.cardId)] || 0));
+  return Math.max(0, Math.min(lent, Number(entry.quantity || 0)));
+}
+function deckLentTotal(deck, entries = deck?.entries || []) {
+  return entries.reduce((sum, entry) => sum + deckLentQuantity(deck, entry), 0);
+}
+// What 使用中カード counts for a deck: its latest version, less what is lent out.
+function inUseDeckEntries(deck) {
+  return deckLatestEntries(deck).map(entry => {
+    const lent = deckLentQuantity(deck, entry);
+    return lent ? { ...entry, quantity: Number(entry.quantity || 0) - lent } : entry;
+  });
+}
+
 // A deck marked 使用中 is one the user has built right now; old decks that were taken apart stay unmarked.
 function visibleDeckList(decks, format, inUseOnly) {
   return decks.filter(deck => (!format || deck.format === format) && (!inUseOnly || deck.inUse === true));
@@ -5514,7 +5537,7 @@ function inUseCardPrintGroups(decks, collection) {
   const groups = new Map();
   const lookOf = card => ({ id: card.scryfallId || cardScryfallId(card), finish: cardFinishKind(card), language: card.language || card.lang || "" });
   for (const deck of decks.filter(item => item.inUse === true)) {
-    const entries = deckLatestEntries(deck)
+    const entries = inUseDeckEntries(deck)
       .map(entry => ({ ...entry, section: ["commander", "main", "side", "maybe"].includes(entry.section) ? entry.section : "main" }))
       .filter(entry => entry.section !== "maybe" && Number(entry.quantity || 0) > 0 && cardForDeckEntry(entry));
     const parts = deckEntryDisplayParts(entries, "split");
@@ -5549,7 +5572,7 @@ function inUsePrintLabel(group) {
 function inUseCardGroups(decks, collection) {
   const groups = new Map();
   for (const deck of decks.filter(item => item.inUse === true)) {
-    for (const entry of deckLatestEntries(deck)) {
+    for (const entry of inUseDeckEntries(deck)) {
       const section = ["commander", "main", "side", "maybe"].includes(entry.section) ? entry.section : "main";
       const quantity = Number(entry.quantity || 0);
       const card = cardForDeckEntry(entry);
@@ -5625,7 +5648,7 @@ function renderDecks() {
     const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + entry.quantity, 0);
     const missing = missingCount(deck);
     const selected = deckListReorderMode && deckListReorderSelection === deck.id;
-    return `<button type="button" class="deck-tile${deck.coverImage ? " has-cover" : ""}${selected ? " deck-list-reorder-selected" : ""}" data-id="${deck.id}">${deck.coverImage ? `<span class="deck-cover-art"><img class="deck-cover-image${deckCoverArtUrl(deck.coverImage) === deck.coverImage && !deck.coverImage.includes("/art_crop/") ? " deck-cover-cropped" : ""}" src="${esc(deckCoverArtUrl(deck.coverImage))}" alt="" loading="lazy" decoding="async"></span>` : ""}<div class="deck-tile-info"><span class="eyebrow">${esc(deck.format)}</span>${deck.inUse === true ? '<span class="deck-in-use-badge">使用中</span>' : ""}<h2>${esc(deck.name)}</h2><span class="deck-total">${total}</span> 枚<p>${deck.entries.length}種類${missing ? ` · <b>${missing}枚不足</b>` : " · 所持内で構築可能"}</p><small class="deck-date-line">作成 ${formatDeckDate(deck.createdAt)} · 更新 ${formatDeckDate(deck.updatedAt)}</small></div></button>`;
+    return `<button type="button" class="deck-tile${deck.coverImage ? " has-cover" : ""}${selected ? " deck-list-reorder-selected" : ""}" data-id="${deck.id}">${deck.coverImage ? `<span class="deck-cover-art"><img class="deck-cover-image${deckCoverArtUrl(deck.coverImage) === deck.coverImage && !deck.coverImage.includes("/art_crop/") ? " deck-cover-cropped" : ""}" src="${esc(deckCoverArtUrl(deck.coverImage))}" alt="" loading="lazy" decoding="async"></span>` : ""}<div class="deck-tile-info"><span class="eyebrow">${esc(deck.format)}</span>${deck.inUse === true ? '<span class="deck-in-use-badge">使用中</span>' : ""}${deck.broken === true ? `<span class="deck-in-use-badge deck-broken-badge">型崩れ${deckLentTotal(deck) ? ` 抜き${deckLentTotal(deck)}` : ""}</span>` : ""}<h2>${esc(deck.name)}</h2><span class="deck-total">${total}</span> 枚<p>${deck.entries.length}種類${missing ? ` · <b>${missing}枚不足</b>` : " · 所持内で構築可能"}</p><small class="deck-date-line">作成 ${formatDeckDate(deck.createdAt)} · 更新 ${formatDeckDate(deck.updatedAt)}</small></div></button>`;
   }).join("");
   if (migrated) persist();
   els.deckList.querySelectorAll(".deck-tile").forEach(button => {
@@ -5966,6 +5989,8 @@ function fillDeckDialog() {
   els.deckName.value = state.editingDeck.name;
   els.deckFormat.value = state.editingDeck.format;
   $("#deckInUse").checked = state.editingDeck.inUse === true;
+  $("#deckBroken").checked = state.editingDeck.broken === true;
+  $("#deckBrokenNote").hidden = state.editingDeck.broken !== true;
   els.deckDates.textContent = `作成日 ${formatDeckDate(state.editingDeck.createdAt)}・更新日 ${formatDeckDate(state.editingDeck.updatedAt)}`;
   els.deckMemo.value = state.editingDeck.memo || "";
   els.deckCardFilter.value = "";
@@ -6777,22 +6802,36 @@ function deckEntryDisplayParts(entries, mode = state.deckDisplayMode) {
   return result;
 }
 
+// The display parts of one entry, with its lent copies taken from the last parts first.
+function deckSectionPartsWithLent(entry, displayParts) {
+  const parts = (displayParts?.get(`${entry.section}\n${entry.cardId}`) || [{ card: cardForDeckEntry(entry), quantity: Number(entry.quantity || 0), missing: null }]).map(part => ({ ...part, lent: 0 }));
+  let lent = deckLentQuantity(state.editingDeck, entry);
+  for (let index = parts.length - 1; index >= 0 && lent > 0; index--) {
+    const take = Math.min(lent, parts[index].quantity);
+    parts[index].lent = take;
+    lent -= take;
+  }
+  return parts;
+}
+
 function renderDeckSection(section, entries, emptyText = "", displayParts = null) {
   const label = sectionLabel(section);
   const count = entries.reduce((sum, entry) => sum + Number(entry.quantity || 0), 0);
   const content = entries.length ? `
     <div class="deck-content-grid">
-      ${entries.flatMap(entry => (displayParts?.get(`${entry.section}\n${entry.cardId}`) || [{ card: cardForDeckEntry(entry), quantity: Number(entry.quantity || 0), missing: null }]).map(part => ({ entry, part }))).map(({ entry, part }) => {
+      ${entries.flatMap(entry => deckSectionPartsWithLent(entry, displayParts).map(part => ({ entry, part }))).map(({ entry, part }) => {
         const card = part.card;
         const missing = section === "maybe" ? 0 : part.missing ?? missingQuantityForEntry(entry);
         const dragging = deckDragState?.dragging && deckDragState.cardId === entry.cardId && deckDragState.section === entry.section;
         const selected = deckReorderSelection?.cardId === entry.cardId && deckReorderSelection?.section === entry.section;
-        const classes = ["deck-content-card", cardFinishClass(card), missing ? "missing-card" : "", dragging ? "deck-dragging-card" : "", deckReorderMode ? "deck-reorder-mode-card" : "", selected ? "deck-reorder-selected" : ""].filter(Boolean).join(" ");
+        const shown = part.quantity - part.lent;
+        const classes = ["deck-content-card", cardFinishClass(card), missing ? "missing-card" : "", part.lent ? "deck-lent-card" : "", part.lent && !shown ? "deck-lent-all" : "", dragging ? "deck-dragging-card" : "", deckReorderMode ? "deck-reorder-mode-card" : "", selected ? "deck-reorder-selected" : ""].filter(Boolean).join(" ");
         const cardName = card ? nameOf(card) : "削除済みカード";
-        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName}${cardFinishKind(card) ? `（${cardFinishKind(card) === "foil" ? "Foil" : "Etched"}）` : ""} ${label} ${part.quantity}枚を編集${missing ? `、${missing}枚不足` : ""}`)}"><img ${card ? localizedImageAttrs(card) : ""} src="${esc(card?.image || "")}" alt="" loading="lazy" draggable="false"><span class="deck-card-quantity" aria-hidden="true">${part.quantity}</span>${cardFinishBadge(card)}${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
+        return `<button type="button" class="${classes}" draggable="false" data-card-id="${esc(entry.cardId)}" data-section="${esc(entry.section)}" aria-label="${esc(`${cardName}${cardFinishKind(card) ? `（${cardFinishKind(card) === "foil" ? "Foil" : "Etched"}）` : ""} ${label} ${part.quantity}枚を編集${part.lent ? `、${part.lent}枚を一時的に抜いている` : ""}${missing ? `、${missing}枚不足` : ""}`)}"><img ${card ? localizedImageAttrs(card) : ""} src="${esc(card?.image || "")}" alt="" loading="lazy" draggable="false"><span class="deck-card-quantity" aria-hidden="true">${shown}</span>${cardFinishBadge(card)}${part.lent ? `<span class="deck-lent-badge" aria-hidden="true">抜き ${part.lent}</span>` : ""}${missing ? `<span class="deck-missing-badge">不足 ${missing}</span>` : ""}</button>`;
       }).join("")}
     </div>` : `<div class="deck-section-empty">${esc(emptyText || `${label}にカードがありません`)}</div>`;
-  return `<section class="deck-section deck-section-${esc(section)}"><div class="deck-section-title"><span>${esc(label)}</span><b>${count}枚</b></div>${content}</section>`;
+  const lent = deckLentTotal(state.editingDeck, entries);
+  return `<section class="deck-section deck-section-${esc(section)}"><div class="deck-section-title"><span>${esc(label)}</span><b>${count}枚${lent ? `（抜き ${lent}枚）` : ""}</b></div>${content}</section>`;
 }
 
 function reorderDeckEntryWithinSection(section, cardId, targetCardId) {
@@ -7082,7 +7121,8 @@ function renderDeckEditor() {
   syncCommanderOptions();
   const total = deck.entries.filter(entry => isDeckBuildSection(entry.section)).reduce((sum, entry) => sum + entry.quantity, 0);
   const missing = missingCount(deck);
-  els.deckCount.textContent = `${total}枚`;
+  const lent = deckLentTotal(deck);
+  els.deckCount.textContent = `${total}枚${lent ? `（抜き ${lent}枚）` : ""}`;
   els.deckMissing.textContent = missing ? `${missing}枚不足` : "不足なし";
   els.deckMissing.style.color = missing ? "#9b332f" : "";
   renderDeckStats();
@@ -7492,6 +7532,37 @@ function renderDeckEntryEditor() {
   els.moveDeckEntryUp.disabled = sectionIndex <= 0;
   els.moveDeckEntryDown.disabled = sectionIndex < 0 || sectionIndex >= sectionEntries.length - 1;
   renderDeckEntryOwnedVariants(entry, card);
+  renderDeckEntryLentRows();
+}
+
+function renderDeckEntryLentRows() {
+  const box = $("#deckEntryLentRows");
+  const deck = state.editingDeck;
+  const rows = deck?.broken === true ? DECK_LEND_SECTIONS.filter(section => section !== "commander" || isCommanderDeck())
+    .map(section => deckEntryForCurrentCardSection(section)).filter(entry => entry && Number(entry.quantity || 0) > 0) : [];
+  box.hidden = !rows.length;
+  box.innerHTML = rows.map(entry => {
+    const lent = deckLentQuantity(deck, entry);
+    const label = sectionLabel(entry.section);
+    return `<div class="deck-section-quantity-row deck-lent-row"><b>${esc(label)}から抜く</b><button type="button" data-lent-section="${esc(entry.section)}" data-lent-step="-1" aria-label="${esc(label)}から抜いている枚数を1枚減らす" ${lent <= 0 ? "disabled" : ""}>−</button><output aria-live="polite">${lent}</output><button type="button" data-lent-section="${esc(entry.section)}" data-lent-step="1" aria-label="${esc(label)}から抜いている枚数を1枚増やす" ${lent >= Number(entry.quantity || 0) ? "disabled" : ""}>＋</button></div>`;
+  }).join("");
+}
+
+// Lending is not an edit of the deck's cards: only deck.lent changes, and the deck's 更新日 stays as it was.
+function setDeckEntryLent(section, value) {
+  const deck = state.editingDeck;
+  const entry = deckEntryForCurrentCardSection(section);
+  if (deck?.broken !== true || !entry) return;
+  const next = Math.max(0, Math.min(Number(entry.quantity || 0), Math.floor(value)));
+  const lent = { ...(deck.lent || {}) };
+  const key = deckLentKey(section, entry.cardId);
+  if (next) lent[key] = next; else delete lent[key];
+  deck.lent = lent;
+  const saved = state.decks.find(item => item.id === deck.id);
+  if (saved) { saved.lent = structuredClone(lent); persist(["decks"]); }
+  renderDeckEditor();
+  renderDeckEntryLentRows();
+  renderDecks();
 }
 
 // Other owned lots of the same card (any language, art or finish) that this deck entry can switch to.
@@ -7844,6 +7915,8 @@ async function duplicateDeck() {
   copy.id = uid();
   copy.name = `${source.name} コピー`;
   copy.inUse = false;
+  copy.broken = false;
+  delete copy.lent;
   copy.createdAt = now;
   copy.updatedAt = now;
   state.decks.unshift(copy);
@@ -8773,6 +8846,33 @@ $("#deckInUse").addEventListener("change", event => {
   saved.inUse = state.editingDeck.inUse;
   persist(["decks"]);
   renderDecks();
+});
+// Unchecking 型崩れ means the deck is whole again, so everything taken out goes back.
+$("#deckBroken").addEventListener("change", event => {
+  const deck = state.editingDeck;
+  if (!deck) return;
+  const lent = deckLentTotal(deck);
+  if (!event.target.checked && lent && !confirm(`一時的に抜いている${lent}枚をデッキに戻し、型崩れを解除しますか？`)) {
+    event.target.checked = true;
+    return;
+  }
+  deck.broken = event.target.checked;
+  if (!deck.broken) delete deck.lent;
+  $("#deckBrokenNote").hidden = !deck.broken;
+  const saved = state.decks.find(item => item.id === deck.id);
+  if (saved) {
+    saved.broken = deck.broken;
+    if (deck.broken) saved.lent = structuredClone(deck.lent || {}); else delete saved.lent;
+    persist(["decks"]);
+  }
+  renderDeckEditor();
+  renderDecks();
+});
+$("#deckEntryLentRows").addEventListener("click", event => {
+  const button = event.target.closest("[data-lent-section]");
+  if (!button) return;
+  const entry = deckEntryForCurrentCardSection(button.dataset.lentSection);
+  setDeckEntryLent(button.dataset.lentSection, deckLentQuantity(state.editingDeck, entry) + Number(button.dataset.lentStep));
 });
 els.deckFormatFilter.addEventListener("change", () => {
   state.deckFormatFilter = els.deckFormatFilter.value;

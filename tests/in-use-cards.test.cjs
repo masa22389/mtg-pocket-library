@@ -6,7 +6,7 @@ const c={state:{collection:[]},nameOf:card=>card.printedName||card.name,normaliz
 vm.createContext(c);
 vm.runInContext(pick('function cardForDeckEntry(','function ownedQuantityForEntry(')+pick('function deckLatestEntries(','function deckUsageForCard(')+
   pick('function isSameOwnedCardName(','function sameCardNameOwnedTotal(')+pick('function sameCardNameOwnedTotal(','\n}\n')+'\n}\n'+
-  pick('function inUseCardGroups(','let deckTab'),c);
+  pick('const DECK_LEND_SECTIONS','// A deck marked 使用中')+pick('function inUseCardGroups(','let deckTab'),c);
 const fable={oracleId:'fable',name:'Fable of the Mirror-Breaker',printedName:'鏡割りの寓話'};
 const bolt={oracleId:'bolt',name:'Lightning Bolt',printedName:'稲妻'};
 c.state.collection=[{id:'f1',...fable,quantity:4,finish:'normal'},{id:'f2',...fable,quantity:1,finish:'foil'},{id:'b1',...bolt,quantity:2}];
@@ -23,6 +23,15 @@ assert.deepEqual([...view],[
   '稲妻 使用3 所持2 赤単(main2) 版あり(main1)',
   '鏡割りの寓話 使用6 所持5 ボロス(main3,side1) 赤単(main2)',
 ],'grouped by name across prints; 候補 and decks not in use are left out; no section counts as main');
+// 型崩れ: copies lent to another deck are left out of the count, and only while the deck is 型崩れ.
+const lentDeck={id:'e',name:'型崩れ',inUse:true,broken:true,lent:{'main\nf1':2,'side\nf2':5},entries:[{cardId:'f1',section:'main',quantity:3},{cardId:'f2',section:'side',quantity:1}]};
+const lentView=decks=>[...c.inUseCardGroups(decks,c.state.collection)].map(g=>`${c.nameOf(g.card)} 使用${g.used}`);
+assert.deepEqual(lentView([lentDeck]),['鏡割りの寓話 使用1'],'2 of 3 main lent and the side copy (lent count clamped to 1) are not counted');
+assert.deepEqual(lentView([{...lentDeck,broken:false}]),['鏡割りの寓話 使用4'],'lent counts do nothing when the deck is not 型崩れ');
+assert.equal(c.deckLentTotal(lentDeck),3);
+assert.equal(lentDeck.entries[0].quantity,3,'the deck itself keeps its quantity');
+assert.match(html,/<input id="deckBroken" type="checkbox">/);
+assert.match(html,/<option>プレモダン<\/option><option>ミドルスクール<\/option>/);
 assert.match(html,/data-deck-tab="inUse"/);assert.match(html,/<input id="inUseCardSearch" type="search"/);
 assert(code.includes('<span class="in-use-deck-format">${esc(deck.format)}</span>'),'each deck row names its format');
 console.log('PASS: the 使用中カード list groups in-use decks by card name, skips candidates, and compares with owned copies.');
